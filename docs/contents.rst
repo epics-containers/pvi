@@ -6,10 +6,6 @@ Contents
 
     Introduction <index>
 
-.. toctree::
-    :caption: Architecture
-
-    arch
 
 * :ref:`genindex`
 
