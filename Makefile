@@ -13,7 +13,7 @@ dist: setup.py $(wildcard pvi/*/*.py)
 
 # Clean the module
 clean:
-	$(PYTHON) setup.py clean
+#	$(PYTHON) setup.py clean
 	rm -rf build dist *egg-info installed.files prefix docs/html
 	find -name '*.pyc' -delete -or -name '*~' -delete
 

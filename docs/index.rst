@@ -45,9 +45,6 @@ and low level opis:
     "pilatus.cpp" -> "libPilatus.so"
     "pilatus.h" -> "libPilatus.so"
 
-What problems is it trying to solve
------------------------------------
-
 .. list-table:: Aims of PVI
     :widths: 20, 80
     :header-rows: 1
@@ -88,7 +85,7 @@ YAML file
 
 The YAML file is broken into 5 sections:
 
-.. list-table:: YAML sections
+.. list-table::
     :widths: 20, 80
     :header-rows: 1
 
@@ -124,14 +121,21 @@ arguments to create the Products:
     Defines -> Components
     Takes -> Producer
 
-Here's a cut down YAML file that might describe a parameter in a detector:
+Here's a cut down pilatus.yaml file that might describe a parameter in a
+detector:
 
 .. code-block:: YAML
 
+    # Define the site specific Producer, this can be overridden with a
+    # site specific .local.yaml file
     type: pvi.producers.DLSAsynProducer
-    boy_embed: pilatus_embed.opi
+    overridden_by: $(yamlname).local.yaml
+    boy_embed: $(yamldir)/../op/opi/DLS/pilatus_embed.opi
     pv_prefix: $(P)$(R)
-    port: $(PORT)
+    asyn_port: $(PORT)
+    template_output: $(yamldir)/../Db/pilatus.template
+    opi_output: $(yamldir)/../opi/op/DLS/pilatus_parameters.opi
+    edl_output: $(yamldir)/../opi/edl/DLS/pilatus_parameters.edl
 
     # Define the arguments that the template takes
     takes:
@@ -158,11 +162,11 @@ Here's a cut down YAML file that might describe a parameter in a detector:
       - type: builtin.widgets.group
         name: AncillaryInformation
 
-      # Make a single parameter with a demand and readback records
+      # Make a single parameter with a demand and readback records and widgets
       - type: asyn.parameters.float64
         name: ThresholdEnergy
         description: |
-            Threshold energy in keV.
+            Threshold energy in keV
 
             camserver uses this value to set the discriminators in each pixel.
             It is typically set to the incident x-ray energy ($(P)$(R)Energy),
@@ -171,35 +175,160 @@ Here's a cut down YAML file that might describe a parameter in a detector:
         egu: keV
         initial_value: 10
         autosave_fields: VAL
-        writeable: True
+        demand: Yes  # Can also be AutoUpdate to add asyn:readback info
+        readback: Yes
         widget: TextInput
         group: AncillaryInformation
 
       # Include a bit of logic from the db template
       - type: builtin.db.include
-        filename: pilatus_logic.template
+        filename: $(yamldir)/../Db/pilatus_logic.template
 
 
+Driver Parameter CPP file
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
+The generated driver parameter CPP file is a baseclass that the driver (which
+contains the logic) can derive from. It contains the string parameter defines,
+and all the createParam calls to make the interface. In this example we have
+a header file pilatus_parameters.h:
 
+.. code-block:: cpp
 
+    #ifndef PILATUS_PARAMETERS_H
+    #define PILATUS_PARAMETERS_H
 
+    /* Strings defining the parameter interface with the Database */
+    #define ThresholdEnergyString "THRESHOLDENERGY" /* (asynFloat64, r/w) */
 
+    /* Class definition */
+    class PilatusParameters {
+    public:
+        PilatusParameters(asynPortDriver *parent);
+        /* Parameters */
+        int ThresholdEnergy;
+    }
 
+    #endif //PILATUS_PARAMETERS_H
+
+And then pilatus_parameters.cpp:
+
+.. code-block:: cpp
+
+    PilatusParameters::PilatusParameters(asynPortDriver *parent) {
+        parent->createParam(ThresholdEnergyString, asynParamFloat64, &ThresholdEnergy);
+    }
+
+The existing pilatus.cpp is then modified to remove these parameters definitions
+and inherit from the intermediate class:
+
+.. code-block:: diff
+
+     pilatusDetector::pilatusDetector(const char *portName, ...)
+         : ADDriver(portName, ...), ...
+    -    imagesRemaining(0)
+    +    imagesRemaining(0),
+    +    PilatusParameters(this)
+     {
+    -    createParam(ThresholdEnergyString, asynParamFloat64, &ThresholdEnergy);
+         status = (epicsThreadCreate("PilatusDetTask", ...
+
+Database Template file
+~~~~~~~~~~~~~~~~~~~~~~
+
+According to the demand and readback properties of the component, the following
+records are created:
+
+.. code-block:: cpp
+
+    record(ao, "$(P)$(R)ThresholdEnergy") {
+        field(PINI, "YES")
+        field(DTYP, "asynFloat64")
+        field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))THRESHOLDENERGY")
+        field(DESC, "Threshold energy in keV")
+        field(EGU,  "keV")
+        field(PREC, "3")
+        field(VAL, "10.000")
+        info(autosaveFields, "VAL")
+    }
+
+    record(ai, "$(P)$(R)ThresholdEnergy_RBV") {
+        field(DTYP, "asynFloat64")
+        field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))THRESHOLDENERGY")
+        field(DESC, "Energy threshold")
+        field(EGU,  "keV")
+        field(PREC, "3")
+        field(SCAN, "I/O Intr")
+    }
+
+This template file can also include records that provide logic (for things
+like the arrayRate and EPICSShutter in areaDetector).
+
+Screen files
+~~~~~~~~~~~~
+
+The intermediate objects are a number of Widget instances. These contain basic
+types (like Combo, TectInput, TextUpdate, LED, Group) and some creation hints
+(like max_field_length, include_units, label, group_name), but no X, Y, Width,
+Height or colour information. They may represent either a single widget or pair
+of demand/readback widgets.
+
+The site-specific Producer consumes these Widget objects, then produces a screen
+with style, sizing and layout that can be customized to the site. This means
+that the default layout (big screen with lots of widgets arranged in group
+boxes) could be produced for one site, then another site could make lots of
+little screens with one group per screen. Styling is also covered, so the
+blue/grey MEDM screens and green/grey EDM screens can be customized to fit
+the site style guide.
+
+Documentation
+~~~~~~~~~~~~~
+
+The Parameter and record sections of the existing documentation could be
+reproduced, either as raw html files as present, or as markdown or rst files
+if the module owner had a preference for those. A similar include file mechanism
+to the templates could be used to add descriptive introduction and usage
+documentation to the autogenerated sections.
 
 
 What changes would be required to add this to an existing areaDetector module?
 ------------------------------------------------------------------------------
 
-
-
-
+We could write a conversion script that converted the existing database file
+to a YAML file. The createParam calls could then be stripped out of the
+driver CPP file, and if any names were different to the record suffix, either
+the driver changed to be consistent or an override "parameter_name" specified in
+the YAML file to keep the code the same. The record interface would be preserved
+so the existing screens could be used, but the parameter strings which form
+the interface between the driver and template would probably change.
 
 Questions
 ---------
 
-- Where should products go, are they built?
+I am fairly happy with the scheme set out above, but there are a lot of
+implementation questions. Here are the most pressing:
 
+One-time generation and checked into source control or generated by Makefile?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Aravis follow the model of:
+
+- Extract genicam
+- Use script to make Db, Edl, Adl
+- Check in the products to source control
+- End users not required to know about the scripts
+
+A very similar model could be followed here, where the files are all generated
+where they currently are (including a definitive set of screens) and only the
+module owner or site specific maintainers would ever run the creation scripts
+again. This means it looks like a normal module, but means that people may not
+know about the YAML source file, and may be tempted to modify the products,
+stopping the creation scripts from being run again at a later date.
+
+Alternatively the products could be made as part of the Make process, with
+the results going in the built db/ include/ and op/*/autogen directories. This
+would avoid the modification of build products, but would require all users
+(including windows users) to run the creation scripts on each Make.
 
 
 
