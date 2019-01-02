@@ -9,8 +9,8 @@ PVI
 
 PVI (PV Interface) is a framework for specifying the interface to an EPICS
 driver in a single `YAML`_ file. The initial target is asyn port driver based
-drivers, but it could be extended to streamDevice and other driver types at a later
-date.
+drivers, but it could be extended to streamDevice and other driver types at a 
+later date.
 
 It allows the asyn parameter interface to be specified in a single place,
 and removes boilerplate code in the driver CPP, template files, documentation,
@@ -83,7 +83,7 @@ template, and site specific screens to disk.
 YAML file
 ~~~~~~~~~
 
-The YAML file is broken into 5 sections:
+The YAML file is broken into 4 sections:
 
 .. list-table::
     :widths: 20, 80
@@ -330,8 +330,15 @@ the results going in the built db/ include/ and op/*/autogen directories. This
 would avoid the modification of build products, but would require all users
 (including windows users) to run the creation scripts on each Make.
 
+Scope of the Parameter interface changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-
+The scheme above shows the parameter interface being generated as a base class
+for the detector driver class, which requires the least source code changes.
+Another option would be to make the parameter library a separate object, making it
+a child of the detector driver part. This would allow more complex drivers to
+separate parameter access over multiple classes to reduce the size of the classes
+implementing the logic.
 
 
 .. _YAML:
