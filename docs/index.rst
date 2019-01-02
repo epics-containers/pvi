@@ -198,8 +198,9 @@ And these settings could then be overridden in a local YAML file:
     boy_embed: $(yamldir)/../op/opi/DLS/pilatus_embed.opi
     
     # Add some additional components, these could override what
-    # appeared in the main YAML file, but not delete
+    # appeared in the main YAML file, but not delete anything
     components:
+      # A DLS specific mechanism for tagging PVs to be archived
       - type: archiver.tags.monitor
         name: ThresholdEnergy
         period: 0.5
