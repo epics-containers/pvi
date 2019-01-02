@@ -126,16 +126,15 @@ detector:
 
 .. code-block:: YAML
 
-    # Define the site specific Producer, this can be overridden with a
+    # Define the generic Producer, this can be overridden with a
     # site specific .local.yaml file
-    type: pvi.producers.DLSAsynProducer
+    type: pvi.producers.AsynProducer
     overridden_by: $(yamlname).local.yaml
-    boy_embed: $(yamldir)/../op/opi/DLS/pilatus_embed.opi
     pv_prefix: $(P)$(R)
     asyn_port: $(PORT)
     template_output: $(yamldir)/../Db/pilatus.template
-    opi_output: $(yamldir)/../opi/op/DLS/pilatus_parameters.opi
-    edl_output: $(yamldir)/../opi/edl/DLS/pilatus_parameters.edl
+    opi_output: $(yamldir)/../opi/op/pilatus_parameters.opi
+    edl_output: $(yamldir)/../opi/edl/pilatus_parameters.edl
 
     # Define the arguments that the template takes
     takes:
@@ -183,6 +182,21 @@ detector:
       # Include a bit of logic from the db template
       - type: builtin.db.include
         filename: $(yamldir)/../Db/pilatus_logic.template
+
+And these settings could then be overridden in a local YAML file:
+
+.. code-block:: YAML
+
+    # Define the site specific Producer
+    type: pvi.producers.DLSAsynProducer
+    boy_embed: $(yamldir)/../op/opi/DLS/pilatus_embed.opi
+    opi_output: $(yamldir)/../opi/op/DLS/pilatus_parameters.opi
+    edl_output: $(yamldir)/../opi/edl/DLS/pilatus_parameters.edl    
+    
+    # Add some archiver tags
+    - type: archiver.tags.monitor
+      name: ThresholdEnergy
+      period: 0.5
 
 
 Driver Parameter CPP file
