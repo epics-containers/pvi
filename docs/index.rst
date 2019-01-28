@@ -130,12 +130,6 @@ detector:
     # site specific .local.yaml file
     type: pvi.producers.AsynProducer
     overridden_by: $(yamlname).local.yaml
-    pv_prefix: $(P)$(R)
-    asyn_port: $(PORT)
-    template_output: $(yamldir)/../Db/pilatus.template
-    opi_output: $(yamldir)/../op/opi/pilatus_parameters.opi
-    adl_output: $(yamldir)/../op/adl/pilatus_parameters.adl
-    edl_output: $(yamldir)/../op/edl/pilatus_parameters.edl
 
     # Define the arguments that the template takes
     takes:
@@ -183,6 +177,13 @@ detector:
       # Include a bit of logic from the db template
       - type: builtin.db.include
         filename: $(yamldir)/../Db/pilatus_logic.template
+
+    pv_prefix: $(P)$(R)
+    asyn_port: $(PORT)
+    template_output: $(yamldir)/../Db/pilatus.template
+    opi_output: $(yamldir)/../op/opi/pilatus_parameters.opi
+    adl_output: $(yamldir)/../op/adl/pilatus_parameters.adl
+    edl_output: $(yamldir)/../op/edl/pilatus_parameters.edl
 
 And these settings could then be overridden in a local YAML file:
 
