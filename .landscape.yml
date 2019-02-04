@@ -1,0 +1,6 @@
+doc-warnings: true
+strictness: veryhigh
+pep8:
+  full: true
+python-targets:
+  - 2
