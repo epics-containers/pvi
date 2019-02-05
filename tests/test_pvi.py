@@ -1,6 +1,6 @@
 import unittest
 
-from pvi.record import Record
+from pvi.record import Record, AIRecord
 
 
 class TestRecord(unittest.TestCase):
@@ -19,3 +19,10 @@ class TestRecord(unittest.TestCase):
 
     def test_infos_attribute(self):
         assert self.record.infos == {"autosaveFields": "VAL"}
+
+
+class TestAIRecord(unittest.TestCase):
+
+    def test_rtyp_property(self):
+        self.airecord = AIRecord("$(P)$(R)", "ThresholdEnergy", {"PINI": "YES"}, {"autosaveFields": "VAL"})
+        assert self.airecord.rtyp == "ai"
