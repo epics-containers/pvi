@@ -6,6 +6,10 @@ class Record(object):
         self.fields = fields
         self.infos = infos
 
+    @property
+    def rtyp(self):
+        raise NotImplementedError(self)
+
 
 class AIRecord(Record):
 

@@ -20,6 +20,10 @@ class TestRecord(unittest.TestCase):
     def test_infos_attribute(self):
         assert self.record.infos == {"autosaveFields": "VAL"}
 
+    def test_rtyp_property(self):
+        with self.assertRaises(NotImplementedError):
+            self.record.rtyp
+
 
 class TestAIRecord(unittest.TestCase):
 
