@@ -28,8 +28,8 @@ class TestRecord(unittest.TestCase):
 class TestAIRecord(unittest.TestCase):
 
     def test_rtyp_property(self):
-        self.airecord = AIRecord("$(P)$(R)", "ThresholdEnergy", {"PINI": "YES"}, {"autosaveFields": "VAL"})
-        assert self.airecord.rtyp == "ai"
+        airecord = AIRecord("$(P)$(R)", "ThresholdEnergy_RBV", {"EGU": "keV"}, {"autosaveFields": "VAL"})
+        assert airecord.rtyp == "ai"
 
 
 class TestAORecord(unittest.TestCase):
