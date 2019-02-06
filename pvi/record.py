@@ -1,5 +1,9 @@
 class Record(object):
 
+    """"Abstract base class for all Records, so it's not advised to
+    create instances of this Record class, only of its subclasses
+    """
+
     def __init__(self, prefix, suffix, fields, infos):
         self.prefix = prefix
         self.suffix = suffix
