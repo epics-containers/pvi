@@ -1,6 +1,6 @@
 import unittest
 
-from pvi.asynparam import AsynParam
+from pvi.asynparam import AsynParam, Float64AsynParam
 
 
 class TestAsynParam(unittest.TestCase):
@@ -17,3 +17,10 @@ class TestAsynParam(unittest.TestCase):
     def test_asyntyp_property(self):
         with self.assertRaises(NotImplementedError):
             self.asynparam.asyntyp
+
+
+class TestFloat64AsynParam(unittest.TestCase):
+
+    def test_asyntyp_property(self):
+        float64_asynparam = Float64AsynParam("THRESHOLDENERGY", 10)
+        assert float64_asynparam.asyntyp == "asynParamFloat64"
