@@ -1,6 +1,6 @@
 import unittest
 
-from pvi.record import Record, AIRecord
+from pvi.record import Record, AIRecord, AORecord
 
 
 class TestRecord(unittest.TestCase):
@@ -30,3 +30,10 @@ class TestAIRecord(unittest.TestCase):
     def test_rtyp_property(self):
         self.airecord = AIRecord("$(P)$(R)", "ThresholdEnergy", {"PINI": "YES"}, {"autosaveFields": "VAL"})
         assert self.airecord.rtyp == "ai"
+
+
+class TestAORecord(unittest.TestCase):
+
+    def test_rtyp_property(self):
+        aorecord = AORecord("$(P)$(R)", "ThresholdEnergy", {"PINI": "YES"}, {"autosaveFields": "VAL"})
+        assert aorecord.rtyp == "ao"

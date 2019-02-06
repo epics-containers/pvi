@@ -23,3 +23,13 @@ class AIRecord(Record):
     @property
     def rtyp(self):
         return "ai"
+
+
+class AORecord(Record):
+
+    def __init__(self, prefix, suffix, fields, infos):
+        super(AORecord, self).__init__(prefix, suffix, fields, infos)
+
+    @property
+    def rtyp(self):
+        return "ao"
