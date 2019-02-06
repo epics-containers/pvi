@@ -1,6 +1,6 @@
 class Record(object):
 
-    """"Abstract base class for all Records, so it's not advised to
+    """Abstract base class for all Records, so it's not advised to
     create instances of this Record class, only of its subclasses
     """
 
