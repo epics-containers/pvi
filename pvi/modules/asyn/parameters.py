@@ -12,39 +12,45 @@ def float64(name, desc, prec, egu, autosave_fields, widget, group,
     intermediate_objects = list()
     intermediate_objects.append(Float64AsynParam(name, initial_value))
 
-    prefix = "$(P)$(R)"
-    in_out_string = "@asyn($(PORT),$(ADDR),$(TIMEOUT))" + name
-    val_with_prec = "{val:.{prec}f}".format(val=initial_value, prec=prec)
+    if demand != "No":
+        prefix = "$(P)$(R)"
+        out_string = "@asyn($(PORT),$(ADDR),$(TIMEOUT))" + name
+        val_with_prec = "{val:.{prec}f}".format(val=initial_value, prec=prec)
 
-    aorecord_fields = {
-        "PINI": "YES",
-        "DTYP": "asynFloat64",
-        "OUT": in_out_string,
-        "DESC": truncated_desc,
-        "EGU": egu,
-        "PREC": str(prec),
-        "VAL": val_with_prec
-    }
+        aorecord_fields = {
+            "PINI": "YES",
+            "DTYP": "asynFloat64",
+            "OUT": out_string,
+            "DESC": truncated_desc,
+            "EGU": egu,
+            "PREC": str(prec),
+            "VAL": val_with_prec
+        }
 
-    aorecord_infos = {
-        "autodaveFields": autosave_fields
-    }
+        aorecord_infos = {
+            "autodaveFields": autosave_fields
+        }
 
-    airecord_fields = {
-        "DTYP": "asynFloat64",
-        "INP": in_out_string,
-        "DESC": truncated_desc,
-        "EGU": egu,
-        "PREC": str(prec),
-        "SCAN": "I/O Intr"
-    }
+        aorecord = AORecord(prefix, name, aorecord_fields, aorecord_infos)
+        intermediate_objects.append(aorecord)
 
-    airecord_infos = {}
+    if readback != "No":
+        prefix = "$(P)$(R)"
+        in_string = "@asyn($(PORT),$(ADDR),$(TIMEOUT))" + name
 
-    aorecord = AORecord(prefix, name, aorecord_fields, aorecord_infos)
-    intermediate_objects.append(aorecord)
+        airecord_fields = {
+            "DTYP": "asynFloat64",
+            "INP": in_string,
+            "DESC": truncated_desc,
+            "EGU": egu,
+            "PREC": str(prec),
+            "SCAN": "I/O Intr"
+        }
 
-    airecord = AIRecord(prefix, name + "_RBV", airecord_fields, airecord_infos)
-    intermediate_objects.append(airecord)
+        airecord_infos = {}
+
+        airecord = AIRecord(prefix, name + "_RBV", airecord_fields,
+                            airecord_infos)
+        intermediate_objects.append(airecord)
 
     return intermediate_objects
