@@ -28,7 +28,7 @@ def float64(name, desc, prec, egu, autosave_fields, widget, group,
         }
 
         aorecord_infos = {
-            "autodaveFields": autosave_fields
+            "autosaveFields": autosave_fields
         }
 
         aorecord = AORecord(prefix, name, aorecord_fields, aorecord_infos)
