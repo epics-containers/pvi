@@ -1,9 +1,24 @@
+from annotypes import Optional, TYPE_CHECKING
+
 from pvi.asynparam import Float64AsynParam
 from pvi.record import AIRecord, AORecord
 
+if TYPE_CHECKING:
+    from typing import List
 
-def float64(name, desc, prec, egu, autosave_fields, widget, group,
-            initial_value=None, demand="AutoUpdate", readback="AutoUpdate"):
+
+def float64(name,  # type: str
+            desc,  # type: str
+            prec,  # type: int
+            egu,  # type: str
+            autosave_fields,  # type: str
+            widget,  # type: str
+            group,  # type: str
+            initial_value=None,  # type: Optional[int]
+            demand="AutoUpdate",  # type: str
+            readback="AutoUpdate"  # type: str
+            ):
+    # type: (...) -> List[Float64AsynParam, AIRecord, AORecord]
 
     desc_split = desc.strip("\n").split("\n")
     one_line_desc = desc_split[0]
@@ -56,6 +71,7 @@ def float64(name, desc, prec, egu, autosave_fields, widget, group,
 
 
 def format_init_val(val, prec):
+    # type: (Optional[int], int) -> Optional[str]
     try:
         return "{val:.{prec}f}".format(val=val, prec=prec)
     except ValueError:
