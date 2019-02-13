@@ -15,7 +15,6 @@ def float64(name, desc, prec, egu, autosave_fields, widget, group,
     if demand != "No":
         prefix = "$(P)$(R)"
         out_string = "@asyn($(PORT),$(ADDR),$(TIMEOUT))" + name
-        val_with_prec = "{val:.{prec}f}".format(val=initial_value, prec=prec)
 
         aorecord_fields = {
             "PINI": "YES",
@@ -24,7 +23,7 @@ def float64(name, desc, prec, egu, autosave_fields, widget, group,
             "DESC": truncated_desc,
             "EGU": egu,
             "PREC": str(prec),
-            "VAL": val_with_prec
+            "VAL": format_init_val(initial_value, prec)
         }
 
         aorecord_infos = {
@@ -54,3 +53,10 @@ def float64(name, desc, prec, egu, autosave_fields, widget, group,
         intermediate_objects.append(airecord)
 
     return intermediate_objects
+
+
+def format_init_val(val, prec):
+    try:
+        return "{val:.{prec}f}".format(val=val, prec=prec)
+    except ValueError:
+        return val

@@ -1,6 +1,6 @@
 import unittest
 
-from pvi.modules.asyn.parameters import float64
+from pvi.modules.asyn.parameters import float64, format_init_val
 
 
 class TestFloat64(unittest.TestCase):
@@ -53,3 +53,12 @@ but sometimes other values may be preferable.
                                        readback)
 
         assert len(intermediate_objects) == 1
+
+
+class TestFormatInitVal(unittest.TestCase):
+
+    def test_num_input(self):
+        assert format_init_val(10, 3) == "10.000"
+
+    def test_none_input(self):
+        assert format_init_val(None, 3) is None
