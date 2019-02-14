@@ -78,6 +78,6 @@ def format_init_val(val, prec):
 
 def truncate_desc(desc):
     # type: (str) -> str
-    desc_split = desc.strip("\n").split("\n")
+    desc_split = desc.strip("\n").strip().split("\n")
     one_line_desc = desc_split[0]
     return one_line_desc[:40]

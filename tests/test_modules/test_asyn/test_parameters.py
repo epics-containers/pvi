@@ -83,3 +83,16 @@ but sometimes other values may be preferable.
         expected_output = "Threshold energy in keV"
 
         assert truncate_desc(input_string) == expected_output
+
+    def test_leading_trailing_whitespace_input(self):
+        input_string = """
+    Threshold energy in keV
+
+camserver uses this value to set the discriminators in each pixel.
+It is typically set to the incident x-ray energy ($(P)$(R)Energy),
+but sometimes other values may be preferable.
+    """
+
+        expected_output = "Threshold energy in keV"
+
+        assert truncate_desc(input_string) == expected_output
