@@ -1,6 +1,6 @@
 import unittest
 
-from pvi.modules.asyn.parameters import float64, format_init_val
+from pvi.modules.asyn.parameters import float64, format_init_val, truncate_desc
 
 
 class TestFloat64(unittest.TestCase):
@@ -62,3 +62,24 @@ class TestFormatInitVal(unittest.TestCase):
 
     def test_none_input(self):
         assert format_init_val(None, 3) is None
+
+
+class TestTruncateDesc(unittest.TestCase):
+
+    def test_empty_input(self):
+        assert truncate_desc("") == ""
+
+    def test_leading_trailing_newlines_input(self):
+        input_string = """
+
+Threshold energy in keV
+
+camserver uses this value to set the discriminators in each pixel.
+It is typically set to the incident x-ray energy ($(P)$(R)Energy),
+but sometimes other values may be preferable.
+
+
+"""
+        expected_output = "Threshold energy in keV"
+
+        assert truncate_desc(input_string) == expected_output

@@ -20,9 +20,7 @@ def float64(name,  # type: str
             ):
     # type: (...) -> List[Float64AsynParam, AIRecord, AORecord]
 
-    desc_split = desc.strip("\n").split("\n")
-    one_line_desc = desc_split[0]
-    truncated_desc = one_line_desc[:40]
+    truncated_desc = truncate_desc(desc)
 
     intermediate_objects = list()
     intermediate_objects.append(Float64AsynParam(name, initial_value))
@@ -76,3 +74,10 @@ def format_init_val(val, prec):
         return "{val:.{prec}f}".format(val=val, prec=prec)
     except ValueError:
         return val
+
+
+def truncate_desc(desc):
+    # type: (str) -> str
+    desc_split = desc.strip("\n").split("\n")
+    one_line_desc = desc_split[0]
+    return one_line_desc[:40]
