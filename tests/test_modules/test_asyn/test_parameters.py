@@ -1,5 +1,7 @@
 import unittest
 
+from pvi.asynparam import Float64AsynParam
+from pvi.record import AIRecord, AORecord
 from pvi.modules.asyn.parameters import float64, format_init_val, truncate_desc
 
 
@@ -21,7 +23,7 @@ but sometimes other values may be preferable.
         self.widget = "TextInput"
         self.group = "AncillaryInformation"
 
-    def test_float64_list_length_case1(self):
+    def test_float64_input_values_case1(self):
         demand = "Yes"
         readback = "Yes"
         intermediate_objects = float64(self.name, self.desc, self.prec,
@@ -32,7 +34,12 @@ but sometimes other values may be preferable.
 
         assert len(intermediate_objects) == 3
 
-    def test_float64_list_length_case2(self):
+        returned_object_types = [type(obj) for obj in intermediate_objects]
+
+        for expected_type in [AIRecord, AORecord, Float64AsynParam]:
+            assert expected_type in returned_object_types
+
+    def test_float64_input_values_case2(self):
         demand = "Yes"
         readback = "No"
         intermediate_objects = float64(self.name, self.desc, self.prec,
@@ -43,7 +50,15 @@ but sometimes other values may be preferable.
 
         assert len(intermediate_objects) == 2
 
-    def test_float64_list_length_case3(self):
+        returned_object_types = [type(obj) for obj in intermediate_objects]
+
+        for expected_type in [AORecord, Float64AsynParam]:
+            assert expected_type in returned_object_types
+
+        for unexpected_type in [AIRecord]:
+            assert unexpected_type not in returned_object_types
+
+    def test_float64_input_values_case3(self):
         demand = "No"
         readback = "No"
         intermediate_objects = float64(self.name, self.desc, self.prec,
@@ -53,6 +68,14 @@ but sometimes other values may be preferable.
                                        readback)
 
         assert len(intermediate_objects) == 1
+
+        returned_object_types = [type(obj) for obj in intermediate_objects]
+
+        for expected_type in [Float64AsynParam]:
+            assert expected_type in returned_object_types
+
+        for unexpected_type in [AIRecord, AORecord]:
+            assert unexpected_type not in returned_object_types
 
 
 class TestFormatInitVal(unittest.TestCase):
