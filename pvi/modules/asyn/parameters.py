@@ -24,15 +24,14 @@ def float64(name,  # type: str
 
     intermediate_objects = list()
     intermediate_objects.append(Float64AsynParam(name, initial_value))
+    record_prefix = "$(P)$(R)"
+    in_out_string = "@asyn($(PORT),$(ADDR),$(TIMEOUT))" + name
 
     if demand != "No":
-        prefix = "$(P)$(R)"
-        out_string = "@asyn($(PORT),$(ADDR),$(TIMEOUT))" + name
-
         aorecord_fields = {
             "PINI": "YES",
             "DTYP": "asynFloat64",
-            "OUT": out_string,
+            "OUT": in_out_string,
             "DESC": truncated_desc,
             "EGU": egu,
             "PREC": str(prec),
@@ -43,16 +42,14 @@ def float64(name,  # type: str
             "autosaveFields": autosave_fields
         }
 
-        aorecord = AORecord(prefix, name, aorecord_fields, aorecord_infos)
+        aorecord = AORecord(record_prefix, name, aorecord_fields,
+                            aorecord_infos)
         intermediate_objects.append(aorecord)
 
     if readback != "No":
-        prefix = "$(P)$(R)"
-        in_string = "@asyn($(PORT),$(ADDR),$(TIMEOUT))" + name
-
         airecord_fields = {
             "DTYP": "asynFloat64",
-            "INP": in_string,
+            "INP": in_out_string,
             "DESC": truncated_desc,
             "EGU": egu,
             "PREC": str(prec),
@@ -61,7 +58,7 @@ def float64(name,  # type: str
 
         airecord_infos = {}
 
-        airecord = AIRecord(prefix, name + "_RBV", airecord_fields,
+        airecord = AIRecord(record_prefix, name + "_RBV", airecord_fields,
                             airecord_infos)
         intermediate_objects.append(airecord)
 
