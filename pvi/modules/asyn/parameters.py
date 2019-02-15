@@ -8,7 +8,7 @@ if TYPE_CHECKING:
 
 
 def float64(name,  # type: str
-            desc,  # type: str
+            description,  # type: str
             prec,  # type: int
             egu,  # type: str
             autosave_fields,  # type: str
@@ -20,7 +20,7 @@ def float64(name,  # type: str
             ):
     # type: (...) -> List[Float64AsynParam, AIRecord, AORecord]
 
-    truncated_desc = truncate_desc(desc)
+    truncated_desc = truncate_desc(description)
 
     intermediate_objects = list()
     intermediate_objects.append(Float64AsynParam(name, initial_value))
