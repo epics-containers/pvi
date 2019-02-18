@@ -1,7 +1,12 @@
 import importlib
+from annotypes import Any, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from typing import List, Callable
 
 
 def lookup_component(component_type, filename, lineno):
+    # type: (str, str, int) -> Callable[..., List[Any]]
 
     pkg, ident = component_type.rsplit(".", 1)
     pkg = "pvi.modules.%s" % pkg
