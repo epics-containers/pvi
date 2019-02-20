@@ -43,3 +43,14 @@ def get_component_yaml_info(yaml_path):
                                     component_info))
 
     return components_and_info
+
+
+def get_intermediate_objects(info):
+    # type: (List[Tuple[str, str, int, Dict]]) -> List[Any]
+    intermediate_objects = []
+
+    for component_type, yaml_path, lineno, component_info in info:
+        component = lookup_component(component_type, yaml_path, lineno)
+        intermediate_objects += component(**component_info)
+
+    return intermediate_objects

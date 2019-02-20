@@ -1,7 +1,8 @@
 import unittest
 from mock import Mock, patch
 
-from pvi.yaml_loader import lookup_component, get_component_yaml_info
+from pvi.yaml_loader import lookup_component, get_component_yaml_info, \
+    get_intermediate_objects
 
 yaml_text = """
 type: pvi.producers.MyProducer
@@ -85,3 +86,45 @@ class TestGetComponentYamlInfo(unittest.TestCase):
         assert returned_component_type == expected_component_type
         assert returned_component_type_lineno == expected_component_type_lineno
         assert returned_params == expected_params
+
+
+class TestGetIntermediateObjects(unittest.TestCase):
+
+    @patch("pvi.yaml_loader.lookup_component")
+    def test_args_passed_to_component(self, mock_lookup):
+        filepath = "/tmp/yamltest.yaml"
+        component_type = "mymodule.components.MyComponent"
+        component_type_lineno = 18
+        component_params = dict(
+            name="SomeName",
+            description="Some description",
+            prec=3,
+            egu="keV",
+            autosave_fields="VAL",
+            widget="TextInput",
+            group="AncillaryInformation",
+            initial_value=10,
+            demand="Yes",
+            readback="Yes"
+        )
+
+        # mock_lookup should return a component, and that component should
+        # return a list of intermediate objects
+        mock_lookup.return_value.return_value = [Mock()]
+
+        components_and_info = [(component_type, filepath,
+                                component_type_lineno, component_params)]
+
+        get_intermediate_objects(components_and_info)
+
+        mock_component = mock_lookup.return_value
+        mock_component.assert_called_once_with(name="SomeName",
+                                               description="Some description",
+                                               prec=3,
+                                               egu="keV",
+                                               autosave_fields="VAL",
+                                               widget="TextInput",
+                                               group="AncillaryInformation",
+                                               initial_value=10,
+                                               demand="Yes",
+                                               readback="Yes")
