@@ -27,13 +27,12 @@ def float64(name,  # type: str
     truncated_desc = truncate_desc(description)
 
     intermediate_objects = [Float64AsynParam(name, initial_value)]
-    in_out_string = "@asyn($(PORT),$(ADDR),$(TIMEOUT))" + name
 
     if demand != "No":
         aorecord_fields = {
             "PINI": "YES",
             "DTYP": "asynFloat64",
-            "OUT": in_out_string,
+            "OUT": name,
             "DESC": truncated_desc,
             "EGU": egu,
             "PREC": prec,
@@ -50,7 +49,7 @@ def float64(name,  # type: str
     if readback != "No":
         airecord_fields = {
             "DTYP": "asynFloat64",
-            "INP": in_out_string,
+            "INP": name,
             "DESC": truncated_desc,
             "EGU": egu,
             "PREC": prec,
