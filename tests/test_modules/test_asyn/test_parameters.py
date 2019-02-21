@@ -2,7 +2,7 @@ import unittest
 
 from pvi.asynparam import Float64AsynParam
 from pvi.record import AIRecord, AORecord
-from pvi.modules.asyn.parameters import float64, format_init_val, truncate_desc
+from pvi.modules.asyn.parameters import float64, truncate_desc
 
 
 class TestFloat64(unittest.TestCase):
@@ -76,15 +76,6 @@ but sometimes other values may be preferable.
 
         for unexpected_type in [AIRecord, AORecord]:
             assert unexpected_type not in returned_object_types
-
-
-class TestFormatInitVal(unittest.TestCase):
-
-    def test_num_input(self):
-        assert format_init_val(10, 3) == "10.000"
-
-    def test_none_input(self):
-        assert format_init_val(None, 3) is None
 
 
 class TestTruncateDesc(unittest.TestCase):

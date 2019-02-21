@@ -34,7 +34,7 @@ def float64(name,  # type: str
             "DESC": truncated_desc,
             "EGU": egu,
             "PREC": str(prec),
-            "VAL": format_init_val(initial_value, prec)
+            "VAL": initial_value
         }
 
         aorecord_infos = {
@@ -60,14 +60,6 @@ def float64(name,  # type: str
         intermediate_objects.append(airecord)
 
     return intermediate_objects
-
-
-def format_init_val(val, prec):
-    # type: (Optional[int], int) -> Optional[str]
-    try:
-        return "{val:.{prec}f}".format(val=val, prec=prec)
-    except ValueError:
-        return val
 
 
 def truncate_desc(desc):
