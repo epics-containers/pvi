@@ -33,7 +33,7 @@ def float64(name,  # type: str
             "OUT": in_out_string,
             "DESC": truncated_desc,
             "EGU": egu,
-            "PREC": str(prec),
+            "PREC": prec,
             "VAL": initial_value
         }
 
@@ -50,7 +50,7 @@ def float64(name,  # type: str
             "INP": in_out_string,
             "DESC": truncated_desc,
             "EGU": egu,
-            "PREC": str(prec),
+            "PREC": prec,
             "SCAN": "I/O Intr"
         }
 
