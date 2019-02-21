@@ -6,6 +6,9 @@ if TYPE_CHECKING:
     from typing import List, Callable, Dict, Tuple
 
 
+# Taken from malcolm
+# file: yamlutil.py
+# class.method: Section.instantiate
 def lookup_component(component_type, filename, lineno):
     # type: (str, str, int) -> Callable[..., List[Any]]
 
