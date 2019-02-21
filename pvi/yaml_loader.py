@@ -13,6 +13,8 @@ def lookup_component(component_type, filename, lineno):
     # type: (str, str, int) -> Callable[..., List[Any]]
 
     pkg, ident = component_type.rsplit(".", 1)
+    # TODO: the hardcoded "pvi.modules." string below will eventually be a
+    #  variable and supplied by a Producer instance
     pkg = "pvi.modules.%s" % pkg
 
     try:
