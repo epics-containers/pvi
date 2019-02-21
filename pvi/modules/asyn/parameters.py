@@ -20,6 +20,10 @@ def float64(name,  # type: str
             ):
     # type: (...) -> List[Float64AsynParam, AIRecord, AORecord]
 
+    # TODO: demand and readback parameters should have type Enum
+    assert demand in ["Yes", "No", "AutoUpdate"]
+    assert readback in ["Yes", "No"]
+
     truncated_desc = truncate_desc(description)
 
     intermediate_objects = [Float64AsynParam(name, initial_value)]
