@@ -16,7 +16,7 @@ def float64(name,  # type: str
             group,  # type: str
             initial_value=None,  # type: int
             demand="AutoUpdate",  # type: str
-            readback="AutoUpdate"  # type: str
+            readback="No"  # type: str
             ):
     # type: (...) -> List[Float64AsynParam, AIRecord, AORecord]
 
