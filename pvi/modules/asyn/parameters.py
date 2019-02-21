@@ -22,8 +22,7 @@ def float64(name,  # type: str
 
     truncated_desc = truncate_desc(description)
 
-    intermediate_objects = list()
-    intermediate_objects.append(Float64AsynParam(name, initial_value))
+    intermediate_objects = [Float64AsynParam(name, initial_value)]
     in_out_string = "@asyn($(PORT),$(ADDR),$(TIMEOUT))" + name
 
     if demand != "No":
