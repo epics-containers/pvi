@@ -1,4 +1,4 @@
-from annotypes import Optional, TYPE_CHECKING
+from annotypes import TYPE_CHECKING
 
 from pvi.asynparam import Float64AsynParam
 from pvi.record import AIRecord, AORecord
@@ -14,7 +14,7 @@ def float64(name,  # type: str
             autosave_fields,  # type: str
             widget,  # type: str
             group,  # type: str
-            initial_value=None,  # type: Optional[int]
+            initial_value=None,  # type: int
             demand="AutoUpdate",  # type: str
             readback="AutoUpdate"  # type: str
             ):
