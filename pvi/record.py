@@ -4,8 +4,7 @@ class Record(object):
     create instances of this Record class, only of its subclasses
     """
 
-    def __init__(self, prefix, suffix, fields, infos):
-        self.prefix = prefix
+    def __init__(self, suffix, fields, infos):
         self.suffix = suffix
         self.fields = fields
         self.infos = infos
@@ -17,8 +16,8 @@ class Record(object):
 
 class AIRecord(Record):
 
-    def __init__(self, prefix, suffix, fields, infos):
-        super(AIRecord, self).__init__(prefix, suffix, fields, infos)
+    def __init__(self, suffix, fields, infos):
+        super(AIRecord, self).__init__(suffix, fields, infos)
 
     @property
     def rtyp(self):
@@ -27,8 +26,8 @@ class AIRecord(Record):
 
 class AORecord(Record):
 
-    def __init__(self, prefix, suffix, fields, infos):
-        super(AORecord, self).__init__(prefix, suffix, fields, infos)
+    def __init__(self, suffix, fields, infos):
+        super(AORecord, self).__init__(suffix, fields, infos)
 
     @property
     def rtyp(self):

@@ -24,7 +24,6 @@ def float64(name,  # type: str
 
     intermediate_objects = list()
     intermediate_objects.append(Float64AsynParam(name, initial_value))
-    record_prefix = "$(P)$(R)"
     in_out_string = "@asyn($(PORT),$(ADDR),$(TIMEOUT))" + name
 
     if demand != "No":
@@ -42,8 +41,7 @@ def float64(name,  # type: str
             "autosaveFields": autosave_fields
         }
 
-        aorecord = AORecord(record_prefix, name, aorecord_fields,
-                            aorecord_infos)
+        aorecord = AORecord(name, aorecord_fields, aorecord_infos)
         intermediate_objects.append(aorecord)
 
     if readback != "No":
@@ -58,8 +56,7 @@ def float64(name,  # type: str
 
         airecord_infos = {}
 
-        airecord = AIRecord(record_prefix, name + "_RBV", airecord_fields,
-                            airecord_infos)
+        airecord = AIRecord(name + "_RBV", airecord_fields, airecord_infos)
         intermediate_objects.append(airecord)
 
     return intermediate_objects
