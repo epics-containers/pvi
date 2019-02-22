@@ -6,7 +6,8 @@ from pvi.record import Record, AIRecord, AORecord
 class TestRecord(unittest.TestCase):
 
     def setUp(self):
-        self.record = Record("ThresholdEnergy", {"PINI": "YES"}, {"autosaveFields": "VAL"})
+        self.record = Record("ThresholdEnergy", {"PINI": "YES"},
+                             {"autosaveFields": "VAL"})
 
     def test_suffix_attribute(self):
         assert self.record.suffix == "ThresholdEnergy"
