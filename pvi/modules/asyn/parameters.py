@@ -1,4 +1,4 @@
-from annotypes import Optional, TYPE_CHECKING
+from annotypes import TYPE_CHECKING
 
 from pvi.asynparam import Float64AsynParam
 from pvi.record import AIRecord, AORecord
@@ -14,63 +14,54 @@ def float64(name,  # type: str
             autosave_fields,  # type: str
             widget,  # type: str
             group,  # type: str
-            initial_value=None,  # type: Optional[int]
+            initial_value=None,  # type: int
             demand="AutoUpdate",  # type: str
-            readback="AutoUpdate"  # type: str
+            readback="No"  # type: str
             ):
     # type: (...) -> List[Float64AsynParam, AIRecord, AORecord]
 
+    # TODO: demand and readback parameters should have type Enum
+    assert demand in ["Yes", "No", "AutoUpdate"]
+    assert readback in ["Yes", "No"]
+
     truncated_desc = truncate_desc(description)
 
-    intermediate_objects = list()
-    intermediate_objects.append(Float64AsynParam(name, initial_value))
-    record_prefix = "$(P)$(R)"
-    in_out_string = "@asyn($(PORT),$(ADDR),$(TIMEOUT))" + name
+    intermediate_objects = [Float64AsynParam(name, initial_value)]
 
     if demand != "No":
         aorecord_fields = {
             "PINI": "YES",
             "DTYP": "asynFloat64",
-            "OUT": in_out_string,
+            "OUT": name,
             "DESC": truncated_desc,
             "EGU": egu,
-            "PREC": str(prec),
-            "VAL": format_init_val(initial_value, prec)
+            "PREC": prec,
+            "VAL": initial_value
         }
 
         aorecord_infos = {
             "autosaveFields": autosave_fields
         }
 
-        aorecord = AORecord(record_prefix, name, aorecord_fields,
-                            aorecord_infos)
+        aorecord = AORecord(name, aorecord_fields, aorecord_infos)
         intermediate_objects.append(aorecord)
 
     if readback != "No":
         airecord_fields = {
             "DTYP": "asynFloat64",
-            "INP": in_out_string,
+            "INP": name,
             "DESC": truncated_desc,
             "EGU": egu,
-            "PREC": str(prec),
+            "PREC": prec,
             "SCAN": "I/O Intr"
         }
 
         airecord_infos = {}
 
-        airecord = AIRecord(record_prefix, name + "_RBV", airecord_fields,
-                            airecord_infos)
+        airecord = AIRecord(name + "_RBV", airecord_fields, airecord_infos)
         intermediate_objects.append(airecord)
 
     return intermediate_objects
-
-
-def format_init_val(val, prec):
-    # type: (Optional[int], int) -> Optional[str]
-    try:
-        return "{val:.{prec}f}".format(val=val, prec=prec)
-    except ValueError:
-        return val
 
 
 def truncate_desc(desc):
