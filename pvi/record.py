@@ -13,6 +13,10 @@ class Record(object):
     def rtyp(self):
         raise NotImplementedError(self)
 
+    @property
+    def inout_field(self):
+        raise NotImplementedError(self)
+
 
 class AIRecord(Record):
 
@@ -23,6 +27,10 @@ class AIRecord(Record):
     def rtyp(self):
         return "ai"
 
+    @property
+    def inout_field(self):
+        return "INP"
+
 
 class AORecord(Record):
 
@@ -32,3 +40,7 @@ class AORecord(Record):
     @property
     def rtyp(self):
         return "ao"
+
+    @property
+    def inout_field(self):
+        return "OUT"
