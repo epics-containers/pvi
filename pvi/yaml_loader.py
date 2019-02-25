@@ -1,6 +1,8 @@
 import importlib
-from annotypes import Any, TYPE_CHECKING
+from annotypes import Any, TYPE_CHECKING, Array
 from ruamel import yaml
+
+from pvi.intermediate import Intermediate
 
 if TYPE_CHECKING:
     from typing import List, Callable, Dict, Tuple
@@ -51,11 +53,11 @@ def get_component_yaml_info(yaml_path):
 
 
 def get_intermediate_objects(info):
-    # type: (List[Tuple[str, str, int, Dict]]) -> List[Any]
+    # type: (List[Tuple[str, str, int, Dict]]) -> Array[Intermediate]
     intermediate_objects = []
 
     for component_type, yaml_path, lineno, component_info in info:
         component = lookup_component(component_type, yaml_path, lineno)
         intermediate_objects += component(**component_info)
 
-    return intermediate_objects
+    return Array[Intermediate](intermediate_objects)
