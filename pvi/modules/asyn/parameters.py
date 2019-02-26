@@ -62,6 +62,7 @@ def float64(name,  # type: ASuffix
     assert demand in ["Yes", "No", "AutoUpdate"]
     assert readback in ["Yes", "No"]
 
+    inout_parameter = "@asyn($(PORT),$(ADDR),$(TIMEOUT))"
     truncated_desc = truncate_desc(description)
 
     intermediate_objects = [Float64AsynParam(name)]
@@ -91,7 +92,8 @@ def float64(name,  # type: ASuffix
             "autosaveFields": autosave_fields
         }
 
-        aorecord = AORecord(name, aorecord_fields, aorecord_infos)
+        aorecord = AORecord(name, inout_parameter, aorecord_fields,
+                            aorecord_infos)
         intermediate_objects.append(aorecord)
 
     if readback != "No":
@@ -106,7 +108,8 @@ def float64(name,  # type: ASuffix
 
         airecord_infos = {}
 
-        airecord = AIRecord(name + "_RBV", airecord_fields, airecord_infos)
+        airecord = AIRecord(name + "_RBV", inout_parameter, airecord_fields,
+                            airecord_infos)
         intermediate_objects.append(airecord)
 
     return AIntermediatesArray(intermediate_objects)
