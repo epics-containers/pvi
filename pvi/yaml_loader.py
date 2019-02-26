@@ -58,6 +58,6 @@ def get_intermediate_objects(info):
 
     for component_type, yaml_path, lineno, component_info in info:
         component = lookup_component(component_type, yaml_path, lineno)
-        intermediate_objects += component(**component_info)
+        intermediate_objects += component(**component_info).seq
 
     return Array[Intermediate](intermediate_objects)

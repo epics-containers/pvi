@@ -1,5 +1,6 @@
 import unittest
 from mock import Mock, patch
+from annotypes import Array
 
 from pvi.yaml_loader import lookup_component, get_component_yaml_info, \
     get_intermediate_objects
@@ -109,8 +110,8 @@ class TestGetIntermediateObjects(unittest.TestCase):
         )
 
         # mock_lookup should return a component, and that component should
-        # return a list of intermediate objects
-        mock_lookup.return_value.return_value = [Mock()]
+        # return an array of intermediate objects
+        mock_lookup.return_value.return_value = Array[Mock]([Mock()])
 
         components_and_info = [(component_type, filepath,
                                 component_type_lineno, component_params)]
