@@ -22,10 +22,6 @@ class AsynParam(Intermediate):
 
 class Float64AsynParam(AsynParam):
 
-    def __init__(self, name, initial_value):
-        # type: (ASuffix, AInitialValue) -> None
-        super(Float64AsynParam, self).__init__(name, initial_value)
-
     @property
     def asyntyp(self):
         return "asynParamFloat64"

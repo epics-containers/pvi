@@ -32,10 +32,6 @@ class Record(Intermediate):
 
 class AIRecord(Record):
 
-    def __init__(self, suffix, fields, infos):
-        # type: (ASuffix, AFields, AInfos) -> None
-        super(AIRecord, self).__init__(suffix, fields, infos)
-
     @property
     def rtyp(self):
         return "ai"
@@ -46,10 +42,6 @@ class AIRecord(Record):
 
 
 class AORecord(Record):
-
-    def __init__(self, suffix, fields, infos):
-        # type: (ASuffix, AFields, AInfos) -> None
-        super(AORecord, self).__init__(suffix, fields, infos)
 
     @property
     def rtyp(self):
