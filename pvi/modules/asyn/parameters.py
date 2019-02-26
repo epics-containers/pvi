@@ -67,15 +67,25 @@ def float64(name,  # type: ASuffix
     intermediate_objects = [Float64AsynParam(name)]
 
     if demand != "No":
-        aorecord_fields = {
-            "PINI": "YES",
-            "DTYP": "asynFloat64",
-            "OUT": name,
-            "DESC": truncated_desc,
-            "EGU": egu,
-            "PREC": prec,
-            "VAL": initial_value
-        }
+
+        if initial_value is None:
+            aorecord_fields = {
+                "DTYP": "asynFloat64",
+                "OUT": name,
+                "DESC": truncated_desc,
+                "EGU": egu,
+                "PREC": prec,
+            }
+        else:
+            aorecord_fields = {
+                "PINI": "YES",
+                "DTYP": "asynFloat64",
+                "OUT": name,
+                "DESC": truncated_desc,
+                "EGU": egu,
+                "PREC": prec,
+                "VAL": initial_value
+            }
 
         aorecord_infos = {
             "autosaveFields": autosave_fields
