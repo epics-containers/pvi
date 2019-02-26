@@ -79,10 +79,10 @@ class TestGetComponentYamlInfo(unittest.TestCase):
             readback="Yes"
         )
 
-        components_and_info = get_component_yaml_info(filepath)
-        returned_component_type = components_and_info[0].component_type
-        returned_component_type_lineno = components_and_info[0].lineno
-        returned_params = components_and_info[0].component_info
+        all_components_data = get_component_yaml_info(filepath)
+        returned_component_type = all_components_data[0].component_type
+        returned_component_type_lineno = all_components_data[0].lineno
+        returned_params = all_components_data[0].component_params
 
         assert returned_component_type == expected_component_type
         assert returned_component_type_lineno == expected_component_type_lineno
