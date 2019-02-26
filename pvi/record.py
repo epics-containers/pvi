@@ -2,10 +2,10 @@ from annotypes import Anno, Mapping
 
 from pvi.intermediate import Intermediate, ASuffix
 
-with Anno("The field names and values of an asyn parameter"):
+with Anno("The field names and values of a record"):
     AFields = Mapping[str, str]
 
-with Anno("The info names and values of an asyn parameter"):
+with Anno("The info names and values of a record"):
     AInfos = Mapping[str, str]
 
 
