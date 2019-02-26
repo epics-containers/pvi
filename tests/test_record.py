@@ -6,11 +6,16 @@ from pvi.record import Record, AIRecord, AORecord
 class TestRecord(unittest.TestCase):
 
     def setUp(self):
-        self.record = Record("ThresholdEnergy", {"PINI": "YES"},
-                             {"autosaveFields": "VAL"})
+        self.record = Record("ThresholdEnergy",
+                             "@asyn($(PORT),$(ADDR),$(TIMEOUT))",
+                             {"PINI": "YES"}, {"autosaveFields": "VAL"})
 
     def test_suffix_attribute(self):
         assert self.record.suffix == "ThresholdEnergy"
+
+    def test_inout_parameter_attribute(self):
+        assert self.record.inout_parameter == \
+               "@asyn($(PORT),$(ADDR),$(TIMEOUT))"
 
     def test_fields_attribute(self):
         assert self.record.fields == {"PINI": "YES"}
@@ -30,8 +35,9 @@ class TestRecord(unittest.TestCase):
 class TestAIRecord(unittest.TestCase):
 
     def setUp(self):
-        self.airecord = AIRecord("ThresholdEnergy_RBV", {"EGU": "keV"},
-                                 {"autosaveFields": "VAL"})
+        self.airecord = AIRecord("ThresholdEnergy_RBV",
+                                 "@asyn($(PORT),$(ADDR),$(TIMEOUT))",
+                                 {"EGU": "keV"}, {"autosaveFields": "VAL"})
 
     def test_rtyp_property(self):
         assert self.airecord.rtyp == "ai"
@@ -43,8 +49,9 @@ class TestAIRecord(unittest.TestCase):
 class TestAORecord(unittest.TestCase):
 
     def setUp(self):
-        self.aorecord = AORecord("ThresholdEnergy", {"PINI": "YES"},
-                                 {"autosaveFields": "VAL"})
+        self.aorecord = AORecord("ThresholdEnergy",
+                                 "@asyn($(PORT),$(ADDR),$(TIMEOUT))",
+                                 {"PINI": "YES"}, {"autosaveFields": "VAL"})
 
     def test_rtyp_property(self):
         assert self.aorecord.rtyp == "ao"

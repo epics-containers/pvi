@@ -1,19 +1,13 @@
-from annotypes import Anno
-
 from pvi.intermediate import Intermediate, ASuffix
-
-with Anno("The initial value (if any) of an asyn parameter"):
-    AInitialValue = int
 
 
 class AsynParam(Intermediate):
 
     """Abstract base class for all AsynParams"""
 
-    def __init__(self, name, initial_value):
-        # type: (ASuffix, AInitialValue) -> None
+    def __init__(self, name):
+        # type: (ASuffix) -> None
         self.name = name
-        self.initial_value = initial_value
 
     @property
     def asyntyp(self):
@@ -21,10 +15,6 @@ class AsynParam(Intermediate):
 
 
 class Float64AsynParam(AsynParam):
-
-    def __init__(self, name, initial_value):
-        # type: (ASuffix, AInitialValue) -> None
-        super(Float64AsynParam, self).__init__(name, initial_value)
 
     @property
     def asyntyp(self):

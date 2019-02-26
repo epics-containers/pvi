@@ -2,10 +2,13 @@ from annotypes import Anno, Mapping
 
 from pvi.intermediate import Intermediate, ASuffix
 
-with Anno("The field names and values of an asyn parameter"):
+with Anno("The in/out parameter of a record"):
+    AInOutParameter = str
+
+with Anno("The field names and values of a record"):
     AFields = Mapping[str, str]
 
-with Anno("The info names and values of an asyn parameter"):
+with Anno("The info names and values of a record"):
     AInfos = Mapping[str, str]
 
 
@@ -15,9 +18,10 @@ class Record(Intermediate):
     create instances of this Record class, only of its subclasses
     """
 
-    def __init__(self, suffix, fields, infos):
-        # type: (ASuffix, AFields, AInfos) -> None
+    def __init__(self, suffix, inout_parameter, fields, infos):
+        # type: (ASuffix, AInOutParameter, AFields, AInfos) -> None
         self.suffix = suffix
+        self.inout_parameter = inout_parameter
         self.fields = fields
         self.infos = infos
 
@@ -32,10 +36,6 @@ class Record(Intermediate):
 
 class AIRecord(Record):
 
-    def __init__(self, suffix, fields, infos):
-        # type: (ASuffix, AFields, AInfos) -> None
-        super(AIRecord, self).__init__(suffix, fields, infos)
-
     @property
     def rtyp(self):
         return "ai"
@@ -46,10 +46,6 @@ class AIRecord(Record):
 
 
 class AORecord(Record):
-
-    def __init__(self, suffix, fields, infos):
-        # type: (ASuffix, AFields, AInfos) -> None
-        super(AORecord, self).__init__(suffix, fields, infos)
 
     @property
     def rtyp(self):

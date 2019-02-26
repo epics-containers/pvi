@@ -1,8 +1,9 @@
 import unittest
 from mock import Mock, patch
+from annotypes import Array
 
 from pvi.yaml_loader import lookup_component, get_component_yaml_info, \
-    get_intermediate_objects
+    get_intermediate_objects, ComponentData
 
 yaml_text = """
 type: pvi.producers.MyProducer
@@ -78,10 +79,10 @@ class TestGetComponentYamlInfo(unittest.TestCase):
             readback="Yes"
         )
 
-        components_and_info = get_component_yaml_info(filepath)
-        returned_component_type = components_and_info[0][0]
-        returned_component_type_lineno = components_and_info[0][2]
-        returned_params = components_and_info[0][3]
+        all_components_data = get_component_yaml_info(filepath)
+        returned_component_type = all_components_data[0].component_type
+        returned_component_type_lineno = all_components_data[0].lineno
+        returned_params = all_components_data[0].component_params
 
         assert returned_component_type == expected_component_type
         assert returned_component_type_lineno == expected_component_type_lineno
@@ -109,13 +110,13 @@ class TestGetIntermediateObjects(unittest.TestCase):
         )
 
         # mock_lookup should return a component, and that component should
-        # return a list of intermediate objects
-        mock_lookup.return_value.return_value = [Mock()]
+        # return an array of intermediate objects
+        mock_lookup.return_value.return_value = Array[Mock]([Mock()])
 
-        components_and_info = [(component_type, filepath,
-                                component_type_lineno, component_params)]
+        component_data = ComponentData(component_type, filepath,
+                                       component_type_lineno, component_params)
 
-        get_intermediate_objects(components_and_info)
+        get_intermediate_objects([component_data])
 
         mock_component = mock_lookup.return_value
         mock_component.assert_called_once_with(name="SomeName",

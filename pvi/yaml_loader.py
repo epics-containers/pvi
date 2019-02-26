@@ -1,9 +1,15 @@
 import importlib
-from annotypes import Any, TYPE_CHECKING
+from collections import namedtuple
+from annotypes import Any, TYPE_CHECKING, Array
 from ruamel import yaml
 
+from pvi.intermediate import Intermediate
+
 if TYPE_CHECKING:
-    from typing import List, Callable, Dict, Tuple
+    from typing import List, Callable, Dict, NamedTuple
+
+ComponentData = namedtuple('ComponentData',
+                           'component_type yaml_path lineno component_params')
 
 
 # Taken from malcolm
@@ -32,30 +38,30 @@ def lookup_component(component_type, filename, lineno):
 
 
 def get_component_yaml_info(yaml_path):
-    # type: (str) -> List[Tuple[str, str, int, Dict]]
+    # type: (str) -> List[NamedTuple[str, str, int, Dict]]
     with open(yaml_path) as f:
         text = f.read()
 
     code = yaml.load(text, Loader=yaml.RoundTripLoader)
     components_section = code["components"]
-    components_and_info = []
+    all_components_data = []
 
-    for component_info in components_section:
-        pos_info = component_info.lc.key("type")
+    for component_params in components_section:
+        pos_info = component_params.lc.key("type")
         lineno = pos_info[0]
-        component_type = component_info.pop("type")
-        components_and_info.append((component_type, yaml_path, lineno,
-                                    component_info))
+        component_type = component_params.pop("type")
+        all_components_data.append(ComponentData(component_type, yaml_path,
+                                                 lineno, component_params))
 
-    return components_and_info
+    return all_components_data
 
 
-def get_intermediate_objects(info):
-    # type: (List[Tuple[str, str, int, Dict]]) -> List[Any]
+def get_intermediate_objects(data):
+    # type: (List[NamedTuple[str, str, int, Dict]]) -> Array[Intermediate]
     intermediate_objects = []
 
-    for component_type, yaml_path, lineno, component_info in info:
+    for component_type, yaml_path, lineno, component_params in data:
         component = lookup_component(component_type, yaml_path, lineno)
-        intermediate_objects += component(**component_info)
+        intermediate_objects += component(**component_params).seq
 
-    return intermediate_objects
+    return Array[Intermediate](intermediate_objects)
