@@ -1,7 +1,7 @@
 from annotypes import Anno, add_call_types, Array
 
 from pvi.intermediate import Intermediate, ASuffix
-from pvi.asynparam import Float64AsynParam, AInitialValue
+from pvi.asynparam import Float64AsynParam
 from pvi.record import AIRecord, AORecord
 
 with Anno("The description of an asyn parameter"):
@@ -26,6 +26,10 @@ with Anno("The widget associated with the parameter"):
 
 with Anno("The group in the GUI containing the widget"):
     AGroup = str
+
+
+with Anno("The initial value (if any) of an asyn parameter"):
+    AInitialValue = int
 
 
 with Anno("Is a demand record and widget required"):
@@ -60,7 +64,7 @@ def float64(name,  # type: ASuffix
 
     truncated_desc = truncate_desc(description)
 
-    intermediate_objects = [Float64AsynParam(name, initial_value)]
+    intermediate_objects = [Float64AsynParam(name)]
 
     if demand != "No":
         aorecord_fields = {
