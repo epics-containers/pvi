@@ -1,4 +1,5 @@
 import importlib
+import inspect
 from collections import namedtuple
 from annotypes import Any, TYPE_CHECKING, Array, NO_DEFAULT
 from ruamel import yaml
@@ -62,7 +63,16 @@ def get_intermediate_objects(data):
 
     for component_type, yaml_path, lineno, component_params in data:
         component = lookup_component(component_type, yaml_path, lineno)
-        intermediate_objects += component(**component_params).seq
+        try:
+            validated_params = validate(component, component_params)
+            intermediates = component(**validated_params)
+        except Exception as e:
+            sourcefile = inspect.getsourcefile(component)
+            sourcefile_lineno = inspect.getsourcelines(component)[1]
+            print("\n%s:%d:\n%s:%d:\n%s" % (
+                yaml_path, lineno, sourcefile, sourcefile_lineno, e))
+        else:
+            intermediate_objects += intermediates.seq
 
     return Array[Intermediate](intermediate_objects)
 

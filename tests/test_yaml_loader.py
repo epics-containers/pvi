@@ -91,12 +91,30 @@ class TestGetComponentYamlInfo(unittest.TestCase):
 
 class TestGetIntermediateObjects(unittest.TestCase):
 
+    @patch("pvi.yaml_loader.validate")
     @patch("pvi.yaml_loader.lookup_component")
-    def test_args_passed_to_component(self, mock_lookup):
+    def test_args_passed_to_component(self, mock_lookup, mock_validate):
         filepath = "/tmp/yamltest.yaml"
         component_type = "mymodule.components.MyComponent"
         component_type_lineno = 18
         component_params = dict(
+            name="SomeName",
+            description="Some description",
+            prec="3",
+            egu="keV",
+            autosave_fields="VAL",
+            widget="TextInput",
+            group="AncillaryInformation",
+            initial_value="10",
+            demand="Yes",
+            readback="Yes"
+        )
+
+        # mock_lookup should return a component, and that component should
+        # return an array of intermediate objects
+        mock_lookup.return_value.return_value = Array[Mock]([Mock()])
+
+        validated_params = dict(
             name="SomeName",
             description="Some description",
             prec=3,
@@ -109,9 +127,7 @@ class TestGetIntermediateObjects(unittest.TestCase):
             readback="Yes"
         )
 
-        # mock_lookup should return a component, and that component should
-        # return an array of intermediate objects
-        mock_lookup.return_value.return_value = Array[Mock]([Mock()])
+        mock_validate.return_value = validated_params
 
         component_data = ComponentData(component_type, filepath,
                                        component_type_lineno, component_params)
