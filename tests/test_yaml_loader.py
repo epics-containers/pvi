@@ -1,6 +1,6 @@
 import unittest
 from mock import Mock, patch
-from annotypes import Array
+from annotypes import Array, NO_DEFAULT
 
 from pvi.yaml_loader import lookup_component, get_component_yaml_info, \
     get_intermediate_objects, ComponentData, validate
@@ -160,3 +160,16 @@ class TestValidate(unittest.TestCase):
         validated_params = validate(mock_component, component_params)
 
         assert validated_params == expected_params
+
+    def test_missing_required_param(self):
+        component_params = dict()
+
+        mock_anno = Mock()
+        mock_anno.typ = int
+        mock_anno.default = NO_DEFAULT
+
+        mock_component = Mock()
+        mock_component.call_types = dict(my_param=mock_anno)
+
+        with self.assertRaises(AssertionError):
+            validate(mock_component, component_params)

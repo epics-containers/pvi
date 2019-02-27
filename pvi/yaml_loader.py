@@ -1,6 +1,6 @@
 import importlib
 from collections import namedtuple
-from annotypes import Any, TYPE_CHECKING, Array
+from annotypes import Any, TYPE_CHECKING, Array, NO_DEFAULT
 from ruamel import yaml
 
 from pvi.intermediate import Intermediate
@@ -69,6 +69,8 @@ def get_intermediate_objects(data):
 
 def validate(component, params):
     validated_params = dict()
+    required_params = [param for param in component.call_types
+                       if component.call_types[param].default == NO_DEFAULT]
 
     for name, anno_obj in component.call_types.items():
         if name in params:
@@ -78,5 +80,10 @@ def validate(component, params):
             elif anno_obj.typ in (int, float):
                 param_val = anno_obj.typ(param_val)
             validated_params[name] = param_val
+
+    missing_params = set(required_params) - set(validated_params)
+    assert not missing_params, \
+        "Requires parameters %s but only given %s" % (
+            list(required_params), list(validated_params))
 
     return validated_params
