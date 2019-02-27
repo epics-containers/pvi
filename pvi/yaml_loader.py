@@ -75,6 +75,8 @@ def validate(component, params):
             param_val = params[name]
             if anno_obj.typ == str:
                 param_val = str(param_val)  # TODO change for python 3
+            elif anno_obj.typ in (int, float):
+                param_val = anno_obj.typ(param_val)
             validated_params[name] = param_val
 
     return validated_params

@@ -146,3 +146,17 @@ class TestValidate(unittest.TestCase):
         validated_params = validate(mock_component, component_params)
 
         assert validated_params == expected_params
+
+    def test_int_validation(self):
+        component_params = dict(my_param="2")
+
+        mock_anno = Mock()
+        mock_anno.typ = int
+
+        mock_component = Mock()
+        mock_component.call_types = dict(my_param=mock_anno)
+
+        expected_params = dict(my_param=2)
+        validated_params = validate(mock_component, component_params)
+
+        assert validated_params == expected_params
