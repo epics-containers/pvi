@@ -78,6 +78,7 @@ def get_intermediate_objects(data):
 
 
 def validate(component, params):
+    # type: (Callable[..., Array[Intermediate]], Dict) -> Dict
     validated_params = dict()
     required_params = [param for param in component.call_types
                        if component.call_types[param].default == NO_DEFAULT]
