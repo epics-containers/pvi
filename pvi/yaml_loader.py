@@ -77,6 +77,10 @@ def get_intermediate_objects(data):
     return Array[Intermediate](intermediate_objects)
 
 
+# Taken from malcolm
+# branch: method-meta
+# file: models.py
+# class.method: MapMeta.validate
 def validate(component, params):
     # type: (Callable[..., Array[Intermediate]], Dict) -> Dict
     validated_params = dict()
