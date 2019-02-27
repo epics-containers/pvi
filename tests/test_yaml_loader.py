@@ -3,7 +3,7 @@ from mock import Mock, patch
 from annotypes import Array
 
 from pvi.yaml_loader import lookup_component, get_component_yaml_info, \
-    get_intermediate_objects, ComponentData
+    get_intermediate_objects, ComponentData, validate
 
 yaml_text = """
 type: pvi.producers.MyProducer
@@ -129,3 +129,20 @@ class TestGetIntermediateObjects(unittest.TestCase):
                                                initial_value=10,
                                                demand="Yes",
                                                readback="Yes")
+
+
+class TestValidate(unittest.TestCase):
+
+    def test_string_validation(self):
+        component_params = dict(my_param=1)
+
+        mock_anno = Mock()
+        mock_anno.typ = str
+
+        mock_component = Mock()
+        mock_component.call_types = dict(my_param=mock_anno)
+
+        expected_params = dict(my_param="1")
+        validated_params = validate(mock_component, component_params)
+
+        assert validated_params == expected_params

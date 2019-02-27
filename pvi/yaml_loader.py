@@ -65,3 +65,16 @@ def get_intermediate_objects(data):
         intermediate_objects += component(**component_params).seq
 
     return Array[Intermediate](intermediate_objects)
+
+
+def validate(component, params):
+    validated_params = dict()
+
+    for name, anno_obj in component.call_types.items():
+        if name in params:
+            param_val = params[name]
+            if anno_obj.typ == str:
+                param_val = str(param_val)  # TODO change for python 3
+            validated_params[name] = param_val
+
+    return validated_params
