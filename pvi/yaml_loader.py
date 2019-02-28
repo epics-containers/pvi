@@ -1,6 +1,7 @@
 import importlib
+import inspect
 from collections import namedtuple
-from annotypes import Any, TYPE_CHECKING, Array
+from annotypes import Any, TYPE_CHECKING, Array, NO_DEFAULT
 from ruamel import yaml
 
 from pvi.intermediate import Intermediate
@@ -62,6 +63,45 @@ def get_intermediate_objects(data):
 
     for component_type, yaml_path, lineno, component_params in data:
         component = lookup_component(component_type, yaml_path, lineno)
-        intermediate_objects += component(**component_params).seq
+        try:
+            validated_params = validate(component, component_params)
+            intermediates = component(**validated_params)
+        except Exception as e:
+            sourcefile = inspect.getsourcefile(component)
+            sourcefile_lineno = inspect.getsourcelines(component)[1]
+            print("\n%s:%d:\n%s:%d:\n%s" % (
+                yaml_path, lineno, sourcefile, sourcefile_lineno, e))
+        else:
+            intermediate_objects += intermediates.seq
 
     return Array[Intermediate](intermediate_objects)
+
+
+# Taken from malcolm
+# branch: method-meta
+# file: models.py
+# class.method: MapMeta.validate
+def validate(component, params):
+    # type: (Callable[..., Array[Intermediate]], Dict) -> Dict
+    validated_params = dict()
+    required_params = [param for param in component.call_types
+                       if component.call_types[param].default == NO_DEFAULT]
+
+    for name, anno_obj in component.call_types.items():
+        if name in params:
+            param_val = params[name]
+            if anno_obj.typ == str:
+                param_val = str(param_val)  # TODO change for python 3
+            elif anno_obj.typ in (int, float):
+                param_val = anno_obj.typ(param_val)
+            else:
+                raise TypeError("Unhandled type conversion: %s %s %r" % (
+                    name, param_val, anno_obj.typ))
+            validated_params[name] = param_val
+
+    missing_params = set(required_params) - set(validated_params)
+    assert not missing_params, \
+        "Requires parameters %s but only given %s" % (
+            list(required_params), list(validated_params))
+
+    return validated_params
