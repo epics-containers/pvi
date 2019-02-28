@@ -189,3 +189,15 @@ class TestValidate(unittest.TestCase):
 
         with self.assertRaises(AssertionError):
             validate(mock_component, component_params)
+
+    def test_unhandled_type_conversion(self):
+        component_params = dict(my_param="5j")
+
+        mock_anno = Mock()
+        mock_anno.typ = complex
+
+        mock_component = Mock()
+        mock_component.call_types = dict(my_param=mock_anno)
+
+        with self.assertRaises(TypeError):
+            validate(mock_component, component_params)

@@ -94,6 +94,9 @@ def validate(component, params):
                 param_val = str(param_val)  # TODO change for python 3
             elif anno_obj.typ in (int, float):
                 param_val = anno_obj.typ(param_val)
+            else:
+                raise TypeError("Unhandled type conversion: %s %s %r" % (
+                    name, param_val, anno_obj.typ))
             validated_params[name] = param_val
 
     missing_params = set(required_params) - set(validated_params)
