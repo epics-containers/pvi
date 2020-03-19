@@ -1,0 +1,14 @@
+
+components:
+  - type: AsynString
+    name: thing
+    desc: The thing
+    role: READ
+  - type: AsynFloat64
+    egu: mm
+    name: blah
+    desc: The blah
+  
+
+
+

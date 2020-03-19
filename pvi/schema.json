@@ -1,0 +1,129 @@
+{
+    "title": "Schema",
+    "type": "object",
+    "properties": {
+      "components": {
+        "title": "Components",
+        "type": "array",
+        "items": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AsynFloat64"
+            },
+            {
+              "$ref": "#/definitions/AsynString"
+            }
+          ]
+        }
+      }
+    },
+    "required": [
+      "components"
+    ],
+    "definitions": {
+      "AsynFloat64": {
+        "title": "AsynFloat64",
+        "type": "object",
+        "properties": {
+          "type": {
+            "title": "Type",
+            "const": "AsynFloat64",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "description": "Parameter, record and device field name",
+            "type": "string"
+          },
+          "desc": {
+            "title": "Desc",
+            "description": "Record and device field description",
+            "type": "string"
+          },
+          "role": {
+            "title": "Role",
+            "description": "The role of the created device field",
+            "default": "SETTING",
+            "enum": [
+              "READ",
+              "WRITE",
+              "SETTING",
+              "POSITIONER"
+            ]
+          },
+          "autosave": {
+            "title": "Autosave",
+            "description": "Record fields that should be autosaved",
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "prec": {
+            "title": "Prec",
+            "description": "Record precision",
+            "default": 3,
+            "type": "integer"
+          },
+          "egu": {
+            "title": "Egu",
+            "description": "Record engineering units",
+            "default": "",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "name",
+          "desc"
+        ]
+      },
+      "AsynString": {
+        "title": "AsynString",
+        "type": "object",
+        "properties": {
+          "type": {
+            "title": "Type",
+            "const": "AsynString",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "description": "Parameter, record and device field name",
+            "type": "string"
+          },
+          "desc": {
+            "title": "Desc",
+            "description": "Record and device field description",
+            "type": "string"
+          },
+          "role": {
+            "title": "Role",
+            "description": "The role of the created device field",
+            "default": "SETTING",
+            "enum": [
+              "READ",
+              "WRITE",
+              "SETTING",
+              "POSITIONER"
+            ]
+          },
+          "autosave": {
+            "title": "Autosave",
+            "description": "Record fields that should be autosaved",
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "type",
+          "name",
+          "desc"
+        ]
+      }
+    }
+  }

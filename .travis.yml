@@ -1,13 +1,20 @@
 language: python
 python:
-  - "2.7"
+  - "3.7"
+  - "3.8"
 
 install:
-  - pip install -r requirements.txt
-  - pip install coveralls coverage
+  - env
+  - pip install --upgrade pip pipenv wheel coveralls
+  # Skip lock as we have multiple versions of python
+  - pipenv install --skip-lock --dev
+  - ls -al ${VIRTUAL_ENV}/lib/python${TRAVIS_PYTHON_VERSION}/site-packages
+  - ls -al ${VIRTUAL_ENV}/bin
+  - python setup.py bdist_wheel
 
 script:
-  - python -m pytest tests
+  - pipenv run tests
+  - pipenv run docs
 
-after_success:
+after_script:
   - coveralls

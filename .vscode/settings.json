@@ -1,0 +1,8 @@
+{
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.linting.enabled": true,
+    "python.pythonPath": "/home/tom/.local/share/virtualenvs/pvi-YMoh_0sz/bin/python",
+    "restructuredtext.confPath": "${workspaceFolder}/docs",
+    "python.formatting.provider": "black"
+}
