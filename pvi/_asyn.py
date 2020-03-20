@@ -1,3 +1,4 @@
+from enum import Enum
 from typing import Dict, List, Tuple
 from dataclasses import dataclass
 
@@ -16,24 +17,34 @@ class RecordInfo:
     fields: Dict[str, str]  #: Fields passed straight through
 
 
+class ParameterRole(str, Enum):
+    READBACK = "READBACK"  #: Read record only
+    ACTION = "ACTION"  #: Write record only
+    SETTING1 = "SETTING1"  #: Write record that syncs with readback values
+    SETTING2 = "SETTING2"  #: Read and write records
+    ACTION_READBACK = "ACTION_READBACK"  #: Write record with readback for current value
+
+
 class AsynParameter(WithType):
     """Base class for all Asyn Parameters to inherit from"""
+
     name: str = Field(
-        ..., description="Name of the created Channel within the Device",
+        ..., description="Name of the Asyn Parameter in the C++ code",
     )
-    description: str = Field(..., description="Description of what this Channel is for")
-    role: ChannelRole = Field(
-        ChannelRole.SETTING, description=ChannelRole.__doc__,
+    description: str = Field(
+        ..., description="Description of what this Parameter is for"
+    )
+    role: ParameterRole = Field(
+        ParameterRole.SETTING2, description=ParameterRole.__doc__,
     )
     autosave: List[str] = Field(
         [], description="Record fields that should be autosaved"
     )
-    auto_update: bool = Field(
-        False,
-        description="If set then create a single record for both demand and readback",
+    record_suffix: str = Field(
+        None, "The record suffix, if not given then use the Parameter name"
     )
 
-    def record_info(self) -> Tuple[RecordInfo, Record]:
+    def record_info(self) -> Tuple[RecordInfo, RecordInfo]:
         """Return (InRecordInfo, OutRecordInfo)"""
         raise NotImplementedError(self)
 
