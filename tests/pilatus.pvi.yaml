@@ -1,5 +1,7 @@
+description: |
+  An EPICS areaDetector driver for the Pilatus pixel array detectors from Dectris.
 base: $(ADCORE)/ADSrc/ADDriver.pvi.yaml
-local: pilatus.local.yaml
+local: $(basename).local.yaml
 macros:
   - type: StringMacro
     name: P
@@ -41,6 +43,6 @@ components:
         initial: 10
         autosave:
           - VAL
-        role: SETTING2
+        role: Setting Pair
 
 

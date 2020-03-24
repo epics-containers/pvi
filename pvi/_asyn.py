@@ -4,8 +4,8 @@ from typing import Any, Dict, Iterator, List
 
 from pydantic import Field
 
-from ._types import Producer, Record, WithType
-from ._util import truncate_description
+from ._types import ChannelTree, Component, ComponentTree, Group, Producer, Record
+from ._util import truncate_description, walk
 
 VALUE_FIELD = Field(None, description="The initial value of the parameter")
 
@@ -20,14 +20,14 @@ class AsynParameterInfo:
 
 
 class ParameterRole(str, Enum):
-    READBACK = "READBACK"  #: Read record only
-    ACTION = "ACTION"  #: Write record only
-    SETTING1 = "SETTING1"  #: Write record that syncs with readback values
-    SETTING2 = "SETTING2"  #: Read and write records
-    ACTION_READBACK = "ACTION_READBACK"  #: Write record with readback for current value
+    SETTING = "Setting"  #: Write record that syncs with readback values
+    SETTING_PAIR = "Setting Pair"  #: Read and write records
+    ACTION = "Action"  #: Write record only
+    READBACK = "Readback"  #: Read record only
+    ACTION_READBACK = "Action + Readback"  #: Write record current value readback
 
     def needs_read_record(self):
-        return self not in [self.ACTION, self.SETTING1]
+        return self not in [self.ACTION, self.SETTING]
 
     def needs_write_record(self):
         return self != self.READBACK
@@ -46,7 +46,7 @@ class ScanRate(str, Enum):
     POINTONE = ".1 second"
 
 
-class AsynParameter(WithType):
+class AsynParameter(Component):
     """Base class for all Asyn Parameters to inherit from"""
 
     name: str = Field(
@@ -56,7 +56,7 @@ class AsynParameter(WithType):
         ..., description="Description of what this Parameter is for"
     )
     role: ParameterRole = Field(
-        ParameterRole.SETTING2, description=ParameterRole.__doc__,
+        ParameterRole.SETTING_PAIR, description=ParameterRole.__doc__,
     )
     autosave: List[str] = Field(
         [], description="Record fields that should be autosaved"
@@ -120,7 +120,7 @@ class AsynProducer(Producer):
     address: str = Field(..., description="The asyn address")
     timeout: str = Field(..., description="The timeout for the asyn port")
 
-    def _make_common_fields(
+    def _make_common_record_fields(
         self, component: AsynParameter, io_field: str
     ) -> Dict[str, str]:
         fields = dict(DESC=truncate_description(component.description))
@@ -130,52 +130,109 @@ class AsynProducer(Producer):
         )
         return fields
 
-    def produce_records(self, component: AsynParameter) -> Iterator[Record]:
-        if isinstance(component, AsynParameter):
-            info = component.asyn_parameter_info()
-            if component.role.needs_read_record():
-                if component.read_record_suffix:
-                    record_name = self.prefix + component.read_record_suffix
-                else:
-                    record_name = self.prefix + component.name + "_RBV"
-                fields = dict(
-                    SCAN=component.read_record_scan.value,
-                    **self._make_common_fields(component, "INP"),
-                    **info.read_record_fields,
-                )
-                yield Record(
-                    record_name=record_name,
-                    record_type=info.read_record_type,
-                    fields=fields,
-                    infos={},
-                )
-            if component.role.needs_write_record():
-                if component.write_record_suffix:
-                    record_name = self.prefix + component.write_record_suffix
-                else:
-                    record_name = self.prefix + component.name
-                if info.write_record_type == "waveform":
-                    io_field = "INP"
-                else:
-                    io_field = "OUT"
-                fields = dict(
-                    **self._make_common_fields(component, io_field),
-                    **info.write_record_fields,
-                )
-                if component.initial is not None:
-                    fields["PINI"] = "YES"
-                    fields["VAL"] = str(component.initial)
-                infos = {}
-                if component.autosave:
-                    infos["autosaveFields"] = " ".join(component.autosave)
-                if component.role == ParameterRole.SETTING1:
-                    infos["asyn:READBACK"] = "1"
-                yield Record(
-                    record_name=record_name,
-                    record_type=info.write_record_type,
-                    fields=fields,
-                    infos=infos,
-                )
+    def _make_read_record(self, component: AsynParameter) -> Record:
+        info = component.asyn_parameter_info()
+        if component.read_record_suffix:
+            record_name = self.prefix + component.read_record_suffix
+        else:
+            record_name = self.prefix + component.name + "_RBV"
+        fields = dict(
+            SCAN=component.read_record_scan.value,
+            **self._make_common_record_fields(component, "INP"),
+            **info.read_record_fields,
+        )
+        return Record(
+            record_name=record_name,
+            record_type=info.read_record_type,
+            fields=fields,
+            infos={},
+        )
 
-    def produce_src(self, components: List[AsynParameter]):
-        return super().produce_src(components)
+    def _make_write_record(self, component: AsynParameter) -> Record:
+        info = component.asyn_parameter_info()
+        if component.write_record_suffix:
+            record_name = self.prefix + component.write_record_suffix
+        else:
+            record_name = self.prefix + component.name
+        if info.write_record_type == "waveform":
+            io_field = "INP"
+        else:
+            io_field = "OUT"
+        fields = dict(
+            **self._make_common_record_fields(component, io_field),
+            **info.write_record_fields,
+        )
+        if component.initial is not None:
+            fields["PINI"] = "YES"
+            fields["VAL"] = str(component.initial)
+        infos = {}
+        if component.autosave:
+            infos["autosaveFields"] = " ".join(component.autosave)
+        if component.role == ParameterRole.SETTING:
+            infos["asyn:READBACK"] = "1"
+        return Record(
+            record_name=record_name,
+            record_type=info.write_record_type,
+            fields=fields,
+            infos=infos,
+        )
+
+    def produce_records(self, component: Component) -> Iterator[Record]:
+        if isinstance(component, AsynParameter):
+            if component.role.needs_read_record():
+                yield self._make_read_record(component)
+            if component.role.needs_write_record():
+                yield self._make_write_record(component)
+
+    def produce_channels(self, components: ComponentTree) -> ChannelTree:
+        channels: ChannelTree = {}
+        return channels
+
+    def produce_src(self, components: ComponentTree, basename: str):
+        parameter_strings = ""
+        parameter_members = ""
+        create_params = ""
+        for component in walk(components):
+            if isinstance(component, Group):
+                title = f"/* Group: {component.name} */\n"
+                parameter_strings += title
+                parameter_members += title
+                create_params += title
+            elif isinstance(component, AsynParameter):
+                parameter_strings += (
+                    f'#define {component.name}String "{component.name.upper()}"'
+                    f" /* {component.type} {component.role.value} */\n"
+                )
+                parameter_members += f"    int {component.name};\n"
+                param_type = component.asyn_parameter_info().asyn_param_type
+                create_params += (
+                    f"    parent->createParam({component.name}String, "
+                    f"{param_type}, &{component.name});"
+                )
+        h_txt = f"""\
+#ifndef {basename.upper()}_PARAMETERS_H
+#define {basename.upper()}_PARAMETERS_H
+
+/* Strings defining the parameter interface with the Database */
+{parameter_strings.rstrip()}
+
+/* Class definition */
+class {basename.title()}Parameters {{
+public:
+    {basename.title()}Parameters(asynPortDriver *parent);
+    /* Parameters */
+    {parameter_members.rstrip()}
+}}
+
+#endif //{basename.upper()}_PARAMETERS_H
+"""
+        cpp_txt = f"""\
+{basename.title()}Parameters::{basename.title()}Parameters(asynPortDriver *parent) {{
+    {create_params.rstrip()}
+}}
+"""
+        outputs = {
+            basename + "_parameters.h": h_txt,
+            basename + "_parameters.cpp": cpp_txt,
+        }
+        return outputs

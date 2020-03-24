@@ -202,13 +202,13 @@
         "role": {
           "title": "Role",
           "description": "An enumeration.",
-          "default": "SETTING2",
+          "default": "Setting Pair",
           "enum": [
-            "READBACK",
-            "ACTION",
-            "SETTING1",
-            "SETTING2",
-            "ACTION_READBACK"
+            "Setting",
+            "Setting Pair",
+            "Action",
+            "Readback",
+            "Action + Readback"
           ],
           "type": "string"
         },
@@ -295,13 +295,13 @@
         "role": {
           "title": "Role",
           "description": "An enumeration.",
-          "default": "SETTING2",
+          "default": "Setting Pair",
           "enum": [
-            "READBACK",
-            "ACTION",
-            "SETTING1",
-            "SETTING2",
-            "ACTION_READBACK"
+            "Setting",
+            "Setting Pair",
+            "Action",
+            "Readback",
+            "Action + Readback"
           ],
           "type": "string"
         },

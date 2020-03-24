@@ -31,6 +31,7 @@ class Schema(BaseModel):
     local: str = Field(
         None, description="YAML file that overrides this for local changes"
     )
+    description: str = Field(..., description="Description of what this Device does")
     macros: List[MacroUnion] = Field(
         [], description="Macros needed to make an instance of this"
     )

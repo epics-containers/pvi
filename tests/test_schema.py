@@ -48,3 +48,38 @@ def test_records(pilatus_schema: Schema):
         ),
         infos=dict(autosaveFields="VAL"),
     )
+
+
+H_EXPECTED = """\
+#ifndef PILATUS_PARAMETERS_H
+#define PILATUS_PARAMETERS_H
+
+/* Strings defining the parameter interface with the Database */
+/* Group: AncilliaryInformation */
+#define ThresholdEnergyString "THRESHOLDENERGY" /* AsynFloat64 Setting Pair */
+
+/* Class definition */
+class PilatusParameters {
+public:
+    PilatusParameters(asynPortDriver *parent);
+    /* Parameters */
+    /* Group: AncilliaryInformation */
+    int ThresholdEnergy;
+}
+
+#endif //PILATUS_PARAMETERS_H
+"""
+
+CPP_EXPECTED = """\
+PilatusParameters::PilatusParameters(asynPortDriver *parent) {
+    /* Group: AncilliaryInformation */
+    parent->createParam(ThresholdEnergyString, asynParamFloat64, &ThresholdEnergy);
+}
+"""
+
+
+def test_src(pilatus_schema: Schema):
+    src = pilatus_schema.producer.produce_src(pilatus_schema.components, "pilatus")
+    assert len(src) == 2
+    assert src["pilatus_parameters.h"] == H_EXPECTED
+    assert src["pilatus_parameters.cpp"] == CPP_EXPECTED

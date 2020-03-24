@@ -2,7 +2,7 @@
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import Dict, Iterator, List, Union
+from typing import Dict, ForwardRef, Iterator, List, Optional, Union
 
 from pydantic import BaseModel, Field
 
@@ -55,22 +55,21 @@ class Record:
 @dataclass
 class Channel:
     label: str  #: The GUI label for the Channel
-    read_pv: str = None  #: The pv to get from, None means not readable (an action)
-    write_pv: str = None  #: The pv to put to, None means not writeable (a readback)
+    read_pv: Optional[
+        str
+    ] = None  #: The pv to get from, None means not readable (an action)
+    write_pv: Optional[
+        str
+    ] = None  #: The pv to put to, None means not writeable (a readback)
     # The following are None to allow multiple references to channels
-    widget: Widget = None  #: Which widget to use for the Channel
-    description: str = None  #: Description of what the Channel does
-    display_form: DisplayForm = None  #: How should numeric values be displayed
+    widget: Optional[Widget] = None  #: Which widget to use for the Channel
+    description: Optional[str] = None  #: Description of what the Channel does
+    display_form: Optional[
+        DisplayForm
+    ] = None  #: How should numeric values be displayed
 
 
-ChannelTree = Dict[str, Union[Channel, "ChannelTree"]]
-
-
-@dataclass
-class Device:
-    description: str  #: Description of what the Device does
-    channels: ChannelTree  #: Child channels
-
+ChannelTree = Dict[str, Union[Channel, ForwardRef("ChannelTree")]]
 
 # These classes are to be inherited from
 
@@ -117,7 +116,7 @@ class Producer(WithType):
         """
         raise NotImplementedError(self)
 
-    def produce_src(self, components: ComponentTree) -> Dict[str, str]:
+    def produce_src(self, components: ComponentTree, basename: str) -> Dict[str, str]:
         """Produce any files that need to go in the src/ directory
 
         Args:
@@ -128,13 +127,13 @@ class Producer(WithType):
         """
         raise NotImplementedError(self)
 
-    def produce_device(self, components: ComponentTree) -> Device:
-        """Produce a device structure for making screens
+    def produce_channels(self, components: ComponentTree) -> ChannelTree:
+        """Produce a channel tree structure for making screens
 
         Args:
             components: Tree including base class Component instances
 
         Returns:
-            A Device Tree structure
+            A Channel Tree structure
         """
         raise NotImplementedError(self)

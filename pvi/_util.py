@@ -1,4 +1,6 @@
-from ._types import Component
+from typing import Iterator
+
+from ._types import Component, ComponentTree, Group
 
 
 def truncate_description(desc: str) -> str:
@@ -7,5 +9,9 @@ def truncate_description(desc: str) -> str:
     return first_line[:40]
 
 
-def walk(components: Component):
-    pass
+def walk(components: ComponentTree) -> Iterator[Component]:
+    """Depth first traversal of component tree"""
+    for component in components:
+        yield component
+        if isinstance(component, Group):
+            yield from walk(component.components)
