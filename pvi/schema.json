@@ -1,129 +1,396 @@
 {
-    "title": "Schema",
-    "type": "object",
-    "properties": {
-      "components": {
-        "title": "Components",
-        "type": "array",
-        "items": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/AsynFloat64"
-            },
-            {
-              "$ref": "#/definitions/AsynString"
-            }
-          ]
-        }
+  "title": "Schema",
+  "type": "object",
+  "properties": {
+    "base": {
+      "title": "Base",
+      "description": "YAML file to use as base class for this",
+      "type": "string"
+    },
+    "local": {
+      "title": "Local",
+      "description": "YAML file that overrides this for local changes",
+      "type": "string"
+    },
+    "macros": {
+      "title": "Macros",
+      "description": "Macros needed to make an instance of this",
+      "default": [],
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "$ref": "#/definitions/FloatMacro"
+          },
+          {
+            "$ref": "#/definitions/StringMacro"
+          }
+        ]
       }
     },
-    "required": [
-      "components"
-    ],
-    "definitions": {
-      "AsynFloat64": {
-        "title": "AsynFloat64",
-        "type": "object",
-        "properties": {
-          "type": {
-            "title": "Type",
-            "const": "AsynFloat64",
-            "type": "string"
+    "producer": {
+      "title": "Producer",
+      "description": "The Producer class to make Records and the Device",
+      "allOf": [
+        {
+          "$ref": "#/definitions/AsynProducer"
+        }
+      ]
+    },
+    "components": {
+      "title": "Components",
+      "description": "The Components to pass to the Producer",
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "$ref": "#/definitions/Group"
           },
-          "name": {
-            "title": "Name",
-            "description": "Parameter, record and device field name",
-            "type": "string"
+          {
+            "$ref": "#/definitions/AsynFloat64"
           },
-          "desc": {
-            "title": "Desc",
-            "description": "Record and device field description",
-            "type": "string"
-          },
-          "role": {
-            "title": "Role",
-            "description": "The role of the created device field",
-            "default": "SETTING",
-            "enum": [
-              "READ",
-              "WRITE",
-              "SETTING",
-              "POSITIONER"
-            ]
-          },
-          "autosave": {
-            "title": "Autosave",
-            "description": "Record fields that should be autosaved",
-            "default": [],
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "prec": {
-            "title": "Prec",
-            "description": "Record precision",
-            "default": 3,
-            "type": "integer"
-          },
-          "egu": {
-            "title": "Egu",
-            "description": "Record engineering units",
-            "default": "",
-            "type": "string"
+          {
+            "$ref": "#/definitions/AsynString"
           }
-        },
-        "required": [
-          "type",
-          "name",
-          "desc"
-        ]
-      },
-      "AsynString": {
-        "title": "AsynString",
-        "type": "object",
-        "properties": {
-          "type": {
-            "title": "Type",
-            "const": "AsynString",
-            "type": "string"
-          },
-          "name": {
-            "title": "Name",
-            "description": "Parameter, record and device field name",
-            "type": "string"
-          },
-          "desc": {
-            "title": "Desc",
-            "description": "Record and device field description",
-            "type": "string"
-          },
-          "role": {
-            "title": "Role",
-            "description": "The role of the created device field",
-            "default": "SETTING",
-            "enum": [
-              "READ",
-              "WRITE",
-              "SETTING",
-              "POSITIONER"
-            ]
-          },
-          "autosave": {
-            "title": "Autosave",
-            "description": "Record fields that should be autosaved",
-            "default": [],
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        },
-        "required": [
-          "type",
-          "name",
-          "desc"
         ]
       }
+    },
+    "startup_lines": {
+      "title": "Startup Lines",
+      "description": "Lines to insert into the startup script",
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "extra_db_files": {
+      "title": "Extra Db Files",
+      "description": "List of paths to extra db files to include",
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "producer",
+    "components"
+  ],
+  "definitions": {
+    "FloatMacro": {
+      "title": "FloatMacro",
+      "description": "BaseModel that adds a type parameter from class name.",
+      "type": "object",
+      "properties": {
+        "type": {
+          "title": "Type",
+          "const": "FloatMacro",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "description": "The name of the Macro that will be passed when instantiated",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "description": "Description of what the Macro will be used for",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "description": "The default value of the parameter, None means required",
+          "type": "number"
+        }
+      },
+      "required": [
+        "name",
+        "description"
+      ]
+    },
+    "StringMacro": {
+      "title": "StringMacro",
+      "description": "BaseModel that adds a type parameter from class name.",
+      "type": "object",
+      "properties": {
+        "type": {
+          "title": "Type",
+          "const": "StringMacro",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "description": "The name of the Macro that will be passed when instantiated",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "description": "Description of what the Macro will be used for",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "description": "The default value of the parameter, None means required",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "description"
+      ]
+    },
+    "AsynProducer": {
+      "title": "AsynProducer",
+      "description": "BaseModel that adds a type parameter from class name.",
+      "type": "object",
+      "properties": {
+        "type": {
+          "title": "Type",
+          "const": "AsynProducer",
+          "type": "string"
+        },
+        "prefix": {
+          "title": "Prefix",
+          "description": "The prefix for record names created by the template file",
+          "type": "string"
+        },
+        "asyn_port": {
+          "title": "Asyn Port",
+          "description": "The asyn port name",
+          "type": "string"
+        },
+        "address": {
+          "title": "Address",
+          "description": "The asyn address",
+          "type": "string"
+        },
+        "timeout": {
+          "title": "Timeout",
+          "description": "The timeout for the asyn port",
+          "type": "string"
+        }
+      },
+      "required": [
+        "prefix",
+        "asyn_port",
+        "address",
+        "timeout"
+      ]
+    },
+    "AsynFloat64": {
+      "title": "AsynFloat64",
+      "description": "Asyn Float64 Parameter and records",
+      "type": "object",
+      "properties": {
+        "type": {
+          "title": "Type",
+          "const": "AsynFloat64",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "description": "Name of the Asyn Parameter in the C++ code",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "description": "Description of what this Parameter is for",
+          "type": "string"
+        },
+        "role": {
+          "title": "Role",
+          "description": "An enumeration.",
+          "default": "SETTING2",
+          "enum": [
+            "READBACK",
+            "ACTION",
+            "SETTING1",
+            "SETTING2",
+            "ACTION_READBACK"
+          ],
+          "type": "string"
+        },
+        "autosave": {
+          "title": "Autosave",
+          "description": "Record fields that should be autosaved",
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "read_record_suffix": {
+          "title": "Read Record Suffix",
+          "description": "The read record suffix, if not given then use $(name)_RBV",
+          "type": "string"
+        },
+        "read_record_scan": {
+          "title": "Read Record Scan",
+          "description": "SCAN rate of the read record",
+          "default": "I/O Intr",
+          "enum": [
+            "Passive",
+            "Event",
+            "I/O Intr",
+            "10 second",
+            "5 second",
+            "2 second",
+            "1 second",
+            ".5 second",
+            ".2 second",
+            ".1 second"
+          ],
+          "type": "string"
+        },
+        "write_record_suffix": {
+          "title": "Write Record Suffix",
+          "description": "The write record suffix, if not given then use $(name)",
+          "type": "string"
+        },
+        "initial": {
+          "title": "Initial",
+          "description": "The initial value of the parameter",
+          "type": "number"
+        },
+        "precision": {
+          "title": "Precision",
+          "description": "Record precision",
+          "default": 3,
+          "type": "integer"
+        },
+        "units": {
+          "title": "Units",
+          "description": "Record engineering units",
+          "default": "",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "description"
+      ]
+    },
+    "AsynString": {
+      "title": "AsynString",
+      "description": "Asyn String Parameter and records",
+      "type": "object",
+      "properties": {
+        "type": {
+          "title": "Type",
+          "const": "AsynString",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "description": "Name of the Asyn Parameter in the C++ code",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "description": "Description of what this Parameter is for",
+          "type": "string"
+        },
+        "role": {
+          "title": "Role",
+          "description": "An enumeration.",
+          "default": "SETTING2",
+          "enum": [
+            "READBACK",
+            "ACTION",
+            "SETTING1",
+            "SETTING2",
+            "ACTION_READBACK"
+          ],
+          "type": "string"
+        },
+        "autosave": {
+          "title": "Autosave",
+          "description": "Record fields that should be autosaved",
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "read_record_suffix": {
+          "title": "Read Record Suffix",
+          "description": "The read record suffix, if not given then use $(name)_RBV",
+          "type": "string"
+        },
+        "read_record_scan": {
+          "title": "Read Record Scan",
+          "description": "SCAN rate of the read record",
+          "default": "I/O Intr",
+          "enum": [
+            "Passive",
+            "Event",
+            "I/O Intr",
+            "10 second",
+            "5 second",
+            "2 second",
+            "1 second",
+            ".5 second",
+            ".2 second",
+            ".1 second"
+          ],
+          "type": "string"
+        },
+        "write_record_suffix": {
+          "title": "Write Record Suffix",
+          "description": "The write record suffix, if not given then use $(name)",
+          "type": "string"
+        },
+        "initial": {
+          "title": "Initial",
+          "description": "The initial value of the parameter",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "description"
+      ]
+    },
+    "Group": {
+      "title": "Group",
+      "description": "Group that can contain multiple parameters or other Groups.",
+      "type": "object",
+      "properties": {
+        "type": {
+          "title": "Type",
+          "const": "Group",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "description": "Name of the Group that will form its label",
+          "type": "string"
+        },
+        "components": {
+          "title": "Components",
+          "description": "Child Parameters or Groups",
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/Group"
+              },
+              {
+                "$ref": "#/definitions/AsynFloat64"
+              },
+              {
+                "$ref": "#/definitions/AsynString"
+              }
+            ]
+          }
+        }
+      },
+      "required": [
+        "name",
+        "components"
+      ]
     }
   }
+}

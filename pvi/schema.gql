@@ -1,0 +1,10 @@
+# This goes in coniql
+
+enum ValueRole {
+    "Read-only readback"
+    RO
+    "Write-only action"
+    WO
+    "Readable and writeable setting"
+    RW
+}

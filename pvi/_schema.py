@@ -2,27 +2,28 @@ from typing import List, Union
 
 from pydantic import BaseModel, Field
 
-from ._types import WithType, Group
-from ._asyn import AsynFloat64, AsynString, AsynProducer, DLSAsynProducer
-from ._stream import StreamFloat64, StreamString
-from ._arguments import FloatArgument, StringArgument
+from ._asyn import AsynFloat64, AsynProducer, AsynString
+from ._macros import FloatMacro, StringMacro
+from ._types import Group as _Group
+
+# from ._stream import StreamFloat64, StreamString, StreamProducer
+# from ._formatters import APSFormatter, DLSFormatter
+
+MacroUnion = Union[FloatMacro, StringMacro]
+ProducerUnion = Union[AsynProducer]  # , StreamProducer]
+# FormatterUnion = Union[APSFormatter, DLSFormatter]
+ComponentUnion = Union["Group", AsynFloat64, AsynString]
 
 
-ArgumentUnion = Union[FloatArgument, StringArgument]
-ProducerUnion = Union[AsynProducer, DLSAsynProducer]
-ComponentUnion = Union[
-    "SchemaGroup", AsynFloat64, AsynString, StreamFloat64, StreamString
-]
+class Group(_Group):
+    """Group that can contain multiple parameters or other Groups."""
 
-
-# Can't do this in types as we don't know what Component types we can have
-class SchemaGroup(Group):
-    children: List[ComponentUnion] = Field(
+    components: List[ComponentUnion] = Field(
         ..., description="Child Parameters or Groups"
     )
 
 
-SchemaGroup.update_forward_refs()
+Group.update_forward_refs()
 
 
 class Schema(BaseModel):
@@ -30,19 +31,21 @@ class Schema(BaseModel):
     local: str = Field(
         None, description="YAML file that overrides this for local changes"
     )
-    arguments: List[Union[StringArgument, FloatArgument]] = Field(
-        [], description="Arguments needed to make an isntance of this"
+    macros: List[MacroUnion] = Field(
+        [], description="Macros needed to make an instance of this"
     )
     producer: ProducerUnion = Field(
-        ..., description="The Producer class to make templates, screens, etc."
+        ..., description="The Producer class to make Records and the Device"
     )
-    components: List[GroupOrParameter]
+    components: List[ComponentUnion] = Field(
+        ..., description="The Components to pass to the Producer"
+    )
+    startup_lines: List[str] = Field(
+        [], description="Lines to insert into the startup script"
+    )
+    extra_db_files: List[str] = Field(
+        [], description="List of paths to extra db files to include"
+    )
 
-    pv_prefix: str = Field(
-        ..., description="The PV Prefix for records created by the template file"
-    )
-    template_file: str = Field(
-        ..., description="Path to the template file that will be created"
-    )
-    includes: List[Union[DBInclude, YAMLInclude]]
-    startup_script: str
+
+Schema.update_forward_refs()

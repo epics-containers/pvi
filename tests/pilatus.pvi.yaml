@@ -1,0 +1,46 @@
+base: $(ADCORE)/ADSrc/ADDriver.pvi.yaml
+local: pilatus.local.yaml
+macros:
+  - type: StringMacro
+    name: P
+    description: Record prefix part 1
+  - type: StringMacro
+    name: M
+    description: Record prefix part 2
+  - type: StringMacro
+    name: PORT
+    description: Asyn port name
+  - type: FloatMacro
+    name: TIMEOUT
+    description: The timeout for records talking to the driver
+    value: 1
+  - type: FloatMacro
+    name: ADDR
+    description: The address for the asyn port
+    value: 0
+producer:
+  type: AsynProducer
+  prefix: $(P)$(M)
+  asyn_port: $(PORT)
+  address: $(ADDR)
+  timeout: $(TIMEOUT)
+components:
+  - type: Group
+    name: AncilliaryInformation
+    components:
+      - type: AsynFloat64
+        name: ThresholdEnergy
+        description: |
+          Threshold energy in keV
+
+          camserver uses this value to set the discriminators in each pixel.
+          It is typically set to the incident x-ray energy ($(P)$(R)Energy),
+          but sometimes other values may be preferable.
+        precision: 3
+        units: keV
+        initial: 10
+        autosave:
+          - VAL
+        role: SETTING2
+
+

@@ -1,22 +1,12 @@
 """The types that should be inherited from or produced by Fields."""
 
+from dataclasses import dataclass
 from enum import Enum
 from typing import Dict, Iterator, List, Union
 
 from pydantic import BaseModel, Field
-from dataclasses import dataclass
-
 
 # These must match the types defined in coniql schema
-
-
-class ValueAccess(Enum):
-    """Does Channel value describe a readback, action or setting."""
-
-    NONE = "Action with no value"
-    RO = "Read-only readback value"
-    WO = "Write-only action with a value"
-    RW = "Readable and writeable setting"
 
 
 class DisplayForm(Enum):
@@ -25,10 +15,10 @@ class DisplayForm(Enum):
     DEFAULT = "Use the default representation from value"
     STRING = "Force string representation, most useful for array of bytes"
     BINARY = "Binary, precision determines number of binary digits"
-    DECIMAL = "Decimal, precision determines number of digits after " "decimal point"
+    DECIMAL = "Decimal, precision determines number of digits after decimal point"
     HEX = "Hexadecimal, precision determines number of hex digits"
     EXPONENTIAL = (
-        "Exponential, precision determines number of digits after " "decimal point"
+        "Exponential, precision determines number of digits after decimal point"
     )
     ENGINEERING = (
         "Exponential where exponent is multiple of 3, "
@@ -36,41 +26,53 @@ class DisplayForm(Enum):
     )
 
 
+class Widget(Enum):
+    """Default widget that should be used to display this channel"""
+
+    TEXTINPUT = "Editable text input box"
+    TEXTUPDATE = "Read only text update"
+    MULTILINETEXTUPDATE = "Multi line read only text update"
+    LED = "On/Off LED indicator"
+    COMBO = "Select from a number of values"
+    CHECKBOX = "A box that can be checked or not"
+    TABLE = "Tabular view of array data"
+    PLOT = "Graph view of array data"
+    METER = "Progress meter"
+    BUTTON = "Action button for no value puts"
+
+
 # These classes allow us to generate Records, Devices and Channels in intermediate files
 
 
 @dataclass
 class Record:
+    record_name: str  #: The name of the record e.g. $(P)$(M)Status
     record_type: str  #: The record type string e.g. ao, stringin
-    suffix: str  #: Record name is Producer prefix plus this suffix
     fields: Dict[str, str]  #: The record fields
     infos: Dict[str, str]  #: Any infos to be added to the record
 
 
 @dataclass
 class Channel:
-    pv: str  #: The pv (with unexpanded macros in it)
     label: str  #: The GUI label for the Channel
+    read_pv: str = None  #: The pv to get from, None means not readable (an action)
+    write_pv: str = None  #: The pv to put to, None means not writeable (a readback)
     # The following are None to allow multiple references to channels
-    # TODO: need Reference component
+    widget: Widget = None  #: Which widget to use for the Channel
     description: str = None  #: Description of what the Channel does
-    value_access: ValueAccess = None  #: What can you do with the value of the Channel
     display_form: DisplayForm = None  #: How should numeric values be displayed
 
 
-ChannelUnion = Union[Channel, "ChannelGroup"]
-
-
-@dataclass
-class ChannelGroup:
-    label: str  #: The GUI label for the Group
-    channels = Dict[str, ChannelUnion]  #: Child channels
+ChannelTree = Dict[str, Union[Channel, "ChannelTree"]]
 
 
 @dataclass
 class Device:
     description: str  #: Description of what the Device does
-    channels = Dict[str, ChannelUnion]  #: Child channels
+    channels: ChannelTree  #: Child channels
+
+
+# These classes are to be inherited from
 
 
 class WithTypeMetaClass(type(BaseModel)):
@@ -84,12 +86,6 @@ class WithType(BaseModel, metaclass=WithTypeMetaClass):
     """BaseModel that adds a type parameter from class name."""
 
     type: str
-
-
-class Macro(WithType):
-    """Define a Macro that will be passed when making an instance."""
-
-    name: str
 
 
 class Component(WithType):
@@ -106,16 +102,39 @@ class Group(Component):
     components: List[Component] = Field(..., description="Child Parameters or Groups")
 
 
+ComponentTree = List[Union[Group, Component]]
+
+
 class Producer(WithType):
-    def produce_template(
-        self, components: List[Component], macros: List[Macro]
-    ) -> List[Record]:
-        """Produce a database template, components does not include base class
-        instances."""
+    def produce_records(self, component: Component) -> Iterator[Record]:
+        """Called repeatedly to produce records for database template
+
+        Args:
+            component: A non-group component defined in this YAML file
+
+        Returns:
+            Records that should be passed to the Formatter
+        """
         raise NotImplementedError(self)
 
-    def produce_device(
-        self, components: List[Component], macros: List[Macro]
-    ) -> Device:
-        """Produce a device structure, components includes base class
-        instances."""
+    def produce_src(self, components: ComponentTree) -> Dict[str, str]:
+        """Produce any files that need to go in the src/ directory
+
+        Args:
+            components: Tree without base class Component instances
+
+        Returns:
+            {filename: contents} for source files that should be created
+        """
+        raise NotImplementedError(self)
+
+    def produce_device(self, components: ComponentTree) -> Device:
+        """Produce a device structure for making screens
+
+        Args:
+            components: Tree including base class Component instances
+
+        Returns:
+            A Device Tree structure
+        """
+        raise NotImplementedError(self)
