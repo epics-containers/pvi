@@ -4,15 +4,17 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-mock = "*"
 pytest-cov = "*"
+pytest-mypy = "*"
 pytest-flake8 = "*"
 pytest-black = "*"
 flake8-isort = "*"
-sphinx_rtd_theme = "*"
-doc8 = "*"
+sphinx-rtd-theme = "*"
+pytest-asyncio = "*"
+# VSCode needs these
+rope = "*"
 black = "*"
-rstcheck = "*"
+mypy = "*"
 
 [packages]
 pydantic = "*"

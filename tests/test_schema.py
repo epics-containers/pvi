@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import cast
 
 import pytest
 from ruamel.yaml import YAML
@@ -17,8 +18,8 @@ def pilatus_schema():
 
 def test_records(pilatus_schema: Schema):
     # Create records from the contents
-    group: Group = pilatus_schema.components[0]
-    energy: AsynFloat64 = group.components[0]
+    group = cast(Group, pilatus_schema.components[0])
+    energy = cast(AsynFloat64, group.children[0])
     records = list(pilatus_schema.producer.produce_records(energy))
     assert len(records) == 2
     assert records[0] == Record(

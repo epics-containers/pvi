@@ -12,6 +12,11 @@
       "description": "YAML file that overrides this for local changes",
       "type": "string"
     },
+    "description": {
+      "title": "Description",
+      "description": "Description of what this Device does",
+      "type": "string"
+    },
     "macros": {
       "title": "Macros",
       "description": "Macros needed to make an instance of this",
@@ -75,6 +80,7 @@
     }
   },
   "required": [
+    "description",
     "producer",
     "components"
   ],
@@ -368,8 +374,8 @@
           "description": "Name of the Group that will form its label",
           "type": "string"
         },
-        "components": {
-          "title": "Components",
+        "children": {
+          "title": "Children",
           "description": "Child Parameters or Groups",
           "type": "array",
           "items": {
@@ -389,7 +395,7 @@
       },
       "required": [
         "name",
-        "components"
+        "children"
       ]
     }
   }

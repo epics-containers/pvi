@@ -2,13 +2,45 @@
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import Dict, ForwardRef, Iterator, List, Optional, Union
+from typing import Dict, Generic, Iterator, Optional, Sequence, TypeVar, Union
 
 from pydantic import BaseModel, Field
 
+
+class WithTypeMetaClass(type(BaseModel)):  # type: ignore
+    def __new__(mcs, name, bases, namespace, **kwargs):
+        # Override type in namespace to be the literal value of the class name
+        namespace["type"] = Field(name, const=True)
+        return super().__new__(mcs, name, bases, namespace, **kwargs)
+
+
+class WithType(BaseModel, metaclass=WithTypeMetaClass):
+    """BaseModel that adds a type parameter from class name."""
+
+    type: str
+
+
+class Component(WithType):
+    """Something that can appear in the tree of components to make up the
+    device."""
+
+    name: str
+
+
+T = TypeVar("T")
+
+
+class Group(Component, Generic[T]):
+    """Group that can contain multiple parameters or other Groups."""
+
+    name: str = Field(..., description="Name of the Group that will form its label")
+    children: Sequence[Union["Group", T]]
+
+
+ComponentTree = Sequence[Union[Component, Group[Component]]]
+
+
 # These must match the types defined in coniql schema
-
-
 class DisplayForm(Enum):
     """Instructions for how a number should be formatted for display."""
 
@@ -42,8 +74,6 @@ class Widget(Enum):
 
 
 # These classes allow us to generate Records, Devices and Channels in intermediate files
-
-
 @dataclass
 class Record:
     record_name: str  #: The name of the record e.g. $(P)$(M)Status
@@ -69,39 +99,7 @@ class Channel:
     ] = None  #: How should numeric values be displayed
 
 
-ChannelTree = Dict[str, Union[Channel, ForwardRef("ChannelTree")]]
-
-# These classes are to be inherited from
-
-
-class WithTypeMetaClass(type(BaseModel)):
-    def __new__(mcs, name, bases, namespace, **kwargs):
-        # Override type in namespace to be the literal value of the class name
-        namespace["type"] = Field(name, const=True)
-        return super().__new__(mcs, name, bases, namespace, **kwargs)
-
-
-class WithType(BaseModel, metaclass=WithTypeMetaClass):
-    """BaseModel that adds a type parameter from class name."""
-
-    type: str
-
-
-class Component(WithType):
-    """Something that can appear in the tree of components to make up the
-    device."""
-
-    name: str
-
-
-class Group(Component):
-    """Group that can contain multiple parameters or other Groups."""
-
-    name: str = Field(..., description="Name of the Group that will form its label")
-    components: List[Component] = Field(..., description="Child Parameters or Groups")
-
-
-ComponentTree = List[Union[Group, Component]]
+ChannelTree = Sequence[Union[Channel, Group[Channel]]]
 
 
 class Producer(WithType):

@@ -14,4 +14,4 @@ def walk(components: ComponentTree) -> Iterator[Component]:
     for component in components:
         yield component
         if isinstance(component, Group):
-            yield from walk(component.components)
+            yield from walk(component.children)

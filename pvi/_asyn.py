@@ -185,7 +185,7 @@ class AsynProducer(Producer):
                 yield self._make_write_record(component)
 
     def produce_channels(self, components: ComponentTree) -> ChannelTree:
-        channels: ChannelTree = {}
+        channels: ChannelTree = []
         return channels
 
     def produce_src(self, components: ComponentTree, basename: str):

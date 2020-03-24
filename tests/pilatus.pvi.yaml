@@ -29,7 +29,7 @@ producer:
 components:
   - type: Group
     name: AncilliaryInformation
-    components:
+    children:
       - type: AsynFloat64
         name: ThresholdEnergy
         description: |
