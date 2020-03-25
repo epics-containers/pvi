@@ -1,11 +1,21 @@
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any, Dict, Iterator, List
+from typing import Any, Dict, List, Union, cast
 
 from pydantic import Field
 
-from ._types import ChannelTree, Component, ComponentTree, Group, Producer, Record
-from ._util import truncate_description, walk
+from pvi._types import Channel, DisplayForm, Widget
+
+from ._types import (
+    ChannelTree,
+    Component,
+    ComponentTree,
+    Group,
+    Producer,
+    Record,
+    RecordTree,
+)
+from ._util import camel_to_title, truncate_description, walk
 
 VALUE_FIELD = Field(None, description="The initial value of the parameter")
 
@@ -19,7 +29,7 @@ class AsynParameterInfo:
     write_record_fields: Dict[str, str]  #: Fields to add to the write record
 
 
-class ParameterRole(str, Enum):
+class ParameterRole(Enum):
     SETTING = "Setting"  #: Write record that syncs with readback values
     SETTING_PAIR = "Setting Pair"  #: Read and write records
     ACTION = "Action"  #: Write record only
@@ -33,7 +43,7 @@ class ParameterRole(str, Enum):
         return self != self.READBACK
 
 
-class ScanRate(str, Enum):
+class ScanRate(Enum):
     PASSIVE = "Passive"
     EVENT = "Event"
     IOINTR = "I/O Intr"
@@ -70,6 +80,18 @@ class AsynParameter(Component):
     write_record_suffix: str = Field(
         None, description="The write record suffix, if not given then use $(name)"
     )
+    read_widget: Widget = Field(
+        Widget.TEXTUPDATE,
+        description="Override the widget to use for read-only channels",
+    )
+    write_widget: Widget = Field(
+        Widget.TEXTINPUT,
+        description="Override the widget to use for writeable channels",
+    )
+    display_form: DisplayForm = Field(
+        None, description="Display form for numeric fields"
+    )
+
     initial: Any = None
 
     def asyn_parameter_info(self) -> AsynParameterInfo:
@@ -130,30 +152,34 @@ class AsynProducer(Producer):
         )
         return fields
 
+    def _read_record_name(self, component: AsynParameter) -> str:
+        if component.read_record_suffix:
+            return self.prefix + component.read_record_suffix
+        else:
+            return self.prefix + component.name + "_RBV"
+
     def _make_read_record(self, component: AsynParameter) -> Record:
         info = component.asyn_parameter_info()
-        if component.read_record_suffix:
-            record_name = self.prefix + component.read_record_suffix
-        else:
-            record_name = self.prefix + component.name + "_RBV"
         fields = dict(
             SCAN=component.read_record_scan.value,
             **self._make_common_record_fields(component, "INP"),
             **info.read_record_fields,
         )
         return Record(
-            record_name=record_name,
+            record_name=self._read_record_name(component),
             record_type=info.read_record_type,
             fields=fields,
             infos={},
         )
 
+    def _write_record_name(self, component: AsynParameter) -> str:
+        if component.write_record_suffix:
+            return self.prefix + component.write_record_suffix
+        else:
+            return self.prefix + component.name
+
     def _make_write_record(self, component: AsynParameter) -> Record:
         info = component.asyn_parameter_info()
-        if component.write_record_suffix:
-            record_name = self.prefix + component.write_record_suffix
-        else:
-            record_name = self.prefix + component.name
         if info.write_record_type == "waveform":
             io_field = "INP"
         else:
@@ -171,22 +197,71 @@ class AsynProducer(Producer):
         if component.role == ParameterRole.SETTING:
             infos["asyn:READBACK"] = "1"
         return Record(
-            record_name=record_name,
+            record_name=self._write_record_name(component),
             record_type=info.write_record_type,
             fields=fields,
             infos=infos,
         )
 
-    def produce_records(self, component: Component) -> Iterator[Record]:
-        if isinstance(component, AsynParameter):
-            if component.role.needs_read_record():
-                yield self._make_read_record(component)
-            if component.role.needs_write_record():
-                yield self._make_write_record(component)
+    def produce_records(self, components: ComponentTree) -> RecordTree:
+        records: List[Union[Record, Group]] = []
+        for component in components:
+            if isinstance(component, Group):
+                group: Group[Record] = Group(
+                    name=component.name,
+                    children=self.produce_records(component.children),
+                )
+                records.append(group)
+            elif isinstance(component, AsynParameter):
+                if component.role.needs_read_record():
+                    records.append(self._make_read_record(component))
+                if component.role.needs_write_record():
+                    records.append(self._make_write_record(component))
+        return records
 
     def produce_channels(self, components: ComponentTree) -> ChannelTree:
-        channels: ChannelTree = []
-        return channels
+        channels: List[Union[Channel, Group]] = []
+        for component in components:
+            if isinstance(component, Group):
+                group: Group[Channel] = Group(
+                    name=component.name,
+                    children=self.produce_channels(component.children),
+                )
+                channels.append(group)
+            elif isinstance(component, AsynParameter):
+                # Make the primary channel
+                channel = Channel(
+                    name=component.name,
+                    label=camel_to_title(component.name),
+                    description=component.description,
+                    display_form=component.display_form,
+                )
+                # Add read pv
+                if component.role == ParameterRole.ACTION_READBACK:
+                    # readback is a separate channel
+                    read_name = component.name + "Readback"
+                    read_channel = Channel(
+                        name=read_name,
+                        label=camel_to_title(read_name),
+                        description=component.description,
+                        display_form=component.display_form,
+                        read_pv=self._read_record_name(component),
+                    )
+                    channels.append(read_channel)
+                elif component.role == ParameterRole.SETTING:
+                    # write record is also a read record
+                    channel.read_pv = channel.write_pv
+                elif component.role.needs_read_record():
+                    channel.read_pv = self._read_record_name(component)
+                    channel.widget = component.read_widget
+                # Add write pv
+                if component.role.needs_write_record():
+                    channel.write_pv = self._write_record_name(component)
+                    # Write widget trumps read widget
+                    channel.widget = component.write_widget
+                channels.append(channel)
+
+        return cast(ChannelTree, channels)
 
     def produce_src(self, components: ComponentTree, basename: str):
         parameter_strings = ""

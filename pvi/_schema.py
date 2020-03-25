@@ -4,6 +4,7 @@ from pydantic import BaseModel, Field
 
 from ._asyn import AsynFloat64, AsynProducer, AsynString
 from ._macros import FloatMacro, StringMacro
+from ._types import Component
 from ._types import Group as _Group
 
 # from ._stream import StreamFloat64, StreamString, StreamProducer
@@ -15,7 +16,7 @@ ProducerUnion = Union[AsynProducer]  # , StreamProducer]
 ComponentUnion = Union["Group", AsynFloat64, AsynString]
 
 
-class Group(_Group):
+class Group(_Group[Component]):
     """Group that can contain multiple parameters or other Groups."""
 
     children: List[ComponentUnion] = Field(

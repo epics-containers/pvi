@@ -1,3 +1,4 @@
+import re
 from typing import Iterator
 
 from ._types import Component, ComponentTree, Group
@@ -15,3 +16,16 @@ def walk(components: ComponentTree) -> Iterator[Component]:
         yield component
         if isinstance(component, Group):
             yield from walk(component.children)
+
+
+def camel_to_title(name):
+    """Takes a CamelCaseFieldName and returns an Title Case Field Name
+    Args:
+        name (str): E.g. CamelCaseFieldName
+    Returns:
+        str: Title Case converted name. E.g. Camel Case Field Name
+    """
+    split = re.findall(r"[A-Z]?[a-z0-9]+|[A-Z]+(?=[A-Z0-9]|$)", name)
+    ret = " ".join(split)
+    ret = ret[0].upper() + ret[1:]
+    return ret

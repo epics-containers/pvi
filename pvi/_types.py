@@ -2,7 +2,7 @@
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import Dict, Generic, Iterator, Optional, Sequence, TypeVar, Union
+from typing import Dict, Generic, Optional, Sequence, TypeVar, Union
 
 from pydantic import BaseModel, Field
 
@@ -82,8 +82,12 @@ class Record:
     infos: Dict[str, str]  #: Any infos to be added to the record
 
 
+RecordTree = Sequence[Union[Record, Group[Record]]]
+
+
 @dataclass
 class Channel:
+    name: str  #: The name of the Channel within the Device
     label: str  #: The GUI label for the Channel
     read_pv: Optional[
         str
@@ -103,11 +107,11 @@ ChannelTree = Sequence[Union[Channel, Group[Channel]]]
 
 
 class Producer(WithType):
-    def produce_records(self, component: Component) -> Iterator[Record]:
-        """Called repeatedly to produce records for database template
+    def produce_records(self, components: ComponentTree) -> RecordTree:
+        """Produce a Record tree structure for database template
 
         Args:
-            component: A non-group component defined in this YAML file
+            components: Tree without base class Component instances
 
         Returns:
             Records that should be passed to the Formatter
