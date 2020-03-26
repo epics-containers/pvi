@@ -7,6 +7,8 @@ from pydantic import Field
 from pvi._types import Channel, DisplayForm, Widget
 
 from ._types import (
+    AsynParameter,
+    AsynParameterTree,
     ChannelTree,
     Component,
     ComponentTree,
@@ -15,7 +17,7 @@ from ._types import (
     Record,
     RecordTree,
 )
-from ._util import camel_to_title, truncate_description, walk
+from ._util import camel_to_title, truncate_description
 
 VALUE_FIELD = Field(None, description="The initial value of the parameter")
 
@@ -29,7 +31,7 @@ class AsynParameterInfo:
     write_record_fields: Dict[str, str]  #: Fields to add to the write record
 
 
-class ParameterRole(Enum):
+class ParameterRole(str, Enum):
     SETTING = "Setting"  #: Write record that syncs with readback values
     SETTING_PAIR = "Setting Pair"  #: Read and write records
     ACTION = "Action"  #: Write record only
@@ -43,7 +45,7 @@ class ParameterRole(Enum):
         return self != self.READBACK
 
 
-class ScanRate(Enum):
+class ScanRate(str, Enum):
     PASSIVE = "Passive"
     EVENT = "Event"
     IOINTR = "I/O Intr"
@@ -56,7 +58,7 @@ class ScanRate(Enum):
     POINTONE = ".1 second"
 
 
-class AsynParameter(Component):
+class AsynParameterComponent(Component):
     """Base class for all Asyn Parameters to inherit from"""
 
     name: str = Field(
@@ -89,7 +91,7 @@ class AsynParameter(Component):
         description="Override the widget to use for writeable channels",
     )
     display_form: DisplayForm = Field(
-        None, description="Display form for numeric fields"
+        None, description="Display form for numeric/array fields"
     )
 
     initial: Any = None
@@ -99,7 +101,7 @@ class AsynParameter(Component):
         raise NotImplementedError(self)
 
 
-class AsynString(AsynParameter):
+class AsynString(AsynParameterComponent):
     """Asyn String Parameter and records"""
 
     initial: str = VALUE_FIELD
@@ -115,7 +117,7 @@ class AsynString(AsynParameter):
         return info
 
 
-class AsynFloat64(AsynParameter):
+class AsynFloat64(AsynParameterComponent):
     """Asyn Float64 Parameter and records"""
 
     initial: float = VALUE_FIELD
@@ -143,7 +145,7 @@ class AsynProducer(Producer):
     timeout: str = Field(..., description="The timeout for the asyn port")
 
     def _make_common_record_fields(
-        self, component: AsynParameter, io_field: str
+        self, component: AsynParameterComponent, io_field: str
     ) -> Dict[str, str]:
         fields = dict(DESC=truncate_description(component.description))
         fields[io_field] = (
@@ -152,13 +154,13 @@ class AsynProducer(Producer):
         )
         return fields
 
-    def _read_record_name(self, component: AsynParameter) -> str:
+    def _read_record_name(self, component: AsynParameterComponent) -> str:
         if component.read_record_suffix:
             return self.prefix + component.read_record_suffix
         else:
             return self.prefix + component.name + "_RBV"
 
-    def _make_read_record(self, component: AsynParameter) -> Record:
+    def _make_read_record(self, component: AsynParameterComponent) -> Record:
         info = component.asyn_parameter_info()
         fields = dict(
             SCAN=component.read_record_scan.value,
@@ -172,13 +174,13 @@ class AsynProducer(Producer):
             infos={},
         )
 
-    def _write_record_name(self, component: AsynParameter) -> str:
+    def _write_record_name(self, component: AsynParameterComponent) -> str:
         if component.write_record_suffix:
             return self.prefix + component.write_record_suffix
         else:
             return self.prefix + component.name
 
-    def _make_write_record(self, component: AsynParameter) -> Record:
+    def _make_write_record(self, component: AsynParameterComponent) -> Record:
         info = component.asyn_parameter_info()
         if info.write_record_type == "waveform":
             io_field = "INP"
@@ -212,7 +214,7 @@ class AsynProducer(Producer):
                     children=self.produce_records(component.children),
                 )
                 records.append(group)
-            elif isinstance(component, AsynParameter):
+            elif isinstance(component, AsynParameterComponent):
                 if component.role.needs_read_record():
                     records.append(self._make_read_record(component))
                 if component.role.needs_write_record():
@@ -228,7 +230,7 @@ class AsynProducer(Producer):
                     children=self.produce_channels(component.children),
                 )
                 channels.append(group)
-            elif isinstance(component, AsynParameter):
+            elif isinstance(component, AsynParameterComponent):
                 # Make the primary channel
                 channel = Channel(
                     name=component.name,
@@ -263,51 +265,20 @@ class AsynProducer(Producer):
 
         return cast(ChannelTree, channels)
 
-    def produce_src(self, components: ComponentTree, basename: str):
-        parameter_strings = ""
-        parameter_members = ""
-        create_params = ""
-        for component in walk(components):
+    def produce_asyn_parameters(self, components: ComponentTree) -> AsynParameterTree:
+        parameters: List[Union[AsynParameter, Group]] = []
+        for component in components:
             if isinstance(component, Group):
-                title = f"/* Group: {component.name} */\n"
-                parameter_strings += title
-                parameter_members += title
-                create_params += title
-            elif isinstance(component, AsynParameter):
-                parameter_strings += (
-                    f'#define {component.name}String "{component.name.upper()}"'
-                    f" /* {component.type} {component.role.value} */\n"
+                group: Group[AsynParameter] = Group(
+                    name=component.name,
+                    children=self.produce_asyn_parameters(component.children),
                 )
-                parameter_members += f"    int {component.name};\n"
-                param_type = component.asyn_parameter_info().asyn_param_type
-                create_params += (
-                    f"    parent->createParam({component.name}String, "
-                    f"{param_type}, &{component.name});"
+                parameters.append(group)
+            elif isinstance(component, AsynParameterComponent):
+                parameter = AsynParameter(
+                    name=component.name,
+                    type=component.asyn_parameter_info().asyn_param_type,
+                    description=component.role.value,
                 )
-        h_txt = f"""\
-#ifndef {basename.upper()}_PARAMETERS_H
-#define {basename.upper()}_PARAMETERS_H
-
-/* Strings defining the parameter interface with the Database */
-{parameter_strings.rstrip()}
-
-/* Class definition */
-class {basename.title()}Parameters {{
-public:
-    {basename.title()}Parameters(asynPortDriver *parent);
-    /* Parameters */
-    {parameter_members.rstrip()}
-}}
-
-#endif //{basename.upper()}_PARAMETERS_H
-"""
-        cpp_txt = f"""\
-{basename.title()}Parameters::{basename.title()}Parameters(asynPortDriver *parent) {{
-    {create_params.rstrip()}
-}}
-"""
-        outputs = {
-            basename + "_parameters.h": h_txt,
-            basename + "_parameters.cpp": cpp_txt,
-        }
-        return outputs
+                parameters.append(parameter)
+        return parameters

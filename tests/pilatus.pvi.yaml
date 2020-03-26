@@ -26,6 +26,8 @@ producer:
   asyn_port: $(PORT)
   address: $(ADDR)
   timeout: $(TIMEOUT)
+formatter:
+  type: DLSFormatter
 components:
   - type: Group
     name: AncilliaryInformation

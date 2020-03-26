@@ -3,6 +3,7 @@ from typing import List, Union
 from pydantic import BaseModel, Field
 
 from ._asyn import AsynFloat64, AsynProducer, AsynString
+from ._dls import DLSFormatter
 from ._macros import FloatMacro, StringMacro
 from ._types import Component
 from ._types import Group as _Group
@@ -12,7 +13,7 @@ from ._types import Group as _Group
 
 MacroUnion = Union[FloatMacro, StringMacro]
 ProducerUnion = Union[AsynProducer]  # , StreamProducer]
-# FormatterUnion = Union[APSFormatter, DLSFormatter]
+FormatterUnion = Union[DLSFormatter]
 ComponentUnion = Union["Group", AsynFloat64, AsynString]
 
 
@@ -38,6 +39,9 @@ class Schema(BaseModel):
     )
     producer: ProducerUnion = Field(
         ..., description="The Producer class to make Records and the Device"
+    )
+    formatter: FormatterUnion = Field(
+        ..., description="The Formatter class to format the output"
     )
     components: List[ComponentUnion] = Field(
         ..., description="The Components to pass to the Producer"

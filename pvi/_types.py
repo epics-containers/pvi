@@ -37,40 +37,36 @@ class Group(Component, Generic[T]):
     children: Sequence[Union["Group", T]]
 
 
+Tree = Sequence[Union[T, Group[T]]]
 ComponentTree = Sequence[Union[Component, Group[Component]]]
 
 
 # These must match the types defined in coniql schema
-class DisplayForm(Enum):
+class DisplayForm(str, Enum):
     """Instructions for how a number should be formatted for display."""
 
-    DEFAULT = "Use the default representation from value"
-    STRING = "Force string representation, most useful for array of bytes"
-    BINARY = "Binary, precision determines number of binary digits"
-    DECIMAL = "Decimal, precision determines number of digits after decimal point"
-    HEX = "Hexadecimal, precision determines number of hex digits"
-    EXPONENTIAL = (
-        "Exponential, precision determines number of digits after decimal point"
-    )
-    ENGINEERING = (
-        "Exponential where exponent is multiple of 3, "
-        "precision determines number of digits after decimal point"
-    )
+    DEFAULT = "Default"
+    STRING = "String"
+    BINARY = "Binary"
+    DECIMAL = "Decimal"
+    HEX = "Hexadecimal"
+    EXPONENTIAL = "Exponential"
+    ENGINEERING = "Engineering"
 
 
-class Widget(Enum):
+class Widget(str, Enum):
     """Default widget that should be used to display this channel"""
 
-    TEXTINPUT = "Editable text input box"
-    TEXTUPDATE = "Read only text update"
-    MULTILINETEXTUPDATE = "Multi line read only text update"
-    LED = "On/Off LED indicator"
-    COMBO = "Select from a number of values"
-    CHECKBOX = "A box that can be checked or not"
-    TABLE = "Tabular view of array data"
-    PLOT = "Graph view of array data"
-    METER = "Progress meter"
-    BUTTON = "Action button for no value puts"
+    TEXTINPUT = "Text Input"
+    TEXTUPDATE = "Text Update"
+    MULTILINETEXTUPDATE = "Multiline Text Update"
+    LED = "LED"
+    COMBO = "Combo"
+    CHECKBOX = "Checkbox"
+    TABLE = "Table"
+    PLOT = "Plot"
+    METER = "Meter"
+    BUTTON = "Button"
 
 
 # These classes allow us to generate Records, Devices and Channels in intermediate files
@@ -106,6 +102,16 @@ class Channel:
 ChannelTree = Sequence[Union[Channel, Group[Channel]]]
 
 
+@dataclass
+class AsynParameter:
+    name: str  #: Asyn parameter name
+    type: str  #: Asyn parameter type
+    description: str  #: Comment about this parameter
+
+
+AsynParameterTree = Sequence[Union[AsynParameter, Group[AsynParameter]]]
+
+
 class Producer(WithType):
     def produce_records(self, components: ComponentTree) -> RecordTree:
         """Produce a Record tree structure for database template
@@ -114,18 +120,18 @@ class Producer(WithType):
             components: Tree without base class Component instances
 
         Returns:
-            Records that should be passed to the Formatter
+            Record tree structure that should be passed to the Formatter
         """
         raise NotImplementedError(self)
 
-    def produce_src(self, components: ComponentTree, basename: str) -> Dict[str, str]:
+    def produce_asyn_parameters(self, components: ComponentTree) -> AsynParameterTree:
         """Produce any files that need to go in the src/ directory
 
         Args:
             components: Tree without base class Component instances
 
         Returns:
-            {filename: contents} for source files that should be created
+            AsynParameter tree structure that should be passed to the Formatter
         """
         raise NotImplementedError(self)
 
@@ -136,6 +142,20 @@ class Producer(WithType):
             components: Tree including base class Component instances
 
         Returns:
-            A Channel Tree structure
+            Channel tree structure that should be passed to the Formatter
         """
+        raise NotImplementedError(self)
+
+
+class Formatter(WithType):
+    # template_path: str
+    # device_path: str
+    # opi_path: str
+    # bob_path: str
+    # adl_path: str
+    # edl_path: str
+    def format_h_file(self, parameters: AsynParameterTree, basename: str) -> str:
+        raise NotImplementedError(self)
+
+    def format_cpp_file(self, parameters: AsynParameterTree, basename: str) -> str:
         raise NotImplementedError(self)

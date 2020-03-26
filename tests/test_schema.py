@@ -72,36 +72,39 @@ but sometimes other values may be preferable.
     )
 
 
-H_EXPECTED = """\
+H_TEXT = """\
 #ifndef PILATUS_PARAMETERS_H
 #define PILATUS_PARAMETERS_H
 
-/* Strings defining the parameter interface with the Database */
-/* Group: AncilliaryInformation */
-#define ThresholdEnergyString "THRESHOLDENERGY" /* AsynFloat64 Setting Pair */
-
-/* Class definition */
 class PilatusParameters {
 public:
     PilatusParameters(asynPortDriver *parent);
-    /* Parameters */
     /* Group: AncilliaryInformation */
-    int ThresholdEnergy;
+    int ThresholdEnergy;  /* asynParamFloat64 Setting Pair */
 }
 
 #endif //PILATUS_PARAMETERS_H
 """
 
-CPP_EXPECTED = """\
+
+def test_h(pilatus_schema: Schema):
+    parameters = pilatus_schema.producer.produce_asyn_parameters(
+        pilatus_schema.components
+    )
+    h = pilatus_schema.formatter.format_h_file(parameters, "pilatus")
+    assert h == H_TEXT
+
+
+CPP_TEXT = """\
 PilatusParameters::PilatusParameters(asynPortDriver *parent) {
-    /* Group: AncilliaryInformation */
-    parent->createParam(ThresholdEnergyString, asynParamFloat64, &ThresholdEnergy);
+    parent->createParam("ThresholdEnergy", asynParamFloat64, &ThresholdEnergy);
 }
 """
 
 
-def test_src(pilatus_schema: Schema):
-    src = pilatus_schema.producer.produce_src(pilatus_schema.components, "pilatus")
-    assert len(src) == 2
-    assert src["pilatus_parameters.h"] == H_EXPECTED
-    assert src["pilatus_parameters.cpp"] == CPP_EXPECTED
+def test_cpp(pilatus_schema: Schema):
+    parameters = pilatus_schema.producer.produce_asyn_parameters(
+        pilatus_schema.components
+    )
+    cpp = pilatus_schema.formatter.format_cpp_file(parameters, "pilatus")
+    assert cpp == CPP_TEXT

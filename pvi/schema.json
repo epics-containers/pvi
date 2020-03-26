@@ -42,6 +42,15 @@
         }
       ]
     },
+    "formatter": {
+      "title": "Formatter",
+      "description": "The Formatter class to format the output",
+      "allOf": [
+        {
+          "$ref": "#/definitions/DLSFormatter"
+        }
+      ]
+    },
     "components": {
       "title": "Components",
       "description": "The Components to pass to the Producer",
@@ -82,6 +91,7 @@
   "required": [
     "description",
     "producer",
+    "formatter",
     "components"
   ],
   "definitions": {
@@ -185,6 +195,18 @@
         "timeout"
       ]
     },
+    "DLSFormatter": {
+      "title": "DLSFormatter",
+      "description": "BaseModel that adds a type parameter from class name.",
+      "type": "object",
+      "properties": {
+        "type": {
+          "title": "Type",
+          "const": "DLSFormatter",
+          "type": "string"
+        }
+      }
+    },
     "AsynFloat64": {
       "title": "AsynFloat64",
       "description": "Asyn Float64 Parameter and records",
@@ -253,6 +275,56 @@
         "write_record_suffix": {
           "title": "Write Record Suffix",
           "description": "The write record suffix, if not given then use $(name)",
+          "type": "string"
+        },
+        "read_widget": {
+          "title": "Read Widget",
+          "description": "Override the widget to use for read-only channels",
+          "default": "Text Update",
+          "enum": [
+            "Text Input",
+            "Text Update",
+            "Multiline Text Update",
+            "LED",
+            "Combo",
+            "Checkbox",
+            "Table",
+            "Plot",
+            "Meter",
+            "Button"
+          ],
+          "type": "string"
+        },
+        "write_widget": {
+          "title": "Write Widget",
+          "description": "Override the widget to use for writeable channels",
+          "default": "Text Input",
+          "enum": [
+            "Text Input",
+            "Text Update",
+            "Multiline Text Update",
+            "LED",
+            "Combo",
+            "Checkbox",
+            "Table",
+            "Plot",
+            "Meter",
+            "Button"
+          ],
+          "type": "string"
+        },
+        "display_form": {
+          "title": "Display Form",
+          "description": "Display form for numeric fields",
+          "enum": [
+            "Default",
+            "String",
+            "Binary",
+            "Decimal",
+            "Hexadecimal",
+            "Exponential",
+            "Engineering"
+          ],
           "type": "string"
         },
         "initial": {
@@ -346,6 +418,56 @@
         "write_record_suffix": {
           "title": "Write Record Suffix",
           "description": "The write record suffix, if not given then use $(name)",
+          "type": "string"
+        },
+        "read_widget": {
+          "title": "Read Widget",
+          "description": "Override the widget to use for read-only channels",
+          "default": "Text Update",
+          "enum": [
+            "Text Input",
+            "Text Update",
+            "Multiline Text Update",
+            "LED",
+            "Combo",
+            "Checkbox",
+            "Table",
+            "Plot",
+            "Meter",
+            "Button"
+          ],
+          "type": "string"
+        },
+        "write_widget": {
+          "title": "Write Widget",
+          "description": "Override the widget to use for writeable channels",
+          "default": "Text Input",
+          "enum": [
+            "Text Input",
+            "Text Update",
+            "Multiline Text Update",
+            "LED",
+            "Combo",
+            "Checkbox",
+            "Table",
+            "Plot",
+            "Meter",
+            "Button"
+          ],
+          "type": "string"
+        },
+        "display_form": {
+          "title": "Display Form",
+          "description": "Display form for numeric fields",
+          "enum": [
+            "Default",
+            "String",
+            "Binary",
+            "Decimal",
+            "Hexadecimal",
+            "Exponential",
+            "Engineering"
+          ],
           "type": "string"
         },
         "initial": {

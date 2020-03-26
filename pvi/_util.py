@@ -1,7 +1,7 @@
 import re
 from typing import Iterator
 
-from ._types import Component, ComponentTree, Group
+from ._types import Group, T, Tree
 
 
 def truncate_description(desc: str) -> str:
@@ -10,8 +10,8 @@ def truncate_description(desc: str) -> str:
     return first_line[:40]
 
 
-def walk(components: ComponentTree) -> Iterator[Component]:
-    """Depth first traversal of component tree"""
+def walk(components: Tree[T]) -> Iterator[T]:
+    """Depth first traversal of tree"""
     for component in components:
         yield component
         if isinstance(component, Group):
