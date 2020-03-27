@@ -1,29 +1,19 @@
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any, Dict, List, Union, cast
+from typing import Any, Dict, List
 
 from pydantic import Field
 
 from pvi._types import Channel, DisplayForm, Widget
 
-from ._types import (
-    AsynParameter,
-    AsynParameterTree,
-    ChannelTree,
-    Component,
-    ComponentTree,
-    Group,
-    Producer,
-    Record,
-    RecordTree,
-)
+from ._types import AsynParameter, Component, Producer, Record, Tree
 from ._util import camel_to_title, truncate_description
 
 VALUE_FIELD = Field(None, description="The initial value of the parameter")
 
 
 @dataclass
-class AsynParameterInfo:
+class AsynInfo:
     asyn_param_type: str  #: Asyn parameter type, e.g. asynParamFloat64
     read_record_type: str  #: RTYP of the read record, e.g. ai
     write_record_type: str  #: RTYP of the write record, e.g. ao
@@ -58,7 +48,7 @@ class ScanRate(str, Enum):
     POINTONE = ".1 second"
 
 
-class AsynParameterComponent(Component):
+class AsynComponent(Component):
     """Base class for all Asyn Parameters to inherit from"""
 
     name: str = Field(
@@ -96,18 +86,18 @@ class AsynParameterComponent(Component):
 
     initial: Any = None
 
-    def asyn_parameter_info(self) -> AsynParameterInfo:
+    def asyn_parameter_info(self) -> AsynInfo:
         """Return (InRecordInfo, OutRecordInfo)"""
         raise NotImplementedError(self)
 
 
-class AsynString(AsynParameterComponent):
+class AsynString(AsynComponent):
     """Asyn String Parameter and records"""
 
     initial: str = VALUE_FIELD
 
-    def asyn_parameter_info(self) -> AsynParameterInfo:
-        info = AsynParameterInfo(
+    def asyn_parameter_info(self) -> AsynInfo:
+        info = AsynInfo(
             read_record_type="stringin",
             read_record_fields=dict(DTYP="asynOctetRead"),
             write_record_type="stringout",
@@ -117,16 +107,16 @@ class AsynString(AsynParameterComponent):
         return info
 
 
-class AsynFloat64(AsynParameterComponent):
+class AsynFloat64(AsynComponent):
     """Asyn Float64 Parameter and records"""
 
     initial: float = VALUE_FIELD
     precision: int = Field(3, description="Record precision")
     units: str = Field("", description="Record engineering units")
 
-    def asyn_parameter_info(self) -> AsynParameterInfo:
+    def asyn_parameter_info(self) -> AsynInfo:
         fields = dict(DTYP="asynFloat64", EGU=self.units, PREC=str(self.precision))
-        info = AsynParameterInfo(
+        info = AsynInfo(
             read_record_type="ai",
             read_record_fields=fields,
             write_record_type="ao",
@@ -144,141 +134,114 @@ class AsynProducer(Producer):
     address: str = Field(..., description="The asyn address")
     timeout: str = Field(..., description="The timeout for the asyn port")
 
-    def _make_common_record_fields(
-        self, component: AsynParameterComponent, io_field: str
-    ) -> Dict[str, str]:
-        fields = dict(DESC=truncate_description(component.description))
-        fields[io_field] = (
-            f"@asyn({self.asyn_port},{self.address},{self.timeout})"
-            + component.name.upper()
-        )
-        return fields
-
-    def _read_record_name(self, component: AsynParameterComponent) -> str:
+    def _read_record_name(self, component: AsynComponent) -> str:
         if component.read_record_suffix:
             return self.prefix + component.read_record_suffix
         else:
             return self.prefix + component.name + "_RBV"
 
-    def _make_read_record(self, component: AsynParameterComponent) -> Record:
-        info = component.asyn_parameter_info()
-        fields = dict(
-            SCAN=component.read_record_scan.value,
-            **self._make_common_record_fields(component, "INP"),
-            **info.read_record_fields,
-        )
-        return Record(
-            record_name=self._read_record_name(component),
-            record_type=info.read_record_type,
-            fields=fields,
-            infos={},
-        )
-
-    def _write_record_name(self, component: AsynParameterComponent) -> str:
+    def _write_record_name(self, component: AsynComponent) -> str:
         if component.write_record_suffix:
             return self.prefix + component.write_record_suffix
         else:
             return self.prefix + component.name
 
-    def _make_write_record(self, component: AsynParameterComponent) -> Record:
+    def _make_records(self, component: AsynComponent) -> List[Record]:
+        records = []
         info = component.asyn_parameter_info()
-        if info.write_record_type == "waveform":
-            io_field = "INP"
-        else:
-            io_field = "OUT"
-        fields = dict(
-            **self._make_common_record_fields(component, io_field),
-            **info.write_record_fields,
-        )
-        if component.initial is not None:
-            fields["PINI"] = "YES"
-            fields["VAL"] = str(component.initial)
-        infos = {}
-        if component.autosave:
-            infos["autosaveFields"] = " ".join(component.autosave)
-        if component.role == ParameterRole.SETTING:
-            infos["asyn:READBACK"] = "1"
-        return Record(
-            record_name=self._write_record_name(component),
-            record_type=info.write_record_type,
-            fields=fields,
-            infos=infos,
-        )
-
-    def produce_records(self, components: ComponentTree) -> RecordTree:
-        records: List[Union[Record, Group]] = []
-        for component in components:
-            if isinstance(component, Group):
-                group: Group[Record] = Group(
-                    name=component.name,
-                    children=self.produce_records(component.children),
+        io = f"@asyn({self.asyn_port},{self.address},{self.timeout}){component.name}"
+        if component.role.needs_read_record():
+            fields = dict(
+                SCAN=component.read_record_scan.value,
+                DESC=truncate_description(component.description),
+                INP=io,
+                **info.read_record_fields,
+            )
+            records.append(
+                Record(
+                    name=self._read_record_name(component),
+                    type=info.read_record_type,
+                    fields=fields,
+                    infos={},
                 )
-                records.append(group)
-            elif isinstance(component, AsynParameterComponent):
-                if component.role.needs_read_record():
-                    records.append(self._make_read_record(component))
-                if component.role.needs_write_record():
-                    records.append(self._make_write_record(component))
+            )
+        if component.role.needs_write_record():
+            fields = dict(
+                DESC=truncate_description(component.description),
+                **info.write_record_fields,
+            )
+            if info.write_record_type == "waveform":
+                fields["INP"] = io
+            else:
+                fields["OUT"] = io
+            if component.initial is not None:
+                fields["PINI"] = "YES"
+                fields["VAL"] = str(component.initial)
+            infos = {}
+            if component.autosave:
+                infos["autosaveFields"] = " ".join(component.autosave)
+            if component.role == ParameterRole.SETTING:
+                infos["asyn:READBACK"] = "1"
+            records.append(
+                Record(
+                    name=self._write_record_name(component),
+                    type=info.write_record_type,
+                    fields=fields,
+                    infos=infos,
+                )
+            )
         return records
 
-    def produce_channels(self, components: ComponentTree) -> ChannelTree:
-        channels: List[Union[Channel, Group]] = []
-        for component in components:
-            if isinstance(component, Group):
-                group: Group[Channel] = Group(
-                    name=component.name,
-                    children=self.produce_channels(component.children),
-                )
-                channels.append(group)
-            elif isinstance(component, AsynParameterComponent):
-                # Make the primary channel
-                channel = Channel(
-                    name=component.name,
-                    label=camel_to_title(component.name),
-                    description=component.description,
-                    display_form=component.display_form,
-                )
-                # Add read pv
-                if component.role == ParameterRole.ACTION_READBACK:
-                    # readback is a separate channel
-                    read_name = component.name + "Readback"
-                    read_channel = Channel(
-                        name=read_name,
-                        label=camel_to_title(read_name),
-                        description=component.description,
-                        display_form=component.display_form,
-                        read_pv=self._read_record_name(component),
-                    )
-                    channels.append(read_channel)
-                elif component.role == ParameterRole.SETTING:
-                    # write record is also a read record
-                    channel.read_pv = channel.write_pv
-                elif component.role.needs_read_record():
-                    channel.read_pv = self._read_record_name(component)
-                    channel.widget = component.read_widget
-                # Add write pv
-                if component.role.needs_write_record():
-                    channel.write_pv = self._write_record_name(component)
-                    # Write widget trumps read widget
-                    channel.widget = component.write_widget
-                channels.append(channel)
+    def produce_records(self, components: Tree[Component]) -> Tree[Record]:
+        return AsynComponent.on_each_node(components, self._make_records)
 
-        return cast(ChannelTree, channels)
+    def _make_channels(self, component: AsynComponent) -> List[Channel]:
+        channels = []
+        # Make the primary channel
+        channel = Channel(
+            name=component.name,
+            label=camel_to_title(component.name),
+            description=component.description,
+            display_form=component.display_form,
+        )
+        # Add read pv
+        if component.role == ParameterRole.ACTION_READBACK:
+            # readback is a separate channel
+            read_name = component.name + "Readback"
+            read_channel = Channel(
+                name=read_name,
+                label=camel_to_title(read_name),
+                description=component.description,
+                display_form=component.display_form,
+                read_pv=self._read_record_name(component),
+            )
+            channels.append(read_channel)
+        elif component.role == ParameterRole.SETTING:
+            # write record is also a read record
+            channel.read_pv = channel.write_pv
+        elif component.role.needs_read_record():
+            channel.read_pv = self._read_record_name(component)
+            channel.widget = component.read_widget
+        # Add write pv
+        if component.role.needs_write_record():
+            channel.write_pv = self._write_record_name(component)
+            # Write widget trumps read widget
+            channel.widget = component.write_widget
+        channels.append(channel)
+        return channels
 
-    def produce_asyn_parameters(self, components: ComponentTree) -> AsynParameterTree:
-        parameters: List[Union[AsynParameter, Group]] = []
-        for component in components:
-            if isinstance(component, Group):
-                group: Group[AsynParameter] = Group(
-                    name=component.name,
-                    children=self.produce_asyn_parameters(component.children),
-                )
-                parameters.append(group)
-            elif isinstance(component, AsynParameterComponent):
-                parameter = AsynParameter(
-                    name=component.name,
-                    type=component.asyn_parameter_info().asyn_param_type,
-                    description=component.role.value,
-                )
-                parameters.append(parameter)
-        return parameters
+    def produce_channels(self, components: Tree[Component]) -> Tree[Channel]:
+        return AsynComponent.on_each_node(components, self._make_channels)
+
+    def _make_asyn_parameters(self, component: AsynComponent) -> List[AsynParameter]:
+        parameter = AsynParameter(
+            name=component.name,
+            type=component.asyn_parameter_info().asyn_param_type,
+            description=component.role.value,
+        )
+        return [parameter]
+
+    def produce_asyn_parameters(
+        self, components: Tree[Component]
+    ) -> Tree[AsynParameter]:
+        return AsynComponent.on_each_node(components, self._make_asyn_parameters)

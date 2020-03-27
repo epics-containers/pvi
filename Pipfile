@@ -15,6 +15,7 @@ pytest-asyncio = "*"
 rope = "*"
 black = "*"
 mypy = "*"
+pytest = "==5.3.0"
 
 [packages]
 pydantic = "*"
@@ -23,7 +24,7 @@ ruamel-yaml = "*"
 
 [scripts]
 # Put coverage here so we don't interfere with debugging in the IDE
-tests = "python -m pytest --cov-fail-under=90 --cov=pvi --cov-report xml:cov.xml"
+tests = "python -m pytest --cov-fail-under=80 --cov=pvi --cov-report xml:cov.xml"
 docs = "sphinx-build -b html docs build/html"
 
 [pipenv]

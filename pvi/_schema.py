@@ -20,6 +20,7 @@ ComponentUnion = Union["Group", AsynFloat64, AsynString]
 class Group(_Group[Component]):
     """Group that can contain multiple parameters or other Groups."""
 
+    name: str = Field(..., description="Name of the Group that will form its label")
     children: List[ComponentUnion] = Field(
         ..., description="Child Parameters or Groups"
     )

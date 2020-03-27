@@ -1,8 +1,7 @@
 """The types that should be inherited from or produced by Fields."""
 
-from dataclasses import dataclass
 from enum import Enum
-from typing import Dict, Generic, Optional, Sequence, TypeVar, Union
+from typing import Callable, Dict, Generic, List, Sequence, Type, TypeVar, Union
 
 from pydantic import BaseModel, Field
 
@@ -20,25 +19,39 @@ class WithType(BaseModel, metaclass=WithTypeMetaClass):
     type: str
 
 
+T = TypeVar("T")
+C = TypeVar("C", bound="Component")
+S = TypeVar("S")
+Tree = Sequence[Union[T, "Group[T]"]]
+
+
 class Component(WithType):
     """Something that can appear in the tree of components to make up the
     device."""
 
     name: str
 
-
-T = TypeVar("T")
+    @classmethod
+    def on_each_node(
+        cls: Type[C], tree: Tree["Component"], func: Callable[[C], List[S]]
+    ) -> Tree[S]:
+        """Visit each node of the tree of type typ, calling func on each leaf"""
+        out: List[Union[S, Group[S]]] = []
+        for t in tree:
+            if isinstance(t, Group):
+                group: Group[S] = Group(
+                    name=t.name, children=cls.on_each_node(t.children, func)
+                )
+                out.append(group)
+            elif isinstance(t, cls):
+                out += func(t)
+        return out
 
 
 class Group(Component, Generic[T]):
     """Group that can contain multiple parameters or other Groups."""
 
-    name: str = Field(..., description="Name of the Group that will form its label")
-    children: Sequence[Union["Group", T]]
-
-
-Tree = Sequence[Union[T, Group[T]]]
-ComponentTree = Sequence[Union[Component, Group[Component]]]
+    children: Tree[T]
 
 
 # These must match the types defined in coniql schema
@@ -70,50 +83,45 @@ class Widget(str, Enum):
 
 
 # These classes allow us to generate Records, Devices and Channels in intermediate files
-@dataclass
-class Record:
-    record_name: str  #: The name of the record e.g. $(P)$(M)Status
-    record_type: str  #: The record type string e.g. ao, stringin
-    fields: Dict[str, str]  #: The record fields
-    infos: Dict[str, str]  #: Any infos to be added to the record
+class Record(BaseModel):
+    name: str = Field(..., description="The name of the record e.g. $(P)$(M)Status")
+    type: str = Field(..., description="The record type string e.g. ao, stringin")
+    fields_: Dict[str, str] = Field(
+        ..., description="The record fields", alias="fields"
+    )
+    infos: Dict[str, str] = Field({}, description="Any infos to be added to the record")
 
 
-RecordTree = Sequence[Union[Record, Group[Record]]]
-
-
-@dataclass
-class Channel:
-    name: str  #: The name of the Channel within the Device
-    label: str  #: The GUI label for the Channel
-    read_pv: Optional[
-        str
-    ] = None  #: The pv to get from, None means not readable (an action)
-    write_pv: Optional[
-        str
-    ] = None  #: The pv to put to, None means not writeable (a readback)
+class Channel(BaseModel):
+    name: str = Field(..., description="The name of the Channel within the Device")
+    label: str = Field(..., description="The GUI label for the Channel")
+    read_pv: str = Field(
+        None, description="The pv to get from, None means not readable (an action)"
+    )
+    write_pv: str = Field(
+        None, description="The pv to put to, None means not writeable (a readback)"
+    )
     # The following are None to allow multiple references to channels
-    widget: Optional[Widget] = None  #: Which widget to use for the Channel
-    description: Optional[str] = None  #: Description of what the Channel does
-    display_form: Optional[
-        DisplayForm
-    ] = None  #: How should numeric values be displayed
+    widget: Widget = Field(None, description="Which widget to use for the Channel")
+    description: str = Field(None, description="Description of what the Channel does")
+    display_form: DisplayForm = Field(
+        None, description="How should numeric values be displayed"
+    )
 
 
-ChannelTree = Sequence[Union[Channel, Group[Channel]]]
+class Device(BaseModel):
+    description: str = Field(..., description="Description of what the Device does")
+    channels: Tree[Channel] = Field(..., description="Channels that make up the Device")
 
 
-@dataclass
-class AsynParameter:
-    name: str  #: Asyn parameter name
-    type: str  #: Asyn parameter type
-    description: str  #: Comment about this parameter
-
-
-AsynParameterTree = Sequence[Union[AsynParameter, Group[AsynParameter]]]
+class AsynParameter(BaseModel):
+    name: str = Field(..., description="Asyn parameter name")
+    type: str = Field(..., description="Asyn parameter type")
+    description: str = Field(..., description="Comment about this parameter")
 
 
 class Producer(WithType):
-    def produce_records(self, components: ComponentTree) -> RecordTree:
+    def produce_records(self, components: Tree[Component]) -> Tree[Record]:
         """Produce a Record tree structure for database template
 
         Args:
@@ -124,7 +132,9 @@ class Producer(WithType):
         """
         raise NotImplementedError(self)
 
-    def produce_asyn_parameters(self, components: ComponentTree) -> AsynParameterTree:
+    def produce_asyn_parameters(
+        self, components: Tree[Component]
+    ) -> Tree[AsynParameter]:
         """Produce any files that need to go in the src/ directory
 
         Args:
@@ -135,7 +145,7 @@ class Producer(WithType):
         """
         raise NotImplementedError(self)
 
-    def produce_channels(self, components: ComponentTree) -> ChannelTree:
+    def produce_channels(self, components: Tree[Component]) -> Tree[Channel]:
         """Produce a channel tree structure for making screens
 
         Args:
@@ -154,8 +164,14 @@ class Formatter(WithType):
     # bob_path: str
     # adl_path: str
     # edl_path: str
-    def format_h_file(self, parameters: AsynParameterTree, basename: str) -> str:
+    def format_device(self, records: Tree[Channel], basename: str) -> str:
         raise NotImplementedError(self)
 
-    def format_cpp_file(self, parameters: AsynParameterTree, basename: str) -> str:
+    def format_template(self, records: Tree[Record], basename: str) -> str:
+        raise NotImplementedError(self)
+
+    def format_h(self, parameters: Tree[AsynParameter], basename: str) -> str:
+        raise NotImplementedError(self)
+
+    def format_cpp(self, parameters: Tree[AsynParameter], basename: str) -> str:
         raise NotImplementedError(self)

@@ -1,5 +1,5 @@
 import re
-from typing import Iterator
+from typing import Iterator, Union
 
 from ._types import Group, T, Tree
 
@@ -10,12 +10,12 @@ def truncate_description(desc: str) -> str:
     return first_line[:40]
 
 
-def walk(components: Tree[T]) -> Iterator[T]:
+def walk(tree: Tree[T]) -> Iterator[Union[T, Group[T]]]:
     """Depth first traversal of tree"""
-    for component in components:
-        yield component
-        if isinstance(component, Group):
-            yield from walk(component.children)
+    for t in tree:
+        yield t
+        if isinstance(t, Group):
+            yield from walk(t.children)
 
 
 def camel_to_title(name):
