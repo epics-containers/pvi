@@ -22,3 +22,7 @@ class StringMacro(Macro):
 
 class FloatMacro(Macro):
     value: float = VALUE_FIELD
+
+
+class IntMacro(Macro):
+    value: int = VALUE_FIELD

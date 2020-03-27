@@ -18,9 +18,35 @@ macros:
     name: TIMEOUT
     description: The timeout for records talking to the driver
     value: 1
-  - type: FloatMacro
+  - type: IntMacro
     name: ADDR
     description: The address for the asyn port
+    value: 0
+  - type: StringMacro
+    name: CAMSERVER
+    description: Machine:port that pilatus camserver is running on
+    value: localhost:41234
+  - type: IntMacro
+    name: XSIZE
+    description: Maximum X dimension of the image
+  - type: IntMacro
+    name: YSIZE
+    description: Maximum Y dimension of the image
+  - type: IntMacro
+    name: BUFFERS
+    description: Maximum number of NDArray buffers to be created for plugin callbacks
+    value: 50
+  - type: IntMacro
+    name: MEMORY
+    description: Max memory to allocate, should be maxw*maxh*nbuffer for driver and all attached plugins
+    value: 0
+  - type: IntMacro
+    name: PRIORITY
+    description: Thread priority for the asyn port driver used for epicsThreadCreate call, 0 for epicsThreadPriorityMedium
+    value: 0
+  - type: IntMacro
+    name: STACK_SIZE
+    description: The stack size for the asyn port driver thread, 0 for epicsThreadGetStackSize(epicsThreadStackMedium)
     value: 0
 producer:
   type: AsynProducer
@@ -31,18 +57,20 @@ producer:
 formatter:
   type: DLSFormatter
 startup: |
-  drvAsynIPPortConfigure("camserver","gse-pilatus1:41234")
+  drvAsynIPPortConfigure("$(PORT)ip","$(CAMSERVER)")
   # Uncomment the following to enable asynTrace on the camserver port
-  #asynSetTraceIOMask("camserver",0,2)
-  #asynSetTraceMask("camserver",0,9)
+  #asynSetTraceIOMask("$(PORT)ip",0,2)
+  #asynSetTraceMask("$(PORT)ip",0,9)
   # Set the input and output terminators.
-  asynOctetSetInputEos("camserver", 0, "\030")
-  asynOctetSetOutputEos("camserver", 0, "\n")
-  dbLoadRecords("pilatus.template", "P=$(P),R=$(R),PORT=$(PORT),ADDR=$(ADDR),TIMEOUT=$(TIMEOUT),CAMSERVER_PORT=$(CAMSERVER_PORT)")
+  asynOctetSetInputEos("$(PORT)ip",0,"\030")
+  asynOctetSetOutputEos("$(PORT)ip",0,"\n")
+  # Make an instance of the driver and load the records
+  pilatusDetectorConfig("$(PORT)","$(PORT)ip",$(XSIZE),$(YSIZE),$(BUFFERS),$(MEMORY),$(PRIORITY),$(STACK_SIZE))
+  dbLoadRecords("pilatus.template","P=$(P),R=$(R),PORT=$(PORT),ADDR=$(ADDR),TIMEOUT=$(TIMEOUT),CAMSERVER_PORT=$(CAMSERVER_PORT)")
 screens:
   - ../op/opi/DLS/pilatus.opi  # summary screen, links to pilatus_parameters.opi
 components:
-  - type: Group
+  - type: ComponentGroup
     name: AncilliaryInformation
     children:
       - type: AsynFloat64

@@ -29,6 +29,9 @@
           },
           {
             "$ref": "#/definitions/StringMacro"
+          },
+          {
+            "$ref": "#/definitions/IntMacro"
           }
         ]
       }
@@ -58,7 +61,7 @@
       "items": {
         "anyOf": [
           {
-            "$ref": "#/definitions/Group"
+            "$ref": "#/definitions/ComponentGroup"
           },
           {
             "$ref": "#/definitions/AsynFloat64"
@@ -76,7 +79,7 @@
     },
     "screens": {
       "title": "Screens",
-      "description": "List of paths to extra db files to include",
+      "description": "List of paths to associated screens",
       "default": [],
       "type": "array",
       "items": {
@@ -147,6 +150,37 @@
           "title": "Value",
           "description": "The default value of the parameter, None means required",
           "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "description"
+      ]
+    },
+    "IntMacro": {
+      "title": "IntMacro",
+      "description": "BaseModel that adds a type parameter from class name.",
+      "type": "object",
+      "properties": {
+        "type": {
+          "title": "Type",
+          "const": "IntMacro",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "description": "The name of the Macro that will be passed when instantiated",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "description": "Description of what the Macro will be used for",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "description": "The default value of the parameter, None means required",
+          "type": "integer"
         }
       },
       "required": [
@@ -478,14 +512,14 @@
         "description"
       ]
     },
-    "Group": {
-      "title": "Group",
+    "ComponentGroup": {
+      "title": "ComponentGroup",
       "description": "Group that can contain multiple parameters or other Groups.",
       "type": "object",
       "properties": {
         "type": {
           "title": "Type",
-          "const": "Group",
+          "const": "ComponentGroup",
           "type": "string"
         },
         "name": {
@@ -500,7 +534,7 @@
           "items": {
             "anyOf": [
               {
-                "$ref": "#/definitions/Group"
+                "$ref": "#/definitions/ComponentGroup"
               },
               {
                 "$ref": "#/definitions/AsynFloat64"

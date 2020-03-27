@@ -5,12 +5,14 @@ from ruamel.yaml import YAML
 
 from pvi import Record, Schema
 from pvi._types import Channel, Group, Widget
+from pvi.cli import main
+
+PILATUS_YAML = Path(__file__).parent / "pilatus.pvi.yaml"
 
 
 @pytest.fixture
 def pilatus_schema():
-    here = Path(__file__).parent
-    data = YAML().load(here / "pilatus.pvi.yaml")
+    data = YAML().load(PILATUS_YAML)
     schema = Schema(**data)
     return schema
 
@@ -136,7 +138,8 @@ record(ao, "$(P)$(R)ThresholdEnergy") {
 """
 
 
-def test_template(pilatus_schema: Schema):
-    records = pilatus_schema.producer.produce_records(pilatus_schema.components)
-    template = pilatus_schema.formatter.format_template(records, "pilatus")
-    assert template == TEMPLATE_TXT
+def test_template(pilatus_schema: Schema, tmp_path: Path):
+    fname = tmp_path / "pilatus.template"
+    main(["generate", str(PILATUS_YAML), str(fname)])
+    with open(fname) as f:
+        assert f.read() == TEMPLATE_TXT
