@@ -1,4 +1,4 @@
-from ._types import AsynParameter, Channel, Device, Formatter, Group, Record, Tree
+from ._types import AsynParameter, Channel, Formatter, Group, Record, Tree
 from ._util import walk
 
 FIELD_TXT = '    field({0:5s} "{1}")\n'
@@ -6,10 +6,8 @@ INFO_TXT = '    info({0} "{1})\n'
 
 
 class DLSFormatter(Formatter):
-    def format_device(self, channels: Tree[Channel], basename: str) -> str:
-        device = Device(description="", channels=channels)
-        txt = device.json(indent=2)
-        return txt
+    def format_edl(self, records: Tree[Channel], basename: str) -> str:
+        raise NotImplementedError(self)
 
     def format_template(self, records: Tree[Record], basename: str) -> str:
         txt = ""

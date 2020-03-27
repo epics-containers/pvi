@@ -23,7 +23,7 @@ def test_records(pilatus_schema: Schema):
     assert len(records) == 2
     assert records[0] == Record(
         type="ai",
-        name="$(P)$(M)ThresholdEnergy_RBV",
+        name="$(P)$(R)ThresholdEnergy_RBV",
         fields=dict(
             DESC="Threshold energy in keV",
             DTYP="asynFloat64",
@@ -36,7 +36,7 @@ def test_records(pilatus_schema: Schema):
     )
     assert records[1] == Record(
         type="ao",
-        name="$(P)$(M)ThresholdEnergy",
+        name="$(P)$(R)ThresholdEnergy",
         fields=dict(
             DESC="Threshold energy in keV",
             DTYP="asynFloat64",
@@ -59,8 +59,8 @@ def test_channels(pilatus_schema: Schema):
     assert channels[0] == Channel(
         name="ThresholdEnergy",
         label="Threshold Energy",
-        read_pv="$(P)$(M)ThresholdEnergy_RBV",
-        write_pv="$(P)$(M)ThresholdEnergy",
+        read_pv="$(P)$(R)ThresholdEnergy_RBV",
+        write_pv="$(P)$(R)ThresholdEnergy",
         widget=Widget.TEXTINPUT,
         description="""Threshold energy in keV
 
@@ -113,7 +113,7 @@ def test_cpp(pilatus_schema: Schema):
 TEMPLATE_TXT = """\
 # Group: AncilliaryInformation
 
-record(ai, "$(P)$(M)ThresholdEnergy_RBV") {
+record(ai, "$(P)$(R)ThresholdEnergy_RBV") {
     field(SCAN, "I/O Intr")
     field(DESC, "Threshold energy in keV")
     field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))ThresholdEnergy")
@@ -122,7 +122,7 @@ record(ai, "$(P)$(M)ThresholdEnergy_RBV") {
     field(PREC, "3")
 }
 
-record(ao, "$(P)$(M)ThresholdEnergy") {
+record(ao, "$(P)$(R)ThresholdEnergy") {
     field(DESC, "Threshold energy in keV")
     field(DTYP, "asynFloat64")
     field(EGU,  "keV")
@@ -140,31 +140,3 @@ def test_template(pilatus_schema: Schema):
     records = pilatus_schema.producer.produce_records(pilatus_schema.components)
     template = pilatus_schema.formatter.format_template(records, "pilatus")
     assert template == TEMPLATE_TXT
-
-
-DEVICE_TXT = r"""{
-  "description": "",
-  "channels": [
-    {
-      "type": "Group",
-      "name": "AncilliaryInformation",
-      "children": [
-        {
-          "name": "ThresholdEnergy",
-          "label": "Threshold Energy",
-          "read_pv": "$(P)$(M)ThresholdEnergy_RBV",
-          "write_pv": "$(P)$(M)ThresholdEnergy",
-          "widget": "Text Input",
-          "description": "Threshold energy in keV\n\ncamserver uses this value to set the discriminators in each pixel.\nIt is typically set to the incident x-ray energy ($(P)$(R)Energy),\nbut sometimes other values may be preferable.\n",
-          "display_form": null
-        }
-      ]
-    }
-  ]
-}"""  # noqa
-
-
-def test_device(pilatus_schema: Schema):
-    channels = pilatus_schema.producer.produce_channels(pilatus_schema.components)
-    device = pilatus_schema.formatter.format_device(channels, "pilatus")
-    assert device == DEVICE_TXT

@@ -47,10 +47,8 @@ class Schema(BaseModel):
     components: List[ComponentUnion] = Field(
         ..., description="The Components to pass to the Producer"
     )
-    startup_lines: List[str] = Field(
-        [], description="Lines to insert into the startup script"
-    )
-    extra_db_files: List[str] = Field(
+    startup: str = Field(..., description="Lines to insert into the startup script")
+    screens: List[str] = Field(
         [], description="List of paths to extra db files to include"
     )
 

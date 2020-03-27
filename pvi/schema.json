@@ -69,17 +69,13 @@
         ]
       }
     },
-    "startup_lines": {
-      "title": "Startup Lines",
+    "startup": {
+      "title": "Startup",
       "description": "Lines to insert into the startup script",
-      "default": [],
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
+      "type": "string"
     },
-    "extra_db_files": {
-      "title": "Extra Db Files",
+    "screens": {
+      "title": "Screens",
       "description": "List of paths to extra db files to include",
       "default": [],
       "type": "array",
@@ -92,7 +88,8 @@
     "description",
     "producer",
     "formatter",
-    "components"
+    "components",
+    "startup"
   ],
   "definitions": {
     "FloatMacro": {
@@ -315,7 +312,7 @@
         },
         "display_form": {
           "title": "Display Form",
-          "description": "Display form for numeric fields",
+          "description": "Display form for numeric/array fields",
           "enum": [
             "Default",
             "String",
@@ -458,7 +455,7 @@
         },
         "display_form": {
           "title": "Display Form",
-          "description": "Display form for numeric fields",
+          "description": "Display form for numeric/array fields",
           "enum": [
             "Default",
             "String",

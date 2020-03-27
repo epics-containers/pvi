@@ -158,13 +158,19 @@ class Producer(WithType):
 
 
 class Formatter(WithType):
-    # template_path: str
-    # device_path: str
-    # opi_path: str
-    # bob_path: str
-    # adl_path: str
-    # edl_path: str
-    def format_device(self, records: Tree[Channel], basename: str) -> str:
+    def format_adl(self, records: Tree[Channel], basename: str) -> str:
+        raise NotImplementedError(self)
+
+    def format_edl(self, records: Tree[Channel], basename: str) -> str:
+        raise NotImplementedError(self)
+
+    def format_opi(self, records: Tree[Channel], basename: str) -> str:
+        raise NotImplementedError(self)
+
+    def format_bob(self, records: Tree[Channel], basename: str) -> str:
+        raise NotImplementedError(self)
+
+    def format_ui(self, records: Tree[Channel], basename: str) -> str:
         raise NotImplementedError(self)
 
     def format_template(self, records: Tree[Record], basename: str) -> str:

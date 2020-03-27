@@ -1,13 +1,15 @@
 description: |
   An EPICS areaDetector driver for the Pilatus pixel array detectors from Dectris.
-base: $(ADCORE)/ADSrc/ADDriver.pvi.yaml
+bases:
+  - $(ADCORE)/ADSrc/ADBase.pvi.yaml
+  - $(ADCORE)/ADSrc/NDFile.pvi.yaml
 local: $(basename).local.yaml
 macros:
   - type: StringMacro
     name: P
     description: Record prefix part 1
   - type: StringMacro
-    name: M
+    name: R
     description: Record prefix part 2
   - type: StringMacro
     name: PORT
@@ -22,12 +24,23 @@ macros:
     value: 0
 producer:
   type: AsynProducer
-  prefix: $(P)$(M)
+  prefix: $(P)$(R)
   asyn_port: $(PORT)
   address: $(ADDR)
   timeout: $(TIMEOUT)
 formatter:
   type: DLSFormatter
+startup: |
+  drvAsynIPPortConfigure("camserver","gse-pilatus1:41234")
+  # Uncomment the following to enable asynTrace on the camserver port
+  #asynSetTraceIOMask("camserver",0,2)
+  #asynSetTraceMask("camserver",0,9)
+  # Set the input and output terminators.
+  asynOctetSetInputEos("camserver", 0, "\030")
+  asynOctetSetOutputEos("camserver", 0, "\n")
+  dbLoadRecords("pilatus.template", "P=$(P),R=$(R),PORT=$(PORT),ADDR=$(ADDR),TIMEOUT=$(TIMEOUT),CAMSERVER_PORT=$(CAMSERVER_PORT)")
+screens:
+  - ../op/opi/DLS/pilatus.opi  # summary screen, links to pilatus_parameters.opi
 components:
   - type: Group
     name: AncilliaryInformation
