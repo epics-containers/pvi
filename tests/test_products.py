@@ -1,21 +1,9 @@
 from pathlib import Path
 
-import pytest
-from pydantic import ValidationError
-
-from pvi import Schema
-from pvi._types import Channel, Group, Widget
-from pvi.cli import main
+from pvi import Channel, Group, Schema, Widget, cli
 
 PILATUS_YAML = Path(__file__).parent / "pilatus.pvi.yaml"
 EXPECTED = Path(__file__).parent / "expected"
-
-
-def test_camel():
-    g = Group(name="CamelThing", children=[])
-    assert g.name == "CamelThing"
-    with pytest.raises(ValidationError):
-        Group(name="CamelThing_not", children=[])
 
 
 def test_channels():
@@ -42,7 +30,7 @@ but sometimes other values may be preferable.
 
 
 def check_generation(tmp_path: Path, fname: str):
-    main(["generate", str(PILATUS_YAML), str(tmp_path / fname)])
+    cli.main(["generate", str(PILATUS_YAML), str(tmp_path / fname)])
     assert open(tmp_path / fname).read() == open(EXPECTED / fname).read()
 
 
