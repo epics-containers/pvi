@@ -1,58 +1,25 @@
 from pathlib import Path
 
 import pytest
-from ruamel.yaml import YAML
+from pydantic import ValidationError
 
-from pvi import Record, Schema
+from pvi import Schema
 from pvi._types import Channel, Group, Widget
 from pvi.cli import main
 
 PILATUS_YAML = Path(__file__).parent / "pilatus.pvi.yaml"
+EXPECTED = Path(__file__).parent / "expected"
 
 
-@pytest.fixture
-def pilatus_schema():
-    data = YAML().load(PILATUS_YAML)
-    schema = Schema(**data)
-    return schema
+def test_camel():
+    g = Group(name="CamelThing", children=[])
+    assert g.name == "CamelThing"
+    with pytest.raises(ValidationError):
+        Group(name="CamelThing_not", children=[])
 
 
-def test_records(pilatus_schema: Schema):
-    record_tree = pilatus_schema.producer.produce_records(pilatus_schema.components)
-    assert len(record_tree) == 1
-    assert isinstance(record_tree[0], Group)
-    records = record_tree[0].children
-    assert len(records) == 2
-    assert records[0] == Record(
-        type="ai",
-        name="$(P)$(R)ThresholdEnergy_RBV",
-        fields=dict(
-            DESC="Threshold energy in keV",
-            DTYP="asynFloat64",
-            EGU="keV",
-            INP="@asyn($(PORT),$(ADDR),$(TIMEOUT))ThresholdEnergy",
-            PREC="3",
-            SCAN="I/O Intr",
-        ),
-        infos={},
-    )
-    assert records[1] == Record(
-        type="ao",
-        name="$(P)$(R)ThresholdEnergy",
-        fields=dict(
-            DESC="Threshold energy in keV",
-            DTYP="asynFloat64",
-            EGU="keV",
-            OUT="@asyn($(PORT),$(ADDR),$(TIMEOUT))ThresholdEnergy",
-            PREC="3",
-            VAL="10.0",
-            PINI="YES",
-        ),
-        infos=dict(autosaveFields="VAL"),
-    )
-
-
-def test_channels(pilatus_schema: Schema):
+def test_channels():
+    pilatus_schema = Schema.load(PILATUS_YAML.parent, "pilatus")
     channel_tree = pilatus_schema.producer.produce_channels(pilatus_schema.components)
     assert len(channel_tree) == 1
     assert isinstance(channel_tree[0], Group)
@@ -74,72 +41,22 @@ but sometimes other values may be preferable.
     )
 
 
-H_TXT = """\
-#ifndef PILATUS_PARAMETERS_H
-#define PILATUS_PARAMETERS_H
-
-class PilatusParameters {
-public:
-    PilatusParameters(asynPortDriver *parent);
-    /* Group: AncilliaryInformation */
-    int ThresholdEnergy;  /* asynParamFloat64 Setting Pair */
-}
-
-#endif //PILATUS_PARAMETERS_H
-"""
+def check_generation(tmp_path: Path, fname: str):
+    main(["generate", str(PILATUS_YAML), str(tmp_path / fname)])
+    assert open(tmp_path / fname).read() == open(EXPECTED / fname).read()
 
 
-def test_h(pilatus_schema: Schema):
-    parameters = pilatus_schema.producer.produce_asyn_parameters(
-        pilatus_schema.components
-    )
-    h = pilatus_schema.formatter.format_h(parameters, "pilatus")
-    assert h == H_TXT
+def test_h(tmp_path: Path):
+    check_generation(tmp_path, "pilatus_parameters.h")
 
 
-CPP_TXT = """\
-PilatusParameters::PilatusParameters(asynPortDriver *parent) {
-    parent->createParam("ThresholdEnergy", asynParamFloat64, &ThresholdEnergy);
-}
-"""
+def test_cpp(tmp_path: Path):
+    check_generation(tmp_path, "pilatus_parameters.cpp")
 
 
-def test_cpp(pilatus_schema: Schema):
-    parameters = pilatus_schema.producer.produce_asyn_parameters(
-        pilatus_schema.components
-    )
-    cpp = pilatus_schema.formatter.format_cpp(parameters, "pilatus")
-    assert cpp == CPP_TXT
+def test_template(tmp_path: Path):
+    check_generation(tmp_path, "pilatus_parameters.template")
 
 
-TEMPLATE_TXT = """\
-# Group: AncilliaryInformation
-
-record(ai, "$(P)$(R)ThresholdEnergy_RBV") {
-    field(SCAN, "I/O Intr")
-    field(DESC, "Threshold energy in keV")
-    field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))ThresholdEnergy")
-    field(DTYP, "asynFloat64")
-    field(EGU,  "keV")
-    field(PREC, "3")
-}
-
-record(ao, "$(P)$(R)ThresholdEnergy") {
-    field(DESC, "Threshold energy in keV")
-    field(DTYP, "asynFloat64")
-    field(EGU,  "keV")
-    field(PREC, "3")
-    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))ThresholdEnergy")
-    field(PINI, "YES")
-    field(VAL,  "10.0")
-    info(autosaveFields, "VAL)
-}
-
-"""
-
-
-def test_template(pilatus_schema: Schema, tmp_path: Path):
-    fname = tmp_path / "pilatus.template"
-    main(["generate", str(PILATUS_YAML), str(fname)])
-    with open(fname) as f:
-        assert f.read() == TEMPLATE_TXT
+def test_csv(tmp_path: Path):
+    check_generation(tmp_path, "pilatus_parameters.csv")

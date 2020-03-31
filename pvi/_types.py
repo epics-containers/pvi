@@ -29,7 +29,11 @@ class Component(WithType):
     """Something that can appear in the tree of components to make up the
     device."""
 
-    name: str
+    name: str = Field(
+        ...,
+        description="CamelCase name to uniquely identify this component",
+        regex=r"([A-Z][a-z0-9]*)*$",
+    )
 
     @classmethod
     def on_each_node(
@@ -109,11 +113,6 @@ class Channel(BaseModel):
     )
 
 
-class Device(BaseModel):
-    description: str = Field(..., description="Description of what the Device does")
-    channels: Tree[Channel] = Field(..., description="Channels that make up the Device")
-
-
 class AsynParameter(BaseModel):
     name: str = Field(..., description="Asyn parameter name")
     type: str = Field(..., description="Asyn parameter type")
@@ -158,19 +157,22 @@ class Producer(WithType):
 
 
 class Formatter(WithType):
-    def format_adl(self, records: Tree[Channel], basename: str) -> str:
+    def format_adl(self, channels: Tree[Channel], basename: str) -> str:
         raise NotImplementedError(self)
 
-    def format_edl(self, records: Tree[Channel], basename: str) -> str:
+    def format_edl(self, channels: Tree[Channel], basename: str) -> str:
         raise NotImplementedError(self)
 
-    def format_opi(self, records: Tree[Channel], basename: str) -> str:
+    def format_opi(self, channels: Tree[Channel], basename: str) -> str:
         raise NotImplementedError(self)
 
-    def format_bob(self, records: Tree[Channel], basename: str) -> str:
+    def format_bob(self, channels: Tree[Channel], basename: str) -> str:
         raise NotImplementedError(self)
 
-    def format_ui(self, records: Tree[Channel], basename: str) -> str:
+    def format_ui(self, channels: Tree[Channel], basename: str) -> str:
+        raise NotImplementedError(self)
+
+    def format_csv(self, channels: Tree[Channel], basename: str) -> str:
         raise NotImplementedError(self)
 
     def format_template(self, records: Tree[Record], basename: str) -> str:

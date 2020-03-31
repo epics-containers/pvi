@@ -5,11 +5,11 @@ PVI
 
     This module is currently a proposal only, so all details are subject to
     change at any point. The documentation is written in the present tense, but
-    no code is written yet.
+    only prototype code is written.
 
 PVI (PV Interface) is a framework for specifying the interface to an EPICS
 driver in a single `YAML`_ file. The initial target is asyn port driver based
-drivers, but it could be extended to streamDevice and other driver types at a 
+drivers, but it could be extended to streamDevice and other driver types at a
 later date.
 
 It allows the asyn parameter interface to be specified in a single place,
@@ -24,26 +24,29 @@ and low level opis:
     edge [fontname=Arial fontsize=10 arrowhead=vee]
 
     {   rank=same;
-        "pilatus.yaml"
-        "pilatus_logic.template"
+        "pilatus.pvi.yaml"
         "pilatus.cpp"
         "pilatus.h"
     }
 
     PVI [shape=doublecircle]
-    "pilatus.yaml" -> PVI
+    "pilatus.pvi.yaml" -> PVI
     PVI -> "pilatus_parameters.cpp"
     PVI -> "pilatus_parameters.h"
-    PVI -> "pilatus.template"
+    PVI -> "pilatus_parameters.template"
     PVI -> "pilatus_parameters.opi"
     PVI -> "pilatus_parameters.adl"
     PVI -> "pilatus_parameters.edl"
-    PVI -> "pilatus_docs.html"
-    "pilatus_logic.template" -> "pilatus.template" [label="include"]
+    PVI -> "pilatus_parameters.csv"
+    "pilatus_parameters.template" -> "pilatus.template" [label="included in"]
     "pilatus_parameters.cpp" -> "libPilatus.so"
     "pilatus_parameters.h" -> "libPilatus.so"
     "pilatus.cpp" -> "libPilatus.so"
     "pilatus.h" -> "libPilatus.so"
+    "pilatus_parameters.csv" -> "pilatus.rst" [label="included in"]
+    "pilatus_parameters.adl" -> "pilatus.adl" [label="linked from"]
+    "pilatus_parameters.edl" -> "pilatus.edl" [label="linked from"]
+    "pilatus_parameters.opi" -> "pilatus.opi" [label="linked from"]
 
 .. list-table:: Aims of PVI
     :widths: 20, 80
@@ -64,9 +67,9 @@ and low level opis:
     * - Support site specific styles for screens
       - Each site has their own style for screens, and many sites have their
         own site specific display manager. Rather than start with one display
-        manager and convert, PVI takes a cut down Widget description (just a
-        type, pv, and some formatting), and lets the site specific template
-        generate the screen according to local styles
+        manager and convert, PVI takes a cut down Channel description (just a
+        type, pv and widget), and lets the site specific template generate the
+        screen according to local styles
 
 
 How it works
@@ -75,15 +78,15 @@ How it works
 The YAML file contains information about each asyn parameter that will be
 exposed by the driver, it's name, type, description, initial value, which record
 type it uses, whether it is writeable or read only, which widget should be used,
-etc. PVI reads these and creates intermediate Record, Widget and AsynParam
-objects which are passed to a site specific Producer. This is responsible
-for taking the intermediate objects and writing a parameter CPP file, database
+etc. PVI reads these and passes them to Producer that creates intermediate Record,
+Channel and AsynParam objects. These are passed to a site specific Formatter which
+takes the tree of intermediate objects and writes a parameter CPP file, database
 template, and site specific screens to disk.
 
 YAML file
 ~~~~~~~~~
 
-The YAML file is broken into 4 sections:
+The YAML file is formed of a number of sections:
 
 .. list-table::
     :widths: 20, 80
@@ -91,22 +94,34 @@ The YAML file is broken into 4 sections:
 
     * - Section
       - Description
-    * - Producer type and arguments
-      - This allows a site specific Producer to be selected (overridden with a
-        .local file) and extra arguments like site specific local top level
-        screens included
-    * - Takes
+    * - bases
+      - The YAML files to use as base classes for superclasses
+    * - local
+      - A local override YAML file for site specific changes
+    * - description
+      - A description of what the device does
+    * - macros
       - These are the arguments that will be used in the resulting template,
         with descriptions and default values
-    * - Defines
-      - These are internally used variables that can be used in the components
-    * - Components
-      - Python functions with their arguments that produce the intermediate
-        Record, Widget and AsynParam objects
+    * - template
+      - The template file that should be loaded by the IOC
+    * - startup
+      - String that should be inserted in a startup script that does a
+        dbLoadRecords and any other startup lines to instantiate this device
+    * - screens
+      - Any screens which form the public interface of this module
+    * - producer
+      - Producer that knows how to create Records and Channels from the Components
+    * - formatter
+      - Site specific Formatter which can format the output files
+    * - components
+      - Tree of Components for each logical asyn parameter arranged in logical
+        GUI groups
 
-The Defines are processed, then the Components produce their intermediate
-Records, Widgets, etc, then the Producer consumes these with the Takes
-arguments to create the Products:
+The Components are created from the YAML file with local overrides (also incorporating
+the base classes for screens). These are passed to the Producer which produces
+AsynParameters, Records and Channels. These are then passed to the Formatter which
+outputs them to file:
 
 .. digraph:: pvi_products
 
@@ -114,97 +129,23 @@ arguments to create the Products:
     node [fontname=Arial fontsize=10 shape=box style=filled fillcolor="#8BC4E9"]
     edge [fontname=Arial fontsize=10 arrowhead=vee]
 
-    Intermediate [label="[Record(),\n Widget(),\n AsynParam(), \nTemplateInclude()]"]
+    Intermediate [label="[Record(),\n Channel(),\n AsynParameter()]"]
     Products [label="Template\nScreens\nDriver Params\nDocumentation"]
 
-    {rank=same; Components -> Intermediate -> Producer -> Products}
-    Defines -> Components
-    Takes -> Producer
+    {rank=same; Components -> Producer -> Intermediate -> Formatter -> Products -> IOC}
+    Macros -> IOC
+    Startup -> IOC
 
 Here's a cut down pilatus.yaml file that might describe a parameter in a
 detector:
 
-.. code-block:: YAML
-
-    # Define the generic Producer, this can be overridden with a
-    # site specific .local.yaml file
-    type: pvi.producers.AsynProducer
-    overridden_by: $(yamlname).local.yaml
-
-    # Define the arguments that the template takes
-    takes:
-      - type: builtin.takes.string
-        name: P
-        description: Record prefix part 1
-
-      - type: builtin.takes.string
-        name: R
-        description: Record prefix part 2
-
-      - type: builtin.takes.string
-        name: PORT
-        description: Asyn port name
-
-    components:
-      # Include the definitions from ADBase.yaml for screen widgets
-      - type: ADCore.includes.ADBase
-        P: $(P)
-        R: $(R)
-        PORT: $(PORT)
-
-      # Make a group box/section widget to hold some parameters
-      - type: builtin.widgets.group
-        name: AncillaryInformation
-
-      # Make a single parameter with a demand and readback records and widgets
-      - type: asyn.parameters.float64
-        name: ThresholdEnergy
-        description: |
-            Threshold energy in keV
-
-            camserver uses this value to set the discriminators in each pixel.
-            It is typically set to the incident x-ray energy ($(P)$(R)Energy),
-            but sometimes other values may be preferable.
-        prec: 3
-        egu: keV
-        initial_value: 10
-        autosave_fields: VAL
-        demand: Yes  # Can also be AutoUpdate to add asyn:readback info
-        readback: Yes
-        widget: TextInput
-        group: AncillaryInformation
-
-      # Include a bit of logic from the db template
-      - type: builtin.db.include
-        filename: $(yamldir)/../Db/pilatus_logic.template
-
-    pv_prefix: $(P)$(R)
-    asyn_port: $(PORT)
-    template_output: $(yamldir)/../Db/pilatus.template
-    opi_output: $(yamldir)/../op/opi/pilatus_parameters.opi
-    adl_output: $(yamldir)/../op/adl/pilatus_parameters.adl
-    edl_output: $(yamldir)/../op/edl/pilatus_parameters.edl
+.. literalinclude:: ../tests/pilatus.pvi.yaml
+    :language: yaml
 
 And these settings could then be overridden in a local YAML file:
 
-.. code-block:: YAML
-
-    # Define the site specific Producer
-    type: pvi.producers.DLSAsynProducer
-    # Override some outputs to be site specific
-    opi_output: $(yamldir)/../op/opi/DLS/pilatus_parameters.opi
-    edl_output: $(yamldir)/../op/edl/DLS/pilatus_parameters.edl    
-    # Associate a site specific hand crafted embedded screens
-    # snippet with the template instance
-    boy_embed: $(yamldir)/../op/opi/DLS/pilatus_embed.opi
-    
-    # Add some additional components, these could override what
-    # appeared in the main YAML file, but not delete anything
-    components:
-      # A DLS specific mechanism for tagging PVs to be archived
-      - type: archiver.tags.monitor
-        name: ThresholdEnergy
-        period: 0.5
+.. literalinclude:: ../tests/pilatus.local.yaml
+    :language: yaml
 
 
 Driver Parameter CPP file
@@ -215,31 +156,14 @@ contains the logic) can derive from. It contains the string parameter defines,
 and all the createParam calls to make the interface. In this example we have
 a header file pilatus_parameters.h:
 
-.. code-block:: cpp
-
-    #ifndef PILATUS_PARAMETERS_H
-    #define PILATUS_PARAMETERS_H
-
-    /* Strings defining the parameter interface with the Database */
-    #define ThresholdEnergyString "THRESHOLDENERGY" /* (asynFloat64, r/w) */
-
-    /* Class definition */
-    class PilatusParameters {
-    public:
-        PilatusParameters(asynPortDriver *parent);
-        /* Parameters */
-        int ThresholdEnergy;
-    }
-
-    #endif //PILATUS_PARAMETERS_H
+.. literalinclude:: ../tests/expected/pilatus_parameters.h
+    :language: cpp
 
 And then pilatus_parameters.cpp:
 
-.. code-block:: cpp
+.. literalinclude:: ../tests/expected/pilatus_parameters.cpp
+    :language: cpp
 
-    PilatusParameters::PilatusParameters(asynPortDriver *parent) {
-        parent->createParam(ThresholdEnergyString, asynParamFloat64, &ThresholdEnergy);
-    }
 
 The existing pilatus.cpp is then modified to remove these parameters definitions
 and inherit from the intermediate class:
@@ -261,41 +185,23 @@ Database Template file
 According to the demand and readback properties of the component, the following
 records are created:
 
-.. code-block:: cpp
+.. literalinclude:: ../tests/expected/pilatus_parameters.template
+    :language: cpp
 
-    record(ao, "$(P)$(R)ThresholdEnergy") {
-        field(PINI, "YES")
-        field(DTYP, "asynFloat64")
-        field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))THRESHOLDENERGY")
-        field(DESC, "Threshold energy in keV")
-        field(EGU,  "keV")
-        field(PREC, "3")
-        field(VAL, "10.000")
-        info(autosaveFields, "VAL")
-    }
 
-    record(ai, "$(P)$(R)ThresholdEnergy_RBV") {
-        field(DTYP, "asynFloat64")
-        field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))THRESHOLDENERGY")
-        field(DESC, "Energy threshold")
-        field(EGU,  "keV")
-        field(PREC, "3")
-        field(SCAN, "I/O Intr")
-    }
-
-This template file can also include records that provide logic (for things
-like the arrayRate and EPICSShutter in areaDetector).
+The top level pilatus.template includes this file, as well as records that
+provide logic (for things like the arrayRate and EPICSShutter in areaDetector).
 
 Screen files
 ~~~~~~~~~~~~
 
-The intermediate objects are a number of Widget instances. These contain basic
+The intermediate objects are a number of Channel instances. These contain basic
 types (like Combo, TextInput, TextUpdate, LED, Group) and some creation hints
-(like max_field_length, include_units, label, group_name), but no X, Y, Width,
+(like label, grouping, description, display_form), but no X, Y, Width,
 Height or colour information. They may represent either a single widget or pair
 of demand/readback widgets.
 
-The site-specific Producer consumes these Widget objects, then produces a screen
+The site-specific Formatter consumes these Channel objects, then produces a screen
 with style, sizing and layout that can be customized to the site. This means
 that the default layout (big screen with lots of widgets arranged in group
 boxes) could be produced for one site, then another site could make lots of
@@ -307,22 +213,24 @@ Documentation
 ~~~~~~~~~~~~~
 
 The Parameter and record sections of the existing documentation could be
-reproduced, either as raw html files as at present, or as markdown or rst files,
-if the module owner had a preference for those. A similar include file mechanism
-to the templates could be used to add descriptive introduction and usage
-documentation to the autogenerated sections.
+reproduced, in tabular form as a csv file that can be included in rst docs:
+
+.. csv-table:: Pilatus Parameters
+   :file: ../tests/expected/pilatus_parameters.csv
+   :widths: 15, 25, 60
+   :header-rows: 1
 
 
 What changes would be required to add this to an existing areaDetector module?
 ------------------------------------------------------------------------------
 
-We could write a conversion script that converted the existing database file
-to a YAML file. The createParam calls could then be stripped out of the
-driver CPP file, and if any names were different to the record suffix, either
-the driver changed to be consistent or an override "parameter_name" specified in
-the YAML file to keep the code the same. The record interface would be preserved
-so the existing screens could be used, but the parameter strings which form
-the interface between the driver and template would probably change.
+We could write a conversion script that converted the existing database file to
+a YAML file. The createParam calls could then be stripped out of the driver CPP
+file, and if any names were different to the record suffix, either the driver
+changed to be consistent with the record name or an override "record_suffix"
+specified in the YAML file to keep the code the same. The record interface would
+be preserved so the existing screens could be used, but the parameter strings
+which form the interface between the driver and template would change.
 
 Questions
 ---------
@@ -333,34 +241,21 @@ implementation questions. Here are the most pressing:
 One-time generation and checked into source control or generated by Makefile?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Aravis follow the model of:
+The process would probably be:
 
-- Extract genicam
-- Use script to make Db, Edl, Adl
-- Check in the products to source control
-- End users not required to know about the scripts
+- If pvi cli tool available, build products as part of make
+- Check in products to source control
+- End users will only regenerate build products if pvi tool installed
 
-A very similar model could be followed here, where the files are all generated
-where they currently are (including a definitive set of screens) and only the
-module owner or site specific maintainers would ever run the creation scripts
-again. This means it looks like a normal module, but means that people may not
-know about the YAML source file, and may be tempted to modify the products,
-stopping the creation scripts from being run again at a later date.
+ADGenICam would be supported by building a GenICamProducer which took no
+components, just a path to a GenICam XML file
 
-Alternatively the products could be made as part of the Make process, with
-the results going in the built db/ include/ and op/*/autogen directories. This
-would avoid the modification of build products, but would require all users
-(including windows users) to run the creation scripts on each Make.
+Which screen tools to support?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Scope of the Parameter interface changes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The scheme above shows the parameter interface being generated as a base class
-for the detector driver class, which requires the least source code changes.
-Another option would be to make the parameter library a separate object, making it
-a child of the detector driver part. This would allow more complex drivers to
-separate parameter access over multiple classes to reduce the size of the classes
-implementing the logic.
+I suggest creating adl and edl files initially, following the example of
+makeAdl.py in ADGenICam, then expanding to support opi, bob and ui files
+natively. This would avoid eneding screen converters installed
 
 
 .. _YAML:

@@ -1,0 +1,22 @@
+# Group: AncilliaryInformation
+
+record(ai, "$(P)$(R)ThresholdEnergy_RBV") {
+    field(SCAN, "I/O Intr")
+    field(DESC, "Threshold energy in keV")
+    field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))ThresholdEnergy")
+    field(DTYP, "asynFloat64")
+    field(EGU,  "keV")
+    field(PREC, "3")
+}
+
+record(ao, "$(P)$(R)ThresholdEnergy") {
+    field(DESC, "Threshold energy in keV")
+    field(DTYP, "asynFloat64")
+    field(EGU,  "keV")
+    field(PREC, "3")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))ThresholdEnergy")
+    field(PINI, "YES")
+    field(VAL,  "10.0")
+    info(autosaveFields, "VAL")
+}
+

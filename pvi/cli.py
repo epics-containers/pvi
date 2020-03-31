@@ -1,8 +1,6 @@
 from argparse import ArgumentParser
 from pathlib import Path
 
-from ruamel.yaml import YAML
-
 from ._schema import Schema
 from ._types import Formatter
 
@@ -14,13 +12,12 @@ def schema(args):
 
 
 def generate(args):
-    data = YAML().load(args.yaml)
-    schema = Schema(**data)
     suffix = args.out.suffix
     assert suffix in SUFFIXES, f"File suffix '{suffix}' is not one of {SUFFIXES}"
     name = args.yaml.name
     assert name.endswith(".pvi.yaml"), "Expected '{name}' to end with '.pvi.yaml'"
     basename = name[:-9]
+    schema = Schema.load(args.yaml.parent, basename)
     if suffix == ".template":
         tree = schema.producer.produce_records(schema.components)
     elif suffix in (".cpp", ".h"):

@@ -1,9 +1,5 @@
 description: |
   An EPICS areaDetector driver for the Pilatus pixel array detectors from Dectris.
-bases:
-  - $(ADCORE)/ADSrc/ADBase.pvi.yaml
-  - $(ADCORE)/ADSrc/NDFile.pvi.yaml
-local: $(basename).local.yaml
 macros:
   - type: StringMacro
     name: P
@@ -40,14 +36,20 @@ macros:
     name: MEMORY
     description: Max memory to allocate, should be maxw*maxh*nbuffer for driver and all attached plugins
     value: 0
-  - type: IntMacro
-    name: PRIORITY
-    description: Thread priority for the asyn port driver used for epicsThreadCreate call, 0 for epicsThreadPriorityMedium
-    value: 0
-  - type: IntMacro
-    name: STACK_SIZE
-    description: The stack size for the asyn port driver thread, 0 for epicsThreadGetStackSize(epicsThreadStackMedium)
-    value: 0
+template: ../Db/pilatus.template
+startup: |
+  drvAsynIPPortConfigure("$(PORT)ip","$(CAMSERVER)")
+  # Set the input and output terminators.
+  asynOctetSetInputEos("$(PORT)ip",0,"\030")
+  asynOctetSetOutputEos("$(PORT)ip",0,"\n")
+  # Make an instance of the driver and load the records
+  pilatusDetectorConfig("$(PORT)","$(PORT)ip",$(XSIZE),$(YSIZE),$(BUFFERS),$(MEMORY))
+screens:
+  - ../op/opi/DLS/pilatus.opi  # summary screen, links to pilatus_parameters.opi
+bases:
+  - $(ADCORE)/ADSrc/ADBase.pvi.yaml
+  - $(ADCORE)/ADSrc/NDFile.pvi.yaml
+local: $(basename).local.yaml
 producer:
   type: AsynProducer
   prefix: $(P)$(R)
@@ -55,20 +57,7 @@ producer:
   address: $(ADDR)
   timeout: $(TIMEOUT)
 formatter:
-  type: DLSFormatter
-startup: |
-  drvAsynIPPortConfigure("$(PORT)ip","$(CAMSERVER)")
-  # Uncomment the following to enable asynTrace on the camserver port
-  #asynSetTraceIOMask("$(PORT)ip",0,2)
-  #asynSetTraceMask("$(PORT)ip",0,9)
-  # Set the input and output terminators.
-  asynOctetSetInputEos("$(PORT)ip",0,"\030")
-  asynOctetSetOutputEos("$(PORT)ip",0,"\n")
-  # Make an instance of the driver and load the records
-  pilatusDetectorConfig("$(PORT)","$(PORT)ip",$(XSIZE),$(YSIZE),$(BUFFERS),$(MEMORY),$(PRIORITY),$(STACK_SIZE))
-  dbLoadRecords("pilatus.template","P=$(P),R=$(R),PORT=$(PORT),ADDR=$(ADDR),TIMEOUT=$(TIMEOUT),CAMSERVER_PORT=$(CAMSERVER_PORT)")
-screens:
-  - ../op/opi/DLS/pilatus.opi  # summary screen, links to pilatus_parameters.opi
+  type: APSFormatter
 components:
   - type: ComponentGroup
     name: AncilliaryInformation
@@ -84,7 +73,5 @@ components:
         precision: 3
         units: keV
         initial: 10
-        autosave:
-          - VAL
         role: Setting Pair
 

@@ -1,8 +1,7 @@
-from dataclasses import dataclass
 from enum import Enum
 from typing import Any, Dict, List
 
-from pydantic import Field
+from pydantic import BaseModel, Field
 
 from pvi._types import Channel, DisplayForm, Widget
 
@@ -12,13 +11,18 @@ from ._util import camel_to_title, truncate_description
 VALUE_FIELD = Field(None, description="The initial value of the parameter")
 
 
-@dataclass
-class AsynInfo:
-    asyn_param_type: str  #: Asyn parameter type, e.g. asynParamFloat64
-    read_record_type: str  #: RTYP of the read record, e.g. ai
-    write_record_type: str  #: RTYP of the write record, e.g. ao
-    read_record_fields: Dict[str, str]  #: Fields to add to the read record
-    write_record_fields: Dict[str, str]  #: Fields to add to the write record
+class AsynInfo(BaseModel):
+    asyn_param_type: str = Field(
+        ..., description="Asyn parameter type, e.g. asynParamFloat64"
+    )
+    read_record_type: str = Field(..., description="RTYP of the read record, e.g. ai")
+    write_record_type: str = Field(..., description="RTYP of the write record, e.g. ao")
+    read_record_fields: Dict[str, str] = Field(
+        ..., description="Fields to add to the read record"
+    )
+    write_record_fields: Dict[str, str] = Field(
+        ..., description="Fields to add to the write record"
+    )
 
 
 class ParameterRole(str, Enum):
@@ -51,9 +55,6 @@ class ScanRate(str, Enum):
 class AsynComponent(Component):
     """Base class for all Asyn Parameters to inherit from"""
 
-    name: str = Field(
-        ..., description="Name of the Asyn Parameter in the C++ code",
-    )
     description: str = Field(
         ..., description="Description of what this Parameter is for"
     )

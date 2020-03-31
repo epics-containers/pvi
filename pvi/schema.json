@@ -2,16 +2,6 @@
   "title": "Schema",
   "type": "object",
   "properties": {
-    "base": {
-      "title": "Base",
-      "description": "YAML file to use as base class for this",
-      "type": "string"
-    },
-    "local": {
-      "title": "Local",
-      "description": "YAML file that overrides this for local changes",
-      "type": "string"
-    },
     "description": {
       "title": "Description",
       "description": "Description of what this Device does",
@@ -36,6 +26,34 @@
         ]
       }
     },
+    "startup": {
+      "title": "Startup",
+      "description": "Lines to insert into the startup script",
+      "type": "string"
+    },
+    "screens": {
+      "title": "Screens",
+      "description": "List of paths to associated screens",
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "bases": {
+      "title": "Bases",
+      "description": "YAML files to use as base classes for this",
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "local": {
+      "title": "Local",
+      "description": "YAML file that overrides this for local changes",
+      "type": "string"
+    },
     "producer": {
       "title": "Producer",
       "description": "The Producer class to make Records and the Device",
@@ -48,9 +66,20 @@
     "formatter": {
       "title": "Formatter",
       "description": "The Formatter class to format the output",
-      "allOf": [
+      "anyOf": [
         {
-          "$ref": "#/definitions/DLSFormatter"
+          "allOf": [
+            {
+              "$ref": "#/definitions/APSFormatter"
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/definitions/DLSFormatter"
+            }
+          ]
         }
       ]
     },
@@ -71,28 +100,14 @@
           }
         ]
       }
-    },
-    "startup": {
-      "title": "Startup",
-      "description": "Lines to insert into the startup script",
-      "type": "string"
-    },
-    "screens": {
-      "title": "Screens",
-      "description": "List of paths to associated screens",
-      "default": [],
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
     }
   },
   "required": [
     "description",
+    "startup",
     "producer",
     "formatter",
-    "components",
-    "startup"
+    "components"
   ],
   "definitions": {
     "FloatMacro": {
@@ -226,6 +241,18 @@
         "timeout"
       ]
     },
+    "APSFormatter": {
+      "title": "APSFormatter",
+      "description": "BaseModel that adds a type parameter from class name.",
+      "type": "object",
+      "properties": {
+        "type": {
+          "title": "Type",
+          "const": "APSFormatter",
+          "type": "string"
+        }
+      }
+    },
     "DLSFormatter": {
       "title": "DLSFormatter",
       "description": "BaseModel that adds a type parameter from class name.",
@@ -250,7 +277,8 @@
         },
         "name": {
           "title": "Name",
-          "description": "Name of the Asyn Parameter in the C++ code",
+          "description": "CamelCase name to uniquely identify this component",
+          "pattern": "([A-Z][a-z0-9]*)*$",
           "type": "string"
         },
         "description": {
@@ -393,7 +421,8 @@
         },
         "name": {
           "title": "Name",
-          "description": "Name of the Asyn Parameter in the C++ code",
+          "description": "CamelCase name to uniquely identify this component",
+          "pattern": "([A-Z][a-z0-9]*)*$",
           "type": "string"
         },
         "description": {
@@ -524,7 +553,8 @@
         },
         "name": {
           "title": "Name",
-          "description": "Name of the Group that will form its label",
+          "description": "CamelCase name to uniquely identify this component",
+          "pattern": "([A-Z][a-z0-9]*)*$",
           "type": "string"
         },
         "children": {
