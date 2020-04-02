@@ -29,7 +29,7 @@ version = pvi.__version__.split("+")[0]
 # The full version, including alpha/beta/rc tags.
 release = pvi.__version__
 
-if os.environ.get('READTHEDOCS') == 'True':
+if os.environ.get("READTHEDOCS") == "True":
     # Readthedocs modifies conf.py, so will appear dirty when it isn't
     release = release.replace(".dirty", "")
 

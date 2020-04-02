@@ -8,7 +8,7 @@ from ._aps import APSFormatter
 from ._asyn import AsynFloat64, AsynProducer, AsynString
 from ._dls import DLSFormatter
 from ._macros import FloatMacro, IntMacro, StringMacro
-from ._types import Component, Group
+from ._types import Component, File, Group
 
 # from ._stream import StreamFloat64, StreamString, StreamProducer
 
@@ -48,9 +48,9 @@ class Schema(BaseModel):
     startup: str = Field(
         "", description="Lines to insert into the startup script of IOC"
     )
-    screens: List[str] = Field([], description="List of paths to associated screens")
-    bases: List[str] = Field(
-        [], description="YAML files to use as base classes for this"
+    screens: List[File] = Field([], description="List of paths to associated screens")
+    includes: List[File] = Field(
+        [], description="YAML files to include in the definitions"
     )
     local: str = Field(
         None, description="YAML file that overrides this for local changes"

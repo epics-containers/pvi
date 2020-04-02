@@ -1,5 +1,5 @@
 screens:
-  - ../op/opi/DLS/pilatus.opi  # summary screen, links to pilatus_parameters.opi
+  - path: ../op/opi/DLS/pilatus.opi  # summary screen, links to pilatus_parameters.opi
 formatter:
   type: DLSFormatter
 components:

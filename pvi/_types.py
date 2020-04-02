@@ -1,7 +1,7 @@
 """The types that should be inherited from or produced by Fields."""
 
 from enum import Enum
-from typing import Callable, Dict, Generic, List, Sequence, Type, TypeVar, Union
+from typing import Any, Callable, Dict, Generic, List, Sequence, Type, TypeVar, Union
 
 from pydantic import BaseModel, Field
 
@@ -56,6 +56,13 @@ class Group(Component, Generic[T]):
     """Group that can contain multiple parameters or other Groups."""
 
     children: Tree[T]
+
+
+class File(BaseModel):
+    path: str = Field(..., description="Path to the file, can include macros")
+    macros: Dict[str, Any] = Field(
+        {}, description="Extra macros to pass along with the macros from this file"
+    )
 
 
 # These must match the types defined in coniql schema
