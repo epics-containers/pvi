@@ -45,7 +45,7 @@ startup: |
   # Make an instance of the driver and load the records
   pilatusDetectorConfig("$(PORT)","$(PORT)ip",$(XSIZE),$(YSIZE),$(BUFFERS),$(MEMORY))
 screens:
-  - path: ../op/opi/DLS/pilatus.opi  # summary screen, links to pilatus_parameters.opi
+  - path: ../op/opi/APS/pilatus.opi  # summary screen, links to pilatus_parameters.opi
 includes:
   - path: $(ADCORE)/ADSrc/_ADBase.pvi.yaml
   - path: $(ADCORE)/ADSrc/_NDFile.pvi.yaml
@@ -74,4 +74,5 @@ components:
         units: keV
         initial: 10
         role: Setting Pair
+
 

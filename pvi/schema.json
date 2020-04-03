@@ -26,9 +26,15 @@
         ]
       }
     },
+    "template": {
+      "title": "Template",
+      "description": "Template file that should be loaded by the IOC",
+      "type": "string"
+    },
     "startup": {
       "title": "Startup",
-      "description": "Lines to insert into the startup script",
+      "description": "Lines to insert into the startup script of IOC",
+      "default": "",
       "type": "string"
     },
     "screens": {
@@ -37,16 +43,16 @@
       "default": [],
       "type": "array",
       "items": {
-        "type": "string"
+        "$ref": "#/definitions/File"
       }
     },
-    "bases": {
-      "title": "Bases",
-      "description": "YAML files to use as base classes for this",
+    "includes": {
+      "title": "Includes",
+      "description": "YAML files to include in the definitions",
       "default": [],
       "type": "array",
       "items": {
-        "type": "string"
+        "$ref": "#/definitions/File"
       }
     },
     "local": {
@@ -104,7 +110,7 @@
   },
   "required": [
     "description",
-    "startup",
+    "template",
     "producer",
     "formatter",
     "components"
@@ -201,6 +207,26 @@
       "required": [
         "name",
         "description"
+      ]
+    },
+    "File": {
+      "title": "File",
+      "type": "object",
+      "properties": {
+        "path": {
+          "title": "Path",
+          "description": "Path to the file, can include macros",
+          "type": "string"
+        },
+        "macros": {
+          "title": "Macros",
+          "description": "Extra macros to pass along with the macros from this file",
+          "default": {},
+          "type": "object"
+        }
+      },
+      "required": [
+        "path"
       ]
     },
     "AsynProducer": {
