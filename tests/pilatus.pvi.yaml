@@ -73,6 +73,4 @@ components:
         precision: 3
         units: keV
         initial: 10
-        role: Setting Pair
-
-
+        role: Setting

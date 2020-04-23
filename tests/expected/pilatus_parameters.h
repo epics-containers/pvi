@@ -5,7 +5,7 @@ class PilatusParameters {
 public:
     PilatusParameters(asynPortDriver *parent);
     /* Group: AncilliaryInformation */
-    int ThresholdEnergy;  /* asynParamFloat64 Setting Pair */
+    int ThresholdEnergy;  /* asynParamFloat64 Setting */
 }
 
 #endif //PILATUS_PARAMETERS_H

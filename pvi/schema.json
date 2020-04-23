@@ -314,16 +314,21 @@
         },
         "role": {
           "title": "Role",
-          "description": "An enumeration.",
-          "default": "Setting Pair",
+          "description": "What role does this parameter play within the device. One of:\n\n    - Readback: a parameter of the device that can be read from.\n      E.g. chipTemperature on a detector, or isHomed for a motor\n    - Action: a parameter of the device that can be written to, but there\n      is no current value.\n      E.g. reboot on a detector, or overwriteCurrentPosition for a motor\n    - Setting: a parameter of the device that can be written to, the\n      current value can be read from, and should be saved/loaded when\n      switching between configurations of the device.\n      E.g. acquireTime on a detector, or velocity of a motor\n    - Transient: a parameter of the device that can be written to and\n      read from, but should not be saved/loaded when switching between\n      configurations of the device.\n      E.g. arrayCounter on a detector, or position of a motor\n    ",
+          "default": "Setting",
           "enum": [
-            "Setting",
-            "Setting Pair",
-            "Action",
             "Readback",
-            "Action + Readback"
+            "Action",
+            "Setting",
+            "Transient"
           ],
           "type": "string"
+        },
+        "demand_auto_updates": {
+          "title": "Demand Auto Updates",
+          "description": "Should demand update when readback changes?",
+          "default": false,
+          "type": "boolean"
         },
         "autosave": {
           "title": "Autosave",
@@ -458,16 +463,21 @@
         },
         "role": {
           "title": "Role",
-          "description": "An enumeration.",
-          "default": "Setting Pair",
+          "description": "What role does this parameter play within the device. One of:\n\n    - Readback: a parameter of the device that can be read from.\n      E.g. chipTemperature on a detector, or isHomed for a motor\n    - Action: a parameter of the device that can be written to, but there\n      is no current value.\n      E.g. reboot on a detector, or overwriteCurrentPosition for a motor\n    - Setting: a parameter of the device that can be written to, the\n      current value can be read from, and should be saved/loaded when\n      switching between configurations of the device.\n      E.g. acquireTime on a detector, or velocity of a motor\n    - Transient: a parameter of the device that can be written to and\n      read from, but should not be saved/loaded when switching between\n      configurations of the device.\n      E.g. arrayCounter on a detector, or position of a motor\n    ",
+          "default": "Setting",
           "enum": [
-            "Setting",
-            "Setting Pair",
-            "Action",
             "Readback",
-            "Action + Readback"
+            "Action",
+            "Setting",
+            "Transient"
           ],
           "type": "string"
+        },
+        "demand_auto_updates": {
+          "title": "Demand Auto Updates",
+          "description": "Should demand update when readback changes?",
+          "default": false,
+          "type": "boolean"
         },
         "autosave": {
           "title": "Autosave",

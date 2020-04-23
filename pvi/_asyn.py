@@ -26,14 +26,30 @@ class AsynInfo(BaseModel):
 
 
 class ParameterRole(str, Enum):
-    SETTING = "Setting"  #: Write record that syncs with readback values
-    SETTING_PAIR = "Setting Pair"  #: Read and write records
-    ACTION = "Action"  #: Write record only
+    """What role does this parameter play within the device. One of:
+
+    - Readback: a parameter of the device that can be read from.
+      E.g. chipTemperature on a detector, or isHomed for a motor
+    - Action: a parameter of the device that can be written to, but there
+      is no current value.
+      E.g. reboot on a detector, or overwriteCurrentPosition for a motor
+    - Setting: a parameter of the device that can be written to, the
+      current value can be read from, and should be saved/loaded when
+      switching between configurations of the device.
+      E.g. acquireTime on a detector, or velocity of a motor
+    - Transient: a parameter of the device that can be written to and
+      read from, but should not be saved/loaded when switching between
+      configurations of the device.
+      E.g. arrayCounter on a detector, or position of a motor
+    """
+
     READBACK = "Readback"  #: Read record only
-    ACTION_READBACK = "Action + Readback"  #: Write record current value readback
+    ACTION = "Action"  #: Write record only
+    SETTING = "Setting"  #: Read and write record, for saving
+    TRANSIENT = "Transient"  #: Read and write record, not for saving
 
     def needs_read_record(self):
-        return self not in [self.ACTION, self.SETTING]
+        return self != self.ACTION
 
     def needs_write_record(self):
         return self != self.READBACK
@@ -59,7 +75,10 @@ class AsynComponent(Component):
         ..., description="Description of what this Parameter is for"
     )
     role: ParameterRole = Field(
-        ParameterRole.SETTING_PAIR, description=ParameterRole.__doc__,
+        ParameterRole.SETTING, description=ParameterRole.__doc__,
+    )
+    demand_auto_updates: bool = Field(
+        False, description="Should demand update when readback changes?"
     )
     autosave: List[str] = Field(
         [], description="Record fields that should be autosaved"
@@ -181,7 +200,7 @@ class AsynProducer(Producer):
             infos = {}
             if component.autosave:
                 infos["autosaveFields"] = " ".join(component.autosave)
-            if component.role == ParameterRole.SETTING:
+            if component.demand_auto_updates:
                 infos["asyn:READBACK"] = "1"
             records.append(
                 Record(
@@ -206,7 +225,7 @@ class AsynProducer(Producer):
             display_form=component.display_form,
         )
         # Add read pv
-        if component.role == ParameterRole.ACTION_READBACK:
+        if component.role == ParameterRole.TRANSIENT:
             # readback is a separate channel
             read_name = component.name + "Readback"
             read_channel = Channel(
@@ -217,9 +236,6 @@ class AsynProducer(Producer):
                 read_pv=self._read_record_name(component),
             )
             channels.append(read_channel)
-        elif component.role == ParameterRole.SETTING:
-            # write record is also a read record
-            channel.read_pv = channel.write_pv
         elif component.role.needs_read_record():
             channel.read_pv = self._read_record_name(component)
             channel.widget = component.read_widget
