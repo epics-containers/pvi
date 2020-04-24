@@ -117,42 +117,60 @@ record({record.type}, "{record.name}") {{
     def format_h(
         self, parameters: Tree[AsynParameter], basename: str, macros: List[Macro]
     ) -> str:
-        parameter_members = ""
-        for parameter in walk(parameters):
-            if isinstance(parameter, Group):
-                parameter_members += f"/* Group: {parameter.name} */\n"
-            else:
-                parameter_members += (
-                    f"    int {parameter.name};  "
-                    f"/* {parameter.type} {parameter.description} */\n"
-                )
+        parent_class = "ADDriver"  # TODO: Extract this from YAML
+        parameter_definitions = [
+            dict(
+                name=basename.capitalize() + node.name,
+                string_name=f"{basename.capitalize()}{node.index_name}String",
+                type=node.type,
+                index_name=node.index_name,
+            )
+            for node in walk(parameters)
+            if isinstance(node, AsynParameter)
+        ]
+
+        defines = "\n".join(
+            '#define {string_name} "{index_name}"'.format(**definition)
+            for definition in parameter_definitions
+        )
+
+        adds = "\n".join(
+            "        this->add({string_name}, {type}, &{index_name});".format(
+                **definition
+            )
+            for definition in parameter_definitions
+        )
+
+        _indexes = [
+            "    int {index_name};".format(**definition)
+            for definition in parameter_definitions
+        ]
+        _indexes.insert(
+            1,
+            "    #define FIRST_{basename}_PARAM_INDEX {index_name}".format(
+                basename=basename.upper(), **parameter_definitions[0]
+            ),
+        )
+        indexes = "\n".join(_indexes)
+
         h_txt = f"""\
-#ifndef {basename.upper()}_PARAMETERS_H
-#define {basename.upper()}_PARAMETERS_H
+#ifndef {basename.capitalize()}DetectorParamSet_H
+#define {basename.capitalize()}DetectorParamSet_H
 
-class {basename.title()}Parameters {{
+#include "{parent_class}ParamSet.h"
+
+{defines}
+
+class {basename}DetectorParamSet : public virtual {parent_class}ParamSet {{
 public:
-    {basename.title()}Parameters(asynPortDriver *parent);
-    {parameter_members.rstrip()}
-}}
+    {basename}DetectorParamSet() {{
+{adds}
+    }}
 
-#endif //{basename.upper()}_PARAMETERS_H
+protected:
+{indexes}
+}};
+
+#endif // {basename.capitalize()}DetectorParamSet_H
 """
         return h_txt
-
-    def format_cpp(
-        self, parameters: Tree[AsynParameter], basename: str, macros: List[Macro]
-    ) -> str:
-        create_params = ""
-        for parameter in walk(parameters):
-            if isinstance(parameter, AsynParameter):
-                create_params += (
-                    f'    parent->createParam("{parameter.name}", '
-                    f"{parameter.type}, &{parameter.name});\n"
-                )
-        cpp_txt = f"""\
-{basename.title()}Parameters::{basename.title()}Parameters(asynPortDriver *parent) {{
-{create_params.rstrip()}
-}}
-"""
-        return cpp_txt
