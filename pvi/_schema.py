@@ -5,7 +5,17 @@ from pydantic import BaseModel, Field
 from ruamel.yaml import YAML
 
 from ._aps import APSFormatter
-from ._asyn import AsynFloat64, AsynProducer, AsynString
+from ._asyn import (
+    AsynBinary,
+    AsynBusy,
+    AsynFloat64,
+    AsynInt32,
+    AsynLong,
+    AsynMultiBitBinary,
+    AsynProducer,
+    AsynString,
+    AsynWaveform,
+)
 from ._dls import DLSFormatter
 from ._macros import FloatMacro, IntMacro, StringMacro
 from ._types import Component, File, Group
@@ -15,7 +25,17 @@ from ._types import Component, File, Group
 MacroUnion = Union[FloatMacro, StringMacro, IntMacro]
 ProducerUnion = Union[AsynProducer]  # , StreamProducer, SoftProducer]
 FormatterUnion = Union[APSFormatter, DLSFormatter]
-ComponentUnion = Union["ComponentGroup", AsynFloat64, AsynString]
+ComponentUnion = Union[
+    "ComponentGroup",
+    AsynBinary,
+    AsynBusy,
+    AsynFloat64,
+    AsynInt32,
+    AsynLong,
+    AsynMultiBitBinary,
+    AsynString,
+    AsynWaveform,
+]
 
 
 class ComponentGroup(Group[Component]):
