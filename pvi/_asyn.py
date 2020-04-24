@@ -74,6 +74,16 @@ class AsynComponent(Component):
     description: str = Field(
         ..., description="Description of what this Parameter is for"
     )
+    index_name: str = Field(
+        None,
+        description="Override name of index variable in source code (defaults to name)",
+        regex=r"([A-Z][a-z0-9]*)*$",
+    )
+    drv_info: str = Field(
+        None,
+        description="Info string for drvUserCreate for dynamically created parameters",
+        regex=r"^\S{1,40}$",  # Limit to 40 characters with no whitespace
+    )
     role: ParameterRole = Field(
         ParameterRole.SETTING, description=ParameterRole.__doc__,
     )
@@ -278,7 +288,8 @@ class AsynProducer(Producer):
     def _make_records(self, component: AsynComponent) -> List[Record]:
         records = []
         inp_fields, out_fields = component.record_fields.sort_records()
-        io = f"@asyn({self.asyn_port},{self.address},{self.timeout}){component.name}"
+        asyn_param_name = component.drv_info or component.name
+        io = f"@asyn({self.asyn_port},{self.address},{self.timeout}){asyn_param_name}"
         if component.role.needs_read_record():
             fields = dict(
                 SCAN=component.read_record_scan.value,
@@ -364,6 +375,7 @@ class AsynProducer(Producer):
         parameter = AsynParameter(
             name=component.name,
             type=component.type_strings.asyn_param,
+            index_name=component.index_name or component.name,
             description=component.role.value,
         )
         return [parameter]

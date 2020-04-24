@@ -83,8 +83,9 @@ class Record(BaseModel):
 
 
 class AsynParameter(BaseModel):
-    name: str = Field(..., description="Asyn parameter name")
+    name: str = Field(..., description="Channel name (base name of PV)")
     type: str = Field(..., description="Asyn parameter type")
+    index_name: str = Field(..., description="Name of index variable in source code")
     description: str = Field(..., description="Comment about this parameter")
 
 
