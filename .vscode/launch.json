@@ -16,5 +16,17 @@
             ],
             "console": "integratedTerminal"
         },
+        {
+            "name": "SimDetector PVI Generate",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder:pvi}/pvi",
+            "args": [
+                "generate",
+                "${workspaceFolder:pvi}/tests/sim.pvi.yaml",
+                "${workspaceFolder:pvi}/simDetectorParamSet.h"
+            ],
+            "console": "integratedTerminal"
+        },
     ]
 }

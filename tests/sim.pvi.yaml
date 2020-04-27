@@ -1,0 +1,73 @@
+description: |
+  An EPICS areaDetector driver for the Pilatus pixel array detectors from Dectris.
+macros:
+  - type: StringMacro
+    name: P
+    description: Record prefix part 1
+  - type: StringMacro
+    name: R
+    description: Record prefix part 2
+  - type: StringMacro
+    name: PORT
+    description: Asyn port name
+  - type: FloatMacro
+    name: TIMEOUT
+    description: The timeout for records talking to the driver
+    value: 1
+  - type: IntMacro
+    name: ADDR
+    description: The address for the asyn port
+    value: 0
+  - type: IntMacro
+    name: XSIZE
+    description: Maximum X dimension of the image
+  - type: IntMacro
+    name: YSIZE
+    description: Maximum Y dimension of the image
+  - type: IntMacro
+    name: DATATYPE
+    description: The datatype of the simulated NDArrays
+    value: 0
+  - type: IntMacro
+    name: BUFFERS
+    description: Maximum number of NDArray buffers to be created for plugin callbacks
+    value: 50
+  - type: IntMacro
+    name: MEMORY
+    description: Max memory to allocate, should be maxw*maxh*nbuffer for driver and all attached plugins
+    value: 0
+template: ../Db/simDetector.template
+startup: |
+  # Make an instance of the driver and load the records
+  simDetectorConfig("$(PORT)", $(XSIZE), $(YSIZE), $(DATATYPE), $(BUFFERS), $(MEMORY))
+screens:
+  - path: ../op/opi/DLS/simDetctor.opi
+includes:
+  - path: $(ADCORE)/ADSrc/_ADBase.pvi.yaml
+local: $(basename).local.yaml
+producer:
+  type: AsynProducer
+  prefix: $(P)$(R)
+  asyn_port: $(PORT)
+  address: $(ADDR)
+  timeout: $(TIMEOUT)
+formatter:
+  type: APSFormatter
+components:
+  - type: ComponentGroup
+    name: AncilliaryInformation
+    children:
+      - name: GainX
+        type: AsynFloat64
+        description: |
+          Gain in the X direction
+        precision: 2
+        initial: 1.0
+        role: Setting
+      - name: GainY
+        type: AsynFloat64
+        description: |
+          Gain in the Y direction
+        precision: 2
+        initial: 1.0
+        role: Setting
