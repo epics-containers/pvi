@@ -20,3 +20,84 @@ record(ao, "$(P)$(R)ThresholdEnergy") {
     info(autosaveFields, "VAL")
 }
 
+record(longin, "$(P)$(R)MinFlatField_RBV") {
+    field(SCAN, "I/O Intr")
+    field(DESC, "Minimum flat field value")
+    field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))MinFlatField")
+    field(DTYP, "asynInt32")
+    field(EGU,  "Counts")
+}
+
+record(longout, "$(P)$(R)MinFlatField") {
+    field(DESC, "Minimum flat field value")
+    field(DTYP, "asynInt32")
+    field(EGU,  "Counts")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))MinFlatField")
+    field(PINI, "YES")
+    field(VAL,  "100")
+    info(autosaveFields, "VAL")
+}
+
+record(mbbi, "$(P)$(R)GapFill_RBV") {
+    field(SCAN, "I/O Intr")
+    field(DESC, "GapFill")
+    field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))GapFill")
+    field(DTYP, "asynInt32")
+    field(ONST, "0")
+    field(ONVL, "0")
+    field(TWST, "-1")
+    field(TWVL, "-1")
+    field(ZRST, "N.A.")
+    field(ZRVL, "2")
+}
+
+record(mbbo, "$(P)$(R)GapFill") {
+    field(DESC, "GapFill")
+    field(DTYP, "asynInt32")
+    field(ONST, "0")
+    field(ONVL, "0")
+    field(TWST, "-1")
+    field(TWVL, "-1")
+    field(ZRST, "N.A.")
+    field(ZRVL, "2")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))GapFill")
+    field(PINI, "YES")
+    field(VAL,  "0")
+    info(autosaveFields, "VAL")
+}
+
+record(stringin, "$(P)$(R)TVXVersion_RBV") {
+    field(SCAN, "I/O Intr")
+    field(DESC, "TVXVersion_RBV")
+    field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))TVXVersion")
+    field(DTYP, "asynOctetRead")
+}
+
+record(ai, "$(P)$(R)PixelCutOff_RBV") {
+    field(SCAN, "I/O Intr")
+    field(DESC, "Readback for tau pixel cut off")
+    field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))PixelCutOff")
+    field(DTYP, "asynInt32")
+    field(EGU,  "Counts")
+}
+
+record(waveform, "$(P)$(R)HeaderString") {
+    field(DESC, "HeaderString")
+    field(DTYP, "asynOctetWrite")
+    field(FTVL, "CHAR")
+    field(NELM, "68")
+    field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))HeaderString")
+    field(PINI, "YES")
+    field(VAL,  "0")
+    info(autosaveFields, "VAL")
+}
+
+record(bi, "$(P)$(R)Armed_RBV") {
+    field(SCAN, "I/O Intr")
+    field(DESC, "Armed flag")
+    field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))Armed")
+    field(DTYP, "asynInt32")
+    field(ONAM, "Armed")
+    field(ZNAM, "Unarmed")
+}
+

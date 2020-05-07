@@ -75,3 +75,49 @@ components:
           PREC: 3
           EGU: keV
         role: Setting
+      - type: AsynLong
+        name: MinFlatField
+        description: Minimum flat field value
+        initial: 100
+        common_fields:
+          EGU: Counts
+      - type: AsynMultiBitBinary
+        name: GapFill
+        description: GapFill
+        initial: 0
+        common_fields:
+          ONST: '0'
+          ONVL: '0'
+          TWST: '-1'
+          TWVL: '-1'
+          ZRST: N.A.
+          ZRVL: '2'
+      - type: AsynString
+        name: TVXVersion
+        description: TVXVersion_RBV
+        role: Readback
+      - type: AsynInt32
+        name: PixelCutOff
+        description: |
+          Readback for tau pixel cut off
+        role: Readback
+        read_fields:
+          EGU: Counts
+      - type: AsynWaveform
+        name: HeaderString
+        description: HeaderString
+        role: Action
+        initial: '0'
+        write_fields:
+          FTVL: CHAR
+          NELM: '68'
+      - type: AsynBinary
+        name: Armed
+        description: |
+          Armed flag
+
+          Indicates Pilatus is ready for external triggers
+        role: Readback
+        read_fields:
+          ONAM: Armed
+          ZNAM: Unarmed

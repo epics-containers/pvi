@@ -20,7 +20,8 @@ class DLSFormatter(Formatter):
             if isinstance(channel, Group):
                 writer.writerow([f"*{channel.name}*"])
             else:
-                pvs = "\n".join([channel.write_pv, channel.read_pv])
+                # Filter out PVs that are None
+                pvs = "\n".join(filter(None, [channel.write_pv, channel.read_pv]))
                 writer.writerow([channel.name, pvs, channel.description])
         return out.getvalue()
 
@@ -73,7 +74,7 @@ public:
             if isinstance(parameter, AsynParameter):
                 create_params += (
                     f'    parent->createParam("{parameter.name}", '
-                    f"{parameter.type}, &{parameter.name});"
+                    f"{parameter.type}, &{parameter.name});\n"
                 )
         cpp_txt = f"""\
 {basename.title()}Parameters::{basename.title()}Parameters(asynPortDriver *parent) {{
