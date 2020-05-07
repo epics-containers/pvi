@@ -1,48 +1,22 @@
 from enum import Enum
-from typing import Any, ClassVar, Dict, List, Union
+from typing import Any, ClassVar, Dict, List
 
 from pydantic import BaseModel, Field
 
 from pvi._types import Channel, DisplayForm, Widget
 
 from ._records import (
-    AnalogueCommon,
-    AnalogueIn,
-    AnalogueOut,
-    BinaryCommon,
-    BinaryIn,
-    BinaryOut,
-    LongCommon,
-    LongIn,
-    LongOut,
-    MultiBitBinaryCommon,
-    MultiBitBinaryIn,
-    MultiBitBinaryOut,
-    StringCommon,
-    StringIn,
-    StringOut,
-    WaveformCommon,
-    WaveformIn,
-    WaveformOut,
+    AnalogueAll,
+    BinaryAll,
+    LongAll,
+    MultiBitBinaryAll,
+    StringAll,
+    WaveformAll,
 )
 from ._types import AsynParameter, Component, Producer, Record, Tree
 from ._util import camel_to_title, truncate_description
 
 VALUE_FIELD = Field(None, description="The initial value of the parameter")
-RecordCommonUnion = Union[
-    AnalogueCommon,
-    BinaryCommon,
-    LongCommon,
-    MultiBitBinaryCommon,
-    StringCommon,
-    WaveformCommon,
-]
-RecordInUnion = Union[
-    AnalogueIn, BinaryIn, LongIn, MultiBitBinaryIn, StringIn, WaveformIn,
-]
-RecordOutUnion = Union[
-    AnalogueOut, BinaryOut, LongOut, MultiBitBinaryOut, StringOut, WaveformOut,
-]
 
 
 class AsynComponentType(BaseModel):
@@ -147,20 +121,17 @@ class AsynComponent(Component):
     )
     asyn_component_type: ClassVar[AsynComponentType]
     initial: Any
-    common_fields: Any = None
-    read_fields: Any = None
-    write_fields: Any = None
+    record_fields: Any
 
     def asyn_parameter_info(self) -> AsynInfo:
+        inp_fields, out_fields = self.record_fields.sort_records()
         read_fields = {
             **dict(DTYP=self.asyn_component_type.asyn_read_type),
-            **self.common_fields.dict(exclude_none=True),
-            **self.read_fields.dict(exclude_none=True),
+            **inp_fields.dict(exclude_none=True),
         }
         write_fields = {
             **dict(DTYP=self.asyn_component_type.asyn_write_type),
-            **self.common_fields.dict(exclude_none=True),
-            **self.write_fields.dict(exclude_none=True),
+            **out_fields.dict(exclude_none=True),
         }
         info = AsynInfo(
             read_record_type=self.asyn_component_type.inp,
@@ -185,9 +156,9 @@ class AsynBinary(AsynComponent):
     initial: int = Field(
         None, ge=0, le=1, description="The initial value of the parameter"
     )
-    common_fields: BinaryCommon = Field(BinaryCommon(), description="Optional common")
-    read_fields: BinaryIn = Field(BinaryIn(), description="Optional read fields")
-    write_fields: BinaryOut = Field(BinaryOut(), description="Optional write fields")
+    record_fields: BinaryAll = Field(
+        BinaryAll(), description="Binary record fields",
+    )
 
 
 class AsynBusy(AsynComponent):
@@ -203,9 +174,9 @@ class AsynBusy(AsynComponent):
     initial: int = Field(
         None, ge=0, le=1, description="The initial value of the parameter"
     )
-    common_fields: BinaryCommon = Field(BinaryCommon(), description="Optional common")
-    read_fields: BinaryIn = Field(BinaryIn(), description="Optional read fields")
-    write_fields: BinaryOut = Field(BinaryOut(), description="Optional write fields")
+    record_fields: BinaryAll = Field(
+        BinaryAll(), description="Binary record fields",
+    )
 
 
 class AsynFloat64(AsynComponent):
@@ -219,12 +190,8 @@ class AsynFloat64(AsynComponent):
         asyn_param_type="asynParamFloat64",
     )
     initial: float = VALUE_FIELD
-    common_fields: AnalogueCommon = Field(
-        AnalogueCommon(), description="Optional common"
-    )
-    read_fields: AnalogueIn = Field(AnalogueIn(), description="Optional read fields")
-    write_fields: AnalogueOut = Field(
-        AnalogueOut(), description="Optional write fields"
+    record_fields: AnalogueAll = Field(
+        AnalogueAll(), description="Analogue record fields",
     )
 
 
@@ -239,12 +206,8 @@ class AsynInt32(AsynComponent):
         asyn_param_type="asynParamInt32",
     )
     initial: int = VALUE_FIELD
-    common_fields: AnalogueCommon = Field(
-        AnalogueCommon(), description="Optional common"
-    )
-    read_fields: AnalogueIn = Field(AnalogueIn(), description="Optional read fields")
-    write_fields: AnalogueOut = Field(
-        AnalogueOut(), description="Optional write fields"
+    record_fields: AnalogueAll = Field(
+        AnalogueAll(), description="Analogue record fields",
     )
 
 
@@ -259,9 +222,9 @@ class AsynLong(AsynComponent):
         asyn_param_type="asynParamInt32",
     )
     initial: int = VALUE_FIELD
-    common_fields: LongCommon = Field(LongCommon(), description="Optional common")
-    read_fields: LongIn = Field(LongIn(), description="Optional read fields")
-    write_fields: LongOut = Field(LongOut(), description="Optional write fields")
+    record_fields: LongAll = Field(
+        LongAll(), description="Long record fields",
+    )
 
 
 class AsynMultiBitBinary(AsynComponent):
@@ -277,14 +240,8 @@ class AsynMultiBitBinary(AsynComponent):
     initial: int = Field(
         None, ge=0, le=15, description="The initial value of the parameter"
     )
-    common_fields: MultiBitBinaryCommon = Field(
-        MultiBitBinaryCommon(), description="Optional common"
-    )
-    read_fields: MultiBitBinaryIn = Field(
-        MultiBitBinaryIn(), description="Optional read fields"
-    )
-    write_fields: MultiBitBinaryOut = Field(
-        MultiBitBinaryOut(), description="Optional write fields"
+    record_fields: MultiBitBinaryAll = Field(
+        MultiBitBinaryAll(), description="Multi-bit binary record fields",
     )
 
 
@@ -299,9 +256,9 @@ class AsynString(AsynComponent):
         asyn_param_type="asynParamOctet",
     )
     initial: str = VALUE_FIELD
-    common_fields: StringCommon = Field(StringCommon(), description="Optional common")
-    read_fields: StringIn = Field(StringIn(), description="Optional read fields")
-    write_fields: StringOut = Field(StringOut(), description="Optional write fields")
+    record_fields: StringAll = Field(
+        StringAll(), description="String record fields",
+    )
 
 
 class AsynWaveform(AsynComponent):
@@ -314,12 +271,8 @@ class AsynWaveform(AsynComponent):
         asyn_write_type="asynOctetWrite",
         asyn_param_type="asynParamOctet",
     )
-    common_fields: WaveformCommon = Field(
-        WaveformCommon(), description="Optional common"
-    )
-    read_fields: WaveformIn = Field(WaveformIn(), description="Optional read fields")
-    write_fields: WaveformOut = Field(
-        WaveformOut(), description="Optional write fields"
+    record_fields: WaveformAll = Field(
+        WaveformAll(), description="Waveform record fields",
     )
 
 

@@ -1,11 +1,28 @@
+from typing import Tuple, Union
+
 from pydantic import BaseModel, Field
 
 # TODO
 # Correct the datatypes (currently using str for all)
 
 
+PairUnion = Union[
+    Tuple["AnalogueIn", "AnalogueOut"],
+    Tuple["BinaryIn", "BinaryOut"],
+    Tuple["LongIn", "LongOut"],
+    Tuple["MultiBitBinaryIn", "MultiBitBinaryOut"],
+    Tuple["StringIn", "StringOut"],
+    Tuple["WaveformIn", "WaveformOut"],
+]
+
+
 class BaseRecordType(BaseModel):
     pass
+
+
+class SortRecords:
+    def sort_records(self) -> PairUnion:
+        raise NotImplementedError(self)
 
 
 class AnalogueCommon(BaseRecordType):
@@ -67,6 +84,13 @@ class AnalogueOut(AnalogueCommon):
     RBV: str = Field(None, description="RBV")
 
 
+class AnalogueAll(AnalogueIn, AnalogueOut, SortRecords):
+    def sort_records(self) -> Tuple[AnalogueIn, AnalogueOut]:
+        inp_records = AnalogueIn(**self.dict(exclude_none=True))
+        out_records = AnalogueOut(**self.dict(exclude_none=True))
+        return inp_records, out_records
+
+
 class BinaryCommon(BaseRecordType):
     COSV: str = Field(None, description="COSV")
     LALM: str = Field(None, description="LALM")
@@ -98,6 +122,13 @@ class BinaryOut(BinaryCommon):
     RBV: str = Field(None, description="RBV")
     RPVT: str = Field(None, description="RPVT")
     WDPT: str = Field(None, description="WDPT")
+
+
+class BinaryAll(BinaryIn, BinaryOut, SortRecords):
+    def sort_records(self) -> Tuple[BinaryIn, BinaryOut]:
+        inp_records = BinaryIn(**self.dict(exclude_none=True))
+        out_records = BinaryOut(**self.dict(exclude_none=True))
+        return inp_records, out_records
 
 
 class LongCommon(BaseRecordType):
@@ -135,6 +166,13 @@ class LongOut(LongCommon):
     IVOA: str = Field(None, description="IVOA")
     IVOV: str = Field(None, description="IVOV")
     OMSL: str = Field(None, description="OMSL")
+
+
+class LongAll(LongIn, LongOut, SortRecords):
+    def sort_records(self) -> Tuple[LongIn, LongOut]:
+        inp_records = LongIn(**self.dict(exclude_none=True))
+        out_records = LongOut(**self.dict(exclude_none=True))
+        return inp_records, out_records
 
 
 class MultiBitBinaryCommon(BaseRecordType):
@@ -215,6 +253,13 @@ class MultiBitBinaryOut(MultiBitBinaryCommon):
     RBV: str = Field(None, description="RBV")
 
 
+class MultiBitBinaryAll(MultiBitBinaryIn, MultiBitBinaryOut, SortRecords):
+    def sort_records(self) -> Tuple[MultiBitBinaryIn, MultiBitBinaryOut]:
+        inp_records = MultiBitBinaryIn(**self.dict(exclude_none=True))
+        out_records = MultiBitBinaryOut(**self.dict(exclude_none=True))
+        return inp_records, out_records
+
+
 class StringCommon(BaseRecordType):
     APST: str = Field(None, description="APST")
     MPST: str = Field(None, description="MPST")
@@ -234,6 +279,13 @@ class StringOut(StringCommon):
     IVOA: str = Field(None, description="IVOA")
     IVOV: str = Field(None, description="IVOV")
     OMSL: str = Field(None, description="OMSL")
+
+
+class StringAll(StringIn, StringOut, SortRecords):
+    def sort_records(self) -> Tuple[StringIn, StringOut]:
+        inp_records = StringIn(**self.dict(exclude_none=True))
+        out_records = StringOut(**self.dict(exclude_none=True))
+        return inp_records, out_records
 
 
 class WaveformCommon(BaseRecordType):
@@ -262,3 +314,10 @@ class WaveformIn(WaveformCommon):
 
 class WaveformOut(WaveformCommon):
     pass
+
+
+class WaveformAll(WaveformIn, WaveformOut, SortRecords):
+    def sort_records(self) -> Tuple[WaveformIn, WaveformOut]:
+        inp_records = WaveformIn(**self.dict(exclude_none=True))
+        out_records = WaveformOut(**self.dict(exclude_none=True))
+        return inp_records, out_records

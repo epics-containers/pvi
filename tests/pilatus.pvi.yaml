@@ -71,7 +71,7 @@ components:
           It is typically set to the incident x-ray energy ($(P)$(R)Energy),
           but sometimes other values may be preferable.
         initial: 10
-        common_fields:
+        record_fields:
           PREC: 3
           EGU: keV
         role: Setting
@@ -79,13 +79,13 @@ components:
         name: MinFlatField
         description: Minimum flat field value
         initial: 100
-        common_fields:
+        record_fields:
           EGU: Counts
       - type: AsynMultiBitBinary
         name: GapFill
         description: GapFill
         initial: 0
-        common_fields:
+        record_fields:
           ONST: '0'
           ONVL: '0'
           TWST: '-1'
@@ -101,14 +101,14 @@ components:
         description: |
           Readback for tau pixel cut off
         role: Readback
-        read_fields:
+        record_fields:
           EGU: Counts
       - type: AsynWaveform
         name: HeaderString
         description: HeaderString
         role: Action
         initial: '0'
-        write_fields:
+        record_fields:
           FTVL: CHAR
           NELM: '68'
       - type: AsynBinary
@@ -118,6 +118,6 @@ components:
 
           Indicates Pilatus is ready for external triggers
         role: Readback
-        read_fields:
+        record_fields:
           ONAM: Armed
           ZNAM: Unarmed

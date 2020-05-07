@@ -309,165 +309,8 @@
         }
       }
     },
-    "BinaryCommon": {
-      "title": "BinaryCommon",
-      "type": "object",
-      "properties": {
-        "COSV": {
-          "title": "Cosv",
-          "description": "COSV",
-          "type": "string"
-        },
-        "LALM": {
-          "title": "Lalm",
-          "description": "LALM",
-          "type": "string"
-        },
-        "MASK": {
-          "title": "Mask",
-          "description": "MASK",
-          "type": "string"
-        },
-        "MLST": {
-          "title": "Mlst",
-          "description": "MLST",
-          "type": "string"
-        },
-        "ONAM": {
-          "title": "Onam",
-          "description": "ONAM",
-          "type": "string"
-        },
-        "ORAW": {
-          "title": "Oraw",
-          "description": "ORAW",
-          "type": "string"
-        },
-        "OSV": {
-          "title": "Osv",
-          "description": "OSV",
-          "type": "string"
-        },
-        "RVAL": {
-          "title": "Rval",
-          "description": "RVAL",
-          "type": "string"
-        },
-        "SIML": {
-          "title": "Siml",
-          "description": "SIML",
-          "type": "string"
-        },
-        "SIMM": {
-          "title": "Simm",
-          "description": "SIMM",
-          "type": "string"
-        },
-        "SIMS": {
-          "title": "Sims",
-          "description": "SIMS",
-          "type": "string"
-        },
-        "SIOL": {
-          "title": "Siol",
-          "description": "SIOL",
-          "type": "string"
-        },
-        "ZNAM": {
-          "title": "Znam",
-          "description": "ZNAM",
-          "type": "string"
-        },
-        "ZSV": {
-          "title": "Zsv",
-          "description": "ZSV",
-          "type": "string"
-        }
-      }
-    },
-    "BinaryIn": {
-      "title": "BinaryIn",
-      "type": "object",
-      "properties": {
-        "COSV": {
-          "title": "Cosv",
-          "description": "COSV",
-          "type": "string"
-        },
-        "LALM": {
-          "title": "Lalm",
-          "description": "LALM",
-          "type": "string"
-        },
-        "MASK": {
-          "title": "Mask",
-          "description": "MASK",
-          "type": "string"
-        },
-        "MLST": {
-          "title": "Mlst",
-          "description": "MLST",
-          "type": "string"
-        },
-        "ONAM": {
-          "title": "Onam",
-          "description": "ONAM",
-          "type": "string"
-        },
-        "ORAW": {
-          "title": "Oraw",
-          "description": "ORAW",
-          "type": "string"
-        },
-        "OSV": {
-          "title": "Osv",
-          "description": "OSV",
-          "type": "string"
-        },
-        "RVAL": {
-          "title": "Rval",
-          "description": "RVAL",
-          "type": "string"
-        },
-        "SIML": {
-          "title": "Siml",
-          "description": "SIML",
-          "type": "string"
-        },
-        "SIMM": {
-          "title": "Simm",
-          "description": "SIMM",
-          "type": "string"
-        },
-        "SIMS": {
-          "title": "Sims",
-          "description": "SIMS",
-          "type": "string"
-        },
-        "SIOL": {
-          "title": "Siol",
-          "description": "SIOL",
-          "type": "string"
-        },
-        "ZNAM": {
-          "title": "Znam",
-          "description": "ZNAM",
-          "type": "string"
-        },
-        "ZSV": {
-          "title": "Zsv",
-          "description": "ZSV",
-          "type": "string"
-        },
-        "SVAL": {
-          "title": "Sval",
-          "description": "SVAL",
-          "type": "string"
-        }
-      }
-    },
-    "BinaryOut": {
-      "title": "BinaryOut",
+    "BinaryAll": {
+      "title": "BinaryAll",
       "type": "object",
       "properties": {
         "COSV": {
@@ -583,6 +426,11 @@
         "WDPT": {
           "title": "Wdpt",
           "description": "WDPT",
+          "type": "string"
+        },
+        "SVAL": {
+          "title": "Sval",
+          "description": "SVAL",
           "type": "string"
         }
       }
@@ -720,60 +568,9 @@
           "maximum": 1,
           "type": "integer"
         },
-        "common_fields": {
-          "title": "Common Fields",
-          "description": "Optional common",
-          "default": {
-            "COSV": null,
-            "LALM": null,
-            "MASK": null,
-            "MLST": null,
-            "ONAM": null,
-            "ORAW": null,
-            "OSV": null,
-            "RVAL": null,
-            "SIML": null,
-            "SIMM": null,
-            "SIMS": null,
-            "SIOL": null,
-            "ZNAM": null,
-            "ZSV": null
-          },
-          "allOf": [
-            {
-              "$ref": "#/definitions/BinaryCommon"
-            }
-          ]
-        },
-        "read_fields": {
-          "title": "Read Fields",
-          "description": "Optional read fields",
-          "default": {
-            "COSV": null,
-            "LALM": null,
-            "MASK": null,
-            "MLST": null,
-            "ONAM": null,
-            "ORAW": null,
-            "OSV": null,
-            "RVAL": null,
-            "SIML": null,
-            "SIMM": null,
-            "SIMS": null,
-            "SIOL": null,
-            "ZNAM": null,
-            "ZSV": null,
-            "SVAL": null
-          },
-          "allOf": [
-            {
-              "$ref": "#/definitions/BinaryIn"
-            }
-          ]
-        },
-        "write_fields": {
-          "title": "Write Fields",
-          "description": "Optional write fields",
+        "record_fields": {
+          "title": "Record Fields",
+          "description": "Binary record fields",
           "default": {
             "COSV": null,
             "LALM": null,
@@ -797,11 +594,12 @@
             "ORBV": null,
             "RBV": null,
             "RPVT": null,
-            "WDPT": null
+            "WDPT": null,
+            "SVAL": null
           },
           "allOf": [
             {
-              "$ref": "#/definitions/BinaryOut"
+              "$ref": "#/definitions/BinaryAll"
             }
           ]
         }
@@ -944,60 +742,9 @@
           "maximum": 1,
           "type": "integer"
         },
-        "common_fields": {
-          "title": "Common Fields",
-          "description": "Optional common",
-          "default": {
-            "COSV": null,
-            "LALM": null,
-            "MASK": null,
-            "MLST": null,
-            "ONAM": null,
-            "ORAW": null,
-            "OSV": null,
-            "RVAL": null,
-            "SIML": null,
-            "SIMM": null,
-            "SIMS": null,
-            "SIOL": null,
-            "ZNAM": null,
-            "ZSV": null
-          },
-          "allOf": [
-            {
-              "$ref": "#/definitions/BinaryCommon"
-            }
-          ]
-        },
-        "read_fields": {
-          "title": "Read Fields",
-          "description": "Optional read fields",
-          "default": {
-            "COSV": null,
-            "LALM": null,
-            "MASK": null,
-            "MLST": null,
-            "ONAM": null,
-            "ORAW": null,
-            "OSV": null,
-            "RVAL": null,
-            "SIML": null,
-            "SIMM": null,
-            "SIMS": null,
-            "SIOL": null,
-            "ZNAM": null,
-            "ZSV": null,
-            "SVAL": null
-          },
-          "allOf": [
-            {
-              "$ref": "#/definitions/BinaryIn"
-            }
-          ]
-        },
-        "write_fields": {
-          "title": "Write Fields",
-          "description": "Optional write fields",
+        "record_fields": {
+          "title": "Record Fields",
+          "description": "Binary record fields",
           "default": {
             "COSV": null,
             "LALM": null,
@@ -1021,11 +768,12 @@
             "ORBV": null,
             "RBV": null,
             "RPVT": null,
-            "WDPT": null
+            "WDPT": null,
+            "SVAL": null
           },
           "allOf": [
             {
-              "$ref": "#/definitions/BinaryOut"
+              "$ref": "#/definitions/BinaryAll"
             }
           ]
         }
@@ -1035,380 +783,8 @@
         "description"
       ]
     },
-    "AnalogueCommon": {
-      "title": "AnalogueCommon",
-      "type": "object",
-      "properties": {
-        "ADEL": {
-          "title": "Adel",
-          "description": "ADEL",
-          "type": "string"
-        },
-        "ALST": {
-          "title": "Alst",
-          "description": "ALST",
-          "type": "string"
-        },
-        "AOFF": {
-          "title": "Aoff",
-          "description": "AOFF",
-          "type": "string"
-        },
-        "ASLO": {
-          "title": "Aslo",
-          "description": "ASLO",
-          "type": "string"
-        },
-        "EGU": {
-          "title": "Egu",
-          "description": "EGU",
-          "type": "string"
-        },
-        "EGUF": {
-          "title": "Eguf",
-          "description": "EGUF",
-          "type": "string"
-        },
-        "EGUL": {
-          "title": "Egul",
-          "description": "EGUL",
-          "type": "string"
-        },
-        "EOFF": {
-          "title": "Eoff",
-          "description": "EOFF",
-          "type": "string"
-        },
-        "ESLO": {
-          "title": "Eslo",
-          "description": "ESLO",
-          "type": "string"
-        },
-        "HHSV": {
-          "title": "Hhsv",
-          "description": "HHSV",
-          "type": "string"
-        },
-        "HIGH": {
-          "title": "High",
-          "description": "HIGH",
-          "type": "string"
-        },
-        "HIHI": {
-          "title": "Hihi",
-          "description": "HIHI",
-          "type": "string"
-        },
-        "HOPR": {
-          "title": "Hopr",
-          "description": "HOPR",
-          "type": "string"
-        },
-        "HSV": {
-          "title": "Hsv",
-          "description": "HSV",
-          "type": "string"
-        },
-        "HYST": {
-          "title": "Hyst",
-          "description": "HYST",
-          "type": "string"
-        },
-        "INIT": {
-          "title": "Init",
-          "description": "INIT",
-          "type": "string"
-        },
-        "LALM": {
-          "title": "Lalm",
-          "description": "LALM",
-          "type": "string"
-        },
-        "LBRK": {
-          "title": "Lbrk",
-          "description": "LBRK",
-          "type": "string"
-        },
-        "LINR": {
-          "title": "Linr",
-          "description": "LINR",
-          "type": "string"
-        },
-        "LLSV": {
-          "title": "Llsv",
-          "description": "LLSV",
-          "type": "string"
-        },
-        "LOLO": {
-          "title": "Lolo",
-          "description": "LOLO",
-          "type": "string"
-        },
-        "LOPR": {
-          "title": "Lopr",
-          "description": "LOPR",
-          "type": "string"
-        },
-        "LOW": {
-          "title": "Low",
-          "description": "LOW",
-          "type": "string"
-        },
-        "LSV": {
-          "title": "Lsv",
-          "description": "LSV",
-          "type": "string"
-        },
-        "MDEL": {
-          "title": "Mdel",
-          "description": "MDEL",
-          "type": "string"
-        },
-        "MLST": {
-          "title": "Mlst",
-          "description": "MLST",
-          "type": "string"
-        },
-        "ORAW": {
-          "title": "Oraw",
-          "description": "ORAW",
-          "type": "string"
-        },
-        "PBRK": {
-          "title": "Pbrk",
-          "description": "PBRK",
-          "type": "string"
-        },
-        "PREC": {
-          "title": "Prec",
-          "description": "PREC",
-          "type": "integer"
-        },
-        "ROFF": {
-          "title": "Roff",
-          "description": "ROFF",
-          "type": "string"
-        },
-        "RVAL": {
-          "title": "Rval",
-          "description": "RVAL",
-          "type": "string"
-        },
-        "SIML": {
-          "title": "Siml",
-          "description": "SIML",
-          "type": "string"
-        },
-        "SIMM": {
-          "title": "Simm",
-          "description": "SIMM",
-          "type": "string"
-        },
-        "SIMS": {
-          "title": "Sims",
-          "description": "SIMS",
-          "type": "string"
-        },
-        "SIOL": {
-          "title": "Siol",
-          "description": "SIOL",
-          "type": "string"
-        }
-      }
-    },
-    "AnalogueIn": {
-      "title": "AnalogueIn",
-      "type": "object",
-      "properties": {
-        "ADEL": {
-          "title": "Adel",
-          "description": "ADEL",
-          "type": "string"
-        },
-        "ALST": {
-          "title": "Alst",
-          "description": "ALST",
-          "type": "string"
-        },
-        "AOFF": {
-          "title": "Aoff",
-          "description": "AOFF",
-          "type": "string"
-        },
-        "ASLO": {
-          "title": "Aslo",
-          "description": "ASLO",
-          "type": "string"
-        },
-        "EGU": {
-          "title": "Egu",
-          "description": "EGU",
-          "type": "string"
-        },
-        "EGUF": {
-          "title": "Eguf",
-          "description": "EGUF",
-          "type": "string"
-        },
-        "EGUL": {
-          "title": "Egul",
-          "description": "EGUL",
-          "type": "string"
-        },
-        "EOFF": {
-          "title": "Eoff",
-          "description": "EOFF",
-          "type": "string"
-        },
-        "ESLO": {
-          "title": "Eslo",
-          "description": "ESLO",
-          "type": "string"
-        },
-        "HHSV": {
-          "title": "Hhsv",
-          "description": "HHSV",
-          "type": "string"
-        },
-        "HIGH": {
-          "title": "High",
-          "description": "HIGH",
-          "type": "string"
-        },
-        "HIHI": {
-          "title": "Hihi",
-          "description": "HIHI",
-          "type": "string"
-        },
-        "HOPR": {
-          "title": "Hopr",
-          "description": "HOPR",
-          "type": "string"
-        },
-        "HSV": {
-          "title": "Hsv",
-          "description": "HSV",
-          "type": "string"
-        },
-        "HYST": {
-          "title": "Hyst",
-          "description": "HYST",
-          "type": "string"
-        },
-        "INIT": {
-          "title": "Init",
-          "description": "INIT",
-          "type": "string"
-        },
-        "LALM": {
-          "title": "Lalm",
-          "description": "LALM",
-          "type": "string"
-        },
-        "LBRK": {
-          "title": "Lbrk",
-          "description": "LBRK",
-          "type": "string"
-        },
-        "LINR": {
-          "title": "Linr",
-          "description": "LINR",
-          "type": "string"
-        },
-        "LLSV": {
-          "title": "Llsv",
-          "description": "LLSV",
-          "type": "string"
-        },
-        "LOLO": {
-          "title": "Lolo",
-          "description": "LOLO",
-          "type": "string"
-        },
-        "LOPR": {
-          "title": "Lopr",
-          "description": "LOPR",
-          "type": "string"
-        },
-        "LOW": {
-          "title": "Low",
-          "description": "LOW",
-          "type": "string"
-        },
-        "LSV": {
-          "title": "Lsv",
-          "description": "LSV",
-          "type": "string"
-        },
-        "MDEL": {
-          "title": "Mdel",
-          "description": "MDEL",
-          "type": "string"
-        },
-        "MLST": {
-          "title": "Mlst",
-          "description": "MLST",
-          "type": "string"
-        },
-        "ORAW": {
-          "title": "Oraw",
-          "description": "ORAW",
-          "type": "string"
-        },
-        "PBRK": {
-          "title": "Pbrk",
-          "description": "PBRK",
-          "type": "string"
-        },
-        "PREC": {
-          "title": "Prec",
-          "description": "PREC",
-          "type": "integer"
-        },
-        "ROFF": {
-          "title": "Roff",
-          "description": "ROFF",
-          "type": "string"
-        },
-        "RVAL": {
-          "title": "Rval",
-          "description": "RVAL",
-          "type": "string"
-        },
-        "SIML": {
-          "title": "Siml",
-          "description": "SIML",
-          "type": "string"
-        },
-        "SIMM": {
-          "title": "Simm",
-          "description": "SIMM",
-          "type": "string"
-        },
-        "SIMS": {
-          "title": "Sims",
-          "description": "SIMS",
-          "type": "string"
-        },
-        "SIOL": {
-          "title": "Siol",
-          "description": "SIOL",
-          "type": "string"
-        },
-        "SMOO": {
-          "title": "Smoo",
-          "description": "SMOO",
-          "type": "string"
-        },
-        "SVAL": {
-          "title": "Sval",
-          "description": "SVAL",
-          "type": "string"
-        }
-      }
-    },
-    "AnalogueOut": {
-      "title": "AnalogueOut",
+    "AnalogueAll": {
+      "title": "AnalogueAll",
       "type": "object",
       "properties": {
         "ADEL": {
@@ -1650,6 +1026,16 @@
           "title": "Rbv",
           "description": "RBV",
           "type": "string"
+        },
+        "SMOO": {
+          "title": "Smoo",
+          "description": "SMOO",
+          "type": "string"
+        },
+        "SVAL": {
+          "title": "Sval",
+          "description": "SVAL",
+          "type": "string"
         }
       }
     },
@@ -1784,103 +1170,9 @@
           "description": "The initial value of the parameter",
           "type": "number"
         },
-        "common_fields": {
-          "title": "Common Fields",
-          "description": "Optional common",
-          "default": {
-            "ADEL": null,
-            "ALST": null,
-            "AOFF": null,
-            "ASLO": null,
-            "EGU": null,
-            "EGUF": null,
-            "EGUL": null,
-            "EOFF": null,
-            "ESLO": null,
-            "HHSV": null,
-            "HIGH": null,
-            "HIHI": null,
-            "HOPR": null,
-            "HSV": null,
-            "HYST": null,
-            "INIT": null,
-            "LALM": null,
-            "LBRK": null,
-            "LINR": null,
-            "LLSV": null,
-            "LOLO": null,
-            "LOPR": null,
-            "LOW": null,
-            "LSV": null,
-            "MDEL": null,
-            "MLST": null,
-            "ORAW": null,
-            "PBRK": null,
-            "PREC": null,
-            "ROFF": null,
-            "RVAL": null,
-            "SIML": null,
-            "SIMM": null,
-            "SIMS": null,
-            "SIOL": null
-          },
-          "allOf": [
-            {
-              "$ref": "#/definitions/AnalogueCommon"
-            }
-          ]
-        },
-        "read_fields": {
-          "title": "Read Fields",
-          "description": "Optional read fields",
-          "default": {
-            "ADEL": null,
-            "ALST": null,
-            "AOFF": null,
-            "ASLO": null,
-            "EGU": null,
-            "EGUF": null,
-            "EGUL": null,
-            "EOFF": null,
-            "ESLO": null,
-            "HHSV": null,
-            "HIGH": null,
-            "HIHI": null,
-            "HOPR": null,
-            "HSV": null,
-            "HYST": null,
-            "INIT": null,
-            "LALM": null,
-            "LBRK": null,
-            "LINR": null,
-            "LLSV": null,
-            "LOLO": null,
-            "LOPR": null,
-            "LOW": null,
-            "LSV": null,
-            "MDEL": null,
-            "MLST": null,
-            "ORAW": null,
-            "PBRK": null,
-            "PREC": null,
-            "ROFF": null,
-            "RVAL": null,
-            "SIML": null,
-            "SIMM": null,
-            "SIMS": null,
-            "SIOL": null,
-            "SMOO": null,
-            "SVAL": null
-          },
-          "allOf": [
-            {
-              "$ref": "#/definitions/AnalogueIn"
-            }
-          ]
-        },
-        "write_fields": {
-          "title": "Write Fields",
-          "description": "Optional write fields",
+        "record_fields": {
+          "title": "Record Fields",
+          "description": "Analogue record fields",
           "default": {
             "ADEL": null,
             "ALST": null,
@@ -1929,11 +1221,13 @@
             "OROC": null,
             "OVAL": null,
             "PVAL": null,
-            "RBV": null
+            "RBV": null,
+            "SMOO": null,
+            "SVAL": null
           },
           "allOf": [
             {
-              "$ref": "#/definitions/AnalogueOut"
+              "$ref": "#/definitions/AnalogueAll"
             }
           ]
         }
@@ -2074,103 +1368,9 @@
           "description": "The initial value of the parameter",
           "type": "integer"
         },
-        "common_fields": {
-          "title": "Common Fields",
-          "description": "Optional common",
-          "default": {
-            "ADEL": null,
-            "ALST": null,
-            "AOFF": null,
-            "ASLO": null,
-            "EGU": null,
-            "EGUF": null,
-            "EGUL": null,
-            "EOFF": null,
-            "ESLO": null,
-            "HHSV": null,
-            "HIGH": null,
-            "HIHI": null,
-            "HOPR": null,
-            "HSV": null,
-            "HYST": null,
-            "INIT": null,
-            "LALM": null,
-            "LBRK": null,
-            "LINR": null,
-            "LLSV": null,
-            "LOLO": null,
-            "LOPR": null,
-            "LOW": null,
-            "LSV": null,
-            "MDEL": null,
-            "MLST": null,
-            "ORAW": null,
-            "PBRK": null,
-            "PREC": null,
-            "ROFF": null,
-            "RVAL": null,
-            "SIML": null,
-            "SIMM": null,
-            "SIMS": null,
-            "SIOL": null
-          },
-          "allOf": [
-            {
-              "$ref": "#/definitions/AnalogueCommon"
-            }
-          ]
-        },
-        "read_fields": {
-          "title": "Read Fields",
-          "description": "Optional read fields",
-          "default": {
-            "ADEL": null,
-            "ALST": null,
-            "AOFF": null,
-            "ASLO": null,
-            "EGU": null,
-            "EGUF": null,
-            "EGUL": null,
-            "EOFF": null,
-            "ESLO": null,
-            "HHSV": null,
-            "HIGH": null,
-            "HIHI": null,
-            "HOPR": null,
-            "HSV": null,
-            "HYST": null,
-            "INIT": null,
-            "LALM": null,
-            "LBRK": null,
-            "LINR": null,
-            "LLSV": null,
-            "LOLO": null,
-            "LOPR": null,
-            "LOW": null,
-            "LSV": null,
-            "MDEL": null,
-            "MLST": null,
-            "ORAW": null,
-            "PBRK": null,
-            "PREC": null,
-            "ROFF": null,
-            "RVAL": null,
-            "SIML": null,
-            "SIMM": null,
-            "SIMS": null,
-            "SIOL": null,
-            "SMOO": null,
-            "SVAL": null
-          },
-          "allOf": [
-            {
-              "$ref": "#/definitions/AnalogueIn"
-            }
-          ]
-        },
-        "write_fields": {
-          "title": "Write Fields",
-          "description": "Optional write fields",
+        "record_fields": {
+          "title": "Record Fields",
+          "description": "Analogue record fields",
           "default": {
             "ADEL": null,
             "ALST": null,
@@ -2219,11 +1419,13 @@
             "OROC": null,
             "OVAL": null,
             "PVAL": null,
-            "RBV": null
+            "RBV": null,
+            "SMOO": null,
+            "SVAL": null
           },
           "allOf": [
             {
-              "$ref": "#/definitions/AnalogueOut"
+              "$ref": "#/definitions/AnalogueAll"
             }
           ]
         }
@@ -2233,235 +1435,8 @@
         "description"
       ]
     },
-    "LongCommon": {
-      "title": "LongCommon",
-      "type": "object",
-      "properties": {
-        "ADEL": {
-          "title": "Adel",
-          "description": "ADEL",
-          "type": "string"
-        },
-        "ALST": {
-          "title": "Alst",
-          "description": "ALST",
-          "type": "string"
-        },
-        "EGU": {
-          "title": "Egu",
-          "description": "EGU",
-          "type": "string"
-        },
-        "HHSV": {
-          "title": "Hhsv",
-          "description": "HHSV",
-          "type": "string"
-        },
-        "HIGH": {
-          "title": "High",
-          "description": "HIGH",
-          "type": "string"
-        },
-        "HIHI": {
-          "title": "Hihi",
-          "description": "HIHI",
-          "type": "string"
-        },
-        "HOPR": {
-          "title": "Hopr",
-          "description": "HOPR",
-          "type": "string"
-        },
-        "HSV": {
-          "title": "Hsv",
-          "description": "HSV",
-          "type": "string"
-        },
-        "HYST": {
-          "title": "Hyst",
-          "description": "HYST",
-          "type": "string"
-        },
-        "LALM": {
-          "title": "Lalm",
-          "description": "LALM",
-          "type": "string"
-        },
-        "LLSV": {
-          "title": "Llsv",
-          "description": "LLSV",
-          "type": "string"
-        },
-        "LOLO": {
-          "title": "Lolo",
-          "description": "LOLO",
-          "type": "string"
-        },
-        "LOPR": {
-          "title": "Lopr",
-          "description": "LOPR",
-          "type": "string"
-        },
-        "LOW": {
-          "title": "Low",
-          "description": "LOW",
-          "type": "string"
-        },
-        "LSV": {
-          "title": "Lsv",
-          "description": "LSV",
-          "type": "string"
-        },
-        "MDEL": {
-          "title": "Mdel",
-          "description": "MDEL",
-          "type": "string"
-        },
-        "MLST": {
-          "title": "Mlst",
-          "description": "MLST",
-          "type": "string"
-        },
-        "SIML": {
-          "title": "Siml",
-          "description": "SIML",
-          "type": "string"
-        },
-        "SIMM": {
-          "title": "Simm",
-          "description": "SIMM",
-          "type": "string"
-        },
-        "SIMS": {
-          "title": "Sims",
-          "description": "SIMS",
-          "type": "string"
-        },
-        "SIOL": {
-          "title": "Siol",
-          "description": "SIOL",
-          "type": "string"
-        }
-      }
-    },
-    "LongIn": {
-      "title": "LongIn",
-      "type": "object",
-      "properties": {
-        "ADEL": {
-          "title": "Adel",
-          "description": "ADEL",
-          "type": "string"
-        },
-        "ALST": {
-          "title": "Alst",
-          "description": "ALST",
-          "type": "string"
-        },
-        "EGU": {
-          "title": "Egu",
-          "description": "EGU",
-          "type": "string"
-        },
-        "HHSV": {
-          "title": "Hhsv",
-          "description": "HHSV",
-          "type": "string"
-        },
-        "HIGH": {
-          "title": "High",
-          "description": "HIGH",
-          "type": "string"
-        },
-        "HIHI": {
-          "title": "Hihi",
-          "description": "HIHI",
-          "type": "string"
-        },
-        "HOPR": {
-          "title": "Hopr",
-          "description": "HOPR",
-          "type": "string"
-        },
-        "HSV": {
-          "title": "Hsv",
-          "description": "HSV",
-          "type": "string"
-        },
-        "HYST": {
-          "title": "Hyst",
-          "description": "HYST",
-          "type": "string"
-        },
-        "LALM": {
-          "title": "Lalm",
-          "description": "LALM",
-          "type": "string"
-        },
-        "LLSV": {
-          "title": "Llsv",
-          "description": "LLSV",
-          "type": "string"
-        },
-        "LOLO": {
-          "title": "Lolo",
-          "description": "LOLO",
-          "type": "string"
-        },
-        "LOPR": {
-          "title": "Lopr",
-          "description": "LOPR",
-          "type": "string"
-        },
-        "LOW": {
-          "title": "Low",
-          "description": "LOW",
-          "type": "string"
-        },
-        "LSV": {
-          "title": "Lsv",
-          "description": "LSV",
-          "type": "string"
-        },
-        "MDEL": {
-          "title": "Mdel",
-          "description": "MDEL",
-          "type": "string"
-        },
-        "MLST": {
-          "title": "Mlst",
-          "description": "MLST",
-          "type": "string"
-        },
-        "SIML": {
-          "title": "Siml",
-          "description": "SIML",
-          "type": "string"
-        },
-        "SIMM": {
-          "title": "Simm",
-          "description": "SIMM",
-          "type": "string"
-        },
-        "SIMS": {
-          "title": "Sims",
-          "description": "SIMS",
-          "type": "string"
-        },
-        "SIOL": {
-          "title": "Siol",
-          "description": "SIOL",
-          "type": "string"
-        },
-        "SVAL": {
-          "title": "Sval",
-          "description": "SVAL",
-          "type": "string"
-        }
-      }
-    },
-    "LongOut": {
-      "title": "LongOut",
+    "LongAll": {
+      "title": "LongAll",
       "type": "object",
       "properties": {
         "ADEL": {
@@ -2598,6 +1573,11 @@
           "title": "Omsl",
           "description": "OMSL",
           "type": "string"
+        },
+        "SVAL": {
+          "title": "Sval",
+          "description": "SVAL",
+          "type": "string"
         }
       }
     },
@@ -2732,74 +1712,9 @@
           "description": "The initial value of the parameter",
           "type": "integer"
         },
-        "common_fields": {
-          "title": "Common Fields",
-          "description": "Optional common",
-          "default": {
-            "ADEL": null,
-            "ALST": null,
-            "EGU": null,
-            "HHSV": null,
-            "HIGH": null,
-            "HIHI": null,
-            "HOPR": null,
-            "HSV": null,
-            "HYST": null,
-            "LALM": null,
-            "LLSV": null,
-            "LOLO": null,
-            "LOPR": null,
-            "LOW": null,
-            "LSV": null,
-            "MDEL": null,
-            "MLST": null,
-            "SIML": null,
-            "SIMM": null,
-            "SIMS": null,
-            "SIOL": null
-          },
-          "allOf": [
-            {
-              "$ref": "#/definitions/LongCommon"
-            }
-          ]
-        },
-        "read_fields": {
-          "title": "Read Fields",
-          "description": "Optional read fields",
-          "default": {
-            "ADEL": null,
-            "ALST": null,
-            "EGU": null,
-            "HHSV": null,
-            "HIGH": null,
-            "HIHI": null,
-            "HOPR": null,
-            "HSV": null,
-            "HYST": null,
-            "LALM": null,
-            "LLSV": null,
-            "LOLO": null,
-            "LOPR": null,
-            "LOW": null,
-            "LSV": null,
-            "MDEL": null,
-            "MLST": null,
-            "SIML": null,
-            "SIMM": null,
-            "SIMS": null,
-            "SIOL": null,
-            "SVAL": null
-          },
-          "allOf": [
-            {
-              "$ref": "#/definitions/LongIn"
-            }
-          ]
-        },
-        "write_fields": {
-          "title": "Write Fields",
-          "description": "Optional write fields",
+        "record_fields": {
+          "title": "Record Fields",
+          "description": "Long record fields",
           "default": {
             "ADEL": null,
             "ALST": null,
@@ -2827,11 +1742,12 @@
             "DRVL": null,
             "IVOA": null,
             "IVOV": null,
-            "OMSL": null
+            "OMSL": null,
+            "SVAL": null
           },
           "allOf": [
             {
-              "$ref": "#/definitions/LongOut"
+              "$ref": "#/definitions/LongAll"
             }
           ]
         }
@@ -2841,645 +1757,8 @@
         "description"
       ]
     },
-    "MultiBitBinaryCommon": {
-      "title": "MultiBitBinaryCommon",
-      "type": "object",
-      "properties": {
-        "COSV": {
-          "title": "Cosv",
-          "description": "COSV",
-          "type": "string"
-        },
-        "EIST": {
-          "title": "Eist",
-          "description": "EIST",
-          "type": "string"
-        },
-        "EISV": {
-          "title": "Eisv",
-          "description": "EISV",
-          "type": "string"
-        },
-        "EIVL": {
-          "title": "Eivl",
-          "description": "EIVL",
-          "type": "string"
-        },
-        "ELST": {
-          "title": "Elst",
-          "description": "ELST",
-          "type": "string"
-        },
-        "ELSV": {
-          "title": "Elsv",
-          "description": "ELSV",
-          "type": "string"
-        },
-        "ELVL": {
-          "title": "Elvl",
-          "description": "ELVL",
-          "type": "string"
-        },
-        "FFST": {
-          "title": "Ffst",
-          "description": "FFST",
-          "type": "string"
-        },
-        "FFSV": {
-          "title": "Ffsv",
-          "description": "FFSV",
-          "type": "string"
-        },
-        "FFVL": {
-          "title": "Ffvl",
-          "description": "FFVL",
-          "type": "string"
-        },
-        "FRST": {
-          "title": "Frst",
-          "description": "FRST",
-          "type": "string"
-        },
-        "FRSV": {
-          "title": "Frsv",
-          "description": "FRSV",
-          "type": "string"
-        },
-        "FRVL": {
-          "title": "Frvl",
-          "description": "FRVL",
-          "type": "string"
-        },
-        "FTST": {
-          "title": "Ftst",
-          "description": "FTST",
-          "type": "string"
-        },
-        "FTSV": {
-          "title": "Ftsv",
-          "description": "FTSV",
-          "type": "string"
-        },
-        "FTVL": {
-          "title": "Ftvl",
-          "description": "FTVL",
-          "type": "string"
-        },
-        "FVST": {
-          "title": "Fvst",
-          "description": "FVST",
-          "type": "string"
-        },
-        "FVSV": {
-          "title": "Fvsv",
-          "description": "FVSV",
-          "type": "string"
-        },
-        "FVVL": {
-          "title": "Fvvl",
-          "description": "FVVL",
-          "type": "string"
-        },
-        "LALM": {
-          "title": "Lalm",
-          "description": "LALM",
-          "type": "string"
-        },
-        "MASK": {
-          "title": "Mask",
-          "description": "MASK",
-          "type": "string"
-        },
-        "MLST": {
-          "title": "Mlst",
-          "description": "MLST",
-          "type": "string"
-        },
-        "NIST": {
-          "title": "Nist",
-          "description": "NIST",
-          "type": "string"
-        },
-        "NISV": {
-          "title": "Nisv",
-          "description": "NISV",
-          "type": "string"
-        },
-        "NIVL": {
-          "title": "Nivl",
-          "description": "NIVL",
-          "type": "string"
-        },
-        "NOBT": {
-          "title": "Nobt",
-          "description": "NOBT",
-          "type": "string"
-        },
-        "ONST": {
-          "title": "Onst",
-          "description": "ONST",
-          "type": "string"
-        },
-        "ONSV": {
-          "title": "Onsv",
-          "description": "ONSV",
-          "type": "string"
-        },
-        "ONVL": {
-          "title": "Onvl",
-          "description": "ONVL",
-          "type": "string"
-        },
-        "ORAW": {
-          "title": "Oraw",
-          "description": "ORAW",
-          "type": "string"
-        },
-        "RVAL": {
-          "title": "Rval",
-          "description": "RVAL",
-          "type": "string"
-        },
-        "SDEF": {
-          "title": "Sdef",
-          "description": "SDEF",
-          "type": "string"
-        },
-        "SHFT": {
-          "title": "Shft",
-          "description": "SHFT",
-          "type": "string"
-        },
-        "SIML": {
-          "title": "Siml",
-          "description": "SIML",
-          "type": "string"
-        },
-        "SIMM": {
-          "title": "Simm",
-          "description": "SIMM",
-          "type": "string"
-        },
-        "SIMS": {
-          "title": "Sims",
-          "description": "SIMS",
-          "type": "string"
-        },
-        "SIOL": {
-          "title": "Siol",
-          "description": "SIOL",
-          "type": "string"
-        },
-        "SVST": {
-          "title": "Svst",
-          "description": "SVST",
-          "type": "string"
-        },
-        "SVSV": {
-          "title": "Svsv",
-          "description": "SVSV",
-          "type": "string"
-        },
-        "SVVL": {
-          "title": "Svvl",
-          "description": "SVVL",
-          "type": "string"
-        },
-        "SXST": {
-          "title": "Sxst",
-          "description": "SXST",
-          "type": "string"
-        },
-        "SXSV": {
-          "title": "Sxsv",
-          "description": "SXSV",
-          "type": "string"
-        },
-        "SXVL": {
-          "title": "Sxvl",
-          "description": "SXVL",
-          "type": "string"
-        },
-        "TEST": {
-          "title": "Test",
-          "description": "TEST",
-          "type": "string"
-        },
-        "TESV": {
-          "title": "Tesv",
-          "description": "TESV",
-          "type": "string"
-        },
-        "TEVL": {
-          "title": "Tevl",
-          "description": "TEVL",
-          "type": "string"
-        },
-        "THST": {
-          "title": "Thst",
-          "description": "THST",
-          "type": "string"
-        },
-        "THSV": {
-          "title": "Thsv",
-          "description": "THSV",
-          "type": "string"
-        },
-        "THVL": {
-          "title": "Thvl",
-          "description": "THVL",
-          "type": "string"
-        },
-        "TTST": {
-          "title": "Ttst",
-          "description": "TTST",
-          "type": "string"
-        },
-        "TTSV": {
-          "title": "Ttsv",
-          "description": "TTSV",
-          "type": "string"
-        },
-        "TTVL": {
-          "title": "Ttvl",
-          "description": "TTVL",
-          "type": "string"
-        },
-        "TVST": {
-          "title": "Tvst",
-          "description": "TVST",
-          "type": "string"
-        },
-        "TVSV": {
-          "title": "Tvsv",
-          "description": "TVSV",
-          "type": "string"
-        },
-        "TVVL": {
-          "title": "Tvvl",
-          "description": "TVVL",
-          "type": "string"
-        },
-        "TWST": {
-          "title": "Twst",
-          "description": "TWST",
-          "type": "string"
-        },
-        "TWSV": {
-          "title": "Twsv",
-          "description": "TWSV",
-          "type": "string"
-        },
-        "TWVL": {
-          "title": "Twvl",
-          "description": "TWVL",
-          "type": "string"
-        },
-        "UNSV": {
-          "title": "Unsv",
-          "description": "UNSV",
-          "type": "string"
-        },
-        "ZRST": {
-          "title": "Zrst",
-          "description": "ZRST",
-          "type": "string"
-        },
-        "ZRSV": {
-          "title": "Zrsv",
-          "description": "ZRSV",
-          "type": "string"
-        },
-        "ZRVL": {
-          "title": "Zrvl",
-          "description": "ZRVL",
-          "type": "string"
-        }
-      }
-    },
-    "MultiBitBinaryIn": {
-      "title": "MultiBitBinaryIn",
-      "type": "object",
-      "properties": {
-        "COSV": {
-          "title": "Cosv",
-          "description": "COSV",
-          "type": "string"
-        },
-        "EIST": {
-          "title": "Eist",
-          "description": "EIST",
-          "type": "string"
-        },
-        "EISV": {
-          "title": "Eisv",
-          "description": "EISV",
-          "type": "string"
-        },
-        "EIVL": {
-          "title": "Eivl",
-          "description": "EIVL",
-          "type": "string"
-        },
-        "ELST": {
-          "title": "Elst",
-          "description": "ELST",
-          "type": "string"
-        },
-        "ELSV": {
-          "title": "Elsv",
-          "description": "ELSV",
-          "type": "string"
-        },
-        "ELVL": {
-          "title": "Elvl",
-          "description": "ELVL",
-          "type": "string"
-        },
-        "FFST": {
-          "title": "Ffst",
-          "description": "FFST",
-          "type": "string"
-        },
-        "FFSV": {
-          "title": "Ffsv",
-          "description": "FFSV",
-          "type": "string"
-        },
-        "FFVL": {
-          "title": "Ffvl",
-          "description": "FFVL",
-          "type": "string"
-        },
-        "FRST": {
-          "title": "Frst",
-          "description": "FRST",
-          "type": "string"
-        },
-        "FRSV": {
-          "title": "Frsv",
-          "description": "FRSV",
-          "type": "string"
-        },
-        "FRVL": {
-          "title": "Frvl",
-          "description": "FRVL",
-          "type": "string"
-        },
-        "FTST": {
-          "title": "Ftst",
-          "description": "FTST",
-          "type": "string"
-        },
-        "FTSV": {
-          "title": "Ftsv",
-          "description": "FTSV",
-          "type": "string"
-        },
-        "FTVL": {
-          "title": "Ftvl",
-          "description": "FTVL",
-          "type": "string"
-        },
-        "FVST": {
-          "title": "Fvst",
-          "description": "FVST",
-          "type": "string"
-        },
-        "FVSV": {
-          "title": "Fvsv",
-          "description": "FVSV",
-          "type": "string"
-        },
-        "FVVL": {
-          "title": "Fvvl",
-          "description": "FVVL",
-          "type": "string"
-        },
-        "LALM": {
-          "title": "Lalm",
-          "description": "LALM",
-          "type": "string"
-        },
-        "MASK": {
-          "title": "Mask",
-          "description": "MASK",
-          "type": "string"
-        },
-        "MLST": {
-          "title": "Mlst",
-          "description": "MLST",
-          "type": "string"
-        },
-        "NIST": {
-          "title": "Nist",
-          "description": "NIST",
-          "type": "string"
-        },
-        "NISV": {
-          "title": "Nisv",
-          "description": "NISV",
-          "type": "string"
-        },
-        "NIVL": {
-          "title": "Nivl",
-          "description": "NIVL",
-          "type": "string"
-        },
-        "NOBT": {
-          "title": "Nobt",
-          "description": "NOBT",
-          "type": "string"
-        },
-        "ONST": {
-          "title": "Onst",
-          "description": "ONST",
-          "type": "string"
-        },
-        "ONSV": {
-          "title": "Onsv",
-          "description": "ONSV",
-          "type": "string"
-        },
-        "ONVL": {
-          "title": "Onvl",
-          "description": "ONVL",
-          "type": "string"
-        },
-        "ORAW": {
-          "title": "Oraw",
-          "description": "ORAW",
-          "type": "string"
-        },
-        "RVAL": {
-          "title": "Rval",
-          "description": "RVAL",
-          "type": "string"
-        },
-        "SDEF": {
-          "title": "Sdef",
-          "description": "SDEF",
-          "type": "string"
-        },
-        "SHFT": {
-          "title": "Shft",
-          "description": "SHFT",
-          "type": "string"
-        },
-        "SIML": {
-          "title": "Siml",
-          "description": "SIML",
-          "type": "string"
-        },
-        "SIMM": {
-          "title": "Simm",
-          "description": "SIMM",
-          "type": "string"
-        },
-        "SIMS": {
-          "title": "Sims",
-          "description": "SIMS",
-          "type": "string"
-        },
-        "SIOL": {
-          "title": "Siol",
-          "description": "SIOL",
-          "type": "string"
-        },
-        "SVST": {
-          "title": "Svst",
-          "description": "SVST",
-          "type": "string"
-        },
-        "SVSV": {
-          "title": "Svsv",
-          "description": "SVSV",
-          "type": "string"
-        },
-        "SVVL": {
-          "title": "Svvl",
-          "description": "SVVL",
-          "type": "string"
-        },
-        "SXST": {
-          "title": "Sxst",
-          "description": "SXST",
-          "type": "string"
-        },
-        "SXSV": {
-          "title": "Sxsv",
-          "description": "SXSV",
-          "type": "string"
-        },
-        "SXVL": {
-          "title": "Sxvl",
-          "description": "SXVL",
-          "type": "string"
-        },
-        "TEST": {
-          "title": "Test",
-          "description": "TEST",
-          "type": "string"
-        },
-        "TESV": {
-          "title": "Tesv",
-          "description": "TESV",
-          "type": "string"
-        },
-        "TEVL": {
-          "title": "Tevl",
-          "description": "TEVL",
-          "type": "string"
-        },
-        "THST": {
-          "title": "Thst",
-          "description": "THST",
-          "type": "string"
-        },
-        "THSV": {
-          "title": "Thsv",
-          "description": "THSV",
-          "type": "string"
-        },
-        "THVL": {
-          "title": "Thvl",
-          "description": "THVL",
-          "type": "string"
-        },
-        "TTST": {
-          "title": "Ttst",
-          "description": "TTST",
-          "type": "string"
-        },
-        "TTSV": {
-          "title": "Ttsv",
-          "description": "TTSV",
-          "type": "string"
-        },
-        "TTVL": {
-          "title": "Ttvl",
-          "description": "TTVL",
-          "type": "string"
-        },
-        "TVST": {
-          "title": "Tvst",
-          "description": "TVST",
-          "type": "string"
-        },
-        "TVSV": {
-          "title": "Tvsv",
-          "description": "TVSV",
-          "type": "string"
-        },
-        "TVVL": {
-          "title": "Tvvl",
-          "description": "TVVL",
-          "type": "string"
-        },
-        "TWST": {
-          "title": "Twst",
-          "description": "TWST",
-          "type": "string"
-        },
-        "TWSV": {
-          "title": "Twsv",
-          "description": "TWSV",
-          "type": "string"
-        },
-        "TWVL": {
-          "title": "Twvl",
-          "description": "TWVL",
-          "type": "string"
-        },
-        "UNSV": {
-          "title": "Unsv",
-          "description": "UNSV",
-          "type": "string"
-        },
-        "ZRST": {
-          "title": "Zrst",
-          "description": "ZRST",
-          "type": "string"
-        },
-        "ZRSV": {
-          "title": "Zrsv",
-          "description": "ZRSV",
-          "type": "string"
-        },
-        "ZRVL": {
-          "title": "Zrvl",
-          "description": "ZRVL",
-          "type": "string"
-        },
-        "SVAL": {
-          "title": "Sval",
-          "description": "SVAL",
-          "type": "string"
-        }
-      }
-    },
-    "MultiBitBinaryOut": {
-      "title": "MultiBitBinaryOut",
+    "MultiBitBinaryAll": {
+      "title": "MultiBitBinaryAll",
       "type": "object",
       "properties": {
         "COSV": {
@@ -3821,6 +2100,11 @@
           "title": "Rbv",
           "description": "RBV",
           "type": "string"
+        },
+        "SVAL": {
+          "title": "Sval",
+          "description": "SVAL",
+          "type": "string"
         }
       }
     },
@@ -3957,156 +2241,9 @@
           "maximum": 15,
           "type": "integer"
         },
-        "common_fields": {
-          "title": "Common Fields",
-          "description": "Optional common",
-          "default": {
-            "COSV": null,
-            "EIST": null,
-            "EISV": null,
-            "EIVL": null,
-            "ELST": null,
-            "ELSV": null,
-            "ELVL": null,
-            "FFST": null,
-            "FFSV": null,
-            "FFVL": null,
-            "FRST": null,
-            "FRSV": null,
-            "FRVL": null,
-            "FTST": null,
-            "FTSV": null,
-            "FTVL": null,
-            "FVST": null,
-            "FVSV": null,
-            "FVVL": null,
-            "LALM": null,
-            "MASK": null,
-            "MLST": null,
-            "NIST": null,
-            "NISV": null,
-            "NIVL": null,
-            "NOBT": null,
-            "ONST": null,
-            "ONSV": null,
-            "ONVL": null,
-            "ORAW": null,
-            "RVAL": null,
-            "SDEF": null,
-            "SHFT": null,
-            "SIML": null,
-            "SIMM": null,
-            "SIMS": null,
-            "SIOL": null,
-            "SVST": null,
-            "SVSV": null,
-            "SVVL": null,
-            "SXST": null,
-            "SXSV": null,
-            "SXVL": null,
-            "TEST": null,
-            "TESV": null,
-            "TEVL": null,
-            "THST": null,
-            "THSV": null,
-            "THVL": null,
-            "TTST": null,
-            "TTSV": null,
-            "TTVL": null,
-            "TVST": null,
-            "TVSV": null,
-            "TVVL": null,
-            "TWST": null,
-            "TWSV": null,
-            "TWVL": null,
-            "UNSV": null,
-            "ZRST": null,
-            "ZRSV": null,
-            "ZRVL": null
-          },
-          "allOf": [
-            {
-              "$ref": "#/definitions/MultiBitBinaryCommon"
-            }
-          ]
-        },
-        "read_fields": {
-          "title": "Read Fields",
-          "description": "Optional read fields",
-          "default": {
-            "COSV": null,
-            "EIST": null,
-            "EISV": null,
-            "EIVL": null,
-            "ELST": null,
-            "ELSV": null,
-            "ELVL": null,
-            "FFST": null,
-            "FFSV": null,
-            "FFVL": null,
-            "FRST": null,
-            "FRSV": null,
-            "FRVL": null,
-            "FTST": null,
-            "FTSV": null,
-            "FTVL": null,
-            "FVST": null,
-            "FVSV": null,
-            "FVVL": null,
-            "LALM": null,
-            "MASK": null,
-            "MLST": null,
-            "NIST": null,
-            "NISV": null,
-            "NIVL": null,
-            "NOBT": null,
-            "ONST": null,
-            "ONSV": null,
-            "ONVL": null,
-            "ORAW": null,
-            "RVAL": null,
-            "SDEF": null,
-            "SHFT": null,
-            "SIML": null,
-            "SIMM": null,
-            "SIMS": null,
-            "SIOL": null,
-            "SVST": null,
-            "SVSV": null,
-            "SVVL": null,
-            "SXST": null,
-            "SXSV": null,
-            "SXVL": null,
-            "TEST": null,
-            "TESV": null,
-            "TEVL": null,
-            "THST": null,
-            "THSV": null,
-            "THVL": null,
-            "TTST": null,
-            "TTSV": null,
-            "TTVL": null,
-            "TVST": null,
-            "TVSV": null,
-            "TVVL": null,
-            "TWST": null,
-            "TWSV": null,
-            "TWVL": null,
-            "UNSV": null,
-            "ZRST": null,
-            "ZRSV": null,
-            "ZRVL": null,
-            "SVAL": null
-          },
-          "allOf": [
-            {
-              "$ref": "#/definitions/MultiBitBinaryIn"
-            }
-          ]
-        },
-        "write_fields": {
-          "title": "Write Fields",
-          "description": "Optional write fields",
+        "record_fields": {
+          "title": "Record Fields",
+          "description": "Multi-bit binary record fields",
           "default": {
             "COSV": null,
             "EIST": null,
@@ -4175,11 +2312,12 @@
             "IVOV": null,
             "OMSL": null,
             "ORBV": null,
-            "RBV": null
+            "RBV": null,
+            "SVAL": null
           },
           "allOf": [
             {
-              "$ref": "#/definitions/MultiBitBinaryOut"
+              "$ref": "#/definitions/MultiBitBinaryAll"
             }
           ]
         }
@@ -4189,95 +2327,8 @@
         "description"
       ]
     },
-    "StringCommon": {
-      "title": "StringCommon",
-      "type": "object",
-      "properties": {
-        "APST": {
-          "title": "Apst",
-          "description": "APST",
-          "type": "string"
-        },
-        "MPST": {
-          "title": "Mpst",
-          "description": "MPST",
-          "type": "string"
-        },
-        "OVAL": {
-          "title": "Oval",
-          "description": "OVAL",
-          "type": "string"
-        },
-        "SIML": {
-          "title": "Siml",
-          "description": "SIML",
-          "type": "string"
-        },
-        "SIMM": {
-          "title": "Simm",
-          "description": "SIMM",
-          "type": "string"
-        },
-        "SIMS": {
-          "title": "Sims",
-          "description": "SIMS",
-          "type": "string"
-        },
-        "SIOL": {
-          "title": "Siol",
-          "description": "SIOL",
-          "type": "string"
-        }
-      }
-    },
-    "StringIn": {
-      "title": "StringIn",
-      "type": "object",
-      "properties": {
-        "APST": {
-          "title": "Apst",
-          "description": "APST",
-          "type": "string"
-        },
-        "MPST": {
-          "title": "Mpst",
-          "description": "MPST",
-          "type": "string"
-        },
-        "OVAL": {
-          "title": "Oval",
-          "description": "OVAL",
-          "type": "string"
-        },
-        "SIML": {
-          "title": "Siml",
-          "description": "SIML",
-          "type": "string"
-        },
-        "SIMM": {
-          "title": "Simm",
-          "description": "SIMM",
-          "type": "string"
-        },
-        "SIMS": {
-          "title": "Sims",
-          "description": "SIMS",
-          "type": "string"
-        },
-        "SIOL": {
-          "title": "Siol",
-          "description": "SIOL",
-          "type": "string"
-        },
-        "SVAL": {
-          "title": "Sval",
-          "description": "SVAL",
-          "type": "string"
-        }
-      }
-    },
-    "StringOut": {
-      "title": "StringOut",
+    "StringAll": {
+      "title": "StringAll",
       "type": "object",
       "properties": {
         "APST": {
@@ -4333,6 +2384,11 @@
         "OMSL": {
           "title": "Omsl",
           "description": "OMSL",
+          "type": "string"
+        },
+        "SVAL": {
+          "title": "Sval",
+          "description": "SVAL",
           "type": "string"
         }
       }
@@ -4468,46 +2524,9 @@
           "description": "The initial value of the parameter",
           "type": "string"
         },
-        "common_fields": {
-          "title": "Common Fields",
-          "description": "Optional common",
-          "default": {
-            "APST": null,
-            "MPST": null,
-            "OVAL": null,
-            "SIML": null,
-            "SIMM": null,
-            "SIMS": null,
-            "SIOL": null
-          },
-          "allOf": [
-            {
-              "$ref": "#/definitions/StringCommon"
-            }
-          ]
-        },
-        "read_fields": {
-          "title": "Read Fields",
-          "description": "Optional read fields",
-          "default": {
-            "APST": null,
-            "MPST": null,
-            "OVAL": null,
-            "SIML": null,
-            "SIMM": null,
-            "SIMS": null,
-            "SIOL": null,
-            "SVAL": null
-          },
-          "allOf": [
-            {
-              "$ref": "#/definitions/StringIn"
-            }
-          ]
-        },
-        "write_fields": {
-          "title": "Write Fields",
-          "description": "Optional write fields",
+        "record_fields": {
+          "title": "Record Fields",
+          "description": "String record fields",
           "default": {
             "APST": null,
             "MPST": null,
@@ -4519,11 +2538,12 @@
             "DOL": null,
             "IVOA": null,
             "IVOV": null,
-            "OMSL": null
+            "OMSL": null,
+            "SVAL": null
           },
           "allOf": [
             {
-              "$ref": "#/definitions/StringOut"
+              "$ref": "#/definitions/StringAll"
             }
           ]
         }
@@ -4533,190 +2553,8 @@
         "description"
       ]
     },
-    "WaveformCommon": {
-      "title": "WaveformCommon",
-      "type": "object",
-      "properties": {
-        "APST": {
-          "title": "Apst",
-          "description": "APST",
-          "type": "string"
-        },
-        "BPTR": {
-          "title": "Bptr",
-          "description": "BPTR",
-          "type": "string"
-        },
-        "BUSY": {
-          "title": "Busy",
-          "description": "BUSY",
-          "type": "string"
-        },
-        "EGU": {
-          "title": "Egu",
-          "description": "EGU",
-          "type": "string"
-        },
-        "FTVL": {
-          "title": "Ftvl",
-          "description": "FTVL",
-          "type": "string"
-        },
-        "HASH": {
-          "title": "Hash",
-          "description": "HASH",
-          "type": "string"
-        },
-        "HOPR": {
-          "title": "Hopr",
-          "description": "HOPR",
-          "type": "string"
-        },
-        "LOPR": {
-          "title": "Lopr",
-          "description": "LOPR",
-          "type": "string"
-        },
-        "MPST": {
-          "title": "Mpst",
-          "description": "MPST",
-          "type": "string"
-        },
-        "NELM": {
-          "title": "Nelm",
-          "description": "NELM",
-          "type": "string"
-        },
-        "NORD": {
-          "title": "Nord",
-          "description": "NORD",
-          "type": "string"
-        },
-        "PREC": {
-          "title": "Prec",
-          "description": "PREC",
-          "type": "integer"
-        },
-        "RARM": {
-          "title": "Rarm",
-          "description": "RARM",
-          "type": "string"
-        },
-        "SIML": {
-          "title": "Siml",
-          "description": "SIML",
-          "type": "string"
-        },
-        "SIMM": {
-          "title": "Simm",
-          "description": "SIMM",
-          "type": "string"
-        },
-        "SIMS": {
-          "title": "Sims",
-          "description": "SIMS",
-          "type": "string"
-        },
-        "SIOL": {
-          "title": "Siol",
-          "description": "SIOL",
-          "type": "string"
-        }
-      }
-    },
-    "WaveformIn": {
-      "title": "WaveformIn",
-      "type": "object",
-      "properties": {
-        "APST": {
-          "title": "Apst",
-          "description": "APST",
-          "type": "string"
-        },
-        "BPTR": {
-          "title": "Bptr",
-          "description": "BPTR",
-          "type": "string"
-        },
-        "BUSY": {
-          "title": "Busy",
-          "description": "BUSY",
-          "type": "string"
-        },
-        "EGU": {
-          "title": "Egu",
-          "description": "EGU",
-          "type": "string"
-        },
-        "FTVL": {
-          "title": "Ftvl",
-          "description": "FTVL",
-          "type": "string"
-        },
-        "HASH": {
-          "title": "Hash",
-          "description": "HASH",
-          "type": "string"
-        },
-        "HOPR": {
-          "title": "Hopr",
-          "description": "HOPR",
-          "type": "string"
-        },
-        "LOPR": {
-          "title": "Lopr",
-          "description": "LOPR",
-          "type": "string"
-        },
-        "MPST": {
-          "title": "Mpst",
-          "description": "MPST",
-          "type": "string"
-        },
-        "NELM": {
-          "title": "Nelm",
-          "description": "NELM",
-          "type": "string"
-        },
-        "NORD": {
-          "title": "Nord",
-          "description": "NORD",
-          "type": "string"
-        },
-        "PREC": {
-          "title": "Prec",
-          "description": "PREC",
-          "type": "integer"
-        },
-        "RARM": {
-          "title": "Rarm",
-          "description": "RARM",
-          "type": "string"
-        },
-        "SIML": {
-          "title": "Siml",
-          "description": "SIML",
-          "type": "string"
-        },
-        "SIMM": {
-          "title": "Simm",
-          "description": "SIMM",
-          "type": "string"
-        },
-        "SIMS": {
-          "title": "Sims",
-          "description": "SIMS",
-          "type": "string"
-        },
-        "SIOL": {
-          "title": "Siol",
-          "description": "SIOL",
-          "type": "string"
-        }
-      }
-    },
-    "WaveformOut": {
-      "title": "WaveformOut",
+    "WaveformAll": {
+      "title": "WaveformAll",
       "type": "object",
       "properties": {
         "APST": {
@@ -4935,9 +2773,9 @@
         "initial": {
           "title": "Initial"
         },
-        "common_fields": {
-          "title": "Common Fields",
-          "description": "Optional common",
+        "record_fields": {
+          "title": "Record Fields",
+          "description": "Waveform record fields",
           "default": {
             "APST": null,
             "BPTR": null,
@@ -4959,63 +2797,7 @@
           },
           "allOf": [
             {
-              "$ref": "#/definitions/WaveformCommon"
-            }
-          ]
-        },
-        "read_fields": {
-          "title": "Read Fields",
-          "description": "Optional read fields",
-          "default": {
-            "APST": null,
-            "BPTR": null,
-            "BUSY": null,
-            "EGU": null,
-            "FTVL": null,
-            "HASH": null,
-            "HOPR": null,
-            "LOPR": null,
-            "MPST": null,
-            "NELM": null,
-            "NORD": null,
-            "PREC": null,
-            "RARM": null,
-            "SIML": null,
-            "SIMM": null,
-            "SIMS": null,
-            "SIOL": null
-          },
-          "allOf": [
-            {
-              "$ref": "#/definitions/WaveformIn"
-            }
-          ]
-        },
-        "write_fields": {
-          "title": "Write Fields",
-          "description": "Optional write fields",
-          "default": {
-            "APST": null,
-            "BPTR": null,
-            "BUSY": null,
-            "EGU": null,
-            "FTVL": null,
-            "HASH": null,
-            "HOPR": null,
-            "LOPR": null,
-            "MPST": null,
-            "NELM": null,
-            "NORD": null,
-            "PREC": null,
-            "RARM": null,
-            "SIML": null,
-            "SIMM": null,
-            "SIMS": null,
-            "SIOL": null
-          },
-          "allOf": [
-            {
-              "$ref": "#/definitions/WaveformOut"
+              "$ref": "#/definitions/WaveformAll"
             }
           ]
         }
