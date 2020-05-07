@@ -7,4 +7,13 @@ components:
     - name: ThresholdEnergy
       autosave:
         - VAL
+    - name: MinFlatField
+      autosave:
+        - VAL
+    - name: GapFill
+      autosave:
+        - VAL
+    - name: HeaderString
+      autosave:
+        - VAL
 

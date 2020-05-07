@@ -7,3 +7,15 @@ camserver uses this value to set the discriminators in each pixel.
 It is typically set to the incident x-ray energy ($(P)$(R)Energy),
 but sometimes other values may be preferable.
 "
+MinFlatField,"$(P)$(R)MinFlatField
+$(P)$(R)MinFlatField_RBV",Minimum flat field value
+GapFill,"$(P)$(R)GapFill
+$(P)$(R)GapFill_RBV",GapFill
+TVXVersion,$(P)$(R)TVXVersion_RBV,TVXVersion_RBV
+PixelCutOff,$(P)$(R)PixelCutOff_RBV,"Readback for tau pixel cut off
+"
+HeaderString,$(P)$(R)HeaderString,HeaderString
+Armed,$(P)$(R)Armed_RBV,"Armed flag
+
+Indicates Pilatus is ready for external triggers
+"

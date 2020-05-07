@@ -12,7 +12,7 @@ def test_channels():
     assert len(channel_tree) == 1
     assert isinstance(channel_tree[0], Group)
     channels = channel_tree[0].children
-    assert len(channels) == 1
+    assert len(channels) == 7
     assert channels[0] == Channel(
         name="ThresholdEnergy",
         label="Threshold Energy",
