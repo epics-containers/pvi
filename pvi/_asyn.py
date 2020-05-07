@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, List
 
 from pydantic import BaseModel, Field
 
@@ -14,31 +14,15 @@ from ._records import (
     WaveformAll,
 )
 from ._types import AsynParameter, Component, Producer, Record, Tree
-from ._util import camel_to_title, truncate_description
-
-VALUE_FIELD = Field(None, description="The initial value of the parameter")
+from ._util import get_label, truncate_description
 
 
-class AsynComponentType(BaseModel):
-    inp: str = Field(..., description="e.g. ai, bi, longin")
-    out: str = Field(..., description="e.g. ao, bo, longout")
-    asyn_read_type: str = Field(..., description="e.g. asynInt32, asynOctetRead")
-    asyn_write_type: str = Field(..., description="e.g. asynInt32, asynOctetWrite")
-    asyn_param_type: str = Field(..., description="e.g. asynParamInt32, asynParamOctet")
-
-
-class AsynInfo(BaseModel):
-    asyn_param_type: str = Field(
-        ..., description="Asyn parameter type, e.g. asynParamFloat64"
-    )
-    read_record_type: str = Field(..., description="RTYP of the read record, e.g. ai")
-    write_record_type: str = Field(..., description="RTYP of the write record, e.g. ao")
-    read_record_fields: Dict[str, str] = Field(
-        ..., description="Fields to add to the read record"
-    )
-    write_record_fields: Dict[str, str] = Field(
-        ..., description="Fields to add to the write record"
-    )
+class TypeStrings(BaseModel):
+    read_record: str = Field(..., description="e.g. ai, bi, longin")
+    write_record: str = Field(..., description="e.g. ao, bo, longout")
+    asyn_read: str = Field(..., description="e.g. asynInt32, asynOctetRead")
+    asyn_write: str = Field(..., description="e.g. asynInt32, asynOctetWrite")
+    asyn_param: str = Field(..., description="e.g. asynParamInt32, asynParamOctet")
 
 
 class ParameterRole(str, Enum):
@@ -108,72 +92,57 @@ class AsynComponent(Component):
     write_record_suffix: str = Field(
         None, description="The write record suffix, if not given then use $(name)"
     )
-    read_widget: Widget = Field(
-        Widget.TEXTUPDATE,
-        description="Override the widget to use for read-only channels",
-    )
-    write_widget: Widget = Field(
-        Widget.TEXTINPUT,
-        description="Override the widget to use for writeable channels",
-    )
     display_form: DisplayForm = Field(
         None, description="Display form for numeric/array fields"
     )
-    asyn_component_type: ClassVar[AsynComponentType]
+    type_strings: ClassVar[TypeStrings]
     initial: Any
+    read_widget: Widget
+    write_widget: Widget
     record_fields: Any
 
-    def asyn_parameter_info(self) -> AsynInfo:
-        inp_fields, out_fields = self.record_fields.sort_records()
-        read_fields = {
-            **dict(DTYP=self.asyn_component_type.asyn_read_type),
-            **inp_fields.dict(exclude_none=True),
-        }
-        write_fields = {
-            **dict(DTYP=self.asyn_component_type.asyn_write_type),
-            **out_fields.dict(exclude_none=True),
-        }
-        info = AsynInfo(
-            read_record_type=self.asyn_component_type.inp,
-            read_record_fields=read_fields,
-            write_record_type=self.asyn_component_type.out,
-            write_record_fields=write_fields,
-            asyn_param_type=self.asyn_component_type.asyn_param_type,
-        )
-        return info
+
+def initial_field(**kwargs):
+    return Field(None, description="The initial value of the parameter", **kwargs)
+
+
+def widget_field(default: Widget, **kwargs):
+    return Field(
+        default,
+        description="Override the widget to use these sort of channels",
+        **kwargs,
+    )
 
 
 class AsynBinary(AsynComponent):
     """Asyn Float32 Parameter and records"""
 
-    asyn_component_type: ClassVar[AsynComponentType] = AsynComponentType(
-        inp="bi",
-        out="bo",
-        asyn_read_type="asynInt32",
-        asyn_write_type="asynInt32",
-        asyn_param_type="asynParamInt32",
+    type_strings: ClassVar[TypeStrings] = TypeStrings(
+        read_record="bi",
+        write_record="bo",
+        asyn_read="asynInt32",
+        asyn_write="asynInt32",
+        asyn_param="asynParamInt32",
     )
-    initial: int = Field(
-        None, ge=0, le=1, description="The initial value of the parameter"
-    )
-    record_fields: BinaryAll = Field(
-        BinaryAll(), description="Binary record fields",
-    )
+    initial: int = initial_field(ge=0, le=1)
+    read_widget: Widget = widget_field(Widget.LED)
+    write_widget: Widget = widget_field(Widget.CHECKBOX)
+    record_fields: BinaryAll = Field(BinaryAll(), description="Binary record fields")
 
 
 class AsynBusy(AsynComponent):
     """Asyn busy Parameter and records"""
 
-    asyn_component_type: ClassVar[AsynComponentType] = AsynComponentType(
-        inp="bi",
-        out="busy",
-        asyn_read_type="asynInt32",
-        asyn_write_type="asynInt32",
-        asyn_param_type="asynParamInt32",
+    type_strings: ClassVar[TypeStrings] = TypeStrings(
+        read_record="bi",
+        write_record="busy",
+        asyn_read="asynInt32",
+        asyn_write="asynInt32",
+        asyn_param="asynParamInt32",
     )
-    initial: int = Field(
-        None, ge=0, le=1, description="The initial value of the parameter"
-    )
+    initial: int = initial_field(ge=0, le=1)
+    read_widget: Widget = widget_field(Widget.LED)
+    write_widget: Widget = widget_field(Widget.BUTTON)
     record_fields: BinaryAll = Field(
         BinaryAll(), description="Binary record fields",
     )
@@ -182,14 +151,16 @@ class AsynBusy(AsynComponent):
 class AsynFloat64(AsynComponent):
     """Asyn Float64 Parameter and records"""
 
-    asyn_component_type: ClassVar[AsynComponentType] = AsynComponentType(
-        inp="ai",
-        out="ao",
-        asyn_read_type="asynFloat64",
-        asyn_write_type="asynFloat64",
-        asyn_param_type="asynParamFloat64",
+    type_strings: ClassVar[TypeStrings] = TypeStrings(
+        read_record="ai",
+        write_record="ao",
+        asyn_read="asynFloat64",
+        asyn_write="asynFloat64",
+        asyn_param="asynParamFloat64",
     )
-    initial: float = VALUE_FIELD
+    initial: float = initial_field()
+    read_widget: Widget = widget_field(Widget.TEXTUPDATE)
+    write_widget: Widget = widget_field(Widget.TEXTINPUT)
     record_fields: AnalogueAll = Field(
         AnalogueAll(), description="Analogue record fields",
     )
@@ -198,14 +169,16 @@ class AsynFloat64(AsynComponent):
 class AsynInt32(AsynComponent):
     """Asyn Int32 Parameter and records"""
 
-    asyn_component_type: ClassVar[AsynComponentType] = AsynComponentType(
-        inp="ai",
-        out="ao",
-        asyn_read_type="asynInt32",
-        asyn_write_type="asynInt32",
-        asyn_param_type="asynParamInt32",
+    type_strings: ClassVar[TypeStrings] = TypeStrings(
+        read_record="ai",
+        write_record="ao",
+        asyn_read="asynInt32",
+        asyn_write="asynInt32",
+        asyn_param="asynParamInt32",
     )
-    initial: int = VALUE_FIELD
+    initial: int = initial_field()
+    read_widget: Widget = widget_field(Widget.TEXTUPDATE)
+    write_widget: Widget = widget_field(Widget.TEXTINPUT)
     record_fields: AnalogueAll = Field(
         AnalogueAll(), description="Analogue record fields",
     )
@@ -214,14 +187,16 @@ class AsynInt32(AsynComponent):
 class AsynLong(AsynComponent):
     """Asyn Long Parameter and records"""
 
-    asyn_component_type: ClassVar[AsynComponentType] = AsynComponentType(
-        inp="longin",
-        out="longout",
-        asyn_read_type="asynInt32",
-        asyn_write_type="asynInt32",
-        asyn_param_type="asynParamInt32",
+    type_strings: ClassVar[TypeStrings] = TypeStrings(
+        read_record="longin",
+        write_record="longout",
+        asyn_read="asynInt32",
+        asyn_write="asynInt32",
+        asyn_param="asynParamInt32",
     )
-    initial: int = VALUE_FIELD
+    initial: int = initial_field()
+    read_widget: Widget = widget_field(Widget.TEXTUPDATE)
+    write_widget: Widget = widget_field(Widget.TEXTINPUT)
     record_fields: LongAll = Field(
         LongAll(), description="Long record fields",
     )
@@ -230,16 +205,16 @@ class AsynLong(AsynComponent):
 class AsynMultiBitBinary(AsynComponent):
     """Asyn MultiBitBinary Parameter and records"""
 
-    asyn_component_type: ClassVar[AsynComponentType] = AsynComponentType(
-        inp="mbbi",
-        out="mbbo",
-        asyn_read_type="asynInt32",
-        asyn_write_type="asynInt32",
-        asyn_param_type="asynParamInt32",
+    type_strings: ClassVar[TypeStrings] = TypeStrings(
+        read_record="mbbi",
+        write_record="mbbo",
+        asyn_read="asynInt32",
+        asyn_write="asynInt32",
+        asyn_param="asynParamInt32",
     )
-    initial: int = Field(
-        None, ge=0, le=15, description="The initial value of the parameter"
-    )
+    initial: int = initial_field(ge=0, le=15)
+    read_widget: Widget = widget_field(Widget.TEXTUPDATE)
+    write_widget: Widget = widget_field(Widget.COMBO)
     record_fields: MultiBitBinaryAll = Field(
         MultiBitBinaryAll(), description="Multi-bit binary record fields",
     )
@@ -248,14 +223,16 @@ class AsynMultiBitBinary(AsynComponent):
 class AsynString(AsynComponent):
     """Asyn String Parameter and records"""
 
-    asyn_component_type: ClassVar[AsynComponentType] = AsynComponentType(
-        inp="stringin",
-        out="stringout",
-        asyn_read_type="asynOctetRead",
-        asyn_write_type="asynOctetWrite",
-        asyn_param_type="asynParamOctet",
+    type_strings: ClassVar[TypeStrings] = TypeStrings(
+        read_record="stringin",
+        write_record="stringout",
+        asyn_read="asynOctetRead",
+        asyn_write="asynOctetWrite",
+        asyn_param="asynParamOctet",
     )
-    initial: str = VALUE_FIELD
+    initial: str = initial_field()
+    read_widget: Widget = widget_field(Widget.TEXTUPDATE)
+    write_widget: Widget = widget_field(Widget.TEXTINPUT)
     record_fields: StringAll = Field(
         StringAll(), description="String record fields",
     )
@@ -264,13 +241,15 @@ class AsynString(AsynComponent):
 class AsynWaveform(AsynComponent):
     """Asyn Waveform Parameter and records"""
 
-    asyn_component_type: ClassVar[AsynComponentType] = AsynComponentType(
-        inp="waveform",
-        out="waveform",
-        asyn_read_type="asynOctetRead",
-        asyn_write_type="asynOctetWrite",
-        asyn_param_type="asynParamOctet",
+    type_strings: ClassVar[TypeStrings] = TypeStrings(
+        read_record="waveform",
+        write_record="waveform",
+        asyn_read="asynOctetRead",
+        asyn_write="asynOctetWrite",
+        asyn_param="asynParamOctet",
     )
+    read_widget: Widget = widget_field(Widget.TEXTUPDATE)
+    write_widget: Widget = widget_field(Widget.TEXTINPUT)
     record_fields: WaveformAll = Field(
         WaveformAll(), description="Waveform record fields",
     )
@@ -298,19 +277,20 @@ class AsynProducer(Producer):
 
     def _make_records(self, component: AsynComponent) -> List[Record]:
         records = []
-        info = component.asyn_parameter_info()
+        inp_fields, out_fields = component.record_fields.sort_records()
         io = f"@asyn({self.asyn_port},{self.address},{self.timeout}){component.name}"
         if component.role.needs_read_record():
             fields = dict(
                 SCAN=component.read_record_scan.value,
                 DESC=truncate_description(component.description),
                 INP=io,
-                **info.read_record_fields,
+                DTYP=component.type_strings.asyn_read,
+                **inp_fields.dict(exclude_none=True),
             )
             records.append(
                 Record(
                     name=self._read_record_name(component),
-                    type=info.read_record_type,
+                    type=component.type_strings.read_record,
                     fields=fields,
                     infos={},
                 )
@@ -318,9 +298,10 @@ class AsynProducer(Producer):
         if component.role.needs_write_record():
             fields = dict(
                 DESC=truncate_description(component.description),
-                **info.write_record_fields,
+                DTYP=component.type_strings.asyn_write,
+                **out_fields.dict(exclude_none=True),
             )
-            if info.write_record_type == "waveform":
+            if component.type_strings.write_record == "waveform":
                 fields["INP"] = io
             else:
                 fields["OUT"] = io
@@ -335,7 +316,7 @@ class AsynProducer(Producer):
             records.append(
                 Record(
                     name=self._write_record_name(component),
-                    type=info.write_record_type,
+                    type=component.type_strings.write_record,
                     fields=fields,
                     infos=infos,
                 )
@@ -350,17 +331,16 @@ class AsynProducer(Producer):
         # Make the primary channel
         channel = Channel(
             name=component.name,
-            label=camel_to_title(component.name),
+            label=get_label(component),
             description=component.description,
             display_form=component.display_form,
         )
         # Add read pv
         if component.role == ParameterRole.TRANSIENT:
             # readback is a separate channel
-            read_name = component.name + "Readback"
             read_channel = Channel(
-                name=read_name,
-                label=camel_to_title(read_name),
+                name=component.name + "Readback",
+                label=get_label(component) + " Readback",
                 description=component.description,
                 display_form=component.display_form,
                 read_pv=self._read_record_name(component),
@@ -383,7 +363,7 @@ class AsynProducer(Producer):
     def _make_asyn_parameters(self, component: AsynComponent) -> List[AsynParameter]:
         parameter = AsynParameter(
             name=component.name,
-            type=component.asyn_parameter_info().asyn_param_type,
+            type=component.type_strings.asyn_param,
             description=component.role.value,
         )
         return [parameter]

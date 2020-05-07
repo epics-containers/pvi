@@ -1,7 +1,7 @@
 import re
 from typing import Iterator, Union
 
-from ._types import Group, T, Tree
+from ._types import Component, Group, T, Tree
 
 
 def truncate_description(desc: str) -> str:
@@ -29,3 +29,12 @@ def camel_to_title(name):
     ret = " ".join(split)
     ret = ret[0].upper() + ret[1:]
     return ret
+
+
+def get_label(component: Component) -> str:
+    """If the component has a label, use that, otherwise
+    return the Title Case version of its camelCase name"""
+    label = component.label
+    if label is None:
+        label = camel_to_title(component.name)
+    return label
