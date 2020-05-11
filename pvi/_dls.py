@@ -16,16 +16,43 @@ from ._types import (
     walk,
 )
 from ._util import prepare_for_yaml
+from .edl_utils import GenerateEDL
 
 FIELD_TXT = '    field({0:5s} "{1}")\n'
 INFO_TXT = '    info({0} "{1}")\n'
 
 
 class DLSFormatter(Formatter):
+
     def format_edl(
         self, channels: Tree[ChannelConfig], basename: str, macros: List[Macro]
     ) -> str:
-        raise NotImplementedError(self)
+        edm_out = ''
+        screen = GenerateEDL(
+            w=0, h=900, x=5, y=50, boxy=0, boxh=0, boxx=0, boxw=245,
+            space=5, labelcounter=0, defFontClass="arial", defFgColorCtrl=25,
+            defBgColorCtrl=3, defFgColorMon=16, defBgColorMon=10)
+        num_children = []
+        for group in channels:
+            num_children.append(len(group.children))
+        boxes = ''
+        widgets = ''
+        counter = 0
+        for channel in walk(channels):
+            if isinstance(channel, Group):
+                childnodes = num_children[counter]
+                boxes += screen.make_box(
+                    box_label=channel.label, nodes=num_children[counter])
+                counter += 1
+            else:
+                widgets += screen.make_widget(
+                    nodes=childnodes, widget_label=channel.label,
+                    widget_type=channel.widget, read_pv=channel.read_pv,
+                    write_pv=channel.write_pv)
+        main_window = screen.make_main_window(window_title=basename)
+        exit_button = screen.make_exit_button()
+        edm_out += main_window + boxes + widgets + exit_button
+        return edm_out
 
     def format_yaml(
         self, channels: Tree[ChannelConfig], basename: str, macros: List[Macro]
