@@ -1,21 +1,13 @@
 import re
-from typing import Iterator, Union
+from enum import Enum
 
-from ._types import Component, Group, T, Tree
+from ruamel.yaml.scalarstring import preserve_literal
 
 
 def truncate_description(desc: str) -> str:
     """Take the first line of a multiline description, truncated to 40 chars"""
     first_line = desc.strip().split("\n")[0]
     return first_line[:40]
-
-
-def walk(tree: Tree[T]) -> Iterator[Union[T, Group[T]]]:
-    """Depth first traversal of tree"""
-    for t in tree:
-        yield t
-        if isinstance(t, Group):
-            yield from walk(t.children)
 
 
 def camel_to_title(name):
@@ -31,10 +23,14 @@ def camel_to_title(name):
     return ret
 
 
-def get_label(component: Component) -> str:
-    """If the component has a label, use that, otherwise
-    return the Title Case version of its camelCase name"""
-    label = component.label
-    if label is None:
-        label = camel_to_title(component.name)
-    return label
+def prepare_for_yaml(child):
+    if isinstance(child, dict):
+        return {k: prepare_for_yaml(v) for k, v in child.items()}
+    elif isinstance(child, list):
+        return [prepare_for_yaml(v) for v in child]
+    elif isinstance(child, Enum):
+        return child.value
+    elif isinstance(child, str) and "\n" in child:
+        return preserve_literal(child)
+    else:
+        return child

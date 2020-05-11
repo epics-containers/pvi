@@ -1,18 +1,46 @@
 import csv
 import io
+from io import StringIO
+from typing import List
 
-from ._types import AsynParameter, Channel, Formatter, Group, Record, Tree
-from ._util import walk
+from ruamel.yaml import YAML
+
+from ._types import (
+    AsynParameter,
+    ChannelConfig,
+    Formatter,
+    Group,
+    Macro,
+    Record,
+    Tree,
+    walk,
+)
+from ._util import prepare_for_yaml
 
 FIELD_TXT = '    field({0:5s} "{1}")\n'
 INFO_TXT = '    info({0} "{1}")\n'
 
 
 class DLSFormatter(Formatter):
-    def format_edl(self, channels: Tree[Channel], basename: str) -> str:
+    def format_edl(
+        self, channels: Tree[ChannelConfig], basename: str, macros: List[Macro]
+    ) -> str:
         raise NotImplementedError(self)
 
-    def format_csv(self, channels: Tree[Channel], basename: str) -> str:
+    def format_yaml(
+        self, channels: Tree[ChannelConfig], basename: str, macros: List[Macro]
+    ) -> str:
+        # Walk the tree stripping enums and preserving descriptions
+        prepared_channels = [prepare_for_yaml(c.dict()) for c in channels]
+        stream = StringIO()
+        YAML().dump(
+            dict(macros=[m.dict() for m in macros], children=prepared_channels), stream
+        )
+        return stream.getvalue()
+
+    def format_csv(
+        self, channels: Tree[ChannelConfig], basename: str, macros: List[Macro]
+    ) -> str:
         out = io.StringIO(newline="")
         writer = csv.writer(out, delimiter=",", quotechar='"')
         writer.writerow(["Parameter", "PVs", "Description"])
@@ -25,7 +53,9 @@ class DLSFormatter(Formatter):
                 writer.writerow([channel.name, pvs, channel.description])
         return out.getvalue()
 
-    def format_template(self, records: Tree[Record], basename: str) -> str:
+    def format_template(
+        self, records: Tree[Record], basename: str, macros: List[Macro]
+    ) -> str:
         txt = ""
         for record in walk(records):
             if isinstance(record, Group):
@@ -44,7 +74,9 @@ record({record.type}, "{record.name}") {{
 """
         return txt
 
-    def format_h(self, parameters: Tree[AsynParameter], basename: str) -> str:
+    def format_h(
+        self, parameters: Tree[AsynParameter], basename: str, macros: List[Macro]
+    ) -> str:
         parameter_members = ""
         for parameter in walk(parameters):
             if isinstance(parameter, Group):
@@ -68,7 +100,9 @@ public:
 """
         return h_txt
 
-    def format_cpp(self, parameters: Tree[AsynParameter], basename: str) -> str:
+    def format_cpp(
+        self, parameters: Tree[AsynParameter], basename: str, macros: List[Macro]
+    ) -> str:
         create_params = ""
         for parameter in walk(parameters):
             if isinstance(parameter, AsynParameter):

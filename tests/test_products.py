@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from pvi import Channel, Group, Schema, Widget, cli
+from pvi import ChannelConfig, Group, Schema, Widget, cli
 
 PILATUS_YAML = Path(__file__).parent / "pilatus.pvi.yaml"
 EXPECTED = Path(__file__).parent / "expected"
@@ -13,7 +13,7 @@ def test_channels():
     assert isinstance(channel_tree[0], Group)
     channels = channel_tree[0].children
     assert len(channels) == 7
-    assert channels[0] == Channel(
+    assert channels[0] == ChannelConfig(
         name="ThresholdEnergy",
         label="Threshold Energy",
         read_pv="$(P)$(R)ThresholdEnergy_RBV",
@@ -32,6 +32,10 @@ but sometimes other values may be preferable.
 def check_generation(tmp_path: Path, fname: str):
     cli.main(["generate", str(PILATUS_YAML), str(tmp_path / fname)])
     assert open(tmp_path / fname).read() == open(EXPECTED / fname).read()
+
+
+def test_yaml(tmp_path: Path):
+    check_generation(tmp_path, "pilatus.coniql.yaml")
 
 
 def test_h(tmp_path: Path):

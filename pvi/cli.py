@@ -26,7 +26,7 @@ def generate(args):
     else:
         tree = schema.producer.produce_channels(schema.components)
     format = getattr(schema.formatter, f"format_{suffix[1:]}")
-    text = format(tree, basename)
+    text = format(tree, basename, schema.macros)
     with open(args.out, "w") as f:
         f.write(text)
 

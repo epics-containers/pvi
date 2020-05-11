@@ -1,9 +1,22 @@
 """The types that should be inherited from or produced by Fields."""
 
 from enum import Enum
-from typing import Any, Callable, Dict, Generic, List, Sequence, Type, TypeVar, Union
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    Generic,
+    Iterator,
+    List,
+    Sequence,
+    Type,
+    TypeVar,
+    Union,
+)
 
 from pydantic import BaseModel, Field
+
+from ._util import camel_to_title
 
 
 # These must match the types defined in coniql schema
@@ -69,23 +82,6 @@ class Record(BaseModel):
     infos: Dict[str, str] = Field({}, description="Any infos to be added to the record")
 
 
-class Channel(BaseModel):
-    name: str = Field(..., description="The name of the Channel within the Device")
-    label: str = Field(..., description="The GUI label for the Channel")
-    read_pv: str = Field(
-        None, description="The pv to get from, None means not readable (an action)"
-    )
-    write_pv: str = Field(
-        None, description="The pv to put to, None means not writeable (a readback)"
-    )
-    # The following are None to allow multiple references to channels
-    widget: Widget = Field(None, description="Which widget to use for the Channel")
-    description: str = Field(None, description="Description of what the Channel does")
-    display_form: DisplayForm = Field(
-        None, description="How should numeric values be displayed"
-    )
-
-
 class AsynParameter(BaseModel):
     name: str = Field(..., description="Asyn parameter name")
     type: str = Field(..., description="Asyn parameter type")
@@ -104,6 +100,23 @@ class WithType(BaseModel, metaclass=WithTypeMetaClass):
     """BaseModel that adds a type parameter from class name."""
 
     type: str
+
+
+class ChannelConfig(WithType):
+    name: str = Field(..., description="The name of the Channel within the Device")
+    label: str = Field(..., description="The GUI label for the Channel")
+    read_pv: str = Field(
+        None, description="The pv to get from, None means not readable (an action)"
+    )
+    write_pv: str = Field(
+        None, description="The pv to put to, None means not writeable (a readback)"
+    )
+    # The following are None to allow multiple references to channels
+    widget: Widget = Field(None, description="Which widget to use for the Channel")
+    description: str = Field(None, description="Description of what the Channel does")
+    display_form: DisplayForm = Field(
+        None, description="How should numeric values be displayed"
+    )
 
 
 T = TypeVar("T")
@@ -126,6 +139,14 @@ class Component(WithType):
         description="The GUI Label for this, default is name converted to Title Case",
     )
 
+    def get_label(self) -> str:
+        """If the component has a label, use that, otherwise
+        return the Title Case version of its camelCase name"""
+        label = self.label
+        if label is None:
+            label = camel_to_title(self.name)
+        return label
+
     @classmethod
     def on_each_node(
         cls: Type[C], tree: Tree["Component"], func: Callable[[C], List[S]]
@@ -135,7 +156,9 @@ class Component(WithType):
         for t in tree:
             if isinstance(t, Group):
                 group: Group[S] = Group(
-                    name=t.name, children=cls.on_each_node(t.children, func)
+                    name=t.name,
+                    label=t.get_label(),
+                    children=cls.on_each_node(t.children, func),
                 )
                 out.append(group)
             elif isinstance(t, cls):
@@ -152,11 +175,29 @@ class Group(Component, Generic[T]):
     )
 
 
+def walk(tree: Tree[T]) -> Iterator[Union[T, Group[T]]]:
+    """Depth first traversal of tree"""
+    for t in tree:
+        yield t
+        if isinstance(t, Group):
+            yield from walk(t.children)
+
+
 class File(BaseModel):
     path: str = Field(..., description="Path to the file, can include macros")
     macros: Dict[str, Any] = Field(
         {}, description="Extra macros to pass along with the macros from this file"
     )
+
+
+class Macro(WithType):
+    name: str = Field(
+        ..., description="The name of the Macro that will be passed when instantiated"
+    )
+    description: str = Field(
+        ..., description="Description of what the Macro will be used for"
+    )
+    value: Any
 
 
 class Producer(WithType):
@@ -184,7 +225,7 @@ class Producer(WithType):
         """
         raise NotImplementedError(self)
 
-    def produce_channels(self, components: Tree[Component]) -> Tree[Channel]:
+    def produce_channels(self, components: Tree[Component]) -> Tree[ChannelConfig]:
         """Produce a channel tree structure for making screens
 
         Args:
@@ -197,29 +238,52 @@ class Producer(WithType):
 
 
 class Formatter(WithType):
-    def format_adl(self, channels: Tree[Channel], basename: str) -> str:
+    def format_adl(
+        self, channels: Tree[ChannelConfig], basename: str, macros: List[Macro]
+    ) -> str:
         raise NotImplementedError(self)
 
-    def format_edl(self, channels: Tree[Channel], basename: str) -> str:
+    def format_edl(
+        self, channels: Tree[ChannelConfig], basename: str, macros: List[Macro]
+    ) -> str:
         raise NotImplementedError(self)
 
-    def format_opi(self, channels: Tree[Channel], basename: str) -> str:
+    def format_opi(
+        self, channels: Tree[ChannelConfig], basename: str, macros: List[Macro]
+    ) -> str:
         raise NotImplementedError(self)
 
-    def format_bob(self, channels: Tree[Channel], basename: str) -> str:
+    def format_bob(
+        self, channels: Tree[ChannelConfig], basename: str, macros: List[Macro]
+    ) -> str:
         raise NotImplementedError(self)
 
-    def format_ui(self, channels: Tree[Channel], basename: str) -> str:
+    def format_ui(
+        self, channels: Tree[ChannelConfig], basename: str, macros: List[Macro]
+    ) -> str:
         raise NotImplementedError(self)
 
-    def format_csv(self, channels: Tree[Channel], basename: str) -> str:
+    def format_yaml(
+        self, channels: Tree[ChannelConfig], basename: str, macros: List[Macro]
+    ) -> str:
         raise NotImplementedError(self)
 
-    def format_template(self, records: Tree[Record], basename: str) -> str:
+    def format_csv(
+        self, channels: Tree[ChannelConfig], basename: str, macros: List[Macro]
+    ) -> str:
         raise NotImplementedError(self)
 
-    def format_h(self, parameters: Tree[AsynParameter], basename: str) -> str:
+    def format_template(
+        self, records: Tree[Record], basename: str, macros: List[Macro]
+    ) -> str:
         raise NotImplementedError(self)
 
-    def format_cpp(self, parameters: Tree[AsynParameter], basename: str) -> str:
+    def format_h(
+        self, parameters: Tree[AsynParameter], basename: str, macros: List[Macro]
+    ) -> str:
+        raise NotImplementedError(self)
+
+    def format_cpp(
+        self, parameters: Tree[AsynParameter], basename: str, macros: List[Macro]
+    ) -> str:
         raise NotImplementedError(self)

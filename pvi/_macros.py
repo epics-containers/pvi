@@ -1,19 +1,12 @@
+from typing import Union
+
 from pydantic import Field
 
-from ._types import WithType
+from ._types import Macro
 
 VALUE_FIELD = Field(
     None, description="The default value of the parameter, None means required"
 )
-
-
-class Macro(WithType):
-    name: str = Field(
-        ..., description="The name of the Macro that will be passed when instantiated"
-    )
-    description: str = Field(
-        ..., description="Description of what the Macro will be used for"
-    )
 
 
 class StringMacro(Macro):
@@ -26,3 +19,6 @@ class FloatMacro(Macro):
 
 class IntMacro(Macro):
     value: int = VALUE_FIELD
+
+
+MacroUnion = Union[FloatMacro, StringMacro, IntMacro]

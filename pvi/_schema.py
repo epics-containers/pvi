@@ -17,13 +17,12 @@ from ._asyn import (
     AsynWaveform,
 )
 from ._dls import DLSFormatter
-from ._macros import FloatMacro, IntMacro, StringMacro
+from ._macros import MacroUnion
 from ._types import Component, File, Group
 from ._version_git import __version__
 
 # from ._stream import StreamFloat64, StreamString, StreamProducer
 
-MacroUnion = Union[FloatMacro, StringMacro, IntMacro]
 ProducerUnion = Union[AsynProducer]  # , StreamProducer, SoftProducer]
 FormatterUnion = Union[APSFormatter, DLSFormatter]
 ComponentUnion = Union[

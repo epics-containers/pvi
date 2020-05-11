@@ -3,7 +3,7 @@ from typing import Any, ClassVar, List
 
 from pydantic import BaseModel, Field
 
-from pvi._types import Channel, DisplayForm, Widget
+from pvi._types import ChannelConfig, DisplayForm, Widget
 
 from ._records import (
     AnalogueAll,
@@ -14,7 +14,7 @@ from ._records import (
     WaveformAll,
 )
 from ._types import AsynParameter, Component, Producer, Record, Tree
-from ._util import get_label, truncate_description
+from ._util import truncate_description
 
 
 class TypeStrings(BaseModel):
@@ -326,21 +326,21 @@ class AsynProducer(Producer):
     def produce_records(self, components: Tree[Component]) -> Tree[Record]:
         return AsynComponent.on_each_node(components, self._make_records)
 
-    def _make_channels(self, component: AsynComponent) -> List[Channel]:
+    def _make_channels(self, component: AsynComponent) -> List[ChannelConfig]:
         channels = []
         # Make the primary channel
-        channel = Channel(
+        channel = ChannelConfig(
             name=component.name,
-            label=get_label(component),
+            label=component.get_label(),
             description=component.description,
             display_form=component.display_form,
         )
         # Add read pv
         if component.role == ParameterRole.TRANSIENT:
             # readback is a separate channel
-            read_channel = Channel(
+            read_channel = ChannelConfig(
                 name=component.name + "Readback",
-                label=get_label(component) + " Readback",
+                label=component.get_label() + " Readback",
                 description=component.description,
                 display_form=component.display_form,
                 read_pv=self._read_record_name(component),
@@ -357,7 +357,7 @@ class AsynProducer(Producer):
         channels.append(channel)
         return channels
 
-    def produce_channels(self, components: Tree[Component]) -> Tree[Channel]:
+    def produce_channels(self, components: Tree[Component]) -> Tree[ChannelConfig]:
         return AsynComponent.on_each_node(components, self._make_channels)
 
     def _make_asyn_parameters(self, component: AsynComponent) -> List[AsynParameter]:
