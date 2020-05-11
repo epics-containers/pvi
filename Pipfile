@@ -23,8 +23,8 @@ ruamel-yaml = "*"
 
 [scripts]
 # Put coverage here so we don't interfere with debugging in the IDE
-tests = "python -m pytest --cov-fail-under=80 --cov=pvi --cov-report xml:cov.xml"
-docs = "sphinx-build -b html docs build/html"
+tests = "python -m pytest --cov-fail-under=90 --cov=pvi --cov-report term"
+docs = "sphinx-build -E -b html docs build/html"
 
 [pipenv]
 allow_prereleases = true
