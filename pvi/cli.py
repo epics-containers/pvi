@@ -35,7 +35,9 @@ def main(args=None):
     parser = ArgumentParser()
     subparsers = parser.add_subparsers()
     # Add a command for interatcting with the schema
-    sub = subparsers.add_parser("schema", help="Output JSON schema for pvi YAML format to file")
+    sub = subparsers.add_parser(
+        "schema", help="Output JSON schema for pvi YAML format to file"
+    )
     sub.add_argument("json", type=Path, help="path to the JSON output file")
     sub.set_defaults(func=schema)
     sub.add_argument(
