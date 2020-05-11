@@ -5,6 +5,17 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Schema Generate",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder:pvi}/pvi",
+            "args": [
+                "schema",
+                "${workspaceFolder:pvi}/pvi/schema.json"
+            ],
+            "console": "integratedTerminal"
+        },
+        {
             "name": "Pilatus PVI Generate",
             "type": "python",
             "request": "launch",
