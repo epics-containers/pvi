@@ -8,7 +8,8 @@ SUFFIXES = ["." + x[7:] for x in Formatter.__dict__ if x.startswith("format_")]
 
 
 def schema(args):
-    print(Schema.schema_json(indent=args.indent))
+    with open(args.json, "w") as f:
+        f.write(Schema.schema_json(indent=args.indent))
 
 
 def generate(args):
@@ -34,7 +35,8 @@ def main(args=None):
     parser = ArgumentParser()
     subparsers = parser.add_subparsers()
     # Add a command for interatcting with the schema
-    sub = subparsers.add_parser("schema", help="Show JSON schema for pvi YAML format")
+    sub = subparsers.add_parser("schema", help="Output JSON schema for pvi YAML format to file")
+    sub.add_argument("json", type=Path, help="path to the JSON output file")
     sub.set_defaults(func=schema)
     sub.add_argument(
         "-i", "--indent", type=int, default=2, help="indent level for JSON"
