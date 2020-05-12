@@ -29,9 +29,9 @@ class DLSFormatter(Formatter):
     ) -> str:
         edm_out = ''
         screen = GenerateEDL(
-            w=0, h=900, x=5, y=50, boxy=0, boxh=0, boxx=0, boxw=245,
-            space=5, labelcounter=0, defFontClass="arial", defFgColorCtrl=25,
-            defBgColorCtrl=3, defFgColorMon=16, defBgColorMon=10)
+            w=0, h=900, x=5, y=50, box_y=0, box_h=0, box_x=0, box_w=245,
+            space=5, label_counter=0, def_font_class="arial", def_fg_colour_ctrl=25,
+            def_bg_colour_ctrl=3, def_fg_colour_mon=16, def_bg_colour_mon=10)
         num_children = []
         for group in channels:
             num_children.append(len(group.children))
