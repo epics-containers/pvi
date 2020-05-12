@@ -16,7 +16,7 @@
             "console": "integratedTerminal"
         },
         {
-            "name": "Pilatus PVI Generate",
+            "name": "Pilatus header Generate",
             "type": "python",
             "request": "launch",
             "program": "${workspaceFolder:pvi}/pvi",
@@ -24,6 +24,18 @@
                 "generate",
                 "${workspaceFolder:pvi}/tests/pilatus.pvi.yaml",
                 "${workspaceFolder:pvi}/pilatusDetectorParamSet.h"
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Pilatus template Generate",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder:pvi}/pvi",
+            "args": [
+                "generate",
+                "${workspaceFolder:pvi}/tests/pilatus.pvi.yaml",
+                "${workspaceFolder:pvi}/pilatusParameters.template"
             ],
             "console": "integratedTerminal"
         },
