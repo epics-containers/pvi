@@ -42,10 +42,6 @@ def test_h(tmp_path: Path):
     check_generation(tmp_path, "pilatus_parameters.h")
 
 
-def test_cpp(tmp_path: Path):
-    check_generation(tmp_path, "pilatus_parameters.cpp")
-
-
 def test_template(tmp_path: Path):
     check_generation(tmp_path, "pilatus_parameters.template")
 

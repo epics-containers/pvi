@@ -283,8 +283,3 @@ class Formatter(WithType):
         self, parameters: Tree[AsynParameter], basename: str, macros: List[Macro]
     ) -> str:
         raise NotImplementedError(self)
-
-    def format_cpp(
-        self, parameters: Tree[AsynParameter], basename: str, macros: List[Macro]
-    ) -> str:
-        raise NotImplementedError(self)
