@@ -27,31 +27,27 @@ class DLSFormatter(Formatter):
     def format_edl(
         self, channels: Tree[ChannelConfig], basename: str, macros: List[Macro]
     ) -> str:
-        edm_out = ''
         screen = GenerateEDL(
             w=0, h=900, x=5, y=50, box_y=0, box_h=0, box_x=0, box_w=245,
-            space=5, label_counter=0, def_font_class="arial", def_fg_colour_ctrl=25,
-            def_bg_colour_ctrl=3, def_fg_colour_mon=16, def_bg_colour_mon=10)
-        num_children = []
-        for group in channels:
-            num_children.append(len(group.children))
+            margin=5, label_counter=0, label_height=20, widget_height=17,
+            widget_x=0, widget_dist=115, exit_space=50, def_font_class="arial",
+            def_fg_colour_ctrl=25, def_bg_colour_ctrl=3, def_fg_colour_mon=16,
+            def_bg_colour_mon=10)
         boxes = ''
         widgets = ''
-        counter = 0
         for channel in walk(channels):
             if isinstance(channel, Group):
-                childnodes = num_children[counter]
+                child_nodes = len(channel.children)
                 boxes += screen.make_box(
-                    box_label=channel.label, nodes=num_children[counter])
-                counter += 1
+                    box_label=channel.label, nodes=child_nodes)
             else:
                 widgets += screen.make_widget(
-                    nodes=childnodes, widget_label=channel.label,
+                    nodes=child_nodes, widget_label=channel.label,
                     widget_type=channel.widget, read_pv=channel.read_pv,
                     write_pv=channel.write_pv)
         main_window = screen.make_main_window(window_title=basename)
         exit_button = screen.make_exit_button()
-        edm_out += main_window + boxes + widgets + exit_button
+        edm_out = main_window + boxes + widgets + exit_button
         return edm_out
 
     def format_yaml(
