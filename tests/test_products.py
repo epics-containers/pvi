@@ -52,3 +52,7 @@ def test_template(tmp_path: Path):
 
 def test_csv(tmp_path: Path):
     check_generation(tmp_path, "pilatus_parameters.csv")
+
+
+def test_edl(tmp_path: Path):
+    check_generation(tmp_path, "pilatus_parameters.edl")
