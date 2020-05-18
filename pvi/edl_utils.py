@@ -4,10 +4,30 @@ from ._types import Widget
 class GenerateEDL:
     """ Returns the strings required to create an entire edl screen,
     containing widgets for each channel."""
-    def __init__(self, w, h, x, y, box_y, box_h, box_x, box_w, margin,
-                 label_counter, label_height, widget_height, widget_x, widget_dist,
-                 exit_space, def_font_class, def_fg_colour_ctrl, def_bg_colour_ctrl,
-                 def_fg_colour_mon, def_bg_colour_mon):
+
+    def __init__(
+        self,
+        w,
+        h,
+        x,
+        y,
+        box_y,
+        box_h,
+        box_x,
+        box_w,
+        margin,
+        label_counter,
+        label_height,
+        widget_height,
+        widget_x,
+        widget_dist,
+        exit_space,
+        def_font_class,
+        def_fg_colour_ctrl,
+        def_bg_colour_ctrl,
+        def_fg_colour_mon,
+        def_bg_colour_mon,
+    ):
         self.w = w
         self.h = h
         self.x = x
@@ -256,7 +276,7 @@ endObjectProperties
 
         # After the last label, set y to start next box below
         box_space = 20
-        if self.label_counter == (nodes-1):
+        if self.label_counter == (nodes - 1):
             self.y = self.box_y + self.box_h + box_space
         else:
             self.label_counter += 1
@@ -266,7 +286,7 @@ endObjectProperties
     def make_label(self, widget_label):
         """ Make a label per channel. """
         label_x = self.x + self.margin
-        label_y = self.box_y + self.margin + (self.label_height*self.label_counter)
+        label_y = self.box_y + self.margin + (self.label_height * self.label_counter)
         label_text = f"""# (Static Text)
 object activeXTextClass
 beginObjectProperties
@@ -292,8 +312,7 @@ endObjectProperties
         """ Make text input widgets. """
         self.widget_x = self.x + self.widget_dist
         # Keep the widget aligned with the label
-        demand_y = self.box_y + self.margin + \
-            ((self.label_height)*self.label_counter)
+        demand_y = self.box_y + self.margin + (self.label_height * self.label_counter)
         return f"""# (Textentry)
 object TextentryClass
 beginObjectProperties
@@ -317,7 +336,7 @@ endObjectProperties
     def make_rbv(self, read_pv, split, widget_width):
         """ Make text update widgets. """
         self.widget_x = self.x + self.widget_dist + split
-        rbv_y = self.box_y + self.margin + (self.label_height*self.label_counter)
+        rbv_y = self.box_y + self.margin + (self.label_height * self.label_counter)
         return f"""# (Textupdate)
 object TextupdateClass
 beginObjectProperties
@@ -341,7 +360,7 @@ endObjectProperties
 
     def make_button(self, widget_label, write_pv):
         self.widget_x = self.x + self.widget_dist
-        btn_y = self.box_y + self.margin + (self.label_height*self.label_counter)
+        btn_y = self.box_y + self.margin + (self.label_height * self.label_counter)
         return f"""# (Message Button)
 object activeMessageButtonClass
 beginObjectProperties
@@ -371,7 +390,7 @@ endObjectProperties
         """ Make centered LED widget. """
         center = 50
         self.widget_x = self.x + self.widget_dist + center
-        led_y = self.box_y + self.margin + (self.label_height*self.label_counter)
+        led_y = self.box_y + self.margin + (self.label_height * self.label_counter)
         return f"""# (Byte)
 object ByteClass
 beginObjectProperties
@@ -393,7 +412,7 @@ endObjectProperties
 
     def make_combo(self, write_pv, read_pv):
         self.widget_x = self.x + self.widget_dist
-        com_y = self.box_y + self.margin + (self.label_height*self.label_counter)
+        com_y = self.box_y + self.margin + (self.label_height * self.label_counter)
         return f"""# (Menu Button)
 object activeMenuButtonClass
 beginObjectProperties
@@ -416,28 +435,28 @@ endObjectProperties
 
 """
 
-#     def make_bar(self, read_pv):
-#         return f"""# (Bar)
-# object activeBarClass
-# beginObjectProperties
-# major 4
-# minor 1
-# release 0
-# x 566
-# y 388
-# w 238
-# h 188
-# indicatorColor index 17
-# fgColor index 14
-# bgColor index 6
-# indicatorPv "{read_pv}"
-# font "helvetica-medium-r-18.0"
-# min "0"
-# max "100"
-# scaleFormat "FFloat"
-# orientation "vertical"
-# endObjectProperties
-# """
+    #     def make_bar(self, read_pv):
+    #         return f"""# (Bar)
+    # object activeBarClass
+    # beginObjectProperties
+    # major 4
+    # minor 1
+    # release 0
+    # x 566
+    # y 388
+    # w 238
+    # h 188
+    # indicatorColor index 17
+    # fgColor index 14
+    # bgColor index 6
+    # indicatorPv "{read_pv}"
+    # font "helvetica-medium-r-18.0"
+    # min "0"
+    # max "100"
+    # scaleFormat "FFloat"
+    # orientation "vertical"
+    # endObjectProperties
+    # """
 
     def make_exit_button(self):
         """ Make exit button in bottom right corner of main window. """
