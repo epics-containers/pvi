@@ -1,5 +1,10 @@
 Parameter,PVs,Description
-*AncilliaryInformation*
+*Top*
+Armed,$(P)$(R)Armed_RBV,"Armed flag
+
+Indicates Pilatus is ready for external triggers
+"
+*AncillaryInformation*
 ThresholdEnergy,"$(P)$(R)ThresholdEnergy
 $(P)$(R)ThresholdEnergy_RBV","Threshold energy in keV
 
@@ -15,7 +20,3 @@ TVXVersion,$(P)$(R)TVXVersion_RBV,TVXVersion_RBV
 PixelCutOff,$(P)$(R)PixelCutOff_RBV,"Readback for tau pixel cut off
 "
 HeaderString,$(P)$(R)HeaderString,HeaderString
-Armed,$(P)$(R)Armed_RBV,"Armed flag
-
-Indicates Pilatus is ready for external triggers
-"

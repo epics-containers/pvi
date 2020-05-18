@@ -55,7 +55,7 @@ formatter:
   type: APSFormatter
 components:
   - type: ComponentGroup
-    name: AncilliaryInformation
+    name: AncillaryInformation
     children:
       - name: GainX
         type: AsynFloat64

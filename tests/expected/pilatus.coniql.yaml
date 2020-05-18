@@ -42,8 +42,24 @@ macros:
   value: 0
 children:
 - type: Group
-  name: AncilliaryInformation
-  label: Ancilliary Information
+  name: Top
+  label: Top
+  children:
+  - type: ChannelConfig
+    name: Armed
+    label: Armed
+    read_pv: $(P)$(R)Armed_RBV
+    write_pv:
+    widget: LED
+    description: |
+      Armed flag
+
+      Indicates Pilatus is ready for external triggers
+    display_form:
+  layout: Box
+- type: Group
+  name: AncillaryInformation
+  label: Ancillary Information
   children:
   - type: ChannelConfig
     name: ThresholdEnergy
@@ -98,16 +114,5 @@ children:
     write_pv: $(P)$(R)HeaderString
     widget: Text Input
     description: HeaderString
-    display_form:
-  - type: ChannelConfig
-    name: Armed
-    label: Armed
-    read_pv: $(P)$(R)Armed_RBV
-    write_pv:
-    widget: LED
-    description: |
-      Armed flag
-
-      Indicates Pilatus is ready for external triggers
     display_form:
   layout: Box

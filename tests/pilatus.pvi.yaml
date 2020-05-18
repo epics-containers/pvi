@@ -60,7 +60,20 @@ formatter:
   type: APSFormatter
 components:
   - type: ComponentGroup
-    name: AncilliaryInformation
+    name: Top
+    children:
+      - type: AsynBinary
+        name: Armed
+        description: |
+          Armed flag
+
+          Indicates Pilatus is ready for external triggers
+        role: Readback
+        record_fields:
+          ONAM: Armed
+          ZNAM: Unarmed
+  - type: ComponentGroup
+    name: AncillaryInformation
     children:
       - type: AsynFloat64
         name: ThresholdEnergy
@@ -111,13 +124,3 @@ components:
         record_fields:
           FTVL: CHAR
           NELM: '68'
-      - type: AsynBinary
-        name: Armed
-        description: |
-          Armed flag
-
-          Indicates Pilatus is ready for external triggers
-        role: Readback
-        record_fields:
-          ONAM: Armed
-          ZNAM: Unarmed
