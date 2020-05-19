@@ -12,7 +12,7 @@ The existing pilatus.cpp is then modified to remove these parameters definitions
 use the param set API.
 
 
-Database Template file
+Database Template File
 ----------------------
 
 According to the demand and readback properties of the component, the following
@@ -24,6 +24,22 @@ records are created:
 
 The top level pilatus.template includes this file, as well as records that
 provide logic (for things like the arrayRate and EPICSShutter in areaDetector).
+
+
+UI
+--
+
+Finally, UI elements can be generated for each component for multiple graphical
+applications. For example, the following EDM screen is generated:
+
+.. image:: pilatus_edl.png
+   :width: 50%
+   :align: center
+
+
+This can serve as a low level overview of the entire system, as well as a convenient
+pallette for constructing higher level, more structured screens.
+
 
 Class Hierarchy
 ---------------
