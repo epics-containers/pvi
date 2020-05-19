@@ -1,4 +1,15 @@
-# Group: AncilliaryInformation
+# Group: Top
+
+record(bi, "$(P)$(R)Armed_RBV") {
+    field(SCAN, "I/O Intr")
+    field(DESC, "Armed flag")
+    field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))Armed")
+    field(DTYP, "asynInt32")
+    field(ONAM, "Armed")
+    field(ZNAM, "Unarmed")
+}
+
+# Group: AncillaryInformation
 
 record(ai, "$(P)$(R)ThresholdEnergy_RBV") {
     field(SCAN, "I/O Intr")
@@ -90,14 +101,5 @@ record(waveform, "$(P)$(R)HeaderString") {
     field(PINI, "YES")
     field(VAL,  "0")
     info(autosaveFields, "VAL")
-}
-
-record(bi, "$(P)$(R)Armed_RBV") {
-    field(SCAN, "I/O Intr")
-    field(DESC, "Armed flag")
-    field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))Armed")
-    field(DTYP, "asynInt32")
-    field(ONAM, "Armed")
-    field(ZNAM, "Unarmed")
 }
 

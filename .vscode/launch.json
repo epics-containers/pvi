@@ -1,0 +1,55 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Schema Generate",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder:pvi}/pvi",
+            "args": [
+                "schema",
+                "${workspaceFolder:pvi}/pvi/schema.json"
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Pilatus header Generate",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder:pvi}/pvi",
+            "args": [
+                "generate",
+                "${workspaceFolder:pvi}/tests/pilatus.pvi.yaml",
+                "${workspaceFolder:pvi}/pilatusDetectorParamSet.h"
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Pilatus template Generate",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder:pvi}/pvi",
+            "args": [
+                "generate",
+                "${workspaceFolder:pvi}/tests/pilatus.pvi.yaml",
+                "${workspaceFolder:pvi}/pilatusParameters.template"
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "SimDetector PVI Generate",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder:pvi}/pvi",
+            "args": [
+                "generate",
+                "${workspaceFolder:pvi}/tests/sim.pvi.yaml",
+                "${workspaceFolder:pvi}/simDetectorParamSet.h"
+            ],
+            "console": "integratedTerminal"
+        },
+    ]
+}

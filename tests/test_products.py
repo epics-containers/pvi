@@ -9,10 +9,13 @@ EXPECTED = Path(__file__).parent / "expected"
 def test_channels():
     pilatus_schema = Schema.load(PILATUS_YAML.parent, "pilatus")
     channel_tree = pilatus_schema.producer.produce_channels(pilatus_schema.components)
-    assert len(channel_tree) == 1
+    assert len(channel_tree) == 2
     assert isinstance(channel_tree[0], Group)
     channels = channel_tree[0].children
-    assert len(channels) == 7
+    assert len(channels) == 1
+    assert isinstance(channel_tree[1], Group)
+    channels = channel_tree[1].children
+    assert len(channels) == 6
     assert channels[0] == ChannelConfig(
         name="ThresholdEnergy",
         label="Threshold Energy",
@@ -39,15 +42,11 @@ def test_yaml(tmp_path: Path):
 
 
 def test_h(tmp_path: Path):
-    check_generation(tmp_path, "pilatus_parameters.h")
-
-
-def test_cpp(tmp_path: Path):
-    check_generation(tmp_path, "pilatus_parameters.cpp")
+    check_generation(tmp_path, "pilatusDetectorParamSet.h")
 
 
 def test_template(tmp_path: Path):
-    check_generation(tmp_path, "pilatus_parameters.template")
+    check_generation(tmp_path, "pilatusParameters.template")
 
 
 def test_csv(tmp_path: Path):

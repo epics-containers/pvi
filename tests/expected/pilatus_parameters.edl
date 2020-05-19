@@ -6,7 +6,7 @@ release 1
 x 300
 y 50
 w 255
-h 250
+h 280
 font "arial-bold-r-12.0"
 ctlFont "arial-bold-r-12.0"
 btnFont "arial-bold-r-12.0"
@@ -133,7 +133,7 @@ release 0
 x 5
 y 50
 w 245
-h 150
+h 30
 lineColor index 14
 fill
 fillColor index 5
@@ -153,7 +153,41 @@ font "arial-medium-r-12.0"
 fontAlign "center"
 fgColor index 14
 bgColor index 8
-value "  Ancilliary Information  "
+value "  Top  "
+autoSize
+border
+endObjectProperties
+
+# (Rectangle)
+object activeRectangleClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 5
+y 100
+w 245
+h 130
+lineColor index 14
+fill
+fillColor index 5
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 5
+y 90
+w 150
+h 14
+font "arial-medium-r-12.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 8
+value "  Ancillary Information  "
 autoSize
 border
 endObjectProperties
@@ -172,6 +206,41 @@ font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
+value "Armed"
+
+endObjectProperties
+
+# (Byte)
+object ByteClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 170
+y 55
+w 17
+h 17
+controlPv "$(P)$(R)Armed_RBV"
+lineColor index 14
+onColor index 15
+offColor index 19
+lineWidth 2
+numBits 1
+endObjectProperties
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 10
+y 105
+w 110
+h 20
+font "arial-bold-r-10.0"
+fgColor index 14
+bgColor index 3
+useDisplayBg
 value "Threshold Energy"
 
 endObjectProperties
@@ -183,7 +252,7 @@ major 10
 minor 0
 release 0
 x 120
-y 55
+y 105
 w 60
 h 17
 controlPv "$(P)$(R)ThresholdEnergy"
@@ -201,7 +270,7 @@ major 10
 minor 0
 release 0
 x 185
-y 55
+y 105
 w 60
 h 17
 controlPv "$(P)$(R)ThresholdEnergy_RBV"
@@ -220,7 +289,7 @@ major 4
 minor 1
 release 0
 x 10
-y 75
+y 125
 w 110
 h 20
 font "arial-bold-r-10.0"
@@ -238,7 +307,7 @@ major 10
 minor 0
 release 0
 x 120
-y 75
+y 125
 w 60
 h 17
 controlPv "$(P)$(R)MinFlatField"
@@ -256,7 +325,7 @@ major 10
 minor 0
 release 0
 x 185
-y 75
+y 125
 w 60
 h 17
 controlPv "$(P)$(R)MinFlatField_RBV"
@@ -275,7 +344,7 @@ major 4
 minor 1
 release 0
 x 10
-y 95
+y 145
 w 110
 h 20
 font "arial-bold-r-10.0"
@@ -293,7 +362,7 @@ major 4
 minor 0
 release 0
 x 120
-y 95
+y 145
 w 125
 h 17
 fgColor index 25
@@ -313,7 +382,7 @@ major 4
 minor 1
 release 0
 x 10
-y 115
+y 165
 w 110
 h 20
 font "arial-bold-r-10.0"
@@ -331,7 +400,7 @@ major 10
 minor 0
 release 0
 x 120
-y 115
+y 165
 w 125
 h 17
 controlPv "$(P)$(R)TVXVersion_RBV"
@@ -350,7 +419,7 @@ major 4
 minor 1
 release 0
 x 10
-y 135
+y 185
 w 110
 h 20
 font "arial-bold-r-10.0"
@@ -368,7 +437,7 @@ major 10
 minor 0
 release 0
 x 120
-y 135
+y 185
 w 125
 h 17
 controlPv "$(P)$(R)PixelCutOff_RBV"
@@ -387,7 +456,7 @@ major 4
 minor 1
 release 0
 x 10
-y 155
+y 205
 w 110
 h 20
 font "arial-bold-r-10.0"
@@ -405,7 +474,7 @@ major 10
 minor 0
 release 0
 x 120
-y 155
+y 205
 w 125
 h 17
 controlPv "$(P)$(R)HeaderString"
@@ -416,41 +485,6 @@ fill
 font "arial-bold-r-12.0"
 endObjectProperties
 
-# (Static Text)
-object activeXTextClass
-beginObjectProperties
-major 4
-minor 1
-release 0
-x 10
-y 175
-w 110
-h 20
-font "arial-bold-r-10.0"
-fgColor index 14
-bgColor index 3
-useDisplayBg
-value "Armed"
-
-endObjectProperties
-
-# (Byte)
-object ByteClass
-beginObjectProperties
-major 4
-minor 0
-release 0
-x 170
-y 175
-w 17
-h 17
-controlPv "$(P)$(R)Armed_RBV"
-lineColor index 14
-onColor index 15
-offColor index 19
-lineWidth 2
-numBits 1
-endObjectProperties
 # (Exit Button)
 object activeExitButtonClass
 beginObjectProperties
@@ -458,7 +492,7 @@ major 4
 minor 1
 release 0
 x 155
-y 220
+y 250
 w 95
 h 25
 fgColor index 46

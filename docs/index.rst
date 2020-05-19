@@ -30,8 +30,8 @@ and low level opis:
     }
 
     PVI [shape=doublecircle]
+    "pilatus.local.yaml" -> PVI
     "pilatus.pvi.yaml" -> PVI
-    PVI -> "pilatus_parameters.cpp"
     PVI -> "pilatus_parameters.h"
     PVI -> "pilatus_parameters.template"
     PVI -> "pilatus_parameters.opi"
@@ -39,8 +39,7 @@ and low level opis:
     PVI -> "pilatus_parameters.edl"
     PVI -> "pilatus_parameters.csv"
     "pilatus_parameters.template" -> "pilatus.template" [label="included in"]
-    "pilatus_parameters.cpp" -> "libPilatus.so"
-    "pilatus_parameters.h" -> "libPilatus.so"
+    "pilatus_parameters.h" -> "pilatus.h" [label="included in"]
     "pilatus.cpp" -> "libPilatus.so"
     "pilatus.h" -> "libPilatus.so"
     "pilatus_parameters.csv" -> "pilatus.rst" [label="included in"]
@@ -147,51 +146,6 @@ And these settings could then be overridden in a local YAML file:
 .. literalinclude:: ../tests/pilatus.local.yaml
     :language: yaml
 
-
-Driver Parameter CPP file
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The generated driver parameter CPP file is a baseclass that the driver (which
-contains the logic) can derive from. It contains the string parameter defines,
-and all the createParam calls to make the interface. In this example we have
-a header file pilatus_parameters.h:
-
-.. literalinclude:: ../tests/expected/pilatus_parameters.h
-    :language: cpp
-
-And then pilatus_parameters.cpp:
-
-.. literalinclude:: ../tests/expected/pilatus_parameters.cpp
-    :language: cpp
-
-
-The existing pilatus.cpp is then modified to remove these parameters definitions
-and inherit from the intermediate class:
-
-.. code-block:: diff
-
-     pilatusDetector::pilatusDetector(const char *portName, ...)
-         : ADDriver(portName, ...), ...
-    -    imagesRemaining(0)
-    +    imagesRemaining(0),
-    +    PilatusParameters(this)
-     {
-    -    createParam(ThresholdEnergyString, asynParamFloat64, &ThresholdEnergy);
-         status = (epicsThreadCreate("PilatusDetTask", ...
-
-Database Template file
-~~~~~~~~~~~~~~~~~~~~~~
-
-According to the demand and readback properties of the component, the following
-records are created:
-
-.. literalinclude:: ../tests/expected/pilatus_parameters.template
-    :language: cpp
-
-
-The top level pilatus.template includes this file, as well as records that
-provide logic (for things like the arrayRate and EPICSShutter in areaDetector).
-
 Screen files
 ~~~~~~~~~~~~
 
@@ -221,17 +175,6 @@ reproduced, in tabular form as a csv file that can be included in rst docs:
    :header-rows: 1
 
 
-What changes would be required to add this to an existing areaDetector module?
-------------------------------------------------------------------------------
-
-We could write a conversion script that converted the existing database file to
-a YAML file. The createParam calls could then be stripped out of the driver CPP
-file, and if any names were different to the record suffix, either the driver
-changed to be consistent with the record name or an override "record_suffix"
-specified in the YAML file to keep the code the same. The record interface would
-be preserved so the existing screens could be used, but the parameter strings
-which form the interface between the driver and template would change.
-
 Questions
 ---------
 
@@ -256,7 +199,7 @@ Which screen tools to support?
 
 I suggest creating adl and edl files initially, following the example of
 makeAdl.py in ADGenICam, then expanding to support opi, bob and ui files
-natively. This would avoid eneding screen converters installed
+natively. This would avoid needing screen converters installed
 
 
 .. _YAML:
