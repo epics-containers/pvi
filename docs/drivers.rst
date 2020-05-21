@@ -41,6 +41,141 @@ This can serve as a low level overview of the entire system, as well as a conven
 pallette for constructing higher level, more structured screens.
 
 
+Ongoing Development
+-------------------
+
+Once a module is working with PVI (either an existing module after the YAML is created
+from the templates using the one time generation script, or a newly written module) it
+will then be necessary to update the YAML file in future development. Here is an
+example of necessary changes to add a new parameter, with and without
+PVI:
+
+With PVI
+~~~~~~~~
+
+Update YAML file:
+
+.. code-block:: YAML
+
+      - type: AsynFloat64
+        name: DelayTime
+        description: Delay in seconds between the external trigger and the start of image acquisition
+        role: Setting
+        initial: 0
+        record_fields:
+          PREC: 3
+          EGU: s
+
+And then run pvi (or possibly just make, if it is integrated into a Makefile). It can
+then be shared with other sites who can generate their own required files.
+
+
+Without PVI
+~~~~~~~~~~~
+
+Update template:
+
+.. code-block:: cpp
+
+    # Delay time in External Trigger mode.
+    record(ao, "$(P)$(R)DelayTime")
+    {
+        field(PINI, "YES")
+        field(DTYP, "asynFloat64")
+        field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))DELAY_TIME")
+        field(EGU,  "s")
+        field(VAL,  "0")
+        field(PREC, "6")
+    }
+
+    record(ai, "$(P)$(R)DelayTime_RBV")
+    {
+        field(DTYP, "asynFloat64")
+        field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))DELAY_TIME")
+        field(EGU,  "s")
+        field(PREC, "6")
+        field(SCAN, "I/O Intr")
+    }
+
+
+Update header file:
+
+.. code-block:: cpp
+
+    ...
+    #define PilatusDelayTimeString "DELAY_TIME"
+    ...
+    createParam(PilatusDelayTimeString, asynParamFloat64, &PilatusDelayTime);
+    ...
+    int PilatusDelayTime;
+    ...
+
+
+Update docs:
+
+.. code-block:: rst
+
+  * - Delay in seconds between the external trigger and the start of image acquisition
+    - DELAY_TIME
+    - $(P)$(R)DelayTime
+    - ao
+
+
+Update screens (of course, this will actually involve editing with a graphical
+interface):
+
+.. code-block:: javascript
+
+    "text update" {
+        object {
+            x=604
+            y=146
+            width=80
+            height=18
+        }
+        monitor {
+            chan="$(P)$(R)DelayTime_RBV"
+            clr=54
+            bclr=4
+        }
+        align="horiz. centered"
+        limits {
+        }
+    }
+    "text entry" {
+        object {
+            x=540
+            y=145
+            width=59
+            height=20
+        }
+        control {
+            chan="$(P)$(R)DelayTime"
+            clr=14
+            bclr=51
+        }
+        limits {
+        }
+    }
+    text {
+        object {
+            x=435
+            y=145
+            width=100
+            height=20
+        }
+        "basic attribute" {
+            clr=14
+        }
+        textix="Delay time"
+        align="horiz. right"
+    }
+
+Then either add equivalent changes to other screen types or use autoconvert, if
+available, and add any site specific details to any of these files (such as autosave
+and archiver tags).
+
+
 Class Hierarchy
 ---------------
 
