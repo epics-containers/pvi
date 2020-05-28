@@ -1,4 +1,6 @@
+import json
 from pathlib import Path
+from unittest import mock
 
 from pvi import ChannelConfig, Group, Schema, Widget, cli
 
@@ -55,3 +57,15 @@ def test_csv(tmp_path: Path):
 
 def test_edl(tmp_path: Path):
     check_generation(tmp_path, "pilatus_parameters.edl")
+
+
+def test_schema_matches_stored_one(tmp_path: Path):
+    schema = str(tmp_path / "schema.json")
+    cli.main(["schema", schema])
+    expected = json.loads(
+        open(Path(__file__).parent.parent / "pvi" / "schema.json").read()
+    )
+    # Don't care if version number didn't update to match if the rest is the same
+    expected["title"] = mock.ANY
+    actual = json.loads(open(schema).read())
+    assert expected == actual
