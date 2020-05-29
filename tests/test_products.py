@@ -36,7 +36,9 @@ but sometimes other values may be preferable.
 
 def check_generation(tmp_path: Path, fname: str):
     cli.main(["generate", str(PILATUS_YAML), str(tmp_path / fname)])
-    assert open(tmp_path / fname).read() == open(EXPECTED / fname).read()
+    assert open(tmp_path / fname).read() == open(EXPECTED / fname).read(), str(
+        EXPECTED / fname
+    )
 
 
 def test_yaml(tmp_path: Path):

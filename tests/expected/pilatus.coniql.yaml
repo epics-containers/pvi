@@ -1,7 +1,7 @@
 children:
 - type: Group
   name: Top
-  layout: Box
+  layout: BOX
   children:
   - type: ChannelConfig
     name: Armed
@@ -13,13 +13,13 @@ children:
       Indicates Pilatus is ready for external triggers
 - type: Group
   name: AncillaryInformation
-  layout: Box
+  layout: BOX
   children:
   - type: ChannelConfig
     name: ThresholdEnergy
     read_pv: $(P)$(R)ThresholdEnergy_RBV
     write_pv: $(P)$(R)ThresholdEnergy
-    widget: Text Input
+    widget: TEXTINPUT
     description: |
       Threshold energy in keV
 
@@ -30,28 +30,28 @@ children:
     name: MinFlatField
     read_pv: $(P)$(R)MinFlatField_RBV
     write_pv: $(P)$(R)MinFlatField
-    widget: Text Input
+    widget: TEXTINPUT
     description: Minimum flat field value
   - type: ChannelConfig
     name: GapFill
     read_pv: $(P)$(R)GapFill_RBV
     write_pv: $(P)$(R)GapFill
-    widget: Combo
+    widget: COMBO
     description: GapFill
   - type: ChannelConfig
     name: TVXVersion
     read_pv: $(P)$(R)TVXVersion_RBV
-    widget: Text Update
+    widget: TEXTUPDATE
     description: TVXVersion_RBV
   - type: ChannelConfig
     name: PixelCutOff
     read_pv: $(P)$(R)PixelCutOff_RBV
-    widget: Text Update
+    widget: TEXTUPDATE
     description: |
       Readback for tau pixel cut off
   - type: ChannelConfig
     name: HeaderString
     label: CBF Header String
     write_pv: $(P)$(R)HeaderString
-    widget: Text Input
+    widget: TEXTINPUT
     description: Header from CBF file

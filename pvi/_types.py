@@ -1,6 +1,5 @@
 """The types that should be inherited from or produced by Fields."""
 
-from enum import Enum
 from typing import (
     Any,
     Callable,
@@ -17,59 +16,7 @@ from typing import (
 from pydantic import BaseModel, Field
 
 from ._util import camel_to_title
-
-
-# These must match the types defined in coniql schema
-class DisplayForm(str, Enum):
-    """Instructions for how a number should be formatted for display."""
-
-    DEFAULT = "Default"
-    STRING = "String"
-    BINARY = "Binary"
-    DECIMAL = "Decimal"
-    HEX = "Hexadecimal"
-    EXPONENTIAL = "Exponential"
-    ENGINEERING = "Engineering"
-
-
-class Widget(str, Enum):
-    """Widget that should be used to display this Channel"""
-
-    #: Editable text input
-    TEXTINPUT = "Text Input"
-    #: Read-only text display
-    TEXTUPDATE = "Text Update"
-    #: Multiline read-only text display
-    MULTILINETEXTUPDATE = "Multiline Text Update"
-    #: Read-only LED indicator
-    LED = "LED"
-    #: Editable combo-box style menu for selecting between fixed choices
-    COMBO = "Combo"
-    #: Editable check box
-    CHECKBOX = "Checkbox"
-    #: Editable progress type bar
-    BAR = "Bar"
-    #: Clickable button to send default value to Channel
-    BUTTON = "Button"
-    #: X-axis for lines on a graph. Only valid within a Group with widget Plot
-    PLOTX = "Plot X"
-    #: Y-axis for a line on a graph. Only valid within a Group with widget Plot
-    PLOTY = "Plot Y"
-
-
-class Layout(str, Enum):
-    """Widget that should be used to display this Group"""
-
-    #: Screen with children in it
-    SCREEN = "Screen"
-    #: Group box with children vertically within it
-    BOX = "Box"
-    #: Graph canvas with each Plot Y as a line in it against Plot X
-    PLOT = "Plot"
-    #: A single row of a table, containing Channels that aren't arrays
-    ROW = "Row"
-    #: Table of Rows with same named fields, or columns of array Channels
-    TABLE = "Table"
+from .coniql_schema import DisplayForm, Layout, Widget
 
 
 # These classes allow us to generate Records, Devices and Channels in intermediate files
