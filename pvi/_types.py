@@ -103,23 +103,6 @@ class WithType(BaseModel, metaclass=WithTypeMetaClass):
     type: str
 
 
-class ChannelConfig(WithType):
-    name: str = Field(..., description="The name of the Channel within the Device")
-    label: str = Field(..., description="The GUI label for the Channel")
-    read_pv: str = Field(
-        None, description="The pv to get from, None means not readable (an action)"
-    )
-    write_pv: str = Field(
-        None, description="The pv to put to, None means not writeable (a readback)"
-    )
-    # The following are None to allow multiple references to channels
-    widget: Widget = Field(None, description="Which widget to use for the Channel")
-    description: str = Field(None, description="Description of what the Channel does")
-    display_form: DisplayForm = Field(
-        None, description="How should numeric values be displayed"
-    )
-
-
 T = TypeVar("T")
 C = TypeVar("C", bound="Component")
 S = TypeVar("S")
@@ -158,7 +141,7 @@ class Component(WithType):
             if isinstance(t, Group):
                 group: Group[S] = Group(
                     name=t.name,
-                    label=t.get_label(),
+                    label=t.label,
                     children=cls.on_each_node(t.children, func),
                 )
                 out.append(group)
@@ -170,10 +153,10 @@ class Component(WithType):
 class Group(Component, Generic[T]):
     """Group that can contain multiple parameters or other Groups."""
 
-    children: Tree[T]
     layout: Layout = Field(
         Layout.BOX, description="The layout to arrange the children within"
     )
+    children: Tree[T]
 
 
 def walk(tree: Tree[T]) -> Iterator[Union[T, Group[T]]]:
@@ -182,6 +165,21 @@ def walk(tree: Tree[T]) -> Iterator[Union[T, Group[T]]]:
         yield t
         if isinstance(t, Group):
             yield from walk(t.children)
+
+
+class ChannelConfig(Component):
+    read_pv: str = Field(
+        None, description="The pv to get from, None means not readable (an action)"
+    )
+    write_pv: str = Field(
+        None, description="The pv to put to, None means not writeable (a readback)"
+    )
+    # The following are None to allow multiple references to channels
+    widget: Widget = Field(None, description="Which widget to use for the Channel")
+    description: str = Field(None, description="Description of what the Channel does")
+    display_form: DisplayForm = Field(
+        None, description="How should numeric values be displayed"
+    )
 
 
 class File(BaseModel):

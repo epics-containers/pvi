@@ -50,14 +50,17 @@ class DLSFormatter(Formatter):
         )
         boxes = ""
         widgets = ""
+        child_nodes = 0
         for channel in walk(channels):
             if isinstance(channel, Group):
                 child_nodes = len(channel.children)
-                boxes += screen.make_box(box_label=channel.label, nodes=child_nodes)
+                boxes += screen.make_box(
+                    box_label=channel.get_label(), nodes=child_nodes
+                )
             else:
                 widgets += screen.make_widget(
                     nodes=child_nodes,
-                    widget_label=channel.label,
+                    widget_label=channel.get_label(),
                     widget_type=channel.widget,
                     read_pv=channel.read_pv,
                     write_pv=channel.write_pv,
@@ -71,11 +74,9 @@ class DLSFormatter(Formatter):
         self, channels: Tree[ChannelConfig], basename: str, macros: List[Macro]
     ) -> str:
         # Walk the tree stripping enums and preserving descriptions
-        prepared_channels = [prepare_for_yaml(c.dict()) for c in channels]
+        children = [prepare_for_yaml(c.dict(exclude_none=True)) for c in channels]
         stream = StringIO()
-        YAML().dump(
-            dict(macros=[m.dict() for m in macros], children=prepared_channels), stream
-        )
+        YAML().dump(dict(children=children), stream)
         return stream.getvalue()
 
     def format_csv(

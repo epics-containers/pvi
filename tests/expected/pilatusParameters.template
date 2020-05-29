@@ -93,7 +93,7 @@ record(ai, "$(P)$(R)PixelCutOff_RBV") {
 }
 
 record(waveform, "$(P)$(R)HeaderString") {
-    field(DESC, "HeaderString")
+    field(DESC, "Header from CBF file")
     field(DTYP, "asynOctetWrite")
     field(FTVL, "CHAR")
     field(NELM, "68")

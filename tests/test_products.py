@@ -20,7 +20,7 @@ def test_channels():
     assert len(channels) == 6
     assert channels[0] == ChannelConfig(
         name="ThresholdEnergy",
-        label="Threshold Energy",
+        label=None,
         read_pv="$(P)$(R)ThresholdEnergy_RBV",
         write_pv="$(P)$(R)ThresholdEnergy",
         widget=Widget.TEXTINPUT,

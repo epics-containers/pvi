@@ -1,69 +1,22 @@
-macros:
-- type: StringMacro
-  name: P
-  description: Record prefix part 1
-  value:
-- type: StringMacro
-  name: R
-  description: Record prefix part 2
-  value:
-- type: StringMacro
-  name: PORT
-  description: Asyn port name
-  value:
-- type: FloatMacro
-  name: TIMEOUT
-  description: The timeout for records talking to the driver
-  value: 1.0
-- type: IntMacro
-  name: ADDR
-  description: The address for the asyn port
-  value: 0
-- type: StringMacro
-  name: CAMSERVER
-  description: Machine:port that pilatus camserver is running on
-  value: localhost:41234
-- type: IntMacro
-  name: XSIZE
-  description: Maximum X dimension of the image
-  value:
-- type: IntMacro
-  name: YSIZE
-  description: Maximum Y dimension of the image
-  value:
-- type: IntMacro
-  name: BUFFERS
-  description: Maximum number of NDArray buffers to be created for plugin callbacks
-  value: 50
-- type: IntMacro
-  name: MEMORY
-  description: Max memory to allocate, should be maxw*maxh*nbuffer for driver and
-    all attached plugins
-  value: 0
 children:
 - type: Group
   name: Top
-  label: Top
+  layout: Box
   children:
   - type: ChannelConfig
     name: Armed
-    label: Armed
     read_pv: $(P)$(R)Armed_RBV
-    write_pv:
     widget: LED
     description: |
       Armed flag
 
       Indicates Pilatus is ready for external triggers
-    display_form:
-  layout: Box
 - type: Group
   name: AncillaryInformation
-  label: Ancillary Information
+  layout: Box
   children:
   - type: ChannelConfig
     name: ThresholdEnergy
-    label: Threshold Energy
     read_pv: $(P)$(R)ThresholdEnergy_RBV
     write_pv: $(P)$(R)ThresholdEnergy
     widget: Text Input
@@ -73,46 +26,32 @@ children:
       camserver uses this value to set the discriminators in each pixel.
       It is typically set to the incident x-ray energy ($(P)$(R)Energy),
       but sometimes other values may be preferable.
-    display_form:
   - type: ChannelConfig
     name: MinFlatField
-    label: Min Flat Field
     read_pv: $(P)$(R)MinFlatField_RBV
     write_pv: $(P)$(R)MinFlatField
     widget: Text Input
     description: Minimum flat field value
-    display_form:
   - type: ChannelConfig
     name: GapFill
-    label: Gap Fill
     read_pv: $(P)$(R)GapFill_RBV
     write_pv: $(P)$(R)GapFill
     widget: Combo
     description: GapFill
-    display_form:
   - type: ChannelConfig
     name: TVXVersion
-    label: TVX Version
     read_pv: $(P)$(R)TVXVersion_RBV
-    write_pv:
     widget: Text Update
     description: TVXVersion_RBV
-    display_form:
   - type: ChannelConfig
     name: PixelCutOff
-    label: Pixel Cut Off
     read_pv: $(P)$(R)PixelCutOff_RBV
-    write_pv:
     widget: Text Update
     description: |
       Readback for tau pixel cut off
-    display_form:
   - type: ChannelConfig
     name: HeaderString
-    label: Header String
-    read_pv:
+    label: CBF Header String
     write_pv: $(P)$(R)HeaderString
     widget: Text Input
-    description: HeaderString
-    display_form:
-  layout: Box
+    description: Header from CBF file
