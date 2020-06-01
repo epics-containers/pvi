@@ -1,6 +1,5 @@
 """The types that should be inherited from or produced by Fields."""
 
-from enum import Enum
 from typing import (
     Any,
     Callable,
@@ -17,59 +16,7 @@ from typing import (
 from pydantic import BaseModel, Field
 
 from ._util import camel_to_title
-
-
-# These must match the types defined in coniql schema
-class DisplayForm(str, Enum):
-    """Instructions for how a number should be formatted for display."""
-
-    DEFAULT = "Default"
-    STRING = "String"
-    BINARY = "Binary"
-    DECIMAL = "Decimal"
-    HEX = "Hexadecimal"
-    EXPONENTIAL = "Exponential"
-    ENGINEERING = "Engineering"
-
-
-class Widget(str, Enum):
-    """Widget that should be used to display this Channel"""
-
-    #: Editable text input
-    TEXTINPUT = "Text Input"
-    #: Read-only text display
-    TEXTUPDATE = "Text Update"
-    #: Multiline read-only text display
-    MULTILINETEXTUPDATE = "Multiline Text Update"
-    #: Read-only LED indicator
-    LED = "LED"
-    #: Editable combo-box style menu for selecting between fixed choices
-    COMBO = "Combo"
-    #: Editable check box
-    CHECKBOX = "Checkbox"
-    #: Editable progress type bar
-    BAR = "Bar"
-    #: Clickable button to send default value to Channel
-    BUTTON = "Button"
-    #: X-axis for lines on a graph. Only valid within a Group with widget Plot
-    PLOTX = "Plot X"
-    #: Y-axis for a line on a graph. Only valid within a Group with widget Plot
-    PLOTY = "Plot Y"
-
-
-class Layout(str, Enum):
-    """Widget that should be used to display this Group"""
-
-    #: Screen with children in it
-    SCREEN = "Screen"
-    #: Group box with children vertically within it
-    BOX = "Box"
-    #: Graph canvas with each Plot Y as a line in it against Plot X
-    PLOT = "Plot"
-    #: A single row of a table, containing Channels that aren't arrays
-    ROW = "Row"
-    #: Table of Rows with same named fields, or columns of array Channels
-    TABLE = "Table"
+from .coniql_schema import DisplayForm, Layout, Widget
 
 
 # These classes allow us to generate Records, Devices and Channels in intermediate files
@@ -101,23 +48,6 @@ class WithType(BaseModel, metaclass=WithTypeMetaClass):
     """BaseModel that adds a type parameter from class name."""
 
     type: str
-
-
-class ChannelConfig(WithType):
-    name: str = Field(..., description="The name of the Channel within the Device")
-    label: str = Field(..., description="The GUI label for the Channel")
-    read_pv: str = Field(
-        None, description="The pv to get from, None means not readable (an action)"
-    )
-    write_pv: str = Field(
-        None, description="The pv to put to, None means not writeable (a readback)"
-    )
-    # The following are None to allow multiple references to channels
-    widget: Widget = Field(None, description="Which widget to use for the Channel")
-    description: str = Field(None, description="Description of what the Channel does")
-    display_form: DisplayForm = Field(
-        None, description="How should numeric values be displayed"
-    )
 
 
 T = TypeVar("T")
@@ -158,7 +88,7 @@ class Component(WithType):
             if isinstance(t, Group):
                 group: Group[S] = Group(
                     name=t.name,
-                    label=t.get_label(),
+                    label=t.label,
                     children=cls.on_each_node(t.children, func),
                 )
                 out.append(group)
@@ -170,10 +100,10 @@ class Component(WithType):
 class Group(Component, Generic[T]):
     """Group that can contain multiple parameters or other Groups."""
 
-    children: Tree[T]
     layout: Layout = Field(
         Layout.BOX, description="The layout to arrange the children within"
     )
+    children: Tree[T]
 
 
 def walk(tree: Tree[T]) -> Iterator[Union[T, Group[T]]]:
@@ -182,6 +112,21 @@ def walk(tree: Tree[T]) -> Iterator[Union[T, Group[T]]]:
         yield t
         if isinstance(t, Group):
             yield from walk(t.children)
+
+
+class ChannelConfig(Component):
+    read_pv: str = Field(
+        None, description="The pv to get from, None means not readable (an action)"
+    )
+    write_pv: str = Field(
+        None, description="The pv to put to, None means not writeable (a readback)"
+    )
+    # The following are None to allow multiple references to channels
+    widget: Widget = Field(None, description="Which widget to use for the Channel")
+    description: str = Field(None, description="Description of what the Channel does")
+    display_form: DisplayForm = Field(
+        None, description="How should numeric values be displayed"
+    )
 
 
 class File(BaseModel):

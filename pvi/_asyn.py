@@ -342,7 +342,7 @@ class AsynProducer(Producer):
         # Make the primary channel
         channel = ChannelConfig(
             name=component.name,
-            label=component.get_label(),
+            label=component.label,
             description=component.description,
             display_form=component.display_form,
         )
@@ -351,7 +351,7 @@ class AsynProducer(Producer):
             # readback is a separate channel
             read_channel = ChannelConfig(
                 name=component.name + "Readback",
-                label=component.get_label() + " Readback",
+                label=component.label + " Readback" if component.label else None,
                 description=component.description,
                 display_form=component.display_form,
                 read_pv=self._read_record_name(component),

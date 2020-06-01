@@ -118,7 +118,8 @@ components:
           EGU: Counts
       - type: AsynWaveform
         name: HeaderString
-        description: HeaderString
+        label: CBF Header String
+        description: Header from CBF file
         role: Action
         initial: '0'
         record_fields:

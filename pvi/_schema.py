@@ -108,6 +108,3 @@ class Schema(BaseModel):
                     data[k] = v
         schema = cls(**data)
         return schema
-
-
-Schema.update_forward_refs()

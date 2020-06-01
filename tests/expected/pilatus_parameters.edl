@@ -463,7 +463,7 @@ font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Header String"
+value "CBF Header String"
 
 endObjectProperties
 
