@@ -25,6 +25,11 @@ class TemplateConverter(BaseModel):
         ..., description="The Formatter class to format the output"
     )
 
+    def top_level_text(self):
+        record_extractor = RecordExtractor(self.get_text())
+        top_level_text = record_extractor.get_top_level_text()
+        return top_level_text
+
     def convert(self):
         extractor_dict = dict(
             description=lambda: "<Driver Description>",
@@ -193,6 +198,21 @@ class RecordExtractor:
 
     def get_stream_records(self):
         return []
+
+    def get_top_level_text(self):
+        record_strs = [record for record in self._extract_record_strs()]
+        top_level_str = self.text
+        for record_str in record_strs:
+            try:
+                self._create_asyn_record(record_str)
+            except RecordError:
+                try:
+                    self._create_stream_record(record_str)
+                except RecordError:
+                    pass
+            else:
+                top_level_str = top_level_str.replace(record_str, "")
+        return top_level_str
 
 
 class RecordRoleSorter:

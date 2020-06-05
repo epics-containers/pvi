@@ -19,6 +19,9 @@ def convert(args):
         suffix = suffixes.pop()
         name = name[: -(len(suffix))]
     Schema.write(converted_yaml, args.out.parent, name)
+    top_level_text = template_converter.top_level_text()
+    with open(args.out.parent / f"{name}_top.template", "w") as f:
+        f.write(top_level_text)
 
 
 def schema(args):
