@@ -1,10 +1,24 @@
 from argparse import ArgumentParser
 from pathlib import Path
 
+from ._convert import TemplateConverter
 from ._schema import Schema
 from ._types import Formatter
 
 SUFFIXES = ["." + x[7:] for x in Formatter.__dict__ if x.startswith("format_")]
+
+
+def convert(args):
+    template_converter = TemplateConverter(
+        template_file=args.template, formatter=dict(type=args.formatter)
+    )
+    converted_yaml = template_converter.convert()
+    name = args.out.name
+    suffixes = args.out.suffixes
+    while suffixes:
+        suffix = suffixes.pop()
+        name = name[: -(len(suffix))]
+    Schema.write(converted_yaml, args.out.parent, name)
 
 
 def schema(args):
@@ -42,6 +56,18 @@ def main(args=None):
     sub.set_defaults(func=schema)
     sub.add_argument(
         "-i", "--indent", type=int, default=2, help="indent level for JSON"
+    )
+    # Add a command for translating a tempalte file to a YAML file
+    sub = subparsers.add_parser(
+        "convert", help="Generate a yaml file from a template file"
+    )
+    sub.set_defaults(func=convert)
+    sub.add_argument("template", type=Path, help="path to the template source file")
+    sub.add_argument(
+        "out", type=Path, help=f"path to the output pvi.yaml file",
+    )
+    sub.add_argument(
+        "-f", "--formatter", type=str, default="DLSFormatter", help="Formatter"
     )
     # Add a command for generating produces
     sub = subparsers.add_parser("generate", help="Generate one of the products")
