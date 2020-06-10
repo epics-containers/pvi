@@ -5,6 +5,7 @@ from unittest import mock
 from pvi import ChannelConfig, Group, Schema, Widget, cli
 
 PILATUS_YAML = Path(__file__).parent / "pilatus.pvi.yaml"
+PILATUS_TEMPLATE = Path(__file__).parent / "pilatus.template"
 EXPECTED = Path(__file__).parent / "expected"
 
 
@@ -59,6 +60,21 @@ def test_csv(tmp_path: Path):
 
 def test_edl(tmp_path: Path):
     check_generation(tmp_path, "pilatus_parameters.edl")
+
+
+def check_conversion(tmp_path: Path, fname: str):
+    cli.main(["convert", str(PILATUS_TEMPLATE), str(tmp_path / fname)])
+    assert open(tmp_path / fname).read() == open(EXPECTED / fname).read(), str(
+        EXPECTED / fname
+    )
+    topname = fname[:-9] + "_top.template"
+    assert open(tmp_path / topname).read() == open(EXPECTED / topname).read(), str(
+        EXPECTED / topname
+    )
+
+
+def test_convert_template(tmp_path: Path):
+    check_conversion(tmp_path, "pilatus.pvi.yaml")
 
 
 def test_schema_matches_stored_one(tmp_path: Path):

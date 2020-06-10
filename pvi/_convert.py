@@ -76,6 +76,7 @@ class TemplateConverter(BaseModel):
             return include_names
 
         include_names = get_include_names(self.get_text())
+        include_names.sort()
         include_list = [
             dict(path=f"<path-to-yaml>/{name}.pvi.yaml") for name in include_names
         ]
@@ -149,6 +150,7 @@ class TemplateConverter(BaseModel):
             return macros
 
         all_macros = get_all_macros(self.get_text())
+        all_macros.sort()
         macro_list = [
             dict(type="StringMacro", name=macro, description="Macro desc")
             for macro in all_macros

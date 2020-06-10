@@ -1,0 +1,446 @@
+description: <Driver Description>
+macros:
+- type: StringMacro
+  name: ADDR
+  description: Macro desc
+- type: StringMacro
+  name: CAMSERVER_PORT
+  description: Macro desc
+- type: StringMacro
+  name: P
+  description: Macro desc
+- type: StringMacro
+  name: PORT
+  description: Macro desc
+- type: StringMacro
+  name: R
+  description: Macro desc
+- type: StringMacro
+  name: TIMEOUT
+  description: Macro desc
+template: <path-to-template>/pilatus.template
+includes:
+- path: <path-to-yaml>/ADBase.pvi.yaml
+- path: <path-to-yaml>/NDFile.pvi.yaml
+- path: <path-to-yaml>/pilatus_detail.pvi.yaml
+producer:
+  type: AsynProducer
+  prefix: $(P)$(R)
+  asyn_port: $(PORT)
+  address: $(ADDR)
+  timeout: $(TIMEOUT)
+formatter:
+  type: DLSFormatter
+components:
+- type: ComponentGroup
+  name: ComponentGroupOne
+  children:
+  - type: AsynBinary
+    name: ResetPower
+    description: ResetPower
+    role: Action
+    record_fields:
+      ONAM: Reset
+      ZNAM: Done
+  - type: AsynBusy
+    name: ThresholdApply
+    description: ThresholdApply
+    role: Action
+    record_fields:
+      ONAM: Apply
+      ZNAM: Done
+  - type: AsynFloat64
+    name: ImageFileTmot
+    description: Timeout for image file
+    role: Action
+    autosave:
+    - VAL
+    initial: 20.0
+    record_fields:
+      EGU: s
+      PREC: 3
+  - type: AsynFloat64
+    name: Wavelength
+    description: Wavelength
+    role: Action
+    autosave:
+    - VAL
+    initial: 1.54
+    record_fields:
+      EGU: Angstroms
+      PREC: 4
+  - type: AsynFloat64
+    name: EnergyLow
+    description: EnergyLow
+    role: Action
+    autosave:
+    - VAL
+    initial: 0.0
+    record_fields:
+      EGU: eV
+      PREC: 3
+  - type: AsynFloat64
+    name: EnergyHigh
+    description: EnergyHigh
+    role: Action
+    autosave:
+    - VAL
+    initial: 0.0
+    record_fields:
+      EGU: eV
+      PREC: 3
+  - type: AsynFloat64
+    name: DetDist
+    description: DetDist
+    role: Action
+    autosave:
+    - VAL
+    initial: 1000.0
+    record_fields:
+      EGU: mm
+      PREC: 3
+  - type: AsynFloat64
+    name: DetVOffset
+    description: DetVOffset
+    role: Action
+    autosave:
+    - VAL
+    initial: 0.0
+    record_fields:
+      EGU: mm
+      PREC: 3
+  - type: AsynFloat64
+    name: BeamX
+    description: BeamX
+    role: Action
+    autosave:
+    - VAL
+    initial: 0.0
+    record_fields:
+      EGU: pixels
+      PREC: 3
+  - type: AsynFloat64
+    name: BeamY
+    description: BeamY
+    role: Action
+    autosave:
+    - VAL
+    initial: 0.0
+    record_fields:
+      EGU: pixels
+      PREC: 3
+  - type: AsynFloat64
+    name: Flux
+    description: Flux
+    role: Action
+    autosave:
+    - VAL
+    initial: 0.0
+    record_fields:
+      EGU: ph/s
+      PREC: 4
+  - type: AsynFloat64
+    name: FilterTransm
+    description: FilterTransm
+    role: Action
+    autosave:
+    - VAL
+    initial: 1.0
+    record_fields:
+      PREC: 4
+  - type: AsynFloat64
+    name: StartAngle
+    description: StartAngle
+    role: Action
+    autosave:
+    - VAL
+    initial: 0.0
+    record_fields:
+      EGU: deg
+      PREC: 4
+  - type: AsynFloat64
+    name: AngleIncr
+    description: AngleIncr
+    role: Action
+    autosave:
+    - VAL
+    initial: 0.1
+    record_fields:
+      EGU: deg
+      PREC: 4
+  - type: AsynFloat64
+    name: Det2theta
+    description: Det2theta
+    role: Action
+    autosave:
+    - VAL
+    initial: 0.0
+    record_fields:
+      EGU: deg
+      PREC: 4
+  - type: AsynFloat64
+    name: Polarization
+    description: Polarization
+    role: Action
+    autosave:
+    - VAL
+    initial: 0.99
+    record_fields:
+      PREC: 4
+  - type: AsynFloat64
+    name: Alpha
+    description: Alpha
+    role: Action
+    autosave:
+    - VAL
+    initial: 0.0
+    record_fields:
+      EGU: deg
+      PREC: 4
+  - type: AsynFloat64
+    name: Kappa
+    description: Kappa
+    role: Action
+    autosave:
+    - VAL
+    initial: 0.0
+    record_fields:
+      EGU: deg
+      PREC: 4
+  - type: AsynFloat64
+    name: Phi
+    description: Phi
+    role: Action
+    autosave:
+    - VAL
+    initial: 0.0
+    record_fields:
+      EGU: deg
+      PREC: 4
+  - type: AsynFloat64
+    name: PhiIncr
+    description: PhiIncr
+    role: Action
+    initial: 0.1
+    record_fields:
+      EGU: deg
+      PREC: 4
+  - type: AsynFloat64
+    name: Chi
+    description: Chi
+    role: Action
+    autosave:
+    - VAL
+    initial: 0.0
+    record_fields:
+      EGU: deg
+      PREC: 4
+  - type: AsynFloat64
+    name: ChiIncr
+    description: ChiIncr
+    role: Action
+    initial: 0.1
+    record_fields:
+      EGU: deg
+      PREC: 4
+  - type: AsynFloat64
+    name: Omega
+    description: Omega
+    role: Action
+    initial: 0.0
+    record_fields:
+      EGU: deg
+      PREC: 4
+  - type: AsynFloat64
+    name: OmegaIncr
+    description: OmegaIncr
+    role: Action
+    initial: 0.1
+    record_fields:
+      EGU: deg
+      PREC: 4
+  - type: AsynString
+    name: OscillAxis
+    description: OscillAxis
+    role: Action
+    autosave:
+    - VAL
+    initial: X, CW
+  - type: AsynLong
+    name: NumOscill
+    description: NumOscill
+    role: Action
+    autosave:
+    - VAL
+    initial: 1
+  - type: AsynWaveform
+    name: BadPixelFile
+    description: BadPixelFile
+    role: Action
+    autosave:
+    - VAL
+    initial: '0'
+    record_fields:
+      FTVL: CHAR
+      NELM: '256'
+  - type: AsynWaveform
+    name: FlatFieldFile
+    description: FlatFieldFile
+    role: Action
+    autosave:
+    - VAL
+    initial: '0'
+    record_fields:
+      FTVL: CHAR
+      NELM: '256'
+  - type: AsynWaveform
+    name: CbfTemplateFile
+    description: CbfTemplateFile
+    role: Action
+    autosave:
+    - VAL
+    initial: '0'
+    record_fields:
+      FTVL: CHAR
+      NELM: '256'
+  - type: AsynWaveform
+    name: HeaderString
+    description: HeaderString
+    role: Action
+    autosave:
+    - VAL
+    initial: '0'
+    record_fields:
+      FTVL: CHAR
+      NELM: '68'
+  - type: AsynBinary
+    name: Armed
+    description: Armed
+    role: Readback
+    record_fields:
+      ONAM: Armed
+      ZNAM: Unarmed
+  - type: AsynLong
+    name: NumBadPixels
+    description: Number of bad pixels
+    role: Readback
+  - type: AsynBinary
+    name: FlatFieldValid
+    description: Flat field valid
+    role: Readback
+    record_fields:
+      ONAM: Yes
+      ZNAM: No
+  - type: AsynInt32
+    name: PixelCutOff
+    description: PixelCutOff_RBV
+    role: Readback
+    record_fields:
+      EGU: counts
+  - type: AsynFloat64
+    name: Temp0
+    description: Temp0_RBV
+    role: Readback
+    record_fields:
+      EGU: C
+      PREC: 1
+  - type: AsynFloat64
+    name: Temp1
+    description: Temp1_RBV
+    role: Readback
+    record_fields:
+      EGU: C
+      PREC: 1
+  - type: AsynFloat64
+    name: Temp2
+    description: Temp2_RBV
+    role: Readback
+    record_fields:
+      EGU: C
+      PREC: 1
+  - type: AsynFloat64
+    name: Humid0
+    description: Humid0_RBV
+    role: Readback
+    record_fields:
+      EGU: '%'
+      PREC: 1
+  - type: AsynFloat64
+    name: Humid1
+    description: Humid1_RBV
+    role: Readback
+    record_fields:
+      EGU: '%'
+      PREC: 1
+  - type: AsynFloat64
+    name: Humid2
+    description: Humid2_RBV
+    role: Readback
+    record_fields:
+      EGU: '%'
+      PREC: 1
+  - type: AsynString
+    name: TVXVersion
+    description: TVXVersion_RBV
+    role: Readback
+  - type: AsynLong
+    name: ResetPowerTime
+    description: Reset module power wait time
+    initial: 1
+    record_fields:
+      EGU: Seconds
+  - type: AsynFloat64
+    name: DelayTime
+    description: DelayTime
+    autosave:
+    - VAL
+    initial: 0.0
+    record_fields:
+      EGU: s
+      PREC: 6
+  - type: AsynFloat64
+    name: ThresholdEnergy
+    description: Energy threshold
+    autosave:
+    - VAL
+    initial: 10.0
+    record_fields:
+      EGU: keV
+      PREC: 3
+  - type: AsynBinary
+    name: ThresholdAutoApply
+    description: ThresholdAutoApply
+    autosave:
+    - VAL
+    initial: 1
+    record_fields:
+      ONAM: Yes
+      ZNAM: No
+  - type: AsynFloat64
+    name: Energy
+    description: X-ray Energy
+    initial: 20.0
+    record_fields:
+      EGU: keV
+      PREC: 3
+  - type: AsynLong
+    name: MinFlatField
+    description: Minimum flat field value
+    autosave:
+    - VAL
+    initial: 100
+    record_fields:
+      EGU: Counts
+  - type: AsynMultiBitBinary
+    name: GapFill
+    description: GapFill
+    autosave:
+    - VAL
+    initial: 0
+    record_fields:
+      ONST: '0'
+      ONVL: '0'
+      TWST: '-1'
+      TWVL: '-1'
+      ZRST: N.A.
+      ZRVL: '2'

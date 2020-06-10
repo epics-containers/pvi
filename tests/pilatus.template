@@ -1,0 +1,812 @@
+# Database for the records specific to the Pilatus driver
+# Mark Rivers
+# July 25, 2008
+
+# % macro, P, Device Prefix
+# % macro, R, Device Suffix
+# % macro, PORT, Asyn Port name
+# % macro, ADDR, Asyn Port address
+# % macro, TIMEOUT, Timeout
+# % macro, CAMSERVER_PORT, Asyn IPPort attached to camserver
+
+# All tags starting with gdatag are DLS specific for GDA
+# % gdatag, template, ADPilatus, $(PORT)_pilatus, $(PORT) Pilatus class instance
+
+# This associates the template with an edm screen
+# % gui, $(PORT), edmtab, pilatusDetector.edl, P=$(P),R=$(R)
+
+include "pilatus_detail.template"
+
+include "ADBase.template"
+include "NDFile.template"
+
+# We redefine the states for the TriggerMode records defined in ADBase.template
+record(mbbo,"$(P)$(R)TriggerMode") {
+    field(DESC,"Acquire mode")
+    field(ZRVL,"0")
+    field(ZRST,"Internal")
+    field(ONVL,"1")
+    field(ONST,"Ext. Enable")
+    field(TWVL,"2")
+    field(TWST,"Ext. Trigger")
+    field(THVL,"3")
+    field(THST,"Mult. Trigger")
+    field(FRVL,"4")
+    field(FRST,"Alignment")
+}
+
+record(mbbi,"$(P)$(R)TriggerMode_RBV") {
+    field(DESC,"Acquire mode")
+    field(ZRVL,"0")
+    field(ZRST,"Internal")
+    field(ONVL,"1")
+    field(ONST,"Ext. Enable")
+    field(TWVL,"2")
+    field(TWST,"Ext. Trigger")
+    field(THVL,"3")
+    field(THST,"Mult. Trigger")
+    field(FRVL,"4")
+    field(FRST,"Alignment")
+}
+
+# We redefine the states for the FileFormat records defined in NDFile.template
+record(mbbo, "$(P)$(R)FileFormat")
+{
+    field(ZRST, "TIFF")
+    field(ZRVL, "0")
+    field(ONST, "Invalid")
+    field(ONVL, "1")
+}
+
+record(mbbi, "$(P)$(R)FileFormat_RBV")
+{
+    field(ZRST, "TIFF")
+    field(ZRVL, "0")
+    field(ONST, "Invalid")
+    field(ONVL, "1")
+}
+
+# Armed flag, which indicates Pilatus is ready for external triggers
+# % gdatag, binary, ro, $(PORT)_pilatus, Armed, Armed flag
+record(bi, "$(P)$(R)Armed")
+{
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))ARMED")
+    field(ZNAM, "Unarmed")
+    field(ONAM, "Armed")
+    field(SCAN, "I/O Intr")
+}
+
+# Reset module power 
+record(bo, "$(P)$(R)ResetPower")
+{
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))RESET_POWER")
+    field(ZNAM, "Done")
+    field(ONAM, "Reset")
+}
+
+# Reset module power delay time
+record(longout, "$(P)$(R)ResetPowerTime")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))RESET_POWER_TIME")
+    field(DESC, "Reset module power wait time")
+    field(VAL,  "1")
+    field(EGU,  "Seconds")
+}
+
+# Reset module power delay time
+record(longin, "$(P)$(R)ResetPowerTime_RBV")
+{
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))RESET_POWER_TIME")
+    field(DESC, "Reset module power wait time")
+    field(EGU,  "Seconds")
+    field(SCAN, "I/O Intr")
+}
+
+# Delay time in External Trigger mode.
+# % gdatag, pv, rw, $(PORT)_pilatus, DelayTime, Set DelayTime
+record(ao, "$(P)$(R)DelayTime")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))DELAY_TIME")
+    field(EGU,  "s")
+    field(VAL,  "0")
+    field(PREC, "6")
+    info(autosaveFields, "VAL")
+}
+
+# % gdatag, pv, ro, $(PORT)_pilatus, DelayTime_RBV, Readback for DelayTime
+record(ai, "$(P)$(R)DelayTime_RBV")
+{
+    field(DTYP, "asynFloat64")
+    field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))DELAY_TIME")
+    field(EGU,  "s")
+    field(PREC, "6")
+    field(SCAN, "I/O Intr")
+}
+
+# Threshold energy
+# % gdatag, pv, rw, $(PORT)_pilatus, ThresholdEnergy, Set ThresholdEnergy
+record(ao, "$(P)$(R)ThresholdEnergy")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))THRESHOLD")
+    field(DESC, "Energy threshold")
+    field(EGU,  "keV")
+    field(PREC, "3")
+    field(VAL, "10.000")
+    info(autosaveFields, "VAL")
+}
+
+# % gdatag, pv, ro, $(PORT)_pilatus, ThresholdEnergy_RBV, Readback for ThresholdEnergy
+# % archiver 10 Monitor
+record(ai, "$(P)$(R)ThresholdEnergy_RBV")
+{
+    field(DTYP, "asynFloat64")
+    field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))THRESHOLD")
+    field(DESC, "Energy threshold")
+    field(EGU,  "keV")
+    field(PREC, "3")
+    field(SCAN, "I/O Intr")
+}
+
+# Threshold apply command
+record(busy, "$(P)$(R)ThresholdApply")
+{
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))THRESHOLD_APPLY")
+    field(ZNAM, "Done")
+    field(ONAM, "Apply")
+    field(VAL,  "0")
+}
+
+# Threshold auto apply flag
+record(bo, "$(P)$(R)ThresholdAutoApply")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))THRESHOLD_AUTO_APPLY")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+    field(VAL,  "1")
+    info(autosaveFields, "VAL")
+}
+
+# Threshold auto apply flag
+record(bi, "$(P)$(R)ThresholdAutoApply_RBV")
+{
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))THRESHOLD_AUTO_APPLY")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+    field(SCAN, "I/O Intr")
+}
+
+# X-ray energy
+record(ao, "$(P)$(R)Energy")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))ENERGY")
+    field(DESC, "X-ray Energy")
+    field(EGU,  "keV")
+    field(PREC, "3")
+    field(VAL, "20.000")
+}
+
+record(ai, "$(P)$(R)Energy_RBV")
+{
+    field(DTYP, "asynFloat64")
+    field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))ENERGY")
+    field(DESC, "X-ray Energy")
+    field(EGU,  "keV")
+    field(PREC, "3")
+    field(SCAN, "I/O Intr")
+}
+
+# Gain menu.  This writes to the Gain PV in the base database.
+# % gdatag, mbbinary, rw, $(PORT)_pilatus, GainMenu, Set Gain
+record(mbbo, "$(P)$(R)GainMenu")
+{
+    field(DESC, "Shaping time and gain")
+    field(DTYP, "Raw Soft Channel")
+    field(OUT,  "$(P)$(R)Gain.VAL PP MS")
+    field(ZRST, "7-30KeV/Fast/LowG")
+    field(ZRVL, "0")
+    field(ONST, "5-18KeV/Med/MedG")
+    field(ONVL, "1")
+    field(TWST, "3-6KeV/Slow/HighG")
+    field(TWVL, "2")
+    field(THST, "2-5KeV/Slow/UltraG")
+    field(THVL, "3")
+    field(VAL,  "1")
+    info(autosaveFields, "VAL")
+}
+
+
+# Timeout waiting for image to be written to file system
+# % gdatag, pv, rw, $(PORT)_pilatus, ImageFileTmot, Set ImageFileTmot
+record(ao, "$(P)$(R)ImageFileTmot")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))IMAGE_FILE_TMOT")
+    field(DESC, "Timeout for image file")
+    field(VAL,  "20")
+    field(EGU,  "s")
+    field(PREC, "3")
+    info(autosaveFields, "VAL")
+}
+
+# Bad pixel file
+# % gdatag, array, rw, $(PORT)_pilatus, BadPixelFile, Set BadPixelFile
+record(waveform, "$(P)$(R)BadPixelFile")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynOctetWrite")
+    field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))BAD_PIXEL_FILE")
+    field(FTVL, "CHAR")
+    field(NELM, "256")
+    info(autosaveFields, "VAL")    
+}
+
+# Number of bad pixels
+# % gdatag, pv, ro, $(PORT)_pilatus, NumBadPixels, Read NumBadPixels
+record(longin, "$(P)$(R)NumBadPixels")
+{
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))NUM_BAD_PIXELS")
+    field(DESC, "Number of bad pixels")
+    field(SCAN, "I/O Intr")
+}
+
+# Flat field file
+# % gdatag, array, rw, $(PORT)_pilatus, FlatFieldFile, Set FlatFieldFile
+record(waveform, "$(P)$(R)FlatFieldFile")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynOctetWrite")
+    field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FLAT_FIELD_FILE")
+    field(FTVL, "CHAR")
+    field(NELM, "256")
+    info(autosaveFields, "VAL")    
+}
+
+# Minimum flat field value
+# % gdatag, pv, rw, $(PORT)_pilatus, MinFlatField, Set MinFlatField
+record(longout, "$(P)$(R)MinFlatField")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))MIN_FLAT_FIELD")
+    field(DESC, "Minimum flat field value")
+    field(VAL,  "100")
+    field(EGU,  "Counts")
+    info(autosaveFields, "VAL")    
+}
+
+# % gdatag, pv, ro, $(PORT)_pilatus, MinFlatField_RBV, Readback for MinFlatField
+record(longin, "$(P)$(R)MinFlatField_RBV")
+{
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))MIN_FLAT_FIELD")
+    field(DESC, "Minimum flat field value")
+    field(EGU,  "Counts")
+    field(SCAN, "I/O Intr")
+}
+
+# Flat field valid flag.
+# % gdatag, binary, ro, $(PORT)_pilatus, FlatFieldValid, FlatFieldValid flag
+record(bi, "$(P)$(R)FlatFieldValid")
+{
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FLAT_FIELD_VALID")
+    field(DESC, "Flat field valid")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+    field(SCAN, "I/O Intr")
+}
+
+# % gdatag, pv, rw, $(PORT)_pilatus, GapFill, Set GapFill
+record(mbbo, "$(P)$(R)GapFill")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))GAP_FILL")
+   field(ZRST, "N.A.")
+   field(ZRVL, "2")
+   field(ONST, "0")
+   field(ONVL, "0")
+   field(TWST, "-1")
+   field(TWVL, "-1")
+   field(VAL,  "0")
+   info(autosaveFields, "VAL")
+}
+
+# % gdatag, pv, rw, $(PORT)_pilatus, GapFill_RBV, Readback for GapFill
+record(mbbi, "$(P)$(R)GapFill_RBV")
+{
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))GAP_FILL")
+   field(ZRST, "N.A.")
+   field(ZRVL, "2")
+   field(ONST, "0")
+   field(ONVL, "0")
+   field(TWST, "-1")
+   field(TWVL, "-1")
+   field(SCAN, "I/O Intr")
+}
+
+
+# asyn record for interactive communication with camserver
+record(asyn, "$(P)$(R)CamserverAsyn")
+{
+    field(PORT,  "$(CAMSERVER_PORT)")
+    field(IMAX, "64")
+    field(OMAX, "64")
+    field(AUCT, "0")
+}
+
+# ancillary information
+
+# % gdatag, pv, rw, $(PORT)_pilatus, Wavelength, Set Wavelength
+record(ao, "$(P)$(R)Wavelength")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))WAVELENGTH")
+    field(PREC, "4")
+    field(VAL,  "1.54")
+    field(EGU,  "Angstroms")
+    info(autosaveFields, "VAL")    
+}
+
+# % gdatag, pv, rw, $(PORT)_pilatus, EnergyLow, Set EnergyLow
+record(ao, "$(P)$(R)EnergyLow")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))ENERGY_LOW")
+    field(PREC, "3")
+    field(VAL,  "0")
+    field(EGU,  "eV")
+    info(autosaveFields, "VAL")
+}
+
+# % gdatag, pv, rw, $(PORT)_pilatus, EnergyHigh, Set EnergyHigh
+record(ao, "$(P)$(R)EnergyHigh")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))ENERGY_HIGH")
+    field(PREC, "3")
+    field(VAL,  "0")
+    field(EGU,  "eV")
+    info(autosaveFields, "VAL")
+}
+
+# % gdatag, pv, rw, $(PORT)_pilatus, DetDist, Set DetDist
+record(ao, "$(P)$(R)DetDist")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))DET_DIST")
+    field(PREC, "3")
+    field(VAL,  "1000")
+    field(EGU,  "mm")
+    info(autosaveFields, "VAL")    
+}
+
+# % gdatag, pv, rw, $(PORT)_pilatus, DetVOffset, Set DetVOffset
+record(ao, "$(P)$(R)DetVOffset")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))DET_VOFFSET")
+    field(PREC, "3")
+    field(VAL,  "0")
+    field(EGU,  "mm")
+    info(autosaveFields, "VAL")
+}
+
+# % gdatag, pv, rw, $(PORT)_pilatus, BeamX, Set BeamX
+record(ao, "$(P)$(R)BeamX")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))BEAM_X")
+    field(PREC, "3")
+    field(VAL,  "0")
+    field(EGU,  "pixels")
+    info(autosaveFields, "VAL")
+}
+
+# % gdatag, pv, rw, $(PORT)_pilatus, BeamY, Set BeamY
+record(ao, "$(P)$(R)BeamY")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))BEAM_Y")
+    field(PREC, "3")
+    field(VAL,  "0")
+    field(EGU,  "pixels")
+    info(autosaveFields, "VAL")
+}
+
+# % gdatag, pv, rw, $(PORT)_pilatus, Flux, Set Flux
+record(ao, "$(P)$(R)Flux")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FLUX")
+    field(PREC, "4")
+    field(VAL,  "0")
+    field(EGU,  "ph/s")
+    info(autosaveFields, "VAL")
+}
+
+# % gdatag, pv, rw, $(PORT)_pilatus, FilterTransm, Set FilterTransm
+record(ao, "$(P)$(R)FilterTransm")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FILTER_TRANSM")
+    field(VAL,  "1.0")
+    field(PREC, "4")
+    info(autosaveFields, "VAL")
+}
+
+# % gdatag, pv, rw, $(PORT)_pilatus, StartAngle, Set StartAngle
+record(ao, "$(P)$(R)StartAngle")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))START_ANGLE")
+    field(PREC, "4")
+    field(VAL,  "0")
+    field(EGU,  "deg")
+    info(autosaveFields, "VAL")
+}
+
+# % gdatag, pv, rw, $(PORT)_pilatus, AngleIncr, Set AngleIncr
+record(ao, "$(P)$(R)AngleIncr")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))ANGLE_INCR")
+    field(PREC, "4")
+    field(VAL,  "0.1")
+    field(EGU,  "deg")
+    info(autosaveFields, "VAL")
+}
+
+# % gdatag, pv, rw, $(PORT)_pilatus, Det2theta, Set Det2theta
+record(ao, "$(P)$(R)Det2theta")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))DET_2THETA")
+    field(PREC, "4")
+    field(VAL,  "0")
+    field(EGU,  "deg")
+    info(autosaveFields, "VAL")
+}
+
+# % gdatag, pv, rw, $(PORT)_pilatus, Polarization, Set Polarization
+record(ao, "$(P)$(R)Polarization")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))POLARIZATION")
+    field(PREC, "4")
+    field(VAL,  "0.99")
+    info(autosaveFields, "VAL")
+}
+
+# % gdatag, pv, rw, $(PORT)_pilatus, Alpha, Set Alpha
+record(ao, "$(P)$(R)Alpha")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))ALPHA")
+    field(PREC, "4")
+    field(VAL,  "0")
+    field(EGU,  "deg")
+    info(autosaveFields, "VAL")
+}
+
+# % gdatag, pv, rw, $(PORT)_pilatus, Kappa, Set Kappa
+record(ao, "$(P)$(R)Kappa")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))KAPPA")
+    field(PREC, "4")
+    field(VAL,  "0")
+    field(EGU,  "deg")
+    info(autosaveFields, "VAL")
+}
+
+# % gdatag, pv, rw, $(PORT)_pilatus, Phi, Set Phi
+record(ao, "$(P)$(R)Phi")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))PHI")
+    field(PREC, "4")
+    field(VAL,  "0")
+    field(EGU,  "deg")
+    info(autosaveFields, "VAL")
+}
+
+# % gdatag, pv, rw, $(PORT)_pilatus, PhiIncr, Set PhiIncr
+record(ao, "$(P)$(R)PhiIncr")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))PHI_INCR")
+    field(PREC, "4")
+    field(VAL,  "0.1")
+    field(EGU,  "deg")
+}
+
+# % gdatag, pv, rw, $(PORT)_pilatus, Chi, Set Chi
+record(ao, "$(P)$(R)Chi")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))CHI")
+    field(PREC, "4")
+    field(VAL,  "0")
+    field(EGU,  "deg")
+    info(autosaveFields, "VAL")
+}
+
+# % gdatag, pv, rw, $(PORT)_pilatus, ChiIncr, Set ChiIncr
+record(ao, "$(P)$(R)ChiIncr")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))CHI_INCR")
+    field(PREC, "4")
+    field(VAL,  "0.1")
+    field(EGU,  "deg")
+}
+
+# % gdatag, pv, rw, $(PORT)_pilatus, Omega, Set Omega
+record(ao, "$(P)$(R)Omega")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))OMEGA")
+    field(PREC, "4")
+    field(VAL,  "0")
+    field(EGU,  "deg")
+}
+
+# % gdatag, pv, rw, $(PORT)_pilatus, OmegaIncr, Set OmegaIncr
+record(ao, "$(P)$(R)OmegaIncr")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))OMEGA_INCR")
+    field(PREC, "4")
+    field(VAL,  "0.1")
+    field(EGU,  "deg")
+}
+
+# % gdatag, pv, rw, $(PORT)_pilatus, OscillAxis, Set OscillAxis
+record(stringout, "$(P)$(R)OscillAxis")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynOctetWrite")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))OSCILL_AXIS")
+    field(VAL,  "X, CW")
+    info(autosaveFields, "VAL")
+}
+
+# % gdatag, pv, rw, $(PORT)_pilatus, NumOscill, Set NumOscill
+record(longout, "$(P)$(R)NumOscill")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))NUM_OSCILL")
+    field(VAL,  "1")
+    info(autosaveFields, "VAL")
+}
+
+
+# Set DISA for PVs in ADBase that do not apply to Pilatus
+
+record(mbbo, "$(P)$(R)DataType")
+{
+    field(DISA, "1")
+}
+record(mbbi, "$(P)$(R)DataType_RBV")
+{
+    field(DISA, "1")
+}
+record(mbbo, "$(P)$(R)ColorMode")
+{
+    field(DISA, "1")
+}
+record(mbbi, "$(P)$(R)ColorMode_RBV")
+{
+    field(DISA, "1")
+}
+record(longout, "$(P)$(R)BinX")
+{
+    field(DISA, "1")
+}
+record(longin, "$(P)$(R)BinX_RBV")
+{
+    field(DISA, "1")
+}
+record(longout, "$(P)$(R)BinY")
+{
+    field(DISA, "1")
+}
+record(longin, "$(P)$(R)BinY_RBV")
+{
+    field(DISA, "1")
+}
+record(longout, "$(P)$(R)MinX")
+{
+    field(DISA, "1")
+}
+record(longin, "$(P)$(R)MinX_RBV")
+{
+    field(DISA, "1")
+}
+record(longout, "$(P)$(R)MinY")
+{
+    field(DISA, "1")
+}
+record(longin, "$(P)$(R)MinY_RBV")
+{
+    field(DISA, "1")
+}
+record(longout, "$(P)$(R)SizeX")
+{
+    field(DISA, "1")
+}
+record(longin, "$(P)$(R)SizeX_RBV")
+{
+    field(DISA, "1")
+}
+record(longout, "$(P)$(R)SizeY")
+{
+    field(DISA, "1")
+}
+record(longin, "$(P)$(R)SizeY_RBV")
+{
+    field(DISA, "1")
+}
+record(bo, "$(P)$(R)ReverseX")
+{
+    field(DISA, "1")
+}
+record(bi, "$(P)$(R)ReverseX_RBV")
+{
+    field(DISA, "1")
+}
+record(bo, "$(P)$(R)ReverseY")
+{
+    field(DISA, "1")
+}
+record(bi, "$(P)$(R)ReverseY_RBV")
+{
+    field(DISA, "1")
+}
+
+# % gdatag, pv, ro, $(PORT)_pilatus, PixelCutOff_RBV, Readback for tau pixel cut off
+record(ai, "$(P)$(R)PixelCutOff_RBV")
+{
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))PIXEL_CUTOFF")
+    field(EGU,  "counts")
+    field(SCAN, "I/O Intr")
+    field(VAL,  "0")
+}
+
+# % archiver 10 Monitor
+record(ai, "$(P)$(R)Temp0_RBV")
+{
+    field(DTYP, "asynFloat64")
+    field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))TH_TEMP_0")
+    field(EGU,  "C")
+    field(SCAN, "I/O Intr")
+    field(VAL,  "0")
+    field(PREC, "1")
+}
+
+# % archiver 10 Monitor
+record(ai, "$(P)$(R)Temp1_RBV")
+{
+    field(DTYP, "asynFloat64")
+    field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))TH_TEMP_1")
+    field(EGU,  "C")
+    field(SCAN, "I/O Intr")
+    field(VAL,  "0")
+    field(PREC, "1")
+}
+
+# % archiver 10 Monitor
+record(ai, "$(P)$(R)Temp2_RBV")
+{
+    field(DTYP, "asynFloat64")
+    field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))TH_TEMP_2")
+    field(EGU,  "C")
+    field(SCAN, "I/O Intr")
+    field(VAL,  "0")
+    field(PREC, "1")
+}
+
+# % archiver 10 Monitor
+record(ai, "$(P)$(R)Humid0_RBV")
+{
+    field(DTYP, "asynFloat64")
+    field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))TH_HUMID_0")
+    field(EGU,  "%")
+    field(SCAN, "I/O Intr")
+    field(VAL,  "0")
+    field(PREC, "1")
+}
+
+# % archiver 10 Monitor
+record(ai, "$(P)$(R)Humid1_RBV")
+{
+    field(DTYP, "asynFloat64")
+    field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))TH_HUMID_1")
+    field(EGU,  "%")
+    field(SCAN, "I/O Intr")
+    field(VAL,  "0")
+    field(PREC, "1")
+}
+
+# % archiver 10 Monitor
+record(ai, "$(P)$(R)Humid2_RBV")
+{
+    field(DTYP, "asynFloat64")
+    field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))TH_HUMID_2")
+    field(EGU,  "%")
+    field(SCAN, "I/O Intr")
+    field(VAL,  "0")
+    field(PREC, "1")
+}
+
+record(stringin, "$(P)$(R)TVXVersion_RBV")
+{
+   field(DTYP, "asynOctetRead")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))TVXVERSION")
+   field(VAL,  "Unknown")
+   field(SCAN, "I/O Intr")
+}
+
+# % gdatag, array, rw, $(PORT)_pilatus, CbfTemplateFile, Set CbfTemplateFile
+record(waveform, "$(P)$(R)CbfTemplateFile")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynOctetWrite")
+    field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))CBFTEMPLATEFILE")
+    field(FTVL, "CHAR")
+    field(NELM, "256")
+    info(autosaveFields, "VAL")
+}
+
+record(waveform, "$(P)$(R)HeaderString")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynOctetWrite")
+    field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))HEADERSTRING")
+    field(FTVL, "CHAR")
+    field(NELM, "68")
+    info(autosaveFields, "VAL")
+}
+
