@@ -36,6 +36,8 @@ class AsynRecord(Record):
         return values
 
     def get_parameter_name(self):
+        # e.g. from: field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1))FILE_PATH")
+        # extract: FILE_PATH
         parameter_name_extractor = r"(?:@asyn\()(?:(?:\$\([^\)]*\)[,]*)*)(?:\))(\S+)"
         for k, v in self.fields_.items():
             if k == "INP" or k == "OUT":

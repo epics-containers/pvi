@@ -68,6 +68,8 @@ class TemplateConverter(BaseModel):
 
     def _extract_includes(self) -> List[Dict[str, str]]:
         def get_include_names(text: str) -> List[str]:
+            # e.g. from: include "NDFile.template"
+            # extract: NDFile
             include_extractor = re.compile(
                 r'(?:include)(?:[^"]*)(?:")([A-Za-z0-9][^.]*)(?:\.template)'
             )
@@ -84,6 +86,8 @@ class TemplateConverter(BaseModel):
 
     def _extract_asyn_producer(self) -> Dict[str, str]:
         def get_prefix(text: str) -> Dict[str, str]:
+            # e.g. from: record(waveform, "$(P)$(R)FilePath")
+            # extract: $(P)$(R)
             prefix_extractor = re.compile(
                 r'(?:record\()(?:[^,]*)(?:[^"]*)(?:")((?:\$\([^)]\))*)(?:[^"]*)'
             )
@@ -98,6 +102,8 @@ class TemplateConverter(BaseModel):
             default_asyn_macros = dict(
                 asyn_port="$(PORT)", address="$(ADDR)", timeout="$(TIMEOUT)"
             )
+            # e.g. from: field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1))FILE_PATH")
+            # extract: $(PORT),$(ADDR=0),$(TIMEOUT=1)
             asyn_macro_extractor = r"(?:@asyn\()((?:\$\([^\)]*\)(?:[^\$\)])*)*)"
             asyn_macros = re.findall(asyn_macro_extractor, text)
             asyn_macros = list(set(asyn_macros))
@@ -144,6 +150,8 @@ class TemplateConverter(BaseModel):
 
     def _extract_macros(self) -> List[Dict[str, str]]:
         def get_all_macros(text: str) -> List[str]:
+            # extract all macros
+            # e.g. $(P), $(R), $(PORT), $(ADDR=0)
             macro_extractor = r"(?:\$\()([^\)]*)(?:\))"
             macros = re.findall(macro_extractor, text)
             macros = list(set(macros))
@@ -163,10 +171,42 @@ class RecordExtractor:
         self.text = text
 
     def _extract_record_strs(self):
+        # extract a whole record definition inc. fields e.g.
+        # record(waveform, "$(P)$(R)FilePath")
+        # {
+        #    field(PINI, "YES")
+        #    field(DTYP, "asynOctetWrite")
+        #    field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1))FILE_PATH")
+        #    field(FTVL, "CHAR")
+        #    field(NELM, "256")
+        #    info(autosaveFields, "VAL")
+        # }
         record_extractor = re.compile(r"record\([^{]*{[^}]*}")
         return re.findall(record_extractor, self.text)
 
     def _parse_record(self, record_str: str) -> Tuple:
+        # extract three groups from a record definition e.g.
+        # from:
+        # record(waveform, "$(P)$(R)FilePath")
+        # {
+        #    field(PINI, "YES")
+        #    field(DTYP, "asynOctetWrite")
+        #    field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1))FILE_PATH")
+        #    field(FTVL, "CHAR")
+        #    field(NELM, "256")
+        #    info(autosaveFields, "VAL")
+        # }
+        # extract:
+        # Group 1 - record type: waveform
+        # Group 2 - record name exc. prefix: FilePath
+        # Group 3 - all fields:
+        #    field(PINI, "YES")
+        #    field(DTYP, "asynOctetWrite")
+        #    field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1))FILE_PATH")
+        #    field(FTVL, "CHAR")
+        #    field(NELM, "256")
+        #    info(autosaveFields, "VAL")
+        #
         record_parser = re.compile(
             r'(?:record\()([^,]*)(?:[^"]*)(?:")'
             r'(?:(?:\$\([a-zA-Z0-9]\))*)([^"]*)'
@@ -176,8 +216,18 @@ class RecordExtractor:
 
     def _create_asyn_record(self, record_str: str) -> AsynRecord:
         record_type, record_name, record_fields = self._parse_record(record_str)
+        # extract two groups from a field e.g.
+        # from: field(PINI, "YES")
+        # extract:
+        # Group 1 - Field: PINI
+        # Group 2 - Value: YES
         field_extractor = r'(?:field\()([^,]*)(?:,)(?:[^"]*)(?:")([^"]*)(?:")'
         fields = dict(re.findall(field_extractor, record_fields))
+        # extract two groups from an info tag e.g.
+        # from: info(autosaveFields, "VAL")
+        # extract:
+        # Group 1 - Field: autosaveFields
+        # Group 2 - Value: VAL
         info_extractor = r'(?:info\()([^,]*)(?:,)(?:[^"]*)(?:")([^"]*)(?:")'
         info = dict(re.findall(info_extractor, record_fields))
         record = AsynRecord(
