@@ -1,3 +1,4 @@
+import sys
 from typing import Dict, List
 
 from pydantic import BaseModel
@@ -24,13 +25,12 @@ class ReadParameterMixin:
         try:
             scan_rate = read_record.fields_["SCAN"]
         except KeyError:
-            print(f"Key error for {read_record.name}")
+            print(f"Key error for {read_record.name}", file=sys.stderr)
             scan_rate = ScanRate.IOINTR
         try:
             return ScanRate(scan_rate)
         except ValueError as e:
-            print(f"Validation error for {read_record.name}")
-            print(e)
+            print(f"Validation error for {read_record.name}\n{e}", file=sys.stderr)
             return ScanRate.IOINTR
 
     def _get_suffix(self, read_record: Record) -> str:

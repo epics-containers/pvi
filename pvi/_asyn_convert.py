@@ -1,4 +1,5 @@
 import re
+import sys
 from typing import Any, Dict, Type
 
 from pydantic import root_validator
@@ -65,16 +66,16 @@ class AsynRecord(Record):
                 for type_string in asyn_component_types
             ]
         try:
-            asyn_class = asyn_components[
-                type_fields.index((self.type, self.fields_["DTYP"]))
-            ]
+            idx = type_fields.index((self.type, self.fields_["DTYP"]))
+            asyn_class = asyn_components[idx]
             return asyn_class
-        except IndexError as e:
-            print(f"{self.name} asyn type not found")
-            raise e
+        except ValueError as e:
+            raise ValueError(
+                f"{self.name} asyn type: ({self.type}, {self.fields_['DTYP']}) "
+                f"not found"
+            ) from e
         except KeyError as e:
-            print(f"{self.name} DTYP not found")
-            raise e
+            raise KeyError(f"{self.name} DTYP not found") from e
 
 
 class SettingPair(Parameter, WriteParameterMixin, ReadParameterMixin):
@@ -104,7 +105,8 @@ class SettingPair(Parameter, WriteParameterMixin, ReadParameterMixin):
                     f"Values: {read_field_value}, "
                     f"{write_field_value}; "
                     f"Using {write_field_value} "
-                    f"for both"
+                    f"for both",
+                    file=sys.stderr,
                 )
                 self.read_record.fields_[
                     read_field_name
