@@ -98,38 +98,36 @@ class TemplateConverter(BaseModel):
             prefix_dict = dict(prefix=prefixes[0])
             return prefix_dict
 
-        def get_asyn_macros(text: str) -> Dict[str, str]:
-            default_asyn_macros = dict(
-                asyn_port="$(PORT)", address="$(ADDR)", timeout="$(TIMEOUT)"
+        def get_asyn_parameters(text: str) -> Dict[str, str]:
+            default_asyn_parameters = dict(
+                asyn_port="$(PORT)", address="$(ADDR=0)", timeout="$(TIMEOUT=1)"
             )
             # e.g. from: field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1))FILE_PATH")
-            # extract: $(PORT),$(ADDR=0),$(TIMEOUT=1)
-            asyn_macro_extractor = r"(?:@asyn\()((?:\$\([^\)]*\)(?:[^\$\)])*)*)"
-            asyn_macros = re.findall(asyn_macro_extractor, text)
-            asyn_macros = list(set(asyn_macros))
-            if len(asyn_macros) > 1:
+            # extract: $(PORT),$(ADDR=0),$(TIMEOUT=1))FILE_PATH
+            asyn_parameter_extractor = r'(?:@asyn\()([^"]*)'
+            asyn_parameters = re.findall(asyn_parameter_extractor, text)
+            # then: remove final close bracket and driver param name
+            # $(PORT),$(ADDR=0),$(TIMEOUT=1)
+            asyn_parameters = [match[: match.rfind(")")] for match in asyn_parameters]
+            asyn_parameters = list(set(asyn_parameters))
+            if len(asyn_parameters) > 1:
                 print(
-                    f"More than one set of asyn macros found. Taking the first instance"
+                    f"More than one set of asyn params found. Taking the first instance"
                 )
-            asyn_macros = asyn_macros[0].split(",")
-            if len(asyn_macros) > len(default_asyn_macros):
-                raise ValueError("Found too many asyn macros")
-            elif len(asyn_macros) < len(default_asyn_macros):
-                print(
-                    f"Didn't find enough asyn_macros,"
-                    "taking a guess at the missing ones"
-                )
-                extra_macros = iter(
-                    set(default_asyn_macros.values()).difference(asyn_macros)
-                )
-                while len(asyn_macros) < len(default_asyn_macros):
-                    asyn_macros.append(next(extra_macros))
-            asyn_macro_dict = dict(zip(default_asyn_macros.keys(), asyn_macros))
-            return asyn_macro_dict
+            asyn_parameters = [param.strip() for param in asyn_parameters[0].split(",")]
+            if len(asyn_parameters) > len(default_asyn_parameters):
+                raise ValueError("Found too many asyn params")
+            asyn_parameter_dict = dict(
+                zip(default_asyn_parameters.keys(), asyn_parameters)
+            )
+            asyn_parameter_dict = {**default_asyn_parameters, **asyn_parameter_dict}
+            return asyn_parameter_dict
 
-        producer = dict(type="AsynProducer")
-        macro_dict = {**get_prefix(self.get_text()), **get_asyn_macros(self.get_text())}
-        producer = {**producer, **macro_dict}
+        producer = {
+            **dict(type="AsynProducer"),
+            **get_prefix(self.get_text()),
+            **get_asyn_parameters(self.get_text()),
+        }
         return producer
 
     def _extract_components(self) -> List[Component]:
