@@ -94,7 +94,7 @@ class AsynComponent(Component):
         [], description="Record fields that should be autosaved"
     )
     read_record_suffix: str = Field(
-        "_RBV", description="The read record suffix, if not given then use $(name)_RBV"
+        None, description="The read record suffix, if not given then use $(name)_RBV"
     )
     read_record_scan: ScanRate = Field(
         ScanRate.IOINTR, description="SCAN rate of the read record"
@@ -274,7 +274,10 @@ class AsynProducer(Producer):
     timeout: str = Field(..., description="The timeout for the asyn port")
 
     def _read_record_name(self, component: AsynComponent) -> str:
-        return self.prefix + component.name + component.read_record_suffix
+        if component.read_record_suffix:
+            return self.prefix + component.read_record_suffix
+        else:
+            return self.prefix + component.name + "_RBV"
 
     def _write_record_name(self, component: AsynComponent) -> str:
         if component.write_record_suffix:
