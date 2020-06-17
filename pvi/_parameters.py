@@ -1,5 +1,5 @@
 import sys
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 from pydantic import BaseModel
 
@@ -33,12 +33,8 @@ class ReadParameterMixin:
             print(f"Validation error for {read_record.name}\n{e}", file=sys.stderr)
             return ScanRate.IOINTR
 
-    def _get_suffix(self, read_record: Record) -> str:
-        try:
-            suffix = "_" + read_record.name.split("_", 1)[1]
-        except IndexError:
-            suffix = "_RBV"
-        return suffix
+    def _get_read_record_suffix(self) -> Optional[str]:
+        raise NotImplementedError(self)
 
 
 class WriteParameterMixin:

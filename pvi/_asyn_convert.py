@@ -1,6 +1,6 @@
 import re
 import sys
-from typing import Any, Dict, Type
+from typing import Any, Dict, Optional, Type
 
 from pydantic import root_validator
 
@@ -84,12 +84,11 @@ class SettingPair(Parameter, WriteParameterMixin, ReadParameterMixin):
     read_record: AsynRecord
     write_record: AsynRecord
 
-    def _get_pair_suffix(self) -> str:
-        if self.read_record.name.startswith(self.write_record.name):
-            suffix = self.read_record.name[len(self.write_record.name) :]
+    def _get_read_record_suffix(self) -> Optional[str]:
+        if self.read_record.name != self.write_record.name + "_RBV":
+            return self.read_record.name
         else:
-            suffix = self._get_suffix(self.read_record)
-        return suffix
+            return None
 
     def _handle_clashes(self) -> None:
         # Check to see if there any clashing values in pairs
@@ -131,9 +130,9 @@ class SettingPair(Parameter, WriteParameterMixin, ReadParameterMixin):
         if read_record_scan:
             non_default_args["read_record_scan"] = read_record_scan
 
-        suffix = self._get_pair_suffix()
-        if suffix:
-            non_default_args["read_record_suffix"] = suffix
+        read_record_suffix = self._get_read_record_suffix()
+        if read_record_suffix:
+            non_default_args["read_record_suffix"] = read_record_suffix
 
         self._handle_clashes()
 
@@ -150,18 +149,25 @@ class SettingPair(Parameter, WriteParameterMixin, ReadParameterMixin):
 class Readback(Parameter, ReadParameterMixin):
     read_record: AsynRecord
 
+    def _get_read_record_suffix(self) -> Optional[str]:
+        if not self.read_record.name.endswith("_RBV"):
+            return self.read_record.name
+        else:
+            return None
+
     def generate_component(self) -> AsynComponent:
         asyn_class = self.read_record.asyn_component_type()
-        name = self.read_record.name.split("_", 1)[0]
 
         non_default_args: Dict[str, Any] = dict()
+        read_record_suffix = self._get_read_record_suffix()
+        if read_record_suffix:
+            name = self.read_record.name
+            non_default_args["read_record_suffix"] = read_record_suffix
+        else:
+            name = self.read_record.name[: -len("_RBV")]
         read_record_scan = self._get_scan_rate(self.read_record)
         if read_record_scan:
             non_default_args["read_record_scan"] = read_record_scan
-
-        suffix = self._get_suffix(self.read_record)
-        if suffix:
-            non_default_args["read_record_suffix"] = suffix
 
         fields = {}
         read_fields = self._remove_invalid(self.read_record.fields_)

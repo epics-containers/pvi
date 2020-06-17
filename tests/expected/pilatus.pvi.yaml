@@ -317,6 +317,7 @@ components:
     name: Armed
     description: Armed
     role: Readback
+    read_record_suffix: Armed
     record_fields:
       ONAM: Armed
       ZNAM: Unarmed
@@ -324,10 +325,12 @@ components:
     name: NumBadPixels
     description: Number of bad pixels
     role: Readback
+    read_record_suffix: NumBadPixels
   - type: AsynBinary
     name: FlatFieldValid
     description: Flat field valid
     role: Readback
+    read_record_suffix: FlatFieldValid
     record_fields:
       ONAM: Yes
       ZNAM: No
