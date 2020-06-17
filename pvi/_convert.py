@@ -94,7 +94,7 @@ class TemplateConverter(BaseModel):
             prefixes = re.findall(prefix_extractor, text)
             prefixes = list(set(prefixes))
             if len(prefixes) > 1:
-                print(f"More than one prefix found. Taking the first instance")
+                raise ValueError("Not all asyn records have the same macro prefix")
             prefix_dict = dict(prefix=prefixes[0])
             return prefix_dict
 
