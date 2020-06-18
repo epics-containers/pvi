@@ -24,9 +24,19 @@ class TemplateConverter(BaseModel):
     formatter: FormatterUnion = Field(
         ..., description="The Formatter class to format the output"
     )
+    _text: str
+
+    class Config:
+        extra = "forbid"
+
+    def __init__(self, **data: Any):
+        super().__init__(**data)
+        with open(self.template_file, "r") as f:
+            text = f.read()
+        object.__setattr__(self, "_text", text)
 
     def top_level_text(self):
-        record_extractor = RecordExtractor(self.get_text())
+        record_extractor = RecordExtractor(self._text)
         top_level_text = record_extractor.get_top_level_text()
         return top_level_text
 
@@ -48,11 +58,6 @@ class TemplateConverter(BaseModel):
         )
         yaml_dict = self._extract_to_dict(extractor_dict)
         return yaml_dict
-
-    def get_text(self):
-        with open(self.template_file, "r") as f:
-            text = f.read()
-        return text
 
     def _extract_to_dict(self, extractor_dict: Dict[str, Callable[[], Any]]):
         filled_dict = dict()
@@ -77,7 +82,7 @@ class TemplateConverter(BaseModel):
             include_names = list(set(include_names))
             return include_names
 
-        include_names = get_include_names(self.get_text())
+        include_names = get_include_names(self._text)
         include_names.sort()
         include_list = [
             dict(path=f"<path-to-yaml>/{name}.pvi.yaml") for name in include_names
@@ -125,13 +130,13 @@ class TemplateConverter(BaseModel):
 
         producer = {
             **dict(type="AsynProducer"),
-            **get_prefix(self.get_text()),
-            **get_asyn_parameters(self.get_text()),
+            **get_prefix(self._text),
+            **get_asyn_parameters(self._text),
         }
         return producer
 
     def _extract_components(self) -> List[Component]:
-        record_extractor = RecordExtractor(self.get_text())
+        record_extractor = RecordExtractor(self._text)
         asyn_records = record_extractor.get_asyn_records()
         actions, readbacks, setting_pairs = RecordRoleSorter.sort_records(asyn_records)
         components = []
@@ -155,7 +160,7 @@ class TemplateConverter(BaseModel):
             macros = list(set(macros))
             return macros
 
-        all_macros = get_all_macros(self.get_text())
+        all_macros = get_all_macros(self._text)
         all_macros.sort()
         macro_list = [
             dict(type="StringMacro", name=macro, description="Macro desc")
@@ -166,7 +171,7 @@ class TemplateConverter(BaseModel):
 
 class RecordExtractor:
     def __init__(self, text):
-        self.text = text
+        self._text = text
 
     def _extract_record_strs(self):
         # extract a whole record definition inc. fields e.g.
@@ -180,7 +185,7 @@ class RecordExtractor:
         #    info(autosaveFields, "VAL")
         # }
         record_extractor = re.compile(r"^[^#\n]*record\([^{]*{[^}]*}", re.MULTILINE)
-        return re.findall(record_extractor, self.text)
+        return re.findall(record_extractor, self._text)
 
     def _parse_record(self, record_str: str) -> Tuple:
         # extract three groups from a record definition e.g.
@@ -255,7 +260,7 @@ class RecordExtractor:
 
     def get_top_level_text(self):
         record_strs = [record for record in self._extract_record_strs()]
-        top_level_str = self.text
+        top_level_str = self._text
         for record_str in record_strs:
             try:
                 self._create_asyn_record(record_str)
