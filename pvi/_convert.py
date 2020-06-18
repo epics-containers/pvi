@@ -179,7 +179,7 @@ class RecordExtractor:
         #    field(NELM, "256")
         #    info(autosaveFields, "VAL")
         # }
-        record_extractor = re.compile(r"record\([^{]*{[^}]*}")
+        record_extractor = re.compile(r"^[^#\n]*record\([^{]*{[^}]*}", re.MULTILINE)
         return re.findall(record_extractor, self.text)
 
     def _parse_record(self, record_str: str) -> Tuple:
@@ -187,7 +187,7 @@ class RecordExtractor:
         # from:
         # record(waveform, "$(P)$(R)FilePath")
         # {
-        #    field(PINI, "YES")
+        #    #field(PINI, "YES")
         #    field(DTYP, "asynOctetWrite")
         #    field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1))FILE_PATH")
         #    field(FTVL, "CHAR")
@@ -198,7 +198,7 @@ class RecordExtractor:
         # Group 1 - record type: waveform
         # Group 2 - record name exc. prefix: FilePath
         # Group 3 - all fields:
-        #    field(PINI, "YES")
+        #    #field(PINI, "YES")
         #    field(DTYP, "asynOctetWrite")
         #    field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1))FILE_PATH")
         #    field(FTVL, "CHAR")
@@ -219,14 +219,18 @@ class RecordExtractor:
         # extract:
         # Group 1 - Field: PINI
         # Group 2 - Value: YES
-        field_extractor = r'(?:field\()([^,]*)(?:,)(?:[^"]*)(?:")([^"]*)(?:")'
+        field_extractor = re.compile(
+            r'^[^#\n]*(?:field\()([^,]*)(?:,)(?:[^"]*)(?:")([^"]*)(?:")', re.MULTILINE
+        )
         fields = dict(re.findall(field_extractor, record_fields))
         # extract two groups from an info tag e.g.
         # from: info(autosaveFields, "VAL")
         # extract:
         # Group 1 - Field: autosaveFields
         # Group 2 - Value: VAL
-        info_extractor = r'(?:info\()([^,]*)(?:,)(?:[^"]*)(?:")([^"]*)(?:")'
+        info_extractor = re.compile(
+            r'^[^#\n]*(?:info\()([^,]*)(?:,)(?:[^"]*)(?:")([^"]*)(?:")', re.MULTILINE
+        )
         info = dict(re.findall(info_extractor, record_fields))
         record = AsynRecord(
             name=record_name, type=record_type, fields=fields, infos=info,
