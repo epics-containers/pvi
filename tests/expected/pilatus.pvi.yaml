@@ -38,6 +38,7 @@ components:
   - type: AsynBinary
     name: ResetPower
     description: ResetPower
+    drv_info: RESET_POWER
     role: Action
     record_fields:
       ONAM: Reset
@@ -45,6 +46,7 @@ components:
   - type: AsynBusy
     name: ThresholdApply
     description: ThresholdApply
+    drv_info: THRESHOLD_APPLY
     role: Action
     record_fields:
       ONAM: Apply
@@ -52,6 +54,7 @@ components:
   - type: AsynFloat64
     name: ImageFileTmot
     description: Timeout for image file
+    drv_info: IMAGE_FILE_TMOT
     role: Action
     autosave:
     - VAL
@@ -62,6 +65,7 @@ components:
   - type: AsynFloat64
     name: Wavelength
     description: Wavelength
+    drv_info: WAVELENGTH
     role: Action
     autosave:
     - VAL
@@ -72,6 +76,7 @@ components:
   - type: AsynFloat64
     name: EnergyLow
     description: EnergyLow
+    drv_info: ENERGY_LOW
     role: Action
     autosave:
     - VAL
@@ -82,6 +87,7 @@ components:
   - type: AsynFloat64
     name: EnergyHigh
     description: EnergyHigh
+    drv_info: ENERGY_HIGH
     role: Action
     autosave:
     - VAL
@@ -92,6 +98,7 @@ components:
   - type: AsynFloat64
     name: DetDist
     description: DetDist
+    drv_info: DET_DIST
     role: Action
     autosave:
     - VAL
@@ -102,6 +109,7 @@ components:
   - type: AsynFloat64
     name: DetVOffset
     description: DetVOffset
+    drv_info: DET_VOFFSET
     role: Action
     autosave:
     - VAL
@@ -112,6 +120,7 @@ components:
   - type: AsynFloat64
     name: BeamX
     description: BeamX
+    drv_info: BEAM_X
     role: Action
     autosave:
     - VAL
@@ -122,6 +131,7 @@ components:
   - type: AsynFloat64
     name: BeamY
     description: BeamY
+    drv_info: BEAM_Y
     role: Action
     autosave:
     - VAL
@@ -132,6 +142,7 @@ components:
   - type: AsynFloat64
     name: Flux
     description: Flux
+    drv_info: FLUX
     role: Action
     autosave:
     - VAL
@@ -142,6 +153,7 @@ components:
   - type: AsynFloat64
     name: FilterTransm
     description: FilterTransm
+    drv_info: FILTER_TRANSM
     role: Action
     autosave:
     - VAL
@@ -151,6 +163,7 @@ components:
   - type: AsynFloat64
     name: StartAngle
     description: StartAngle
+    drv_info: START_ANGLE
     role: Action
     autosave:
     - VAL
@@ -161,6 +174,7 @@ components:
   - type: AsynFloat64
     name: AngleIncr
     description: AngleIncr
+    drv_info: ANGLE_INCR
     role: Action
     autosave:
     - VAL
@@ -171,6 +185,7 @@ components:
   - type: AsynFloat64
     name: Det2theta
     description: Det2theta
+    drv_info: DET_2THETA
     role: Action
     autosave:
     - VAL
@@ -181,6 +196,7 @@ components:
   - type: AsynFloat64
     name: Polarization
     description: Polarization
+    drv_info: POLARIZATION
     role: Action
     autosave:
     - VAL
@@ -190,6 +206,7 @@ components:
   - type: AsynFloat64
     name: Alpha
     description: Alpha
+    drv_info: ALPHA
     role: Action
     autosave:
     - VAL
@@ -200,6 +217,7 @@ components:
   - type: AsynFloat64
     name: Kappa
     description: Kappa
+    drv_info: KAPPA
     role: Action
     autosave:
     - VAL
@@ -210,6 +228,7 @@ components:
   - type: AsynFloat64
     name: Phi
     description: Phi
+    drv_info: PHI
     role: Action
     autosave:
     - VAL
@@ -220,6 +239,7 @@ components:
   - type: AsynFloat64
     name: PhiIncr
     description: PhiIncr
+    drv_info: PHI_INCR
     role: Action
     initial: 0.1
     record_fields:
@@ -228,6 +248,7 @@ components:
   - type: AsynFloat64
     name: Chi
     description: Chi
+    drv_info: CHI
     role: Action
     autosave:
     - VAL
@@ -238,6 +259,7 @@ components:
   - type: AsynFloat64
     name: ChiIncr
     description: ChiIncr
+    drv_info: CHI_INCR
     role: Action
     initial: 0.1
     record_fields:
@@ -246,6 +268,7 @@ components:
   - type: AsynFloat64
     name: Omega
     description: Omega
+    drv_info: OMEGA
     role: Action
     initial: 0.0
     record_fields:
@@ -254,6 +277,7 @@ components:
   - type: AsynFloat64
     name: OmegaIncr
     description: OmegaIncr
+    drv_info: OMEGA_INCR
     role: Action
     initial: 0.1
     record_fields:
@@ -262,6 +286,7 @@ components:
   - type: AsynString
     name: OscillAxis
     description: OscillAxis
+    drv_info: OSCILL_AXIS
     role: Action
     autosave:
     - VAL
@@ -269,6 +294,7 @@ components:
   - type: AsynLong
     name: NumOscill
     description: NumOscill
+    drv_info: NUM_OSCILL
     role: Action
     autosave:
     - VAL
@@ -276,6 +302,7 @@ components:
   - type: AsynWaveform
     name: BadPixelFile
     description: BadPixelFile
+    drv_info: BAD_PIXEL_FILE
     role: Action
     autosave:
     - VAL
@@ -286,6 +313,7 @@ components:
   - type: AsynWaveform
     name: FlatFieldFile
     description: FlatFieldFile
+    drv_info: FLAT_FIELD_FILE
     role: Action
     autosave:
     - VAL
@@ -296,6 +324,7 @@ components:
   - type: AsynWaveform
     name: CbfTemplateFile
     description: CbfTemplateFile
+    drv_info: CBFTEMPLATEFILE
     role: Action
     autosave:
     - VAL
@@ -306,6 +335,7 @@ components:
   - type: AsynWaveform
     name: HeaderString
     description: HeaderString
+    drv_info: HEADERSTRING
     role: Action
     autosave:
     - VAL
@@ -316,6 +346,7 @@ components:
   - type: AsynBinary
     name: Armed
     description: Armed
+    drv_info: ARMED
     role: Readback
     read_record_suffix: Armed
     record_fields:
@@ -324,11 +355,13 @@ components:
   - type: AsynLong
     name: NumBadPixels
     description: Number of bad pixels
+    drv_info: NUM_BAD_PIXELS
     role: Readback
     read_record_suffix: NumBadPixels
   - type: AsynBinary
     name: FlatFieldValid
     description: Flat field valid
+    drv_info: FLAT_FIELD_VALID
     role: Readback
     read_record_suffix: FlatFieldValid
     record_fields:
@@ -337,12 +370,14 @@ components:
   - type: AsynInt32
     name: PixelCutOff
     description: PixelCutOff_RBV
+    drv_info: PIXEL_CUTOFF
     role: Readback
     record_fields:
       EGU: counts
   - type: AsynFloat64
     name: Temp0
     description: Temp0_RBV
+    drv_info: TH_TEMP_0
     role: Readback
     record_fields:
       EGU: C
@@ -350,6 +385,7 @@ components:
   - type: AsynFloat64
     name: Temp1
     description: Temp1_RBV
+    drv_info: TH_TEMP_1
     role: Readback
     record_fields:
       EGU: C
@@ -357,6 +393,7 @@ components:
   - type: AsynFloat64
     name: Temp2
     description: Temp2_RBV
+    drv_info: TH_TEMP_2
     role: Readback
     record_fields:
       EGU: C
@@ -364,6 +401,7 @@ components:
   - type: AsynFloat64
     name: Humid0
     description: Humid0_RBV
+    drv_info: TH_HUMID_0
     role: Readback
     record_fields:
       EGU: '%'
@@ -371,6 +409,7 @@ components:
   - type: AsynFloat64
     name: Humid1
     description: Humid1_RBV
+    drv_info: TH_HUMID_1
     role: Readback
     record_fields:
       EGU: '%'
@@ -378,6 +417,7 @@ components:
   - type: AsynFloat64
     name: Humid2
     description: Humid2_RBV
+    drv_info: TH_HUMID_2
     role: Readback
     record_fields:
       EGU: '%'
@@ -385,16 +425,19 @@ components:
   - type: AsynString
     name: TVXVersion
     description: TVXVersion_RBV
+    drv_info: TVXVERSION
     role: Readback
   - type: AsynLong
     name: ResetPowerTime
     description: Reset module power wait time
+    drv_info: RESET_POWER_TIME
     initial: 1
     record_fields:
       EGU: Seconds
   - type: AsynFloat64
     name: DelayTime
     description: DelayTime
+    drv_info: DELAY_TIME
     autosave:
     - VAL
     initial: 0.0
@@ -404,6 +447,7 @@ components:
   - type: AsynFloat64
     name: ThresholdEnergy
     description: Energy threshold
+    drv_info: THRESHOLD
     autosave:
     - VAL
     initial: 10.0
@@ -413,6 +457,7 @@ components:
   - type: AsynBinary
     name: ThresholdAutoApply
     description: ThresholdAutoApply
+    drv_info: THRESHOLD_AUTO_APPLY
     autosave:
     - VAL
     initial: 1
@@ -422,6 +467,7 @@ components:
   - type: AsynFloat64
     name: Energy
     description: X-ray Energy
+    drv_info: ENERGY
     initial: 20.0
     record_fields:
       EGU: keV
@@ -429,6 +475,7 @@ components:
   - type: AsynLong
     name: MinFlatField
     description: Minimum flat field value
+    drv_info: MIN_FLAT_FIELD
     autosave:
     - VAL
     initial: 100
@@ -437,6 +484,7 @@ components:
   - type: AsynMultiBitBinary
     name: GapFill
     description: GapFill
+    drv_info: GAP_FILL
     autosave:
     - VAL
     initial: 0

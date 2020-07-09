@@ -122,6 +122,10 @@ class SettingPair(Parameter, WriteParameterMixin, ReadParameterMixin):
         )
         non_default_args["autosave"] = self._get_autosave_fields(self.write_record)
 
+        drv_info = self.write_record.get_parameter_name()
+        if drv_info != self.write_record.name:
+            non_default_args["drv_info"] = drv_info
+
         initial = self._get_initial(self.write_record)
         if initial:
             non_default_args["initial"] = initial
@@ -169,6 +173,10 @@ class Readback(Parameter, ReadParameterMixin):
         if read_record_scan:
             non_default_args["read_record_scan"] = read_record_scan
 
+        drv_info = self.read_record.get_parameter_name()
+        if drv_info != self.read_record.name:
+            non_default_args["drv_info"] = drv_info
+
         fields = {}
         read_fields = self._remove_invalid(self.read_record.fields_)
         if read_fields:
@@ -199,6 +207,10 @@ class Action(Parameter, WriteParameterMixin):
         initial = self._get_initial(self.write_record)
         if initial:
             non_default_args["initial"] = initial
+
+        drv_info = self.write_record.get_parameter_name()
+        if drv_info != self.write_record.name:
+            non_default_args["drv_info"] = drv_info
 
         fields = {}
         write_fields = self._remove_invalid(self.write_record.fields_)
