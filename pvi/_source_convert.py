@@ -115,6 +115,49 @@ class SourceConverter(BaseModel):
         with open(source_file, "r") as f:
             text = f.read()
         top_level_text = self._extract_top_level_text(text)
+        top_level_text = self._add_param_set_to_class(top_level_text, source_file.stem)
+        top_level_text = self._add_ADDriver_paramSet(top_level_text)
+        return top_level_text
+
+    def _add_param_set_to_class(self, top_level_text: str, basename: str) -> str:
+        # e.g. extract: class epicsShareClass simDetector : public ADDriver {
+        class_def_extractor = re.compile(r"class[^:]*:[ ]*public[ ]*ADDriver[ ]*{")
+        try:
+            class_def_str = re.findall(class_def_extractor, top_level_text)[0]
+            class_def_replacement = class_def_str.replace(
+                "public", f"public {basename}ParamSet, public"
+            )
+            top_level_text = top_level_text.replace(
+                class_def_str, class_def_replacement
+            )
+            # Add the include
+            idx = top_level_text.index('#include "ADDriver.h"')
+            top_level_text = (
+                top_level_text[:idx]
+                + f'#include "{basename}ParamSet.h"\n'
+                + top_level_text[idx:]
+            )
+        except IndexError:
+            pass
+        return top_level_text
+
+    def _add_ADDriver_paramSet(self, top_level_text: str) -> str:
+        # e.g. extract: "   :  ADDriver(portName"
+        constructor_extractor = re.compile(r"[ ]*:[ ]*ADDriver\(portName")
+        try:
+            constructor_str = re.findall(constructor_extractor, top_level_text)[0]
+            idx = constructor_str.find("(") + 1
+            constructor_replacement = constructor_str.replace(
+                "portName",
+                f"static_cast<ADDriverParamSet*>(this),  "
+                f"/* Upcast to provide ADDriver with its param set */"
+                f"\n{' '*idx}portName",
+            )
+            top_level_text = top_level_text.replace(
+                constructor_str, constructor_replacement
+            )
+        except IndexError:
+            pass
         return top_level_text
 
     def _extract_top_level_text(self, text: str) -> str:

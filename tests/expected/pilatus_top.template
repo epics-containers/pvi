@@ -17,6 +17,7 @@
 
 include "pilatus_detail.template"
 
+include "pilatusParameters.template"
 include "ADBase.template"
 include "NDFile.template"
 

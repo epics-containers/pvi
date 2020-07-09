@@ -37,7 +37,7 @@ class TemplateConverter(BaseModel):
 
     def top_level_text(self):
         record_extractor = RecordExtractor(self._text)
-        top_level_text = record_extractor.get_top_level_text()
+        top_level_text = record_extractor.get_top_level_text(self.template_file.stem)
         return top_level_text
 
     def convert(self):
@@ -243,7 +243,7 @@ class RecordExtractor:
         return record
 
     def get_asyn_records(self) -> List[AsynRecord]:
-        record_strs = [record for record in self._extract_record_strs()]
+        record_strs = self._extract_record_strs()
         record_list = []
         for record_str in record_strs:
             try:
@@ -258,8 +258,8 @@ class RecordExtractor:
     def get_stream_records(self):
         return []
 
-    def get_top_level_text(self):
-        record_strs = [record for record in self._extract_record_strs()]
+    def get_top_level_text(self, template_name: str) -> str:
+        record_strs = self._extract_record_strs()
         top_level_str = self._text
         for record_str in record_strs:
             try:
@@ -271,6 +271,24 @@ class RecordExtractor:
                     pass
             else:
                 top_level_str = top_level_str.replace(record_str, "")
+        top_level_str = self._add_param_template_include(top_level_str, template_name)
+        return top_level_str
+
+    def _add_param_template_include(
+        self, top_level_str: str, template_name: str
+    ) -> str:
+        # e.g. extract: include "ADBase.template"
+        include_extractor = re.compile(r'include[ ]*"ADBase.template"')
+        try:
+            include_str = re.findall(include_extractor, top_level_str)[0]
+            idx = top_level_str.find(include_str)
+            top_level_str = (
+                top_level_str[:idx]
+                + f'include "{template_name}Parameters.template"\n'
+                + top_level_str[idx:]
+            )
+        except IndexError:
+            raise IndexError('include "ADBase.template" not found')
         return top_level_str
 
 
