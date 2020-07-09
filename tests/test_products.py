@@ -6,6 +6,7 @@ from pvi import ChannelConfig, Group, Schema, Widget, cli
 
 PILATUS_YAML = Path(__file__).parent / "pilatus.pvi.yaml"
 PILATUS_TEMPLATE = Path(__file__).parent / "pilatus.template"
+PILATUS_SOURCE = Path(__file__).parent / "pilatusDetector.cpp"
 EXPECTED = Path(__file__).parent / "expected"
 
 
@@ -62,19 +63,26 @@ def test_edl(tmp_path: Path):
     check_generation(tmp_path, "pilatus_parameters.edl")
 
 
-def check_conversion(tmp_path: Path, fname: str):
-    cli.main(["convert", str(PILATUS_TEMPLATE), str(tmp_path / fname)])
-    assert open(tmp_path / fname).read() == open(EXPECTED / fname).read(), str(
-        EXPECTED / fname
+def check_conversion(tmp_path: Path):
+    cli.main(
+        ["convert", str(PILATUS_TEMPLATE), str(tmp_path), "-s", str(PILATUS_SOURCE)]
     )
-    topname = fname[:-9] + "_top.template"
-    assert open(tmp_path / topname).read() == open(EXPECTED / topname).read(), str(
-        EXPECTED / topname
-    )
+    assert (
+        open(tmp_path / "pilatus.pvi.yaml").read()
+        == open(EXPECTED / "pilatus.pvi.yaml").read()
+    ), str(EXPECTED / "pilatus.pvi.yaml")
+    assert (
+        open(tmp_path / "pilatus_top.template").read()
+        == open(EXPECTED / "pilatus_top.template").read()
+    ), str(EXPECTED / "pilatus_top.template")
+    assert (
+        open(tmp_path / "pilatusDetector_top.cpp").read()
+        == open(EXPECTED / "pilatusDetector_top.cpp").read()
+    ), str(EXPECTED / "pilatusDetector_top.cpp")
 
 
 def test_convert_template(tmp_path: Path):
-    check_conversion(tmp_path, "pilatus.pvi.yaml")
+    check_conversion(tmp_path)
 
 
 def test_schema_matches_stored_one(tmp_path: Path):

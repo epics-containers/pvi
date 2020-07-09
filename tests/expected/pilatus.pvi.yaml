@@ -43,6 +43,7 @@ components:
     record_fields:
       ONAM: Reset
       ZNAM: Done
+    index_name: PilatusResetPower
   - type: AsynBusy
     name: ThresholdApply
     description: ThresholdApply
@@ -51,6 +52,7 @@ components:
     record_fields:
       ONAM: Apply
       ZNAM: Done
+    index_name: PilatusThresholdApply
   - type: AsynFloat64
     name: ImageFileTmot
     description: Timeout for image file
@@ -62,6 +64,7 @@ components:
     record_fields:
       EGU: s
       PREC: 3
+    index_name: PilatusImageFileTmot
   - type: AsynFloat64
     name: Wavelength
     description: Wavelength
@@ -73,6 +76,7 @@ components:
     record_fields:
       EGU: Angstroms
       PREC: 4
+    index_name: PilatusWavelength
   - type: AsynFloat64
     name: EnergyLow
     description: EnergyLow
@@ -84,6 +88,7 @@ components:
     record_fields:
       EGU: eV
       PREC: 3
+    index_name: PilatusEnergyLow
   - type: AsynFloat64
     name: EnergyHigh
     description: EnergyHigh
@@ -95,6 +100,7 @@ components:
     record_fields:
       EGU: eV
       PREC: 3
+    index_name: PilatusEnergyHigh
   - type: AsynFloat64
     name: DetDist
     description: DetDist
@@ -106,6 +112,7 @@ components:
     record_fields:
       EGU: mm
       PREC: 3
+    index_name: PilatusDetDist
   - type: AsynFloat64
     name: DetVOffset
     description: DetVOffset
@@ -117,6 +124,7 @@ components:
     record_fields:
       EGU: mm
       PREC: 3
+    index_name: PilatusDetVOffset
   - type: AsynFloat64
     name: BeamX
     description: BeamX
@@ -128,6 +136,7 @@ components:
     record_fields:
       EGU: pixels
       PREC: 3
+    index_name: PilatusBeamX
   - type: AsynFloat64
     name: BeamY
     description: BeamY
@@ -139,6 +148,7 @@ components:
     record_fields:
       EGU: pixels
       PREC: 3
+    index_name: PilatusBeamY
   - type: AsynFloat64
     name: Flux
     description: Flux
@@ -150,6 +160,7 @@ components:
     record_fields:
       EGU: ph/s
       PREC: 4
+    index_name: PilatusFlux
   - type: AsynFloat64
     name: FilterTransm
     description: FilterTransm
@@ -160,6 +171,7 @@ components:
     initial: 1.0
     record_fields:
       PREC: 4
+    index_name: PilatusFilterTransm
   - type: AsynFloat64
     name: StartAngle
     description: StartAngle
@@ -171,6 +183,7 @@ components:
     record_fields:
       EGU: deg
       PREC: 4
+    index_name: PilatusStartAngle
   - type: AsynFloat64
     name: AngleIncr
     description: AngleIncr
@@ -182,6 +195,7 @@ components:
     record_fields:
       EGU: deg
       PREC: 4
+    index_name: PilatusAngleIncr
   - type: AsynFloat64
     name: Det2theta
     description: Det2theta
@@ -193,6 +207,7 @@ components:
     record_fields:
       EGU: deg
       PREC: 4
+    index_name: PilatusDet2theta
   - type: AsynFloat64
     name: Polarization
     description: Polarization
@@ -203,6 +218,7 @@ components:
     initial: 0.99
     record_fields:
       PREC: 4
+    index_name: PilatusPolarization
   - type: AsynFloat64
     name: Alpha
     description: Alpha
@@ -214,6 +230,7 @@ components:
     record_fields:
       EGU: deg
       PREC: 4
+    index_name: PilatusAlpha
   - type: AsynFloat64
     name: Kappa
     description: Kappa
@@ -225,6 +242,7 @@ components:
     record_fields:
       EGU: deg
       PREC: 4
+    index_name: PilatusKappa
   - type: AsynFloat64
     name: Phi
     description: Phi
@@ -236,6 +254,7 @@ components:
     record_fields:
       EGU: deg
       PREC: 4
+    index_name: PilatusPhi
   - type: AsynFloat64
     name: PhiIncr
     description: PhiIncr
@@ -245,6 +264,7 @@ components:
     record_fields:
       EGU: deg
       PREC: 4
+    index_name: PilatusPhiIncr
   - type: AsynFloat64
     name: Chi
     description: Chi
@@ -256,6 +276,7 @@ components:
     record_fields:
       EGU: deg
       PREC: 4
+    index_name: PilatusChi
   - type: AsynFloat64
     name: ChiIncr
     description: ChiIncr
@@ -265,6 +286,7 @@ components:
     record_fields:
       EGU: deg
       PREC: 4
+    index_name: PilatusChiIncr
   - type: AsynFloat64
     name: Omega
     description: Omega
@@ -274,6 +296,7 @@ components:
     record_fields:
       EGU: deg
       PREC: 4
+    index_name: PilatusOmega
   - type: AsynFloat64
     name: OmegaIncr
     description: OmegaIncr
@@ -283,6 +306,7 @@ components:
     record_fields:
       EGU: deg
       PREC: 4
+    index_name: PilatusOmegaIncr
   - type: AsynString
     name: OscillAxis
     description: OscillAxis
@@ -291,6 +315,7 @@ components:
     autosave:
     - VAL
     initial: X, CW
+    index_name: PilatusOscillAxis
   - type: AsynLong
     name: NumOscill
     description: NumOscill
@@ -299,6 +324,7 @@ components:
     autosave:
     - VAL
     initial: 1
+    index_name: PilatusNumOscill
   - type: AsynWaveform
     name: BadPixelFile
     description: BadPixelFile
@@ -310,6 +336,7 @@ components:
     record_fields:
       FTVL: CHAR
       NELM: '256'
+    index_name: PilatusBadPixelFile
   - type: AsynWaveform
     name: FlatFieldFile
     description: FlatFieldFile
@@ -321,6 +348,7 @@ components:
     record_fields:
       FTVL: CHAR
       NELM: '256'
+    index_name: PilatusFlatFieldFile
   - type: AsynWaveform
     name: CbfTemplateFile
     description: CbfTemplateFile
@@ -332,6 +360,7 @@ components:
     record_fields:
       FTVL: CHAR
       NELM: '256'
+    index_name: PilatusCbfTemplateFile
   - type: AsynWaveform
     name: HeaderString
     description: HeaderString
@@ -343,6 +372,7 @@ components:
     record_fields:
       FTVL: CHAR
       NELM: '68'
+    index_name: PilatusHeaderString
   - type: AsynBinary
     name: Armed
     description: Armed
@@ -352,12 +382,14 @@ components:
     record_fields:
       ONAM: Armed
       ZNAM: Unarmed
+    index_name: PilatusArmed
   - type: AsynLong
     name: NumBadPixels
     description: Number of bad pixels
     drv_info: NUM_BAD_PIXELS
     role: Readback
     read_record_suffix: NumBadPixels
+    index_name: PilatusNumBadPixels
   - type: AsynBinary
     name: FlatFieldValid
     description: Flat field valid
@@ -367,6 +399,7 @@ components:
     record_fields:
       ONAM: Yes
       ZNAM: No
+    index_name: PilatusFlatFieldValid
   - type: AsynInt32
     name: PixelCutOff
     description: PixelCutOff_RBV
@@ -374,6 +407,7 @@ components:
     role: Readback
     record_fields:
       EGU: counts
+    index_name: PilatusPixelCutOff
   - type: AsynFloat64
     name: Temp0
     description: Temp0_RBV
@@ -382,6 +416,7 @@ components:
     record_fields:
       EGU: C
       PREC: 1
+    index_name: PilatusThTemp0
   - type: AsynFloat64
     name: Temp1
     description: Temp1_RBV
@@ -390,6 +425,7 @@ components:
     record_fields:
       EGU: C
       PREC: 1
+    index_name: PilatusThTemp1
   - type: AsynFloat64
     name: Temp2
     description: Temp2_RBV
@@ -398,6 +434,7 @@ components:
     record_fields:
       EGU: C
       PREC: 1
+    index_name: PilatusThTemp2
   - type: AsynFloat64
     name: Humid0
     description: Humid0_RBV
@@ -406,6 +443,7 @@ components:
     record_fields:
       EGU: '%'
       PREC: 1
+    index_name: PilatusThHumid0
   - type: AsynFloat64
     name: Humid1
     description: Humid1_RBV
@@ -414,6 +452,7 @@ components:
     record_fields:
       EGU: '%'
       PREC: 1
+    index_name: PilatusThHumid1
   - type: AsynFloat64
     name: Humid2
     description: Humid2_RBV
@@ -422,11 +461,13 @@ components:
     record_fields:
       EGU: '%'
       PREC: 1
+    index_name: PilatusThHumid2
   - type: AsynString
     name: TVXVersion
     description: TVXVersion_RBV
     drv_info: TVXVERSION
     role: Readback
+    index_name: PilatusTvxVersion
   - type: AsynLong
     name: ResetPowerTime
     description: Reset module power wait time
@@ -434,6 +475,7 @@ components:
     initial: 1
     record_fields:
       EGU: Seconds
+    index_name: PilatusResetPowerTime
   - type: AsynFloat64
     name: DelayTime
     description: DelayTime
@@ -444,6 +486,7 @@ components:
     record_fields:
       EGU: s
       PREC: 6
+    index_name: PilatusDelayTime
   - type: AsynFloat64
     name: ThresholdEnergy
     description: Energy threshold
@@ -454,6 +497,7 @@ components:
     record_fields:
       EGU: keV
       PREC: 3
+    index_name: PilatusThreshold
   - type: AsynBinary
     name: ThresholdAutoApply
     description: ThresholdAutoApply
@@ -464,6 +508,7 @@ components:
     record_fields:
       ONAM: Yes
       ZNAM: No
+    index_name: PilatusThresholdAutoApply
   - type: AsynFloat64
     name: Energy
     description: X-ray Energy
@@ -472,6 +517,7 @@ components:
     record_fields:
       EGU: keV
       PREC: 3
+    index_name: PilatusEnergy
   - type: AsynLong
     name: MinFlatField
     description: Minimum flat field value
@@ -481,6 +527,7 @@ components:
     initial: 100
     record_fields:
       EGU: Counts
+    index_name: PilatusMinFlatField
   - type: AsynMultiBitBinary
     name: GapFill
     description: GapFill
@@ -495,3 +542,4 @@ components:
       TWVL: '-1'
       ZRST: N.A.
       ZRVL: '2'
+    index_name: PilatusGapFill

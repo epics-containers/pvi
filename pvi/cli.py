@@ -1,26 +1,35 @@
 from argparse import ArgumentParser
 from pathlib import Path
 
-from ._convert import TemplateConverter
+from ._convert import TemplateConverter, merge_in_index_names
 from ._schema import Schema
+from ._source_convert import SourceConverter
 from ._types import Formatter
 
 SUFFIXES = ["." + x[7:] for x in Formatter.__dict__ if x.startswith("format_")]
 
 
 def convert(args):
+    source_converter = SourceConverter(source_files=args.source_files)
+    index_info_mapping = source_converter.get_index_info_mapping()
+
+    for source_file in args.source_files:
+        top_level_text = source_converter.get_top_level_text(source_file)
+        with open(
+            args.output_dir / f"{source_file.stem}_top{source_file.suffix}", "w"
+        ) as f:
+            f.write(top_level_text)
+
     template_converter = TemplateConverter(
         template_file=args.template, formatter=dict(type=args.formatter)
     )
     converted_yaml = template_converter.convert()
-    name = args.out.name
-    suffixes = args.out.suffixes
-    while suffixes:
-        suffix = suffixes.pop()
-        name = name[: -(len(suffix))]
-    Schema.write(converted_yaml, args.out.parent, name)
+
+    # merge in index names
+    converted_yaml = merge_in_index_names(converted_yaml, index_info_mapping)
+    Schema.write(converted_yaml, args.output_dir, args.template.stem)
     top_level_text = template_converter.top_level_text()
-    with open(args.out.parent / f"{name}_top.template", "w") as f:
+    with open(args.output_dir / f"{args.template.stem}_top.template", "w") as f:
         f.write(top_level_text)
 
 
@@ -60,14 +69,21 @@ def main(args=None):
     sub.add_argument(
         "-i", "--indent", type=int, default=2, help="indent level for JSON"
     )
-    # Add a command for translating a tempalte file to a YAML file
+    # Add a command for translating a database templates and source code to YAML
     sub = subparsers.add_parser(
         "convert", help="Generate a yaml file from a template file"
     )
     sub.set_defaults(func=convert)
     sub.add_argument("template", type=Path, help="path to the template source file")
     sub.add_argument(
-        "out", type=Path, help=f"path to the output pvi.yaml file",
+        "-s",
+        "--source_files",
+        type=Path,
+        help="paths to the .cpp and .h source files",
+        nargs="*",
+    )
+    sub.add_argument(
+        "output_dir", type=Path, help=f"directory for output files",
     )
     sub.add_argument(
         "-f", "--formatter", type=str, default="DLSFormatter", help="Formatter"

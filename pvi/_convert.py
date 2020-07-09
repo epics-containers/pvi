@@ -331,3 +331,13 @@ class ParameterRoleMatcher:
             if r.get_parameter_name() == w.get_parameter_name()
         ]
         return setting_pairs
+
+
+def merge_in_index_names(yaml_dict, index_info_mapping):
+    info_index_mapping = {info: index for index, info in index_info_mapping.items()}
+    components = yaml_dict["components"]
+    for group in components:
+        for child in group["children"]:
+            drv_info = child["drv_info"]
+            child["index_name"] = info_index_mapping[drv_info]
+    return yaml_dict
