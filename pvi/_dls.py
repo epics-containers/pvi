@@ -122,16 +122,18 @@ record({record.type}, "{record.name}") {{
         parameter_definitions = [
             dict(
                 name=basename.capitalize() + node.name,
-                string_name=f"{basename.capitalize()}{node.index_name}String",
+                string_name=f"{basename[0].upper() + basename[1:]}"
+                f"{node.index_name}String",
                 type=node.type,
                 index_name=node.index_name,
+                drv_info=node.drv_info,
             )
             for node in walk(parameters)
             if isinstance(node, AsynParameter)
         ]
 
         defines = "\n".join(
-            '#define {string_name} "{index_name}"'.format(**definition)
+            '#define {string_name} "{drv_info}"'.format(**definition)
             for definition in parameter_definitions
         )
 
@@ -155,8 +157,8 @@ record({record.type}, "{record.name}") {{
         indexes = "\n".join(_indexes)
 
         h_txt = f"""\
-#ifndef {basename.capitalize()}DetectorParamSet_H
-#define {basename.capitalize()}DetectorParamSet_H
+#ifndef {basename[0].upper() + basename[1:]}DetectorParamSet_H
+#define {basename[0].upper() + basename[1:]}DetectorParamSet_H
 
 #include "{parent_class}ParamSet.h"
 
@@ -172,6 +174,6 @@ protected:
 {indexes}
 }};
 
-#endif // {basename.capitalize()}DetectorParamSet_H
+#endif // {basename[0].upper() + basename[1:]}DetectorParamSet_H
 """
         return h_txt

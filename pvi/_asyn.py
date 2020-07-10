@@ -376,6 +376,7 @@ class AsynProducer(Producer):
             name=component.name,
             type=component.type_strings.asyn_param,
             index_name=component.index_name or component.name,
+            drv_info=component.drv_info or component.name,
             description=component.role.value,
         )
         return [parameter]
