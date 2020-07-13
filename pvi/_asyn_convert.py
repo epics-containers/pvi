@@ -130,21 +130,20 @@ class SettingPair(Parameter, WriteParameterMixin, ReadParameterMixin):
         if initial:
             non_default_args["initial"] = initial
 
-        read_record_scan = self._get_scan_rate(self.read_record)
-        if read_record_scan:
-            non_default_args["read_record_scan"] = read_record_scan
-
         read_record_suffix = self._get_read_record_suffix()
         if read_record_suffix:
             non_default_args["read_record_suffix"] = read_record_suffix
 
         self._handle_clashes()
 
+        write_fields = self._remove_invalid(self.write_record.fields_)
+        read_fields = self._remove_invalid(self.read_record.fields_)
+
         component = asyn_class(
             description=self.write_record.fields_["DESC"],
             name=self.write_record.name,
             role=ParameterRole.SETTING,
-            record_fields={**self.write_record.fields_, **self.read_record.fields_},
+            record_fields={**write_fields, **read_fields},
             **non_default_args,
         )
         return component
@@ -169,24 +168,18 @@ class Readback(Parameter, ReadParameterMixin):
             non_default_args["read_record_suffix"] = read_record_suffix
         else:
             name = self.read_record.name[: -len("_RBV")]
-        read_record_scan = self._get_scan_rate(self.read_record)
-        if read_record_scan:
-            non_default_args["read_record_scan"] = read_record_scan
 
         drv_info = self.read_record.get_parameter_name()
         if drv_info != self.read_record.name:
             non_default_args["drv_info"] = drv_info
 
-        fields = {}
         read_fields = self._remove_invalid(self.read_record.fields_)
-        if read_fields:
-            fields["read_fields"] = read_fields
 
         component = asyn_class(
             description=self.read_record.fields_["DESC"],
             name=name,
             role=ParameterRole.READBACK,
-            record_fields=self.read_record.fields_,
+            record_fields=read_fields,
             **non_default_args,
         )
         return component
@@ -212,16 +205,13 @@ class Action(Parameter, WriteParameterMixin):
         if drv_info != self.write_record.name:
             non_default_args["drv_info"] = drv_info
 
-        fields = {}
         write_fields = self._remove_invalid(self.write_record.fields_)
-        if write_fields:
-            fields["write_fields"] = write_fields
 
         component = asyn_class(
             description=self.write_record.fields_["DESC"],
             name=self.write_record.name,
             role=ParameterRole.ACTION,
-            record_fields=self.write_record.fields_,
+            record_fields=write_fields,
             **non_default_args,
         )
         return component

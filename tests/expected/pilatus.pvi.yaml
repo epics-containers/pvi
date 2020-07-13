@@ -380,6 +380,7 @@ components:
     role: Readback
     read_record_suffix: Armed
     record_fields:
+      SCAN: I/O Intr
       ONAM: Armed
       ZNAM: Unarmed
     index_name: PilatusArmed
@@ -389,6 +390,8 @@ components:
     drv_info: NUM_BAD_PIXELS
     role: Readback
     read_record_suffix: NumBadPixels
+    record_fields:
+      SCAN: I/O Intr
     index_name: PilatusNumBadPixels
   - type: AsynBinary
     name: FlatFieldValid
@@ -397,6 +400,7 @@ components:
     role: Readback
     read_record_suffix: FlatFieldValid
     record_fields:
+      SCAN: I/O Intr
       ONAM: Yes
       ZNAM: No
     index_name: PilatusFlatFieldValid
@@ -406,6 +410,7 @@ components:
     drv_info: PIXEL_CUTOFF
     role: Readback
     record_fields:
+      SCAN: I/O Intr
       EGU: counts
     index_name: PilatusPixelCutOff
   - type: AsynFloat64
@@ -414,6 +419,7 @@ components:
     drv_info: TH_TEMP_0
     role: Readback
     record_fields:
+      SCAN: I/O Intr
       EGU: C
       PREC: 1
     index_name: PilatusThTemp0
@@ -423,6 +429,7 @@ components:
     drv_info: TH_TEMP_1
     role: Readback
     record_fields:
+      SCAN: I/O Intr
       EGU: C
       PREC: 1
     index_name: PilatusThTemp1
@@ -432,6 +439,7 @@ components:
     drv_info: TH_TEMP_2
     role: Readback
     record_fields:
+      SCAN: I/O Intr
       EGU: C
       PREC: 1
     index_name: PilatusThTemp2
@@ -441,6 +449,7 @@ components:
     drv_info: TH_HUMID_0
     role: Readback
     record_fields:
+      SCAN: I/O Intr
       EGU: '%'
       PREC: 1
     index_name: PilatusThHumid0
@@ -450,6 +459,7 @@ components:
     drv_info: TH_HUMID_1
     role: Readback
     record_fields:
+      SCAN: I/O Intr
       EGU: '%'
       PREC: 1
     index_name: PilatusThHumid1
@@ -459,6 +469,7 @@ components:
     drv_info: TH_HUMID_2
     role: Readback
     record_fields:
+      SCAN: I/O Intr
       EGU: '%'
       PREC: 1
     index_name: PilatusThHumid2
@@ -467,6 +478,8 @@ components:
     description: TVXVersion_RBV
     drv_info: TVXVERSION
     role: Readback
+    record_fields:
+      SCAN: I/O Intr
     index_name: PilatusTvxVersion
   - type: AsynLong
     name: ResetPowerTime
@@ -474,6 +487,7 @@ components:
     drv_info: RESET_POWER_TIME
     initial: 1
     record_fields:
+      SCAN: I/O Intr
       EGU: Seconds
     index_name: PilatusResetPowerTime
   - type: AsynFloat64
@@ -484,6 +498,7 @@ components:
     - VAL
     initial: 0.0
     record_fields:
+      SCAN: I/O Intr
       EGU: s
       PREC: 6
     index_name: PilatusDelayTime
@@ -495,6 +510,7 @@ components:
     - VAL
     initial: 10.0
     record_fields:
+      SCAN: I/O Intr
       EGU: keV
       PREC: 3
     index_name: PilatusThreshold
@@ -506,6 +522,7 @@ components:
     - VAL
     initial: 1
     record_fields:
+      SCAN: I/O Intr
       ONAM: Yes
       ZNAM: No
     index_name: PilatusThresholdAutoApply
@@ -515,6 +532,7 @@ components:
     drv_info: ENERGY
     initial: 20.0
     record_fields:
+      SCAN: I/O Intr
       EGU: keV
       PREC: 3
     index_name: PilatusEnergy
@@ -526,6 +544,7 @@ components:
     - VAL
     initial: 100
     record_fields:
+      SCAN: I/O Intr
       EGU: Counts
     index_name: PilatusMinFlatField
   - type: AsynMultiBitBinary
@@ -536,6 +555,7 @@ components:
     - VAL
     initial: 0
     record_fields:
+      SCAN: I/O Intr
       ONST: '0'
       ONVL: '0'
       TWST: '-1'

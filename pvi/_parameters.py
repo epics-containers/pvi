@@ -1,14 +1,12 @@
-import sys
 from typing import Dict, List, Optional
 
 from pydantic import BaseModel
 
-from ._asyn import ScanRate
 from ._types import Component, Record
 
 
 class Parameter(BaseModel):
-    invalid = ["DESC", "DTYP", "INP", "OUT", "PINI", "SCAN", "VAL"]
+    invalid = ["DESC", "DTYP", "INP", "OUT", "PINI", "VAL"]
 
     def _remove_invalid(self, fields: Dict[str, str]) -> Dict[str, str]:
         valid_fields = {
@@ -21,18 +19,6 @@ class Parameter(BaseModel):
 
 
 class ReadParameterMixin:
-    def _get_scan_rate(self, read_record: Record) -> ScanRate:
-        try:
-            scan_rate = read_record.fields_["SCAN"]
-        except KeyError:
-            print(f"Key error for {read_record.name}", file=sys.stderr)
-            scan_rate = ScanRate.IOINTR
-        try:
-            return ScanRate(scan_rate)
-        except ValueError as e:
-            print(f"Validation error for {read_record.name}\n{e}", file=sys.stderr)
-            return ScanRate.IOINTR
-
     def _get_read_record_suffix(self) -> Optional[str]:
         raise NotImplementedError(self)
 

@@ -17,7 +17,20 @@ PairUnion = Union[
 
 
 class BaseRecordType(BaseModel):
-    pass
+    DISA: str = Field(None, description="DISA")
+    DISS: str = Field(None, description="DISS")
+    DISV: str = Field(None, description="DISV")
+    EVNT: str = Field(None, description="EVNT")
+    FLNK: str = Field(None, description="FLNK")
+    LCNT: str = Field(None, description="LCNT")
+    LSET: str = Field(None, description="LSET")
+    PACT: str = Field(None, description="PACT")
+    PHAS: str = Field(None, description="PHAS")
+    PINI: str = Field(None, description="PINI")
+    PRIO: str = Field(None, description="PRIO")
+    PROC: str = Field(None, description="PROC")
+    SCAN: str = Field(None, description="SCAN")
+    SDIS: str = Field(None, description="SDIS")
 
 
 class SortRecords:
