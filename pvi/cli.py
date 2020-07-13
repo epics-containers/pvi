@@ -1,9 +1,9 @@
 from argparse import ArgumentParser
 from pathlib import Path
 
-from ._convert import TemplateConverter, merge_in_index_names
 from ._schema import Schema
 from ._source_convert import SourceConverter
+from ._template_convert import TemplateConverter, merge_in_index_names
 from ._types import Formatter
 
 SUFFIXES = ["." + x[7:] for x in Formatter.__dict__ if x.startswith("format_")]
