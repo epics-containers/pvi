@@ -1,6 +1,6 @@
 import re
 import sys
-from typing import Any, Dict, Optional, Type
+from typing import Any, Dict, List, Optional, Tuple, Type
 
 from pydantic import root_validator
 
@@ -83,6 +83,23 @@ class AsynRecord(Record):
 class SettingPair(Parameter, WriteParameterMixin, ReadParameterMixin):
     read_record: AsynRecord
     write_record: AsynRecord
+    _dominant_read = True
+
+    @property
+    def dominant(self):
+        if self._dominant_read:
+            dominant = self.read_record
+        else:
+            dominant = self.write_record
+        return dominant
+
+    @property
+    def subordinate(self):
+        if self._dominant_read:
+            subordinate = self.write_record
+        else:
+            subordinate = self.read_record
+        return subordinate
 
     def _get_read_record_suffix(self) -> Optional[str]:
         if self.read_record.name != self.write_record.name + "_RBV":
@@ -90,8 +107,9 @@ class SettingPair(Parameter, WriteParameterMixin, ReadParameterMixin):
         else:
             return None
 
-    def _handle_clashes(self) -> None:
+    def _get_field_clashes(self) -> List[str]:
         # Check to see if there any clashing values in pairs
+        clashing_fields = []
         for (read_field_name, read_field_value) in self.read_record.fields_.items():
             write_field_value = self.write_record.fields_.get(
                 read_field_name, read_field_value
@@ -100,18 +118,34 @@ class SettingPair(Parameter, WriteParameterMixin, ReadParameterMixin):
                 write_field_value != read_field_value
                 and read_field_name not in self.invalid
             ):
-                print(
-                    f"Pair: {self.write_record.name}; "
-                    f"Field: {read_field_name}; "
-                    f"Values: {read_field_value}, "
-                    f"{write_field_value}; "
-                    f"Using {write_field_value} "
-                    f"for both",
-                    file=sys.stderr,
-                )
-                self.read_record.fields_[
-                    read_field_name
-                ] = self.write_record.fields_.get(read_field_name, read_field_value)
+                clashing_fields.append(read_field_name)
+        return clashing_fields
+
+    def _handle_clashes(self, clashing_fields: List[str]):
+        for field in clashing_fields:
+            chosen_value = self.dominant.fields_[field]
+            discarded_value = self.subordinate.fields_.get(field, chosen_value)
+            print(
+                f"Pair: {self.write_record.name}; "
+                f"Field: {field}; "
+                f"Values: {chosen_value}, "
+                f"{discarded_value}; "
+                f"Using {chosen_value} "
+                f"for both",
+                file=sys.stderr,
+            )
+            self.subordinate.fields_[field] = self.dominant.fields_.get(
+                field, chosen_value
+            )
+
+    def get_naming_overrides(self) -> Tuple[str, List[str]]:
+        record_name = self.subordinate.name
+        override_fields = self._get_field_clashes()
+        return record_name, override_fields
+
+    def are_clashes(self) -> bool:
+        empty = not self._get_field_clashes()
+        return not empty
 
     def generate_component(self) -> AsynComponent:
         asyn_class = self.write_record.asyn_component_type()
@@ -134,7 +168,8 @@ class SettingPair(Parameter, WriteParameterMixin, ReadParameterMixin):
         if read_record_suffix:
             non_default_args["read_record_suffix"] = read_record_suffix
 
-        self._handle_clashes()
+        field_clashes = self._get_field_clashes()
+        self._handle_clashes(field_clashes)
 
         write_fields = self._remove_invalid(self.write_record.fields_)
         read_fields = self._remove_invalid(self.read_record.fields_)

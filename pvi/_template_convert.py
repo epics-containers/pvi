@@ -18,6 +18,8 @@ from ._types import Component, Record
 R = TypeVar("R", bound=Record)
 P = TypeVar("P", bound=Parameter)
 
+OVERRIDE_DESC = "# Overriding value in auto-generated template"
+
 
 class TemplateConverter(BaseModel):
     template_file: FilePath = Field(..., description="template file to convert to yaml")
@@ -217,8 +219,7 @@ class RecordExtractor:
         )
         return re.findall(record_parser, record_str)[0]
 
-    def _create_asyn_record(self, record_str: str) -> AsynRecord:
-        record_type, record_name, record_fields = self._parse_record(record_str)
+    def _extract_fields(self, fields_str: str) -> List[Tuple[str, str]]:
         # extract two groups from a field e.g.
         # from: field(PINI, "YES")
         # extract:
@@ -227,7 +228,9 @@ class RecordExtractor:
         field_extractor = re.compile(
             r'^[^#\n]*(?:field\()([^,]*)(?:,)(?:[^"]*)(?:")([^"]*)(?:")', re.MULTILINE
         )
-        fields = dict(re.findall(field_extractor, record_fields))
+        return re.findall(field_extractor, fields_str)
+
+    def _extract_infos(self, fields_str: str) -> List[Tuple[str, str]]:
         # extract two groups from an info tag e.g.
         # from: info(autosaveFields, "VAL")
         # extract:
@@ -236,7 +239,12 @@ class RecordExtractor:
         info_extractor = re.compile(
             r'^[^#\n]*(?:info\()([^,]*)(?:,)(?:[^"]*)(?:")([^"]*)(?:")', re.MULTILINE
         )
-        info = dict(re.findall(info_extractor, record_fields))
+        return re.findall(info_extractor, fields_str)
+
+    def _create_asyn_record(self, record_str: str) -> AsynRecord:
+        record_type, record_name, record_fields = self._parse_record(record_str)
+        fields = dict(self._extract_fields(record_fields))
+        info = dict(self._extract_infos(record_fields))
         record = AsynRecord(
             name=record_name, type=record_type, fields=fields, infos=info,
         )
@@ -271,7 +279,38 @@ class RecordExtractor:
                     pass
             else:
                 top_level_str = top_level_str.replace(record_str, "")
+
+        # Get override strings for setting pair clashes
+        asyn_records = self.get_asyn_records()
+        _, _, setting_pairs = RecordRoleSorter.sort_records(asyn_records)
+        overrides = [
+            setting_pair.get_naming_overrides()
+            for setting_pair in setting_pairs
+            if setting_pair.are_clashes()
+        ]
+        record_lines = {
+            self._parse_record(record_str)[1]: record_str.splitlines()
+            for record_str in record_strs
+        }
+
+        def keep_line(line: str, clashing_fields: List[str]) -> bool:
+            extracted_field = self._extract_fields(line) or self._extract_infos(line)
+            return not extracted_field or (extracted_field[0][0] in clashing_fields)
+
+        override = [
+            "\n".join(
+                [OVERRIDE_DESC]
+                + [
+                    line
+                    for line in record_lines[record_name]
+                    if keep_line(line, clashing_fields)
+                ]
+            )
+            for record_name, clashing_fields in overrides
+        ]
+
         top_level_str = self._add_param_template_include(top_level_str, template_name)
+        top_level_str += f"\n\n".join(override)
         return top_level_str
 
     def _add_param_template_include(
