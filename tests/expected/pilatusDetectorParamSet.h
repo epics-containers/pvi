@@ -1,5 +1,5 @@
-#ifndef PilatusDetectorParamSet_H
-#define PilatusDetectorParamSet_H
+#ifndef PilatusParamSet_H
+#define PilatusParamSet_H
 
 #include "ADDriverParamSet.h"
 
@@ -11,9 +11,9 @@
 #define PilatusPixelCutOffString "PixelCutOff"
 #define PilatusHeaderStringString "HeaderString"
 
-class pilatusDetectorParamSet : public virtual ADDriverParamSet {
+class pilatusParamSet : public virtual ADDriverParamSet {
 public:
-    pilatusDetectorParamSet() {
+    pilatusParamSet() {
         this->add(PilatusArmedString, asynParamInt32, &Armed);
         this->add(PilatusThresholdEnergyString, asynParamFloat64, &ThresholdEnergy);
         this->add(PilatusMinFlatFieldString, asynParamInt32, &MinFlatField);
@@ -34,4 +34,4 @@ protected:
     int HeaderString;
 };
 
-#endif // PilatusDetectorParamSet_H
+#endif // PilatusParamSet_H

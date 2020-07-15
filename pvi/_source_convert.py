@@ -111,21 +111,21 @@ class SourceConverter(BaseModel):
         index_info_dict = self._map_index_to_info(string_info_dict, string_index_dict)
         return index_info_dict
 
-    def get_top_level_text(self, source_file: FilePath) -> str:
+    def get_top_level_text(self, source_file: FilePath, paramset_name: str) -> str:
         with open(source_file, "r") as f:
             text = f.read()
         top_level_text = self._extract_top_level_text(text)
-        top_level_text = self._add_param_set_to_class(top_level_text, source_file.stem)
+        top_level_text = self._add_param_set_to_class(top_level_text, paramset_name)
         top_level_text = self._add_ADDriver_paramSet(top_level_text)
         return top_level_text
 
-    def _add_param_set_to_class(self, top_level_text: str, basename: str) -> str:
+    def _add_param_set_to_class(self, top_level_text: str, paramset_name: str) -> str:
         # e.g. extract: class epicsShareClass simDetector : public ADDriver {
         class_def_extractor = re.compile(r"class[^:]*:[ ]*public[ ]*ADDriver[ ]*{")
         try:
             class_def_str = re.findall(class_def_extractor, top_level_text)[0]
             class_def_replacement = class_def_str.replace(
-                "public", f"public {basename}ParamSet, public"
+                "public", f"public {paramset_name}ParamSet, public"
             )
             top_level_text = top_level_text.replace(
                 class_def_str, class_def_replacement
@@ -134,7 +134,7 @@ class SourceConverter(BaseModel):
             idx = top_level_text.index('#include "ADDriver.h"')
             top_level_text = (
                 top_level_text[:idx]
-                + f'#include "{basename}ParamSet.h"\n'
+                + f'#include "{paramset_name}ParamSet.h"\n'
                 + top_level_text[idx:]
             )
         except IndexError:

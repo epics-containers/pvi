@@ -36,7 +36,7 @@
 
 #include <asynOctetSyncIO.h>
 
-#include "pilatusDetectorParamSet.h"
+#include "pilatusParamSet.h"
 #include "ADDriver.h"
 
 #define DRIVER_VERSION      2
@@ -80,7 +80,7 @@ static const char *driverName = "pilatusDetector";
 
 
 /** Driver for Dectris Pilatus pixel array detectors using their camserver server over TCP/IP socket */
-class pilatusDetector : public pilatusDetectorParamSet, public ADDriver {
+class pilatusDetector : public pilatusParamSet, public ADDriver {
 public:
     pilatusDetector(const char *portName, const char *camserverPort,
                     int maxSizeX, int maxSizeY,

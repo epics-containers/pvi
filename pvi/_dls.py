@@ -157,16 +157,16 @@ record({record.type}, "{record.name}") {{
         indexes = "\n".join(_indexes)
 
         h_txt = f"""\
-#ifndef {basename[0].upper() + basename[1:]}DetectorParamSet_H
-#define {basename[0].upper() + basename[1:]}DetectorParamSet_H
+#ifndef {basename[0].upper() + basename[1:]}ParamSet_H
+#define {basename[0].upper() + basename[1:]}ParamSet_H
 
 #include "{parent_class}ParamSet.h"
 
 {defines}
 
-class {basename}DetectorParamSet : public virtual {parent_class}ParamSet {{
+class {basename}ParamSet : public virtual {parent_class}ParamSet {{
 public:
-    {basename}DetectorParamSet() {{
+    {basename}ParamSet() {{
 {adds}
     }}
 
@@ -174,6 +174,6 @@ protected:
 {indexes}
 }};
 
-#endif // {basename[0].upper() + basename[1:]}DetectorParamSet_H
+#endif // {basename[0].upper() + basename[1:]}ParamSet_H
 """
         return h_txt

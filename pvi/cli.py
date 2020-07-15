@@ -14,7 +14,9 @@ def convert(args):
     index_info_mapping = source_converter.get_index_info_mapping()
 
     for source_file in args.source_files:
-        top_level_text = source_converter.get_top_level_text(source_file)
+        top_level_text = source_converter.get_top_level_text(
+            source_file, args.template.stem
+        )
         with open(
             args.output_dir / f"{source_file.stem}_top{source_file.suffix}", "w"
         ) as f:
