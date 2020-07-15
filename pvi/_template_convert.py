@@ -277,18 +277,9 @@ class RecordExtractor:
     def _add_param_template_include(
         self, top_level_str: str, template_name: str
     ) -> str:
-        # e.g. extract: include "ADBase.template"
-        include_extractor = re.compile(r'include[ ]*"ADBase.template"')
-        try:
-            include_str = re.findall(include_extractor, top_level_str)[0]
-            idx = top_level_str.find(include_str)
-            top_level_str = (
-                top_level_str[:idx]
-                + f'include "{template_name}Parameters.template"\n'
-                + top_level_str[idx:]
-            )
-        except IndexError:
-            raise IndexError('include "ADBase.template" not found')
+        top_level_str = (
+            f'include "{template_name}Parameters.template"\n' + top_level_str
+        )
         return top_level_str
 
 

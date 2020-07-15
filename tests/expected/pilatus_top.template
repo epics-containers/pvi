@@ -1,3 +1,4 @@
+include "pilatusParameters.template"
 # Database for the records specific to the Pilatus driver
 # Mark Rivers
 # July 25, 2008
@@ -17,7 +18,6 @@
 
 include "pilatus_detail.template"
 
-include "pilatusParameters.template"
 include "ADBase.template"
 include "NDFile.template"
 
