@@ -16,6 +16,7 @@ from ._types import (
     walk,
 )
 from ._util import prepare_for_yaml
+from .adl_utils import GenerateADL
 from .edl_utils import GenerateEDL
 
 FIELD_TXT = '    field({0:5s} "{1}")\n'
@@ -23,6 +24,47 @@ INFO_TXT = '    info({0} "{1}")\n'
 
 
 class DLSFormatter(Formatter):
+    def format_adl(
+        self, channels: Tree[ChannelConfig], basename: str, macros: List[Macro]
+    ) -> str:
+        screen = GenerateADL(
+            w=0,
+            h=900,
+            x=5,
+            y=50,
+            box_y=0,
+            box_h=0,
+            box_x=0,
+            box_w=245,
+            box_title=20,
+            margin=5,
+            label_counter=0,
+            label_height=20,
+            widget_height=17,
+            widget_x=0,
+            widget_dist=115,
+        )
+        boxes = ""
+        widgets = ""
+        child_nodes = 0
+        for channel in walk(channels):
+            if isinstance(channel, Group):
+                child_nodes = len(channel.children)
+                boxes += screen.make_box(
+                    box_label=channel.get_label(), nodes=child_nodes
+                )
+            else:
+                widgets += screen.make_widget(
+                    nodes=child_nodes,
+                    widget_label=channel.get_label(),
+                    widget_type=channel.widget,
+                    read_pv=channel.read_pv,
+                    write_pv=channel.write_pv,
+                )
+        main_window = screen.make_main_window(window_title=basename)
+        edm_out = main_window + boxes + widgets
+        return edm_out
+
     def format_edl(
         self, channels: Tree[ChannelConfig], basename: str, macros: List[Macro]
     ) -> str:
