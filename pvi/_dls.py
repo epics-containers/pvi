@@ -31,18 +31,17 @@ class DLSFormatter(Formatter):
             w=0,
             h=900,
             x=5,
-            y=50,
+            y=40,
             box_y=0,
             box_h=0,
             box_x=0,
-            box_w=245,
+            box_w=300,
             box_title=20,
             margin=5,
             label_counter=0,
-            label_height=20,
-            widget_height=17,
-            widget_x=0,
-            widget_dist=115,
+            label_height=23,
+            widget_height=19,
+            widget_width=0,
         )
         boxes = ""
         widgets = ""
