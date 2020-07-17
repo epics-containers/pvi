@@ -61,6 +61,10 @@ def test_edl(tmp_path: Path):
     check_generation(tmp_path, "pilatus_parameters.edl")
 
 
+def test_adl(tmp_path: Path):
+    check_generation(tmp_path, "pilatus_parameters.adl")
+
+
 def test_schema_matches_stored_one(tmp_path: Path):
     schema = str(tmp_path / "schema.json")
     cli.main(["schema", schema])
