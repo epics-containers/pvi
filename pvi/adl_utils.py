@@ -236,10 +236,18 @@ text {{
         self.widget_width = (self.box_w / 2) - (2 * self.margin)
 
         if widget_type == Widget.BUTTON:
-            widget = self.make_button(widget_label, write_pv)
+            button_width = 70
+            widget_x = (
+                self.get_widget_x()
+                + (((self.box_w / 2) - button_width) / 2)
+                - self.margin
+            )
+            widget = self.make_button(widget_label, write_pv, widget_x)
         elif widget_type == Widget.LED:
-            # led width = 20
-            widget_x = self.get_widget_x() + (((self.box_w / 2) - 20) / 2) - self.margin
+            led_width = 20
+            widget_x = (
+                self.get_widget_x() + (((self.box_w / 2) - led_width) / 2) - self.margin
+            )
             widget = self.make_led(read_pv, widget_x)
         elif widget_type == Widget.COMBO:
             self.widget_width = (self.box_w / 4) - (3 / 2 * self.margin)
@@ -337,14 +345,27 @@ text {{
     }}
 """
 
-    def make_button(self, widget_label, write_pv):
+    def make_button(self, widget_label, write_pv, widget_x):
         return f"""
+"message button" {{
+    object {{
+            x={widget_x}
+            y={self.get_widget_y()}
+            width=70
+            height={self.widget_height}
+    }}
+    control {{
+            chan="{write_pv}"
+            clr=14
+            bclr=51
+    }}
+    label="{widget_label}"
+    press_msg="0"
+}}
 """
 
     def make_led(self, read_pv, widget_x):
         """ Make centered LED widget. """
-        # center = 50
-        # self.widget_x = self.x + self.widget_dist + center
         return f"""
 byte {{
     object {{
