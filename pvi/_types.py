@@ -1,5 +1,5 @@
 """The types that should be inherited from or produced by Fields."""
-
+from enum import Enum
 from typing import (
     Any,
     Callable,
@@ -33,6 +33,7 @@ class AsynParameter(BaseModel):
     name: str = Field(..., description="Channel name (base name of PV)")
     type: str = Field(..., description="Asyn parameter type")
     index_name: str = Field(..., description="Name of index variable in source code")
+    drv_info: str = Field(..., description="Name of drvInfoString")
     description: str = Field(..., description="Comment about this parameter")
 
 
@@ -77,6 +78,17 @@ class Component(WithType):
         if label is None:
             label = camel_to_title(self.name)
         return label
+
+    # override dict method
+    # want to always return 'type' even when using exclude_unset=True
+    # want to return all enums as values
+    def dict(self, **kwargs):
+        default_export = super().dict(**kwargs)
+        modified_export = {**dict(type=self.type), **default_export}
+        for key, value in modified_export.items():
+            if isinstance(value, Enum):
+                modified_export[key] = value.value
+        return modified_export
 
     @classmethod
     def on_each_node(

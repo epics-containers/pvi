@@ -55,19 +55,6 @@ class ParameterRole(str, Enum):
         return self != self.READBACK
 
 
-class ScanRate(str, Enum):
-    PASSIVE = "Passive"
-    EVENT = "Event"
-    IOINTR = "I/O Intr"
-    TEN = "10 second"
-    FIVE = "5 second"
-    TWO = "2 second"
-    ONE = "1 second"
-    POINTFIVE = ".5 second"
-    POINTTWO = ".2 second"
-    POINTONE = ".1 second"
-
-
 class AsynComponent(Component):
     """Base class for all Asyn Parameters to inherit from"""
 
@@ -95,9 +82,6 @@ class AsynComponent(Component):
     )
     read_record_suffix: str = Field(
         None, description="The read record suffix, if not given then use $(name)_RBV"
-    )
-    read_record_scan: ScanRate = Field(
-        ScanRate.IOINTR, description="SCAN rate of the read record"
     )
     write_record_suffix: str = Field(
         None, description="The write record suffix, if not given then use $(name)"
@@ -292,7 +276,6 @@ class AsynProducer(Producer):
         io = f"@asyn({self.asyn_port},{self.address},{self.timeout}){asyn_param_name}"
         if component.role.needs_read_record():
             fields = dict(
-                SCAN=component.read_record_scan.value,
                 DESC=truncate_description(component.description),
                 INP=io,
                 DTYP=component.type_strings.asyn_read,
@@ -312,6 +295,8 @@ class AsynProducer(Producer):
                 DTYP=component.type_strings.asyn_write,
                 **out_fields.dict(exclude_none=True),
             )
+            if "SCAN" in fields:
+                del fields["SCAN"]
             if component.type_strings.write_record == "waveform":
                 fields["INP"] = io
             else:
@@ -376,6 +361,7 @@ class AsynProducer(Producer):
             name=component.name,
             type=component.type_strings.asyn_param,
             index_name=component.index_name or component.name,
+            drv_info=component.drv_info or component.name,
             description=component.role.value,
         )
         return [parameter]
