@@ -63,6 +63,10 @@ def test_edl(tmp_path: Path):
     check_generation(tmp_path, "pilatus_parameters.edl")
 
 
+def test_adl(tmp_path: Path):
+    check_generation(tmp_path, "pilatus_parameters.adl")
+
+
 def check_conversion(tmp_path: Path):
     cli.main(
         ["convert", str(PILATUS_TEMPLATE), str(tmp_path), "-s", str(PILATUS_SOURCE)]
