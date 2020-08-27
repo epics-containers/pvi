@@ -20,9 +20,9 @@ macros:
   description: Macro desc
 template: <path-to-template>/pilatus.template
 includes:
-- path: <path-to-yaml>/ADBase.pvi.yaml
-- path: <path-to-yaml>/NDFile.pvi.yaml
-- path: <path-to-yaml>/pilatus_detail.pvi.yaml
+- <path-to-yaml>/ADBase.pvi.yaml
+- <path-to-yaml>/NDFile.pvi.yaml
+- <path-to-yaml>/pilatus_detail.pvi.yaml
 producer:
   type: AsynProducer
   prefix: $(P)$(R)

@@ -73,7 +73,7 @@ class TemplateConverter(BaseModel):
         template = "<path-to-template>/" + str(self.template_file.name)
         return template
 
-    def _extract_includes(self) -> List[Dict[str, str]]:
+    def _extract_includes(self) -> List[str]:
         def get_include_names(text: str) -> List[str]:
             # e.g. from: include "NDFile.template"
             # extract: NDFile
@@ -86,9 +86,7 @@ class TemplateConverter(BaseModel):
 
         include_names = get_include_names(self._text)
         include_names.sort()
-        include_list = [
-            dict(path=f"<path-to-yaml>/{name}.pvi.yaml") for name in include_names
-        ]
+        include_list = [f"<path-to-yaml>/{name}.pvi.yaml" for name in include_names]
         return include_list
 
     def _extract_asyn_producer(self) -> Dict[str, str]:
