@@ -5,26 +5,23 @@ verify_ssl = true
 
 [dev-packages]
 pytest-cov = "*"
-pytest-mypy = "*"
-pytest-flake8 = "*"
 pytest-black = "*"
-flake8-isort = "*"
-sphinx-rtd-theme = "*"
+pytest-flake8 = "*"
 pytest-asyncio = "*"
-# VSCode needs these
-rope = "*"
-black = "*"
+flake8-isort = "*"
+pytest-mypy = "*"
+sphinx-rtd-theme = "*"
+# Pinning black stops us having to allow pre-releases globally
+black = "==19.10b0"
+# Without these lines lockfile isn't usable on multiple Python versions and platforms
 mypy = "*"
-pytest = ">=5.3.0"
+atomicwrites = "*"
 
 [packages]
-pydantic = "*"
-ruamel-yaml = "*"
+# All other package requirements from setup.cfg
+pvi = {editable = true,path = "."}
 
 [scripts]
 # Put coverage here so we don't interfere with debugging in the IDE
 tests = "python -m pytest --cov-fail-under=90 --cov=pvi --cov-report term"
 docs = "sphinx-build -E -b html docs build/html"
-
-[pipenv]
-allow_prereleases = true

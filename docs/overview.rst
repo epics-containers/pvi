@@ -20,22 +20,10 @@ The YAML file is formed of a number of sections:
 
     * - Section
       - Description
-    * - bases
+    * - includes
       - The YAML files to use as base classes for superclasses
     * - local
       - A local override YAML file for site specific changes
-    * - description
-      - A description of what the device does
-    * - macros
-      - These are the arguments that will be used in the resulting template,
-        with descriptions and default values
-    * - template
-      - The template file that should be loaded by the IOC
-    * - startup
-      - String that should be inserted in a startup script that does a
-        dbLoadRecords and any other startup lines to instantiate this device
-    * - screens
-      - Any screens which form the public interface of this module
     * - producer
       - Producer that knows how to create Records and Channels from the Components
     * - formatter
@@ -58,9 +46,7 @@ outputs them to file:
     Intermediate [label="[Record(),\n Channel(),\n AsynParameter()]"]
     Products [label="Template\nScreens\nDriver Params\nDocumentation"]
 
-    {rank=same; Components -> Producer -> Intermediate -> Formatter -> Products -> IOC}
-    Macros -> IOC
-    Startup -> IOC
+    {rank=same; Components -> Producer -> Intermediate -> Formatter -> Products}
 
 Here's a cut down pilatus.yaml file that might describe a parameter in a
 detector:

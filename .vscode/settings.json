@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "/home/tom/.local/share/virtualenvs/pvi-YMoh_0sz/bin/python",
+    "python.pythonPath": "/scratch/tmc43/pipenv/pvi-8WvQsKFD/bin/python",
     "python.linting.pylintEnabled": false,
     "python.linting.flake8Enabled": true,
     "python.linting.enabled": true,
@@ -12,4 +12,6 @@
     "yaml.schemas": {
         "../pvi/pvi/schema.json": ["*.pvi.yaml"]
     },
+    "python.languageServer": "Microsoft",
+    "restructuredtext.confPath": "${workspaceFolder}/docs",
 }

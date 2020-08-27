@@ -17,8 +17,7 @@ from ._asyn import (
     AsynWaveform,
 )
 from ._dls import DLSFormatter
-from ._macros import MacroUnion
-from ._types import Component, File, Group
+from ._types import Component, Group
 from ._version_git import __version__
 
 # from ._stream import StreamFloat64, StreamString, StreamProducer
@@ -58,18 +57,7 @@ def walk_dicts(tree: List[Dict]) -> Iterator[Dict]:
 
 
 class Schema(BaseModel):
-    description: str = Field(..., description="Description of what this Device does")
-    macros: List[MacroUnion] = Field(
-        [], description="Macros needed to make an instance of this"
-    )
-    template: str = Field(
-        ..., description="Template file that should be loaded by the IOC"
-    )
-    startup: str = Field(
-        "", description="Lines to insert into the startup script of IOC"
-    )
-    screens: List[File] = Field([], description="List of paths to associated screens")
-    includes: List[File] = Field(
+    includes: List[str] = Field(
         [], description="YAML files to include in the definitions"
     )
     local: str = Field(

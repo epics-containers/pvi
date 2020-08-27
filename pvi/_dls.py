@@ -1,20 +1,10 @@
 import csv
 import io
 from io import StringIO
-from typing import List
 
 from ruamel.yaml import YAML
 
-from ._types import (
-    AsynParameter,
-    ChannelConfig,
-    Formatter,
-    Group,
-    Macro,
-    Record,
-    Tree,
-    walk,
-)
+from ._types import AsynParameter, ChannelConfig, Formatter, Group, Record, Tree, walk
 from ._util import prepare_for_yaml
 from .adl_utils import GenerateADL
 from .edl_utils import GenerateEDL
@@ -24,9 +14,7 @@ INFO_TXT = '    info({0} "{1}")\n'
 
 
 class DLSFormatter(Formatter):
-    def format_adl(
-        self, channels: Tree[ChannelConfig], basename: str, macros: List[Macro]
-    ) -> str:
+    def format_adl(self, channels: Tree[ChannelConfig], basename: str) -> str:
         screen = GenerateADL(
             w=0,
             h=900,
@@ -64,9 +52,7 @@ class DLSFormatter(Formatter):
         edm_out = main_window + boxes + widgets
         return edm_out
 
-    def format_edl(
-        self, channels: Tree[ChannelConfig], basename: str, macros: List[Macro]
-    ) -> str:
+    def format_edl(self, channels: Tree[ChannelConfig], basename: str) -> str:
         screen = GenerateEDL(
             w=0,
             h=900,
@@ -111,18 +97,14 @@ class DLSFormatter(Formatter):
         edm_out = main_window + boxes + widgets + exit_button
         return edm_out
 
-    def format_yaml(
-        self, channels: Tree[ChannelConfig], basename: str, macros: List[Macro]
-    ) -> str:
+    def format_yaml(self, channels: Tree[ChannelConfig], basename: str) -> str:
         # Walk the tree stripping enums and preserving descriptions
         children = [prepare_for_yaml(c.dict(exclude_none=True)) for c in channels]
         stream = StringIO()
         YAML().dump(dict(children=children), stream)
         return stream.getvalue()
 
-    def format_csv(
-        self, channels: Tree[ChannelConfig], basename: str, macros: List[Macro]
-    ) -> str:
+    def format_csv(self, channels: Tree[ChannelConfig], basename: str) -> str:
         out = io.StringIO(newline="")
         writer = csv.writer(out, delimiter=",", quotechar='"')
         writer.writerow(["Parameter", "PVs", "Description"])
@@ -135,9 +117,7 @@ class DLSFormatter(Formatter):
                 writer.writerow([channel.name, pvs, channel.description])
         return out.getvalue()
 
-    def format_template(
-        self, records: Tree[Record], basename: str, macros: List[Macro]
-    ) -> str:
+    def format_template(self, records: Tree[Record], basename: str) -> str:
         txt = ""
         for record in walk(records):
             if isinstance(record, Group):
@@ -156,9 +136,7 @@ record({record.type}, "{record.name}") {{
 """
         return txt
 
-    def format_h(
-        self, parameters: Tree[AsynParameter], basename: str, macros: List[Macro]
-    ) -> str:
+    def format_h(self, parameters: Tree[AsynParameter], basename: str) -> str:
         parent_class = "ADDriver"  # TODO: Extract this from YAML
         parameter_definitions = [
             dict(

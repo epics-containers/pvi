@@ -1,7 +1,6 @@
 """The types that should be inherited from or produced by Fields."""
 from enum import Enum
 from typing import (
-    Any,
     Callable,
     Dict,
     Generic,
@@ -141,23 +140,6 @@ class ChannelConfig(Component):
     )
 
 
-class File(BaseModel):
-    path: str = Field(..., description="Path to the file, can include macros")
-    macros: Dict[str, Any] = Field(
-        {}, description="Extra macros to pass along with the macros from this file"
-    )
-
-
-class Macro(WithType):
-    name: str = Field(
-        ..., description="The name of the Macro that will be passed when instantiated"
-    )
-    description: str = Field(
-        ..., description="Description of what the Macro will be used for"
-    )
-    value: Any
-
-
 class Producer(WithType):
     def produce_records(self, components: Tree[Component]) -> Tree[Record]:
         """Produce a Record tree structure for database template
@@ -196,47 +178,29 @@ class Producer(WithType):
 
 
 class Formatter(WithType):
-    def format_adl(
-        self, channels: Tree[ChannelConfig], basename: str, macros: List[Macro]
-    ) -> str:
+    def format_adl(self, channels: Tree[ChannelConfig], basename: str) -> str:
         raise NotImplementedError(self)
 
-    def format_edl(
-        self, channels: Tree[ChannelConfig], basename: str, macros: List[Macro]
-    ) -> str:
+    def format_edl(self, channels: Tree[ChannelConfig], basename: str) -> str:
         raise NotImplementedError(self)
 
-    def format_opi(
-        self, channels: Tree[ChannelConfig], basename: str, macros: List[Macro]
-    ) -> str:
+    def format_opi(self, channels: Tree[ChannelConfig], basename: str) -> str:
         raise NotImplementedError(self)
 
-    def format_bob(
-        self, channels: Tree[ChannelConfig], basename: str, macros: List[Macro]
-    ) -> str:
+    def format_bob(self, channels: Tree[ChannelConfig], basename: str) -> str:
         raise NotImplementedError(self)
 
-    def format_ui(
-        self, channels: Tree[ChannelConfig], basename: str, macros: List[Macro]
-    ) -> str:
+    def format_ui(self, channels: Tree[ChannelConfig], basename: str) -> str:
         raise NotImplementedError(self)
 
-    def format_yaml(
-        self, channels: Tree[ChannelConfig], basename: str, macros: List[Macro]
-    ) -> str:
+    def format_yaml(self, channels: Tree[ChannelConfig], basename: str) -> str:
         raise NotImplementedError(self)
 
-    def format_csv(
-        self, channels: Tree[ChannelConfig], basename: str, macros: List[Macro]
-    ) -> str:
+    def format_csv(self, channels: Tree[ChannelConfig], basename: str) -> str:
         raise NotImplementedError(self)
 
-    def format_template(
-        self, records: Tree[Record], basename: str, macros: List[Macro]
-    ) -> str:
+    def format_template(self, records: Tree[Record], basename: str) -> str:
         raise NotImplementedError(self)
 
-    def format_h(
-        self, parameters: Tree[AsynParameter], basename: str, macros: List[Macro]
-    ) -> str:
+    def format_h(self, parameters: Tree[AsynParameter], basename: str) -> str:
         raise NotImplementedError(self)
