@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Dict, Iterator, List, Union
 
-from pydantic import BaseModel, Field, ValidationError
+from pydantic import BaseModel, Field
 from ruamel.yaml import YAML
 
 from ._aps import APSFormatter
@@ -99,8 +99,5 @@ class Schema(BaseModel):
 
     @classmethod
     def write(cls, yaml: Dict, path: Path, basename: str):
-        try:
-            cls(**yaml)
-        except ValidationError as e:
-            print(e)
+        cls(**yaml)
         YAML().dump(yaml, path / f"{basename}.pvi.yaml")
