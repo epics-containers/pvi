@@ -1,4 +1,2 @@
-screens:
-  - path: ../op/opi/DLS/simDetector.opi
 formatter:
   type: DLSFormatter

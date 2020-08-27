@@ -44,9 +44,6 @@ class TemplateConverter(BaseModel):
 
     def convert(self):
         extractor_dict = dict(
-            description=lambda: "<Driver Description>",
-            macros=self._extract_macros,
-            template=self._extract_template,
             includes=self._extract_includes,
             producer=self._extract_asyn_producer,
             formatter=lambda: self.formatter.dict(),
@@ -68,10 +65,6 @@ class TemplateConverter(BaseModel):
             if value:
                 filled_dict[key] = value
         return filled_dict
-
-    def _extract_template(self) -> str:
-        template = "<path-to-template>/" + str(self.template_file.name)
-        return template
 
     def _extract_includes(self) -> List[str]:
         def get_include_names(text: str) -> List[str]:
@@ -150,23 +143,6 @@ class TemplateConverter(BaseModel):
             )
             components.append(component_dict)
         return components
-
-    def _extract_macros(self) -> List[Dict[str, str]]:
-        def get_all_macros(text: str) -> List[str]:
-            # extract all macros
-            # e.g. $(P), $(R), $(PORT), $(ADDR=0)
-            macro_extractor = r"(?:\$\()([^\)]*)(?:\))"
-            macros = re.findall(macro_extractor, text)
-            macros = list(set(macros))
-            return macros
-
-        all_macros = get_all_macros(self._text)
-        all_macros.sort()
-        macro_list = [
-            dict(type="StringMacro", name=macro, description="Macro desc")
-            for macro in all_macros
-        ]
-        return macro_list
 
 
 class RecordExtractor:
