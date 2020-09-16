@@ -13,6 +13,7 @@ def convert(args):
     source_converter = SourceConverter(source_files=args.source_files)
     index_info_mapping = source_converter.get_index_info_mapping()
 
+    parent = source_converter._extract_parent_class()
     for source_file in args.source_files:
         top_level_text = source_converter.get_top_level_text(
             source_file, args.template.stem

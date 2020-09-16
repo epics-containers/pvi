@@ -44,7 +44,6 @@ class TemplateConverter(BaseModel):
 
     def convert(self):
         extractor_dict = dict(
-            includes=self._extract_includes,
             producer=self._extract_asyn_producer,
             formatter=lambda: self.formatter.dict(),
             components=lambda: [
@@ -65,22 +64,6 @@ class TemplateConverter(BaseModel):
             if value:
                 filled_dict[key] = value
         return filled_dict
-
-    def _extract_includes(self) -> List[str]:
-        def get_include_names(text: str) -> List[str]:
-            # e.g. from: include "NDFile.template"
-            # extract: NDFile
-            include_extractor = re.compile(
-                r'(?:include)(?:[^"]*)(?:")([A-Za-z0-9][^.]*)(?:\.template)'
-            )
-            include_names = re.findall(include_extractor, text)
-            include_names = list(set(include_names))
-            return include_names
-
-        include_names = get_include_names(self._text)
-        include_names.sort()
-        include_list = [f"<path-to-yaml>/{name}.pvi.yaml" for name in include_names]
-        return include_list
 
     def _extract_asyn_producer(self) -> Dict[str, str]:
         def get_prefix(text: str) -> Dict[str, str]:

@@ -21,6 +21,14 @@ class SourceConverter(BaseModel):
                 text += f.read()
         object.__setattr__(self, "_text", text)
 
+    def _extract_parent_class(self) -> str:
+        # e.g. extract 'asynNDArrayDriver' from
+        # class epicsShareClass ADDriver : public asynNDArrayDriver {
+        parent_class_extractor = re.compile(r"class.* (\w+) {")
+        parent_class = re.search(parent_class_extractor, self._text).groups()[0]
+
+        return parent_class
+
     def _extract_create_param_strs(self) -> List[str]:
         # e.g. extract: createParam(SimGainXString, asynParamFloat64, &SimGainX);
         create_param_extractor = re.compile(r"createParam\([^\)]*\);")

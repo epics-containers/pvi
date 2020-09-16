@@ -57,9 +57,6 @@ def walk_dicts(tree: List[Dict]) -> Iterator[Dict]:
 
 
 class Schema(BaseModel):
-    includes: List[str] = Field(
-        [], description="YAML files to include in the definitions"
-    )
     local: str = Field(
         None, description="YAML file that overrides this for local changes"
     )
@@ -68,6 +65,9 @@ class Schema(BaseModel):
     )
     formatter: FormatterUnion = Field(
         ..., description="The Formatter class to format the output"
+    )
+    parent: str = Field(
+        ..., description="Parent that this Device inherits from"
     )
     components: List[ComponentUnion] = Field(
         ..., description="The Components to pass to the Producer"
