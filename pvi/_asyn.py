@@ -1,7 +1,7 @@
 from enum import Enum
-from typing import Any, ClassVar, List
+from typing import Any, ClassVar, List, Union
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, constr
 
 from pvi._types import ChannelConfig, DisplayForm, Widget
 
@@ -96,6 +96,10 @@ class AsynComponent(Component):
     record_fields: Any
 
 
+def macro_with_default(default_pattern: str):
+    return constr(regex=r"(\$\(\w+=(" + default_pattern + r")\))")
+
+
 def initial_field(**kwargs):
     return Field(None, description="The initial value of the parameter", **kwargs)
 
@@ -118,7 +122,7 @@ class AsynBinary(AsynComponent):
         asyn_write="asynInt32",
         asyn_param="asynParamInt32",
     )
-    initial: int = initial_field(ge=0, le=1)
+    initial: Union[int, macro_with_default(r"[0-1]")] = initial_field(ge=0, le=1)
     read_widget: Widget = widget_field(Widget.LED)
     write_widget: Widget = widget_field(Widget.CHECKBOX)
     record_fields: BinaryAll = Field(BinaryAll(), description="Binary record fields")
@@ -134,7 +138,7 @@ class AsynBusy(AsynComponent):
         asyn_write="asynInt32",
         asyn_param="asynParamInt32",
     )
-    initial: int = initial_field(ge=0, le=1)
+    initial: Union[int, macro_with_default(r"[0-1]")] = initial_field(ge=0, le=1)
     read_widget: Widget = widget_field(Widget.LED)
     write_widget: Widget = widget_field(Widget.BUTTON)
     record_fields: BinaryAll = Field(
@@ -152,7 +156,7 @@ class AsynFloat64(AsynComponent):
         asyn_write="asynFloat64",
         asyn_param="asynParamFloat64",
     )
-    initial: float = initial_field()
+    initial: Union[float, macro_with_default(r"-?[0-9]+(\.[0-9]+)?")] = initial_field()
     read_widget: Widget = widget_field(Widget.TEXTUPDATE)
     write_widget: Widget = widget_field(Widget.TEXTINPUT)
     record_fields: AnalogueAll = Field(
@@ -170,7 +174,7 @@ class AsynInt32(AsynComponent):
         asyn_write="asynInt32",
         asyn_param="asynParamInt32",
     )
-    initial: int = initial_field()
+    initial: Union[int, macro_with_default(r"-?\d+")] = initial_field()
     read_widget: Widget = widget_field(Widget.TEXTUPDATE)
     write_widget: Widget = widget_field(Widget.TEXTINPUT)
     record_fields: AnalogueAll = Field(
@@ -188,7 +192,7 @@ class AsynLong(AsynComponent):
         asyn_write="asynInt32",
         asyn_param="asynParamInt32",
     )
-    initial: int = initial_field()
+    initial: Union[int, macro_with_default(r"-?\d+")] = initial_field()
     read_widget: Widget = widget_field(Widget.TEXTUPDATE)
     write_widget: Widget = widget_field(Widget.TEXTINPUT)
     record_fields: LongAll = Field(
@@ -206,7 +210,7 @@ class AsynMultiBitBinary(AsynComponent):
         asyn_write="asynInt32",
         asyn_param="asynParamInt32",
     )
-    initial: int = initial_field(ge=0, le=15)
+    initial: Union[int, macro_with_default(r"[0-15]")] = initial_field(ge=0, le=15)
     read_widget: Widget = widget_field(Widget.TEXTUPDATE)
     write_widget: Widget = widget_field(Widget.COMBO)
     record_fields: MultiBitBinaryAll = Field(
