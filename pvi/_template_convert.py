@@ -308,7 +308,10 @@ class RecordRoleSorter:
             # Move waveform records with asynOctetWrite from read to write
             read_records = []
             for r in inp_records:
-                if r.type == "waveform" and r.fields_["DTYP"] == "asynOctetWrite":
+                if r.type == "waveform" and (
+                    r.fields_["DTYP"] == "asynOctetWrite"
+                    or r.fields_["DTYP"].endswith("ArrayOut")
+                ):
                     write_records.append(r)
                 else:
                     read_records.append(r)

@@ -4,7 +4,7 @@ from typing import Any, Dict, List, Optional, Tuple, Type
 
 from pydantic import root_validator
 
-from ._asyn import AsynComponent, ParameterRole
+from ._asyn import AsynComponent, AsynWaveform, ParameterRole
 from ._parameters import Parameter, ReadParameterMixin, WriteParameterMixin
 from ._types import Record
 
@@ -50,19 +50,17 @@ class AsynRecord(Record):
         asyn_component_types = [
             cls.type_strings for cls in AsynComponent.__subclasses__()
         ]
+
+        # For waveform records the data type is defined by FTVL
+        if self.type == "waveform":
+            return AsynWaveform
+
         if "INP" in self.fields_.keys():
             type_fields = [
                 (type_string.read_record, type_string.asyn_read)
                 for type_string in asyn_component_types
             ]
         elif "OUT" in self.fields_.keys():
-            type_fields = [
-                (type_string.write_record, type_string.asyn_write)
-                for type_string in asyn_component_types
-            ]
-
-        # waveform is a special case. It can only ever be an INP
-        if self.type == "waveform" and self.fields_["DTYP"] == "asynOctetWrite":
             type_fields = [
                 (type_string.write_record, type_string.asyn_write)
                 for type_string in asyn_component_types
