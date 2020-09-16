@@ -189,7 +189,6 @@ public:
 {adds}
     }}
 
-protected:
 {indexes}
 }};
 
