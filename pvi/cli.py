@@ -5,21 +5,25 @@ from ._schema import Schema
 from ._source_convert import SourceConverter
 from ._template_convert import TemplateConverter, merge_in_index_names
 from ._types import Formatter
+from._util import insert_entry
+from typing import Any
 
 SUFFIXES = ["." + x[7:] for x in Formatter.__dict__ if x.startswith("format_")]
 
 
 def convert(args):
-    source_converter = SourceConverter(source_files=args.source_files)
+    source_converter = SourceConverter(
+        source_files=args.source_files, module_root=args.root
+    )
     index_info_mapping = source_converter.get_index_info_mapping()
 
     parent = source_converter._extract_parent_class()
     for source_file in args.source_files:
         top_level_text = source_converter.get_top_level_text(
-            source_file, args.template.stem
+            source_file, args.output_name, parent
         )
         with open(
-            args.output_dir / f"{source_file.stem}_top{source_file.suffix}", "w"
+            args.output_dir / f"{source_file.stem}{source_file.suffix}", "w"
         ) as f:
             f.write(top_level_text)
 
@@ -27,12 +31,14 @@ def convert(args):
         template_file=args.template, formatter=dict(type=args.formatter)
     )
     converted_yaml = template_converter.convert()
-
-    # merge in index names
+    converted_yaml = insert_entry(converted_yaml, "parent", parent, "components")
     converted_yaml = merge_in_index_names(converted_yaml, index_info_mapping)
-    Schema.write(converted_yaml, args.output_dir, args.template.stem)
-    top_level_text = template_converter.top_level_text()
-    with open(args.output_dir / f"{args.template.stem}_top.template", "w") as f:
+
+    schema_name = args.output_name or args.template.stem
+    Schema.write(converted_yaml, args.output_dir, schema_name)
+
+    top_level_text = template_converter.top_level_text(args.output_name)
+    with open(args.output_dir / f"{args.template.stem}.template", "w") as f:
         f.write(top_level_text)
 
 
@@ -55,7 +61,7 @@ def generate(args):
     else:
         tree = schema.producer.produce_channels(schema.components)
     format = getattr(schema.formatter, f"format_{suffix[1:]}")
-    text = format(tree, basename)
+    text = format(tree, basename, schema)
     with open(args.out, "w") as f:
         f.write(text)
 
@@ -72,7 +78,7 @@ def main(args=None):
     sub.add_argument(
         "-i", "--indent", type=int, default=2, help="indent level for JSON"
     )
-    # Add a command for translating a database templates and source code to YAML
+    # Add a command for translating a database template and source code to YAML
     sub = subparsers.add_parser(
         "convert", help="Generate a yaml file from a template file"
     )
@@ -86,12 +92,18 @@ def main(args=None):
         nargs="*",
     )
     sub.add_argument(
-        "output_dir", type=Path, help=f"directory for output files",
+        "output_dir", type=Path, help="Directory for output files",
+    )
+    sub.add_argument(
+        "-n", "--output-name", type=str, help="Basename (suffix) of generated YAML",
+    )
+    sub.add_argument(
+        "-r", "--root", type=Path, help="Full path to root of module", required=True
     )
     sub.add_argument(
         "-f", "--formatter", type=str, default="DLSFormatter", help="Formatter"
     )
-    # Add a command for generating produces
+    # Add a command for generating products
     sub = subparsers.add_parser("generate", help="Generate one of the products")
     sub.set_defaults(func=generate)
     sub.add_argument("yaml", type=Path, help="path to the YAML source file")

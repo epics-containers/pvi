@@ -37,9 +37,10 @@ class TemplateConverter(BaseModel):
             text = f.read()
         object.__setattr__(self, "_text", text)
 
-    def top_level_text(self):
+    def top_level_text(self, output_name=None):
         record_extractor = RecordExtractor(self._text)
-        top_level_text = record_extractor.get_top_level_text(self.template_file.stem)
+        output_name = output_name or self.template_file.stem
+        top_level_text = record_extractor.get_top_level_text(output_name)
         return top_level_text
 
     def convert(self):
@@ -223,7 +224,7 @@ class RecordExtractor:
     def get_stream_records(self):
         return []
 
-    def get_top_level_text(self, template_name: str) -> str:
+    def get_top_level_text(self, output_name: str) -> str:
         record_strs = self._extract_record_strs()
         top_level_str = self._text
         for record_str in record_strs:
@@ -266,16 +267,12 @@ class RecordExtractor:
             for record_name, clashing_fields in overrides
         ]
 
-        top_level_str = self._add_param_template_include(top_level_str, template_name)
+        top_level_str = self._add_param_template_include(top_level_str, output_name)
         top_level_str += f"\n\n".join(override)
         return top_level_str
 
-    def _add_param_template_include(
-        self, top_level_str: str, template_name: str
-    ) -> str:
-        top_level_str = (
-            f'include "{template_name}Parameters.template"\n' + top_level_str
-        )
+    def _add_param_template_include(self, top_level_str: str, output_name: str) -> str:
+        top_level_str = f'include "{output_name}ParamSet.template"\n' + top_level_str
         return top_level_str
 
 

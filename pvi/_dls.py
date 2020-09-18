@@ -5,7 +5,7 @@ from io import StringIO
 from ruamel.yaml import YAML
 
 from ._types import AsynParameter, ChannelConfig, Formatter, Group, Record, Tree, walk
-from ._util import prepare_for_yaml
+from ._util import prepare_for_yaml, get_param_set
 from .adl_utils import GenerateADL
 from .edl_utils import GenerateEDL
 
@@ -14,7 +14,9 @@ INFO_TXT = '    info({0} "{1}")\n'
 
 
 class DLSFormatter(Formatter):
-    def format_adl(self, channels: Tree[ChannelConfig], basename: str) -> str:
+    def format_adl(
+        self, channels: Tree[ChannelConfig], basename: str, _schema: dict
+    ) -> str:
         screen = GenerateADL(
             w=0,
             h=900,
@@ -52,7 +54,9 @@ class DLSFormatter(Formatter):
         edm_out = main_window + boxes + widgets
         return edm_out
 
-    def format_edl(self, channels: Tree[ChannelConfig], basename: str) -> str:
+    def format_edl(
+        self, channels: Tree[ChannelConfig], basename: str, _schema: dict
+    ) -> str:
         screen = GenerateEDL(
             w=0,
             h=900,
@@ -97,14 +101,18 @@ class DLSFormatter(Formatter):
         edm_out = main_window + boxes + widgets + exit_button
         return edm_out
 
-    def format_yaml(self, channels: Tree[ChannelConfig], basename: str) -> str:
+    def format_yaml(
+        self, channels: Tree[ChannelConfig], _basename: str, _schema: dict
+    ) -> str:
         # Walk the tree stripping enums and preserving descriptions
         children = [prepare_for_yaml(c.dict(exclude_none=True)) for c in channels]
         stream = StringIO()
         YAML().dump(dict(children=children), stream)
         return stream.getvalue()
 
-    def format_csv(self, channels: Tree[ChannelConfig], basename: str) -> str:
+    def format_csv(
+        self, channels: Tree[ChannelConfig], _basename: str, _schema: dict
+    ) -> str:
         out = io.StringIO(newline="")
         writer = csv.writer(out, delimiter=",", quotechar='"')
         writer.writerow(["Parameter", "PVs", "Description"])
@@ -117,7 +125,9 @@ class DLSFormatter(Formatter):
                 writer.writerow([channel.name, pvs, channel.description])
         return out.getvalue()
 
-    def format_template(self, records: Tree[Record], basename: str) -> str:
+    def format_template(
+        self, records: Tree[Record], basename: str, schema: dict
+    ) -> str:
         txt = ""
         for record in walk(records):
             if isinstance(record, Group):
@@ -136,13 +146,15 @@ record({record.type}, "{record.name}") {{
 """
         return txt
 
-    def format_h(self, parameters: Tree[AsynParameter], basename: str) -> str:
-        parent_class = "ADDriver"  # TODO: Extract this from YAML
+    def format_h(
+        self, parameters: Tree[AsynParameter], basename: str, schema: dict
+    ) -> str:
+        parent_param_set = get_param_set(schema.parent)
+
         parameter_definitions = [
             dict(
                 name=basename.capitalize() + node.name,
-                string_name=f"{basename[0].upper() + basename[1:]}"
-                f"{node.index_name}String",
+                string_name=f"{node.index_name}String",
                 type=node.type,
                 index_name=node.index_name,
                 drv_info=node.drv_info,
@@ -179,11 +191,11 @@ record({record.type}, "{record.name}") {{
 #ifndef {basename[0].upper() + basename[1:]}ParamSet_H
 #define {basename[0].upper() + basename[1:]}ParamSet_H
 
-#include "{parent_class}ParamSet.h"
+#include "{parent_param_set}.h"
 
 {defines}
 
-class {basename}ParamSet : public virtual {parent_class}ParamSet {{
+class {basename}ParamSet : public virtual {parent_param_set} {{
 public:
     {basename}ParamSet() {{
 {adds}

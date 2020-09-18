@@ -1,13 +1,19 @@
+import os
 import re
 from typing import Any, Dict, List, Tuple
+from pathlib import Path
 
 from pydantic import BaseModel, Field, FilePath
+
+from ._schema import Schema, ComponentUnion
+from ._util import get_param_set
 
 
 class SourceConverter(BaseModel):
     source_files: List[FilePath] = Field(
         ..., description="source files to convert to yaml"
     )
+    module_root: Path = Field(..., description="Path to root of module")
     _text: str
 
     class Config:
@@ -31,13 +37,13 @@ class SourceConverter(BaseModel):
 
     def _extract_create_param_strs(self) -> List[str]:
         # e.g. extract: createParam(SimGainXString, asynParamFloat64, &SimGainX);
-        create_param_extractor = re.compile(r"createParam\([^\)]*\);")
+        create_param_extractor = re.compile(r"createParam\([^\)]*\);.*")
         create_param_strs = re.findall(create_param_extractor, self._text)
         return create_param_strs
 
     def _extract_define_strs(self, str_names: List[str]) -> List[str]:
         # e.g. extract: #define SimGainXString                "SIM_GAIN_X";
-        define_extractor = re.compile(r'\#define[_A-Za-z0-9 ]*"[^"]*"[^\n ]*')
+        define_extractor = re.compile(r'\#define[_A-Za-z0-9 ]*"[^"]*".*')
         definitions = re.findall(define_extractor, self._text)
         # We only want to strip the definitions with corresponding createParam calls
         definitions = [
@@ -119,53 +125,74 @@ class SourceConverter(BaseModel):
         index_info_dict = self._map_index_to_info(string_info_dict, string_index_dict)
         return index_info_dict
 
-    def get_top_level_text(self, source_file: FilePath, paramset_name: str) -> str:
+    def get_top_level_text(
+        self, source_file: FilePath, device_name: str, parent: str
+    ) -> str:
         with open(source_file, "r") as f:
             text = f.read()
+
         top_level_text = self._extract_top_level_text(text)
-        top_level_text = self._add_param_set_to_class(top_level_text, paramset_name)
-        top_level_text = self._add_ADDriver_paramSet(top_level_text)
+
+        if source_file.suffix == ".cpp":
+            top_level_text = self._add_param_set_cpp(
+                top_level_text, device_name, parent
+            )
+        elif source_file.suffix == ".h":
+            top_level_text = self._add_param_set_h(
+                top_level_text, device_name, parent
+            )
+
         return top_level_text
 
-    def _add_param_set_to_class(self, top_level_text: str, paramset_name: str) -> str:
-        # e.g. extract: class epicsShareClass simDetector : public ADDriver {
-        class_def_extractor = re.compile(r"class[^:]*:[ ]*public[ ]*ADDriver[ ]*{")
-        try:
-            class_def_str = re.findall(class_def_extractor, top_level_text)[0]
-            class_def_replacement = class_def_str.replace(
-                "public", f"public {paramset_name}ParamSet, public"
-            )
-            top_level_text = top_level_text.replace(
-                class_def_str, class_def_replacement
-            )
-            # Add the include
-            idx = top_level_text.index('#include "ADDriver.h"')
-            top_level_text = (
-                top_level_text[:idx]
-                + f'#include "{paramset_name}ParamSet.h"\n'
-                + top_level_text[idx:]
-            )
-        except IndexError:
-            pass
+    def _add_param_set_cpp(
+        self, top_level_text: str, device_class: str, parent_class: str
+    ) -> str:
+        # Add the constructor param set parameter
+        top_level_text = top_level_text.replace(
+            f"::{device_class}(", f"::{device_class}({device_class}ParamSet* paramSet, "
+        )
+
+        # Add the initialiser list base class param set parameter
+        parent_param_set = get_param_set(parent_class)
+        top_level_text = top_level_text.replace(
+            f"{parent_class}(",
+            f"{parent_class}(static_cast<{parent_param_set}*>(this), ",
+        )
+
+        # Add the param set to the initialiser list
+        top_level_text = re.sub(
+            # Driver constructor and initialiser list, all whitespace between ) and {
+            r"(::" + device_class + r"\([^{]+\))(\s*){",
+            # Insert param set after last entry in initialiser list, in between match groups 1 and 2
+            r"\1,\n    paramSet(paramSet)\2{",
+            top_level_text,
+        )
+
         return top_level_text
 
-    def _add_ADDriver_paramSet(self, top_level_text: str) -> str:
-        # e.g. extract: "   :  ADDriver(portName"
-        constructor_extractor = re.compile(r"[ ]*:[ ]*ADDriver\(portName")
-        try:
-            constructor_str = re.findall(constructor_extractor, top_level_text)[0]
-            idx = constructor_str.find("(") + 1
-            constructor_replacement = constructor_str.replace(
-                "portName",
-                f"static_cast<ADDriverParamSet*>(this),  "
-                f"/* Upcast to provide ADDriver with its param set */"
-                f"\n{' '*idx}portName",
-            )
-            top_level_text = top_level_text.replace(
-                constructor_str, constructor_replacement
-            )
-        except IndexError:
-            pass
+    def _add_param_set_h(
+        self, top_level_text: str, device_class: str, parent_class: str
+    ) -> str:
+        # Add the constructor param set parameter
+        top_level_text = top_level_text.replace(
+            f" {device_class}(", f" {device_class}({device_class}ParamSet* paramSet, "
+        )
+
+        # Add the include
+        idx = top_level_text.index(f'#include "{parent_class}.h"')
+        top_level_text = (
+            top_level_text[:idx]
+            + f'#include "{device_class}ParamSet.h"\n'
+            + top_level_text[idx:]
+        )
+        # Add the param set pointer member definition
+        protected_extractor = re.compile(r".*protected:")
+        protected_str = re.findall(protected_extractor, top_level_text)[0]
+        param_set_definition = f"    {device_class}ParamSet* paramSet;"
+        top_level_text = top_level_text.replace(
+            protected_str, protected_str + "\n" + param_set_definition
+        )
+
         return top_level_text
 
     def _extract_top_level_text(self, text: str) -> str:
@@ -184,4 +211,41 @@ class SourceConverter(BaseModel):
             not in [unwanted_str.lstrip() for unwanted_str in unwanted_strs]
         ]
         top_level_text = "\n".join(top_level_lines)
+
+        parameters = list(string_index_dict.values())
+        parent_components = find_parent_components(
+            self._extract_parent_class(), self.module_root,
+        )
+        parameters += [
+            parameter.index_name
+            for component in parent_components
+            for parameter in component.children
+        ]
+
+        top_level_text = self._insert_param_set_accessors(top_level_text, parameters)
+
         return top_level_text
+
+    def _insert_param_set_accessors(self, text: str, parameters: List[str]) -> str:
+        for parameter in parameters:
+            # Only match parameter name exactly, not others with same prefix
+            text = re.sub(
+                r"(\W)" + parameter + r"(\W)", r"\1paramSet->" + parameter + r"\2", text
+            )
+        return text
+
+
+def find_parent_components(yaml_name: str, module_root: str) -> List[ComponentUnion]:
+    if yaml_name == "asynPortDriver":
+        return []  # asynPortDriver is the most base class and has no parameters
+
+    # Look in this module first
+    if f"{yaml_name}.pvi.yaml" in os.listdir(os.path.join(module_root, "pvi")):
+        directory = os.path.join(module_root, "pvi")
+    else:
+        # TODO: Search configure/RELEASE paths
+        raise IOError(f"Cannot find {yaml_name}.pvi.yaml")
+
+    schema = Schema.load(Path(directory), Path(yaml_name))
+
+    return schema.components + find_parent_components(schema.parent, module_root)

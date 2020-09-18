@@ -1,6 +1,8 @@
 import re
 from enum import Enum
 
+from typing import Any
+
 from ruamel.yaml.scalarstring import preserve_literal
 
 
@@ -34,3 +36,18 @@ def prepare_for_yaml(child):
         return preserve_literal(child)
     else:
         return child
+
+
+def insert_entry(yaml: dict, insert_key: str, insert_value: Any, position_key: str):
+    # Recreate given yaml with new key inserted just before position_key
+    updated_yaml = {}
+    for key, value in yaml.items():
+        if key == position_key:
+            updated_yaml[insert_key] = insert_value
+        updated_yaml[key] = value
+
+    return updated_yaml
+
+
+def get_param_set(driver: str):
+    return "asynParamSet" if driver == "asynPortDriver" else driver + "ParamSet"
