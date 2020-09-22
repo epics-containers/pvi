@@ -22,7 +22,7 @@ OVERRIDE_DESC = "# Overriding value in auto-generated template"
 
 
 class TemplateConverter(BaseModel):
-    template_file: FilePath = Field(..., description="template file to convert to yaml")
+    template_files: List[FilePath] = Field(..., description="template file to convert to yaml")
     formatter: FormatterUnion = Field(
         ..., description="The Formatter class to format the output"
     )
@@ -33,15 +33,19 @@ class TemplateConverter(BaseModel):
 
     def __init__(self, **data: Any):
         super().__init__(**data)
-        with open(self.template_file, "r") as f:
-            text = f.read()
+        text = []
+        for template_file in self.template_files:
+            with open(template_file, "r") as f:
+                text.append(f.read())
         object.__setattr__(self, "_text", text)
 
     def top_level_text(self, output_name=None):
-        record_extractor = RecordExtractor(self._text)
-        output_name = output_name or self.template_file.stem
-        top_level_text = record_extractor.get_top_level_text(output_name)
-        return top_level_text
+        extracted_templates = []
+        for text in self._text:
+            record_extractor = RecordExtractor(text)
+            output_name = output_name or self.template_file.stem
+            extracted_templates.append(record_extractor.get_top_level_text(output_name))
+        return extracted_templates
 
     def convert(self):
         extractor_dict = dict(
@@ -67,27 +71,29 @@ class TemplateConverter(BaseModel):
         return filled_dict
 
     def _extract_asyn_producer(self) -> Dict[str, str]:
-        def get_prefix(text: str) -> Dict[str, str]:
+        def get_prefix(texts: List[str]) -> Dict[str, str]:
             # e.g. from: record(waveform, "$(P)$(R)FilePath")
             # extract: $(P)$(R)
             prefix_extractor = re.compile(
                 r'(?:record\()(?:[^,]*)(?:[^"]*)(?:")((?:\$\([^)]\))*)(?:[^"]*)'
             )
-            prefixes = re.findall(prefix_extractor, text)
+            for text in texts:
+                prefixes = re.findall(prefix_extractor, text)
             prefixes = list(set(prefixes))
             if len(prefixes) > 1:
                 raise ValueError("Not all asyn records have the same macro prefix")
             prefix_dict = dict(prefix=prefixes[0])
             return prefix_dict
 
-        def get_asyn_parameters(text: str) -> Dict[str, str]:
+        def get_asyn_parameters(texts: List[str]) -> Dict[str, str]:
             default_asyn_parameters = dict(
                 asyn_port="$(PORT)", address="$(ADDR=0)", timeout="$(TIMEOUT=1)"
             )
             # e.g. from: field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1))FILE_PATH")
             # extract: $(PORT),$(ADDR=0),$(TIMEOUT=1))FILE_PATH
             asyn_parameter_extractor = r'(?:@asyn\()([^"]*)'
-            asyn_parameters = re.findall(asyn_parameter_extractor, text)
+            for text in texts:
+                asyn_parameters = re.findall(asyn_parameter_extractor, text)
             # then: remove final close bracket and driver param name
             # $(PORT),$(ADDR=0),$(TIMEOUT=1)
             asyn_parameters = [match[: match.rfind(")")] for match in asyn_parameters]
@@ -113,19 +119,20 @@ class TemplateConverter(BaseModel):
         return producer
 
     def _extract_components(self) -> List[Component]:
-        record_extractor = RecordExtractor(self._text)
-        asyn_records = record_extractor.get_asyn_records()
-        actions, readbacks, setting_pairs = RecordRoleSorter.sort_records(asyn_records)
         components = []
-        for parameter in chain(actions, readbacks, setting_pairs):
-            component = parameter.generate_component()
-            component_dict = component.dict(
-                exclude_unset=True,
-                exclude_none=True,
-                exclude_defaults=True,
-                by_alias=True,
-            )
-            components.append(component_dict)
+        for text in self._text:
+            record_extractor = RecordExtractor(text)
+            asyn_records = record_extractor.get_asyn_records()
+            actions, readbacks, setting_pairs = RecordRoleSorter.sort_records(asyn_records)
+            for parameter in chain(actions, readbacks, setting_pairs):
+                component = parameter.generate_component()
+                component_dict = component.dict(
+                    exclude_unset=True,
+                    exclude_none=True,
+                    exclude_defaults=True,
+                    by_alias=True,
+                )
+                components.append(component_dict)
         return components
 
 

@@ -15,6 +15,7 @@ class SourceConverter(BaseModel):
     )
     module_root: Path = Field(..., description="Path to root of module")
     _text: str
+    _create_param_strs: List[str]
 
     class Config:
         extra = "forbid"
@@ -26,6 +27,7 @@ class SourceConverter(BaseModel):
             with open(source_file, "r") as f:
                 text += f.read()
         object.__setattr__(self, "_text", text)
+        self._extract_create_param_strs()
 
     def _extract_parent_class(self) -> str:
         # e.g. extract 'asynNDArrayDriver' from
@@ -39,7 +41,10 @@ class SourceConverter(BaseModel):
         # e.g. extract: createParam(SimGainXString, asynParamFloat64, &SimGainX);
         create_param_extractor = re.compile(r"createParam\([^\)]*\);.*")
         create_param_strs = re.findall(create_param_extractor, self._text)
-        return create_param_strs
+        object.__setattr__(self, "_create_param_strs", create_param_strs)
+
+    def _filter_create_param_strs(self, parameters: List[str]) -> List[str]:
+        return [s for s in self._create_param_strs if any(p in s for p in parameters)]
 
     def _extract_define_strs(self, str_names: List[str]) -> List[str]:
         # e.g. extract: #define SimGainXString                "SIM_GAIN_X";
@@ -89,11 +94,10 @@ class SourceConverter(BaseModel):
         return string_info_pair
 
     def _get_string_index_mapping(self) -> Dict[str, str]:
-        create_param_strs = self._extract_create_param_strs()
         string_index_dict = dict(
             [
                 self._parse_create_param_str(create_param_str)
-                for create_param_str in create_param_strs
+                for create_param_str in self._create_param_strs
             ]
         )
         return string_index_dict
@@ -126,21 +130,20 @@ class SourceConverter(BaseModel):
         return index_info_dict
 
     def get_top_level_text(
-        self, source_file: FilePath, device_name: str, parent: str
+        self, source_file: FilePath, device_name: str, parameters: List[str]
     ) -> str:
         with open(source_file, "r") as f:
             text = f.read()
 
-        top_level_text = self._extract_top_level_text(text)
+        top_level_text = self._extract_top_level_text(text, parameters)
 
+        parent = self._extract_parent_class()
         if source_file.suffix == ".cpp":
             top_level_text = self._add_param_set_cpp(
                 top_level_text, device_name, parent
             )
         elif source_file.suffix == ".h":
-            top_level_text = self._add_param_set_h(
-                top_level_text, device_name, parent
-            )
+            top_level_text = self._add_param_set_h(top_level_text, device_name, parent)
 
         return top_level_text
 
@@ -156,7 +159,7 @@ class SourceConverter(BaseModel):
         parent_param_set = get_param_set(parent_class)
         top_level_text = top_level_text.replace(
             f"{parent_class}(",
-            f"{parent_class}(static_cast<{parent_param_set}*>(this), ",
+            f"{parent_class}(static_cast<{parent_param_set}*>(paramSet), ",
         )
 
         # Add the param set to the initialiser list
@@ -195,14 +198,25 @@ class SourceConverter(BaseModel):
 
         return top_level_text
 
-    def _extract_top_level_text(self, text: str) -> str:
+    def _extract_top_level_text(self, text: str, parameter_infos: List[str]) -> str:
+        definition_strs = self._extract_define_strs(parameter_infos)
         string_index_dict = self._get_string_index_mapping()
-        create_param_strs = self._extract_create_param_strs()
-        definition_strs = self._extract_define_strs(list(string_index_dict.keys()))
-        declaration_strs = self._extract_index_declarations(
-            list(string_index_dict.values())
+
+        string_info_dict = self._get_string_info_mapping(list(string_index_dict.keys()))
+        info_string_dict = dict(
+            (string, info) for info, string in string_info_dict.items()
         )
+        parameter_strings = [
+            info_string_dict[parameter_info] for parameter_info in parameter_infos
+        ]
+        create_param_strs = self._filter_create_param_strs(parameter_strings)
+
+        parameter_indexes = [string_index_dict[s] for s in parameter_strings]
+
+        declaration_strs = self._extract_index_declarations(parameter_indexes)
+
         unwanted_strs = create_param_strs + definition_strs + declaration_strs
+
         top_level_lines = text.splitlines()
         top_level_lines = [
             line
@@ -212,7 +226,10 @@ class SourceConverter(BaseModel):
         ]
         top_level_text = "\n".join(top_level_lines)
 
-        parameters = list(string_index_dict.values())
+        info_index_map = dict(
+            (info, string_index_dict[s]) for info, s in info_string_dict.items()
+        )
+        parameters = [info_index_map[info] for info in parameter_infos]
         parent_components = find_parent_components(
             self._extract_parent_class(), self.module_root,
         )

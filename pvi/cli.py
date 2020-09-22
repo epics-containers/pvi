@@ -5,8 +5,7 @@ from ._schema import Schema
 from ._source_convert import SourceConverter
 from ._template_convert import TemplateConverter, merge_in_index_names
 from ._types import Formatter
-from._util import insert_entry
-from typing import Any
+from ._util import insert_entry
 
 SUFFIXES = ["." + x[7:] for x in Formatter.__dict__ if x.startswith("format_")]
 
@@ -15,31 +14,38 @@ def convert(args):
     source_converter = SourceConverter(
         source_files=args.source_files, module_root=args.root
     )
-    index_info_mapping = source_converter.get_index_info_mapping()
 
-    parent = source_converter._extract_parent_class()
+    template_converter = TemplateConverter(
+        template_files=args.templates, formatter=dict(type=args.formatter)
+    )
+    converted_yaml = template_converter.convert()
+
+    template_parameters = [
+        parameter["drv_info"]
+        for component in converted_yaml["components"]
+        for parameter in component["children"]
+    ]
     for source_file in args.source_files:
         top_level_text = source_converter.get_top_level_text(
-            source_file, args.output_name, parent
+            source_file, args.output_name, template_parameters
         )
         with open(
             args.output_dir / f"{source_file.stem}{source_file.suffix}", "w"
         ) as f:
             f.write(top_level_text)
 
-    template_converter = TemplateConverter(
-        template_file=args.template, formatter=dict(type=args.formatter)
-    )
-    converted_yaml = template_converter.convert()
+    parent = source_converter._extract_parent_class()
     converted_yaml = insert_entry(converted_yaml, "parent", parent, "components")
+    index_info_mapping = source_converter.get_index_info_mapping()
     converted_yaml = merge_in_index_names(converted_yaml, index_info_mapping)
 
     schema_name = args.output_name or args.template.stem
     Schema.write(converted_yaml, args.output_dir, schema_name)
 
-    top_level_text = template_converter.top_level_text(args.output_name)
-    with open(args.output_dir / f"{args.template.stem}.template", "w") as f:
-        f.write(top_level_text)
+    extracted_templates = template_converter.top_level_text(args.output_name)
+    for template_text, template_path in zip(extracted_templates, args.templates):
+        with open(args.output_dir / f"{template_path.stem}.template", "w") as f:
+            f.write(template_text)
 
 
 def schema(args):
@@ -83,7 +89,9 @@ def main(args=None):
         "convert", help="Generate a yaml file from a template file"
     )
     sub.set_defaults(func=convert)
-    sub.add_argument("template", type=Path, help="path to the template source file")
+    sub.add_argument(
+        "templates", type=Path, nargs="+", help="path to the template source file"
+    )
     sub.add_argument(
         "-s",
         "--source_files",
