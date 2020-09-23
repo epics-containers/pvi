@@ -181,7 +181,7 @@ record({record.type}, "{record.name}") {{
         ]
         _indexes.insert(
             1,
-            "    #define FIRST_{basename}_PARAM_INDEX {index_name}".format(
+            "    #define FIRST_{basename}PARAMSET_PARAM {index_name}".format(
                 basename=basename.upper(), **parameter_definitions[0]
             ),
         )
