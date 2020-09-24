@@ -22,7 +22,9 @@ OVERRIDE_DESC = "# Overriding value in auto-generated template"
 
 
 class TemplateConverter(BaseModel):
-    template_files: List[FilePath] = Field(..., description="template file to convert to yaml")
+    template_files: List[FilePath] = Field(
+        ..., description="template file to convert to yaml"
+    )
     formatter: FormatterUnion = Field(
         ..., description="The Formatter class to format the output"
     )
@@ -39,12 +41,14 @@ class TemplateConverter(BaseModel):
                 text.append(f.read())
         object.__setattr__(self, "_text", text)
 
-    def top_level_text(self, output_name=None):
+    def top_level_text(self, driver_name=None):
         extracted_templates = []
         for text in self._text:
             record_extractor = RecordExtractor(text)
-            output_name = output_name or self.template_file.stem
-            extracted_templates.append(record_extractor.get_top_level_text(output_name))
+            driver_name = driver_name or self.template_file.stem
+            extracted_templates.append(
+                record_extractor.get_top_level_text(driver_name)
+            )
         return extracted_templates
 
     def convert(self):
@@ -123,7 +127,9 @@ class TemplateConverter(BaseModel):
         for text in self._text:
             record_extractor = RecordExtractor(text)
             asyn_records = record_extractor.get_asyn_records()
-            actions, readbacks, setting_pairs = RecordRoleSorter.sort_records(asyn_records)
+            actions, readbacks, setting_pairs = RecordRoleSorter.sort_records(
+                asyn_records
+            )
             for parameter in chain(actions, readbacks, setting_pairs):
                 component = parameter.generate_component()
                 component_dict = component.dict(
@@ -231,7 +237,7 @@ class RecordExtractor:
     def get_stream_records(self):
         return []
 
-    def get_top_level_text(self, output_name: str) -> str:
+    def get_top_level_text(self, driver_name: str) -> str:
         record_strs = self._extract_record_strs()
         top_level_str = self._text
         for record_str in record_strs:
@@ -274,12 +280,12 @@ class RecordExtractor:
             for record_name, clashing_fields in overrides
         ]
 
-        top_level_str = self._add_param_template_include(top_level_str, output_name)
+        top_level_str = self._add_param_template_include(top_level_str, driver_name)
         top_level_str += f"\n\n".join(override)
         return top_level_str
 
-    def _add_param_template_include(self, top_level_str: str, output_name: str) -> str:
-        top_level_str = f'include "{output_name}ParamSet.template"\n' + top_level_str
+    def _add_param_template_include(self, top_level_str: str, driver_name: str) -> str:
+        top_level_str = f'include "{driver_name}ParamSet.template"\n' + top_level_str
         return top_level_str
 
 

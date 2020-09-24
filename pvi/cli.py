@@ -11,32 +11,33 @@ SUFFIXES = ["." + x[7:] for x in Formatter.__dict__ if x.startswith("format_")]
 
 
 def convert(args):
-    # Process and recreate template files
     template_converter = TemplateConverter(
         template_files=args.templates, formatter=dict(type=args.formatter)
     )
 
-    extracted_templates = template_converter.top_level_text(args.output_name)
-    for template_text, template_path in zip(extracted_templates, args.templates):
-        with open(args.output_dir / f"{template_path.stem}.template", "w") as f:
-            f.write(template_text)
-
     # Generate initial yaml to provide parameter info strings to source converter
     converted_yaml = template_converter.convert()
 
-    # Process and recreate source files
+    cpp_file = [f for f in args.source_files if f.suffix == ".cpp"][0]
+    h_file = [f for f in args.source_files if f.suffix == ".h"][0]
     parameter_infos = [
         parameter["drv_info"]
         for component in converted_yaml["components"]
         for parameter in component["children"]
     ]
-
-    cpp_file = [f for f in args.source_files if f.suffix == ".cpp"][0]
-    h_file = [f for f in args.source_files if f.suffix == ".h"][0]
     source_converter = SourceConverter(
         cpp=cpp_file, h=h_file, module_root=args.root, parameter_infos=parameter_infos,
     )
 
+    # Process and recreate template files - pass source device name for param set include
+    extracted_templates = template_converter.top_level_text(
+        source_converter.device_class
+    )
+    for template_text, template_path in zip(extracted_templates, args.templates):
+        with open(args.output_dir / f"{template_path.stem}.template", "w") as f:
+            f.write(template_text)
+
+    # Process and recreate source files
     extracted_source = source_converter.get_top_level_text()
     with open(args.output_dir / f"{cpp_file.stem}{cpp_file.suffix}", "w") as f:
         f.write(extracted_source.cpp)
@@ -51,8 +52,7 @@ def convert(args):
         converted_yaml, source_converter._get_index_info_map()
     )
 
-    schema_name = args.output_name or args.template.stem
-    Schema.write(converted_yaml, args.output_dir, schema_name)
+    Schema.write(converted_yaml, args.output_dir, source_converter.device_class)
 
 
 def schema(args):
@@ -108,9 +108,6 @@ def main(args=None):
     )
     sub.add_argument(
         "output_dir", type=Path, help="Directory for output files",
-    )
-    sub.add_argument(
-        "-n", "--output-name", type=str, help="Basename (suffix) of generated YAML",
     )
     sub.add_argument(
         "-r", "--root", type=Path, help="Full path to root of module", required=True
