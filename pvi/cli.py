@@ -18,15 +18,16 @@ def convert(args):
     # Generate initial yaml to provide parameter info strings to source converter
     converted_yaml = template_converter.convert()
 
-    cpp_file = [f for f in args.source_files if f.suffix == ".cpp"][0]
-    h_file = [f for f in args.source_files if f.suffix == ".h"][0]
     parameter_infos = [
         parameter["drv_info"]
         for component in converted_yaml["components"]
         for parameter in component["children"]
     ]
     source_converter = SourceConverter(
-        cpp=cpp_file, h=h_file, module_root=args.root, parameter_infos=parameter_infos,
+        cpp=args.cpp,
+        h=args.header,
+        module_root=args.root,
+        parameter_infos=parameter_infos,
     )
 
     # Process and recreate template files - pass source device name for param set include
@@ -39,9 +40,11 @@ def convert(args):
 
     # Process and recreate source files
     extracted_source = source_converter.get_top_level_text()
-    with open(args.output_dir / f"{cpp_file.stem}{cpp_file.suffix}", "w") as f:
+    with open(
+        args.output_dir / f"{args.cpp.stem}{args.cpp.suffix}", "w"
+    ) as f:
         f.write(extracted_source.cpp)
-    with open(args.output_dir / f"{h_file.stem}{h_file.suffix}", "w") as f:
+    with open(args.output_dir / f"{args.header.stem}{args.header.suffix}", "w") as f:
         f.write(extracted_source.h)
 
     # Update yaml based on source file definitions and write
@@ -100,11 +103,10 @@ def main(args=None):
         "templates", type=Path, nargs="+", help="path to the template source file"
     )
     sub.add_argument(
-        "-s",
-        "--source_files",
-        type=Path,
-        help="paths to the .cpp and .h source files",
-        nargs="*",
+        "--cpp", type=Path, help="Path .cpp file",
+    )
+    sub.add_argument(
+        "--header", type=Path, help="Path .h file",
     )
     sub.add_argument(
         "output_dir", type=Path, help="Directory for output files",
