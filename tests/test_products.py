@@ -4,34 +4,28 @@ from unittest import mock
 
 from pvi import ChannelConfig, Group, Schema, Widget, cli
 
-PILATUS_YAML = Path(__file__).parent / "pilatus.pvi.yaml"
-PILATUS_TEMPLATE = Path(__file__).parent / "pilatus.template"
-PILATUS_SOURCE = Path(__file__).parent / "pilatusDetector.cpp"
-EXPECTED = Path(__file__).parent / "expected"
+ROOT = Path(__file__).parent
+PILATUS_YAML = ROOT / "pvi/pilatusDetector.pvi.yaml"
+PILATUS_TEMPLATE = ROOT / "pilatus.template"
+PILATUS_CPP = ROOT / "pilatusDetector.cpp"
+PILATUS_H = ROOT / "pilatusDetector.h"
+EXPECTED = ROOT / "expected"
 
 
 def test_channels():
-    pilatus_schema = Schema.load(PILATUS_YAML.parent, "pilatus")
+    pilatus_schema = Schema.load(PILATUS_YAML.parent, "pilatusDetector")
     channel_tree = pilatus_schema.producer.produce_channels(pilatus_schema.components)
-    assert len(channel_tree) == 2
+    assert len(channel_tree) == 1
     assert isinstance(channel_tree[0], Group)
     channels = channel_tree[0].children
-    assert len(channels) == 1
-    assert isinstance(channel_tree[1], Group)
-    channels = channel_tree[1].children
-    assert len(channels) == 6
-    assert channels[0] == ChannelConfig(
+    assert len(channels) == 48
+    assert channels[43] == ChannelConfig(
         name="ThresholdEnergy",
         label=None,
         read_pv="$(P)$(R)ThresholdEnergy_RBV",
         write_pv="$(P)$(R)ThresholdEnergy",
         widget=Widget.TEXTINPUT,
-        description="""Threshold energy in keV
-
-camserver uses this value to set the discriminators in each pixel.
-It is typically set to the incident x-ray energy ($(P)$(R)Energy),
-but sometimes other values may be preferable.
-""",
+        description="Energy threshold",
         display_form=None,
     )
 
@@ -43,8 +37,8 @@ def check_generation(tmp_path: Path, fname: str):
     )
 
 
-def test_yaml(tmp_path: Path):
-    check_generation(tmp_path, "pilatus.coniql.yaml")
+def test_coniql_yaml(tmp_path: Path):
+    check_generation(tmp_path, "pilatusParamSet.coniql.yaml")
 
 
 def test_h(tmp_path: Path):
@@ -52,37 +46,50 @@ def test_h(tmp_path: Path):
 
 
 def test_template(tmp_path: Path):
-    check_generation(tmp_path, "pilatusParameters.template")
+    check_generation(tmp_path, "pilatusParamSet.template")
 
 
 def test_csv(tmp_path: Path):
-    check_generation(tmp_path, "pilatus_parameters.csv")
+    check_generation(tmp_path, "pilatusParamSet.csv")
 
 
 def test_edl(tmp_path: Path):
-    check_generation(tmp_path, "pilatus_parameters.edl")
+    check_generation(tmp_path, "pilatusParamSet.edl")
 
 
 def test_adl(tmp_path: Path):
-    check_generation(tmp_path, "pilatus_parameters.adl")
+    check_generation(tmp_path, "pilatusParamSet.adl")
 
 
 def check_conversion(tmp_path: Path):
     cli.main(
-        ["convert", str(PILATUS_TEMPLATE), str(tmp_path), "-s", str(PILATUS_SOURCE)]
+        [
+            "convert",
+            str(PILATUS_TEMPLATE),
+            str(tmp_path),
+            "--cpp",
+            str(PILATUS_CPP),
+            "--header",
+            str(PILATUS_H),
+            "--root",
+            str(ROOT),
+        ]
     )
     assert (
-        open(tmp_path / "pilatus.pvi.yaml").read()
-        == open(EXPECTED / "pilatus.pvi.yaml").read()
-    ), str(EXPECTED / "pilatus.pvi.yaml")
+        open(tmp_path / "pilatusDetector.pvi.yaml").read() == open(PILATUS_YAML).read()
+    ), str(PILATUS_YAML)
     assert (
-        open(tmp_path / "pilatus_top.template").read()
-        == open(EXPECTED / "pilatus_top.template").read()
-    ), str(EXPECTED / "pilatus_top.template")
+        open(tmp_path / "pilatus.template").read()
+        == open(EXPECTED / "pilatus.template").read()
+    ), str(EXPECTED / "pilatus.template")
     assert (
-        open(tmp_path / "pilatusDetector_top.cpp").read()
-        == open(EXPECTED / "pilatusDetector_top.cpp").read()
-    ), str(EXPECTED / "pilatusDetector_top.cpp")
+        open(tmp_path / "pilatusDetector.cpp").read()
+        == open(EXPECTED / "pilatusDetector.cpp").read()
+    ), str(EXPECTED / "pilatusDetector.cpp")
+    assert (
+        open(tmp_path / "pilatusDetector.h").read()
+        == open(EXPECTED / "pilatusDetector.h").read()
+    ), str(EXPECTED / "pilatusDetector.h")
 
 
 def test_convert_template(tmp_path: Path):

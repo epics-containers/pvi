@@ -1,4 +1,4 @@
-include "pilatusParameters.template"
+include "pilatusDetectorParamSet.template"
 # Database for the records specific to the Pilatus driver
 # Mark Rivers
 # July 25, 2008

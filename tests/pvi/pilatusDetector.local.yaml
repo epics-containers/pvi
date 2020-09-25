@@ -2,15 +2,15 @@ formatter:
   type: DLSFormatter
 components:
   # Override this field to be autosaved
-  - name: ThresholdEnergy
+  - name: PilatusThresholdEnergy
     autosave:
       - VAL
-  - name: MinFlatField
+  - name: PilatusMinFlatField
     autosave:
       - VAL
-  - name: GapFill
+  - name: PilatusGapFill
     autosave:
       - VAL
-  - name: HeaderString
+  - name: PilatusHeaderString
     autosave:
       - VAL

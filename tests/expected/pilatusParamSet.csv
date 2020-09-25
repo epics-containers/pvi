@@ -1,0 +1,57 @@
+Parameter,PVs,Description
+*ComponentGroupOne*
+ResetPower,$(P)$(R)ResetPower,ResetPower
+ThresholdApply,$(P)$(R)ThresholdApply,ThresholdApply
+ImageFileTmot,$(P)$(R)ImageFileTmot,Timeout for image file
+Wavelength,$(P)$(R)Wavelength,Wavelength
+EnergyLow,$(P)$(R)EnergyLow,EnergyLow
+EnergyHigh,$(P)$(R)EnergyHigh,EnergyHigh
+DetDist,$(P)$(R)DetDist,DetDist
+DetVOffset,$(P)$(R)DetVOffset,DetVOffset
+BeamX,$(P)$(R)BeamX,BeamX
+BeamY,$(P)$(R)BeamY,BeamY
+Flux,$(P)$(R)Flux,Flux
+FilterTransm,$(P)$(R)FilterTransm,FilterTransm
+StartAngle,$(P)$(R)StartAngle,StartAngle
+AngleIncr,$(P)$(R)AngleIncr,AngleIncr
+Det2theta,$(P)$(R)Det2theta,Det2theta
+Polarization,$(P)$(R)Polarization,Polarization
+Alpha,$(P)$(R)Alpha,Alpha
+Kappa,$(P)$(R)Kappa,Kappa
+Phi,$(P)$(R)Phi,Phi
+PhiIncr,$(P)$(R)PhiIncr,PhiIncr
+Chi,$(P)$(R)Chi,Chi
+ChiIncr,$(P)$(R)ChiIncr,ChiIncr
+Omega,$(P)$(R)Omega,Omega
+OmegaIncr,$(P)$(R)OmegaIncr,OmegaIncr
+OscillAxis,$(P)$(R)OscillAxis,OscillAxis
+NumOscill,$(P)$(R)NumOscill,NumOscill
+BadPixelFile,$(P)$(R)BadPixelFile,BadPixelFile
+FlatFieldFile,$(P)$(R)FlatFieldFile,FlatFieldFile
+CbfTemplateFile,$(P)$(R)CbfTemplateFile,CbfTemplateFile
+HeaderString,$(P)$(R)HeaderString,HeaderString
+Armed,$(P)$(R)Armed,Armed
+NumBadPixels,$(P)$(R)NumBadPixels,Number of bad pixels
+FlatFieldValid,$(P)$(R)FlatFieldValid,Flat field valid
+PixelCutOff,$(P)$(R)PixelCutOff_RBV,PixelCutOff_RBV
+Temp0,$(P)$(R)Temp0_RBV,Temp0_RBV
+Temp1,$(P)$(R)Temp1_RBV,Temp1_RBV
+Temp2,$(P)$(R)Temp2_RBV,Temp2_RBV
+Humid0,$(P)$(R)Humid0_RBV,Humid0_RBV
+Humid1,$(P)$(R)Humid1_RBV,Humid1_RBV
+Humid2,$(P)$(R)Humid2_RBV,Humid2_RBV
+TVXVersion,$(P)$(R)TVXVersion_RBV,TVXVersion_RBV
+ResetPowerTime,"$(P)$(R)ResetPowerTime
+$(P)$(R)ResetPowerTime_RBV",Reset module power wait time
+DelayTime,"$(P)$(R)DelayTime
+$(P)$(R)DelayTime_RBV",DelayTime
+ThresholdEnergy,"$(P)$(R)ThresholdEnergy
+$(P)$(R)ThresholdEnergy_RBV",Energy threshold
+ThresholdAutoApply,"$(P)$(R)ThresholdAutoApply
+$(P)$(R)ThresholdAutoApply_RBV",ThresholdAutoApply
+Energy,"$(P)$(R)Energy
+$(P)$(R)Energy_RBV",X-ray Energy
+MinFlatField,"$(P)$(R)MinFlatField
+$(P)$(R)MinFlatField_RBV",Minimum flat field value
+GapFill,"$(P)$(R)GapFill
+$(P)$(R)GapFill_RBV",GapFill
