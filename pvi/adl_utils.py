@@ -15,6 +15,7 @@ class GenerateADL:
         box_h,
         box_x,
         box_w,
+        box_column,
         box_title,
         margin,
         label_counter,
@@ -30,6 +31,7 @@ class GenerateADL:
         self.box_h = box_h
         self.box_x = box_x
         self.box_w = box_w
+        self.box_column = box_column
         self.box_title = box_title
         self.margin = margin
         self.label_counter = label_counter
@@ -176,7 +178,10 @@ text {{
 
         # Make a new column when the position of bottom of current box is greater than
         # the main window height
-        if (self.box_y + self.box_h) > self.h:
+        if (self.box_y == self.y) and self.box_h > self.h:
+            # Double box width to start next column in same box
+            self.box_w += self.box_w
+        elif (self.box_y + self.box_h) > self.h:
             self.y = 40  # Start back at the top
             self.box_y = self.y
             self.x = self.box_x + self.box_w + self.margin  # New column
@@ -184,11 +189,6 @@ text {{
 
         box_title_y = self.box_y + self.margin  # Make group label at top of box
         box_title_w = self.box_w - (2 * self.margin)
-
-        # Use this if planning on having groups with loads of channels
-        # if self.box_h > self.h:
-        #     self.box_h = self.h - 60
-        #     self.w += 245
 
         return f"""
 # (Rectangle)
@@ -233,30 +233,34 @@ text {{
 
     def make_widget(self, widget_label, nodes, widget_type, read_pv, write_pv):
         pv_label = self.make_label(widget_label)
-        self.widget_width = (self.box_w / 2) - (2 * self.margin)
+        self.widget_width = (self.box_column / 2) - (2 * self.margin)
 
         if widget_type == Widget.BUTTON:
             button_width = 70
             widget_x = (
                 self.get_widget_x()
-                + (((self.box_w / 2) - button_width) / 2)
+                + (((self.box_column / 2) - button_width) / 2)
                 - self.margin
             )
             widget = self.make_button(widget_label, write_pv, widget_x)
+        elif widget_type == Widget.CHECKBOX:
+            widget = self.make_choice(write_pv)
         elif widget_type == Widget.LED:
             led_width = 20
             widget_x = (
-                self.get_widget_x() + (((self.box_w / 2) - led_width) / 2) - self.margin
+                self.get_widget_x()
+                + (((self.box_column / 2) - led_width) / 2)
+                - self.margin
             )
             widget = self.make_led(read_pv, widget_x)
         elif widget_type == Widget.COMBO:
-            self.widget_width = (self.box_w / 4) - (3 / 2 * self.margin)
+            self.widget_width = (self.box_column / 4) - (3 / 2 * self.margin)
             pv_menu = self.make_combo(write_pv)
             widget_x = self.get_widget_x() + self.widget_width + self.margin
             pv_rbv = self.make_rbv(read_pv, widget_x)
             widget = pv_menu + pv_rbv
         elif (widget_type == Widget.TEXTINPUT) and read_pv:
-            self.widget_width = (self.box_w / 4) - (3 / 2 * self.margin)
+            self.widget_width = (self.box_column / 4) - (3 / 2 * self.margin)
             pv_demand = self.make_demand(write_pv)
             widget_x = self.get_widget_x() + self.widget_width + self.margin
             pv_rbv = self.make_rbv(read_pv, widget_x)
@@ -283,7 +287,7 @@ text {{
     def make_label(self, widget_label):
         """ Make a label per channel. """
         label_x = self.x + self.margin
-        label_w = (self.box_w - (2 * self.margin)) / 2
+        label_w = (self.box_column - (2 * self.margin)) / 2
         label_text = f"""
 # (Static Text)
     text {{
@@ -402,9 +406,26 @@ byte {{
     }}
 """
 
+    def make_choice(self, write_pv):
+        return f"""
+"choice button" {{
+    object {{
+        x={self.get_widget_x()}
+        y={self.get_widget_y()}
+        width={self.widget_width}
+        height={self.widget_height}
+    }}
+    control {{
+        chan="{write_pv}"
+        clr=14
+        bclr=51
+    }}
+        stacking="column"
+}}"""
+
     def get_widget_x(self):
         # Adjust for demand and readback widgets
-        widget_x = self.box_x + (self.box_w / 2) + self.margin
+        widget_x = self.box_x + (self.box_column / 2) + self.margin
         return widget_x
 
     def get_widget_y(self):

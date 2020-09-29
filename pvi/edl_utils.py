@@ -15,11 +15,12 @@ class GenerateEDL:
         box_h,
         box_x,
         box_w,
+        box_column,
         margin,
         label_counter,
         label_height,
         widget_height,
-        widget_x,
+        widget_width,
         widget_dist,
         exit_space,
         def_font_class,
@@ -36,11 +37,12 @@ class GenerateEDL:
         self.box_h = box_h
         self.box_x = box_x
         self.box_w = box_w
+        self.box_column = box_column
         self.margin = margin
         self.label_counter = label_counter
         self.label_height = label_height
         self.widget_height = widget_height
-        self.widget_x = widget_x
+        self.widget_width = widget_width
         self.widget_dist = widget_dist
         self.exit_space = exit_space
         self.def_font_class = def_font_class
@@ -201,19 +203,19 @@ endObjectProperties
         # label height and two border spaces for top and bottom.
         self.box_h = nodes * self.label_height + (2 * self.margin)
 
-        # Make a new columnn when the position of bottom of current box plus space for
+        # Make a new column when the position of bottom of current box plus space for
         # exit button is greater than the main window height
-        if (self.box_y + self.box_h + self.exit_space) > self.h:
+        if (self.box_y == self.y) and (self.box_h + self.exit_space) > self.h:
+            # Double box width to start next column in same box
+            self.box_w += self.box_w
+        elif (self.box_y + self.box_h + self.exit_space) > self.h:
             self.y = 50  # Start back at the top
             self.box_y = self.y
-            self.x = self.box_x + self.box_w + self.margin  # New column
+            self.x = self.box_x + self.box_w + self.margin  # New column for new box
             self.box_x = self.x
+        elif self.box_h > self.h:
+            self.box_w += self.box_w
         box_title_y = self.box_y - 10  # Make overlapping group label above box
-
-        # Use this if planning on having groups with loads of channels
-        # if self.box_h > self.h:
-        #     self.box_h = self.h - 60
-        #     self.w += 245
 
         return f"""# (Rectangle)
 object activeRectangleClass
@@ -253,30 +255,45 @@ endObjectProperties
 
     def make_widget(self, widget_label, nodes, widget_type, read_pv, write_pv):
         pv_label = self.make_label(widget_label)
+        self.widget_width = (self.box_column/2) - (2 * self.margin)
 
         if widget_type == Widget.BUTTON:
             widget = self.make_button(widget_label, write_pv)
+        elif widget_type == Widget.CHECKBOX:
+            widget = self.make_choice(write_pv, read_pv)
         elif widget_type == Widget.LED:
-            widget = self.make_led(read_pv)
+            led_width = 20
+            widget_x = (
+                self.get_widget_x()
+                + (((self.box_column / 2) - led_width) / 2)
+                - self.margin
+            )
+            widget = self.make_led(read_pv, widget_x)
         elif widget_type == Widget.COMBO:
-            widget = self.make_combo(write_pv, read_pv)
+            self.widget_width = (self.box_column / 4) - (3 / 2 * self.margin)
+            pv_menu = self.make_combo(write_pv, read_pv)
+            widget_x = self.get_widget_x() + self.widget_width + self.margin
+            pv_rbv = self.make_rbv(read_pv, widget_x)
+            widget = pv_menu + pv_rbv
         elif (widget_type == Widget.TEXTINPUT) and read_pv:
-            pv_demand = self.make_demand(write_pv, widget_width=60)
-            # Split variable is for two side-by-side widgets i.e. text input & readback
-            pv_rbv = self.make_rbv(read_pv, widget_width=60, split=65)
+            self.widget_width = (self.box_column / 4) - (3 / 2 * self.margin)
+            pv_demand = self.make_demand(write_pv)
+            widget_x = self.get_widget_x() + self.widget_width + self.margin
+            pv_rbv = self.make_rbv(read_pv, widget_x)
             widget = pv_demand + pv_rbv
         elif widget_type == Widget.TEXTINPUT:
-            pv_demand = self.make_demand(write_pv, widget_width=125)
+            pv_demand = self.make_demand(write_pv)
             widget = pv_demand
         elif widget_type == Widget.TEXTUPDATE:
-            pv_rbv = self.make_rbv(read_pv, split=0, widget_width=125)
+            widget_x = self.get_widget_x()
+            pv_rbv = self.make_rbv(read_pv, widget_x)
             widget = pv_rbv
         else:
             raise NotImplementedError
 
         # After the last label, set y to start next box below
         box_space = 20
-        if self.label_counter == (nodes - 1):
+        if (self.label_counter == (nodes - 1)):
             self.y = self.box_y + self.box_h + box_space
         else:
             self.label_counter += 1
@@ -295,7 +312,7 @@ minor 1
 release 0
 x {label_x}
 y {label_y}
-w 110
+w 115
 h {self.label_height}
 font "{self.def_font_class}-bold-r-10.0"
 fgColor index 14
@@ -308,20 +325,17 @@ endObjectProperties
 """
         return label_text
 
-    def make_demand(self, write_pv, widget_width):
+    def make_demand(self, write_pv):
         """ Make text input widgets. """
-        self.widget_x = self.x + self.widget_dist
-        # Keep the widget aligned with the label
-        demand_y = self.box_y + self.margin + (self.label_height * self.label_counter)
         return f"""# (Textentry)
 object TextentryClass
 beginObjectProperties
 major 10
 minor 0
 release 0
-x {self.widget_x}
-y {demand_y}
-w {widget_width}
+x {self.get_widget_x()}
+y {self.get_widget_y()}
+w {self.widget_width}
 h {self.widget_height}
 controlPv "{write_pv}"
 fgColor index {self.def_fg_colour_ctrl}
@@ -333,19 +347,17 @@ endObjectProperties
 
 """
 
-    def make_rbv(self, read_pv, split, widget_width):
+    def make_rbv(self, read_pv, widget_x):
         """ Make text update widgets. """
-        self.widget_x = self.x + self.widget_dist + split
-        rbv_y = self.box_y + self.margin + (self.label_height * self.label_counter)
         return f"""# (Textupdate)
 object TextupdateClass
 beginObjectProperties
 major 10
 minor 0
 release 0
-x {self.widget_x}
-y {rbv_y}
-w {widget_width}
+x {widget_x}
+y {self.get_widget_y()}
+w {self.widget_width}
 h {self.widget_height}
 controlPv "{read_pv}"
 fgColor index {self.def_fg_colour_mon}
@@ -359,16 +371,14 @@ endObjectProperties
 """
 
     def make_button(self, widget_label, write_pv):
-        self.widget_x = self.x + self.widget_dist
-        btn_y = self.box_y + self.margin + (self.label_height * self.label_counter)
         return f"""# (Message Button)
 object activeMessageButtonClass
 beginObjectProperties
 major 4
 minor 0
 release 0
-x {self.widget_x}
-y {btn_y}
+x {self.get_widget_x()}
+y {self.get_widget_y()}
 w 125
 h {self.widget_height}
 fgColor index {self.def_fg_colour_ctrl}
@@ -386,19 +396,16 @@ endObjectProperties
 
 """
 
-    def make_led(self, read_pv):
+    def make_led(self, read_pv, widget_x):
         """ Make centered LED widget. """
-        center = 50
-        self.widget_x = self.x + self.widget_dist + center
-        led_y = self.box_y + self.margin + (self.label_height * self.label_counter)
         return f"""# (Byte)
 object ByteClass
 beginObjectProperties
 major 4
 minor 0
 release 0
-x {self.widget_x}
-y {led_y}
+x {widget_x}
+y {self.get_widget_y()}
 w 17
 h {self.widget_height}
 controlPv "{read_pv}"
@@ -411,17 +418,15 @@ endObjectProperties
 """
 
     def make_combo(self, write_pv, read_pv):
-        self.widget_x = self.x + self.widget_dist
-        com_y = self.box_y + self.margin + (self.label_height * self.label_counter)
         return f"""# (Menu Button)
 object activeMenuButtonClass
 beginObjectProperties
 major 4
 minor 0
 release 0
-x {self.widget_x}
-y {com_y}
-w 125
+x {self.get_widget_x()}
+y {self.get_widget_y()}
+w {self.widget_width}
 h {self.widget_height}
 fgColor index {self.def_fg_colour_ctrl}
 bgColor index {self.def_bg_colour_ctrl}
@@ -435,28 +440,43 @@ endObjectProperties
 
 """
 
-    #     def make_bar(self, read_pv):
-    #         return f"""# (Bar)
-    # object activeBarClass
-    # beginObjectProperties
-    # major 4
-    # minor 1
-    # release 0
-    # x 566
-    # y 388
-    # w 238
-    # h 188
-    # indicatorColor index 17
-    # fgColor index 14
-    # bgColor index 6
-    # indicatorPv "{read_pv}"
-    # font "helvetica-medium-r-18.0"
-    # min "0"
-    # max "100"
-    # scaleFormat "FFloat"
-    # orientation "vertical"
-    # endObjectProperties
-    # """
+    def make_choice(self, write_pv, read_pv):
+        return f"""# (Choice Button)
+object activeChoiceButtonClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x {self.get_widget_x()}
+y {self.get_widget_y()}
+w 120
+h 15
+fgColor index 14
+bgColor index 3
+selectColor index 3
+inconsistentColor index 14
+topShadowColor index 1
+botShadowColor index 11
+controlPv "{write_pv}"
+indicatorPv "{read_pv}"
+font "{self.def_font_class}-bold-r-14.0"
+orientation "horizontal"
+endObjectProperties
+"""
+
+    def get_widget_x(self):
+        # Adjust for demand and readback widgets
+        widget_x = self.box_x + (self.box_column / 2) + self.margin
+        return widget_x
+
+    def get_widget_y(self):
+        # Keep the widget aligned with the label
+        widget_y = (
+            self.box_y
+            + self.margin
+            + (self.label_height * self.label_counter)
+        )
+        return widget_y
 
     def make_exit_button(self):
         """ Make exit button in bottom right corner of main window. """
