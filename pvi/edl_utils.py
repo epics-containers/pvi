@@ -19,6 +19,7 @@ class GenerateEDL:
         margin,
         label_counter,
         label_height,
+        label_width,
         widget_height,
         widget_width,
         widget_dist,
@@ -41,6 +42,7 @@ class GenerateEDL:
         self.margin = margin
         self.label_counter = label_counter
         self.label_height = label_height
+        self.label_width = label_width
         self.widget_height = widget_height
         self.widget_width = widget_width
         self.widget_dist = widget_dist
@@ -201,13 +203,14 @@ endObjectProperties
 
         # Adjust the box height depending on the number of channels in each group,
         # label height and two border spaces for top and bottom.
-        self.box_h = nodes * self.label_height + (2 * self.margin)
+        if nodes * self.label_height + (2 * self.margin) > self.h:
+            self.box_h = self.h
 
         # Make a new column when the position of bottom of current box plus space for
         # exit button is greater than the main window height
         if (self.box_y == self.y) and (self.box_h + self.exit_space) > self.h:
             # Double box width to start next column in same box
-            self.box_w += self.box_w
+            self.box_w += self.box_column
         elif (self.box_y + self.box_h + self.exit_space) > self.h:
             self.y = 50  # Start back at the top
             self.box_y = self.y
@@ -254,40 +257,48 @@ endObjectProperties
 """
 
     def make_widget(self, widget_label, nodes, widget_type, read_pv, write_pv):
+
         pv_label = self.make_label(widget_label)
         self.widget_width = (self.box_column / 2) - (2 * self.margin)
 
         if widget_type == Widget.BUTTON:
             widget = self.make_button(widget_label, write_pv)
+
         elif widget_type == Widget.CHECKBOX:
             widget = self.make_choice(write_pv, read_pv)
+
         elif widget_type == Widget.LED:
             led_width = 20
-            widget_x = (
+            self.x = (
                 self.get_widget_x()
                 + (((self.box_column / 2) - led_width) / 2)
                 - self.margin
             )
-            widget = self.make_led(read_pv, widget_x)
+            widget = self.make_led(read_pv)
+
         elif widget_type == Widget.COMBO:
             self.widget_width = (self.box_column / 4) - (3 / 2 * self.margin)
             pv_menu = self.make_combo(write_pv, read_pv)
-            widget_x = self.get_widget_x() + self.widget_width + self.margin
-            pv_rbv = self.make_rbv(read_pv, widget_x)
+            self.x += self.widget_width + self.margin
+            pv_rbv = self.make_rbv(read_pv)
             widget = pv_menu + pv_rbv
+
         elif (widget_type == Widget.TEXTINPUT) and read_pv:
             self.widget_width = (self.box_column / 4) - (3 / 2 * self.margin)
             pv_demand = self.make_demand(write_pv)
-            widget_x = self.get_widget_x() + self.widget_width + self.margin
-            pv_rbv = self.make_rbv(read_pv, widget_x)
+            self.x += self.widget_width + self.margin
+            pv_rbv = self.make_rbv(read_pv)
             widget = pv_demand + pv_rbv
+
         elif widget_type == Widget.TEXTINPUT:
             pv_demand = self.make_demand(write_pv)
             widget = pv_demand
+
         elif widget_type == Widget.TEXTUPDATE:
-            widget_x = self.get_widget_x()
-            pv_rbv = self.make_rbv(read_pv, widget_x)
+            self.x = self.get_widget_x()
+            pv_rbv = self.make_rbv(read_pv)
             widget = pv_rbv
+
         else:
             raise NotImplementedError
 
@@ -302,17 +313,20 @@ endObjectProperties
 
     def make_label(self, widget_label):
         """ Make a label per channel. """
-        label_x = self.x + self.margin
-        label_y = self.box_y + self.margin + (self.label_height * self.label_counter)
+        # Work out how many nodes can fit into max box height ( + 2 * margin)
+        # If that number of nodes == label_counter:
+        # move into next column (y = 50, x += box_column)
+        self.x = self.box_x + self.margin
+        self.y = self.box_y + self.margin + (self.label_height * self.label_counter)
         label_text = f"""# (Static Text)
 object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
 release 0
-x {label_x}
-y {label_y}
-w 115
+x {self.x}
+y {self.y}
+w {self.label_width}
 h {self.label_height}
 font "{self.def_font_class}-bold-r-10.0"
 fgColor index 14
@@ -347,7 +361,7 @@ endObjectProperties
 
 """
 
-    def make_rbv(self, read_pv, widget_x):
+    def make_rbv(self, read_pv):
         """ Make text update widgets. """
         return f"""# (Textupdate)
 object TextupdateClass
@@ -355,7 +369,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x {widget_x}
+x {self.x}
 y {self.get_widget_y()}
 w {self.widget_width}
 h {self.widget_height}
@@ -396,7 +410,7 @@ endObjectProperties
 
 """
 
-    def make_led(self, read_pv, widget_x):
+    def make_led(self, read_pv):
         """ Make centered LED widget. """
         return f"""# (Byte)
 object ByteClass
@@ -404,7 +418,7 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x {widget_x}
+x {self.x}
 y {self.get_widget_y()}
 w 17
 h {self.widget_height}
@@ -465,27 +479,26 @@ endObjectProperties
 """
 
     def get_widget_x(self):
-        # Adjust for demand and readback widgets
-        widget_x = self.box_x + (self.box_column / 2) + self.margin
-        return widget_x
+        self.x += self.label_width + (self.margin * 4)
+        return self.x
 
     def get_widget_y(self):
         # Keep the widget aligned with the label
-        widget_y = self.box_y + self.margin + (self.label_height * self.label_counter)
-        return widget_y
+        self.y = self.box_y + self.margin + (self.label_height * self.label_counter)
+        return self.y
 
     def make_exit_button(self):
         """ Make exit button in bottom right corner of main window. """
-        exit_x = self.w - 100
-        exit_y = self.h - min(30, self.h - self.y)
+        self.x = self.w - 100
+        self.y = self.h - min(30, self.h - self.y)
         return f"""# (Exit Button)
 object activeExitButtonClass
 beginObjectProperties
 major 4
 minor 1
 release 0
-x {exit_x}
-y {exit_y}
+x {self.x}
+y {self.y}
 w 95
 h 25
 fgColor index 46

@@ -6,7 +6,7 @@ release 1
 x 300
 y 50
 w 540
-h 1070
+h 1000
 font "arial-bold-r-12.0"
 ctlFont "arial-bold-r-12.0"
 btnFont "arial-bold-r-12.0"
@@ -133,7 +133,7 @@ release 0
 x 5
 y 50
 w 530
-h 970
+h 900
 lineColor index 14
 fill
 fillColor index 5
@@ -182,7 +182,7 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 142.5
+x 145
 y 55
 w 120
 h 15
@@ -221,7 +221,7 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 142.5
+x 145
 y 75
 w 125
 h 17
@@ -262,7 +262,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 95
 w 122.5
 h 17
@@ -298,7 +298,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 115
 w 122.5
 h 17
@@ -334,7 +334,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 135
 w 122.5
 h 17
@@ -370,7 +370,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 155
 w 122.5
 h 17
@@ -406,7 +406,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 175
 w 122.5
 h 17
@@ -442,7 +442,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 195
 w 122.5
 h 17
@@ -478,7 +478,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 215
 w 122.5
 h 17
@@ -514,7 +514,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 235
 w 122.5
 h 17
@@ -550,7 +550,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 255
 w 122.5
 h 17
@@ -586,7 +586,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 275
 w 122.5
 h 17
@@ -622,7 +622,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 295
 w 122.5
 h 17
@@ -658,7 +658,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 315
 w 122.5
 h 17
@@ -694,7 +694,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 335
 w 122.5
 h 17
@@ -730,7 +730,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 355
 w 122.5
 h 17
@@ -766,7 +766,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 375
 w 122.5
 h 17
@@ -802,7 +802,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 395
 w 122.5
 h 17
@@ -838,7 +838,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 415
 w 122.5
 h 17
@@ -874,7 +874,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 435
 w 122.5
 h 17
@@ -910,7 +910,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 455
 w 122.5
 h 17
@@ -946,7 +946,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 475
 w 122.5
 h 17
@@ -982,7 +982,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 495
 w 122.5
 h 17
@@ -1018,7 +1018,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 515
 w 122.5
 h 17
@@ -1054,7 +1054,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 535
 w 122.5
 h 17
@@ -1090,7 +1090,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 555
 w 122.5
 h 17
@@ -1126,7 +1126,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 575
 w 122.5
 h 17
@@ -1162,7 +1162,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 595
 w 122.5
 h 17
@@ -1198,7 +1198,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 615
 w 122.5
 h 17
@@ -1234,7 +1234,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 635
 w 122.5
 h 17
@@ -1270,7 +1270,7 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 193.75
+x 196.25
 y 655
 w 17
 h 17
@@ -1305,7 +1305,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 675
 w 122.5
 h 17
@@ -1342,7 +1342,7 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 193.75
+x 196.25
 y 695
 w 17
 h 17
@@ -1377,7 +1377,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 715
 w 122.5
 h 17
@@ -1414,7 +1414,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 735
 w 122.5
 h 17
@@ -1451,7 +1451,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 755
 w 122.5
 h 17
@@ -1488,7 +1488,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 775
 w 122.5
 h 17
@@ -1525,7 +1525,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 795
 w 122.5
 h 17
@@ -1562,7 +1562,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 815
 w 122.5
 h 17
@@ -1599,7 +1599,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 835
 w 122.5
 h 17
@@ -1636,7 +1636,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 855
 w 122.5
 h 17
@@ -1673,7 +1673,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 875
 w 58.75
 h 17
@@ -1691,7 +1691,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 206.25
+x 208.75
 y 875
 w 58.75
 h 17
@@ -1728,7 +1728,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 895
 w 58.75
 h 17
@@ -1746,7 +1746,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 206.25
+x 208.75
 y 895
 w 58.75
 h 17
@@ -1783,7 +1783,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 915
 w 58.75
 h 17
@@ -1801,7 +1801,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 206.25
+x 208.75
 y 915
 w 58.75
 h 17
@@ -1838,7 +1838,7 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 142.5
+x 145
 y 935
 w 120
 h 15
@@ -1877,7 +1877,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 955
 w 58.75
 h 17
@@ -1895,7 +1895,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 206.25
+x 208.75
 y 955
 w 58.75
 h 17
@@ -1932,7 +1932,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 142.5
+x 145
 y 975
 w 58.75
 h 17
@@ -1950,7 +1950,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 206.25
+x 208.75
 y 975
 w 58.75
 h 17
@@ -1987,7 +1987,7 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 142.5
+x 145
 y 995
 w 58.75
 h 17
@@ -2007,7 +2007,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 206.25
+x 208.75
 y 995
 w 58.75
 h 17
@@ -2027,7 +2027,7 @@ major 4
 minor 1
 release 0
 x 440
-y 1040
+y 970
 w 95
 h 25
 fgColor index 46

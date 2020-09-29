@@ -60,7 +60,7 @@ class DLSFormatter(Formatter):
     ) -> str:
         screen = GenerateEDL(
             w=0,
-            h=1000,
+            h=900,
             x=5,
             y=50,
             box_y=0,
@@ -71,6 +71,7 @@ class DLSFormatter(Formatter):
             margin=5,
             label_counter=0,
             label_height=20,
+            label_width=115,
             widget_height=17,
             widget_width=0,
             widget_dist=112,
