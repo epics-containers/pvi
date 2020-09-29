@@ -255,7 +255,7 @@ endObjectProperties
 
     def make_widget(self, widget_label, nodes, widget_type, read_pv, write_pv):
         pv_label = self.make_label(widget_label)
-        self.widget_width = (self.box_column/2) - (2 * self.margin)
+        self.widget_width = (self.box_column / 2) - (2 * self.margin)
 
         if widget_type == Widget.BUTTON:
             widget = self.make_button(widget_label, write_pv)
@@ -293,7 +293,7 @@ endObjectProperties
 
         # After the last label, set y to start next box below
         box_space = 20
-        if (self.label_counter == (nodes - 1)):
+        if self.label_counter == (nodes - 1):
             self.y = self.box_y + self.box_h + box_space
         else:
             self.label_counter += 1
@@ -471,11 +471,7 @@ endObjectProperties
 
     def get_widget_y(self):
         # Keep the widget aligned with the label
-        widget_y = (
-            self.box_y
-            + self.margin
-            + (self.label_height * self.label_counter)
-        )
+        widget_y = self.box_y + self.margin + (self.label_height * self.label_counter)
         return widget_y
 
     def make_exit_button(self):
