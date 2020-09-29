@@ -1,7 +1,9 @@
+from glob import glob
 import re
 from enum import Enum
+from pathlib import Path
 
-from typing import Any
+from typing import Any, List
 
 from ruamel.yaml.scalarstring import preserve_literal
 
@@ -51,3 +53,31 @@ def insert_entry(yaml: dict, insert_key: str, insert_value: Any, position_key: s
 
 def get_param_set(driver: str):
     return "asynParamSet" if driver == "asynPortDriver" else driver + "ParamSet"
+
+
+def find_parent_modules(module_root: Path) -> List[Path]:
+
+    configure = module_root / "configure"
+    release_paths = glob(str(configure / "RELEASE*"))
+
+    macros = {}
+    # e.g. extract (ADCORE, /path/to/ADCore) from ADCORE = /path/to/ADCore
+    module_definition_extractor = re.compile(r"^(\w+)\s*=\s*(\S+)", re.MULTILINE)
+    for release_path in release_paths:
+        with open(release_path) as release_file:
+            match = re.findall(
+                module_definition_extractor, release_file.read()
+            )
+            macros.update(dict(match))
+
+    macro_re = re.compile(r"\$\(([^\)]+)\)")
+    for macro in macros:
+        for nested_macro in macro_re.findall(macros[macro]):
+            if nested_macro in macros.keys():
+                macros[macro] = macros[macro].replace(
+                    "$({})".format(nested_macro), macros[nested_macro]
+                )
+
+    modules = [Path(module) for module in macros.values()]
+
+    return modules

@@ -6,11 +6,10 @@ from pathlib import Path
 from pydantic import BaseModel, Field, FilePath
 
 from ._schema import Schema, ComponentUnion
-from ._util import get_param_set
+from ._util import get_param_set, find_parent_modules
 
 
 class Source:
-
     def __init__(self, cpp: FilePath, h: FilePath):
         self.cpp = cpp
         self.h = h
@@ -170,10 +169,17 @@ class SourceConverter(BaseModel):
         ]
         cpp_text = self._insert_param_set_accessors(cpp_text, parameters)
 
-        # Add the constructor param set parameter
+        # Add the param set parameter to the constructor declaration
         cpp_text = cpp_text.replace(
             f"::{self.device_class}(",
             f"::{self.device_class}({self.device_class}ParamSet* paramSet, ",
+        )
+
+        # Add the param set parameter to the contructor call in the extern "C" function
+        cpp_text = cpp_text.replace(
+            f"new {self.device_class}(",
+            f"{self.device_class}ParamSet* paramSet = new {self.device_class}ParamSet;\n"
+            f"    new {self.device_class}(paramSet, ",
         )
 
         # Add the initialiser list base class param set parameter
@@ -247,18 +253,29 @@ class SourceConverter(BaseModel):
         return text
 
 
-def find_parent_components(yaml_name: str, module_root: str) -> List[ComponentUnion]:
+def find_parent_components(yaml_name: str, module_root: Path) -> List[ComponentUnion]:
     if yaml_name == "asynPortDriver":
         return []  # asynPortDriver is the most base class and has no parameters
 
+    yaml_directory = None
+
     # Look in this module first
-    if f"{yaml_name}.pvi.yaml" in os.listdir(os.path.join(module_root, "pvi")):
-        directory = os.path.join(module_root, "pvi")
+    here = module_root / "pvi"
+    if f"{yaml_name}.pvi.yaml" in os.listdir(here):
+        yaml_directory = here
     else:
-        # TODO: Search configure/RELEASE paths
+        parent_modules = find_parent_modules(module_root)
+        for module in parent_modules:
+            if os.path.isdir(module / "pvi"):
+                pvi = module / "pvi"
+                if f"{yaml_name}.pvi.yaml" in os.listdir(pvi):
+                    yaml_directory = pvi
+                    break
+
+    if yaml_directory is None:
         raise IOError(f"Cannot find {yaml_name}.pvi.yaml")
 
-    schema = Schema.load(Path(directory), Path(yaml_name))
+    schema = Schema.load(Path(yaml_directory), Path(yaml_name))
 
     return schema.components + find_parent_components(schema.parent, module_root)
 

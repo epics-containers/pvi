@@ -1477,7 +1477,8 @@ extern "C" int pilatusDetectorConfig(const char *portName, const char *camserver
                                     int maxBuffers, size_t maxMemory,
                                     int priority, int stackSize)
 {
-    new pilatusDetector(portName, camserverPort, maxSizeX, maxSizeY, maxBuffers, maxMemory,
+    pilatusDetectorParamSet* paramSet = new pilatusDetectorParamSet;
+    new pilatusDetector(paramSet, portName, camserverPort, maxSizeX, maxSizeY, maxBuffers, maxMemory,
                         priority, stackSize);
     return(asynSuccess);
 }
