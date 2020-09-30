@@ -16,6 +16,7 @@ class GenerateEDL:
         box_x,
         box_w,
         box_column,
+        max_nodes,
         margin,
         label_counter,
         label_height,
@@ -39,6 +40,7 @@ class GenerateEDL:
         self.box_x = box_x
         self.box_w = box_w
         self.box_column = box_column
+        self.max_nodes = max_nodes
         self.margin = margin
         self.label_counter = label_counter
         self.label_height = label_height
@@ -205,6 +207,7 @@ endObjectProperties
         # label height and two border spaces for top and bottom.
         if nodes * self.label_height + (2 * self.margin) > self.h:
             self.box_h = self.h
+            self.max_nodes = self.box_h / self.label_height
 
         # Make a new column when the position of bottom of current box plus space for
         # exit button is greater than the main window height
@@ -313,11 +316,13 @@ endObjectProperties
 
     def make_label(self, widget_label):
         """ Make a label per channel. """
-        # Work out how many nodes can fit into max box height ( + 2 * margin)
-        # If that number of nodes == label_counter:
-        # move into next column (y = 50, x += box_column)
-        self.x = self.box_x + self.margin
-        self.y = self.box_y + self.margin + (self.label_height * self.label_counter)
+        if self.label_counter < (self.max_nodes - 1):
+            self.x = self.box_x + self.margin
+            self.y = self.box_y + self.margin + (self.label_height * self.label_counter)
+        elif self.label_counter >= (self.max_nodes - 1):
+            self.x = self.box_column + (2 * self.margin)
+            self.y = (self.box_y + self.margin
+                      + (self.label_height * ((self.label_counter+1)-self.max_nodes)))
         label_text = f"""# (Static Text)
 object activeXTextClass
 beginObjectProperties
@@ -348,7 +353,7 @@ major 10
 minor 0
 release 0
 x {self.get_widget_x()}
-y {self.get_widget_y()}
+y {self.y}
 w {self.widget_width}
 h {self.widget_height}
 controlPv "{write_pv}"
@@ -370,7 +375,7 @@ major 10
 minor 0
 release 0
 x {self.x}
-y {self.get_widget_y()}
+y {self.y}
 w {self.widget_width}
 h {self.widget_height}
 controlPv "{read_pv}"
@@ -392,7 +397,7 @@ major 4
 minor 0
 release 0
 x {self.get_widget_x()}
-y {self.get_widget_y()}
+y {self.y}
 w 125
 h {self.widget_height}
 fgColor index {self.def_fg_colour_ctrl}
@@ -419,7 +424,7 @@ major 4
 minor 0
 release 0
 x {self.x}
-y {self.get_widget_y()}
+y {self.y}
 w 17
 h {self.widget_height}
 controlPv "{read_pv}"
@@ -439,7 +444,7 @@ major 4
 minor 0
 release 0
 x {self.get_widget_x()}
-y {self.get_widget_y()}
+y {self.y}
 w {self.widget_width}
 h {self.widget_height}
 fgColor index {self.def_fg_colour_ctrl}
@@ -462,7 +467,7 @@ major 4
 minor 0
 release 0
 x {self.get_widget_x()}
-y {self.get_widget_y()}
+y {self.y}
 w 120
 h 15
 fgColor index 14
@@ -481,11 +486,6 @@ endObjectProperties
     def get_widget_x(self):
         self.x += self.label_width + (self.margin * 4)
         return self.x
-
-    def get_widget_y(self):
-        # Keep the widget aligned with the label
-        self.y = self.box_y + self.margin + (self.label_height * self.label_counter)
-        return self.y
 
     def make_exit_button(self):
         """ Make exit button in bottom right corner of main window. """
