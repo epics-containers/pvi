@@ -70,6 +70,7 @@ class DLSFormatter(Formatter):
             box_column=265,
             max_nodes=0,
             margin=5,
+            column_counter=0,
             label_counter=0,
             label_height=20,
             label_width=115,

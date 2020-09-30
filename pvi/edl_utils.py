@@ -1,3 +1,4 @@
+import math
 from ._types import Widget
 
 
@@ -18,6 +19,7 @@ class GenerateEDL:
         box_column,
         max_nodes,
         margin,
+        column_counter,
         label_counter,
         label_height,
         label_width,
@@ -42,6 +44,7 @@ class GenerateEDL:
         self.box_column = box_column
         self.max_nodes = max_nodes
         self.margin = margin
+        self.column_counter = column_counter
         self.label_counter = label_counter
         self.label_height = label_height
         self.label_width = label_width
@@ -198,29 +201,33 @@ endObjectProperties
 """
 
     def make_box(self, box_label, nodes):
+        """Makes a box, height depends on number of channels in each group using \
+            a fixed label height (plus space for margins)."""
+
         # Reset label counter for each new box
         self.label_counter = 0
+        self.column_counter = 0
         self.box_y = self.y
         self.box_x = self.x
 
-        # Adjust the box height depending on the number of channels in each group,
-        # label height and two border spaces for top and bottom.
-        if nodes * self.label_height + (2 * self.margin) > self.h:
+        # Add columns to a single box when there are too many channels to fit
+        # vertically in the window
+        self.box_h = nodes * self.label_height + (2 * self.margin)
+        if self.box_h > self.h:
             self.box_h = self.h
-            self.max_nodes = self.box_h / self.label_height
-
-        # Make a new column when the position of bottom of current box plus space for
-        # exit button is greater than the main window height
-        if (self.box_y == self.y) and (self.box_h + self.exit_space) > self.h:
-            # Double box width to start next column in same box
-            self.box_w += self.box_column
+            self.max_nodes = (math.floor((self.box_h - (2 * self.margin))
+                              / self.label_height))
+            remainder = nodes - self.max_nodes
+            num_cols = math.ceil(remainder / self.max_nodes)
+            self.box_w += (num_cols * self.box_w)
+        # Make a new box in the next column when window height is reached
         elif (self.box_y + self.box_h + self.exit_space) > self.h:
             self.y = 50  # Start back at the top
             self.box_y = self.y
             self.x = self.box_x + self.box_w + self.margin  # New column for new box
             self.box_x = self.x
-        elif self.box_h > self.h:
-            self.box_w += self.box_w
+        else:
+            pass
         box_title_y = self.box_y - 10  # Make overlapping group label above box
 
         return f"""# (Rectangle)
@@ -316,13 +323,19 @@ endObjectProperties
 
     def make_label(self, widget_label):
         """ Make a label per channel. """
-        if self.label_counter < (self.max_nodes - 1):
-            self.x = self.box_x + self.margin
-            self.y = self.box_y + self.margin + (self.label_height * self.label_counter)
-        elif self.label_counter >= (self.max_nodes - 1):
-            self.x = self.box_column + (2 * self.margin)
-            self.y = (self.box_y + self.margin
-                      + (self.label_height * ((self.label_counter+1)-self.max_nodes)))
+
+        if (self.y + (2 * self.label_height)) > (self.box_y + self.box_h):
+            self.column_counter += 1
+            self.label_counter = 0
+            self.x = self.box_x + self.margin + (self.box_column * self.column_counter)
+            self.y = (self.box_y
+                      + self.margin
+                      + (self.label_height * self.label_counter))
+        else:
+            self.x = self.box_x + self.margin + (self.box_column * self.column_counter)
+            self.y = (self.box_y
+                      + self.margin
+                      + (self.label_height * self.label_counter))
         label_text = f"""# (Static Text)
 object activeXTextClass
 beginObjectProperties
@@ -484,7 +497,7 @@ endObjectProperties
 """
 
     def get_widget_x(self):
-        self.x += self.label_width + (self.margin * 4)
+        self.x += self.label_width + (self.margin * 3)
         return self.x
 
     def make_exit_button(self):
