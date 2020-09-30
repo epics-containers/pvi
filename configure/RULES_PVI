@@ -31,7 +31,7 @@ install: $(PARAMSETS)
 %ParamSet.h: $(TOP)/pvi/%.pvi.yaml
 	$(BIN_PVI) generate $< $@
 
-clean::
+clean:
 	rm -f $(PARAMSETS)
 
 endif # PVI_PARAMSETS
