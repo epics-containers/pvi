@@ -1,3 +1,4 @@
+import math
 from ._types import Widget
 
 
@@ -11,15 +12,20 @@ class GenerateADL:
         h,
         x,
         y,
+        max_box_h,
         box_y,
         box_h,
         box_x,
         box_w,
         box_column,
         box_title,
+        max_nodes,
         margin,
+        column_counter,
         label_counter,
+        label_reset,
         label_height,
+        label_width,
         widget_height,
         widget_width,
     ):
@@ -27,15 +33,20 @@ class GenerateADL:
         self.h = h
         self.x = x
         self.y = y
+        self.max_box_h = max_box_h
         self.box_y = box_y
         self.box_h = box_h
         self.box_x = box_x
         self.box_w = box_w
         self.box_column = box_column
         self.box_title = box_title
+        self.max_nodes = max_nodes
         self.margin = margin
+        self.column_counter = column_counter
+        self.label_reset = label_reset
         self.label_counter = label_counter
         self.label_height = label_height
+        self.label_width = label_width
         self.widget_height = widget_height
         self.widget_width = widget_width
 
@@ -169,22 +180,31 @@ text {{
     def make_box(self, box_label, nodes):
         # Reset label counter for each new box
         self.label_counter = 0
+        self.label_reset = 0
+        self.column_counter = 0
+
+        # Position new box        
         self.box_y = self.y
         self.box_x = self.x
+        self.box_w = self.box_column
 
-        # Adjust the box height depending on the number of channels in each group,
-        # label height and two border spaces for top and bottom.
+        # Initial box height
         self.box_h = (nodes + 1) * self.label_height + (2 * self.margin)
 
-        # Make a new column when the position of bottom of current box is greater than
-        # the main window height
-        if (self.box_y == self.y) and self.box_h > self.h:
-            # Double box width to start next column in same box
-            self.box_w += self.box_w
-        elif (self.box_y + self.box_h) > self.h:
-            self.y = 40  # Start back at the top
-            self.box_y = self.y
-            self.x = self.box_x + self.box_w + self.margin  # New column
+        # Add columns to a single box when there are too many channels to fit
+        # vertically in the window
+        if self.box_h > self.h:
+            self.box_h = self.max_box_h
+            self.max_nodes = (math.floor((self.box_h - (2 * self.margin))
+                              / self.label_height))
+            remainder = nodes - self.max_nodes
+            num_cols = math.ceil(remainder / self.max_nodes)
+            self.box_w += (num_cols * self.box_column)
+
+        if (self.box_y + self.box_h) > self.h:
+            self.y = 40  # Start back at the top             
+            self.box_y = self.y             
+            self.x += self.widget_width + self.margin  # New column
             self.box_x = self.x
 
         box_title_y = self.box_y + self.margin  # Make group label at top of box
@@ -236,42 +256,43 @@ text {{
         self.widget_width = (self.box_column / 2) - (2 * self.margin)
 
         if widget_type == Widget.BUTTON:
-            button_width = 70
-            widget_x = (
-                self.get_widget_x()
-                + (((self.box_column / 2) - button_width) / 2)
-                - self.margin
-            )
-            widget = self.make_button(widget_label, write_pv, widget_x)
+            widget = self.make_button(widget_label, write_pv)
+
         elif widget_type == Widget.CHECKBOX:
             widget = self.make_choice(write_pv)
+
         elif widget_type == Widget.LED:
             led_width = 20
-            widget_x = (
+            self.x = (
                 self.get_widget_x()
                 + (((self.box_column / 2) - led_width) / 2)
                 - self.margin
             )
-            widget = self.make_led(read_pv, widget_x)
+            widget = self.make_led(read_pv)
+
         elif widget_type == Widget.COMBO:
             self.widget_width = (self.box_column / 4) - (3 / 2 * self.margin)
             pv_menu = self.make_combo(write_pv)
-            widget_x = self.get_widget_x() + self.widget_width + self.margin
-            pv_rbv = self.make_rbv(read_pv, widget_x)
+            self.x += + self.widget_width + self.margin
+            pv_rbv = self.make_rbv(read_pv)
             widget = pv_menu + pv_rbv
+
         elif (widget_type == Widget.TEXTINPUT) and read_pv:
             self.widget_width = (self.box_column / 4) - (3 / 2 * self.margin)
             pv_demand = self.make_demand(write_pv)
-            widget_x = self.get_widget_x() + self.widget_width + self.margin
-            pv_rbv = self.make_rbv(read_pv, widget_x)
+            self.x += self.widget_width + self.margin
+            pv_rbv = self.make_rbv(read_pv)
             widget = pv_demand + pv_rbv
+
         elif widget_type == Widget.TEXTINPUT:
             pv_demand = self.make_demand(write_pv)
             widget = pv_demand
+
         elif widget_type == Widget.TEXTUPDATE:
-            widget_x = self.get_widget_x()
-            pv_rbv = self.make_rbv(read_pv, widget_x)
+            self.x = self.get_widget_x()
+            pv_rbv = self.make_rbv(read_pv)
             widget = pv_rbv
+
         else:
             raise NotImplementedError
 
@@ -279,22 +300,35 @@ text {{
         box_space = 15
         if self.label_counter == (nodes - 1):
             self.y = self.box_y + self.box_h + box_space
+            self.x = self.box_x
         else:
             self.label_counter += 1
+            self.label_reset += 1
 
         return pv_label + widget
 
     def make_label(self, widget_label):
         """ Make a label per channel. """
-        label_x = self.x + self.margin
-        label_w = (self.box_column - (2 * self.margin)) / 2
+        # Start labelling again at top of next column
+        if (self.y + (2 * self.label_height)) > (self.box_y + self.box_h):
+            self.column_counter += 1
+            self.label_reset = 0
+            self.x = self.box_x + self.margin + (self.box_column * self.column_counter)
+            self.y = (self.box_y
+                      + self.margin
+                      + (self.label_height * (self.label_reset + 1)))
+        else:
+            self.x = self.box_x + self.margin + (self.box_column * self.column_counter)
+            self.y = (self.box_y
+                      + self.margin
+                      + (self.label_height * (self.label_reset + 1)))
         label_text = f"""
 # (Static Text)
     text {{
         object {{
-            x={label_x}
-            y={self.get_widget_y()}
-            width={label_w}
+            x={self.x}
+            y={self.y}
+            width={self.label_width}
             height={self.label_height}
         }}
         "basic attribute" {{
@@ -313,7 +347,7 @@ text {{
     "text entry" {{
         object {{
             x={self.get_widget_x()}
-            y={self.get_widget_y()}
+            y={self.y}
             width={self.widget_width}
             height={self.widget_height}
         }}
@@ -327,14 +361,14 @@ text {{
     }}
 """
 
-    def make_rbv(self, read_pv, widget_x):
+    def make_rbv(self, read_pv):
         """ Make text update widgets. """
         return f"""
 # (Textupdate)
     "text update" {{
         object {{
-            x={widget_x}
-            y={self.get_widget_y()}
+            x={self.x}
+            y={self.y}
             width={self.widget_width}
             height={self.widget_height}
         }}
@@ -349,13 +383,13 @@ text {{
     }}
 """
 
-    def make_button(self, widget_label, write_pv, widget_x):
+    def make_button(self, widget_label, write_pv):
         return f"""
 "message button" {{
     object {{
-            x={widget_x}
-            y={self.get_widget_y()}
-            width=70
+            x={self.get_widget_x()}
+            y={self.y}
+            width={self.widget_width}
             height={self.widget_height}
     }}
     control {{
@@ -368,15 +402,15 @@ text {{
 }}
 """
 
-    def make_led(self, read_pv, widget_x):
+    def make_led(self, read_pv):
         """ Make centered LED widget. """
         return f"""
 byte {{
     object {{
-        x={widget_x}
-        y={self.get_widget_y()}
+        x={self.x}
+        y={self.y}
         width=20
-        height=20
+        height={self.widget_height}
     }}
     monitor {{
         chan="{read_pv}"
@@ -394,7 +428,7 @@ byte {{
     menu {{
         object {{
             x={self.get_widget_x()}
-            y={self.get_widget_y()}
+            y={self.y}
             width={self.widget_width}
             height={self.widget_height}
         }}
@@ -411,7 +445,7 @@ byte {{
 "choice button" {{
     object {{
         x={self.get_widget_x()}
-        y={self.get_widget_y()}
+        y={self.y}
         width={self.widget_width}
         height={self.widget_height}
     }}
@@ -425,15 +459,5 @@ byte {{
 
     def get_widget_x(self):
         # Adjust for demand and readback widgets
-        widget_x = self.box_x + (self.box_column / 2) + self.margin
-        return widget_x
-
-    def get_widget_y(self):
-        # Keep the widget aligned with the label
-        widget_y = (
-            self.box_y
-            + (2 * self.margin)
-            + (self.label_height * self.label_counter)
-            + self.box_title
-        )
-        return widget_y
+        self.x += self.label_width + self.margin
+        return self.x

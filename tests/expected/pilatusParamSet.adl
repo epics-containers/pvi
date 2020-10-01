@@ -8,7 +8,7 @@ display {
         x=391
         y=58
         width=610
-        height=1182
+        height=845
     }
     clr=14
     bclr=4
@@ -117,7 +117,7 @@ text {
             x=5
             y=40
             width=600
-            height=1137
+            height=800
         }
         "basic attribute" {
             clr=14
@@ -154,8 +154,8 @@ text {
     text {
         object {
             x=10
-            y=70
-            width=145.0
+            y=68
+            width=145
             height=23
         }
         "basic attribute" {
@@ -167,8 +167,8 @@ text {
 
 "choice button" {
     object {
-        x=160.0
-        y=70
+        x=160
+        y=68
         width=140.0
         height=19
     }
@@ -183,8 +183,8 @@ text {
     text {
         object {
             x=10
-            y=93
-            width=145.0
+            y=91
+            width=145
             height=23
         }
         "basic attribute" {
@@ -196,9 +196,9 @@ text {
 
 "message button" {
     object {
-            x=195.0
-            y=93
-            width=70
+            x=160
+            y=91
+            width=140.0
             height=19
     }
     control {
@@ -214,8 +214,8 @@ text {
     text {
         object {
             x=10
-            y=116
-            width=145.0
+            y=114
+            width=145
             height=23
         }
         "basic attribute" {
@@ -228,8 +228,8 @@ text {
 # (Textentry)
     "text entry" {
         object {
-            x=160.0
-            y=116
+            x=160
+            y=114
             width=140.0
             height=19
         }
@@ -246,8 +246,8 @@ text {
     text {
         object {
             x=10
-            y=139
-            width=145.0
+            y=137
+            width=145
             height=23
         }
         "basic attribute" {
@@ -260,8 +260,8 @@ text {
 # (Textentry)
     "text entry" {
         object {
-            x=160.0
-            y=139
+            x=160
+            y=137
             width=140.0
             height=19
         }
@@ -278,8 +278,8 @@ text {
     text {
         object {
             x=10
-            y=162
-            width=145.0
+            y=160
+            width=145
             height=23
         }
         "basic attribute" {
@@ -292,8 +292,8 @@ text {
 # (Textentry)
     "text entry" {
         object {
-            x=160.0
-            y=162
+            x=160
+            y=160
             width=140.0
             height=19
         }
@@ -310,8 +310,8 @@ text {
     text {
         object {
             x=10
-            y=185
-            width=145.0
+            y=183
+            width=145
             height=23
         }
         "basic attribute" {
@@ -324,8 +324,8 @@ text {
 # (Textentry)
     "text entry" {
         object {
-            x=160.0
-            y=185
+            x=160
+            y=183
             width=140.0
             height=19
         }
@@ -342,8 +342,8 @@ text {
     text {
         object {
             x=10
-            y=208
-            width=145.0
+            y=206
+            width=145
             height=23
         }
         "basic attribute" {
@@ -356,8 +356,8 @@ text {
 # (Textentry)
     "text entry" {
         object {
-            x=160.0
-            y=208
+            x=160
+            y=206
             width=140.0
             height=19
         }
@@ -374,8 +374,8 @@ text {
     text {
         object {
             x=10
-            y=231
-            width=145.0
+            y=229
+            width=145
             height=23
         }
         "basic attribute" {
@@ -388,8 +388,8 @@ text {
 # (Textentry)
     "text entry" {
         object {
-            x=160.0
-            y=231
+            x=160
+            y=229
             width=140.0
             height=19
         }
@@ -406,8 +406,8 @@ text {
     text {
         object {
             x=10
-            y=254
-            width=145.0
+            y=252
+            width=145
             height=23
         }
         "basic attribute" {
@@ -420,8 +420,8 @@ text {
 # (Textentry)
     "text entry" {
         object {
-            x=160.0
-            y=254
+            x=160
+            y=252
             width=140.0
             height=19
         }
@@ -438,8 +438,8 @@ text {
     text {
         object {
             x=10
-            y=277
-            width=145.0
+            y=275
+            width=145
             height=23
         }
         "basic attribute" {
@@ -452,8 +452,8 @@ text {
 # (Textentry)
     "text entry" {
         object {
-            x=160.0
-            y=277
+            x=160
+            y=275
             width=140.0
             height=19
         }
@@ -470,8 +470,8 @@ text {
     text {
         object {
             x=10
-            y=300
-            width=145.0
+            y=298
+            width=145
             height=23
         }
         "basic attribute" {
@@ -484,8 +484,8 @@ text {
 # (Textentry)
     "text entry" {
         object {
-            x=160.0
-            y=300
+            x=160
+            y=298
             width=140.0
             height=19
         }
@@ -502,8 +502,8 @@ text {
     text {
         object {
             x=10
-            y=323
-            width=145.0
+            y=321
+            width=145
             height=23
         }
         "basic attribute" {
@@ -516,8 +516,8 @@ text {
 # (Textentry)
     "text entry" {
         object {
-            x=160.0
-            y=323
+            x=160
+            y=321
             width=140.0
             height=19
         }
@@ -534,8 +534,8 @@ text {
     text {
         object {
             x=10
-            y=346
-            width=145.0
+            y=344
+            width=145
             height=23
         }
         "basic attribute" {
@@ -548,8 +548,8 @@ text {
 # (Textentry)
     "text entry" {
         object {
-            x=160.0
-            y=346
+            x=160
+            y=344
             width=140.0
             height=19
         }
@@ -566,8 +566,8 @@ text {
     text {
         object {
             x=10
-            y=369
-            width=145.0
+            y=367
+            width=145
             height=23
         }
         "basic attribute" {
@@ -580,8 +580,8 @@ text {
 # (Textentry)
     "text entry" {
         object {
-            x=160.0
-            y=369
+            x=160
+            y=367
             width=140.0
             height=19
         }
@@ -598,8 +598,8 @@ text {
     text {
         object {
             x=10
-            y=392
-            width=145.0
+            y=390
+            width=145
             height=23
         }
         "basic attribute" {
@@ -612,8 +612,8 @@ text {
 # (Textentry)
     "text entry" {
         object {
-            x=160.0
-            y=392
+            x=160
+            y=390
             width=140.0
             height=19
         }
@@ -630,8 +630,8 @@ text {
     text {
         object {
             x=10
-            y=415
-            width=145.0
+            y=413
+            width=145
             height=23
         }
         "basic attribute" {
@@ -644,8 +644,8 @@ text {
 # (Textentry)
     "text entry" {
         object {
-            x=160.0
-            y=415
+            x=160
+            y=413
             width=140.0
             height=19
         }
@@ -662,8 +662,8 @@ text {
     text {
         object {
             x=10
-            y=438
-            width=145.0
+            y=436
+            width=145
             height=23
         }
         "basic attribute" {
@@ -676,8 +676,8 @@ text {
 # (Textentry)
     "text entry" {
         object {
-            x=160.0
-            y=438
+            x=160
+            y=436
             width=140.0
             height=19
         }
@@ -694,8 +694,8 @@ text {
     text {
         object {
             x=10
-            y=461
-            width=145.0
+            y=459
+            width=145
             height=23
         }
         "basic attribute" {
@@ -708,8 +708,8 @@ text {
 # (Textentry)
     "text entry" {
         object {
-            x=160.0
-            y=461
+            x=160
+            y=459
             width=140.0
             height=19
         }
@@ -726,8 +726,8 @@ text {
     text {
         object {
             x=10
-            y=484
-            width=145.0
+            y=482
+            width=145
             height=23
         }
         "basic attribute" {
@@ -740,8 +740,8 @@ text {
 # (Textentry)
     "text entry" {
         object {
-            x=160.0
-            y=484
+            x=160
+            y=482
             width=140.0
             height=19
         }
@@ -758,8 +758,8 @@ text {
     text {
         object {
             x=10
-            y=507
-            width=145.0
+            y=505
+            width=145
             height=23
         }
         "basic attribute" {
@@ -772,8 +772,8 @@ text {
 # (Textentry)
     "text entry" {
         object {
-            x=160.0
-            y=507
+            x=160
+            y=505
             width=140.0
             height=19
         }
@@ -790,8 +790,8 @@ text {
     text {
         object {
             x=10
-            y=530
-            width=145.0
+            y=528
+            width=145
             height=23
         }
         "basic attribute" {
@@ -804,8 +804,8 @@ text {
 # (Textentry)
     "text entry" {
         object {
-            x=160.0
-            y=530
+            x=160
+            y=528
             width=140.0
             height=19
         }
@@ -822,8 +822,8 @@ text {
     text {
         object {
             x=10
-            y=553
-            width=145.0
+            y=551
+            width=145
             height=23
         }
         "basic attribute" {
@@ -836,8 +836,8 @@ text {
 # (Textentry)
     "text entry" {
         object {
-            x=160.0
-            y=553
+            x=160
+            y=551
             width=140.0
             height=19
         }
@@ -854,8 +854,8 @@ text {
     text {
         object {
             x=10
-            y=576
-            width=145.0
+            y=574
+            width=145
             height=23
         }
         "basic attribute" {
@@ -868,8 +868,8 @@ text {
 # (Textentry)
     "text entry" {
         object {
-            x=160.0
-            y=576
+            x=160
+            y=574
             width=140.0
             height=19
         }
@@ -886,8 +886,8 @@ text {
     text {
         object {
             x=10
-            y=599
-            width=145.0
+            y=597
+            width=145
             height=23
         }
         "basic attribute" {
@@ -900,8 +900,8 @@ text {
 # (Textentry)
     "text entry" {
         object {
-            x=160.0
-            y=599
+            x=160
+            y=597
             width=140.0
             height=19
         }
@@ -918,8 +918,8 @@ text {
     text {
         object {
             x=10
-            y=622
-            width=145.0
+            y=620
+            width=145
             height=23
         }
         "basic attribute" {
@@ -932,8 +932,8 @@ text {
 # (Textentry)
     "text entry" {
         object {
-            x=160.0
-            y=622
+            x=160
+            y=620
             width=140.0
             height=19
         }
@@ -950,8 +950,8 @@ text {
     text {
         object {
             x=10
-            y=645
-            width=145.0
+            y=643
+            width=145
             height=23
         }
         "basic attribute" {
@@ -964,8 +964,8 @@ text {
 # (Textentry)
     "text entry" {
         object {
-            x=160.0
-            y=645
+            x=160
+            y=643
             width=140.0
             height=19
         }
@@ -982,8 +982,8 @@ text {
     text {
         object {
             x=10
-            y=668
-            width=145.0
+            y=666
+            width=145
             height=23
         }
         "basic attribute" {
@@ -996,8 +996,8 @@ text {
 # (Textentry)
     "text entry" {
         object {
-            x=160.0
-            y=668
+            x=160
+            y=666
             width=140.0
             height=19
         }
@@ -1014,8 +1014,8 @@ text {
     text {
         object {
             x=10
-            y=691
-            width=145.0
+            y=689
+            width=145
             height=23
         }
         "basic attribute" {
@@ -1028,8 +1028,8 @@ text {
 # (Textentry)
     "text entry" {
         object {
-            x=160.0
-            y=691
+            x=160
+            y=689
             width=140.0
             height=19
         }
@@ -1046,8 +1046,8 @@ text {
     text {
         object {
             x=10
-            y=714
-            width=145.0
+            y=712
+            width=145
             height=23
         }
         "basic attribute" {
@@ -1060,8 +1060,8 @@ text {
 # (Textentry)
     "text entry" {
         object {
-            x=160.0
-            y=714
+            x=160
+            y=712
             width=140.0
             height=19
         }
@@ -1078,8 +1078,8 @@ text {
     text {
         object {
             x=10
-            y=737
-            width=145.0
+            y=735
+            width=145
             height=23
         }
         "basic attribute" {
@@ -1092,8 +1092,8 @@ text {
 # (Textentry)
     "text entry" {
         object {
-            x=160.0
-            y=737
+            x=160
+            y=735
             width=140.0
             height=19
         }
@@ -1110,8 +1110,8 @@ text {
     text {
         object {
             x=10
-            y=760
-            width=145.0
+            y=758
+            width=145
             height=23
         }
         "basic attribute" {
@@ -1124,9 +1124,9 @@ text {
 byte {
     object {
         x=220.0
-        y=760
+        y=758
         width=20
-        height=20
+        height=19
     }
     monitor {
         chan="$(P)$(R)Armed"
@@ -1141,8 +1141,8 @@ byte {
     text {
         object {
             x=10
-            y=783
-            width=145.0
+            y=781
+            width=145
             height=23
         }
         "basic attribute" {
@@ -1155,8 +1155,8 @@ byte {
 # (Textupdate)
     "text update" {
         object {
-            x=160.0
-            y=783
+            x=160
+            y=781
             width=140.0
             height=19
         }
@@ -1174,8 +1174,8 @@ byte {
     text {
         object {
             x=10
-            y=806
-            width=145.0
+            y=804
+            width=145
             height=23
         }
         "basic attribute" {
@@ -1188,9 +1188,9 @@ byte {
 byte {
     object {
         x=220.0
-        y=806
+        y=804
         width=20
-        height=20
+        height=19
     }
     monitor {
         chan="$(P)$(R)FlatFieldValid"
@@ -1204,9 +1204,9 @@ byte {
 # (Static Text)
     text {
         object {
-            x=10
-            y=829
-            width=145.0
+            x=310
+            y=68
+            width=145
             height=23
         }
         "basic attribute" {
@@ -1219,8 +1219,8 @@ byte {
 # (Textupdate)
     "text update" {
         object {
-            x=160.0
-            y=829
+            x=460
+            y=68
             width=140.0
             height=19
         }
@@ -1237,9 +1237,9 @@ byte {
 # (Static Text)
     text {
         object {
-            x=10
-            y=852
-            width=145.0
+            x=310
+            y=91
+            width=145
             height=23
         }
         "basic attribute" {
@@ -1252,8 +1252,8 @@ byte {
 # (Textupdate)
     "text update" {
         object {
-            x=160.0
-            y=852
+            x=460
+            y=91
             width=140.0
             height=19
         }
@@ -1270,9 +1270,9 @@ byte {
 # (Static Text)
     text {
         object {
-            x=10
-            y=875
-            width=145.0
+            x=310
+            y=114
+            width=145
             height=23
         }
         "basic attribute" {
@@ -1285,8 +1285,8 @@ byte {
 # (Textupdate)
     "text update" {
         object {
-            x=160.0
-            y=875
+            x=460
+            y=114
             width=140.0
             height=19
         }
@@ -1303,9 +1303,9 @@ byte {
 # (Static Text)
     text {
         object {
-            x=10
-            y=898
-            width=145.0
+            x=310
+            y=137
+            width=145
             height=23
         }
         "basic attribute" {
@@ -1318,8 +1318,8 @@ byte {
 # (Textupdate)
     "text update" {
         object {
-            x=160.0
-            y=898
+            x=460
+            y=137
             width=140.0
             height=19
         }
@@ -1336,9 +1336,9 @@ byte {
 # (Static Text)
     text {
         object {
-            x=10
-            y=921
-            width=145.0
+            x=310
+            y=160
+            width=145
             height=23
         }
         "basic attribute" {
@@ -1351,8 +1351,8 @@ byte {
 # (Textupdate)
     "text update" {
         object {
-            x=160.0
-            y=921
+            x=460
+            y=160
             width=140.0
             height=19
         }
@@ -1369,9 +1369,9 @@ byte {
 # (Static Text)
     text {
         object {
-            x=10
-            y=944
-            width=145.0
+            x=310
+            y=183
+            width=145
             height=23
         }
         "basic attribute" {
@@ -1384,8 +1384,8 @@ byte {
 # (Textupdate)
     "text update" {
         object {
-            x=160.0
-            y=944
+            x=460
+            y=183
             width=140.0
             height=19
         }
@@ -1402,9 +1402,9 @@ byte {
 # (Static Text)
     text {
         object {
-            x=10
-            y=967
-            width=145.0
+            x=310
+            y=206
+            width=145
             height=23
         }
         "basic attribute" {
@@ -1417,8 +1417,8 @@ byte {
 # (Textupdate)
     "text update" {
         object {
-            x=160.0
-            y=967
+            x=460
+            y=206
             width=140.0
             height=19
         }
@@ -1435,9 +1435,9 @@ byte {
 # (Static Text)
     text {
         object {
-            x=10
-            y=990
-            width=145.0
+            x=310
+            y=229
+            width=145
             height=23
         }
         "basic attribute" {
@@ -1450,8 +1450,8 @@ byte {
 # (Textupdate)
     "text update" {
         object {
-            x=160.0
-            y=990
+            x=460
+            y=229
             width=140.0
             height=19
         }
@@ -1468,9 +1468,9 @@ byte {
 # (Static Text)
     text {
         object {
-            x=10
-            y=1013
-            width=145.0
+            x=310
+            y=252
+            width=145
             height=23
         }
         "basic attribute" {
@@ -1483,8 +1483,8 @@ byte {
 # (Textentry)
     "text entry" {
         object {
-            x=160.0
-            y=1013
+            x=460
+            y=252
             width=67.5
             height=19
         }
@@ -1500,8 +1500,8 @@ byte {
 # (Textupdate)
     "text update" {
         object {
-            x=232.5
-            y=1013
+            x=532.5
+            y=252
             width=67.5
             height=19
         }
@@ -1518,9 +1518,9 @@ byte {
 # (Static Text)
     text {
         object {
-            x=10
-            y=1036
-            width=145.0
+            x=310
+            y=275
+            width=145
             height=23
         }
         "basic attribute" {
@@ -1533,8 +1533,8 @@ byte {
 # (Textentry)
     "text entry" {
         object {
-            x=160.0
-            y=1036
+            x=460
+            y=275
             width=67.5
             height=19
         }
@@ -1550,8 +1550,8 @@ byte {
 # (Textupdate)
     "text update" {
         object {
-            x=232.5
-            y=1036
+            x=532.5
+            y=275
             width=67.5
             height=19
         }
@@ -1568,9 +1568,9 @@ byte {
 # (Static Text)
     text {
         object {
-            x=10
-            y=1059
-            width=145.0
+            x=310
+            y=298
+            width=145
             height=23
         }
         "basic attribute" {
@@ -1583,8 +1583,8 @@ byte {
 # (Textentry)
     "text entry" {
         object {
-            x=160.0
-            y=1059
+            x=460
+            y=298
             width=67.5
             height=19
         }
@@ -1600,8 +1600,8 @@ byte {
 # (Textupdate)
     "text update" {
         object {
-            x=232.5
-            y=1059
+            x=532.5
+            y=298
             width=67.5
             height=19
         }
@@ -1618,9 +1618,9 @@ byte {
 # (Static Text)
     text {
         object {
-            x=10
-            y=1082
-            width=145.0
+            x=310
+            y=321
+            width=145
             height=23
         }
         "basic attribute" {
@@ -1632,8 +1632,8 @@ byte {
 
 "choice button" {
     object {
-        x=160.0
-        y=1082
+        x=460
+        y=321
         width=140.0
         height=19
     }
@@ -1647,9 +1647,9 @@ byte {
 # (Static Text)
     text {
         object {
-            x=10
-            y=1105
-            width=145.0
+            x=310
+            y=344
+            width=145
             height=23
         }
         "basic attribute" {
@@ -1662,8 +1662,8 @@ byte {
 # (Textentry)
     "text entry" {
         object {
-            x=160.0
-            y=1105
+            x=460
+            y=344
             width=67.5
             height=19
         }
@@ -1679,8 +1679,8 @@ byte {
 # (Textupdate)
     "text update" {
         object {
-            x=232.5
-            y=1105
+            x=532.5
+            y=344
             width=67.5
             height=19
         }
@@ -1697,9 +1697,9 @@ byte {
 # (Static Text)
     text {
         object {
-            x=10
-            y=1128
-            width=145.0
+            x=310
+            y=367
+            width=145
             height=23
         }
         "basic attribute" {
@@ -1712,8 +1712,8 @@ byte {
 # (Textentry)
     "text entry" {
         object {
-            x=160.0
-            y=1128
+            x=460
+            y=367
             width=67.5
             height=19
         }
@@ -1729,8 +1729,8 @@ byte {
 # (Textupdate)
     "text update" {
         object {
-            x=232.5
-            y=1128
+            x=532.5
+            y=367
             width=67.5
             height=19
         }
@@ -1747,9 +1747,9 @@ byte {
 # (Static Text)
     text {
         object {
-            x=10
-            y=1151
-            width=145.0
+            x=310
+            y=390
+            width=145
             height=23
         }
         "basic attribute" {
@@ -1762,8 +1762,8 @@ byte {
 # (Menu Button)
     menu {
         object {
-            x=160.0
-            y=1151
+            x=460
+            y=390
             width=67.5
             height=19
         }
@@ -1777,8 +1777,8 @@ byte {
 # (Textupdate)
     "text update" {
         object {
-            x=232.5
-            y=1151
+            x=532.5
+            y=390
             width=67.5
             height=19
         }

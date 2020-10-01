@@ -490,7 +490,7 @@ minor 0
 release 0
 x {self.get_widget_x()}
 y {self.y}
-w 120
+w {self.widget_width}
 h 15
 fgColor index 14
 bgColor index 3
