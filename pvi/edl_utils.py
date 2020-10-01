@@ -12,6 +12,7 @@ class GenerateEDL:
         h,
         x,
         y,
+        max_box_h,
         box_y,
         box_h,
         box_x,
@@ -20,6 +21,7 @@ class GenerateEDL:
         max_nodes,
         margin,
         column_counter,
+        label_reset,
         label_counter,
         label_height,
         label_width,
@@ -37,6 +39,7 @@ class GenerateEDL:
         self.h = h
         self.x = x
         self.y = y
+        self.max_box_h = max_box_h
         self.box_y = box_y
         self.box_h = box_h
         self.box_x = box_x
@@ -45,6 +48,7 @@ class GenerateEDL:
         self.max_nodes = max_nodes
         self.margin = margin
         self.column_counter = column_counter
+        self.label_reset = label_reset
         self.label_counter = label_counter
         self.label_height = label_height
         self.label_width = label_width
@@ -204,30 +208,35 @@ endObjectProperties
         """Makes a box, height depends on number of channels in each group using \
             a fixed label height (plus space for margins)."""
 
-        # Reset label counter for each new box
+        # Reset counters for each new box
         self.label_counter = 0
+        self.label_reset = 0
         self.column_counter = 0
+
+        # Position new box
         self.box_y = self.y
         self.box_x = self.x
+        self.box_w = self.box_column
+
+        # Initial box height
+        self.box_h = nodes * self.label_height + (2 * self.margin)
 
         # Add columns to a single box when there are too many channels to fit
         # vertically in the window
-        self.box_h = nodes * self.label_height + (2 * self.margin)
         if self.box_h > self.h:
-            self.box_h = self.h
+            self.box_h = self.max_box_h
             self.max_nodes = (math.floor((self.box_h - (2 * self.margin))
                               / self.label_height))
             remainder = nodes - self.max_nodes
             num_cols = math.ceil(remainder / self.max_nodes)
-            self.box_w += (num_cols * self.box_w)
-        # Make a new box in the next column when window height is reached
-        elif (self.box_y + self.box_h + self.exit_space) > self.h:
-            self.y = 50  # Start back at the top
-            self.box_y = self.y
-            self.x = self.box_x + self.box_w + self.margin  # New column for new box
+            self.box_w += (num_cols * self.box_column)
+
+        if (self.box_y + self.box_h + self.exit_space) > self.h:
+            self.y = 50  # Start back at the top             
+            self.box_y = self.y             
+            self.x += self.widget_width + (3 * self.margin)  # New column
             self.box_x = self.x
-        else:
-            pass
+
         box_title_y = self.box_y - 10  # Make overlapping group label above box
 
         return f"""# (Rectangle)
@@ -316,26 +325,26 @@ endObjectProperties
         box_space = 20
         if self.label_counter == (nodes - 1):
             self.y = self.box_y + self.box_h + box_space
+            self.x = self.box_x
         else:
             self.label_counter += 1
+            self.label_reset += 1
 
         return pv_label + widget
 
     def make_label(self, widget_label):
         """ Make a label per channel. """
-
+        # Start labelling again at top of next column
         if (self.y + (2 * self.label_height)) > (self.box_y + self.box_h):
             self.column_counter += 1
-            self.label_counter = 0
+            self.label_reset = 0
             self.x = self.box_x + self.margin + (self.box_column * self.column_counter)
-            self.y = (self.box_y
-                      + self.margin
-                      + (self.label_height * self.label_counter))
+            self.y = self.box_y + self.margin + (self.label_height * self.label_reset)
         else:
             self.x = self.box_x + self.margin + (self.box_column * self.column_counter)
             self.y = (self.box_y
                       + self.margin
-                      + (self.label_height * self.label_counter))
+                      + (self.label_height * self.label_reset))
         label_text = f"""# (Static Text)
 object activeXTextClass
 beginObjectProperties
