@@ -16,9 +16,6 @@ install: $(TEMPLATES)
 %ParamSet.template: $(TOP)/pvi/%.pvi.yaml
 	$(BIN_PVI) generate $< $@
 
-clean::
-	rm -f $(TEMPLATES)
-
 endif # PVI_TEMPLATES
 
 ifdef PVI_PARAMSETS
@@ -30,9 +27,6 @@ install: $(PARAMSETS)
 # Rule to create a ParamSet header file from a PVI yaml file
 %ParamSet.h: $(TOP)/pvi/%.pvi.yaml
 	$(BIN_PVI) generate $< $@
-
-clean:
-	rm -f $(PARAMSETS)
 
 endif # PVI_PARAMSETS
 
