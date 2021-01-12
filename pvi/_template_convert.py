@@ -28,7 +28,7 @@ class TemplateConverter(BaseModel):
     formatter: FormatterUnion = Field(
         ..., description="The Formatter class to format the output"
     )
-    _text: str
+    _text: List[str]
 
     class Config:
         extra = "forbid"
@@ -46,9 +46,7 @@ class TemplateConverter(BaseModel):
         for text in self._text:
             record_extractor = RecordExtractor(text)
             driver_name = driver_name or self.template_file.stem
-            extracted_templates.append(
-                record_extractor.get_top_level_text(driver_name)
-            )
+            extracted_templates.append(record_extractor.get_top_level_text(driver_name))
         return extracted_templates
 
     def convert(self):

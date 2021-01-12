@@ -1,16 +1,16 @@
 import os
 import re
-from typing import Any, Dict, List, Tuple
 from pathlib import Path
+from typing import Any, Dict, List, Tuple
 
 from pydantic import BaseModel, Field, FilePath
 
-from ._schema import Schema, ComponentUnion
-from ._util import get_param_set, find_parent_modules
+from ._schema import ComponentUnion, Schema
+from ._util import find_parent_modules, get_param_set
 
 
 class Source:
-    def __init__(self, cpp: FilePath, h: FilePath):
+    def __init__(self, cpp: str, h: str):
         self.cpp = cpp
         self.h = h
 
@@ -57,9 +57,9 @@ class SourceConverter(BaseModel):
             self._extract_index_declarations(self.string_index_map.values()),
         )
 
-    def _extract_device_and_parent_class(self) -> str:
+    def _extract_device_and_parent_class(self) -> Tuple[str, str]:
         # e.g. extract 'NDPluginDriver' and 'asynNDArrayDriver' from
-        # class epicsShareClass NDPluginDriver : public asynNDArrayDriver, public epicsThreadRunable {
+        # class epicsShareClass NDPluginDriver : public asynNDArrayDriver, public epicsThreadRunable {  # noqa
         class_extractor = re.compile(r"class.* (\w+) : \w+ (\w+) (?:, .*)?{")
         classes = re.search(class_extractor, self.source.h).groups()
 
@@ -85,8 +85,8 @@ class SourceConverter(BaseModel):
         # e.g. extract:     int SimGainX;
         declaration_extractor = re.compile(r"\s*int [^;]*;")
         declarations = re.findall(declaration_extractor, self.source.h)
-        # We only want to extract the declarations for the given index names
-        # This also filters any generic int parameter definitions in the class and some comments
+        # We only want to extract the declarations for the given index names - this also
+        # filters any generic int parameter definitions in the class and some comments
         declarations = filter_strings(declarations, index_names)
         return declarations
 
@@ -176,10 +176,11 @@ class SourceConverter(BaseModel):
         )
 
         # Add the param set parameter to the contructor call in the extern "C" function
+        driver = self.device_class
         cpp_text = cpp_text.replace(
-            f"new {self.device_class}(",
-            f"{self.device_class}ParamSet* paramSet = new {self.device_class}ParamSet;\n"
-            f"    new {self.device_class}(paramSet, ",
+            f"new {driver}(",
+            f"{driver}ParamSet* paramSet = new {driver}ParamSet;\n"
+            f"    new {driver}(paramSet, ",
         )
 
         # Add the initialiser list base class param set parameter
@@ -193,7 +194,8 @@ class SourceConverter(BaseModel):
         cpp_text = re.sub(
             # Driver constructor and initialiser list, all whitespace between ) and {
             r"(::" + self.device_class + r"\([^{]+\))(\s*){",
-            # Insert param set after last entry in initialiser list, in between match groups 1 and 2
+            # Insert param set after last entry in initialiser list, in between
+            # match groups 1 and 2
             r"\1,\n    paramSet(paramSet)\2{",
             cpp_text,
         )
@@ -275,7 +277,7 @@ def find_parent_components(yaml_name: str, module_root: Path) -> List[ComponentU
     if yaml_directory is None:
         raise IOError(f"Cannot find {yaml_name}.pvi.yaml")
 
-    schema = Schema.load(Path(yaml_directory), Path(yaml_name))
+    schema = Schema.load(Path(yaml_directory), yaml_name)
 
     return schema.components + find_parent_components(schema.parent, module_root)
 

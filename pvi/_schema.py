@@ -66,9 +66,7 @@ class Schema(BaseModel):
     formatter: FormatterUnion = Field(
         ..., description="The Formatter class to format the output"
     )
-    parent: str = Field(
-        ..., description="Parent that this Device inherits from"
-    )
+    parent: str = Field(..., description="Parent that this Device inherits from")
     components: List[ComponentUnion] = Field(
         ..., description="The Components to pass to the Producer"
     )

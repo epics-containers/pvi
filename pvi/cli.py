@@ -30,7 +30,7 @@ def convert(args):
         parameter_infos=parameter_infos,
     )
 
-    # Process and recreate template files - pass source device name for param set include
+    # Process and recreate template files - pass source device for param set include
     extracted_templates = template_converter.top_level_text(
         source_converter.device_class
     )
@@ -40,9 +40,7 @@ def convert(args):
 
     # Process and recreate source files
     extracted_source = source_converter.get_top_level_text()
-    with open(
-        args.output_dir / f"{args.cpp.stem}{args.cpp.suffix}", "w"
-    ) as f:
+    with open(args.output_dir / f"{args.cpp.stem}{args.cpp.suffix}", "w") as f:
         f.write(extracted_source.cpp)
     with open(args.output_dir / f"{args.header.stem}{args.header.suffix}", "w") as f:
         f.write(extracted_source.h)

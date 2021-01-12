@@ -1,8 +1,7 @@
-from glob import glob
 import re
 from enum import Enum
+from glob import glob
 from pathlib import Path
-
 from typing import Any, List
 
 from ruamel.yaml.scalarstring import preserve_literal
@@ -65,9 +64,7 @@ def find_parent_modules(module_root: Path) -> List[Path]:
     module_definition_extractor = re.compile(r"^(\w+)\s*=\s*(\S+)", re.MULTILINE)
     for release_path in release_paths:
         with open(release_path) as release_file:
-            match = re.findall(
-                module_definition_extractor, release_file.read()
-            )
+            match = re.findall(module_definition_extractor, release_file.read())
             macros.update(dict(match))
 
     macro_re = re.compile(r"\$\(([^\)]+)\)")

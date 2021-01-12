@@ -5,7 +5,7 @@ from io import StringIO
 from ruamel.yaml import YAML
 
 from ._types import AsynParameter, ChannelConfig, Formatter, Group, Record, Tree, walk
-from ._util import prepare_for_yaml, get_param_set
+from ._util import get_param_set, prepare_for_yaml
 from .adl_utils import GenerateADL
 from .edl_utils import GenerateEDL
 
