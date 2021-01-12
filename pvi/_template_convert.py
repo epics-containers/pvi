@@ -102,7 +102,7 @@ class TemplateConverter(BaseModel):
             asyn_parameters = list(set(asyn_parameters))
             if len(asyn_parameters) > 1:
                 print(
-                    f"More than one set of asyn params found. Taking the first instance"
+                    "More than one set of asyn params found. Taking the first instance"
                 )
             asyn_parameters = [param.strip() for param in asyn_parameters[0].split(",")]
             if len(asyn_parameters) > len(default_asyn_parameters):
@@ -279,7 +279,7 @@ class RecordExtractor:
         ]
 
         top_level_str = self._add_param_template_include(top_level_str, driver_name)
-        top_level_str += f"\n\n".join(override)
+        top_level_str += "\n\n".join(override)
         return top_level_str
 
     def _add_param_template_include(self, top_level_str: str, driver_name: str) -> str:

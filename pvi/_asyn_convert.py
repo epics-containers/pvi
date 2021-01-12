@@ -27,12 +27,12 @@ class AsynRecord(Record):
         if all(k in v.keys() for k in ("INP", "OUT")) or not any(
             k in v.keys() for k in ("INP", "OUT")
         ):
-            raise RecordError(f"Record has no input or output field or both")
+            raise RecordError("Record has no input or output field or both")
 
         asyn_field = v.get("INP", v.get("OUT"))
         if "@asyn(" not in asyn_field:
             # Is it Asyn, because if it's not we don't care about it
-            raise RecordError(f"Record has no @asyn field")
+            raise RecordError("Record has no @asyn field")
         return values
 
     def get_parameter_name(self):
