@@ -184,7 +184,7 @@ minor 0
 release 0
 x 140
 y 55
-w 120
+w 122.5
 h 15
 fgColor index 14
 bgColor index 3
@@ -1840,7 +1840,7 @@ minor 0
 release 0
 x 405
 y 155
-w 120
+w 122.5
 h 15
 fgColor index 14
 bgColor index 3

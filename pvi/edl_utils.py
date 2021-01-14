@@ -1,4 +1,5 @@
 import math
+
 from ._types import Widget
 
 
@@ -225,15 +226,16 @@ endObjectProperties
         # vertically in the window
         if self.box_h > self.h:
             self.box_h = self.max_box_h
-            self.max_nodes = (math.floor((self.box_h - (2 * self.margin))
-                              / self.label_height))
+            self.max_nodes = math.floor(
+                (self.box_h - (2 * self.margin)) / self.label_height
+            )
             remainder = nodes - self.max_nodes
             num_cols = math.ceil(remainder / self.max_nodes)
-            self.box_w += (num_cols * self.box_column)
+            self.box_w += num_cols * self.box_column
 
         if (self.box_y + self.box_h + self.exit_space) > self.h:
-            self.y = 50  # Start back at the top             
-            self.box_y = self.y             
+            self.y = 50  # Start back at the top
+            self.box_y = self.y
             self.x += self.widget_width + (3 * self.margin)  # New column
             self.box_x = self.x
 
@@ -342,9 +344,7 @@ endObjectProperties
             self.y = self.box_y + self.margin + (self.label_height * self.label_reset)
         else:
             self.x = self.box_x + self.margin + (self.box_column * self.column_counter)
-            self.y = (self.box_y
-                      + self.margin
-                      + (self.label_height * self.label_reset))
+            self.y = self.box_y + self.margin + (self.label_height * self.label_reset)
         label_text = f"""# (Static Text)
 object activeXTextClass
 beginObjectProperties

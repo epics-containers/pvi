@@ -1,4 +1,5 @@
 import math
+
 from ._types import Widget
 
 
@@ -183,7 +184,7 @@ text {{
         self.label_reset = 0
         self.column_counter = 0
 
-        # Position new box        
+        # Position new box
         self.box_y = self.y
         self.box_x = self.x
         self.box_w = self.box_column
@@ -195,15 +196,16 @@ text {{
         # vertically in the window
         if self.box_h > self.h:
             self.box_h = self.max_box_h
-            self.max_nodes = (math.floor((self.box_h - (2 * self.margin))
-                              / self.label_height))
+            self.max_nodes = math.floor(
+                (self.box_h - (2 * self.margin)) / self.label_height
+            )
             remainder = nodes - self.max_nodes
             num_cols = math.ceil(remainder / self.max_nodes)
-            self.box_w += (num_cols * self.box_column)
+            self.box_w += num_cols * self.box_column
 
         if (self.box_y + self.box_h) > self.h:
-            self.y = 40  # Start back at the top             
-            self.box_y = self.y             
+            self.y = 40  # Start back at the top
+            self.box_y = self.y
             self.x += self.widget_width + self.margin  # New column
             self.box_x = self.x
 
@@ -273,7 +275,7 @@ text {{
         elif widget_type == Widget.COMBO:
             self.widget_width = (self.box_column / 4) - (3 / 2 * self.margin)
             pv_menu = self.make_combo(write_pv)
-            self.x += + self.widget_width + self.margin
+            self.x += +self.widget_width + self.margin
             pv_rbv = self.make_rbv(read_pv)
             widget = pv_menu + pv_rbv
 
@@ -314,14 +316,14 @@ text {{
             self.column_counter += 1
             self.label_reset = 0
             self.x = self.box_x + self.margin + (self.box_column * self.column_counter)
-            self.y = (self.box_y
-                      + self.margin
-                      + (self.label_height * (self.label_reset + 1)))
+            self.y = (
+                self.box_y + self.margin + (self.label_height * (self.label_reset + 1))
+            )
         else:
             self.x = self.box_x + self.margin + (self.box_column * self.column_counter)
-            self.y = (self.box_y
-                      + self.margin
-                      + (self.label_height * (self.label_reset + 1)))
+            self.y = (
+                self.box_y + self.margin + (self.label_height * (self.label_reset + 1))
+            )
         label_text = f"""
 # (Static Text)
     text {{
