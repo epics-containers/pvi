@@ -4,24 +4,13 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-pytest-cov = "*"
-pytest-black = "*"
-pytest-flake8 = "*"
-pytest-asyncio = "*"
-flake8-isort = "*"
-pytest-mypy = "*"
-sphinx-rtd-theme = "*"
-# Pinning black stops us having to allow pre-releases globally
-black = "==19.10b0"
-# Without these lines lockfile isn't usable on multiple Python versions and platforms
-mypy = "*"
-atomicwrites = "*"
+pvi = {editable = true, extras = ["dev"], path = "."}
 
 [packages]
-# All other package requirements from setup.cfg
-pvi = {editable = true,path = "."}
+pvi = {editable = true, path = "."}
 
 [scripts]
-# Put coverage here so we don't interfere with debugging in the IDE
-tests = "python -m pytest --cov-fail-under=90 --cov=pvi --cov-report term"
-docs = "sphinx-build -E -b html docs build/html"
+tests = "python -m pytest"
+docs = "sphinx-build -EWT --keep-going docs build/html"
+# Delete any files that git ignore hides from us
+gitclean = "git clean -fdX"

@@ -100,7 +100,7 @@ def test_schema_matches_stored_one(tmp_path: Path):
     schema = str(tmp_path / "schema.json")
     cli.main(["schema", schema])
     expected = json.loads(
-        open(Path(__file__).parent.parent / "pvi" / "schema.json").read()
+        open(Path(__file__).parent.parent / "src" / "pvi" / "schema.json").read()
     )
     # Don't care if version number didn't update to match if the rest is the same
     expected["title"] = mock.ANY

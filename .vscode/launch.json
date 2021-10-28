@@ -5,151 +5,19 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Convert Pilatus test files",
+            "name": "Debug Unit Test",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder:pvi}/pvi",
-            "args": [
-                "convert",
-                "/dls_sw/prod/R3.14.12.7/support/ADPilatus/2-9dls1/pilatusApp/Db/pilatus.template",
-                "${workspaceFolder:pvi}/tests/expected",
-                "-c",
-                "/dls_sw/prod/R3.14.12.7/support/ADPilatus/2-9dls1/pilatusApp/src/pilatusDetector.cpp",
-                "-h",
-                "/dls_sw/prod/R3.14.12.7/support/ADPilatus/2-9dls1/pilatusApp/src/pilatusDetector.h",
-                "-r",
-                "${workspaceFolder:ADCore}"
-            ],
-            "console": "integratedTerminal"
-        },
-        {
-            "name": "ADCore Convert",
-            "type": "python",
-            "request": "launch",
-            "program": "${workspaceFolder:pvi}/pvi",
-            "args": [
-                "convert",
-                "/dls_sw/prod/R3.14.12.7/support/ADCore/3-9dls2/ADApp/Db/ADBase.template",
-                "/scratch/work/R3.14.12.7/support/ADCore/pvi",
-                "--cpp",
-                "/dls_sw/prod/R3.14.12.7/support/ADCore/3-9dls2/ADApp/ADSrc/ADDriver.cpp",
-                "--header",
-                "/dls_sw/prod/R3.14.12.7/support/ADCore/3-9dls2/ADApp/ADSrc/ADDriver.h",
-                "-r",
-                "/scratch/work/R3.14.12.7/support/ADCore"
-            ],
-            "console": "integratedTerminal"
-        },
-        {
-            "name": "ADCore Convert asynNDArrayDriver",
-            "type": "python",
-            "request": "launch",
-            "program": "${workspaceFolder:pvi}/pvi",
-            "args": [
-                "convert",
-                "/dls_sw/prod/R3.14.12.7/support/ADCore/3-9dls2/ADApp/Db/NDArrayBase.template",
-                "/dls_sw/prod/R3.14.12.7/support/ADCore/3-9dls2/ADApp/Db/NDFile.template",
-                "/scratch/work/R3.14.12.7/support/ADCore/pvi",
-                "--cpp",
-                "/dls_sw/prod/R3.14.12.7/support/ADCore/3-9dls2/ADApp/ADSrc/asynNDArrayDriver.cpp",
-                "--header",
-                "/dls_sw/prod/R3.14.12.7/support/ADCore/3-9dls2/ADApp/ADSrc/asynNDArrayDriver.h",
-                "-r",
-                "/scratch/work/R3.14.12.7/support/ADCore"
-            ],
-            "console": "integratedTerminal"
-        },
-        {
-            "name": "ADCore Generate",
-            "type": "python",
-            "request": "launch",
-            "program": "${workspaceFolder:pvi}/pvi",
-            "args": [
-                "generate",
-                "/scratch/work/R3.14.12.7/support/ADCore/pvi/asynNDArrayDriver.pvi.yaml",
-                "/scratch/work/R3.14.12.7/support/ADCore/pvi/asynNDArrayDriver.h",
-            ],
-            "console": "integratedTerminal"
-        },
-        {
-            "name": "Schema Generate",
-            "type": "python",
-            "request": "launch",
-            "program": "${workspaceFolder:pvi}/pvi",
-            "args": [
-                "schema",
-                "${workspaceFolder:pvi}/pvi/schema.json"
-            ],
-            "console": "integratedTerminal"
-        },
-        {
-            "name": "Pilatus header Generate",
-            "type": "python",
-            "request": "launch",
-            "program": "${workspaceFolder:pvi}/pvi",
-            "args": [
-                "generate",
-                "${workspaceFolder:pvi}/tests/pilatus.pvi.yaml",
-                "${workspaceFolder:pvi}/pilatusDetectorParamSet.h"
-            ],
-            "console": "integratedTerminal"
-        },
-        {
-            "name": "Pilatus template Generate",
-            "type": "python",
-            "request": "launch",
-            "program": "${workspaceFolder:pvi}/pvi",
-            "args": [
-                "generate",
-                "${workspaceFolder:pvi}/tests/pilatus.pvi.yaml",
-                "${workspaceFolder:pvi}/pilatusParameters.template"
-            ],
-            "console": "integratedTerminal"
-        },
-        {
-            "name": "Pilatus edl Generate",
-            "type": "python",
-            "request": "launch",
-            "program": "${workspaceFolder:pvi}/pvi",
-            "args": [
-                "generate",
-                "${workspaceFolder:pvi}/tests/pilatus.pvi.yaml",
-                "${workspaceFolder:pvi}/pilatus_parameters.edl"
-            ],
-            "console": "integratedTerminal"
-        },
-        {
-            "name": "SimDetector PVI Generate",
-            "type": "python",
-            "request": "launch",
-            "program": "${workspaceFolder:pvi}/pvi",
-            "args": [
-                "generate",
-                "${workspaceFolder:pvi}/tests/sim.pvi.yaml",
-                "${workspaceFolder:pvi}/simDetectorParamSet.h"
-            ],
-            "console": "integratedTerminal"
-        },
-        {
-            "name": "simDetector IOC",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceFolder:ADSimDetector}/iocs/simDetector/bin/linux-x86_64/simDetector",
-            "args": [
-                "stsimDetector.boot"
-            ],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder:ADSimDetector}/iocs/simDetector/bin/linux-x86_64",
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "gdb",
-            "setupCommands": [
-                {
-                    "description": "Enable pretty-printing for gdb",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                }
-            ]
-        },
+            "justMyCode": false,
+            "program": "${file}",
+            "purpose": ["debug-test"],
+            "console": "integratedTerminal",
+            "env": {
+                // The default config in setup.cfg's "[tool:pytest]" adds coverage.
+                // Cannot have coverage and debugging at the same time.
+                // https://github.com/microsoft/vscode-python/issues/693
+                "PYTEST_ADDOPTS": "--no-cov"
+            },
+        }
     ]
 }

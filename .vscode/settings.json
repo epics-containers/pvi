@@ -1,17 +1,17 @@
 {
-    "python.pythonPath": "/scratch/tmc43/pipenv/pvi-8WvQsKFD/bin/python",
+    "editor.defaultFormatter": "ms-python.python",
     "python.linting.pylintEnabled": false,
     "python.linting.flake8Enabled": true,
+    "python.linting.mypyEnabled": true,
     "python.linting.enabled": true,
     "python.testing.pytestArgs": [],
     "python.testing.unittestEnabled": false,
     "python.testing.nosetestsEnabled": false,
     "python.testing.pytestEnabled": true,
     "python.formatting.provider": "black",
-    "python.jediEnabled": false,
-    "yaml.schemas": {
-        "../pvi/pvi/schema.json": ["*.pvi.yaml"]
-    },
-    "python.languageServer": "Microsoft",
-    "restructuredtext.confPath": "${workspaceFolder}/docs",
+    "python.languageServer": "Pylance",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    }
 }

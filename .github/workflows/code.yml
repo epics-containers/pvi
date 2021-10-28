@@ -1,0 +1,114 @@
+
+name: Code CI
+
+on:
+  push:
+    # Restricting to these branches and tags stops duplicate jobs on internal
+    # PRs but stops CI running on internal branches without a PR. Delete the
+    # next 5 lines to restore the original behaviour
+    branches:
+      - master
+      - main
+    tags:
+      - "*"
+  pull_request:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["ubuntu-latest"]  # can add windows-latest, macos-latest
+        python: ["3.7", "3.8", "3.9"]
+        pipenv: ["skip-lock"]  # --${flag} will be passed to pipenv command
+
+        include:
+          # Add an extra Python3.7 runner to publish wheels and use the lockfile
+          - os: "ubuntu-latest"
+            python: "3.7"
+            pipenv: "deploy"
+            publish: true
+
+    name: build/${{ matrix.python }}/${{ matrix.os }}/${{ matrix.pipenv }}
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v2
+        with:
+          # require history to get back to last tag for version number of branches
+          fetch-depth: 0
+
+      - name: Set up Python ${{ matrix.python }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: Create Sdist and Wheel
+        if: matrix.publish
+        # Set SOURCE_DATE_EPOCH from git commit for reproducible build
+        # https://reproducible-builds.org/
+        # Set group writable and umask to do the same to match inside DLS
+        run: |
+          chmod -R g+w .
+          umask 0002
+          SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct) pipx run build --sdist --wheel
+
+      - name: Test cli works from the installed wheel
+        if: matrix.publish
+        # Can remove the repository reference after https://github.com/pypa/pipx/pull/733
+        run: pipx run --spec dist/*.whl ${GITHUB_REPOSITORY##*/} --version
+
+      - name: Use a non-editable install to test the installed wheel
+        if: matrix.pipenv == 'skip-lock'
+        run: sed -i 's/editable *= *true/editable = false/' Pipfile
+
+      - name: Install Python Dependencies
+        run: |
+          pip install pipenv
+          pipenv install --dev --${{ matrix.pipenv }} --python $(python -c 'import sys; print(sys.executable)') && pipenv graph
+
+      - name: Run Tests
+        # https://github.com/pytest-dev/pytest/issues/2042
+        run: PY_IGNORE_IMPORTMISMATCH=1 pipenv run tests
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          name: ${{ matrix.python }}/${{ matrix.os }}/${{ matrix.pipenv }}
+          files: cov.xml
+
+      - name: Upload Wheel and Sdist as artifacts
+        if: matrix.publish
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: dist/*
+
+  release:
+    needs: [build]
+    runs-on: ubuntu-latest
+    # upload to PyPI and make a release on every tag
+    if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: dist
+
+      - name: Github Release
+        # We pin to the SHA, not the tag, for security reasons.
+        # https://docs.github.com/en/actions/learn-github-actions/security-hardening-for-github-actions#using-third-party-actions
+        uses: softprops/action-gh-release@2d72d869af3bf23602f9593a1e3fd739b80ac1eb  # v0.1.12
+        with:
+          files: dist/*
+          body: See [Changelog](CHANGELOG.rst) for more details
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish to PyPI
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.pypi_token }}
+        run: pipx run twine upload dist/*
+

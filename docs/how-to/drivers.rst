@@ -4,7 +4,7 @@ Drivers
 The generated header file contains the string parameters, and defines the parameters to
 make the interface. In this example we have a header file pilatusDetectorParamSet.h:
 
-.. literalinclude:: ../tests/expected/pilatusDetectorParamSet.h
+.. literalinclude:: ../../tests/expected/pilatusDetectorParamSet.h
     :language: cpp
 
 
@@ -18,7 +18,7 @@ Database Template File
 According to the demand and readback properties of the component, the following
 records are created:
 
-.. literalinclude:: ../tests/expected/pilatusParameters.template
+.. literalinclude:: ../../tests/expected/pilatusParameters.template
     :language: cpp
 
 
@@ -32,7 +32,7 @@ UI
 Finally, UI elements can be generated for each component for multiple graphical
 applications. For example, the following EDM screen is generated:
 
-.. image:: pilatus_edl.png
+.. image:: ../images/pilatus_edl.png
    :width: 50%
    :align: center
 
