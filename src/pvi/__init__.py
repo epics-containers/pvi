@@ -1,13 +1,4 @@
-from ._schema import Schema
-from ._types import AsynParameter, ChannelConfig, Group, Record, Widget
+from . import types
 from ._version_git import __version__
 
-__all__ = [
-    "AsynParameter",
-    "ChannelConfig",
-    "Group",
-    "Record",
-    "Schema",
-    "Widget",
-    "__version__",
-]
+__all__ = ["__version__", "types"]

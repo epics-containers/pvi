@@ -1,0 +1,446 @@
+{
+  "type": "array",
+  "items": {
+    "$ref": "#/$defs/Component"
+  },
+  "$defs": {
+    "Component": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "SignalR",
+              "default": "SignalR"
+            },
+            "name": {
+              "type": "string",
+              "description": "Unique name of component within this Device"
+            },
+            "pv": {
+              "type": "string",
+              "description": "PV to be used for get and monitor"
+            },
+            "widget": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/ReadWidget"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Widget to use for display, None means don't display",
+              "default": null
+            }
+          },
+          "required": [
+            "name",
+            "pv"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "SignalRW",
+              "default": "SignalRW"
+            },
+            "name": {
+              "type": "string",
+              "description": "Unique name of component within this Device"
+            },
+            "pv": {
+              "type": "string",
+              "description": "PV to be used for put"
+            },
+            "widget": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/WriteWidget"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Widget to use for control, None means don't display",
+              "default": null
+            },
+            "read_pv": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "PV to be used for read, None means use pv",
+              "default": null
+            },
+            "read_widget": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/ReadWidget"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Widget to use for display, None means use widget",
+              "default": null
+            }
+          },
+          "required": [
+            "name",
+            "pv"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "SignalX",
+              "default": "SignalX"
+            },
+            "name": {
+              "type": "string",
+              "description": "Unique name of component within this Device"
+            },
+            "pv": {
+              "type": "string",
+              "description": "PV to be used for put"
+            },
+            "value": {
+              "description": "Value to write. None means zero",
+              "default": null
+            }
+          },
+          "required": [
+            "name",
+            "pv"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "DeviceRef",
+              "default": "DeviceRef"
+            },
+            "name": {
+              "type": "string",
+              "description": "Unique name of component within this Device"
+            },
+            "pv": {
+              "type": "string",
+              "description": "Child device PVI PV"
+            }
+          },
+          "required": [
+            "name",
+            "pv"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "SignalRef",
+              "default": "SignalRef"
+            },
+            "name": {
+              "type": "string",
+              "description": "Unique name of component within this Device"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "Group",
+              "default": "Group"
+            },
+            "name": {
+              "type": "string",
+              "description": "Unique name of component within this Device"
+            },
+            "layout": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "Plot",
+                      "default": "Plot"
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "Row",
+                      "default": "Row"
+                    },
+                    "header": {
+                      "type": [
+                        "array",
+                        "null"
+                      ],
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Labels for the items in the row, None means use previous row header",
+                      "default": null
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "Grid",
+                      "default": "Grid"
+                    },
+                    "labelled": {
+                      "type": "boolean",
+                      "description": "If True use names of children as labels",
+                      "default": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              ],
+              "description": "How to layout children on screen"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Component"
+              },
+              "description": "Child Components"
+            }
+          },
+          "required": [
+            "name",
+            "layout",
+            "children"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "ReadWidget": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "LED",
+              "default": "LED"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "BitField",
+              "default": "BitField"
+            },
+            "labels": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Label for each bit"
+            }
+          },
+          "required": [
+            "labels"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "ProgressBar",
+              "default": "ProgressBar"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "TextRead",
+              "default": "TextRead"
+            },
+            "lines": {
+              "type": "integer",
+              "description": "Number of lines to display",
+              "default": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "ArrayTrace",
+              "default": "ArrayTrace"
+            },
+            "axis": {
+              "type": "string",
+              "description": "Traces with same axis name will appear on same axis, plotted against 'x' trace if it exists, or indexes if not. Only one traces with axis='x' allowed."
+            }
+          },
+          "required": [
+            "axis"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "TableRead",
+              "default": "TableRead"
+            },
+            "widgets": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/ReadWidget"
+              },
+              "description": "For each column, what widget should be repeated for every row"
+            }
+          },
+          "required": [
+            "widgets"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "ImageRead",
+              "default": "ImageRead"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "WriteWidget": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "CheckBox",
+              "default": "CheckBox"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "ComboBox",
+              "default": "ComboBox"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "TextWrite",
+              "default": "TextWrite"
+            },
+            "lines": {
+              "type": "integer",
+              "description": "Number of lines to display",
+              "default": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "ArrayWrite",
+              "default": "ArrayWrite"
+            },
+            "widget": {
+              "$ref": "#/$defs/WriteWidget",
+              "description": "What widget should be used for each item"
+            }
+          },
+          "required": [
+            "widget"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "TableWrite",
+              "default": "TableWrite"
+            },
+            "widgets": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/WriteWidget"
+              },
+              "description": "For each column, what widget should be repeated for every row"
+            }
+          },
+          "required": [
+            "widgets"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "$schema": "http://json-schema.org/draft/2020-12/schema#"
+}
