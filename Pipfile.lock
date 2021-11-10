@@ -16,10 +16,10 @@
     "default": {
         "apischema": {
             "hashes": [
-                "sha256:345836c4b90055d7bd0d44c822e93dd76b4ceb197f6ee1dda7092061981a774a",
-                "sha256:c9bcaa901bbbca8699d6ebb05beeff47fac04706bfa358c6b264c10102a5d6c0"
+                "sha256:8e540344bd1073d858f27ae65d5158729ff594488528fe8f84049b4e7a82af87",
+                "sha256:d89d1a439f0aad123596a2b4bc7130eba8e459a4f5748a4f3307e8fe97368796"
             ],
-            "version": "==0.15.7"
+            "version": "==0.16.1"
         },
         "pvi": {
             "editable": true,
@@ -78,10 +78,10 @@
         },
         "apischema": {
             "hashes": [
-                "sha256:345836c4b90055d7bd0d44c822e93dd76b4ceb197f6ee1dda7092061981a774a",
-                "sha256:c9bcaa901bbbca8699d6ebb05beeff47fac04706bfa358c6b264c10102a5d6c0"
+                "sha256:8e540344bd1073d858f27ae65d5158729ff594488528fe8f84049b4e7a82af87",
+                "sha256:d89d1a439f0aad123596a2b4bc7130eba8e459a4f5748a4f3307e8fe97368796"
             ],
-            "version": "==0.15.7"
+            "version": "==0.16.1"
         },
         "appdirs": {
             "hashes": [
@@ -206,10 +206,10 @@
         },
         "flake8": {
             "hashes": [
-                "sha256:479b1304f72536a55948cb40a32dce8bb0ffe3501e26eaf292c7e60eb5e0428d",
-                "sha256:806e034dda44114815e23c16ef92f95c91e4c71100ff52813adf7132a6ad870d"
+                "sha256:07528381786f2a6237b061f6e96610a4167b226cb926e2aa2b6b1d78057c576b",
+                "sha256:bf8fd333346d844f616e8d47905ef3a3384edae6b4e9beb0c5101e25e3110907"
             ],
-            "version": "==4.0.1"
+            "version": "==3.9.2"
         },
         "flake8-isort": {
             "hashes": [
@@ -235,11 +235,11 @@
         },
         "importlib-metadata": {
             "hashes": [
-                "sha256:8c501196e49fb9df5df43833bdb1e4328f64847763ec8a50703148b73784d581",
-                "sha256:d7eb1dea6d6a6086f8be21784cc9e3bcfa55872b52309bc5fad53a8ea444465d"
+                "sha256:b618b6d2d5ffa2f16add5697cf57a46c76a56229b0ed1c438322e4e95645bd15",
+                "sha256:f284b3e11256ad1e5d03ab86bb2ccd6f5339688ff17a4d797a0fe7df326f23b1"
             ],
             "markers": "python_version < '3.8' and python_version < '3.8'",
-            "version": "==4.0.1"
+            "version": "==4.8.1"
         },
         "iniconfig": {
             "hashes": [
@@ -398,17 +398,17 @@
         },
         "pycodestyle": {
             "hashes": [
-                "sha256:720f8b39dde8b293825e7ff02c475f3077124006db4f440dcbc9a20b76548a20",
-                "sha256:eddd5847ef438ea1c7870ca7eb78a9d47ce0cdb4851a5523949f2601d0cbbe7f"
+                "sha256:514f76d918fcc0b55c6680472f0a37970994e07bbb80725808c17089be302068",
+                "sha256:c389c1d06bf7904078ca03399a4816f974a1d590090fecea0c63ec26ebaf1cef"
             ],
-            "version": "==2.8.0"
+            "version": "==2.7.0"
         },
         "pyflakes": {
             "hashes": [
-                "sha256:05a85c2872edf37a4ed30b0cce2f6093e1d0581f8c19d7393122da7e25b2b24c",
-                "sha256:3bb3a3f256f4b7968c9c788781e4ff07dce46bdf12339dcda61053375426ee2e"
+                "sha256:7893783d01b8a89811dd72d7dfd4d84ff098e5eed95cfa8905b22bbffe52efc3",
+                "sha256:f5bc8ecabc05bb9d291eb5203d6810b49040f6ff446a756326104746cc00c1db"
             ],
-            "version": "==2.4.0"
+            "version": "==2.3.1"
         },
         "pygments": {
             "hashes": [
