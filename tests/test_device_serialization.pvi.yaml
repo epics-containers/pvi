@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=../pvi.schema.json
+- type: Group
+  name: parameters
+  layout:
+    type: Grid
+  children:
+    - type: SignalRW
+      name: widthUnits
+      pv: WIDTH:UNITS
+      widget:
+        type: ComboBox
+    - type: SignalRW
+      name: width
+      pv: WIDTH
+      widget:
+        type: TextWrite
+- type: SignalRW
+  name: table
+  pv: TABLE
+  widget:
+    type: TableWrite
+    widgets:
+      - type: CheckBox
+      - type: ComboBox
+      - type: TextWrite
+- type: SignalR
+  name: outA
+  pv: OUTA
+  widget:
+    type: LED

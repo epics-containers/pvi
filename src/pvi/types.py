@@ -1,8 +1,7 @@
 from dataclasses import dataclass
-from typing import Any, List, Optional, Union
+from typing import Any, List, Optional
 
 from typing_extensions import Annotated as A
-from typing_extensions import Literal
 
 from ._serialization import as_discriminated_union, desc
 
