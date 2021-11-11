@@ -25,15 +25,15 @@ from pvi.types import (
 def device():
     return [
         Group(
-            "parameters",
+            "Parameters",
             Grid(),
             [
-                SignalRW("widthUnits", "WIDTH:UNITS", ComboBox()),
-                SignalRW("width", "WIDTH", TextWrite()),
+                SignalRW("WidthUnits", "WIDTH:UNITS", ComboBox()),
+                SignalRW("Width", "WIDTH", TextWrite()),
             ],
         ),
-        SignalRW("table", "TABLE", TableWrite([CheckBox(), ComboBox(), TextWrite()])),
-        SignalR("outA", "OUTA", LED()),
+        SignalRW("Table", "TABLE", TableWrite([CheckBox(), ComboBox(), TextWrite()])),
+        SignalR("OutA", "OUTA", LED()),
     ]
 
 
@@ -55,6 +55,9 @@ def test_deserialize(device, device_serialized):
 
 
 def test_schema_matches_stored():
-    expected = json.dumps(deserialization_schema(List[Component]), indent=2)
+    expected = json.dumps(
+        deserialization_schema(List[Component], all_refs=True), indent=2
+    )
+    open(Path(__file__).parent.parent / "pvi.schema.json", "w").write(expected)
     actual = open(Path(__file__).parent.parent / "pvi.schema.json").read()
     assert actual == expected

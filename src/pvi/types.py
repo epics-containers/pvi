@@ -1,12 +1,11 @@
 from dataclasses import dataclass
-from typing import Any, List, Optional
+from typing import Any, Optional, Sequence
 
 from typing_extensions import Annotated as A
 
-from ._serialization import as_discriminated_union, desc
+from ._utils import as_discriminated_union, desc, to_title_case
 
 
-#############
 @as_discriminated_union
 @dataclass
 class ReadWidget:
@@ -21,7 +20,7 @@ class LED(ReadWidget):
 class BitField(ReadWidget):
     """LED and label for each bit of an int PV"""
 
-    labels: A[List[str], desc("Label for each bit")]
+    labels: A[Sequence[str], desc("Label for each bit")]
 
 
 class ProgressBar(ReadWidget):
@@ -54,7 +53,7 @@ class TableRead(ReadWidget):
     """Tabular view of an NTTable"""
 
     widgets: A[
-        List[ReadWidget],
+        Sequence[ReadWidget],
         desc("For each column, what widget should be repeated for every row"),
     ]
 
@@ -63,7 +62,6 @@ class ImageRead(ReadWidget):
     """2D Image view of an NTNDArray"""
 
 
-#############
 @as_discriminated_union
 @dataclass
 class WriteWidget:
@@ -97,7 +95,7 @@ class ArrayWrite(WriteWidget):
 @dataclass
 class TableWrite(WriteWidget):
     widgets: A[
-        List[WriteWidget],
+        Sequence[WriteWidget],
         desc("For each column, what widget should be repeated for every row"),
     ]
 
@@ -117,7 +115,7 @@ class Row(Layout):
     """Children are columns in the row"""
 
     header: A[
-        Optional[List[str]],
+        Optional[Sequence[str]],
         desc("Labels for the items in the row, None means use previous row header"),
     ] = None
 
@@ -129,12 +127,19 @@ class Grid(Layout):
     labelled: A[bool, desc("If True use names of children as labels")] = True
 
 
-@as_discriminated_union
 @dataclass
+@as_discriminated_union
 class Component:
-    """A List of these describes a Device"""
+    """These make up a Device"""
 
-    name: A[str, desc("Unique name of component within this Device")]
+    name: A[
+        str, desc("PascalCase name to uniquely identify", pattern=r"([A-Z][a-z0-9]*)*$")
+    ]
+
+    # TODO: add optional label in subclasses to override this
+    @property
+    def label(self):
+        return to_title_case(self.name)
 
 
 @dataclass
@@ -157,7 +162,8 @@ class SignalRW(Component):
         Optional[WriteWidget],
         desc("Widget to use for control, None means don't display"),
     ] = None
-    read_pv: A[Optional[str], desc("PV to be used for read, None means use pv")] = None
+    # This was Optional[str] but produced JSON schema that YAML editor didn't understand
+    read_pv: A[str, desc("PV to be used for read, empty means use pv")] = ""
     read_widget: A[
         Optional[ReadWidget], desc("Widget to use for display, None means use widget"),
     ] = None
@@ -167,7 +173,7 @@ class SignalRW(Component):
 class SignalX(Component):
     """Executable that puts a fixed value to a PV."""
 
-    pv: A[str, desc("PV to be used for put")]
+    pv: A[str, desc("PV to be used for call")]
     value: A[Any, desc("Value to write. None means zero")] = None
 
 
@@ -187,4 +193,42 @@ class Group(Component):
     """Group of child components in a Layout"""
 
     layout: A[Layout, desc("How to layout children on screen")]
-    children: A[List[Component], desc("Child Components")]
+    children: A[Sequence[Component], desc("Child Components")]
+
+
+@as_discriminated_union
+@dataclass
+class Formatter:
+    # Screens
+    def format_adl(self, components: Sequence[Component], basename: str) -> str:
+        raise NotImplementedError(self)
+
+    def format_edl(self, components: Sequence[Component], basename: str) -> str:
+        raise NotImplementedError(self)
+
+    def format_opi(self, components: Sequence[Component], basename: str) -> str:
+        raise NotImplementedError(self)
+
+    def format_bob(self, components: Sequence[Component], basename: str) -> str:
+        raise NotImplementedError(self)
+
+    def format_ui(self, components: Sequence[Component], basename: str) -> str:
+        raise NotImplementedError(self)
+
+    # TODO: add pvi json and csv to cli
+
+
+@as_discriminated_union
+@dataclass
+class Producer:
+    def produce_records(self):
+        """Make epicsdbbuilder records"""
+        raise NotImplementedError(self)
+
+    def produce_components(self) -> Sequence[Component]:
+        """Make signals from components"""
+        raise NotImplementedError(self)
+
+    def produce_text(self, extension: str) -> str:
+        """Make things like cpp, h files"""
+        raise NotImplementedError(self)
