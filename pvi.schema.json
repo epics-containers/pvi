@@ -1,13 +1,23 @@
 {
   "type": "array",
   "items": {
-    "$ref": "#/$defs/Component"
+    "anyOf": [
+      {
+        "$ref": "#/$defs/Component"
+      },
+      {
+        "$ref": "#/$defs/ComponentGroup"
+      }
+    ]
   },
   "$defs": {
     "Component": {
       "anyOf": [
         {
           "$ref": "#/$defs/SignalR"
+        },
+        {
+          "$ref": "#/$defs/SignalW"
         },
         {
           "$ref": "#/$defs/SignalRW"
@@ -20,9 +30,6 @@
         },
         {
           "$ref": "#/$defs/SignalRef"
-        },
-        {
-          "$ref": "#/$defs/Group"
         }
       ]
     },
@@ -196,13 +203,13 @@
       },
       "additionalProperties": false
     },
-    "SignalRW": {
+    "SignalW": {
       "type": "object",
       "properties": {
         "type": {
           "type": "string",
-          "const": "SignalRW",
-          "default": "SignalRW"
+          "const": "SignalW",
+          "default": "SignalW"
         },
         "name": {
           "type": "string",
@@ -223,26 +230,6 @@
             }
           ],
           "description": "Widget to use for control, None means don't display",
-          "default": null
-        },
-        "read_pv": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "description": "PV to be used for read, empty means use pv",
-          "default": null
-        },
-        "read_widget": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/ReadWidget"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Widget to use for display, None means use widget",
           "default": null
         }
       },
@@ -348,6 +335,59 @@
       ],
       "additionalProperties": false
     },
+    "SignalRW": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "SignalRW",
+          "default": "SignalRW"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "([A-Z][a-z0-9]*)*$",
+          "description": "PascalCase name to uniquely identify"
+        },
+        "pv": {
+          "type": "string",
+          "description": "PV to be used for put"
+        },
+        "widget": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/WriteWidget"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Widget to use for control, None means don't display",
+          "default": null
+        },
+        "read_pv": {
+          "type": "string",
+          "description": "PV to be used for read, empty means use pv",
+          "default": ""
+        },
+        "read_widget": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReadWidget"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Widget to use for display, None means use widget",
+          "default": null
+        }
+      },
+      "required": [
+        "name",
+        "pv"
+      ],
+      "additionalProperties": false
+    },
     "SignalX": {
       "type": "object",
       "properties": {
@@ -419,7 +459,7 @@
       ],
       "additionalProperties": false
     },
-    "Group": {
+    "ComponentGroup": {
       "type": "object",
       "properties": {
         "type": {
@@ -439,7 +479,14 @@
         "children": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/Component"
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Component"
+              },
+              {
+                "$ref": "#/$defs/ComponentGroup"
+              }
+            ]
           },
           "description": "Child Components"
         }

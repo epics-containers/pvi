@@ -1,6 +1,5 @@
 import json
 from pathlib import Path
-from typing import List
 
 import pytest
 from apischema import deserialize, serialize
@@ -18,6 +17,7 @@ from pvi.types import (
     SignalRW,
     TableWrite,
     TextWrite,
+    Tree,
 )
 
 
@@ -50,14 +50,14 @@ def test_serialize(device, device_serialized):
 
 
 def test_deserialize(device, device_serialized):
-    d = deserialize(List[Component], device_serialized)
+    d = deserialize(Tree[Component], device_serialized)
     assert d == device
 
 
 def test_schema_matches_stored():
     expected = json.dumps(
-        deserialization_schema(List[Component], all_refs=True), indent=2
+        deserialization_schema(Tree[Component], all_refs=True), indent=2
     )
-    open(Path(__file__).parent.parent / "pvi.schema.json", "w").write(expected)
+    # open(Path(__file__).parent.parent / "pvi.schema.json", "w").write(expected)
     actual = open(Path(__file__).parent.parent / "pvi.schema.json").read()
     assert actual == expected

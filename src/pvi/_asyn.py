@@ -1,376 +1,337 @@
-from enum import Enum
-from typing import Any, ClassVar, List, Union
+from dataclasses import dataclass
+from typing import Any, ClassVar, Iterator, Optional, Union
 
-from pydantic import BaseModel, Field, constr
-
-from pvi._types import ChannelConfig, DisplayForm, Widget
+from apischema.schemas import schema
+from apischema.types import Number
+from epicsdbbuilder import records
 
 from ._records import (
-    AnalogueAll,
-    BinaryAll,
-    LongAll,
-    MultiBitBinaryAll,
-    StringAll,
-    WaveformAll,
+    AnalogueRecordPair,
+    BinaryRecordPair,
+    LongRecordPair,
+    MultiBitBinaryRecordPair,
+    RecordPair,
+    StringRecordPair,
+    WaveformRecordPair,
 )
-from ._types import AsynParameter, Component, Producer, Record, Tree
-from ._util import truncate_description
+from ._utils import Annotated, as_discriminated_union, desc, truncate_description
+from .types import (
+    LED,
+    Access,
+    CheckBox,
+    ComboBox,
+    Component,
+    DisplayForm,
+    Named,
+    Producer,
+    ReadWidget,
+    SignalR,
+    SignalRW,
+    SignalW,
+    TextRead,
+    TextWrite,
+    Tree,
+    WriteWidget,
+    on_each_node,
+    walk,
+)
 
 
-class TypeStrings(BaseModel):
-    read_record: str = Field(..., description="e.g. ai, bi, longin")
-    write_record: str = Field(..., description="e.g. ao, bo, longout")
-    asyn_read: str = Field(..., description="e.g. asynInt32, asynOctetRead")
-    asyn_write: str = Field(..., description="e.g. asynInt32, asynOctetWrite")
-    asyn_param: str = Field(..., description="e.g. asynParamInt32, asynParamOctet")
+@dataclass
+class TypeStrings:
+    """The type strings for record dtypes and parameter names"""
+
+    asyn_read: Annotated[str, desc("e.g. asynInt32, asynOctetRead")]
+    asyn_write: Annotated[str, desc("e.g. asynInt32, asynOctetWrite")]
+    asyn_param: Annotated[str, desc("e.g. asynParamInt32, asynParamOctet")]
 
 
-class ParameterRole(str, Enum):
-    """What role does this parameter play within the device. One of:
-
-    - Readback: a parameter of the device that can be read from.
-      E.g. chipTemperature on a detector, or isHomed for a motor
-    - Action: a parameter of the device that can be written to, but there
-      is no current value.
-      E.g. reboot on a detector, or overwriteCurrentPosition for a motor
-    - Setting: a parameter of the device that can be written to, the
-      current value can be read from, and should be saved/loaded when
-      switching between configurations of the device.
-      E.g. acquireTime on a detector, or velocity of a motor
-    - Transient: a parameter of the device that can be written to and
-      read from, but should not be saved/loaded when switching between
-      configurations of the device.
-      E.g. arrayCounter on a detector, or position of a motor
-    """
-
-    READBACK = "Readback"  #: Read record only
-    ACTION = "Action"  #: Write record only
-    SETTING = "Setting"  #: Read and write record, for saving
-    TRANSIENT = "Transient"  #: Read and write record, not for saving
-
-    def needs_read_record(self):
-        return self != self.ACTION
-
-    def needs_write_record(self):
-        return self != self.READBACK
+AReadWidget = Annotated[Optional[ReadWidget], desc("Widget to use for read record")]
+AWriteWidget = Annotated[Optional[WriteWidget], desc("Widget to use for write record")]
 
 
-class AsynComponent(Component):
+@as_discriminated_union
+@dataclass
+class AsynParameter(Named):
     """Base class for all Asyn Parameters to inherit from"""
 
-    description: str = Field(
-        ..., description="Description of what this Parameter is for"
-    )
-    index_name: str = Field(
-        None,
-        description="Override name of index variable in source code (defaults to name)",
-        regex=r"([A-Z][a-z0-9]*)*$",
-    )
-    drv_info: str = Field(
-        None,
-        description="Info string for drvUserCreate for dynamically created parameters",
-        regex=r"^\S{1,40}$",  # Limit to 40 characters with no whitespace
-    )
-    role: ParameterRole = Field(
-        ParameterRole.SETTING, description=ParameterRole.__doc__,
-    )
-    demand_auto_updates: bool = Field(
-        False, description="Should demand update when readback changes?"
-    )
-    autosave: List[str] = Field(
-        [], description="Record fields that should be autosaved"
-    )
-    read_record_suffix: str = Field(
-        None, description="The read record suffix, if not given then use $(name)_RBV"
-    )
-    write_record_suffix: str = Field(
-        None, description="The write record suffix, if not given then use $(name)"
-    )
-    display_form: DisplayForm = Field(
-        None, description="Display form for numeric/array fields"
-    )
+    description: Annotated[str, desc("Description of what this Parameter is for")]
+    index_name: Annotated[
+        Optional[str],
+        desc("Override name of index variable in source code (defaults to name)"),
+    ] = None
+    drv_info: Annotated[
+        Optional[str],
+        desc(
+            "Info string for drvUserCreate for dynamically created parameters",
+            # Limit to 40 characters with no whitespace
+            pattern=r"^\S{1,40}$",
+        ),
+    ] = None
+    access: Annotated[Access, desc(Access.__doc__)] = Access.RW
+    demand_auto_updates: Annotated[
+        bool, desc("Should demand update when readback changes?")
+    ] = False
+    read_record_suffix: Annotated[
+        Optional[str], desc("The read record suffix, if not given then use $(name)_RBV")
+    ] = None
+    write_record_suffix: Annotated[
+        Optional[str], desc("The write record suffix, if not given then use $(name)")
+    ] = None
+    display_form: Annotated[
+        Optional[DisplayForm], desc("Display form for numeric/array fields")
+    ] = None
     type_strings: ClassVar[TypeStrings]
-    initial: Any
-    read_widget: Widget
-    write_widget: Widget
-    record_fields: Any
+    initial: Any = None
+    read_widget: Optional[AReadWidget] = None
+    write_widget: Optional[AWriteWidget] = None
+    record_fields: RecordPair = RecordPair()
 
 
-def macro_with_default(default_pattern: str):
-    return constr(regex=r"(\$\(\w+=(" + default_pattern + r")\))")
-
-
-def initial_field(**kwargs):
-    return Field(None, description="The initial value of the parameter", **kwargs)
-
-
-def widget_field(default: Widget, **kwargs):
-    return Field(
-        default,
-        description="Override the widget to use these sort of channels",
-        **kwargs,
+def initial_value(pattern: str = None, min: Number = None, max: Number = None):
+    if pattern:
+        pattern = r"(\$\(\w+=(" + pattern + r")\))"
+    return schema(
+        description="The initial value of the parameter",
+        min=min,
+        max=max,
+        pattern=pattern,
     )
 
 
-class AsynBinary(AsynComponent):
-    """Asyn Float32 Parameter and records"""
+class AsynBinary(AsynParameter):
+    """Asyn Binary Parameter and records"""
 
-    type_strings: ClassVar[TypeStrings] = TypeStrings(
-        read_record="bi",
-        write_record="bo",
-        asyn_read="asynInt32",
-        asyn_write="asynInt32",
-        asyn_param="asynParamInt32",
+    type_strings = TypeStrings(
+        asyn_read="asynInt32", asyn_write="asynInt32", asyn_param="asynParamInt32",
     )
-    initial: Union[int, macro_with_default(r"[0-1]")] = initial_field(ge=0, le=1)
-    read_widget: Widget = widget_field(Widget.LED)
-    write_widget: Widget = widget_field(Widget.CHECKBOX)
-    record_fields: BinaryAll = Field(BinaryAll(), description="Binary record fields")
+    initial: Annotated[
+        Union[None, int, str], initial_value(r"[0-1]", min=0, max=1)
+    ] = None
+    read_widget: AReadWidget = LED()
+    write_widget: AWriteWidget = CheckBox()
+    record_fields: Annotated[  # type: ignore
+        BinaryRecordPair, desc("Binary record fields")
+    ] = BinaryRecordPair()
 
 
-class AsynBusy(AsynComponent):
-    """Asyn busy Parameter and records"""
-
-    type_strings: ClassVar[TypeStrings] = TypeStrings(
-        read_record="bi",
-        write_record="busy",
-        asyn_read="asynInt32",
-        asyn_write="asynInt32",
-        asyn_param="asynParamInt32",
-    )
-    initial: Union[int, macro_with_default(r"[0-1]")] = initial_field(ge=0, le=1)
-    read_widget: Widget = widget_field(Widget.LED)
-    write_widget: Widget = widget_field(Widget.BUTTON)
-    record_fields: BinaryAll = Field(
-        BinaryAll(), description="Binary record fields",
-    )
-
-
-class AsynFloat64(AsynComponent):
+class AsynFloat64(AsynParameter):
     """Asyn Float64 Parameter and records"""
 
     type_strings: ClassVar[TypeStrings] = TypeStrings(
-        read_record="ai",
-        write_record="ao",
         asyn_read="asynFloat64",
         asyn_write="asynFloat64",
         asyn_param="asynParamFloat64",
     )
-    initial: Union[float, macro_with_default(r"-?[0-9]+(\.[0-9]+)?")] = initial_field()
-    read_widget: Widget = widget_field(Widget.TEXTUPDATE)
-    write_widget: Widget = widget_field(Widget.TEXTINPUT)
-    record_fields: AnalogueAll = Field(
-        AnalogueAll(), description="Analogue record fields",
-    )
+    initial: Annotated[
+        Union[None, float, str], initial_value(r"-?[0-9]+(\.[0-9]+)?")
+    ] = None
+    read_widget: AReadWidget = TextRead()
+    write_widget: AWriteWidget = TextWrite()
+    record_fields: Annotated[  # type: ignore
+        AnalogueRecordPair, desc("Analogue record fields")
+    ] = AnalogueRecordPair()
 
 
-class AsynInt32(AsynComponent):
+class AsynInt32(AsynParameter):
     """Asyn Int32 Parameter and records"""
 
     type_strings: ClassVar[TypeStrings] = TypeStrings(
-        read_record="ai",
-        write_record="ao",
-        asyn_read="asynInt32",
-        asyn_write="asynInt32",
-        asyn_param="asynParamInt32",
+        asyn_read="asynInt32", asyn_write="asynInt32", asyn_param="asynParamInt32",
     )
-    initial: Union[int, macro_with_default(r"-?\d+")] = initial_field()
-    read_widget: Widget = widget_field(Widget.TEXTUPDATE)
-    write_widget: Widget = widget_field(Widget.TEXTINPUT)
-    record_fields: AnalogueAll = Field(
-        AnalogueAll(), description="Analogue record fields",
-    )
+    initial: Annotated[Union[None, int, str], initial_value(r"-?\d+")] = None
+    read_widget: AReadWidget = TextRead()
+    write_widget: AWriteWidget = TextWrite()
+    record_fields: Annotated[  # type: ignore
+        AnalogueRecordPair, desc("Analogue record fields")
+    ] = AnalogueRecordPair()
 
 
-class AsynLong(AsynComponent):
+class AsynLong(AsynInt32):
     """Asyn Long Parameter and records"""
 
-    type_strings: ClassVar[TypeStrings] = TypeStrings(
-        read_record="longin",
-        write_record="longout",
-        asyn_read="asynInt32",
-        asyn_write="asynInt32",
-        asyn_param="asynParamInt32",
-    )
-    initial: Union[int, macro_with_default(r"-?\d+")] = initial_field()
-    read_widget: Widget = widget_field(Widget.TEXTUPDATE)
-    write_widget: Widget = widget_field(Widget.TEXTINPUT)
-    record_fields: LongAll = Field(
-        LongAll(), description="Long record fields",
-    )
+    record_fields: Annotated[  # type: ignore
+        LongRecordPair, desc("Long record fields")
+    ] = LongRecordPair()
 
 
-class AsynMultiBitBinary(AsynComponent):
+class AsynMultiBitBinary(AsynParameter):
     """Asyn MultiBitBinary Parameter and records"""
 
     type_strings: ClassVar[TypeStrings] = TypeStrings(
-        read_record="mbbi",
-        write_record="mbbo",
-        asyn_read="asynInt32",
-        asyn_write="asynInt32",
-        asyn_param="asynParamInt32",
+        asyn_read="asynInt32", asyn_write="asynInt32", asyn_param="asynParamInt32",
     )
-    initial: Union[int, macro_with_default(r"[0-15]")] = initial_field(ge=0, le=15)
-    read_widget: Widget = widget_field(Widget.TEXTUPDATE)
-    write_widget: Widget = widget_field(Widget.COMBO)
-    record_fields: MultiBitBinaryAll = Field(
-        MultiBitBinaryAll(), description="Multi-bit binary record fields",
-    )
+    initial: Annotated[
+        Union[None, int, str], initial_value(r"[0-15]", min=0, max=15)
+    ] = None
+    read_widget: AReadWidget = TextRead()
+    write_widget: AWriteWidget = ComboBox()
+    record_fields: Annotated[  # type: ignore
+        MultiBitBinaryRecordPair, desc("Multi-bit binary record fields")
+    ] = MultiBitBinaryRecordPair()
 
 
-class AsynString(AsynComponent):
+class AsynString(AsynParameter):
     """Asyn String Parameter and records"""
 
     type_strings: ClassVar[TypeStrings] = TypeStrings(
-        read_record="stringin",
-        write_record="stringout",
         asyn_read="asynOctetRead",
         asyn_write="asynOctetWrite",
         asyn_param="asynParamOctet",
     )
-    initial: str = initial_field()
-    read_widget: Widget = widget_field(Widget.TEXTUPDATE)
-    write_widget: Widget = widget_field(Widget.TEXTINPUT)
-    record_fields: StringAll = Field(
-        StringAll(), description="String record fields",
-    )
+    initial: Annotated[Union[None, str], initial_value()] = None
+    read_widget: AReadWidget = TextRead()
+    write_widget: AWriteWidget = TextWrite()
+    record_fields: Annotated[  # type: ignore
+        StringRecordPair, desc("String record fields")
+    ] = StringRecordPair()
 
 
-class AsynWaveform(AsynComponent):
+class AsynWaveform(AsynParameter):
     """Asyn Waveform Parameter and records"""
 
     type_strings: ClassVar[TypeStrings] = TypeStrings(
-        read_record="waveform",
-        write_record="waveform",
         asyn_read="asynOctetRead",
         asyn_write="asynOctetWrite",
         asyn_param="asynParamOctet",
     )
-    read_widget: Widget = widget_field(Widget.TEXTUPDATE)
-    write_widget: Widget = widget_field(Widget.TEXTINPUT)
-    record_fields: WaveformAll = Field(
-        WaveformAll(), description="Waveform record fields",
-    )
+    record_fields: Annotated[  # type: ignore
+        WaveformRecordPair, desc("Waveform record fields")
+    ] = WaveformRecordPair()
 
 
 class AsynProducer(Producer):
-    prefix: str = Field(
-        ..., description="The prefix for record names created by the template file"
-    )
-    asyn_port: str = Field(..., description="The asyn port name")
-    address: str = Field(..., description="The asyn address")
-    timeout: str = Field(..., description="The timeout for the asyn port")
+    prefix: Annotated[
+        str, desc("The prefix for record names created by the template file")
+    ]
+    asyn_port: Annotated[str, desc("The asyn port name")]
+    address: Annotated[str, desc("The asyn address")]
+    timeout: Annotated[str, desc("The timeout for the asyn port")]
+    parent_class: Annotated[
+        str, desc("The parent class for the ParamSet.h")
+    ] = "ADDriver"
+    parameters: Annotated[
+        Tree[AsynParameter], desc("The parameters to make into an IOC")
+    ] = []
 
-    def _read_record_name(self, component: AsynComponent) -> str:
-        if component.read_record_suffix:
-            return self.prefix + component.read_record_suffix
+    def _read_record_name(self, parameter: AsynParameter) -> str:
+        if parameter.read_record_suffix:
+            return self.prefix + parameter.read_record_suffix
         else:
-            return self.prefix + component.name + "_RBV"
+            return self.prefix + parameter.name + "_RBV"
 
-    def _write_record_name(self, component: AsynComponent) -> str:
-        if component.write_record_suffix:
-            return self.prefix + component.write_record_suffix
+    def _write_record_name(self, parameter: AsynParameter) -> str:
+        if parameter.write_record_suffix:
+            return self.prefix + parameter.write_record_suffix
         else:
-            return self.prefix + component.name
+            return self.prefix + parameter.name
 
-    def _make_records(self, component: AsynComponent) -> List[Record]:
-        records = []
-        inp_fields, out_fields = component.record_fields.sort_records()
-        asyn_param_name = component.drv_info or component.name
+    def produce_records(self):
+        """Make epicsdbbuilder records"""
+        for node in walk(self.parameters):
+            if isinstance(node, AsynParameter):
+                self._produce_record(node)
+
+    def _produce_record(self, parameter: AsynParameter):
+        inp_fields, out_fields = parameter.record_fields.sort_records()
+        asyn_param_name = parameter.drv_info or parameter.name
         io = f"@asyn({self.asyn_port},{self.address},{self.timeout}){asyn_param_name}"
-        if component.role.needs_read_record():
+        if parameter.access.needs_read_record():
+            name = self._read_record_name(parameter)
+            rtype = parameter.record_fields.in_record_type.__name__
             fields = dict(
-                DESC=truncate_description(component.description),
+                DESC=truncate_description(parameter.description),
                 INP=io,
-                DTYP=component.type_strings.asyn_read,
-                **inp_fields.dict(exclude_none=True),
+                DTYP=parameter.type_strings.asyn_read,
+                **inp_fields,
             )
-            records.append(
-                Record(
-                    name=self._read_record_name(component),
-                    type=component.type_strings.read_record,
-                    fields=fields,
-                    infos={},
-                )
-            )
-        if component.role.needs_write_record():
+            record = getattr(records, rtype)(name, **fields)
+            if parameter.display_form:
+                record.add_info("Q:form", parameter.display_form)
+        if parameter.access.needs_write_record():
+            name = self._write_record_name(parameter)
+            rtype = parameter.record_fields.out_record_type.__name__
             fields = dict(
-                DESC=truncate_description(component.description),
-                DTYP=component.type_strings.asyn_write,
-                **out_fields.dict(exclude_none=True),
+                DESC=truncate_description(parameter.description),
+                DTYP=parameter.type_strings.asyn_write,
+                **out_fields,
             )
             if "SCAN" in fields:
                 del fields["SCAN"]
-            if component.type_strings.write_record == "waveform":
+            if rtype == "waveform":
                 fields["INP"] = io
             else:
                 fields["OUT"] = io
-            if component.initial is not None:
+            if parameter.initial is not None:
                 fields["PINI"] = "YES"
-                fields["VAL"] = str(component.initial)
-            infos = {}
-            if component.autosave:
-                infos["autosaveFields"] = " ".join(component.autosave)
-            if component.demand_auto_updates:
-                infos["asyn:READBACK"] = "1"
-            records.append(
-                Record(
-                    name=self._write_record_name(component),
-                    type=component.type_strings.write_record,
-                    fields=fields,
-                    infos=infos,
-                )
+                fields["VAL"] = parameter.initial
+            record = getattr(records, rtype)(name, **fields)
+            if parameter.demand_auto_updates:
+                record.add_info("asyn:READBACK", 1)
+            if parameter.display_form:
+                record.add_info("Q:form", parameter.display_form)
+
+    def produce_components(self) -> Tree[Component]:
+        """Make signals from components"""
+        return on_each_node(self.parameters, self._produce_component)
+
+    def _produce_component(self, parameter: AsynParameter) -> Iterator[Component]:
+        # TODO: what about SignalX?
+        read_pv = self._read_record_name(parameter)
+        write_pv = self._write_record_name(parameter)
+        if parameter.access == Access.R:
+            yield SignalR(parameter.name, read_pv, parameter.read_widget)
+        elif parameter.access == Access.W:
+            yield SignalW(
+                parameter.name, write_pv, parameter.write_widget,
             )
-        return records
-
-    def produce_records(self, components: Tree[Component]) -> Tree[Record]:
-        return AsynComponent.on_each_node(components, self._make_records)
-
-    def _make_channels(self, component: AsynComponent) -> List[ChannelConfig]:
-        channels = []
-        # Make the primary channel
-        channel = ChannelConfig(
-            name=component.name,
-            label=component.label,
-            description=component.description,
-            display_form=component.display_form,
-        )
-        # Add read pv
-        if component.role == ParameterRole.TRANSIENT:
-            # readback is a separate channel
-            read_channel = ChannelConfig(
-                name=component.name + "Readback",
-                label=component.label + " Readback" if component.label else None,
-                description=component.description,
-                display_form=component.display_form,
-                read_pv=self._read_record_name(component),
+        elif parameter.access == Access.RW:
+            need_both = not parameter.demand_auto_updates
+            yield SignalRW(
+                parameter.name,
+                write_pv,
+                parameter.write_widget,
+                read_pv=read_pv if need_both else "",
+                read_widget=parameter.read_widget if need_both else None,
             )
-            channels.append(read_channel)
-        elif component.role.needs_read_record():
-            channel.read_pv = self._read_record_name(component)
-            channel.widget = component.read_widget
-        # Add write pv
-        if component.role.needs_write_record():
-            channel.write_pv = self._write_record_name(component)
-            # Write widget trumps read widget
-            channel.widget = component.write_widget
-        channels.append(channel)
-        return channels
 
-    def produce_channels(self, components: Tree[Component]) -> Tree[ChannelConfig]:
-        return AsynComponent.on_each_node(components, self._make_channels)
+    def produce_text(self, filename: str) -> str:
+        """Make things like cpp, h files"""
+        basename, extension = filename.rsplit(".", maxsplit=1)
+        assert extension == "h", f"Can only make header files not {filename}"
+        guard_define = basename.capitalize() + "DetectorParamSet_H"
+        defines = []
+        adds = []
+        indexes = []
+        for node in walk(self.parameters):
+            if isinstance(node, AsynParameter):
+                param_type = node.type_strings.asyn_param
+                index_name = node.index_name or node.name
+                drv_info = node.drv_info or basename.capitalize() + node.name + "String"
+                defines.append(f'#define {drv_info} "{index_name}"')
+                adds.append(f"this->add({drv_info}, {param_type}, &{index_name});")
+                indexes.append(f"int {index_name};")
+                if len(indexes) == 1:
+                    indexes.append(
+                        f"#define FIRST_{basename.upper()}_PARAM_INDEX {index_name}"
+                    )
 
-    def _make_asyn_parameters(self, component: AsynComponent) -> List[AsynParameter]:
-        parameter = AsynParameter(
-            name=component.name,
-            type=component.type_strings.asyn_param,
-            index_name=component.index_name or component.name,
-            drv_info=component.drv_info or component.name,
-            description=component.role.value,
-        )
-        return [parameter]
+        def join(texts, indent=0):
+            return (" " * indent + "\n").join(texts)
 
-    def produce_asyn_parameters(
-        self, components: Tree[Component]
-    ) -> Tree[AsynParameter]:
-        return AsynComponent.on_each_node(components, self._make_asyn_parameters)
+        h_txt = f"""\
+#ifndef {guard_define}
+#define {guard_define}
+#include "{self.parent_class}ParamSet.h"
+{join(defines)}
+class {basename}DetectorParamSet : public virtual {self.parent_class}ParamSet {{
+public:
+    {basename}DetectorParamSet() {{
+        {join(adds, indent=8)}
+    }}
+protected:
+    {join(indexes, indent=4)}
+}};
+#endif // {guard_define}
+"""
+        return h_txt

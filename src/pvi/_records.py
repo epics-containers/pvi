@@ -1,336 +1,241 @@
-from typing import Tuple, Union
+from __future__ import annotations
 
-from pydantic import BaseModel, Field
+import ctypes
+import dataclasses
+from ctypes import POINTER, c_char_p, c_int, c_void_p, pointer
+from dataclasses import Field, field, make_dataclass
+from enum import Enum
+from pathlib import Path
+from typing import Any, ClassVar, Dict, List, Tuple, Type, get_type_hints
 
-# TODO
-# Correct the datatypes (currently using str for all)
+from apischema import serialize
+from epicscorelibs.ioc import dbCore
+from epicscorelibs.path import base_path
+from typing_extensions import Annotated as A
 
-
-PairUnion = Union[
-    Tuple["AnalogueIn", "AnalogueOut"],
-    Tuple["BinaryIn", "BinaryOut"],
-    Tuple["LongIn", "LongOut"],
-    Tuple["MultiBitBinaryIn", "MultiBitBinaryOut"],
-    Tuple["StringIn", "StringOut"],
-    Tuple["WaveformIn", "WaveformOut"],
-]
-
-
-class BaseRecordType(BaseModel):
-    DISA: str = Field(None, description="DISA")
-    DISS: str = Field(None, description="DISS")
-    DISV: str = Field(None, description="DISV")
-    EVNT: str = Field(None, description="EVNT")
-    FLNK: str = Field(None, description="FLNK")
-    LCNT: str = Field(None, description="LCNT")
-    LSET: str = Field(None, description="LSET")
-    PACT: str = Field(None, description="PACT")
-    PHAS: str = Field(None, description="PHAS")
-    PINI: str = Field(None, description="PINI")
-    PRIO: str = Field(None, description="PRIO")
-    PROC: str = Field(None, description="PROC")
-    SCAN: str = Field(None, description="SCAN")
-    SDIS: str = Field(None, description="SDIS")
+from ._utils import desc
 
 
-class SortRecords:
-    def sort_records(self) -> PairUnion:
-        raise NotImplementedError(self)
+# https://code.activestate.com/recipes/576731-c-function-decorator/
+class EPICSFunc:
+    """This class wraps a Python function into its C equivalent in the given library"""
+
+    def __init__(self, error_check=None):
+        """Set the library to reference the function name against."""
+        self.error_check = error_check
+
+    def __getitem__(self, key):
+        """Return a pointer to the type, used in get_type_hints below"""
+        # https://github.com/python/mypy/issues/7540
+        return POINTER(key)
+
+    def __call__(self, f):
+        """Performs the actual function wrapping."""
+        # Get the type hints, redirecting pointer[something] to self
+        hints = get_type_hints(f, localns=dict(pointer=self))
+
+        # get the function itself
+        function = dbCore[f.__name__]
+
+        # Set its call args, return type, and error handler if there is one
+        function.argtypes = [v for x, v in hints.items() if x != "return"]
+        function.restype = hints.get("return")
+        if self.error_check:
+            function.errcheck = self.error_check
+
+        return function
 
 
-class AnalogueCommon(BaseRecordType):
-    ADEL: str = Field(None, description="ADEL")
-    ALST: str = Field(None, description="ALST")
-    AOFF: str = Field(None, description="AOFF")
-    ASLO: str = Field(None, description="ASLO")
-    EGU: str = Field(None, description="EGU")
-    EGUF: str = Field(None, description="EGUF")
-    EGUL: str = Field(None, description="EGUL")
-    EOFF: str = Field(None, description="EOFF")
-    ESLO: str = Field(None, description="ESLO")
-    HHSV: str = Field(None, description="HHSV")
-    HIGH: str = Field(None, description="HIGH")
-    HIHI: str = Field(None, description="HIHI")
-    HOPR: str = Field(None, description="HOPR")
-    HSV: str = Field(None, description="HSV")
-    HYST: str = Field(None, description="HYST")
-    INIT: str = Field(None, description="INIT")
-    LALM: str = Field(None, description="LALM")
-    LBRK: str = Field(None, description="LBRK")
-    LINR: str = Field(None, description="LINR")
-    LLSV: str = Field(None, description="LLSV")
-    LOLO: str = Field(None, description="LOLO")
-    LOPR: str = Field(None, description="LOPR")
-    LOW: str = Field(None, description="LOW")
-    LSV: str = Field(None, description="LSV")
-    MDEL: str = Field(None, description="MDEL")
-    MLST: str = Field(None, description="MLST")
-    ORAW: str = Field(None, description="ORAW")
-    PBRK: str = Field(None, description="PBRK")
-    PREC: int = Field(None, description="PREC")
-    ROFF: str = Field(None, description="ROFF")
-    RVAL: str = Field(None, description="RVAL")
-    SIML: str = Field(None, description="SIML")
-    SIMM: str = Field(None, description="SIMM")
-    SIMS: str = Field(None, description="SIMS")
-    SIOL: str = Field(None, description="SIOL")
+class auto_encode(c_char_p):
+    @classmethod
+    def from_param(cls, value):
+        return None if value is None else value.encode()
 
 
-class AnalogueIn(AnalogueCommon):
-    SMOO: str = Field(None, description="SMOO")
-    SVAL: str = Field(None, description="SVAL")
+def auto_decode(result, func, args):
+    return None if result is None else result.decode()
 
 
-class AnalogueOut(AnalogueCommon):
-    DOL: str = Field(None, description="DOL")
-    DRVH: str = Field(None, description="DRVH")
-    DRVL: str = Field(None, description="DRVL")
-    IVOA: str = Field(None, description="IVOA")
-    IVOV: str = Field(None, description="IVOV")
-    OIF: str = Field(None, description="OIF")
-    OMOD: str = Field(None, description="OMOD")
-    OMSL: str = Field(None, description="OMSL")
-    ORBV: str = Field(None, description="ORBV")
-    OROC: str = Field(None, description="OROC")
-    OVAL: str = Field(None, description="OVAL")
-    PVAL: str = Field(None, description="PVAL")
-    RBV: str = Field(None, description="RBV")
+def expect_success(result, function, args):
+    assert result == 0, f"Expected success from {function}{args}"
+    return result
 
 
-class AnalogueAll(AnalogueIn, AnalogueOut, SortRecords):
-    def sort_records(self) -> Tuple[AnalogueIn, AnalogueOut]:
-        inp_records = AnalogueIn(**self.dict(exclude_none=True))
-        out_records = AnalogueOut(**self.dict(exclude_none=True))
-        return inp_records, out_records
+@EPICSFunc(expect_success)
+def dbReadDatabase(
+    *,
+    ppdbbase: c_void_p,
+    filename: auto_encode,
+    path: auto_encode,
+    substitutions: auto_encode,
+) -> c_int:
+    ...
 
 
-class BinaryCommon(BaseRecordType):
-    COSV: str = Field(None, description="COSV")
-    LALM: str = Field(None, description="LALM")
-    MASK: str = Field(None, description="MASK")
-    MLST: str = Field(None, description="MLST")
-    ONAM: str = Field(None, description="ONAM")
-    ORAW: str = Field(None, description="ORAW")
-    OSV: str = Field(None, description="OSV")
-    RVAL: str = Field(None, description="RVAL")
-    SIML: str = Field(None, description="SIML")
-    SIMM: str = Field(None, description="SIMM")
-    SIMS: str = Field(None, description="SIMS")
-    SIOL: str = Field(None, description="SIOL")
-    ZNAM: str = Field(None, description="ZNAM")
-    ZSV: str = Field(None, description="ZSV")
+@EPICSFunc()
+def dbAllocEntry(*, pdbbase: c_void_p) -> c_void_p:
+    ...
 
 
-class BinaryIn(BinaryCommon):
-    SVAL: str = Field(None, description="SVAL")
+@EPICSFunc(expect_success)
+def dbFirstRecordType(*, pdbentry: c_void_p) -> c_int:
+    ...
 
 
-class BinaryOut(BinaryCommon):
-    DOL: str = Field(None, description="DOL")
-    HIGH: str = Field(None, description="HIGH")
-    IVOA: str = Field(None, description="IVOA")
-    IVOV: str = Field(None, description="IVOV")
-    OMSL: str = Field(None, description="OMSL")
-    ORBV: str = Field(None, description="ORBV")
-    RBV: str = Field(None, description="RBV")
-    RPVT: str = Field(None, description="RPVT")
-    WDPT: str = Field(None, description="WDPT")
+@EPICSFunc()
+def dbNextRecordType(*, pdbentry: c_void_p) -> c_int:
+    ...
 
 
-class BinaryAll(BinaryIn, BinaryOut, SortRecords):
-    def sort_records(self) -> Tuple[BinaryIn, BinaryOut]:
-        inp_records = BinaryIn(**self.dict(exclude_none=True))
-        out_records = BinaryOut(**self.dict(exclude_none=True))
-        return inp_records, out_records
+@EPICSFunc(auto_decode)
+def dbGetRecordTypeName(*, pdbentry: c_void_p) -> c_char_p:
+    ...
 
 
-class LongCommon(BaseRecordType):
-    ADEL: str = Field(None, description="ADEL")
-    ALST: str = Field(None, description="ALST")
-    EGU: str = Field(None, description="EGU")
-    HHSV: str = Field(None, description="HHSV")
-    HIGH: str = Field(None, description="HIGH")
-    HIHI: str = Field(None, description="HIHI")
-    HOPR: str = Field(None, description="HOPR")
-    HSV: str = Field(None, description="HSV")
-    HYST: str = Field(None, description="HYST")
-    LALM: str = Field(None, description="LALM")
-    LLSV: str = Field(None, description="LLSV")
-    LOLO: str = Field(None, description="LOLO")
-    LOPR: str = Field(None, description="LOPR")
-    LOW: str = Field(None, description="LOW")
-    LSV: str = Field(None, description="LSV")
-    MDEL: str = Field(None, description="MDEL")
-    MLST: str = Field(None, description="MLST")
-    SIML: str = Field(None, description="SIML")
-    SIMM: str = Field(None, description="SIMM")
-    SIMS: str = Field(None, description="SIMS")
-    SIOL: str = Field(None, description="SIOL")
+@EPICSFunc(expect_success)
+def dbFirstField(*, pdbentry: c_void_p, dctonly: c_int) -> c_int:
+    ...
 
 
-class LongIn(LongCommon):
-    SVAL: str = Field(None, description="SVAL")
+@EPICSFunc()
+def dbNextField(*, pdbentry: c_void_p, dctonly: c_int) -> c_int:
+    ...
 
 
-class LongOut(LongCommon):
-    DOL: str = Field(None, description="DOL")
-    DRVH: str = Field(None, description="DRVH")
-    DRVL: str = Field(None, description="DRVL")
-    IVOA: str = Field(None, description="IVOA")
-    IVOV: str = Field(None, description="IVOV")
-    OMSL: str = Field(None, description="OMSL")
+@EPICSFunc(auto_decode)
+def dbGetFieldName(*, pdbentry: c_void_p) -> c_char_p:
+    ...
 
 
-class LongAll(LongIn, LongOut, SortRecords):
-    def sort_records(self) -> Tuple[LongIn, LongOut]:
-        inp_records = LongIn(**self.dict(exclude_none=True))
-        out_records = LongOut(**self.dict(exclude_none=True))
-        return inp_records, out_records
+@EPICSFunc()
+def dbGetFieldDbfType(*, pdbentry: c_void_p) -> c_int:
+    ...
 
 
-class MultiBitBinaryCommon(BaseRecordType):
-    COSV: str = Field(None, description="COSV")
-    EIST: str = Field(None, description="EIST")
-    EISV: str = Field(None, description="EISV")
-    EIVL: str = Field(None, description="EIVL")
-    ELST: str = Field(None, description="ELST")
-    ELSV: str = Field(None, description="ELSV")
-    ELVL: str = Field(None, description="ELVL")
-    FFST: str = Field(None, description="FFST")
-    FFSV: str = Field(None, description="FFSV")
-    FFVL: str = Field(None, description="FFVL")
-    FRST: str = Field(None, description="FRST")
-    FRSV: str = Field(None, description="FRSV")
-    FRVL: str = Field(None, description="FRVL")
-    FTST: str = Field(None, description="FTST")
-    FTSV: str = Field(None, description="FTSV")
-    FTVL: str = Field(None, description="FTVL")
-    FVST: str = Field(None, description="FVST")
-    FVSV: str = Field(None, description="FVSV")
-    FVVL: str = Field(None, description="FVVL")
-    LALM: str = Field(None, description="LALM")
-    MASK: str = Field(None, description="MASK")
-    MLST: str = Field(None, description="MLST")
-    NIST: str = Field(None, description="NIST")
-    NISV: str = Field(None, description="NISV")
-    NIVL: str = Field(None, description="NIVL")
-    NOBT: str = Field(None, description="NOBT")
-    ONST: str = Field(None, description="ONST")
-    ONSV: str = Field(None, description="ONSV")
-    ONVL: str = Field(None, description="ONVL")
-    ORAW: str = Field(None, description="ORAW")
-    RVAL: str = Field(None, description="RVAL")
-    SDEF: str = Field(None, description="SDEF")
-    SHFT: str = Field(None, description="SHFT")
-    SIML: str = Field(None, description="SIML")
-    SIMM: str = Field(None, description="SIMM")
-    SIMS: str = Field(None, description="SIMS")
-    SIOL: str = Field(None, description="SIOL")
-    SVST: str = Field(None, description="SVST")
-    SVSV: str = Field(None, description="SVSV")
-    SVVL: str = Field(None, description="SVVL")
-    SXST: str = Field(None, description="SXST")
-    SXSV: str = Field(None, description="SXSV")
-    SXVL: str = Field(None, description="SXVL")
-    TEST: str = Field(None, description="TEST")
-    TESV: str = Field(None, description="TESV")
-    TEVL: str = Field(None, description="TEVL")
-    THST: str = Field(None, description="THST")
-    THSV: str = Field(None, description="THSV")
-    THVL: str = Field(None, description="THVL")
-    TTST: str = Field(None, description="TTST")
-    TTSV: str = Field(None, description="TTSV")
-    TTVL: str = Field(None, description="TTVL")
-    TVST: str = Field(None, description="TVST")
-    TVSV: str = Field(None, description="TVSV")
-    TVVL: str = Field(None, description="TVVL")
-    TWST: str = Field(None, description="TWST")
-    TWSV: str = Field(None, description="TWSV")
-    TWVL: str = Field(None, description="TWVL")
-    UNSV: str = Field(None, description="UNSV")
-    ZRST: str = Field(None, description="ZRST")
-    ZRSV: str = Field(None, description="ZRSV")
-    ZRVL: str = Field(None, description="ZRVL")
+@EPICSFunc(auto_decode)
+def dbGetFieldTypeString(*, dbfType: c_int) -> c_char_p:
+    ...
 
 
-class MultiBitBinaryIn(MultiBitBinaryCommon):
-    SVAL: str = Field(None, description="SVAL")
+@EPICSFunc(auto_decode)
+def dbGetDefault(*, pdbentry: c_void_p) -> c_char_p:
+    ...
 
 
-class MultiBitBinaryOut(MultiBitBinaryCommon):
-    DOL: str = Field(None, description="DOL")
-    IVOA: str = Field(None, description="IVOA")
-    IVOV: str = Field(None, description="IVOV")
-    OMSL: str = Field(None, description="OMSL")
-    ORBV: str = Field(None, description="ORBV")
-    RBV: str = Field(None, description="RBV")
+@EPICSFunc(auto_decode)
+def dbGetPrompt(*, pdbentry: c_void_p) -> c_char_p:
+    ...
 
 
-class MultiBitBinaryAll(MultiBitBinaryIn, MultiBitBinaryOut, SortRecords):
-    def sort_records(self) -> Tuple[MultiBitBinaryIn, MultiBitBinaryOut]:
-        inp_records = MultiBitBinaryIn(**self.dict(exclude_none=True))
-        out_records = MultiBitBinaryOut(**self.dict(exclude_none=True))
-        return inp_records, out_records
+@EPICSFunc()
+def dbGetNMenuChoices(*, pdbentry: c_void_p) -> c_int:
+    ...
 
 
-class StringCommon(BaseRecordType):
-    APST: str = Field(None, description="APST")
-    MPST: str = Field(None, description="MPST")
-    OVAL: str = Field(None, description="OVAL")
-    SIML: str = Field(None, description="SIML")
-    SIMM: str = Field(None, description="SIMM")
-    SIMS: str = Field(None, description="SIMS")
-    SIOL: str = Field(None, description="SIOL")
+@EPICSFunc()
+def dbGetMenuChoices(*, pdbentry: c_void_p) -> pointer[c_char_p]:
+    ...
 
 
-class StringIn(StringCommon):
-    SVAL: str = Field(None, description="SVAL")
+@EPICSFunc()
+def dbFreeEntry(*, pdbentry: c_void_p):
+    ...
 
 
-class StringOut(StringCommon):
-    DOL: str = Field(None, description="DOL")
-    IVOA: str = Field(None, description="IVOA")
-    IVOV: str = Field(None, description="IVOV")
-    OMSL: str = Field(None, description="OMSL")
+DBF_TYPE_MAP = dict(
+    DBF_STRING=str,
+    DBF_CHAR=int,
+    DBF_UCHAR=int,
+    DBF_SHORT=int,
+    DBF_USHORT=int,
+    DBF_LONG=int,
+    DBF_ULONG=int,
+    DBF_INT64=int,
+    DBF_UINT64=int,
+    DBF_FLOAT=float,
+    DBF_DOUBLE=float,
+    DBF_ENUM=str,
+    DBF_MENU=Enum,
+    DBF_DEVICE=str,
+    DBF_INLINK=str,
+    DBF_OUTLINK=str,
+    DBF_FWDLINK=str,
+    DBF_NOACCESS=None,
+)
+
+FieldList = List[Tuple[str, Type, Field]]
 
 
-class StringAll(StringIn, StringOut, SortRecords):
-    def sort_records(self) -> Tuple[StringIn, StringOut]:
-        inp_records = StringIn(**self.dict(exclude_none=True))
-        out_records = StringOut(**self.dict(exclude_none=True))
-        return inp_records, out_records
+def make_fields(entry) -> FieldList:
+    status = dbFirstField(entry, 0)
+    fields: FieldList = []
+    while status == 0:
+        field_name = dbGetFieldName(entry)
+        default = dbGetDefault(entry)
+        prompt = dbGetPrompt(entry)
+        field_type = DBF_TYPE_MAP[dbGetFieldTypeString(dbGetFieldDbfType(entry))]
+        if field_type is Enum:
+            # Make a custom enum type from the menu choices
+            choices = dbGetMenuChoices(entry)
+            str_choices = [choices[i].decode() for i in range(dbGetNMenuChoices(entry))]
+            field_type = Enum(field_name, [(c, c) for c in str_choices])  # type: ignore
+        if field_type:
+            fields.append(
+                (field_name, A[field_type, desc(prompt)], field(default=default))
+            )
+        status = dbNextField(entry, 0)
+    return fields
 
 
-class WaveformCommon(BaseRecordType):
-    APST: str = Field(None, description="APST")
-    BPTR: str = Field(None, description="BPTR")
-    BUSY: str = Field(None, description="BUSY")
-    EGU: str = Field(None, description="EGU")
-    FTVL: str = Field(None, description="FTVL")
-    HASH: str = Field(None, description="HASH")
-    HOPR: str = Field(None, description="HOPR")
-    LOPR: str = Field(None, description="LOPR")
-    MPST: str = Field(None, description="MPST")
-    NELM: str = Field(None, description="NELM")
-    NORD: str = Field(None, description="NORD")
-    PREC: int = Field(None, description="PREC")
-    RARM: str = Field(None, description="RARM")
-    SIML: str = Field(None, description="SIML")
-    SIMM: str = Field(None, description="SIMM")
-    SIMS: str = Field(None, description="SIMS")
-    SIOL: str = Field(None, description="SIOL")
+def make_fields_dict() -> Dict[str, FieldList]:
+    fields_dict: Dict[str, FieldList] = {}
+    pdbbase = ctypes.c_void_p()
+    dbd_path = str(Path(base_path) / "dbd")
+    dbReadDatabase(ctypes.byref(pdbbase), "base.dbd", dbd_path, None)
+    entry = dbAllocEntry(pdbbase)
+    status = dbFirstRecordType(entry)
+    while status == 0:
+        record_type = dbGetRecordTypeName(entry)
+        fields_dict[record_type] = make_fields(entry)
+        status = dbNextRecordType(entry)
+    dbFreeEntry(entry)
+    return fields_dict
 
 
-class WaveformIn(WaveformCommon):
-    pass
+fields_dict = make_fields_dict()
 
 
-class WaveformOut(WaveformCommon):
-    pass
+class RecordPair:
+    in_record_type: ClassVar[Type]
+    out_record_type: ClassVar[Type]
+
+    @classmethod
+    def for_record_types(cls, in_str: str, out_str: str) -> Type[RecordPair]:
+        in_record_type = make_dataclass(in_str, fields_dict[in_str])
+        out_record_type = make_dataclass(out_str, fields_dict[out_str])
+        namespace = dict(in_record_type=in_record_type, out_record_type=out_record_type)
+        subclass = type(
+            f"{in_str}_{out_str}", (cls, in_record_type, out_record_type), namespace
+        )
+        return subclass
+
+    def sort_records(self) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+        record_fields: Dict[str, Any] = serialize(
+            self, exclude_none=True, exclude_defaults=True
+        )
+
+        def make(cls: Type) -> Dict[str, Any]:
+            fields = set(f.name for f in dataclasses.fields(cls))
+            return {k: v for k, v in record_fields.items() if k in fields}
+
+        return make(self.in_record_type), make(self.out_record_type)
 
 
-class WaveformAll(WaveformIn, WaveformOut, SortRecords):
-    def sort_records(self) -> Tuple[WaveformIn, WaveformOut]:
-        inp_records = WaveformIn(**self.dict(exclude_none=True))
-        out_records = WaveformOut(**self.dict(exclude_none=True))
-        return inp_records, out_records
+AnalogueRecordPair = RecordPair.for_record_types("ai", "ao")
+BinaryRecordPair = RecordPair.for_record_types("bi", "bo")
+LongRecordPair = RecordPair.for_record_types("longin", "longout")
+MultiBitBinaryRecordPair = RecordPair.for_record_types("mbbi", "mbbo")
+StringRecordPair = RecordPair.for_record_types("stringin", "stringout")
+WaveformRecordPair = RecordPair.for_record_types("waveform", "waveform")
+
+# TODO: add busy record

@@ -1,18 +1,28 @@
 import re
+import sys
 from dataclasses import field, make_dataclass
 from functools import lru_cache
-from typing import List, Optional, Pattern, TypeVar, Union
+from typing import Any, Callable, List, Optional, Pattern, TypeVar, Union
 
-from apischema import deserializer, order, schema, serialized
+from apischema import deserializer, order, schema, serialized, type_name
 from apischema.conversions import Conversion
 from apischema.conversions.converters import serializer
 from apischema.utils import CAMEL_CASE_REGEX, identity
 from typing_extensions import Literal
 
+if sys.version_info >= (3, 8):
+    from typing import Annotated, Literal
+else:
+    from typing_extensions import Annotated, Literal
+
+__all__ = ["Annotated", "Literal"]
+
+Cls = TypeVar("Cls", bound=type)
+
 
 # Permanently cache so we don't include deserialization subclasses defined below
 @lru_cache(maxsize=None)
-def rec_subclasses(cls: type) -> List[type]:
+def rec_subclasses(cls: Cls) -> List[Cls]:
     """Recursive implementation of type.__subclasses__"""
     subclasses = []
     for sub_cls in cls.__subclasses__():
@@ -20,13 +30,15 @@ def rec_subclasses(cls: type) -> List[type]:
     return subclasses
 
 
-Cls = TypeVar("Cls", bound=type)
+def _make_converters(cls: Cls, classes: Callable[[Cls], List[Cls]]) -> Cls:
+    params = tuple(getattr(cls, "__parameters__", ()))
 
+    def with_params(sub: Cls) -> Any:
+        return sub[params] if params else sub  # type: ignore
 
-def as_discriminated_union(cls: Cls) -> Cls:
     def deserialization() -> Conversion:
         def typed_subs():
-            for sub in rec_subclasses(cls):
+            for sub in classes(cls):
                 # Make typed_sub derived from sub with additional type entry
                 type_field = (
                     "type",
@@ -34,7 +46,7 @@ def as_discriminated_union(cls: Cls) -> Cls:
                     field(default=sub.__name__, metadata=order(-1)),
                 )
                 yield make_dataclass(
-                    sub.__name__, [type_field], bases=(sub,)  # type: ignore
+                    sub.__name__, [type_field], bases=(with_params(sub),)
                 )
 
         def convert(sub_inst):
@@ -44,8 +56,8 @@ def as_discriminated_union(cls: Cls) -> Cls:
 
         return Conversion(
             convert,
-            source=Union[tuple(typed_subs())],  # type: ignore
-            target=cls,
+            source=Union[tuple(with_params(s) for s in typed_subs())],  # type: ignore
+            target=with_params(cls),
         )
 
     def serialization() -> Conversion:
@@ -57,13 +69,22 @@ def as_discriminated_union(cls: Cls) -> Cls:
         return Conversion(
             identity,
             source=cls,
-            target=Union[tuple(rec_subclasses(cls))],  # type: ignore
+            target=Union[tuple(classes(cls))],  # type: ignore
             inherited=False,
         )
 
     serializer(lazy=serialization, source=cls)
     deserializer(lazy=deserialization, target=cls)
+    type_name(lambda tp, arg: f"{arg.__name__}{tp.__name__}")(cls)
     return cls
+
+
+def add_type_field(cls: Cls) -> Cls:
+    return _make_converters(cls, lambda cls: [cls])
+
+
+def as_discriminated_union(cls: Cls) -> Cls:
+    return _make_converters(cls, rec_subclasses)
 
 
 def desc(description: str, *, pattern: Optional[Union[str, Pattern]] = None):
@@ -82,3 +103,9 @@ def to_title_case(pascal_s: str) -> str:
         Title Case converted name. E.g. Pascal Case Field Name
     """
     return CAMEL_CASE_REGEX.sub(lambda m: " " + m.group(), pascal_s)
+
+
+def truncate_description(desc: str) -> str:
+    """Take the first line of a multiline description, truncated to 40 chars"""
+    first_line = desc.strip().split("\n")[0]
+    return first_line[:40]

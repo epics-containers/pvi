@@ -1,9 +1,26 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
-from typing import Any, Optional, Sequence
+from enum import Enum
+from typing import (
+    Any,
+    Callable,
+    Generic,
+    Iterator,
+    List,
+    Optional,
+    Sequence,
+    TypeVar,
+    Union,
+)
 
-from typing_extensions import Annotated as A
-
-from ._utils import as_discriminated_union, desc, to_title_case
+from ._utils import (
+    Annotated,
+    add_type_field,
+    as_discriminated_union,
+    desc,
+    to_title_case,
+)
 
 
 @as_discriminated_union
@@ -20,7 +37,7 @@ class LED(ReadWidget):
 class BitField(ReadWidget):
     """LED and label for each bit of an int PV"""
 
-    labels: A[Sequence[str], desc("Label for each bit")]
+    labels: Annotated[Sequence[str], desc("Label for each bit")]
 
 
 class ProgressBar(ReadWidget):
@@ -31,14 +48,14 @@ class ProgressBar(ReadWidget):
 class TextRead(ReadWidget):
     """Text view of any PV"""
 
-    lines: A[int, desc("Number of lines to display")] = 1
+    lines: Annotated[int, desc("Number of lines to display")] = 1
 
 
 @dataclass
 class ArrayTrace(ReadWidget):
     """Trace of the array in a plot view"""
 
-    axis: A[
+    axis: Annotated[
         str,
         desc(
             "Traces with same axis name will appear on same axis, "
@@ -52,7 +69,7 @@ class ArrayTrace(ReadWidget):
 class TableRead(ReadWidget):
     """Tabular view of an NTTable"""
 
-    widgets: A[
+    widgets: Annotated[
         Sequence[ReadWidget],
         desc("For each column, what widget should be repeated for every row"),
     ]
@@ -80,21 +97,21 @@ class ComboBox(WriteWidget):
 class TextWrite(WriteWidget):
     """Text control of any PV"""
 
-    lines: A[int, desc("Number of lines to display")] = 1
+    lines: Annotated[int, desc("Number of lines to display")] = 1
 
 
 @dataclass
 class ArrayWrite(WriteWidget):
     """Control of an array PV"""
 
-    widget: A[
+    widget: Annotated[
         WriteWidget, desc("What widget should be used for each item"),
     ]
 
 
 @dataclass
 class TableWrite(WriteWidget):
-    widgets: A[
+    widgets: Annotated[
         Sequence[WriteWidget],
         desc("For each column, what widget should be repeated for every row"),
     ]
@@ -114,7 +131,7 @@ class Plot(Layout):
 class Row(Layout):
     """Children are columns in the row"""
 
-    header: A[
+    header: Annotated[
         Optional[Sequence[str]],
         desc("Labels for the items in the row, None means use previous row header"),
     ] = None
@@ -124,15 +141,12 @@ class Row(Layout):
 class Grid(Layout):
     """Children are rows in the grid"""
 
-    labelled: A[bool, desc("If True use names of children as labels")] = True
+    labelled: Annotated[bool, desc("If True use names of children as labels")] = True
 
 
 @dataclass
-@as_discriminated_union
-class Component:
-    """These make up a Device"""
-
-    name: A[
+class Named:
+    name: Annotated[
         str, desc("PascalCase name to uniquely identify", pattern=r"([A-Z][a-z0-9]*)*$")
     ]
 
@@ -142,29 +156,40 @@ class Component:
         return to_title_case(self.name)
 
 
+@as_discriminated_union
+class Component(Named):
+    """These make up a Device"""
+
+
 @dataclass
 class SignalR(Component):
     """Scalar value backed by a single PV"""
 
-    pv: A[str, desc("PV to be used for get and monitor")]
-    widget: A[
+    pv: Annotated[str, desc("PV to be used for get and monitor")]
+    widget: Annotated[
         Optional[ReadWidget],
         desc("Widget to use for display, None means don't display"),
     ] = None
 
 
 @dataclass
-class SignalRW(Component):
-    """Read/Write value backed by one or two PVs"""
+class SignalW(Component):
+    """Write only value backed by a single PV"""
 
-    pv: A[str, desc("PV to be used for put")]
-    widget: A[
+    pv: Annotated[str, desc("PV to be used for put")]
+    widget: Annotated[
         Optional[WriteWidget],
         desc("Widget to use for control, None means don't display"),
     ] = None
+
+
+@dataclass
+class SignalRW(SignalW):
+    """Read/write value backed by one or two PVs"""
+
     # This was Optional[str] but produced JSON schema that YAML editor didn't understand
-    read_pv: A[str, desc("PV to be used for read, empty means use pv")] = ""
-    read_widget: A[
+    read_pv: Annotated[str, desc("PV to be used for read, empty means use pv")] = ""
+    read_widget: Annotated[
         Optional[ReadWidget], desc("Widget to use for display, None means use widget"),
     ] = None
 
@@ -173,46 +198,76 @@ class SignalRW(Component):
 class SignalX(Component):
     """Executable that puts a fixed value to a PV."""
 
-    pv: A[str, desc("PV to be used for call")]
-    value: A[Any, desc("Value to write. None means zero")] = None
+    pv: Annotated[str, desc("PV to be used for call")]
+    value: Annotated[Any, desc("Value to write. None means zero")] = None
 
 
 @dataclass
 class DeviceRef(Component):
     """Reference to another Device."""
 
-    pv: A[str, desc("Child device PVI PV")]
+    pv: Annotated[str, desc("Child device PVI PV")]
 
 
 class SignalRef(Component):
     """Reference to another Signal with the same name in this Device."""
 
 
+T = TypeVar("T")
+S = TypeVar("S")
+
+
+@add_type_field
 @dataclass
-class Group(Component):
+class Group(Generic[T], Named):
     """Group of child components in a Layout"""
 
-    layout: A[Layout, desc("How to layout children on screen")]
-    children: A[Sequence[Component], desc("Child Components")]
+    layout: Annotated[Layout, desc("How to layout children on screen")]
+    children: Annotated[Tree[T], desc("Child Components")]
+
+
+Tree = Sequence[Union[T, Group[T]]]
+
+
+def on_each_node(tree: Tree[T], func: Callable[[T], Iterator[S]]) -> Tree[S]:
+    """Visit each node of the tree of type typ, calling func on each leaf"""
+    out: List[Union[S, Group[S]]] = []
+    for t in tree:
+        if isinstance(t, Group):
+            group: Group[S] = Group(
+                name=t.name, layout=t.layout, children=on_each_node(t.children, func),
+            )
+            out.append(group)
+        else:
+            out += list(func(t))
+    return out
+
+
+def walk(tree: Tree[T]) -> Iterator[Union[T, Group[T]]]:
+    """Depth first traversal of tree"""
+    for t in tree:
+        yield t
+        if isinstance(t, Group):
+            yield from walk(t.children)
 
 
 @as_discriminated_union
 @dataclass
 class Formatter:
     # Screens
-    def format_adl(self, components: Sequence[Component], basename: str) -> str:
+    def format_adl(self, components: Tree[Component], basename: str) -> str:
         raise NotImplementedError(self)
 
-    def format_edl(self, components: Sequence[Component], basename: str) -> str:
+    def format_edl(self, components: Tree[Component], basename: str) -> str:
         raise NotImplementedError(self)
 
-    def format_opi(self, components: Sequence[Component], basename: str) -> str:
+    def format_opi(self, components: Tree[Component], basename: str) -> str:
         raise NotImplementedError(self)
 
-    def format_bob(self, components: Sequence[Component], basename: str) -> str:
+    def format_bob(self, components: Tree[Component], basename: str) -> str:
         raise NotImplementedError(self)
 
-    def format_ui(self, components: Sequence[Component], basename: str) -> str:
+    def format_ui(self, components: Tree[Component], basename: str) -> str:
         raise NotImplementedError(self)
 
     # TODO: add pvi json and csv to cli
@@ -225,10 +280,52 @@ class Producer:
         """Make epicsdbbuilder records"""
         raise NotImplementedError(self)
 
-    def produce_components(self) -> Sequence[Component]:
+    def produce_components(self) -> Tree[Component]:
         """Make signals from components"""
         raise NotImplementedError(self)
 
     def produce_text(self, extension: str) -> str:
         """Make things like cpp, h files"""
         raise NotImplementedError(self)
+
+
+class Access(str, Enum):
+    """What access does the user have. One of:
+
+    - R: Read only value that cannot be set. E.g. chipTemperature on a detector,
+      or isHomed for a motor
+    - W: Write only value that can be written to, but there is no current value.
+      E.g. reboot on a detector, or overwriteCurrentPosition for a motor
+    - RW: Read and Write value that can be written to and read back.
+      E.g. acquireTime on a detector, or velocity of a motor
+    """
+
+    R = "R"  #: Read record only
+    W = "W"  #: Write record only
+    RW = "RW"  #: Read and write record
+
+    def needs_read_record(self):
+        return self != self.W
+
+    def needs_write_record(self):
+        return self != self.R
+
+
+class DisplayForm(str, Enum):
+    """Instructions for how a number should be formatted for display"""
+
+    #: Use the default representation from value
+    DEFAULT = "Default"
+    #: Force string representation, most useful for array of bytes
+    STRING = "String"
+    #: Binary, precision determines number of binary digits
+    BINARY = "Binary"
+    #: Decimal, precision determines number of digits after decimal point
+    DECIMAL = "Decimal"
+    #: Hexadecimal, precision determines number of hex digits
+    HEX = "Hex"
+    #: Exponential, precision determines number of digits after decimal point
+    EXPONENTIAL = "Exponential"
+    #: Exponential where exponent is multiple of 3, precision determines number of
+    #: digits after decimal point
+    ENGINEERING = "Engineering"
