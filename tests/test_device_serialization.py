@@ -3,7 +3,6 @@ from pathlib import Path
 
 import pytest
 from apischema import deserialize, serialize
-from apischema.json_schema import deserialization_schema
 from ruamel.yaml import YAML
 
 from pvi.types import (
@@ -52,12 +51,3 @@ def test_serialize(device, device_serialized):
 def test_deserialize(device, device_serialized):
     d = deserialize(Tree[Component], device_serialized)
     assert d == device
-
-
-def test_schema_matches_stored():
-    expected = json.dumps(
-        deserialization_schema(Tree[Component], all_refs=True), indent=2
-    )
-    # open(Path(__file__).parent.parent / "pvi.schema.json", "w").write(expected)
-    actual = open(Path(__file__).parent.parent / "pvi.schema.json").read()
-    assert actual == expected

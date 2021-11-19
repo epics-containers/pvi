@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import Enum
+from pathlib import Path
 from typing import (
     Any,
     Callable,
@@ -276,15 +277,15 @@ class Formatter:
 @as_discriminated_union
 @dataclass
 class Producer:
-    def produce_records(self):
-        """Make epicsdbbuilder records"""
-        raise NotImplementedError(self)
-
     def produce_components(self) -> Tree[Component]:
         """Make signals from components"""
         raise NotImplementedError(self)
 
-    def produce_text(self, extension: str) -> str:
+    def produce_records(self, path: Path):
+        """Make epicsdbbuilder records"""
+        raise NotImplementedError(self)
+
+    def produce_other(self, path: Path):
         """Make things like cpp, h files"""
         raise NotImplementedError(self)
 

@@ -7,7 +7,7 @@ verify_ssl = true
 pvi = {editable = true, extras = ["dev"], path = "."}
 
 [packages]
-pvi = {editable = true, extras = ["yaml"], path = "."}
+pvi = {editable = true, extras = ["cli"], path = "."}
 
 [scripts]
 tests = "python -m pytest"

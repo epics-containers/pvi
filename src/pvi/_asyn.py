@@ -1,20 +1,23 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Any, ClassVar, Iterator, Optional, Union
 
 from apischema.schemas import schema
 from apischema.types import Number
 from epicsdbbuilder import records
+from epicsdbbuilder.recordset import WriteRecords
 
 from ._records import (
     AnalogueRecordPair,
     BinaryRecordPair,
     LongRecordPair,
     MultiBitBinaryRecordPair,
+    RecordComment,
     RecordPair,
     StringRecordPair,
     WaveformRecordPair,
 )
-from ._utils import Annotated, as_discriminated_union, desc, truncate_description
+from ._utils import Annotated, as_discriminated_union, desc, join, truncate_description
 from .types import (
     LED,
     Access,
@@ -99,6 +102,7 @@ def initial_value(pattern: str = None, min: Number = None, max: Number = None):
     )
 
 
+@dataclass
 class AsynBinary(AsynParameter):
     """Asyn Binary Parameter and records"""
 
@@ -115,6 +119,7 @@ class AsynBinary(AsynParameter):
     ] = BinaryRecordPair()
 
 
+@dataclass
 class AsynFloat64(AsynParameter):
     """Asyn Float64 Parameter and records"""
 
@@ -133,6 +138,7 @@ class AsynFloat64(AsynParameter):
     ] = AnalogueRecordPair()
 
 
+@dataclass
 class AsynInt32(AsynParameter):
     """Asyn Int32 Parameter and records"""
 
@@ -147,6 +153,7 @@ class AsynInt32(AsynParameter):
     ] = AnalogueRecordPair()
 
 
+@dataclass
 class AsynLong(AsynInt32):
     """Asyn Long Parameter and records"""
 
@@ -155,6 +162,7 @@ class AsynLong(AsynInt32):
     ] = LongRecordPair()
 
 
+@dataclass
 class AsynMultiBitBinary(AsynParameter):
     """Asyn MultiBitBinary Parameter and records"""
 
@@ -171,6 +179,7 @@ class AsynMultiBitBinary(AsynParameter):
     ] = MultiBitBinaryRecordPair()
 
 
+@dataclass
 class AsynString(AsynParameter):
     """Asyn String Parameter and records"""
 
@@ -187,6 +196,7 @@ class AsynString(AsynParameter):
     ] = StringRecordPair()
 
 
+@dataclass
 class AsynWaveform(AsynParameter):
     """Asyn Waveform Parameter and records"""
 
@@ -200,6 +210,7 @@ class AsynWaveform(AsynParameter):
     ] = WaveformRecordPair()
 
 
+@dataclass
 class AsynProducer(Producer):
     prefix: Annotated[
         str, desc("The prefix for record names created by the template file")
@@ -212,7 +223,7 @@ class AsynProducer(Producer):
     ] = "ADDriver"
     parameters: Annotated[
         Tree[AsynParameter], desc("The parameters to make into an IOC")
-    ] = []
+    ] = field(default_factory=list)
 
     def _read_record_name(self, parameter: AsynParameter) -> str:
         if parameter.read_record_suffix:
@@ -226,11 +237,38 @@ class AsynProducer(Producer):
         else:
             return self.prefix + parameter.name
 
-    def produce_records(self):
+    def produce_components(self) -> Tree[Component]:
+        """Make signals from components"""
+        return on_each_node(self.parameters, self._produce_component)
+
+    def _produce_component(self, parameter: AsynParameter) -> Iterator[Component]:
+        # TODO: what about SignalX?
+        read_pv = self._read_record_name(parameter)
+        write_pv = self._write_record_name(parameter)
+        if parameter.access == Access.R:
+            yield SignalR(parameter.name, read_pv, parameter.read_widget)
+        elif parameter.access == Access.W:
+            yield SignalW(
+                parameter.name, write_pv, parameter.write_widget,
+            )
+        elif parameter.access == Access.RW:
+            need_both = not parameter.demand_auto_updates
+            yield SignalRW(
+                parameter.name,
+                write_pv,
+                parameter.write_widget,
+                read_pv=read_pv if need_both else "",
+                read_widget=parameter.read_widget if need_both else None,
+            )
+
+    def produce_records(self, path: Path):
         """Make epicsdbbuilder records"""
         for node in walk(self.parameters):
             if isinstance(node, AsynParameter):
                 self._produce_record(node)
+            else:
+                RecordComment(f"Group: {node.name}")
+        WriteRecords(str(path), sort=lambda x: x)
 
     def _produce_record(self, parameter: AsynParameter):
         inp_fields, out_fields = parameter.record_fields.sort_records()
@@ -271,35 +309,11 @@ class AsynProducer(Producer):
             if parameter.display_form:
                 record.add_info("Q:form", parameter.display_form)
 
-    def produce_components(self) -> Tree[Component]:
-        """Make signals from components"""
-        return on_each_node(self.parameters, self._produce_component)
-
-    def _produce_component(self, parameter: AsynParameter) -> Iterator[Component]:
-        # TODO: what about SignalX?
-        read_pv = self._read_record_name(parameter)
-        write_pv = self._write_record_name(parameter)
-        if parameter.access == Access.R:
-            yield SignalR(parameter.name, read_pv, parameter.read_widget)
-        elif parameter.access == Access.W:
-            yield SignalW(
-                parameter.name, write_pv, parameter.write_widget,
-            )
-        elif parameter.access == Access.RW:
-            need_both = not parameter.demand_auto_updates
-            yield SignalRW(
-                parameter.name,
-                write_pv,
-                parameter.write_widget,
-                read_pv=read_pv if need_both else "",
-                read_widget=parameter.read_widget if need_both else None,
-            )
-
-    def produce_text(self, filename: str) -> str:
+    def produce_other(self, path: Path):
         """Make things like cpp, h files"""
-        basename, extension = filename.rsplit(".", maxsplit=1)
-        assert extension == "h", f"Can only make header files not {filename}"
-        guard_define = basename.capitalize() + "DetectorParamSet_H"
+        is_valid = path.suffix == "h" and "." not in path.stem
+        assert is_valid, f"Can only make header files not {path}"
+        guard_define = path.stem.capitalize() + "DetectorParamSet_H"
         defines = []
         adds = []
         indexes = []
@@ -307,26 +321,25 @@ class AsynProducer(Producer):
             if isinstance(node, AsynParameter):
                 param_type = node.type_strings.asyn_param
                 index_name = node.index_name or node.name
-                drv_info = node.drv_info or basename.capitalize() + node.name + "String"
+                drv_info = (
+                    node.drv_info or path.stem.capitalize() + node.name + "String"
+                )
                 defines.append(f'#define {drv_info} "{index_name}"')
                 adds.append(f"this->add({drv_info}, {param_type}, &{index_name});")
                 indexes.append(f"int {index_name};")
                 if len(indexes) == 1:
                     indexes.append(
-                        f"#define FIRST_{basename.upper()}_PARAM_INDEX {index_name}"
+                        f"#define FIRST_{path.stem.upper()}_PARAM_INDEX {index_name}"
                     )
-
-        def join(texts, indent=0):
-            return (" " * indent + "\n").join(texts)
 
         h_txt = f"""\
 #ifndef {guard_define}
 #define {guard_define}
 #include "{self.parent_class}ParamSet.h"
 {join(defines)}
-class {basename}DetectorParamSet : public virtual {self.parent_class}ParamSet {{
+class {path.stem}DetectorParamSet : public virtual {self.parent_class}ParamSet {{
 public:
-    {basename}DetectorParamSet() {{
+    {path.stem}DetectorParamSet() {{
         {join(adds, indent=8)}
     }}
 protected:
@@ -334,4 +347,4 @@ protected:
 }};
 #endif // {guard_define}
 """
-        return h_txt
+        path.write_text(h_txt)

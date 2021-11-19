@@ -1,144 +1,81 @@
 from __future__ import annotations
 
-import ctypes
 import dataclasses
 from ctypes import POINTER, c_char_p, c_int, c_void_p, pointer
-from dataclasses import Field, field, make_dataclass
 from enum import Enum
 from pathlib import Path
 from typing import Any, ClassVar, Dict, List, Tuple, Type, get_type_hints
 
 from apischema import serialize
-from epicscorelibs.ioc import dbCore
-from epicscorelibs.path import base_path
+from epicsdbbuilder import dbd, mydbstatic
+from epicsdbbuilder.recordset import recordset
 from typing_extensions import Annotated as A
 
 from ._utils import desc
 
 
+class PointerFactory:
+    def __getitem__(self, key):
+        """Return a pointer to the type, used in get_type_hints below"""
+        # https://github.com/python/mypy/issues/7540
+        return POINTER(key)
+
+
+dbd.InitialiseDbd()
+for asyn_dbd in (Path(__file__).parent / "asynDbd").glob("*.dbd"):
+    if asyn_dbd.name != "asynCalc.dbd":
+        dbd.LoadDbdFile(asyn_dbd)
+
+
 # https://code.activestate.com/recipes/576731-c-function-decorator/
-class EPICSFunc:
+class DbFunction:
     """This class wraps a Python function into its C equivalent in the given library"""
 
     def __init__(self, error_check=None):
         """Set the library to reference the function name against."""
         self.error_check = error_check
 
-    def __getitem__(self, key):
-        """Return a pointer to the type, used in get_type_hints below"""
-        # https://github.com/python/mypy/issues/7540
-        return POINTER(key)
-
     def __call__(self, f):
         """Performs the actual function wrapping."""
-        # Get the type hints, redirecting pointer[something] to self
-        hints = get_type_hints(f, localns=dict(pointer=self))
+        # Get the type hints, redirecting pointer[something] to PointerFactory
+        hints = get_type_hints(f, localns=dict(pointer=PointerFactory()))
 
-        # get the function itself
-        function = dbCore[f.__name__]
-
-        # Set its call args, return type, and error handler if there is one
-        function.argtypes = [v for x, v in hints.items() if x != "return"]
-        function.restype = hints.get("return")
-        if self.error_check:
-            function.errcheck = self.error_check
-
-        return function
+        # Return the function with argtypes etc. described by the type hints
+        return mydbstatic.GetDbFunction(
+            f.__name__,
+            argtypes=[v for x, v in hints.items() if x != "return"],
+            restype=hints.get("return"),
+            errcheck=self.error_check,
+        )
 
 
-class auto_encode(c_char_p):
-    @classmethod
-    def from_param(cls, value):
-        return None if value is None else value.encode()
-
-
-def auto_decode(result, func, args):
-    return None if result is None else result.decode()
-
-
-def expect_success(result, function, args):
-    assert result == 0, f"Expected success from {function}{args}"
-    return result
-
-
-@EPICSFunc(expect_success)
-def dbReadDatabase(
-    *,
-    ppdbbase: c_void_p,
-    filename: auto_encode,
-    path: auto_encode,
-    substitutions: auto_encode,
-) -> c_int:
+@DbFunction()
+def dbGetFieldDbfType(pdbentry: c_void_p) -> c_int:
     ...
 
 
-@EPICSFunc()
-def dbAllocEntry(*, pdbbase: c_void_p) -> c_void_p:
+@DbFunction(mydbstatic.auto_decode)
+def dbGetFieldTypeString(dbfType: c_int) -> c_char_p:
     ...
 
 
-@EPICSFunc(expect_success)
-def dbFirstRecordType(*, pdbentry: c_void_p) -> c_int:
+@DbFunction(mydbstatic.auto_decode)
+def dbGetDefault(pdbentry: c_void_p) -> c_char_p:
     ...
 
 
-@EPICSFunc()
-def dbNextRecordType(*, pdbentry: c_void_p) -> c_int:
+@DbFunction(mydbstatic.auto_decode)
+def dbGetPrompt(pdbentry: c_void_p) -> c_char_p:
     ...
 
 
-@EPICSFunc(auto_decode)
-def dbGetRecordTypeName(*, pdbentry: c_void_p) -> c_char_p:
+@DbFunction()
+def dbGetNMenuChoices(pdbentry: c_void_p) -> c_int:
     ...
 
 
-@EPICSFunc(expect_success)
-def dbFirstField(*, pdbentry: c_void_p, dctonly: c_int) -> c_int:
-    ...
-
-
-@EPICSFunc()
-def dbNextField(*, pdbentry: c_void_p, dctonly: c_int) -> c_int:
-    ...
-
-
-@EPICSFunc(auto_decode)
-def dbGetFieldName(*, pdbentry: c_void_p) -> c_char_p:
-    ...
-
-
-@EPICSFunc()
-def dbGetFieldDbfType(*, pdbentry: c_void_p) -> c_int:
-    ...
-
-
-@EPICSFunc(auto_decode)
-def dbGetFieldTypeString(*, dbfType: c_int) -> c_char_p:
-    ...
-
-
-@EPICSFunc(auto_decode)
-def dbGetDefault(*, pdbentry: c_void_p) -> c_char_p:
-    ...
-
-
-@EPICSFunc(auto_decode)
-def dbGetPrompt(*, pdbentry: c_void_p) -> c_char_p:
-    ...
-
-
-@EPICSFunc()
-def dbGetNMenuChoices(*, pdbentry: c_void_p) -> c_int:
-    ...
-
-
-@EPICSFunc()
-def dbGetMenuChoices(*, pdbentry: c_void_p) -> pointer[c_char_p]:
-    ...
-
-
-@EPICSFunc()
-def dbFreeEntry(*, pdbentry: c_void_p):
+@DbFunction()
+def dbGetMenuChoices(pdbentry: c_void_p) -> pointer[c_char_p]:
     ...
 
 
@@ -163,14 +100,12 @@ DBF_TYPE_MAP = dict(
     DBF_NOACCESS=None,
 )
 
-FieldList = List[Tuple[str, Type, Field]]
+FieldList = List[Tuple[str, Type, dataclasses.Field]]
 
 
-def make_fields(entry) -> FieldList:
-    status = dbFirstField(entry, 0)
+def make_fields(entry: dbd.DBEntry, record_type: str) -> FieldList:
     fields: FieldList = []
-    while status == 0:
-        field_name = dbGetFieldName(entry)
+    for field_name in entry.iterate_fields():
         default = dbGetDefault(entry)
         prompt = dbGetPrompt(entry)
         field_type = DBF_TYPE_MAP[dbGetFieldTypeString(dbGetFieldDbfType(entry))]
@@ -178,27 +113,24 @@ def make_fields(entry) -> FieldList:
             # Make a custom enum type from the menu choices
             choices = dbGetMenuChoices(entry)
             str_choices = [choices[i].decode() for i in range(dbGetNMenuChoices(entry))]
-            field_type = Enum(field_name, [(c, c) for c in str_choices])  # type: ignore
+            enum_name = record_type + field_name
+            field_type = Enum(enum_name, [(c, c) for c in str_choices])  # type: ignore
         if field_type:
             fields.append(
-                (field_name, A[field_type, desc(prompt)], field(default=default))
+                (
+                    field_name,
+                    A[field_type, desc(prompt)],
+                    dataclasses.field(default=default),
+                )
             )
-        status = dbNextField(entry, 0)
     return fields
 
 
 def make_fields_dict() -> Dict[str, FieldList]:
     fields_dict: Dict[str, FieldList] = {}
-    pdbbase = ctypes.c_void_p()
-    dbd_path = str(Path(base_path) / "dbd")
-    dbReadDatabase(ctypes.byref(pdbbase), "base.dbd", dbd_path, None)
-    entry = dbAllocEntry(pdbbase)
-    status = dbFirstRecordType(entry)
-    while status == 0:
-        record_type = dbGetRecordTypeName(entry)
-        fields_dict[record_type] = make_fields(entry)
-        status = dbNextRecordType(entry)
-    dbFreeEntry(entry)
+    entry = dbd.DBEntry()
+    for record_type in entry.iterate_records():
+        fields_dict[record_type] = make_fields(entry, record_type)
     return fields_dict
 
 
@@ -211,8 +143,8 @@ class RecordPair:
 
     @classmethod
     def for_record_types(cls, in_str: str, out_str: str) -> Type[RecordPair]:
-        in_record_type = make_dataclass(in_str, fields_dict[in_str])
-        out_record_type = make_dataclass(out_str, fields_dict[out_str])
+        in_record_type = dataclasses.make_dataclass(in_str, fields_dict[in_str])
+        out_record_type = dataclasses.make_dataclass(out_str, fields_dict[out_str])
         namespace = dict(in_record_type=in_record_type, out_record_type=out_record_type)
         subclass = type(
             f"{in_str}_{out_str}", (cls, in_record_type, out_record_type), namespace
@@ -237,5 +169,16 @@ LongRecordPair = RecordPair.for_record_types("longin", "longout")
 MultiBitBinaryRecordPair = RecordPair.for_record_types("mbbi", "mbbo")
 StringRecordPair = RecordPair.for_record_types("stringin", "stringout")
 WaveformRecordPair = RecordPair.for_record_types("waveform", "waveform")
+
+
+class RecordComment:
+    def __init__(self, comment: str):
+        self.comment = comment
+        recordset.PublishRecord(comment, self)
+
+    def Print(self, output):
+        print(file=output)
+        print(f"# {self.comment}", file=output)
+
 
 # TODO: add busy record
