@@ -171,14 +171,4 @@ StringRecordPair = RecordPair.for_record_types("stringin", "stringout")
 WaveformRecordPair = RecordPair.for_record_types("waveform", "waveform")
 
 
-class RecordComment:
-    def __init__(self, comment: str):
-        self.comment = comment
-        recordset.PublishRecord(comment, self)
-
-    def Print(self, output):
-        print(file=output)
-        print(f"# {self.comment}", file=output)
-
-
 # TODO: add busy record
