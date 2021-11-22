@@ -8,7 +8,6 @@ from typing import Any, ClassVar, Dict, List, Tuple, Type, get_type_hints
 
 from apischema import serialize
 from epicsdbbuilder import dbd, mydbstatic
-from epicsdbbuilder.recordset import recordset
 from typing_extensions import Annotated as A
 
 from ._utils import desc

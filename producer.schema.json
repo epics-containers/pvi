@@ -1,8 +1,12 @@
 {
-  "$ref": "#/$defs/Producer",
-  "$defs": {
+  "allOf": [
+    {
+      "$ref": "#/definitions/Producer"
+    }
+  ],
+  "definitions": {
     "Producer": {
-      "$ref": "#/$defs/AsynProducer"
+      "$ref": "#/definitions/AsynProducer"
     },
     "AsynProducer": {
       "type": "object",
@@ -38,10 +42,10 @@
           "items": {
             "anyOf": [
               {
-                "$ref": "#/$defs/AsynParameter"
+                "$ref": "#/definitions/AsynParameter"
               },
               {
-                "$ref": "#/$defs/AsynParameterGroup"
+                "$ref": "#/definitions/AsynParameterGroup"
               }
             ]
           },
@@ -60,25 +64,25 @@
     "AsynParameter": {
       "anyOf": [
         {
-          "$ref": "#/$defs/AsynBinary"
+          "$ref": "#/definitions/AsynBinary"
         },
         {
-          "$ref": "#/$defs/AsynFloat64"
+          "$ref": "#/definitions/AsynFloat64"
         },
         {
-          "$ref": "#/$defs/AsynInt32"
+          "$ref": "#/definitions/AsynInt32"
         },
         {
-          "$ref": "#/$defs/AsynLong"
+          "$ref": "#/definitions/AsynLong"
         },
         {
-          "$ref": "#/$defs/AsynMultiBitBinary"
+          "$ref": "#/definitions/AsynMultiBitBinary"
         },
         {
-          "$ref": "#/$defs/AsynString"
+          "$ref": "#/definitions/AsynString"
         },
         {
-          "$ref": "#/$defs/AsynWaveform"
+          "$ref": "#/definitions/AsynWaveform"
         }
       ]
     },
@@ -179,7 +183,7 @@
         "read_widget": {
           "anyOf": [
             {
-              "$ref": "#/$defs/ReadWidget"
+              "$ref": "#/definitions/ReadWidget"
             },
             {
               "type": "null"
@@ -193,7 +197,7 @@
         "write_widget": {
           "anyOf": [
             {
-              "$ref": "#/$defs/WriteWidget"
+              "$ref": "#/definitions/WriteWidget"
             },
             {
               "type": "null"
@@ -205,8 +209,12 @@
           }
         },
         "record_fields": {
-          "$ref": "#/$defs/bi_bo",
-          "description": "Binary record fields"
+          "description": "Binary record fields",
+          "allOf": [
+            {
+              "$ref": "#/definitions/bi_bo"
+            }
+          ]
         }
       },
       "required": [
@@ -218,25 +226,25 @@
     "ReadWidget": {
       "anyOf": [
         {
-          "$ref": "#/$defs/LED"
+          "$ref": "#/definitions/LED"
         },
         {
-          "$ref": "#/$defs/BitField"
+          "$ref": "#/definitions/BitField"
         },
         {
-          "$ref": "#/$defs/ProgressBar"
+          "$ref": "#/definitions/ProgressBar"
         },
         {
-          "$ref": "#/$defs/TextRead"
+          "$ref": "#/definitions/TextRead"
         },
         {
-          "$ref": "#/$defs/ArrayTrace"
+          "$ref": "#/definitions/ArrayTrace"
         },
         {
-          "$ref": "#/$defs/TableRead"
+          "$ref": "#/definitions/TableRead"
         },
         {
-          "$ref": "#/$defs/ImageRead"
+          "$ref": "#/definitions/ImageRead"
         }
       ]
     },
@@ -328,7 +336,7 @@
         "widgets": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/ReadWidget"
+            "$ref": "#/definitions/ReadWidget"
           },
           "description": "For each column, what widget should be repeated for every row"
         }
@@ -352,19 +360,19 @@
     "WriteWidget": {
       "anyOf": [
         {
-          "$ref": "#/$defs/CheckBox"
+          "$ref": "#/definitions/CheckBox"
         },
         {
-          "$ref": "#/$defs/ComboBox"
+          "$ref": "#/definitions/ComboBox"
         },
         {
-          "$ref": "#/$defs/TextWrite"
+          "$ref": "#/definitions/TextWrite"
         },
         {
-          "$ref": "#/$defs/ArrayWrite"
+          "$ref": "#/definitions/ArrayWrite"
         },
         {
-          "$ref": "#/$defs/TableWrite"
+          "$ref": "#/definitions/TableWrite"
         }
       ]
     },
@@ -415,8 +423,12 @@
           "default": "ArrayWrite"
         },
         "widget": {
-          "$ref": "#/$defs/WriteWidget",
-          "description": "What widget should be used for each item"
+          "description": "What widget should be used for each item",
+          "allOf": [
+            {
+              "$ref": "#/definitions/WriteWidget"
+            }
+          ]
         }
       },
       "required": [
@@ -435,7 +447,7 @@
         "widgets": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/WriteWidget"
+            "$ref": "#/definitions/WriteWidget"
           },
           "description": "For each column, what widget should be repeated for every row"
         }
@@ -461,12 +473,20 @@
           "description": "Access Security Group"
         },
         "SCAN": {
-          "$ref": "#/$defs/biSCAN",
-          "description": "Scan Mechanism"
+          "description": "Scan Mechanism",
+          "allOf": [
+            {
+              "$ref": "#/definitions/biSCAN"
+            }
+          ]
         },
         "PINI": {
-          "$ref": "#/$defs/biPINI",
-          "description": "Process at iocInit"
+          "description": "Process at iocInit",
+          "allOf": [
+            {
+              "$ref": "#/definitions/biPINI"
+            }
+          ]
         },
         "PHAS": {
           "type": "integer",
@@ -509,40 +529,68 @@
           "description": "Force Processing"
         },
         "STAT": {
-          "$ref": "#/$defs/biSTAT",
-          "description": "Alarm Status"
+          "description": "Alarm Status",
+          "allOf": [
+            {
+              "$ref": "#/definitions/biSTAT"
+            }
+          ]
         },
         "SEVR": {
-          "$ref": "#/$defs/biSEVR",
-          "description": "Alarm Severity"
+          "description": "Alarm Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/biSEVR"
+            }
+          ]
         },
         "AMSG": {
           "type": "string",
           "description": "Alarm Message"
         },
         "NSTA": {
-          "$ref": "#/$defs/biNSTA",
-          "description": "New Alarm Status"
+          "description": "New Alarm Status",
+          "allOf": [
+            {
+              "$ref": "#/definitions/biNSTA"
+            }
+          ]
         },
         "NSEV": {
-          "$ref": "#/$defs/biNSEV",
-          "description": "New Alarm Severity"
+          "description": "New Alarm Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/biNSEV"
+            }
+          ]
         },
         "NAMSG": {
           "type": "string",
           "description": "New Alarm Message"
         },
         "ACKS": {
-          "$ref": "#/$defs/biACKS",
-          "description": "Alarm Ack Severity"
+          "description": "Alarm Ack Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/biACKS"
+            }
+          ]
         },
         "ACKT": {
-          "$ref": "#/$defs/biACKT",
-          "description": "Alarm Ack Transient"
+          "description": "Alarm Ack Transient",
+          "allOf": [
+            {
+              "$ref": "#/definitions/biACKT"
+            }
+          ]
         },
         "DISS": {
-          "$ref": "#/$defs/biDISS",
-          "description": "Disable Alarm Sevrty"
+          "description": "Disable Alarm Sevrty",
+          "allOf": [
+            {
+              "$ref": "#/definitions/biDISS"
+            }
+          ]
         },
         "LCNT": {
           "type": "integer",
@@ -561,8 +609,12 @@
           "description": "Reprocess "
         },
         "PRIO": {
-          "$ref": "#/$defs/biPRIO",
-          "description": "Scheduling Priority"
+          "description": "Scheduling Priority",
+          "allOf": [
+            {
+              "$ref": "#/definitions/biPRIO"
+            }
+          ]
         },
         "TPRO": {
           "type": "integer",
@@ -573,8 +625,12 @@
           "description": "Undefined"
         },
         "UDFS": {
-          "$ref": "#/$defs/biUDFS",
-          "description": "Undefined Alarm Sevrty"
+          "description": "Undefined Alarm Sevrty",
+          "allOf": [
+            {
+              "$ref": "#/definitions/biUDFS"
+            }
+          ]
         },
         "UTAG": {
           "type": "integer",
@@ -609,16 +665,28 @@
           "description": "Hardware Mask"
         },
         "ZSV": {
-          "$ref": "#/$defs/biZSV",
-          "description": "Zero Error Severity"
+          "description": "Zero Error Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/biZSV"
+            }
+          ]
         },
         "OSV": {
-          "$ref": "#/$defs/biOSV",
-          "description": "One Error Severity"
+          "description": "One Error Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/biOSV"
+            }
+          ]
         },
         "COSV": {
-          "$ref": "#/$defs/biCOSV",
-          "description": "Change of State Svr"
+          "description": "Change of State Svr",
+          "allOf": [
+            {
+              "$ref": "#/definitions/biCOSV"
+            }
+          ]
         },
         "MLST": {
           "type": "integer",
@@ -637,20 +705,36 @@
           "description": "Simulation Mode Link"
         },
         "SIMM": {
-          "$ref": "#/$defs/biSIMM",
-          "description": "Simulation Mode"
+          "description": "Simulation Mode",
+          "allOf": [
+            {
+              "$ref": "#/definitions/biSIMM"
+            }
+          ]
         },
         "SIMS": {
-          "$ref": "#/$defs/biSIMS",
-          "description": "Simulation Mode Severity"
+          "description": "Simulation Mode Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/biSIMS"
+            }
+          ]
         },
         "OLDSIMM": {
-          "$ref": "#/$defs/biOLDSIMM",
-          "description": "Prev. Simulation Mode"
+          "description": "Prev. Simulation Mode",
+          "allOf": [
+            {
+              "$ref": "#/definitions/biOLDSIMM"
+            }
+          ]
         },
         "SSCN": {
-          "$ref": "#/$defs/biSSCN",
-          "description": "Sim. Mode Scan"
+          "description": "Sim. Mode Scan",
+          "allOf": [
+            {
+              "$ref": "#/definitions/biSSCN"
+            }
+          ]
         },
         "SDLY": {
           "type": "number",
@@ -969,7 +1053,7 @@
         "read_widget": {
           "anyOf": [
             {
-              "$ref": "#/$defs/ReadWidget"
+              "$ref": "#/definitions/ReadWidget"
             },
             {
               "type": "null"
@@ -984,7 +1068,7 @@
         "write_widget": {
           "anyOf": [
             {
-              "$ref": "#/$defs/WriteWidget"
+              "$ref": "#/definitions/WriteWidget"
             },
             {
               "type": "null"
@@ -997,8 +1081,12 @@
           }
         },
         "record_fields": {
-          "$ref": "#/$defs/ai_ao",
-          "description": "Analogue record fields"
+          "description": "Analogue record fields",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ai_ao"
+            }
+          ]
         }
       },
       "required": [
@@ -1023,12 +1111,20 @@
           "description": "Access Security Group"
         },
         "SCAN": {
-          "$ref": "#/$defs/aiSCAN",
-          "description": "Scan Mechanism"
+          "description": "Scan Mechanism",
+          "allOf": [
+            {
+              "$ref": "#/definitions/aiSCAN"
+            }
+          ]
         },
         "PINI": {
-          "$ref": "#/$defs/aiPINI",
-          "description": "Process at iocInit"
+          "description": "Process at iocInit",
+          "allOf": [
+            {
+              "$ref": "#/definitions/aiPINI"
+            }
+          ]
         },
         "PHAS": {
           "type": "integer",
@@ -1071,40 +1167,68 @@
           "description": "Force Processing"
         },
         "STAT": {
-          "$ref": "#/$defs/aiSTAT",
-          "description": "Alarm Status"
+          "description": "Alarm Status",
+          "allOf": [
+            {
+              "$ref": "#/definitions/aiSTAT"
+            }
+          ]
         },
         "SEVR": {
-          "$ref": "#/$defs/aiSEVR",
-          "description": "Alarm Severity"
+          "description": "Alarm Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/aiSEVR"
+            }
+          ]
         },
         "AMSG": {
           "type": "string",
           "description": "Alarm Message"
         },
         "NSTA": {
-          "$ref": "#/$defs/aiNSTA",
-          "description": "New Alarm Status"
+          "description": "New Alarm Status",
+          "allOf": [
+            {
+              "$ref": "#/definitions/aiNSTA"
+            }
+          ]
         },
         "NSEV": {
-          "$ref": "#/$defs/aiNSEV",
-          "description": "New Alarm Severity"
+          "description": "New Alarm Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/aiNSEV"
+            }
+          ]
         },
         "NAMSG": {
           "type": "string",
           "description": "New Alarm Message"
         },
         "ACKS": {
-          "$ref": "#/$defs/aiACKS",
-          "description": "Alarm Ack Severity"
+          "description": "Alarm Ack Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/aiACKS"
+            }
+          ]
         },
         "ACKT": {
-          "$ref": "#/$defs/aiACKT",
-          "description": "Alarm Ack Transient"
+          "description": "Alarm Ack Transient",
+          "allOf": [
+            {
+              "$ref": "#/definitions/aiACKT"
+            }
+          ]
         },
         "DISS": {
-          "$ref": "#/$defs/aiDISS",
-          "description": "Disable Alarm Sevrty"
+          "description": "Disable Alarm Sevrty",
+          "allOf": [
+            {
+              "$ref": "#/definitions/aiDISS"
+            }
+          ]
         },
         "LCNT": {
           "type": "integer",
@@ -1123,8 +1247,12 @@
           "description": "Reprocess "
         },
         "PRIO": {
-          "$ref": "#/$defs/aiPRIO",
-          "description": "Scheduling Priority"
+          "description": "Scheduling Priority",
+          "allOf": [
+            {
+              "$ref": "#/definitions/aiPRIO"
+            }
+          ]
         },
         "TPRO": {
           "type": "integer",
@@ -1135,8 +1263,12 @@
           "description": "Undefined"
         },
         "UDFS": {
-          "$ref": "#/$defs/aiUDFS",
-          "description": "Undefined Alarm Sevrty"
+          "description": "Undefined Alarm Sevrty",
+          "allOf": [
+            {
+              "$ref": "#/definitions/aiUDFS"
+            }
+          ]
         },
         "UTAG": {
           "type": "integer",
@@ -1155,8 +1287,12 @@
           "description": "Display Precision"
         },
         "LINR": {
-          "$ref": "#/$defs/aiLINR",
-          "description": "Linearization"
+          "description": "Linearization",
+          "allOf": [
+            {
+              "$ref": "#/definitions/aiLINR"
+            }
+          ]
         },
         "EGUF": {
           "type": "number",
@@ -1215,20 +1351,36 @@
           "description": "Low Alarm Limit"
         },
         "HHSV": {
-          "$ref": "#/$defs/aiHHSV",
-          "description": "Hihi Severity"
+          "description": "Hihi Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/aiHHSV"
+            }
+          ]
         },
         "LLSV": {
-          "$ref": "#/$defs/aiLLSV",
-          "description": "Lolo Severity"
+          "description": "Lolo Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/aiLLSV"
+            }
+          ]
         },
         "HSV": {
-          "$ref": "#/$defs/aiHSV",
-          "description": "High Severity"
+          "description": "High Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/aiHSV"
+            }
+          ]
         },
         "LSV": {
-          "$ref": "#/$defs/aiLSV",
-          "description": "Low Severity"
+          "description": "Low Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/aiLSV"
+            }
+          ]
         },
         "HYST": {
           "type": "number",
@@ -1279,20 +1431,36 @@
           "description": "Simulation Mode Link"
         },
         "SIMM": {
-          "$ref": "#/$defs/aiSIMM",
-          "description": "Simulation Mode"
+          "description": "Simulation Mode",
+          "allOf": [
+            {
+              "$ref": "#/definitions/aiSIMM"
+            }
+          ]
         },
         "SIMS": {
-          "$ref": "#/$defs/aiSIMS",
-          "description": "Simulation Mode Severity"
+          "description": "Simulation Mode Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/aiSIMS"
+            }
+          ]
         },
         "OLDSIMM": {
-          "$ref": "#/$defs/aiOLDSIMM",
-          "description": "Prev. Simulation Mode"
+          "description": "Prev. Simulation Mode",
+          "allOf": [
+            {
+              "$ref": "#/definitions/aiOLDSIMM"
+            }
+          ]
         },
         "SSCN": {
-          "$ref": "#/$defs/aiSSCN",
-          "description": "Sim. Mode Scan"
+          "description": "Sim. Mode Scan",
+          "allOf": [
+            {
+              "$ref": "#/definitions/aiSSCN"
+            }
+          ]
         },
         "SDLY": {
           "type": "number",
@@ -1652,7 +1820,7 @@
         "read_widget": {
           "anyOf": [
             {
-              "$ref": "#/$defs/ReadWidget"
+              "$ref": "#/definitions/ReadWidget"
             },
             {
               "type": "null"
@@ -1667,7 +1835,7 @@
         "write_widget": {
           "anyOf": [
             {
-              "$ref": "#/$defs/WriteWidget"
+              "$ref": "#/definitions/WriteWidget"
             },
             {
               "type": "null"
@@ -1680,8 +1848,12 @@
           }
         },
         "record_fields": {
-          "$ref": "#/$defs/ai_ao",
-          "description": "Analogue record fields"
+          "description": "Analogue record fields",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ai_ao"
+            }
+          ]
         }
       },
       "required": [
@@ -1785,7 +1957,7 @@
         "read_widget": {
           "anyOf": [
             {
-              "$ref": "#/$defs/ReadWidget"
+              "$ref": "#/definitions/ReadWidget"
             },
             {
               "type": "null"
@@ -1800,7 +1972,7 @@
         "write_widget": {
           "anyOf": [
             {
-              "$ref": "#/$defs/WriteWidget"
+              "$ref": "#/definitions/WriteWidget"
             },
             {
               "type": "null"
@@ -1813,8 +1985,12 @@
           }
         },
         "record_fields": {
-          "$ref": "#/$defs/longin_longout",
-          "description": "Long record fields"
+          "description": "Long record fields",
+          "allOf": [
+            {
+              "$ref": "#/definitions/longin_longout"
+            }
+          ]
         }
       },
       "required": [
@@ -1839,12 +2015,20 @@
           "description": "Access Security Group"
         },
         "SCAN": {
-          "$ref": "#/$defs/longinSCAN",
-          "description": "Scan Mechanism"
+          "description": "Scan Mechanism",
+          "allOf": [
+            {
+              "$ref": "#/definitions/longinSCAN"
+            }
+          ]
         },
         "PINI": {
-          "$ref": "#/$defs/longinPINI",
-          "description": "Process at iocInit"
+          "description": "Process at iocInit",
+          "allOf": [
+            {
+              "$ref": "#/definitions/longinPINI"
+            }
+          ]
         },
         "PHAS": {
           "type": "integer",
@@ -1887,40 +2071,68 @@
           "description": "Force Processing"
         },
         "STAT": {
-          "$ref": "#/$defs/longinSTAT",
-          "description": "Alarm Status"
+          "description": "Alarm Status",
+          "allOf": [
+            {
+              "$ref": "#/definitions/longinSTAT"
+            }
+          ]
         },
         "SEVR": {
-          "$ref": "#/$defs/longinSEVR",
-          "description": "Alarm Severity"
+          "description": "Alarm Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/longinSEVR"
+            }
+          ]
         },
         "AMSG": {
           "type": "string",
           "description": "Alarm Message"
         },
         "NSTA": {
-          "$ref": "#/$defs/longinNSTA",
-          "description": "New Alarm Status"
+          "description": "New Alarm Status",
+          "allOf": [
+            {
+              "$ref": "#/definitions/longinNSTA"
+            }
+          ]
         },
         "NSEV": {
-          "$ref": "#/$defs/longinNSEV",
-          "description": "New Alarm Severity"
+          "description": "New Alarm Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/longinNSEV"
+            }
+          ]
         },
         "NAMSG": {
           "type": "string",
           "description": "New Alarm Message"
         },
         "ACKS": {
-          "$ref": "#/$defs/longinACKS",
-          "description": "Alarm Ack Severity"
+          "description": "Alarm Ack Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/longinACKS"
+            }
+          ]
         },
         "ACKT": {
-          "$ref": "#/$defs/longinACKT",
-          "description": "Alarm Ack Transient"
+          "description": "Alarm Ack Transient",
+          "allOf": [
+            {
+              "$ref": "#/definitions/longinACKT"
+            }
+          ]
         },
         "DISS": {
-          "$ref": "#/$defs/longinDISS",
-          "description": "Disable Alarm Sevrty"
+          "description": "Disable Alarm Sevrty",
+          "allOf": [
+            {
+              "$ref": "#/definitions/longinDISS"
+            }
+          ]
         },
         "LCNT": {
           "type": "integer",
@@ -1939,8 +2151,12 @@
           "description": "Reprocess "
         },
         "PRIO": {
-          "$ref": "#/$defs/longinPRIO",
-          "description": "Scheduling Priority"
+          "description": "Scheduling Priority",
+          "allOf": [
+            {
+              "$ref": "#/definitions/longinPRIO"
+            }
+          ]
         },
         "TPRO": {
           "type": "integer",
@@ -1951,8 +2167,12 @@
           "description": "Undefined"
         },
         "UDFS": {
-          "$ref": "#/$defs/longinUDFS",
-          "description": "Undefined Alarm Sevrty"
+          "description": "Undefined Alarm Sevrty",
+          "allOf": [
+            {
+              "$ref": "#/definitions/longinUDFS"
+            }
+          ]
         },
         "UTAG": {
           "type": "integer",
@@ -1995,20 +2215,36 @@
           "description": "Low Alarm Limit"
         },
         "HHSV": {
-          "$ref": "#/$defs/longinHHSV",
-          "description": "Hihi Severity"
+          "description": "Hihi Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/longinHHSV"
+            }
+          ]
         },
         "LLSV": {
-          "$ref": "#/$defs/longinLLSV",
-          "description": "Lolo Severity"
+          "description": "Lolo Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/longinLLSV"
+            }
+          ]
         },
         "HSV": {
-          "$ref": "#/$defs/longinHSV",
-          "description": "High Severity"
+          "description": "High Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/longinHSV"
+            }
+          ]
         },
         "LSV": {
-          "$ref": "#/$defs/longinLSV",
-          "description": "Low Severity"
+          "description": "Low Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/longinLSV"
+            }
+          ]
         },
         "HYST": {
           "type": "integer",
@@ -2043,20 +2279,36 @@
           "description": "Sim Mode Location"
         },
         "SIMM": {
-          "$ref": "#/$defs/longinSIMM",
-          "description": "Simulation Mode"
+          "description": "Simulation Mode",
+          "allOf": [
+            {
+              "$ref": "#/definitions/longinSIMM"
+            }
+          ]
         },
         "SIMS": {
-          "$ref": "#/$defs/longinSIMS",
-          "description": "Sim mode Alarm Svrty"
+          "description": "Sim mode Alarm Svrty",
+          "allOf": [
+            {
+              "$ref": "#/definitions/longinSIMS"
+            }
+          ]
         },
         "OLDSIMM": {
-          "$ref": "#/$defs/longinOLDSIMM",
-          "description": "Prev. Simulation Mode"
+          "description": "Prev. Simulation Mode",
+          "allOf": [
+            {
+              "$ref": "#/definitions/longinOLDSIMM"
+            }
+          ]
         },
         "SSCN": {
-          "$ref": "#/$defs/longinSSCN",
-          "description": "Sim. Mode Scan"
+          "description": "Sim. Mode Scan",
+          "allOf": [
+            {
+              "$ref": "#/definitions/longinSSCN"
+            }
+          ]
         },
         "SDLY": {
           "type": "number",
@@ -2393,7 +2645,7 @@
         "read_widget": {
           "anyOf": [
             {
-              "$ref": "#/$defs/ReadWidget"
+              "$ref": "#/definitions/ReadWidget"
             },
             {
               "type": "null"
@@ -2408,7 +2660,7 @@
         "write_widget": {
           "anyOf": [
             {
-              "$ref": "#/$defs/WriteWidget"
+              "$ref": "#/definitions/WriteWidget"
             },
             {
               "type": "null"
@@ -2420,8 +2672,12 @@
           }
         },
         "record_fields": {
-          "$ref": "#/$defs/mbbi_mbbo",
-          "description": "Multi-bit binary record fields"
+          "description": "Multi-bit binary record fields",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbi_mbbo"
+            }
+          ]
         }
       },
       "required": [
@@ -2446,12 +2702,20 @@
           "description": "Access Security Group"
         },
         "SCAN": {
-          "$ref": "#/$defs/mbbiSCAN",
-          "description": "Scan Mechanism"
+          "description": "Scan Mechanism",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbiSCAN"
+            }
+          ]
         },
         "PINI": {
-          "$ref": "#/$defs/mbbiPINI",
-          "description": "Process at iocInit"
+          "description": "Process at iocInit",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbiPINI"
+            }
+          ]
         },
         "PHAS": {
           "type": "integer",
@@ -2494,40 +2758,68 @@
           "description": "Force Processing"
         },
         "STAT": {
-          "$ref": "#/$defs/mbbiSTAT",
-          "description": "Alarm Status"
+          "description": "Alarm Status",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbiSTAT"
+            }
+          ]
         },
         "SEVR": {
-          "$ref": "#/$defs/mbbiSEVR",
-          "description": "Alarm Severity"
+          "description": "Alarm Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbiSEVR"
+            }
+          ]
         },
         "AMSG": {
           "type": "string",
           "description": "Alarm Message"
         },
         "NSTA": {
-          "$ref": "#/$defs/mbbiNSTA",
-          "description": "New Alarm Status"
+          "description": "New Alarm Status",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbiNSTA"
+            }
+          ]
         },
         "NSEV": {
-          "$ref": "#/$defs/mbbiNSEV",
-          "description": "New Alarm Severity"
+          "description": "New Alarm Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbiNSEV"
+            }
+          ]
         },
         "NAMSG": {
           "type": "string",
           "description": "New Alarm Message"
         },
         "ACKS": {
-          "$ref": "#/$defs/mbbiACKS",
-          "description": "Alarm Ack Severity"
+          "description": "Alarm Ack Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbiACKS"
+            }
+          ]
         },
         "ACKT": {
-          "$ref": "#/$defs/mbbiACKT",
-          "description": "Alarm Ack Transient"
+          "description": "Alarm Ack Transient",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbiACKT"
+            }
+          ]
         },
         "DISS": {
-          "$ref": "#/$defs/mbbiDISS",
-          "description": "Disable Alarm Sevrty"
+          "description": "Disable Alarm Sevrty",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbiDISS"
+            }
+          ]
         },
         "LCNT": {
           "type": "integer",
@@ -2546,8 +2838,12 @@
           "description": "Reprocess "
         },
         "PRIO": {
-          "$ref": "#/$defs/mbbiPRIO",
-          "description": "Scheduling Priority"
+          "description": "Scheduling Priority",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbiPRIO"
+            }
+          ]
         },
         "TPRO": {
           "type": "integer",
@@ -2558,8 +2854,12 @@
           "description": "Undefined"
         },
         "UDFS": {
-          "$ref": "#/$defs/mbbiUDFS",
-          "description": "Undefined Alarm Sevrty"
+          "description": "Undefined Alarm Sevrty",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbiUDFS"
+            }
+          ]
         },
         "UTAG": {
           "type": "integer",
@@ -2706,76 +3006,148 @@
           "description": "Fifteen String"
         },
         "ZRSV": {
-          "$ref": "#/$defs/mbbiZRSV",
-          "description": "State Zero Severity"
+          "description": "State Zero Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbiZRSV"
+            }
+          ]
         },
         "ONSV": {
-          "$ref": "#/$defs/mbbiONSV",
-          "description": "State One Severity"
+          "description": "State One Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbiONSV"
+            }
+          ]
         },
         "TWSV": {
-          "$ref": "#/$defs/mbbiTWSV",
-          "description": "State Two Severity"
+          "description": "State Two Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbiTWSV"
+            }
+          ]
         },
         "THSV": {
-          "$ref": "#/$defs/mbbiTHSV",
-          "description": "State Three Severity"
+          "description": "State Three Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbiTHSV"
+            }
+          ]
         },
         "FRSV": {
-          "$ref": "#/$defs/mbbiFRSV",
-          "description": "State Four Severity"
+          "description": "State Four Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbiFRSV"
+            }
+          ]
         },
         "FVSV": {
-          "$ref": "#/$defs/mbbiFVSV",
-          "description": "State Five Severity"
+          "description": "State Five Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbiFVSV"
+            }
+          ]
         },
         "SXSV": {
-          "$ref": "#/$defs/mbbiSXSV",
-          "description": "State Six Severity"
+          "description": "State Six Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbiSXSV"
+            }
+          ]
         },
         "SVSV": {
-          "$ref": "#/$defs/mbbiSVSV",
-          "description": "State Seven Severity"
+          "description": "State Seven Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbiSVSV"
+            }
+          ]
         },
         "EISV": {
-          "$ref": "#/$defs/mbbiEISV",
-          "description": "State Eight Severity"
+          "description": "State Eight Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbiEISV"
+            }
+          ]
         },
         "NISV": {
-          "$ref": "#/$defs/mbbiNISV",
-          "description": "State Nine Severity"
+          "description": "State Nine Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbiNISV"
+            }
+          ]
         },
         "TESV": {
-          "$ref": "#/$defs/mbbiTESV",
-          "description": "State Ten Severity"
+          "description": "State Ten Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbiTESV"
+            }
+          ]
         },
         "ELSV": {
-          "$ref": "#/$defs/mbbiELSV",
-          "description": "State Eleven Severity"
+          "description": "State Eleven Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbiELSV"
+            }
+          ]
         },
         "TVSV": {
-          "$ref": "#/$defs/mbbiTVSV",
-          "description": "State Twelve Severity"
+          "description": "State Twelve Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbiTVSV"
+            }
+          ]
         },
         "TTSV": {
-          "$ref": "#/$defs/mbbiTTSV",
-          "description": "State Thirteen Sevr"
+          "description": "State Thirteen Sevr",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbiTTSV"
+            }
+          ]
         },
         "FTSV": {
-          "$ref": "#/$defs/mbbiFTSV",
-          "description": "State Fourteen Sevr"
+          "description": "State Fourteen Sevr",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbiFTSV"
+            }
+          ]
         },
         "FFSV": {
-          "$ref": "#/$defs/mbbiFFSV",
-          "description": "State Fifteen Severity"
+          "description": "State Fifteen Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbiFFSV"
+            }
+          ]
         },
         "UNSV": {
-          "$ref": "#/$defs/mbbiUNSV",
-          "description": "Unknown State Severity"
+          "description": "Unknown State Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbiUNSV"
+            }
+          ]
         },
         "COSV": {
-          "$ref": "#/$defs/mbbiCOSV",
-          "description": "Change of State Svr"
+          "description": "Change of State Svr",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbiCOSV"
+            }
+          ]
         },
         "RVAL": {
           "type": "integer",
@@ -2814,20 +3186,36 @@
           "description": "Simulation Mode Link"
         },
         "SIMM": {
-          "$ref": "#/$defs/mbbiSIMM",
-          "description": "Simulation Mode"
+          "description": "Simulation Mode",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbiSIMM"
+            }
+          ]
         },
         "SIMS": {
-          "$ref": "#/$defs/mbbiSIMS",
-          "description": "Simulation Mode Severity"
+          "description": "Simulation Mode Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbiSIMS"
+            }
+          ]
         },
         "OLDSIMM": {
-          "$ref": "#/$defs/mbbiOLDSIMM",
-          "description": "Prev. Simulation Mode"
+          "description": "Prev. Simulation Mode",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbiOLDSIMM"
+            }
+          ]
         },
         "SSCN": {
-          "$ref": "#/$defs/mbbiSSCN",
-          "description": "Sim. Mode Scan"
+          "description": "Sim. Mode Scan",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbiSSCN"
+            }
+          ]
         },
         "SDLY": {
           "type": "number",
@@ -3287,7 +3675,7 @@
         "read_widget": {
           "anyOf": [
             {
-              "$ref": "#/$defs/ReadWidget"
+              "$ref": "#/definitions/ReadWidget"
             },
             {
               "type": "null"
@@ -3302,7 +3690,7 @@
         "write_widget": {
           "anyOf": [
             {
-              "$ref": "#/$defs/WriteWidget"
+              "$ref": "#/definitions/WriteWidget"
             },
             {
               "type": "null"
@@ -3315,8 +3703,12 @@
           }
         },
         "record_fields": {
-          "$ref": "#/$defs/stringin_stringout",
-          "description": "String record fields"
+          "description": "String record fields",
+          "allOf": [
+            {
+              "$ref": "#/definitions/stringin_stringout"
+            }
+          ]
         }
       },
       "required": [
@@ -3341,12 +3733,20 @@
           "description": "Access Security Group"
         },
         "SCAN": {
-          "$ref": "#/$defs/stringinSCAN",
-          "description": "Scan Mechanism"
+          "description": "Scan Mechanism",
+          "allOf": [
+            {
+              "$ref": "#/definitions/stringinSCAN"
+            }
+          ]
         },
         "PINI": {
-          "$ref": "#/$defs/stringinPINI",
-          "description": "Process at iocInit"
+          "description": "Process at iocInit",
+          "allOf": [
+            {
+              "$ref": "#/definitions/stringinPINI"
+            }
+          ]
         },
         "PHAS": {
           "type": "integer",
@@ -3389,40 +3789,68 @@
           "description": "Force Processing"
         },
         "STAT": {
-          "$ref": "#/$defs/stringinSTAT",
-          "description": "Alarm Status"
+          "description": "Alarm Status",
+          "allOf": [
+            {
+              "$ref": "#/definitions/stringinSTAT"
+            }
+          ]
         },
         "SEVR": {
-          "$ref": "#/$defs/stringinSEVR",
-          "description": "Alarm Severity"
+          "description": "Alarm Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/stringinSEVR"
+            }
+          ]
         },
         "AMSG": {
           "type": "string",
           "description": "Alarm Message"
         },
         "NSTA": {
-          "$ref": "#/$defs/stringinNSTA",
-          "description": "New Alarm Status"
+          "description": "New Alarm Status",
+          "allOf": [
+            {
+              "$ref": "#/definitions/stringinNSTA"
+            }
+          ]
         },
         "NSEV": {
-          "$ref": "#/$defs/stringinNSEV",
-          "description": "New Alarm Severity"
+          "description": "New Alarm Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/stringinNSEV"
+            }
+          ]
         },
         "NAMSG": {
           "type": "string",
           "description": "New Alarm Message"
         },
         "ACKS": {
-          "$ref": "#/$defs/stringinACKS",
-          "description": "Alarm Ack Severity"
+          "description": "Alarm Ack Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/stringinACKS"
+            }
+          ]
         },
         "ACKT": {
-          "$ref": "#/$defs/stringinACKT",
-          "description": "Alarm Ack Transient"
+          "description": "Alarm Ack Transient",
+          "allOf": [
+            {
+              "$ref": "#/definitions/stringinACKT"
+            }
+          ]
         },
         "DISS": {
-          "$ref": "#/$defs/stringinDISS",
-          "description": "Disable Alarm Sevrty"
+          "description": "Disable Alarm Sevrty",
+          "allOf": [
+            {
+              "$ref": "#/definitions/stringinDISS"
+            }
+          ]
         },
         "LCNT": {
           "type": "integer",
@@ -3441,8 +3869,12 @@
           "description": "Reprocess "
         },
         "PRIO": {
-          "$ref": "#/$defs/stringinPRIO",
-          "description": "Scheduling Priority"
+          "description": "Scheduling Priority",
+          "allOf": [
+            {
+              "$ref": "#/definitions/stringinPRIO"
+            }
+          ]
         },
         "TPRO": {
           "type": "integer",
@@ -3453,8 +3885,12 @@
           "description": "Undefined"
         },
         "UDFS": {
-          "$ref": "#/$defs/stringinUDFS",
-          "description": "Undefined Alarm Sevrty"
+          "description": "Undefined Alarm Sevrty",
+          "allOf": [
+            {
+              "$ref": "#/definitions/stringinUDFS"
+            }
+          ]
         },
         "UTAG": {
           "type": "integer",
@@ -3473,12 +3909,20 @@
           "description": "Previous Value"
         },
         "MPST": {
-          "$ref": "#/$defs/stringinMPST",
-          "description": "Post Value Monitors"
+          "description": "Post Value Monitors",
+          "allOf": [
+            {
+              "$ref": "#/definitions/stringinMPST"
+            }
+          ]
         },
         "APST": {
-          "$ref": "#/$defs/stringinAPST",
-          "description": "Post Archive Monitors"
+          "description": "Post Archive Monitors",
+          "allOf": [
+            {
+              "$ref": "#/definitions/stringinAPST"
+            }
+          ]
         },
         "SIOL": {
           "type": "string",
@@ -3489,20 +3933,36 @@
           "description": "Simulation Mode Link"
         },
         "SIMM": {
-          "$ref": "#/$defs/stringinSIMM",
-          "description": "Simulation Mode"
+          "description": "Simulation Mode",
+          "allOf": [
+            {
+              "$ref": "#/definitions/stringinSIMM"
+            }
+          ]
         },
         "SIMS": {
-          "$ref": "#/$defs/stringinSIMS",
-          "description": "Simulation Mode Severity"
+          "description": "Simulation Mode Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/stringinSIMS"
+            }
+          ]
         },
         "OLDSIMM": {
-          "$ref": "#/$defs/stringinOLDSIMM",
-          "description": "Prev. Simulation Mode"
+          "description": "Prev. Simulation Mode",
+          "allOf": [
+            {
+              "$ref": "#/definitions/stringinOLDSIMM"
+            }
+          ]
         },
         "SSCN": {
-          "$ref": "#/$defs/stringinSSCN",
-          "description": "Sim. Mode Scan"
+          "description": "Sim. Mode Scan",
+          "allOf": [
+            {
+              "$ref": "#/definitions/stringinSSCN"
+            }
+          ]
         },
         "SDLY": {
           "type": "number",
@@ -3802,7 +4262,7 @@
             {
               "anyOf": [
                 {
-                  "$ref": "#/$defs/ReadWidget"
+                  "$ref": "#/definitions/ReadWidget"
                 },
                 {
                   "type": "null"
@@ -3821,7 +4281,7 @@
             {
               "anyOf": [
                 {
-                  "$ref": "#/$defs/WriteWidget"
+                  "$ref": "#/definitions/WriteWidget"
                 },
                 {
                   "type": "null"
@@ -3836,8 +4296,12 @@
           "default": null
         },
         "record_fields": {
-          "$ref": "#/$defs/waveform_waveform",
-          "description": "Waveform record fields"
+          "description": "Waveform record fields",
+          "allOf": [
+            {
+              "$ref": "#/definitions/waveform_waveform"
+            }
+          ]
         }
       },
       "required": [
@@ -3862,12 +4326,20 @@
           "description": "Access Security Group"
         },
         "SCAN": {
-          "$ref": "#/$defs/waveformSCAN",
-          "description": "Scan Mechanism"
+          "description": "Scan Mechanism",
+          "allOf": [
+            {
+              "$ref": "#/definitions/waveformSCAN"
+            }
+          ]
         },
         "PINI": {
-          "$ref": "#/$defs/waveformPINI",
-          "description": "Process at iocInit"
+          "description": "Process at iocInit",
+          "allOf": [
+            {
+              "$ref": "#/definitions/waveformPINI"
+            }
+          ]
         },
         "PHAS": {
           "type": "integer",
@@ -3910,40 +4382,68 @@
           "description": "Force Processing"
         },
         "STAT": {
-          "$ref": "#/$defs/waveformSTAT",
-          "description": "Alarm Status"
+          "description": "Alarm Status",
+          "allOf": [
+            {
+              "$ref": "#/definitions/waveformSTAT"
+            }
+          ]
         },
         "SEVR": {
-          "$ref": "#/$defs/waveformSEVR",
-          "description": "Alarm Severity"
+          "description": "Alarm Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/waveformSEVR"
+            }
+          ]
         },
         "AMSG": {
           "type": "string",
           "description": "Alarm Message"
         },
         "NSTA": {
-          "$ref": "#/$defs/waveformNSTA",
-          "description": "New Alarm Status"
+          "description": "New Alarm Status",
+          "allOf": [
+            {
+              "$ref": "#/definitions/waveformNSTA"
+            }
+          ]
         },
         "NSEV": {
-          "$ref": "#/$defs/waveformNSEV",
-          "description": "New Alarm Severity"
+          "description": "New Alarm Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/waveformNSEV"
+            }
+          ]
         },
         "NAMSG": {
           "type": "string",
           "description": "New Alarm Message"
         },
         "ACKS": {
-          "$ref": "#/$defs/waveformACKS",
-          "description": "Alarm Ack Severity"
+          "description": "Alarm Ack Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/waveformACKS"
+            }
+          ]
         },
         "ACKT": {
-          "$ref": "#/$defs/waveformACKT",
-          "description": "Alarm Ack Transient"
+          "description": "Alarm Ack Transient",
+          "allOf": [
+            {
+              "$ref": "#/definitions/waveformACKT"
+            }
+          ]
         },
         "DISS": {
-          "$ref": "#/$defs/waveformDISS",
-          "description": "Disable Alarm Sevrty"
+          "description": "Disable Alarm Sevrty",
+          "allOf": [
+            {
+              "$ref": "#/definitions/waveformDISS"
+            }
+          ]
         },
         "LCNT": {
           "type": "integer",
@@ -3962,8 +4462,12 @@
           "description": "Reprocess "
         },
         "PRIO": {
-          "$ref": "#/$defs/waveformPRIO",
-          "description": "Scheduling Priority"
+          "description": "Scheduling Priority",
+          "allOf": [
+            {
+              "$ref": "#/definitions/waveformPRIO"
+            }
+          ]
         },
         "TPRO": {
           "type": "integer",
@@ -3974,8 +4478,12 @@
           "description": "Undefined"
         },
         "UDFS": {
-          "$ref": "#/$defs/waveformUDFS",
-          "description": "Undefined Alarm Sevrty"
+          "description": "Undefined Alarm Sevrty",
+          "allOf": [
+            {
+              "$ref": "#/definitions/waveformUDFS"
+            }
+          ]
         },
         "UTAG": {
           "type": "integer",
@@ -4014,8 +4522,12 @@
           "description": "Number of Elements"
         },
         "FTVL": {
-          "$ref": "#/$defs/waveformFTVL",
-          "description": "Field Type of Value"
+          "description": "Field Type of Value",
+          "allOf": [
+            {
+              "$ref": "#/definitions/waveformFTVL"
+            }
+          ]
         },
         "BUSY": {
           "type": "integer",
@@ -4034,32 +4546,56 @@
           "description": "Simulation Mode Link"
         },
         "SIMM": {
-          "$ref": "#/$defs/waveformSIMM",
-          "description": "Simulation Mode"
+          "description": "Simulation Mode",
+          "allOf": [
+            {
+              "$ref": "#/definitions/waveformSIMM"
+            }
+          ]
         },
         "SIMS": {
-          "$ref": "#/$defs/waveformSIMS",
-          "description": "Simulation Mode Severity"
+          "description": "Simulation Mode Severity",
+          "allOf": [
+            {
+              "$ref": "#/definitions/waveformSIMS"
+            }
+          ]
         },
         "OLDSIMM": {
-          "$ref": "#/$defs/waveformOLDSIMM",
-          "description": "Prev. Simulation Mode"
+          "description": "Prev. Simulation Mode",
+          "allOf": [
+            {
+              "$ref": "#/definitions/waveformOLDSIMM"
+            }
+          ]
         },
         "SSCN": {
-          "$ref": "#/$defs/waveformSSCN",
-          "description": "Sim. Mode Scan"
+          "description": "Sim. Mode Scan",
+          "allOf": [
+            {
+              "$ref": "#/definitions/waveformSSCN"
+            }
+          ]
         },
         "SDLY": {
           "type": "number",
           "description": "Sim. Mode Async Delay"
         },
         "MPST": {
-          "$ref": "#/$defs/waveformMPST",
-          "description": "Post Value Monitors"
+          "description": "Post Value Monitors",
+          "allOf": [
+            {
+              "$ref": "#/definitions/waveformMPST"
+            }
+          ]
         },
         "APST": {
-          "$ref": "#/$defs/waveformAPST",
-          "description": "Post Archive Monitors"
+          "description": "Post Archive Monitors",
+          "allOf": [
+            {
+              "$ref": "#/definitions/waveformAPST"
+            }
+          ]
         },
         "HASH": {
           "type": "integer",
@@ -4292,18 +4828,22 @@
           "description": "PascalCase name to uniquely identify"
         },
         "layout": {
-          "$ref": "#/$defs/Layout",
-          "description": "How to layout children on screen"
+          "description": "How to layout children on screen",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Layout"
+            }
+          ]
         },
         "children": {
           "type": "array",
           "items": {
             "anyOf": [
               {
-                "$ref": "#/$defs/AsynParameter"
+                "$ref": "#/definitions/AsynParameter"
               },
               {
-                "$ref": "#/$defs/AsynParameterGroup"
+                "$ref": "#/definitions/AsynParameterGroup"
               }
             ]
           },
@@ -4320,13 +4860,13 @@
     "Layout": {
       "anyOf": [
         {
-          "$ref": "#/$defs/Plot"
+          "$ref": "#/definitions/Plot"
         },
         {
-          "$ref": "#/$defs/Row"
+          "$ref": "#/definitions/Row"
         },
         {
-          "$ref": "#/$defs/Grid"
+          "$ref": "#/definitions/Grid"
         }
       ]
     },
@@ -4380,5 +4920,5 @@
       "additionalProperties": false
     }
   },
-  "$schema": "http://json-schema.org/draft/2020-12/schema#"
+  "$schema": "http://json-schema.org/draft-07/schema#"
 }

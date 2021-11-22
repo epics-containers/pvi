@@ -17,7 +17,14 @@ from ._records import (
     StringRecordPair,
     WaveformRecordPair,
 )
-from ._utils import Annotated, as_discriminated_union, desc, join, truncate_description
+from ._utils import (
+    Annotated,
+    as_discriminated_union,
+    desc,
+    get_param_set,
+    join_lines,
+    truncate_description,
+)
 from .types import (
     LED,
     Access,
@@ -225,17 +232,17 @@ class AsynProducer(Producer):
         Tree[AsynParameter], desc("The parameters to make into an IOC")
     ] = field(default_factory=list)
 
-    def _read_record_name(self, parameter: AsynParameter) -> str:
+    def _read_record_suffix(self, parameter: AsynParameter) -> str:
         if parameter.read_record_suffix:
-            return self.prefix + parameter.read_record_suffix
+            return parameter.read_record_suffix
         else:
-            return self.prefix + parameter.name + "_RBV"
+            return parameter.name + "_RBV"
 
-    def _write_record_name(self, parameter: AsynParameter) -> str:
+    def _write_record_suffix(self, parameter: AsynParameter) -> str:
         if parameter.write_record_suffix:
-            return self.prefix + parameter.write_record_suffix
+            return parameter.write_record_suffix
         else:
-            return self.prefix + parameter.name
+            return parameter.name
 
     def produce_components(self) -> Tree[Component]:
         """Make signals from components"""
@@ -243,8 +250,8 @@ class AsynProducer(Producer):
 
     def _produce_component(self, parameter: AsynParameter) -> Iterator[Component]:
         # TODO: what about SignalX?
-        read_pv = self._read_record_name(parameter)
-        write_pv = self._write_record_name(parameter)
+        read_pv = self._read_record_suffix(parameter)
+        write_pv = self._write_record_suffix(parameter)
         if parameter.access == Access.R:
             yield SignalR(parameter.name, read_pv, parameter.read_widget)
         elif parameter.access == Access.W:
@@ -286,7 +293,7 @@ This file was automatically generated
         asyn_param_name = parameter.drv_info or parameter.name
         io = f"@asyn({self.asyn_port},{self.address},{self.timeout}){asyn_param_name}"
         if parameter.access.needs_read_record():
-            name = self._read_record_name(parameter)
+            name = self.prefix + self._read_record_suffix(parameter)
             rtype = parameter.record_fields.in_record_type.__name__
             inp_fields.update(
                 DESC=truncate_description(parameter.description),
@@ -295,7 +302,7 @@ This file was automatically generated
             )
             yield getattr(records, rtype)(name, **inp_fields)
         if parameter.access.needs_write_record():
-            name = self._write_record_name(parameter)
+            name = self.prefix + self._write_record_suffix(parameter)
             rtype = parameter.record_fields.out_record_type.__name__
             out_fields.update(
                 DESC=truncate_description(parameter.description),
@@ -315,9 +322,10 @@ This file was automatically generated
 
     def produce_other(self, path: Path):
         """Make things like cpp, h files"""
-        is_valid = path.suffix == "h" and "." not in path.stem
+        is_valid = path.suffix == ".h" and "." not in path.stem
+        parent_param_set = get_param_set(self.parent_class)
         assert is_valid, f"Can only make header files not {path}"
-        guard_define = path.stem.capitalize() + "DetectorParamSet_H"
+        guard_define = path.stem[0].upper() + path.stem[1:] + "_H"
         defines = []
         adds = []
         indexes = []
@@ -325,30 +333,35 @@ This file was automatically generated
             if isinstance(node, AsynParameter):
                 param_type = node.type_strings.asyn_param
                 index_name = node.index_name or node.name
-                drv_info = (
-                    node.drv_info or path.stem.capitalize() + node.name + "String"
+                drv_info = node.drv_info or node.name
+                defines.append(f'#define {index_name}String "{drv_info}"')
+                adds.append(
+                    f"this->add({index_name}String, {param_type}, &{index_name});"
                 )
-                defines.append(f'#define {drv_info} "{index_name}"')
-                adds.append(f"this->add({drv_info}, {param_type}, &{index_name});")
                 indexes.append(f"int {index_name};")
                 if len(indexes) == 1:
                     indexes.append(
-                        f"#define FIRST_{path.stem.upper()}_PARAM_INDEX {index_name}"
+                        f"#define FIRST_{path.stem.upper()}_PARAM {index_name}"
                     )
 
-        h_txt = f"""\
+        path.write_text(
+            f"""\
 #ifndef {guard_define}
 #define {guard_define}
-#include "{self.parent_class}ParamSet.h"
-{join(defines)}
-class {path.stem}DetectorParamSet : public virtual {self.parent_class}ParamSet {{
+
+#include "{parent_param_set}.h"
+
+{join_lines(defines)}
+
+class {path.stem} : public virtual {parent_param_set} {{
 public:
-    {path.stem}DetectorParamSet() {{
-        {join(adds, indent=8)}
+    {path.stem}() {{
+        {join_lines(adds, indent=8)}
     }}
-protected:
-    {join(indexes, indent=4)}
+
+    {join_lines(indexes, indent=4)}
 }};
+
 #endif // {guard_define}
 """
-        path.write_text(h_txt)
+        )

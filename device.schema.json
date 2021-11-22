@@ -1,35 +1,52 @@
 {
-  "type": "array",
-  "items": {
-    "anyOf": [
-      {
-        "$ref": "#/$defs/Component"
+  "allOf": [
+    {
+      "$ref": "#/definitions/Device"
+    }
+  ],
+  "definitions": {
+    "Device": {
+      "type": "object",
+      "properties": {
+        "children": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/Component"
+              },
+              {
+                "$ref": "#/definitions/ComponentGroup"
+              }
+            ]
+          },
+          "description": "Child Components"
+        }
       },
-      {
-        "$ref": "#/$defs/ComponentGroup"
-      }
-    ]
-  },
-  "$defs": {
+      "required": [
+        "children"
+      ],
+      "additionalProperties": false
+    },
     "Component": {
       "anyOf": [
         {
-          "$ref": "#/$defs/SignalR"
+          "$ref": "#/definitions/SignalR"
         },
         {
-          "$ref": "#/$defs/SignalW"
+          "$ref": "#/definitions/SignalW"
         },
         {
-          "$ref": "#/$defs/SignalRW"
+          "$ref": "#/definitions/SignalRW"
         },
         {
-          "$ref": "#/$defs/SignalX"
+          "$ref": "#/definitions/SignalX"
         },
         {
-          "$ref": "#/$defs/DeviceRef"
+          "$ref": "#/definitions/DeviceRef"
         },
         {
-          "$ref": "#/$defs/SignalRef"
+          "$ref": "#/definitions/SignalRef"
         }
       ]
     },
@@ -53,7 +70,7 @@
         "widget": {
           "anyOf": [
             {
-              "$ref": "#/$defs/ReadWidget"
+              "$ref": "#/definitions/ReadWidget"
             },
             {
               "type": "null"
@@ -72,25 +89,25 @@
     "ReadWidget": {
       "anyOf": [
         {
-          "$ref": "#/$defs/LED"
+          "$ref": "#/definitions/LED"
         },
         {
-          "$ref": "#/$defs/BitField"
+          "$ref": "#/definitions/BitField"
         },
         {
-          "$ref": "#/$defs/ProgressBar"
+          "$ref": "#/definitions/ProgressBar"
         },
         {
-          "$ref": "#/$defs/TextRead"
+          "$ref": "#/definitions/TextRead"
         },
         {
-          "$ref": "#/$defs/ArrayTrace"
+          "$ref": "#/definitions/ArrayTrace"
         },
         {
-          "$ref": "#/$defs/TableRead"
+          "$ref": "#/definitions/TableRead"
         },
         {
-          "$ref": "#/$defs/ImageRead"
+          "$ref": "#/definitions/ImageRead"
         }
       ]
     },
@@ -182,7 +199,7 @@
         "widgets": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/ReadWidget"
+            "$ref": "#/definitions/ReadWidget"
           },
           "description": "For each column, what widget should be repeated for every row"
         }
@@ -223,7 +240,7 @@
         "widget": {
           "anyOf": [
             {
-              "$ref": "#/$defs/WriteWidget"
+              "$ref": "#/definitions/WriteWidget"
             },
             {
               "type": "null"
@@ -242,19 +259,19 @@
     "WriteWidget": {
       "anyOf": [
         {
-          "$ref": "#/$defs/CheckBox"
+          "$ref": "#/definitions/CheckBox"
         },
         {
-          "$ref": "#/$defs/ComboBox"
+          "$ref": "#/definitions/ComboBox"
         },
         {
-          "$ref": "#/$defs/TextWrite"
+          "$ref": "#/definitions/TextWrite"
         },
         {
-          "$ref": "#/$defs/ArrayWrite"
+          "$ref": "#/definitions/ArrayWrite"
         },
         {
-          "$ref": "#/$defs/TableWrite"
+          "$ref": "#/definitions/TableWrite"
         }
       ]
     },
@@ -305,8 +322,12 @@
           "default": "ArrayWrite"
         },
         "widget": {
-          "$ref": "#/$defs/WriteWidget",
-          "description": "What widget should be used for each item"
+          "description": "What widget should be used for each item",
+          "allOf": [
+            {
+              "$ref": "#/definitions/WriteWidget"
+            }
+          ]
         }
       },
       "required": [
@@ -325,7 +346,7 @@
         "widgets": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/WriteWidget"
+            "$ref": "#/definitions/WriteWidget"
           },
           "description": "For each column, what widget should be repeated for every row"
         }
@@ -355,7 +376,7 @@
         "widget": {
           "anyOf": [
             {
-              "$ref": "#/$defs/WriteWidget"
+              "$ref": "#/definitions/WriteWidget"
             },
             {
               "type": "null"
@@ -372,7 +393,7 @@
         "read_widget": {
           "anyOf": [
             {
-              "$ref": "#/$defs/ReadWidget"
+              "$ref": "#/definitions/ReadWidget"
             },
             {
               "type": "null"
@@ -473,18 +494,22 @@
           "description": "PascalCase name to uniquely identify"
         },
         "layout": {
-          "$ref": "#/$defs/Layout",
-          "description": "How to layout children on screen"
+          "description": "How to layout children on screen",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Layout"
+            }
+          ]
         },
         "children": {
           "type": "array",
           "items": {
             "anyOf": [
               {
-                "$ref": "#/$defs/Component"
+                "$ref": "#/definitions/Component"
               },
               {
-                "$ref": "#/$defs/ComponentGroup"
+                "$ref": "#/definitions/ComponentGroup"
               }
             ]
           },
@@ -501,13 +526,13 @@
     "Layout": {
       "anyOf": [
         {
-          "$ref": "#/$defs/Plot"
+          "$ref": "#/definitions/Plot"
         },
         {
-          "$ref": "#/$defs/Row"
+          "$ref": "#/definitions/Row"
         },
         {
-          "$ref": "#/$defs/Grid"
+          "$ref": "#/definitions/Grid"
         }
       ]
     },
@@ -561,5 +586,5 @@
       "additionalProperties": false
     }
   },
-  "$schema": "http://json-schema.org/draft/2020-12/schema#"
+  "$schema": "http://json-schema.org/draft-07/schema#"
 }

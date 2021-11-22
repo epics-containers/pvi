@@ -1,16 +1,15 @@
 import json
-from enum import Enum
 from pathlib import Path
 from typing import Optional, Type
 
 import jsonschema
 import typer
-from apischema import deserialize
-from apischema.json_schema import deserialization_schema
+from apischema import deserialize, serialize
+from apischema.json_schema import JsonSchemaVersion, deserialization_schema
 from ruamel.yaml import YAML
 
 from pvi import __version__
-from pvi.types import Component, Producer, Tree
+from pvi.types import Device, Producer
 
 from . import _asyn  # noqa
 
@@ -36,26 +35,23 @@ def main(
     """PVI builder interface"""
 
 
-class SchemaType(str, Enum):
-    pvi = "pvi"
-    producer = "producer"
-
-
 @cli.command()
-def schema(
-    type: SchemaType = typer.Argument(..., help="sort of schema to write"),
-    output: Path = typer.Argument(..., help="filename to write the schema to"),
-):
+def schema(output: Path = typer.Argument(..., help="filename to write the schema to"),):
     """Write the JSON schema for the pvi interface or producer interface"""
     cls: Type
-    if type is SchemaType.pvi:
-        cls = Tree[Component]
-    elif type is SchemaType.producer:
+    assert output.name.endswith(
+        ".schema.json"
+    ), f"Expected '{output.name}' to end with '.schema.json'"
+    if output.name == "device.schema.json":
+        cls = Device
+    elif output.name == "producer.schema.json":
         cls = Producer
     else:
         raise ValueError(type)
-    schema = json.dumps(deserialization_schema(cls, all_refs=True), indent=2)
-    output.write_text(schema)
+    schema = deserialization_schema(
+        cls, all_refs=True, version=JsonSchemaVersion.DRAFT_7
+    )
+    output.write_text(json.dumps(schema, indent=2))
 
 
 @cli.command()
@@ -71,13 +67,14 @@ def produce(
     producer_dict = YAML(typ="safe").load(yaml)
     # first check the definition file with jsonschema since it has more
     # legible error messages than apischema
-    # schema = deserialization_schema(Producer, all_refs=True)
-    schema = json.loads(open("producer.schema.json").read())
-    jsonschema.validate(producer_dict, schema)
-    # basename = name[:-9]
+    jsonschema.validate(producer_dict, deserialization_schema(Producer))
     producer = deserialize(Producer, producer_dict)
     if output.suffix == ".template":
         producer.produce_records(output)
+    elif output.suffixes == [".pvi", ".json"]:
+        device = Device(producer.produce_components())
+        serialized = serialize(device, exclude_none=True, exclude_defaults=True)
+        output.write_text(json.dumps(serialized, indent=2))
     else:
         producer.produce_other(output)
 

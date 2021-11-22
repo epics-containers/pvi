@@ -2,27 +2,25 @@ import json
 from pathlib import Path
 
 import pytest
-from apischema import deserialize, serialize
 from ruamel.yaml import YAML
 
 from pvi.types import (
     LED,
     CheckBox,
     ComboBox,
-    Component,
+    Device,
     Grid,
     Group,
     SignalR,
     SignalRW,
     TableWrite,
     TextWrite,
-    Tree,
 )
 
 
 @pytest.fixture
 def device():
-    return [
+    components = [
         Group(
             "Parameters",
             Grid(),
@@ -34,6 +32,7 @@ def device():
         SignalRW("Table", "TABLE", TableWrite([CheckBox(), ComboBox(), TextWrite()])),
         SignalR("OutA", "OUTA", LED()),
     ]
+    return Device(components)
 
 
 @pytest.fixture
@@ -43,11 +42,11 @@ def device_serialized():
     )
 
 
-def test_serialize(device, device_serialized):
-    s = serialize(device, exclude_none=True, exclude_defaults=True)
+def test_serialize(device: Device, device_serialized):
+    s = device.serialize()
     assert json.dumps(s, indent=2) == json.dumps(device_serialized, indent=2)
 
 
-def test_deserialize(device, device_serialized):
-    d = deserialize(Tree[Component], device_serialized)
+def test_deserialize(device: Device, device_serialized):
+    d = Device.deserialize(device_serialized)
     assert d == device

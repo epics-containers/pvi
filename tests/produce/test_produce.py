@@ -6,7 +6,10 @@ from typer.testing import CliRunner
 from pvi.__main__ import cli
 
 
-@pytest.mark.parametrize("filename", ["pilatusParamSet.template"])
+@pytest.mark.parametrize(
+    "filename",
+    ["pilatusParamSet.template", "pilatusDetectorParamSet.h", "pilatus.pvi.json"],
+)
 def test_produce(tmp_path, filename):
     tmp_file = tmp_path / filename
     yaml = Path(__file__).parent / "pilatusDetector.pvi.yaml"

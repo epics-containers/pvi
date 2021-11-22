@@ -111,5 +111,9 @@ def truncate_description(desc: str) -> str:
     return first_line[:40]
 
 
-def join(texts, indent=0):
-    return (" " * indent + "\n").join(texts)
+def join_lines(lines, indent=0):
+    return ("\n" + (" " * indent)).join(lines)
+
+
+def get_param_set(driver: str) -> str:
+    return "asynParamSet" if driver == "asynPortDriver" else driver + "ParamSet"

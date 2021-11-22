@@ -9,11 +9,14 @@ from typing import (
     Generic,
     Iterator,
     List,
+    Mapping,
     Optional,
     Sequence,
     TypeVar,
     Union,
 )
+
+from apischema import deserialize, serialize
 
 from ._utils import (
     Annotated,
@@ -250,6 +253,22 @@ def walk(tree: Tree[T]) -> Iterator[Union[T, Group[T]]]:
         yield t
         if isinstance(t, Group):
             yield from walk(t.children)
+
+
+@dataclass
+class Device:
+    """Collection of Components"""
+
+    children: Annotated[Tree[Component], desc("Child Components")]
+
+    def serialize(self) -> Mapping[str, Any]:
+        """Serialize the Device to a dictionary."""
+        return serialize(self, exclude_none=True, exclude_defaults=True)
+
+    @classmethod
+    def deserialize(cls, serialized: Mapping[str, Any]) -> Device:
+        """Deserialize the Device from a dictionary."""
+        return deserialize(cls, serialized)
 
 
 @as_discriminated_union
