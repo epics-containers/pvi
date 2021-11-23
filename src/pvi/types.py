@@ -300,6 +300,10 @@ class Producer:
         """Make signals from components"""
         raise NotImplementedError(self)
 
+    def produce_csv(self, path: Path):
+        """Make docs csv table"""
+        raise NotImplementedError(self)
+
     def produce_records(self, path: Path):
         """Make epicsdbbuilder records"""
         raise NotImplementedError(self)

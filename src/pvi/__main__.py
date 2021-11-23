@@ -54,6 +54,9 @@ def schema(output: Path = typer.Argument(..., help="filename to write the schema
     output.write_text(json.dumps(schema, indent=2))
 
 
+UI_SUFFIXES = [".edl", ".adl", ".ui", ".opi", ".bob", ".csv"]
+
+
 @cli.command()
 def produce(
     yaml: Path = typer.Argument(..., help="path to the YAML source file"),
@@ -71,10 +74,16 @@ def produce(
     producer = deserialize(Producer, producer_dict)
     if output.suffix == ".template":
         producer.produce_records(output)
+    elif output.suffix == ".csv":
+        producer.produce_csv(output)
     elif output.suffixes == [".pvi", ".json"]:
         device = Device(producer.produce_components())
         serialized = serialize(device, exclude_none=True, exclude_defaults=True)
         output.write_text(json.dumps(serialized, indent=2))
+    elif output.suffix in UI_SUFFIXES:
+        components = producer.produce_components()
+        func = getattr(formatter, f"produce_{output.suffix[1:]}")
+        func(components, output)
     else:
         producer.produce_other(output)
 

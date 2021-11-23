@@ -1,12 +1,12 @@
+import csv
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, ClassVar, Iterator, Optional, Union
 
 from apischema.schemas import schema
 from apischema.types import Number
-from epicsdbbuilder import records
+from epicsdbbuilder import WriteRecords, records
 from epicsdbbuilder.recordbase import Record
-from epicsdbbuilder.recordset import WriteRecords
 
 from ._records import (
     AnalogueRecordPair,
@@ -32,6 +32,7 @@ from .types import (
     ComboBox,
     Component,
     DisplayForm,
+    Group,
     Named,
     Producer,
     ReadWidget,
@@ -268,19 +269,41 @@ class AsynProducer(Producer):
                 read_widget=parameter.read_widget if need_both else None,
             )
 
+    def produce_csv(self, path: Path):
+        with open(path, "w", newline="") as csvfile:
+            writer = csv.writer(csvfile, delimiter=",", quotechar='"')
+            writer.writerow(["Parameter", "Records", "Description"])
+            for node in walk(self.parameters):
+                if isinstance(node, Group):
+                    writer.writerow([f"*{node.name}*"])
+                else:
+                    records = []
+                    if node.access.needs_read_record():
+                        name = self.prefix + self._read_record_suffix(node)
+                        rtype = node.record_fields.in_record_type.__name__
+                        records.append(f"{rtype}: {name}")
+                    if node.access.needs_write_record():
+                        name = self.prefix + self._write_record_suffix(node)
+                        rtype = node.record_fields.out_record_type.__name__
+                        records.append(f"{rtype}: {name}")
+                    record_txt = "\n".join(records)
+                    if records:
+                        writer.writerow([node.name, record_txt, node.description])
+
     def produce_records(self, path: Path):
         """Make epicsdbbuilder records"""
         comment = None
         for node in walk(self.parameters):
-            if isinstance(node, AsynParameter):
+            if isinstance(node, Group):
+                comment = f"Group: {node.name}"
+            else:
                 for record in self._produce_record(node):
                     if node.display_form:
                         record.add_info("Q:form", node.display_form)
                     if comment:
                         record.add_comment(comment)
                     comment = None
-            else:
-                comment = f"Group: {node.name}"
+
                 header = """\
 This file was automatically generated
 

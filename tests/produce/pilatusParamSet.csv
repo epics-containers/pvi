@@ -1,0 +1,56 @@
+Parameter,Records,Description
+*GroupOne*
+ResetPower,bo: $(P)$(R)ResetPower,ResetPower
+ImageFileTmot,ao: $(P)$(R)ImageFileTmot,Timeout for image file
+Wavelength,ao: $(P)$(R)Wavelength,Wavelength
+EnergyLow,ao: $(P)$(R)EnergyLow,EnergyLow
+EnergyHigh,ao: $(P)$(R)EnergyHigh,EnergyHigh
+DetDist,ao: $(P)$(R)DetDist,DetDist
+DetVOffset,ao: $(P)$(R)DetVOffset,DetVOffset
+BeamX,ao: $(P)$(R)BeamX,BeamX
+BeamY,ao: $(P)$(R)BeamY,BeamY
+Flux,ao: $(P)$(R)Flux,Flux
+FilterTransm,ao: $(P)$(R)FilterTransm,FilterTransm
+StartAngle,ao: $(P)$(R)StartAngle,StartAngle
+AngleIncr,ao: $(P)$(R)AngleIncr,AngleIncr
+Det2theta,ao: $(P)$(R)Det2theta,Det2theta
+Polarization,ao: $(P)$(R)Polarization,Polarization
+Alpha,ao: $(P)$(R)Alpha,Alpha
+Kappa,ao: $(P)$(R)Kappa,Kappa
+Phi,ao: $(P)$(R)Phi,Phi
+PhiIncr,ao: $(P)$(R)PhiIncr,PhiIncr
+Chi,ao: $(P)$(R)Chi,Chi
+ChiIncr,ao: $(P)$(R)ChiIncr,ChiIncr
+Omega,ao: $(P)$(R)Omega,Omega
+OmegaIncr,ao: $(P)$(R)OmegaIncr,OmegaIncr
+OscillAxis,stringout: $(P)$(R)OscillAxis,OscillAxis
+NumOscill,longout: $(P)$(R)NumOscill,NumOscill
+BadPixelFile,waveform: $(P)$(R)BadPixelFile,BadPixelFile
+FlatFieldFile,waveform: $(P)$(R)FlatFieldFile,FlatFieldFile
+CbfTemplateFile,waveform: $(P)$(R)CbfTemplateFile,CbfTemplateFile
+HeaderString,waveform: $(P)$(R)HeaderString,HeaderString
+Armed,bi: $(P)$(R)Armed,Armed
+NumBadPixels,longin: $(P)$(R)NumBadPixels,Number of bad pixels
+FlatFieldValid,bi: $(P)$(R)FlatFieldValid,Flat field valid
+PixelCutOff,ai: $(P)$(R)PixelCutOff_RBV,PixelCutOff_RBV
+Temp0,ai: $(P)$(R)Temp0_RBV,Temp0_RBV
+Temp1,ai: $(P)$(R)Temp1_RBV,Temp1_RBV
+Temp2,ai: $(P)$(R)Temp2_RBV,Temp2_RBV
+Humid0,ai: $(P)$(R)Humid0_RBV,Humid0_RBV
+Humid1,ai: $(P)$(R)Humid1_RBV,Humid1_RBV
+Humid2,ai: $(P)$(R)Humid2_RBV,Humid2_RBV
+TVXVersion,stringin: $(P)$(R)TVXVersion_RBV,TVXVersion_RBV
+ResetPowerTime,"longin: $(P)$(R)ResetPowerTime_RBV
+longout: $(P)$(R)ResetPowerTime",Reset module power wait time
+DelayTime,"ai: $(P)$(R)DelayTime_RBV
+ao: $(P)$(R)DelayTime",DelayTime
+ThresholdEnergy,"ai: $(P)$(R)ThresholdEnergy_RBV
+ao: $(P)$(R)ThresholdEnergy",Energy threshold
+ThresholdAutoApply,"bi: $(P)$(R)ThresholdAutoApply_RBV
+bo: $(P)$(R)ThresholdAutoApply",ThresholdAutoApply
+Energy,"ai: $(P)$(R)Energy_RBV
+ao: $(P)$(R)Energy",X-ray Energy
+MinFlatField,"longin: $(P)$(R)MinFlatField_RBV
+longout: $(P)$(R)MinFlatField",Minimum flat field value
+GapFill,"mbbi: $(P)$(R)GapFill_RBV
+mbbo: $(P)$(R)GapFill",GapFill
