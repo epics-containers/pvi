@@ -10,7 +10,7 @@ from apischema import serialize
 from epicsdbbuilder import dbd, mydbstatic
 from typing_extensions import Annotated as A
 
-from ._utils import desc
+from pvi._utils import desc
 
 
 class PointerFactory:

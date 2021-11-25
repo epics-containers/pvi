@@ -9,9 +9,8 @@ from apischema.json_schema import JsonSchemaVersion, deserialization_schema
 from ruamel.yaml import YAML
 
 from pvi import __version__
-from pvi.types import Device, Producer
-
-from . import _asyn  # noqa
+from pvi._producers import Producer
+from pvi.device import Device
 
 cli = typer.Typer()
 
@@ -81,9 +80,9 @@ def produce(
         serialized = serialize(device, exclude_none=True, exclude_defaults=True)
         output.write_text(json.dumps(serialized, indent=2))
     elif output.suffix in UI_SUFFIXES:
-        components = producer.produce_components()
-        func = getattr(formatter, f"produce_{output.suffix[1:]}")
-        func(components, output)
+        producer.produce_components()
+        # func = getattr(formatter, f"produce_{output.suffix[1:]}")
+        # func(components, output)
     else:
         producer.produce_other(output)
 

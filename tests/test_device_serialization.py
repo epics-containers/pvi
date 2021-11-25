@@ -4,7 +4,7 @@ from pathlib import Path
 import pytest
 from ruamel.yaml import YAML
 
-from pvi.types import (
+from pvi.device import (
     LED,
     CheckBox,
     ComboBox,

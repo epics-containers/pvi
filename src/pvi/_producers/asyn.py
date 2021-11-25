@@ -8,16 +8,7 @@ from apischema.types import Number
 from epicsdbbuilder import WriteRecords, records
 from epicsdbbuilder.recordbase import Record
 
-from ._records import (
-    AnalogueRecordPair,
-    BinaryRecordPair,
-    LongRecordPair,
-    MultiBitBinaryRecordPair,
-    RecordPair,
-    StringRecordPair,
-    WaveformRecordPair,
-)
-from ._utils import (
+from pvi._utils import (
     Annotated,
     as_discriminated_union,
     desc,
@@ -25,16 +16,13 @@ from ._utils import (
     join_lines,
     truncate_description,
 )
-from .types import (
+from pvi.device import (
     LED,
-    Access,
     CheckBox,
     ComboBox,
     Component,
-    DisplayForm,
     Group,
     Named,
-    Producer,
     ReadWidget,
     SignalR,
     SignalRW,
@@ -45,6 +33,17 @@ from .types import (
     WriteWidget,
     on_each_node,
     walk,
+)
+
+from .base import Access, DisplayForm, Producer
+from .records import (
+    AnalogueRecordPair,
+    BinaryRecordPair,
+    LongRecordPair,
+    MultiBitBinaryRecordPair,
+    RecordPair,
+    StringRecordPair,
+    WaveformRecordPair,
 )
 
 
