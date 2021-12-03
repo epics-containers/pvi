@@ -21,6 +21,7 @@ from pvi.device import (
     CheckBox,
     ComboBox,
     Component,
+    Device,
     Group,
     Named,
     ReadWidget,
@@ -212,6 +213,8 @@ class AsynWaveform(AsynParameter):
         asyn_write="asynOctetWrite",
         asyn_param="asynParamOctet",
     )
+    read_widget: AReadWidget = TextRead()
+    write_widget: AWriteWidget = TextWrite()
     record_fields: Annotated[  # type: ignore
         WaveformRecordPair, desc("Waveform record fields")
     ] = WaveformRecordPair()
@@ -219,9 +222,7 @@ class AsynWaveform(AsynParameter):
 
 @dataclass
 class AsynProducer(Producer):
-    prefix: Annotated[
-        str, desc("The prefix for record names created by the template file")
-    ]
+    label: Annotated[str, desc("Screen title")]
     asyn_port: Annotated[str, desc("The asyn port name")]
     address: Annotated[str, desc("The asyn address")]
     timeout: Annotated[str, desc("The timeout for the asyn port")]
@@ -244,9 +245,10 @@ class AsynProducer(Producer):
         else:
             return parameter.name
 
-    def produce_components(self) -> Tree[Component]:
+    def produce_device(self) -> Device:
         """Make signals from components"""
-        return on_each_node(self.parameters, self._produce_component)
+        components = on_each_node(self.parameters, self._produce_component)
+        return Device(self.label, components)
 
     def _produce_component(self, parameter: AsynParameter) -> Iterator[Component]:
         # TODO: what about SignalX?

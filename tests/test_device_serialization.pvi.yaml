@@ -1,4 +1,5 @@
-# yaml-language-server: $schema=../device.schema.json
+# yaml-language-server: $schema=../pvi.device.schema.json
+label: label
 children:
 - type: Group
   name: Parameters

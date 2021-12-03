@@ -1,5 +1,6 @@
-# yaml-language-server: $schema=../../producer.schema.json
+# yaml-language-server: $schema=../pvi.producer.schema.json
 type: AsynProducer
+label: Pilatus Detector
 prefix: $(P)$(R)
 asyn_port: $(PORT)
 address: $(ADDR)

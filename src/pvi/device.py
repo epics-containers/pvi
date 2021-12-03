@@ -257,6 +257,7 @@ def walk(tree: Tree[T]) -> Iterator[Union[T, Group[T]]]:
 class Device:
     """Collection of Components"""
 
+    label: Annotated[str, desc("Label for screen")]
     children: Annotated[Tree[Component], desc("Child Components")]
 
     def serialize(self) -> Mapping[str, Any]:

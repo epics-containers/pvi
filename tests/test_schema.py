@@ -13,10 +13,10 @@ def test_version():
     assert result.stdout == __version__ + "\n"
 
 
-@pytest.mark.parametrize("schema", ["device", "producer"])
+@pytest.mark.parametrize("schema", ["device", "producer", "formatter"])
 def test_schemas(tmp_path, schema):
-    tmp_file = tmp_path / f"{schema}.schema.json"
+    tmp_file = tmp_path / f"pvi.{schema}.schema.json"
     result = CliRunner().invoke(cli, ["schema", str(tmp_file)])
     assert result.exit_code == 0, result
-    expected = open(Path(__file__).parent.parent / f"{schema}.schema.json").read()
+    expected = open(Path(__file__).parent.parent / f"pvi.{schema}.schema.json").read()
     assert open(tmp_file).read() == expected

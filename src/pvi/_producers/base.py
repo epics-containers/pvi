@@ -2,8 +2,8 @@ from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
 
-from pvi._utils import as_discriminated_union
-from pvi.device import Component, Tree
+from pvi._utils import Annotated, as_discriminated_union, desc
+from pvi.device import Device
 
 
 class Access(str, Enum):
@@ -51,7 +51,11 @@ class DisplayForm(str, Enum):
 @as_discriminated_union
 @dataclass
 class Producer:
-    def produce_components(self) -> Tree[Component]:
+    prefix: Annotated[
+        str, desc("The prefix for record names created by the template file")
+    ]
+
+    def produce_device(self) -> Device:
         """Make signals from components"""
         raise NotImplementedError(self)
 

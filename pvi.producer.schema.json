@@ -20,6 +20,10 @@
           "type": "string",
           "description": "The prefix for record names created by the template file"
         },
+        "label": {
+          "type": "string",
+          "description": "Screen title"
+        },
         "asyn_port": {
           "type": "string",
           "description": "The asyn port name"
@@ -55,6 +59,7 @@
       },
       "required": [
         "prefix",
+        "label",
         "asyn_port",
         "address",
         "timeout"

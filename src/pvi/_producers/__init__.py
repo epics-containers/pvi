@@ -1,5 +1,4 @@
-# Import these so serializers are registered
-from . import asyn  # noqa
+from .asyn import AsynProducer
 from .base import Producer
 
-__all__ = ["Producer"]
+__all__ = ["Producer", "AsynProducer"]

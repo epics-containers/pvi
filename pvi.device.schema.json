@@ -8,6 +8,10 @@
     "Device": {
       "type": "object",
       "properties": {
+        "label": {
+          "type": "string",
+          "description": "Label for screen"
+        },
         "children": {
           "type": "array",
           "items": {
@@ -24,6 +28,7 @@
         }
       },
       "required": [
+        "label",
         "children"
       ],
       "additionalProperties": false

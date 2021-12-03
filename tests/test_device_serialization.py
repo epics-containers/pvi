@@ -32,7 +32,7 @@ def device():
         SignalRW("Table", "TABLE", TableWrite([CheckBox(), ComboBox(), TextWrite()])),
         SignalR("OutA", "OUTA", LED()),
     ]
-    return Device(components)
+    return Device("label", components)
 
 
 @pytest.fixture
