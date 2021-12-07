@@ -18,5 +18,5 @@ def test_schemas(tmp_path, schema):
     tmp_file = tmp_path / f"pvi.{schema}.schema.json"
     result = CliRunner().invoke(cli, ["schema", str(tmp_file)])
     assert result.exit_code == 0, result
-    expected = open(Path(__file__).parent.parent / f"pvi.{schema}.schema.json").read()
-    assert open(tmp_file).read() == expected
+    expected = Path(__file__).parent.parent / "schemas" / f"pvi.{schema}.schema.json"
+    assert tmp_file.read_text() == expected.read_text()

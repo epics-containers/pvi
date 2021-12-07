@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=../pvi.device.schema.json
+# yaml-language-server: $schema=../schemas/pvi.device.schema.json
 label: label
 children:
 - type: Group

@@ -20,6 +20,11 @@
           "type": "integer",
           "description": "Spacing between widgets",
           "default": 5
+        },
+        "title_height": {
+          "type": "integer",
+          "description": "Height of screen title bar",
+          "default": 25
         }
       },
       "additionalProperties": false

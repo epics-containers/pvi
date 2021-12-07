@@ -4265,40 +4265,32 @@
         "read_widget": {
           "anyOf": [
             {
-              "anyOf": [
-                {
-                  "$ref": "#/definitions/ReadWidget"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "description": "Widget to use for read record"
+              "$ref": "#/definitions/ReadWidget"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "description": "Widget to use for read record",
+          "default": {
+            "type": "TextRead",
+            "lines": 1
+          }
         },
         "write_widget": {
           "anyOf": [
             {
-              "anyOf": [
-                {
-                  "$ref": "#/definitions/WriteWidget"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "description": "Widget to use for write record"
+              "$ref": "#/definitions/WriteWidget"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "description": "Widget to use for write record",
+          "default": {
+            "type": "TextWrite",
+            "lines": 1
+          }
         },
         "record_fields": {
           "description": "Waveform record fields",
