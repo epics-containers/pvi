@@ -211,22 +211,34 @@
         {
           "type": "SignalW",
           "name": "BadPixelFile",
-          "pv": "BadPixelFile"
+          "pv": "BadPixelFile",
+          "widget": {
+            "type": "TextWrite"
+          }
         },
         {
           "type": "SignalW",
           "name": "FlatFieldFile",
-          "pv": "FlatFieldFile"
+          "pv": "FlatFieldFile",
+          "widget": {
+            "type": "TextWrite"
+          }
         },
         {
           "type": "SignalW",
           "name": "CbfTemplateFile",
-          "pv": "CbfTemplateFile"
+          "pv": "CbfTemplateFile",
+          "widget": {
+            "type": "TextWrite"
+          }
         },
         {
           "type": "SignalW",
           "name": "HeaderString",
-          "pv": "HeaderString"
+          "pv": "HeaderString",
+          "widget": {
+            "type": "TextWrite"
+          }
         },
         {
           "type": "SignalR",

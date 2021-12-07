@@ -102,16 +102,28 @@ class Screen(Generic[T]):
     label_width: int
     widget_width: int
     widget_height: int
+    max_height: int
     components: Dict[str, Component] = field(init=False, default_factory=dict)
 
     def screen(self, components: Tree[Component], title: str) -> WidgetFactory[T]:
         # Make the contents of the screen
         widgets: List[WidgetFactory[T]] = []
+        x, y = 0, 0
         for c in components:
             if isinstance(c, Group):
-                y = max_y(widgets, self.spacing)
-                widgets.append(self.group(c, bounds=Bounds(0, y)))
-                # TODO: move to next column if too big
+                group = self.group(c, bounds=Bounds(x, y))
+                if group.bounds.h + group.bounds.x > self.max_height:
+                    if group.bounds.h > self.max_height:
+                        # Group will be wider to fit
+                        h = self.max_height
+                    else:
+                        # Group will cap to height
+                        h = 0
+                    # Retry in a new column
+                    x = max_x(widgets)
+                    y = 0
+                    group = self.group(c, bounds=Bounds(x, y, h=h))
+                widgets.append(group)
             else:
                 raise NotImplementedError(c)
         bounds = Bounds(w=max_x(widgets), h=max_y(widgets))
@@ -150,26 +162,47 @@ class Screen(Generic[T]):
             ComboBox: self.combo_box_cls,
             TextWrite: self.text_write_cls,
         }
+        if isinstance(widget, (TextRead, TextWrite)):
+            bounds.h *= widget.lines
         return widget_factory[type(widget)](bounds, self.prefix + pv)
 
     def group(self, group: Group[Component], bounds: Bounds) -> WidgetFactory[T]:
-        bounds.w = self.label_width + 2 * (self.spacing + self.widget_width)
-        widgets: List[WidgetFactory[T]] = []
+        x = 0
+        full_w = self.label_width + 2 * (self.spacing + self.widget_width)
+        widget_lists: List[List[WidgetFactory[T]]] = [[]]
         assert isinstance(group.layout, Grid), "Can only do grid at the moment"
         for c in group.children:
             if isinstance(c, Group):
                 # TODO: make a new screen
                 raise NotImplementedError(c)
             else:
-                y = max_y(widgets, self.spacing)
-                for w in self.component(
-                    c,
-                    bounds=Bounds(0, y, bounds.w, self.widget_height),
-                    add_label=group.layout.labelled,
-                ):
-                    widgets.append(w)
+
+                def make(y):
+                    return self.component(
+                        c,
+                        bounds=Bounds(x, y, full_w, self.widget_height),
+                        add_label=group.layout.labelled,
+                    )
+
+                widgets = list(make(y=max_y(widget_lists[-1], self.spacing)))
+                max_h = max(w.bounds.y + w.bounds.h for w in widgets)
+                if bounds.h > 0 and max_h > bounds.h:
+                    # Retry in the next row
+                    x = max_x(widget_lists[-1], self.spacing)
+                    widget_lists.append(list(make(y=0)))
+                else:
+                    # Add in this row
+                    for w in widgets:
+                        widget_lists[-1].append(w)
+
+        widgets = concat(widget_lists)
         bounds.h = max_y(widgets)
+        bounds.w = max_x(widgets)
         return self.group_cls(bounds, group.label, widgets)
+
+
+def concat(items: List[List[T]]) -> List[T]:
+    return [x for seq in items for x in seq]
 
 
 def split_with_sep(text: str, sep: str, maxsplit: int = -1) -> List[str]:

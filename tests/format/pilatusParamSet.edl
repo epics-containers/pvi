@@ -3,10 +3,10 @@ beginScreenProperties
 major 4
 minor 0
 release 1
-x 300
-y 50
-w 540
-h 900
+x 0
+y 0
+w 515
+h 925
 font "arial-bold-r-12.0"
 ctlFont "arial-bold-r-12.0"
 btnFont "arial-bold-r-12.0"
@@ -25,103 +25,23 @@ snapToGrid
 gridSize 5
 endScreenProperties
 
-# (Group)
-object activeGroupClass
-beginObjectProperties
-major 4
-minor 0
-release 0
-x 0
-y 0
-w 540
-h 30
-
-beginGroup
-
-# (Rectangle)
-object activeRectangleClass
-beginObjectProperties
-major 4
-minor 0
-release 0
-x 0
-y 0
-w 540
-h 30
-lineColor index 3
-fill
-fillColor index 3
-endObjectProperties
-
-# (Lines)
-object activeLineClass
-beginObjectProperties
-major 4
-minor 0
-release 1
-x 0
-y 2
-w 540
-h 24
-lineColor index 11
-fillColor index 0
-numPoints 3
-xPoints {
-  0 0
-  1 540
-  2 540
-}
-yPoints {
-  0 26
-  1 26
-  2 2
-}
-endObjectProperties
-
 # (Static Text)
 object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 0
-y 2
-w 540
-h 24
+y 0
+w 515
+h 25
 font "arial-bold-r-16.0"
 fontAlign "center"
 fgColor index 14
 bgColor index 48
-value "pilatusDetector features - $(P)$(R)"
-endObjectProperties
-
-# (Lines)
-object activeLineClass
-beginObjectProperties
-major 4
-minor 0
-release 1
-x 0
-y 2
-w 540
-h 24
-lineColor index 1
-fillColor index 0
-numPoints 3
-xPoints {
-  0 0
-  1 0
-  2 540
+value {
+  "Pilatus Detector - $(P)$(R)"
 }
-yPoints {
-  0 26
-  1 2
-  2 2
-}
-endObjectProperties
-
-endGroup
-
 endObjectProperties
 
 # (Rectangle)
@@ -131,9 +51,9 @@ major 4
 minor 0
 release 0
 x 5
-y 50
-w 530
-h 800
+y 35
+w 505
+h 885
 lineColor index 14
 fill
 fillColor index 5
@@ -144,16 +64,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 5
-y 40
-w 150
-h 14
+y 30
+w 505
+h 10
 font "arial-medium-r-12.0"
 fontAlign "center"
 fgColor index 14
 bgColor index 8
-value "  Component Group One  "
+value {
+  "   Group One  "
+}
 autoSize
 border
 endObjectProperties
@@ -163,17 +85,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
-y 55
+y 45
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Reset Power"
-
+value {
+  " Reset Power"
+}
 endObjectProperties
 
 # (Choice Button)
@@ -182,10 +105,10 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 140
-y 55
-w 122.5
-h 15
+x 130
+y 45
+w 125
+h 20
 fgColor index 14
 bgColor index 3
 selectColor index 3
@@ -197,63 +120,24 @@ indicatorPv "None"
 font "arial-bold-r-14.0"
 orientation "horizontal"
 endObjectProperties
-# (Static Text)
-object activeXTextClass
-beginObjectProperties
-major 4
-minor 1
-release 0
-x 10
-y 75
-w 115
-h 20
-font "arial-bold-r-10.0"
-fgColor index 14
-bgColor index 3
-useDisplayBg
-value "Threshold Apply"
-
-endObjectProperties
-
-# (Message Button)
-object activeMessageButtonClass
-beginObjectProperties
-major 4
-minor 0
-release 0
-x 140
-y 75
-w 125
-h 17
-fgColor index 25
-onColor index 3
-offColor index 3
-topShadowColor index 1
-botShadowColor index 11
-controlPv "$(P)$(R)ThresholdApply"
-pressValue "1"
-onLabel "Threshold Apply"
-offLabel "Threshold Apply"
-3d
-font "arial-bold-r-12.0"
-endObjectProperties
 
 # (Static Text)
 object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
-y 95
+y 70
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Image File Tmot"
-
+value {
+  " Image File Tmot"
+}
 endObjectProperties
 
 # (Textentry)
@@ -262,16 +146,17 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
-y 95
-w 122.5
-h 17
+x 130
+y 70
+w 125
+h 20
 controlPv "$(P)$(R)ImageFileTmot"
 fgColor index 25
 fgAlarm
 bgColor index 3
 fill
 font "arial-bold-r-12.0"
+fontAlign "center"
 endObjectProperties
 
 # (Static Text)
@@ -279,17 +164,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
-y 115
+y 95
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Wavelength"
-
+value {
+  " Wavelength"
+}
 endObjectProperties
 
 # (Textentry)
@@ -298,16 +184,17 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
-y 115
-w 122.5
-h 17
+x 130
+y 95
+w 125
+h 20
 controlPv "$(P)$(R)Wavelength"
 fgColor index 25
 fgAlarm
 bgColor index 3
 fill
 font "arial-bold-r-12.0"
+fontAlign "center"
 endObjectProperties
 
 # (Static Text)
@@ -315,17 +202,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
-y 135
+y 120
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Energy Low"
-
+value {
+  " Energy Low"
+}
 endObjectProperties
 
 # (Textentry)
@@ -334,16 +222,17 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
-y 135
-w 122.5
-h 17
+x 130
+y 120
+w 125
+h 20
 controlPv "$(P)$(R)EnergyLow"
 fgColor index 25
 fgAlarm
 bgColor index 3
 fill
 font "arial-bold-r-12.0"
+fontAlign "center"
 endObjectProperties
 
 # (Static Text)
@@ -351,17 +240,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
-y 155
+y 145
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Energy High"
-
+value {
+  " Energy High"
+}
 endObjectProperties
 
 # (Textentry)
@@ -370,16 +260,17 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
-y 155
-w 122.5
-h 17
+x 130
+y 145
+w 125
+h 20
 controlPv "$(P)$(R)EnergyHigh"
 fgColor index 25
 fgAlarm
 bgColor index 3
 fill
 font "arial-bold-r-12.0"
+fontAlign "center"
 endObjectProperties
 
 # (Static Text)
@@ -387,17 +278,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
-y 175
+y 170
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Det Dist"
-
+value {
+  " Det Dist"
+}
 endObjectProperties
 
 # (Textentry)
@@ -406,16 +298,17 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
-y 175
-w 122.5
-h 17
+x 130
+y 170
+w 125
+h 20
 controlPv "$(P)$(R)DetDist"
 fgColor index 25
 fgAlarm
 bgColor index 3
 fill
 font "arial-bold-r-12.0"
+fontAlign "center"
 endObjectProperties
 
 # (Static Text)
@@ -423,7 +316,7 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
 y 195
 w 115
@@ -432,8 +325,9 @@ font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Det V Offset"
-
+value {
+  " Det V Offset"
+}
 endObjectProperties
 
 # (Textentry)
@@ -442,16 +336,17 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
+x 130
 y 195
-w 122.5
-h 17
+w 125
+h 20
 controlPv "$(P)$(R)DetVOffset"
 fgColor index 25
 fgAlarm
 bgColor index 3
 fill
 font "arial-bold-r-12.0"
+fontAlign "center"
 endObjectProperties
 
 # (Static Text)
@@ -459,17 +354,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
-y 215
+y 220
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Beam X"
-
+value {
+  " Beam X"
+}
 endObjectProperties
 
 # (Textentry)
@@ -478,16 +374,17 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
-y 215
-w 122.5
-h 17
+x 130
+y 220
+w 125
+h 20
 controlPv "$(P)$(R)BeamX"
 fgColor index 25
 fgAlarm
 bgColor index 3
 fill
 font "arial-bold-r-12.0"
+fontAlign "center"
 endObjectProperties
 
 # (Static Text)
@@ -495,17 +392,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
-y 235
+y 245
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Beam Y"
-
+value {
+  " Beam Y"
+}
 endObjectProperties
 
 # (Textentry)
@@ -514,16 +412,17 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
-y 235
-w 122.5
-h 17
+x 130
+y 245
+w 125
+h 20
 controlPv "$(P)$(R)BeamY"
 fgColor index 25
 fgAlarm
 bgColor index 3
 fill
 font "arial-bold-r-12.0"
+fontAlign "center"
 endObjectProperties
 
 # (Static Text)
@@ -531,17 +430,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
-y 255
+y 270
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Flux"
-
+value {
+  " Flux"
+}
 endObjectProperties
 
 # (Textentry)
@@ -550,16 +450,17 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
-y 255
-w 122.5
-h 17
+x 130
+y 270
+w 125
+h 20
 controlPv "$(P)$(R)Flux"
 fgColor index 25
 fgAlarm
 bgColor index 3
 fill
 font "arial-bold-r-12.0"
+fontAlign "center"
 endObjectProperties
 
 # (Static Text)
@@ -567,17 +468,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
-y 275
+y 295
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Filter Transm"
-
+value {
+  " Filter Transm"
+}
 endObjectProperties
 
 # (Textentry)
@@ -586,16 +488,17 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
-y 275
-w 122.5
-h 17
+x 130
+y 295
+w 125
+h 20
 controlPv "$(P)$(R)FilterTransm"
 fgColor index 25
 fgAlarm
 bgColor index 3
 fill
 font "arial-bold-r-12.0"
+fontAlign "center"
 endObjectProperties
 
 # (Static Text)
@@ -603,17 +506,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
-y 295
+y 320
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Start Angle"
-
+value {
+  " Start Angle"
+}
 endObjectProperties
 
 # (Textentry)
@@ -622,16 +526,17 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
-y 295
-w 122.5
-h 17
+x 130
+y 320
+w 125
+h 20
 controlPv "$(P)$(R)StartAngle"
 fgColor index 25
 fgAlarm
 bgColor index 3
 fill
 font "arial-bold-r-12.0"
+fontAlign "center"
 endObjectProperties
 
 # (Static Text)
@@ -639,17 +544,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
-y 315
+y 345
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Angle Incr"
-
+value {
+  " Angle Incr"
+}
 endObjectProperties
 
 # (Textentry)
@@ -658,16 +564,17 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
-y 315
-w 122.5
-h 17
+x 130
+y 345
+w 125
+h 20
 controlPv "$(P)$(R)AngleIncr"
 fgColor index 25
 fgAlarm
 bgColor index 3
 fill
 font "arial-bold-r-12.0"
+fontAlign "center"
 endObjectProperties
 
 # (Static Text)
@@ -675,17 +582,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
-y 335
+y 370
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Det2theta"
-
+value {
+  " Det 2theta"
+}
 endObjectProperties
 
 # (Textentry)
@@ -694,16 +602,17 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
-y 335
-w 122.5
-h 17
+x 130
+y 370
+w 125
+h 20
 controlPv "$(P)$(R)Det2theta"
 fgColor index 25
 fgAlarm
 bgColor index 3
 fill
 font "arial-bold-r-12.0"
+fontAlign "center"
 endObjectProperties
 
 # (Static Text)
@@ -711,17 +620,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
-y 355
+y 395
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Polarization"
-
+value {
+  " Polarization"
+}
 endObjectProperties
 
 # (Textentry)
@@ -730,16 +640,17 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
-y 355
-w 122.5
-h 17
+x 130
+y 395
+w 125
+h 20
 controlPv "$(P)$(R)Polarization"
 fgColor index 25
 fgAlarm
 bgColor index 3
 fill
 font "arial-bold-r-12.0"
+fontAlign "center"
 endObjectProperties
 
 # (Static Text)
@@ -747,17 +658,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
-y 375
+y 420
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Alpha"
-
+value {
+  " Alpha"
+}
 endObjectProperties
 
 # (Textentry)
@@ -766,16 +678,17 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
-y 375
-w 122.5
-h 17
+x 130
+y 420
+w 125
+h 20
 controlPv "$(P)$(R)Alpha"
 fgColor index 25
 fgAlarm
 bgColor index 3
 fill
 font "arial-bold-r-12.0"
+fontAlign "center"
 endObjectProperties
 
 # (Static Text)
@@ -783,17 +696,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
-y 395
+y 445
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Kappa"
-
+value {
+  " Kappa"
+}
 endObjectProperties
 
 # (Textentry)
@@ -802,16 +716,17 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
-y 395
-w 122.5
-h 17
+x 130
+y 445
+w 125
+h 20
 controlPv "$(P)$(R)Kappa"
 fgColor index 25
 fgAlarm
 bgColor index 3
 fill
 font "arial-bold-r-12.0"
+fontAlign "center"
 endObjectProperties
 
 # (Static Text)
@@ -819,17 +734,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
-y 415
+y 470
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Phi"
-
+value {
+  " Phi"
+}
 endObjectProperties
 
 # (Textentry)
@@ -838,16 +754,17 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
-y 415
-w 122.5
-h 17
+x 130
+y 470
+w 125
+h 20
 controlPv "$(P)$(R)Phi"
 fgColor index 25
 fgAlarm
 bgColor index 3
 fill
 font "arial-bold-r-12.0"
+fontAlign "center"
 endObjectProperties
 
 # (Static Text)
@@ -855,17 +772,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
-y 435
+y 495
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Phi Incr"
-
+value {
+  " Phi Incr"
+}
 endObjectProperties
 
 # (Textentry)
@@ -874,16 +792,17 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
-y 435
-w 122.5
-h 17
+x 130
+y 495
+w 125
+h 20
 controlPv "$(P)$(R)PhiIncr"
 fgColor index 25
 fgAlarm
 bgColor index 3
 fill
 font "arial-bold-r-12.0"
+fontAlign "center"
 endObjectProperties
 
 # (Static Text)
@@ -891,17 +810,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
-y 455
+y 520
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Chi"
-
+value {
+  " Chi"
+}
 endObjectProperties
 
 # (Textentry)
@@ -910,16 +830,17 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
-y 455
-w 122.5
-h 17
+x 130
+y 520
+w 125
+h 20
 controlPv "$(P)$(R)Chi"
 fgColor index 25
 fgAlarm
 bgColor index 3
 fill
 font "arial-bold-r-12.0"
+fontAlign "center"
 endObjectProperties
 
 # (Static Text)
@@ -927,17 +848,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
-y 475
+y 545
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Chi Incr"
-
+value {
+  " Chi Incr"
+}
 endObjectProperties
 
 # (Textentry)
@@ -946,16 +868,17 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
-y 475
-w 122.5
-h 17
+x 130
+y 545
+w 125
+h 20
 controlPv "$(P)$(R)ChiIncr"
 fgColor index 25
 fgAlarm
 bgColor index 3
 fill
 font "arial-bold-r-12.0"
+fontAlign "center"
 endObjectProperties
 
 # (Static Text)
@@ -963,17 +886,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
-y 495
+y 570
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Omega"
-
+value {
+  " Omega"
+}
 endObjectProperties
 
 # (Textentry)
@@ -982,16 +906,17 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
-y 495
-w 122.5
-h 17
+x 130
+y 570
+w 125
+h 20
 controlPv "$(P)$(R)Omega"
 fgColor index 25
 fgAlarm
 bgColor index 3
 fill
 font "arial-bold-r-12.0"
+fontAlign "center"
 endObjectProperties
 
 # (Static Text)
@@ -999,17 +924,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
-y 515
+y 595
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Omega Incr"
-
+value {
+  " Omega Incr"
+}
 endObjectProperties
 
 # (Textentry)
@@ -1018,16 +944,17 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
-y 515
-w 122.5
-h 17
+x 130
+y 595
+w 125
+h 20
 controlPv "$(P)$(R)OmegaIncr"
 fgColor index 25
 fgAlarm
 bgColor index 3
 fill
 font "arial-bold-r-12.0"
+fontAlign "center"
 endObjectProperties
 
 # (Static Text)
@@ -1035,17 +962,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
-y 535
+y 620
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Oscill Axis"
-
+value {
+  " Oscill Axis"
+}
 endObjectProperties
 
 # (Textentry)
@@ -1054,16 +982,17 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
-y 535
-w 122.5
-h 17
+x 130
+y 620
+w 125
+h 20
 controlPv "$(P)$(R)OscillAxis"
 fgColor index 25
 fgAlarm
 bgColor index 3
 fill
 font "arial-bold-r-12.0"
+fontAlign "center"
 endObjectProperties
 
 # (Static Text)
@@ -1071,17 +1000,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
-y 555
+y 645
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Num Oscill"
-
+value {
+  " Num Oscill"
+}
 endObjectProperties
 
 # (Textentry)
@@ -1090,16 +1020,17 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
-y 555
-w 122.5
-h 17
+x 130
+y 645
+w 125
+h 20
 controlPv "$(P)$(R)NumOscill"
 fgColor index 25
 fgAlarm
 bgColor index 3
 fill
 font "arial-bold-r-12.0"
+fontAlign "center"
 endObjectProperties
 
 # (Static Text)
@@ -1107,17 +1038,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
-y 575
+y 670
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Bad Pixel File"
-
+value {
+  " Bad Pixel File"
+}
 endObjectProperties
 
 # (Textentry)
@@ -1126,16 +1058,17 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
-y 575
-w 122.5
-h 17
+x 130
+y 670
+w 125
+h 20
 controlPv "$(P)$(R)BadPixelFile"
 fgColor index 25
 fgAlarm
 bgColor index 3
 fill
 font "arial-bold-r-12.0"
+fontAlign "center"
 endObjectProperties
 
 # (Static Text)
@@ -1143,17 +1076,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
-y 595
+y 695
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Flat Field File"
-
+value {
+  " Flat Field File"
+}
 endObjectProperties
 
 # (Textentry)
@@ -1162,16 +1096,17 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
-y 595
-w 122.5
-h 17
+x 130
+y 695
+w 125
+h 20
 controlPv "$(P)$(R)FlatFieldFile"
 fgColor index 25
 fgAlarm
 bgColor index 3
 fill
 font "arial-bold-r-12.0"
+fontAlign "center"
 endObjectProperties
 
 # (Static Text)
@@ -1179,17 +1114,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
-y 615
+y 720
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Cbf Template File"
-
+value {
+  " Cbf Template File"
+}
 endObjectProperties
 
 # (Textentry)
@@ -1198,16 +1134,17 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
-y 615
-w 122.5
-h 17
+x 130
+y 720
+w 125
+h 20
 controlPv "$(P)$(R)CbfTemplateFile"
 fgColor index 25
 fgAlarm
 bgColor index 3
 fill
 font "arial-bold-r-12.0"
+fontAlign "center"
 endObjectProperties
 
 # (Static Text)
@@ -1215,17 +1152,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
-y 635
+y 745
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Header String"
-
+value {
+  " Header String"
+}
 endObjectProperties
 
 # (Textentry)
@@ -1234,16 +1172,17 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
-y 635
-w 122.5
-h 17
+x 130
+y 745
+w 125
+h 20
 controlPv "$(P)$(R)HeaderString"
 fgColor index 25
 fgAlarm
 bgColor index 3
 fill
 font "arial-bold-r-12.0"
+fontAlign "center"
 endObjectProperties
 
 # (Static Text)
@@ -1251,17 +1190,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
-y 655
+y 770
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Armed"
-
+value {
+  " Armed"
+}
 endObjectProperties
 
 # (Byte)
@@ -1270,10 +1210,10 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 191.25
-y 655
-w 17
-h 17
+x 182
+y 770
+w 20
+h 20
 controlPv "$(P)$(R)Armed"
 lineColor index 14
 onColor index 15
@@ -1281,22 +1221,24 @@ offColor index 19
 lineWidth 2
 numBits 1
 endObjectProperties
+
 # (Static Text)
 object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
-y 675
+y 795
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Num Bad Pixels"
-
+value {
+  " Num Bad Pixels"
+}
 endObjectProperties
 
 # (Textupdate)
@@ -1305,10 +1247,10 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
-y 675
-w 122.5
-h 17
+x 130
+y 795
+w 125
+h 20
 controlPv "$(P)$(R)NumBadPixels"
 fgColor index 16
 fgAlarm
@@ -1323,17 +1265,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
-y 695
+y 820
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Flat Field Valid"
-
+value {
+  " Flat Field Valid"
+}
 endObjectProperties
 
 # (Byte)
@@ -1342,10 +1285,10 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 191.25
-y 695
-w 17
-h 17
+x 182
+y 820
+w 20
+h 20
 controlPv "$(P)$(R)FlatFieldValid"
 lineColor index 14
 onColor index 15
@@ -1353,22 +1296,24 @@ offColor index 19
 lineWidth 2
 numBits 1
 endObjectProperties
+
 # (Static Text)
 object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
-y 715
+y 845
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Pixel Cut Off"
-
+value {
+  " Pixel Cut Off"
+}
 endObjectProperties
 
 # (Textupdate)
@@ -1377,10 +1322,10 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
-y 715
-w 122.5
-h 17
+x 130
+y 845
+w 125
+h 20
 controlPv "$(P)$(R)PixelCutOff_RBV"
 fgColor index 16
 fgAlarm
@@ -1395,17 +1340,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
-y 735
+y 870
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Temp0"
-
+value {
+  " Temp 0"
+}
 endObjectProperties
 
 # (Textupdate)
@@ -1414,10 +1360,10 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
-y 735
-w 122.5
-h 17
+x 130
+y 870
+w 125
+h 20
 controlPv "$(P)$(R)Temp0_RBV"
 fgColor index 16
 fgAlarm
@@ -1432,17 +1378,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
+release 1
 x 10
-y 755
+y 895
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Temp1"
-
+value {
+  " Temp 1"
+}
 endObjectProperties
 
 # (Textupdate)
@@ -1451,10 +1398,10 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
-y 755
-w 122.5
-h 17
+x 130
+y 895
+w 125
+h 20
 controlPv "$(P)$(R)Temp1_RBV"
 fgColor index 16
 fgAlarm
@@ -1469,17 +1416,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
-x 10
-y 775
+release 1
+x 260
+y 45
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Temp2"
-
+value {
+  " Temp 2"
+}
 endObjectProperties
 
 # (Textupdate)
@@ -1488,10 +1436,10 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
-y 775
-w 122.5
-h 17
+x 380
+y 45
+w 125
+h 20
 controlPv "$(P)$(R)Temp2_RBV"
 fgColor index 16
 fgAlarm
@@ -1506,17 +1454,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
-x 10
-y 795
+release 1
+x 260
+y 70
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Humid0"
-
+value {
+  " Humid 0"
+}
 endObjectProperties
 
 # (Textupdate)
@@ -1525,10 +1474,10 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
-y 795
-w 122.5
-h 17
+x 380
+y 70
+w 125
+h 20
 controlPv "$(P)$(R)Humid0_RBV"
 fgColor index 16
 fgAlarm
@@ -1543,17 +1492,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
-x 10
-y 815
+release 1
+x 260
+y 95
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Humid1"
-
+value {
+  " Humid 1"
+}
 endObjectProperties
 
 # (Textupdate)
@@ -1562,10 +1512,10 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 140
-y 815
-w 122.5
-h 17
+x 380
+y 95
+w 125
+h 20
 controlPv "$(P)$(R)Humid1_RBV"
 fgColor index 16
 fgAlarm
@@ -1580,17 +1530,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
-x 275
-y 55
+release 1
+x 260
+y 120
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Humid2"
-
+value {
+  " Humid 2"
+}
 endObjectProperties
 
 # (Textupdate)
@@ -1599,10 +1550,10 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 405
-y 55
-w 122.5
-h 17
+x 380
+y 120
+w 125
+h 20
 controlPv "$(P)$(R)Humid2_RBV"
 fgColor index 16
 fgAlarm
@@ -1617,17 +1568,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
-x 275
-y 75
+release 1
+x 260
+y 145
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "TVX Version"
-
+value {
+  " TVX Version"
+}
 endObjectProperties
 
 # (Textupdate)
@@ -1636,10 +1588,10 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 405
-y 75
-w 122.5
-h 17
+x 380
+y 145
+w 125
+h 20
 controlPv "$(P)$(R)TVXVersion_RBV"
 fgColor index 16
 fgAlarm
@@ -1654,17 +1606,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
-x 275
-y 95
+release 1
+x 260
+y 170
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Reset Power Time"
-
+value {
+  " Reset Power Time"
+}
 endObjectProperties
 
 # (Textentry)
@@ -1673,16 +1626,17 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 405
-y 95
-w 58.75
-h 17
+x 380
+y 170
+w 60
+h 20
 controlPv "$(P)$(R)ResetPowerTime"
 fgColor index 25
 fgAlarm
 bgColor index 3
 fill
 font "arial-bold-r-12.0"
+fontAlign "center"
 endObjectProperties
 
 # (Textupdate)
@@ -1691,10 +1645,10 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 468.75
-y 95
-w 58.75
-h 17
+x 445
+y 170
+w 60
+h 20
 controlPv "$(P)$(R)ResetPowerTime_RBV"
 fgColor index 16
 fgAlarm
@@ -1709,17 +1663,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
-x 275
-y 115
+release 1
+x 260
+y 195
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Delay Time"
-
+value {
+  " Delay Time"
+}
 endObjectProperties
 
 # (Textentry)
@@ -1728,16 +1683,17 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 405
-y 115
-w 58.75
-h 17
+x 380
+y 195
+w 60
+h 20
 controlPv "$(P)$(R)DelayTime"
 fgColor index 25
 fgAlarm
 bgColor index 3
 fill
 font "arial-bold-r-12.0"
+fontAlign "center"
 endObjectProperties
 
 # (Textupdate)
@@ -1746,10 +1702,10 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 468.75
-y 115
-w 58.75
-h 17
+x 445
+y 195
+w 60
+h 20
 controlPv "$(P)$(R)DelayTime_RBV"
 fgColor index 16
 fgAlarm
@@ -1764,17 +1720,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
-x 275
-y 135
+release 1
+x 260
+y 220
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Threshold Energy"
-
+value {
+  " Threshold Energy"
+}
 endObjectProperties
 
 # (Textentry)
@@ -1783,16 +1740,17 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 405
-y 135
-w 58.75
-h 17
+x 380
+y 220
+w 60
+h 20
 controlPv "$(P)$(R)ThresholdEnergy"
 fgColor index 25
 fgAlarm
 bgColor index 3
 fill
 font "arial-bold-r-12.0"
+fontAlign "center"
 endObjectProperties
 
 # (Textupdate)
@@ -1801,10 +1759,10 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 468.75
-y 135
-w 58.75
-h 17
+x 445
+y 220
+w 60
+h 20
 controlPv "$(P)$(R)ThresholdEnergy_RBV"
 fgColor index 16
 fgAlarm
@@ -1819,17 +1777,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
-x 275
-y 155
+release 1
+x 260
+y 245
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Threshold Auto Apply"
-
+value {
+  " Threshold Auto Apply"
+}
 endObjectProperties
 
 # (Choice Button)
@@ -1838,10 +1797,10 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 405
-y 155
-w 122.5
-h 15
+x 380
+y 245
+w 60
+h 20
 fgColor index 14
 bgColor index 3
 selectColor index 3
@@ -1849,26 +1808,46 @@ inconsistentColor index 14
 topShadowColor index 1
 botShadowColor index 11
 controlPv "$(P)$(R)ThresholdAutoApply"
-indicatorPv "$(P)$(R)ThresholdAutoApply_RBV"
+indicatorPv "None"
 font "arial-bold-r-14.0"
 orientation "horizontal"
 endObjectProperties
+
+# (Byte)
+object ByteClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 465
+y 245
+w 20
+h 20
+controlPv "$(P)$(R)ThresholdAutoApply_RBV"
+lineColor index 14
+onColor index 15
+offColor index 19
+lineWidth 2
+numBits 1
+endObjectProperties
+
 # (Static Text)
 object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
-x 275
-y 175
+release 1
+x 260
+y 270
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Energy"
-
+value {
+  " Energy"
+}
 endObjectProperties
 
 # (Textentry)
@@ -1877,16 +1856,17 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 405
-y 175
-w 58.75
-h 17
+x 380
+y 270
+w 60
+h 20
 controlPv "$(P)$(R)Energy"
 fgColor index 25
 fgAlarm
 bgColor index 3
 fill
 font "arial-bold-r-12.0"
+fontAlign "center"
 endObjectProperties
 
 # (Textupdate)
@@ -1895,10 +1875,10 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 468.75
-y 175
-w 58.75
-h 17
+x 445
+y 270
+w 60
+h 20
 controlPv "$(P)$(R)Energy_RBV"
 fgColor index 16
 fgAlarm
@@ -1913,17 +1893,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
-x 275
-y 195
+release 1
+x 260
+y 295
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Min Flat Field"
-
+value {
+  " Min Flat Field"
+}
 endObjectProperties
 
 # (Textentry)
@@ -1932,16 +1913,17 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 405
-y 195
-w 58.75
-h 17
+x 380
+y 295
+w 60
+h 20
 controlPv "$(P)$(R)MinFlatField"
 fgColor index 25
 fgAlarm
 bgColor index 3
 fill
 font "arial-bold-r-12.0"
+fontAlign "center"
 endObjectProperties
 
 # (Textupdate)
@@ -1950,10 +1932,10 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 468.75
-y 195
-w 58.75
-h 17
+x 445
+y 295
+w 60
+h 20
 controlPv "$(P)$(R)MinFlatField_RBV"
 fgColor index 16
 fgAlarm
@@ -1968,17 +1950,18 @@ object activeXTextClass
 beginObjectProperties
 major 4
 minor 1
-release 0
-x 275
-y 215
+release 1
+x 260
+y 320
 w 115
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
 bgColor index 3
 useDisplayBg
-value "Gap Fill"
-
+value {
+  " Gap Fill"
+}
 endObjectProperties
 
 # (Menu Button)
@@ -1987,17 +1970,16 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 405
-y 215
-w 58.75
-h 17
+x 380
+y 320
+w 60
+h 20
 fgColor index 25
 bgColor index 3
 inconsistentColor index 0
 topShadowColor index 1
 botShadowColor index 11
 controlPv "$(P)$(R)GapFill"
-indicatorPv "$(P)$(R)GapFill_RBV"
 font "arial-bold-r-12.0"
 endObjectProperties
 
@@ -2007,10 +1989,10 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 468.75
-y 215
-w 58.75
-h 17
+x 445
+y 320
+w 60
+h 20
 controlPv "$(P)$(R)GapFill_RBV"
 fgColor index 16
 fgAlarm
@@ -2019,23 +2001,3 @@ fill
 font "arial-bold-r-12.0"
 fontAlign "center"
 endObjectProperties
-
-# (Exit Button)
-object activeExitButtonClass
-beginObjectProperties
-major 4
-minor 1
-release 0
-x 440
-y 870
-w 95
-h 25
-fgColor index 46
-bgColor index 3
-topShadowColor index 1
-botShadowColor index 11
-label "EXIT"
-font "arial-bold-r-14.0"
-3d
-endObjectProperties
-

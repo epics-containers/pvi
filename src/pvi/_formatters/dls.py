@@ -22,6 +22,7 @@ from .utils import (
 class DLSFormatter(Formatter):
     spacing: Annotated[int, desc("Spacing between widgets")] = 5
     title_height: Annotated[int, desc("Height of screen title bar")] = 25
+    max_height: Annotated[int, desc("Max height of the screen")] = 900
 
     def format(self, device: Device, prefix: str, path: Path):
         assert path.suffix == ".edl", "Can only write EDL files"
@@ -88,6 +89,7 @@ class DLSFormatter(Formatter):
             label_width=115,
             widget_width=60,
             widget_height=20,
+            max_height=self.max_height - self.title_height - self.spacing,
         )
         title = f"{device.label} - {prefix}"
         texts = screen.screen(device.children, title).format()
