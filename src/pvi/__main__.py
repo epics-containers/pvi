@@ -83,10 +83,11 @@ def produce(
         producer_inst.produce_records(output)
     elif output.suffix == ".csv":
         producer_inst.produce_csv(output)
-    elif output.suffixes == [".pvi", ".device", ".json"]:
+    elif output.suffixes == [".pvi", ".device", ".yaml"]:
         device = producer_inst.produce_device()
         serialized = serialize(device, exclude_none=True, exclude_defaults=True)
-        output.write_text(json.dumps(serialized, indent=2))
+        # TODO: add modeline
+        YAML().dump(serialized, output)
     else:
         producer_inst.produce_other(output)
 

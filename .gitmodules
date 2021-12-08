@@ -1,3 +1,6 @@
-[submodule "asyn"]
-	path = asyn
+[submodule "submodules/asyn"]
+	path = submodules/asyn
 	url = https://github.com/epics-modules/asyn.git
+[submodule "submodules/copyInfo"]
+	path = submodules/copyInfo
+	url = https://github.com/dls-controls/copyInfo.git

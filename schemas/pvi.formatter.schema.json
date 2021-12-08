@@ -25,6 +25,11 @@
           "type": "integer",
           "description": "Height of screen title bar",
           "default": 25
+        },
+        "max_height": {
+          "type": "integer",
+          "description": "Max height of the screen",
+          "default": 900
         }
       },
       "additionalProperties": false

@@ -3,27 +3,24 @@ from __future__ import annotations
 import dataclasses
 from ctypes import POINTER, c_char_p, c_int, c_void_p, pointer
 from enum import Enum
+from io import StringIO
 from pathlib import Path
-from typing import Any, ClassVar, Dict, List, Tuple, Type, get_type_hints
+from typing import Any, ClassVar, Dict, List, TextIO, Tuple, Type, get_type_hints
 
 from apischema import serialize
-from epicsdbbuilder import dbd, mydbstatic
+from epicsdbbuilder import dbd, mydbstatic, records
+from epicsdbbuilder.recordbase import Record
 from typing_extensions import Annotated as A
 
 from pvi._utils import desc
+from pvi.device import Device
 
-
-class PointerFactory:
-    def __getitem__(self, key):
-        """Return a pointer to the type, used in get_type_hints below"""
-        # https://github.com/python/mypy/issues/7540
-        return POINTER(key)
-
-
+# Add DBDs
 dbd.InitialiseDbd()
-for asyn_dbd in (Path(__file__).parent / "asynDbd").glob("*.dbd"):
-    if asyn_dbd.name != "asynCalc.dbd":
-        dbd.LoadDbdFile(asyn_dbd)
+for module in ["asynDbd", "copyInfoDbd"]:
+    for dbd_path in (Path(__file__).parent / module).glob("*.dbd"):
+        if dbd_path.name not in ["asynCalc.dbd"]:
+            dbd.LoadDbdFile(dbd_path)
 
 
 # https://code.activestate.com/recipes/576731-c-function-decorator/
@@ -36,6 +33,13 @@ class DbFunction:
 
     def __call__(self, f):
         """Performs the actual function wrapping."""
+
+        class PointerFactory:
+            def __getitem__(self, key):
+                """Return a pointer to the type, used in get_type_hints below"""
+                # https://github.com/python/mypy/issues/7540
+                return POINTER(key)
+
         # Get the type hints, redirecting pointer[something] to PointerFactory
         hints = get_type_hints(f, localns=dict(pointer=PointerFactory()))
 
@@ -162,6 +166,7 @@ class RecordPair:
         return make(self.in_record_type), make(self.out_record_type)
 
 
+# Populate records
 AnalogueRecordPair = RecordPair.for_record_types("ai", "ao")
 BinaryRecordPair = RecordPair.for_record_types("bi", "bo")
 LongRecordPair = RecordPair.for_record_types("longin", "longout")
@@ -169,5 +174,19 @@ MultiBitBinaryRecordPair = RecordPair.for_record_types("mbbi", "mbbo")
 StringRecordPair = RecordPair.for_record_types("stringin", "stringout")
 WaveformRecordPair = RecordPair.for_record_types("waveform", "waveform")
 
-
 # TODO: add busy record
+
+
+class PVIRecord(records.waveform, Record):
+    def __init__(self, record: str, device: Device):
+        super().__init__(record, DTYP="copyInfo")
+        self.add_info("copyInfo", device.serialize())
+
+    def Print(self, output: TextIO, alphabetical=True):
+        record_output = StringIO()
+        super().Print(record_output, alphabetical=alphabetical)
+        for line in record_output.getvalue().splitlines():
+            if line:
+                print("$(PVI=#)" + line, file=output)
+            else:
+                print(file=output)
