@@ -9,8 +9,8 @@ from apischema.json_schema import JsonSchemaVersion, deserialization_schema
 from ruamel.yaml import YAML
 
 from pvi import __version__
-from pvi._formatters import Formatter
-from pvi._producers import Producer
+from pvi._format import Formatter
+from pvi._produce import Producer
 from pvi.device import Device
 
 cli = typer.Typer()
