@@ -6,7 +6,40 @@
   ],
   "definitions": {
     "Formatter": {
-      "$ref": "#/definitions/DLSFormatter"
+      "anyOf": [
+        {
+          "$ref": "#/definitions/APSFormatter"
+        },
+        {
+          "$ref": "#/definitions/DLSFormatter"
+        }
+      ]
+    },
+    "APSFormatter": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "APSFormatter",
+          "default": "APSFormatter"
+        },
+        "spacing": {
+          "type": "integer",
+          "description": "Spacing between widgets",
+          "default": 5
+        },
+        "title_height": {
+          "type": "integer",
+          "description": "Height of screen title bar",
+          "default": 25
+        },
+        "max_height": {
+          "type": "integer",
+          "description": "Max height of the screen",
+          "default": 900
+        }
+      },
+      "additionalProperties": false
     },
     "DLSFormatter": {
       "type": "object",

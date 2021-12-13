@@ -8,8 +8,8 @@ from pvi.device import Device
 from .base import Formatter
 from .utils import (
     ActionFactory,
+    AdlTemplate,
     Bounds,
-    EdlTemplate,
     GroupFactory,
     GroupType,
     LabelFactory,
@@ -21,34 +21,45 @@ from .utils import (
 
 
 @dataclass
-class DLSFormatter(Formatter):
+class APSFormatter(Formatter):
     spacing: Annotated[int, desc("Spacing between widgets")] = 5
     title_height: Annotated[int, desc("Height of screen title bar")] = 25
     max_height: Annotated[int, desc("Max height of the screen")] = 900
 
     def format(self, device: Device, prefix: str, path: Path):
-        assert path.suffix == ".edl", "Can only write EDL files"
-        template = EdlTemplate(open(Path(__file__).parent / "dls.edl").read())
+        assert path.suffix == ".adl", "Can only write adl files"
+        template = AdlTemplate(open(Path(__file__).parent / "aps.adl").read())
+        label_background_cls = group_box_cls = WidgetFactory.from_template(
+            template, search="clr=2"
+        )
         screen_title_cls = LabelFactory.from_template(
-            template, search='"Title"', value="text"
+            template, search='"Title"', textix="text"
         )
         group_title_cls = LabelFactory.from_template(
-            template, search='"  Group  "', value="text"
+            template, search='"Group"', textix="text"
         )
-        group_box_cls = WidgetFactory.from_template(
-            template, search="fillColor index 5"
-        )
-        group_label_height = 10
+        group_box_cls = WidgetFactory.from_template(template, search='fill="outline"')
+        group_label_height = 25
 
         def make_group_widgets(bounds: Bounds, title: str) -> List[WidgetFactory[str]]:
-            x, y, w, h = bounds.x, bounds.y, bounds.w, bounds.h
+            title_bounds = Bounds(
+                bounds.x + self.spacing,
+                bounds.y + self.spacing,
+                bounds.w - 2 * self.spacing,
+                group_label_height - self.spacing,
+            )
             return [
-                group_box_cls(Bounds(x, y + self.spacing, w, h - self.spacing)),
-                group_title_cls(Bounds(x, y, w, group_label_height), f"  {title}  "),
+                group_box_cls(bounds),
+                label_background_cls(title_bounds),
+                group_title_cls(title_bounds, title),
             ]
 
         def make_screen_widgets(bounds: Bounds, title: str) -> List[WidgetFactory[str]]:
-            return [screen_title_cls(Bounds(0, 0, bounds.w, self.title_height), title)]
+            title_bounds = Bounds(0, 0, bounds.w, self.title_height)
+            return [
+                label_background_cls(title_bounds),
+                screen_title_cls(title_bounds, title),
+            ]
 
         screen = Screen(
             screen_cls=GroupFactory.from_template(
@@ -64,34 +75,30 @@ class DLSFormatter(Formatter):
                 make_widgets=make_group_widgets,
             ),
             label_cls=LabelFactory.from_template(
-                template, search='"Label"', value="text"
+                template, search='"Label"', textix="text"
             ),
             led_cls=PVWidgetFactory.from_template(
-                template, search='"LED"', sized=Bounds.square, controlPv="pv"
+                template, search='"LED"', sized=Bounds.square, chan="pv"
             ),
             text_read_cls=PVWidgetFactory.from_template(
-                template, search='"TextRead"', controlPv="pv"
+                template, search='"TextRead"', chan="pv"
             ),
             check_box_cls=PVWidgetFactory.from_template(
-                template, search='"CheckBox"', controlPv="pv"
+                template, search='"CheckBox"', chan="pv"
             ),
             combo_box_cls=PVWidgetFactory.from_template(
-                template, search='"ComboBox"', controlPv="pv"
+                template, search='"ComboBox"', chan="pv"
             ),
             text_write_cls=PVWidgetFactory.from_template(
-                template, search='"TextWrite"', controlPv="pv"
+                template, search='"TextWrite"', chan="pv"
             ),
             action_button_cls=ActionFactory.from_template(
-                template,
-                search='"SignalX"',
-                onLabel="label",
-                offLabel="label",
-                controlPv="pv",
+                template, search='"SignalX"', label="label", chan="pv",
             ),
             prefix=prefix,
             spacing=self.spacing,
-            label_width=115,
-            widget_width=60,
+            label_width=205,
+            widget_width=100,
             widget_height=20,
             max_height=self.max_height - self.title_height - self.spacing,
         )

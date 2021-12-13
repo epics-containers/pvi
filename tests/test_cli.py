@@ -46,7 +46,11 @@ def test_produce(tmp_path, filename):
 
 
 @pytest.mark.parametrize(
-    "filename,formatter", [("pilatusParamSet.edl", "dls.pvi.formatter.yaml")],
+    "filename,formatter",
+    [
+        ("pilatusParameters.edl", "dls.pvi.formatter.yaml"),
+        ("pilatusParameters.adl", "aps.pvi.formatter.yaml"),
+    ],
 )
 def test_format(tmp_path, filename, formatter):
     expected_path = HERE / "format" / filename

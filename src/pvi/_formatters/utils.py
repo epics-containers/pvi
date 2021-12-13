@@ -1,5 +1,6 @@
 import re
 from dataclasses import dataclass, field, replace
+from enum import Enum
 from typing import Callable, Dict, Iterator, List, Tuple, Type, TypeVar, Union
 
 from pvi.device import (
@@ -32,12 +33,48 @@ class Bounds:
     w: int = 0
     h: int = 0
 
-    def split(self, w: int, spacing: int) -> "Bounds":
+    def copy(self) -> "Bounds":
+        return Bounds(self.x, self.y, self.w, self.h)
+
+    def split(self, w: int, spacing: int) -> Tuple["Bounds", "Bounds"]:
+        """Split horizontally"""
         assert w + spacing < self.w, f"Can't split off {w + spacing} from {self.w}"
-        dims = Bounds(self.x, self.y, w, self.h)
-        self.x += w + spacing
-        self.w -= w + spacing
-        return dims
+        left = Bounds(self.x, self.y, w, self.h)
+        right = Bounds(self.x + w + spacing, self.y, self.w - w - spacing, self.h)
+        return left, right
+
+    def square(self) -> "Bounds":
+        """Return the largest square that will fit in self"""
+        size = min(self.w, self.h)
+        return Bounds(
+            x=self.x + int((self.w - size) / 2),
+            y=self.y + int((self.h - size) / 2),
+            w=size,
+            h=size,
+        )
+
+    def padded(self, bounds: "Bounds") -> "Bounds":
+        return Bounds(
+            x=self.x + bounds.x,
+            y=self.y + bounds.y,
+            w=self.w + bounds.w,
+            h=self.h + bounds.h,
+        )
+
+
+class WidgetTemplate(Generic[T]):
+    screen: T
+
+    def search(self, search) -> T:
+        """Search for a widget"""
+        raise NotImplementedError(self)
+
+    def set(self, t: T, bounds: Bounds = None, **properties) -> T:
+        """Set the properties on the internal representation"""
+        raise NotImplementedError(self)
+
+
+WF = TypeVar("WF", bound="WidgetFactory")
 
 
 @dataclass
@@ -46,6 +83,23 @@ class WidgetFactory(Generic[T]):
 
     def format(self) -> List[T]:
         raise NotImplementedError(self)
+
+    @classmethod
+    def from_template(
+        cls: Type[WF],
+        template: WidgetTemplate[T],
+        search,
+        sized: Callable[[Bounds], Bounds] = Bounds.copy,
+        **attrs,
+    ) -> Type[WF]:
+        t = template.search(search)
+
+        class AWidgetFactory(cls):  # type: ignore
+            def format(self) -> List[T]:
+                properties = {k: getattr(self, v) for k, v in attrs.items()}
+                return [template.set(t, sized(self.bounds), **properties)]
+
+        return AWidgetFactory
 
 
 @dataclass
@@ -65,10 +119,50 @@ class ActionFactory(WidgetFactory[T]):
     value: str
 
 
+class GroupType(Enum):
+    GROUP = "GROUP"
+    SCREEN = "SCREEN"
+
+
 @dataclass
 class GroupFactory(WidgetFactory[T]):
     title: str
     children: List[WidgetFactory[T]]
+
+    @classmethod
+    def from_template(
+        cls,
+        template: WidgetTemplate[T],
+        search: GroupType,
+        sized: Callable[[Bounds], Bounds] = Bounds.copy,
+        make_widgets: Callable[[Bounds, str], List[WidgetFactory[T]]] = None,
+        **attrs,
+    ) -> Type["GroupFactory[T]"]:
+        @dataclass
+        class AGroupFactory(GroupFactory[T]):
+            def format(self) -> List[T]:
+                padding = sized(self.bounds)
+                texts: List[T] = []
+                if search == GroupType.SCREEN:
+                    properties = {k: getattr(self, v) for k, v in attrs.items()}
+                    texts.append(
+                        template.set(template.screen, self.bounds, **properties)
+                    )
+                # TODO: group things?
+                if make_widgets:
+                    for widget in make_widgets(self.bounds, self.title):
+                        texts += widget.format()
+                for c in self.children:
+                    c.bounds.x += padding.x
+                    c.bounds.y += padding.y
+                    texts += c.format()
+                return texts
+
+            def __post_init__(self):
+                padding = sized(self.bounds)
+                self.bounds = replace(self.bounds, w=padding.w, h=padding.h)
+
+        return AGroupFactory
 
 
 def max_x(widgets: List[WidgetFactory[T]], spacing: int = 0) -> int:
@@ -137,15 +231,16 @@ class Screen(Generic[T]):
         if not isinstance(c, SignalRef):
             self.components[c.name] = c
         if add_label:
-            yield self.label_cls(bounds.split(self.label_width, self.spacing), c.label)
+            left, bounds = bounds.split(self.label_width, self.spacing)
+            yield self.label_cls(left, c.label)
         if isinstance(c, SignalX):
             yield self.action_button_cls(bounds, c.label, c.pv, c.value)
         elif isinstance(c, SignalR) and c.widget:
             yield self.pv_widget(c.widget, bounds, c.pv)
         elif isinstance(c, SignalRW) and c.read_pv and c.read_widget and c.widget:
-            left_bounds = bounds.split(int((bounds.w - self.spacing) / 2), self.spacing)
-            yield self.pv_widget(c.widget, left_bounds, c.pv)
-            yield self.pv_widget(c.read_widget, bounds, c.read_pv)
+            left, right = bounds.split(int((bounds.w - self.spacing) / 2), self.spacing)
+            yield self.pv_widget(c.widget, left, c.pv)
+            yield self.pv_widget(c.read_widget, right, c.read_pv)
         elif isinstance(c, (SignalW, SignalRW)) and c.widget:
             yield self.pv_widget(c.widget, bounds, c.pv)
         elif isinstance(c, SignalRef):
@@ -209,88 +304,66 @@ def split_with_sep(text: str, sep: str, maxsplit: int = -1) -> List[str]:
     return [t + sep for t in text.split(sep, maxsplit=maxsplit)]
 
 
-@dataclass
-class EdlWidget:
-    text: str
-
-    def __setitem__(self, item: str, value):
-        multiline = re.compile(r"^%s {[^}]*}$" % item, re.MULTILINE | re.DOTALL)
-        if multiline.search(self.text):
-            pattern = multiline
-            lines = str(value).splitlines()
-            value = "\n".join(["{"] + [f'  "{x}"' for x in lines] + ["}"])
-        else:
-            # Single line
-            pattern = re.compile(r"^%s .*$" % item, re.MULTILINE)
-            if isinstance(value, str):
-                value = f'"{value}"'
-        self.text, n = pattern.subn(f"{item} {value}", self.text)
-        assert n == 1, f"No replacements made for {item}"
-
-    @classmethod
-    def bounded(cls, text: str, bounds: Bounds) -> "EdlWidget":
-        w = cls(text)
-        for prop in "xywh":
-            w[prop] = getattr(bounds, prop)
-        return w
+def with_title(spacing, title_height: int) -> Callable[[Bounds], Bounds]:
+    return Bounds(
+        spacing, spacing + title_height, 2 * spacing, 2 * spacing + title_height,
+    ).padded
 
 
-ExtraText = Callable[[str, Bounds], Tuple[List[str], int]]
-
-
-class EdlFile:
+class EdlTemplate(WidgetTemplate[str]):
     def __init__(self, text: str):
         assert "endGroup" not in text, "Can't do groups"
         self.screen, text = split_with_sep(text, "\nendScreenProperties\n", 1)
         self.widgets = split_with_sep(text, "\nendObjectProperties\n")
 
-    def widget_factory(
-        self,
-        cls: Type[T],
-        search: str,
-        make_widget: Callable[[str, Bounds], EdlWidget] = EdlWidget.bounded,
-        **properties: str,
-    ) -> Type[T]:
+    def set(self, t: str, bounds: Bounds = None, **properties) -> str:
+        if bounds:
+            for k in "xywh":
+                properties[k] = getattr(bounds, k)
+        for item, value in properties.items():
+            multiline = re.compile(r"^%s {[^}]*}$" % item, re.MULTILINE | re.DOTALL)
+            if multiline.search(t):
+                pattern = multiline
+                lines = str(value).splitlines()
+                value = "\n".join(["{"] + [f'  "{x}"' for x in lines] + ["}"])
+            else:
+                # Single line
+                pattern = re.compile(r"^%s .*$" % item, re.MULTILINE)
+                if isinstance(value, str):
+                    value = f'"{value}"'
+            t, n = pattern.subn(f"{item} {value}", t)
+            assert n == 1, f"No replacements made for {item}"
+        return t
+
+    def search(self, search: str) -> str:
         matches = [t for t in self.widgets if re.search(search, t)]
         assert len(matches) == 1, f"Got {len(matches)} matches for {search!r}"
+        return matches[0]
 
-        class EdlWidgetFactory(cls):  # type: ignore
-            def format(self) -> List[str]:
-                widget = make_widget(matches[0], self.bounds)
-                for prop, attr in properties.items():
-                    widget[prop] = getattr(self, attr)
-                return [widget.text]
 
-        return EdlWidgetFactory
+class AdlTemplate(WidgetTemplate[str]):
+    def __init__(self, text: str):
+        assert "children {" not in text, "Can't do groups"
+        widgets = split_with_sep(text, "\n}\n")
+        self.screen = "".join(widgets[:2])
+        self.widgets = widgets[2:]
 
-    def group_factory(
-        self,
-        padding: Bounds,
-        make_widgets: Callable[[Bounds, str], List[WidgetFactory[str]]],
-        is_screen: bool = False,
-    ) -> Type[GroupFactory[str]]:
-        @dataclass
-        class EdlGroupFactory(GroupFactory[str]):
-            def format(self, screen=self.screen, padding=padding) -> List[str]:
-                texts: List[str] = []
-                if is_screen:
-                    texts.append(EdlWidget.bounded(screen, self.bounds).text)
-                else:
-                    padding = replace(
-                        padding,
-                        x=padding.x + self.bounds.x,
-                        y=padding.y + self.bounds.y,
-                    )
-                for widget in make_widgets(self.bounds, self.title):
-                    texts += widget.format()
-                for c in self.children:
-                    c.bounds.x += padding.x
-                    c.bounds.y += padding.y
-                    texts += c.format()
-                return texts
+    def set(self, t: str, bounds: Bounds = None, **properties) -> str:
+        if bounds:
+            properties["x"] = bounds.x
+            properties["y"] = bounds.y
+            properties["width"] = bounds.w
+            properties["height"] = bounds.h
+        for item, value in properties.items():
+            # Only need single line
+            pattern = re.compile(r"^(\s*%s)=.*$" % item, re.MULTILINE)
+            if isinstance(value, str):
+                value = f'"{value}"'
+            t, n = pattern.subn(r"\g<1>=" + str(value), t)
+            assert n == 1, f"No replacements made for {item}"
+        return t
 
-            def __post_init__(self):
-                self.bounds.h += padding.h
-                self.bounds.w += padding.w
-
-        return EdlGroupFactory
+    def search(self, search: str) -> str:
+        matches = [t for t in self.widgets if re.search(search, t)]
+        assert len(matches) == 1, f"Got {len(matches)} matches for {search!r}"
+        return matches[0]
