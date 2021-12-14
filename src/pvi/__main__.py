@@ -13,7 +13,9 @@ from pvi._format import Formatter
 from pvi._produce import Producer
 from pvi.device import Device
 
-cli = typer.Typer()
+app = typer.Typer()
+convert_app = typer.Typer()
+app.add_typer(convert_app, name="convert", help="Convert a module to use PVI")
 
 
 def version_callback(value: bool):
@@ -22,7 +24,7 @@ def version_callback(value: bool):
         raise typer.Exit()
 
 
-@cli.callback()
+@app.callback()
 def main(
     version: Optional[bool] = typer.Option(
         None,
@@ -35,7 +37,7 @@ def main(
     """PVI builder interface"""
 
 
-@cli.command()
+@app.command()
 def schema(output: Path = typer.Argument(..., help="filename to write the schema to"),):
     """Write the JSON schema for the pvi interface or producer interface"""
     cls: Type
@@ -72,12 +74,12 @@ def deserialize_yaml(cls: Type[T], path: Path) -> T:
     return deserialize(cls, d)
 
 
-@cli.command()
+@app.command()
 def produce(
-    producer: Path = typer.Argument(..., help="path to the producer .pvi.yaml file"),
     output: Path = typer.Argument(..., help="filename to write the product to"),
+    producer: Path = typer.Argument(..., help="path to the producer .pvi.yaml file"),
 ):
-    """Parse the producer from YAML and use it to make the requested product"""
+    """Create template/csv/device product from producer YAML"""
     producer_inst = deserialize_yaml(Producer, producer)
     if output.suffix == ".template":
         producer_inst.produce_records(output)
@@ -92,18 +94,72 @@ def produce(
         producer_inst.produce_other(output)
 
 
-@cli.command()
+@app.command()
 def format(
+    output: Path = typer.Argument(..., help="filename to write the product to"),
     producer: Path = typer.Argument(..., help="path to the .pvi.producer.yaml file"),
     formatter: Path = typer.Argument(..., help="path to the .pvi.formatter.yaml file"),
-    output: Path = typer.Argument(..., help="filename to write the product to"),
 ):
-    """Parse producer and formatter from YAML and use it to make the requested screen"""
+    """Create screen product from producer and formatter YAML"""
     producer_inst = deserialize_yaml(Producer, producer)
     formatter_inst = deserialize_yaml(Formatter, formatter)
     device = producer_inst.produce_device()
     formatter_inst.format(device, producer_inst.prefix, output)
 
 
+@convert_app.command()
+def asyn(
+    output: Path = typer.Argument(..., help="directory to put the output files in"),
+    template: Path = typer.Argument(..., help="path to the .template file to convert"),
+    cpp: Path = typer.Argument(..., help="path to the .cpp file to convert"),
+    h: Path = typer.Argument(..., help="path to the .h file to convert"),
+):
+    """Convert template/cpp/h to producer YAML and stripped template/cpp/h"""
+
+    template_converter = TemplateConverter(
+        template_files=args.templates, formatter=dict(type=args.formatter)
+    )
+
+    # Generate initial yaml to provide parameter info strings to source converter
+    converted_yaml = template_converter.convert()
+
+    parameter_infos = [
+        parameter["drv_info"]
+        for component in converted_yaml["components"]
+        for parameter in component["children"]
+    ]
+    source_converter = SourceConverter(
+        cpp=args.cpp,
+        h=args.header,
+        module_root=args.root,
+        parameter_infos=parameter_infos,
+    )
+
+    # Process and recreate template files - pass source device for param set include
+    extracted_templates = template_converter.top_level_text(
+        source_converter.device_class
+    )
+    for template_text, template_path in zip(extracted_templates, args.templates):
+        with open(args.output_dir / f"{template_path.stem}.template", "w") as f:
+            f.write(template_text)
+
+    # Process and recreate source files
+    extracted_source = source_converter.get_top_level_text()
+    with open(args.output_dir / f"{args.cpp.stem}{args.cpp.suffix}", "w") as f:
+        f.write(extracted_source.cpp)
+    with open(args.output_dir / f"{args.header.stem}{args.header.suffix}", "w") as f:
+        f.write(extracted_source.h)
+
+    # Update yaml based on source file definitions and write
+    converted_yaml = insert_entry(
+        converted_yaml, "parent", source_converter.parent_class, "components"
+    )
+    converted_yaml = merge_in_index_names(
+        converted_yaml, source_converter._get_index_info_map()
+    )
+
+    Schema.write(converted_yaml, args.output_dir, source_converter.device_class)
+
+
 if __name__ == "__main__":
-    cli()
+    app()
