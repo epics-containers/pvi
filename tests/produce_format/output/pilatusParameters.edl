@@ -74,7 +74,7 @@ fontAlign "center"
 fgColor index 14
 bgColor index 8
 value {
-  "   Group One  "
+  "  Group One  "
 }
 autoSize
 border
@@ -95,7 +95,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Reset Power"
+  "Reset Power"
 }
 endObjectProperties
 
@@ -136,7 +136,48 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Image File Tmot"
+  "Threshold Apply"
+}
+endObjectProperties
+
+# (Choice Button)
+object activeChoiceButtonClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 130
+y 70
+w 125
+h 20
+fgColor index 14
+bgColor index 3
+selectColor index 3
+inconsistentColor index 14
+topShadowColor index 1
+botShadowColor index 11
+controlPv "$(P)$(R)ThresholdApply"
+indicatorPv "None"
+font "arial-bold-r-14.0"
+orientation "horizontal"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 10
+y 95
+w 115
+h 20
+font "arial-bold-r-10.0"
+fgColor index 14
+bgColor index 3
+useDisplayBg
+value {
+  "Image File Tmot"
 }
 endObjectProperties
 
@@ -147,7 +188,7 @@ major 10
 minor 0
 release 0
 x 130
-y 70
+y 95
 w 125
 h 20
 controlPv "$(P)$(R)ImageFileTmot"
@@ -166,7 +207,7 @@ major 4
 minor 1
 release 1
 x 10
-y 95
+y 120
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -174,7 +215,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Wavelength"
+  "Wavelength"
 }
 endObjectProperties
 
@@ -185,7 +226,7 @@ major 10
 minor 0
 release 0
 x 130
-y 95
+y 120
 w 125
 h 20
 controlPv "$(P)$(R)Wavelength"
@@ -204,7 +245,7 @@ major 4
 minor 1
 release 1
 x 10
-y 120
+y 145
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -212,7 +253,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Energy Low"
+  "Energy Low"
 }
 endObjectProperties
 
@@ -223,7 +264,7 @@ major 10
 minor 0
 release 0
 x 130
-y 120
+y 145
 w 125
 h 20
 controlPv "$(P)$(R)EnergyLow"
@@ -242,7 +283,7 @@ major 4
 minor 1
 release 1
 x 10
-y 145
+y 170
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -250,7 +291,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Energy High"
+  "Energy High"
 }
 endObjectProperties
 
@@ -261,7 +302,7 @@ major 10
 minor 0
 release 0
 x 130
-y 145
+y 170
 w 125
 h 20
 controlPv "$(P)$(R)EnergyHigh"
@@ -280,7 +321,7 @@ major 4
 minor 1
 release 1
 x 10
-y 170
+y 195
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -288,7 +329,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Det Dist"
+  "Det Dist"
 }
 endObjectProperties
 
@@ -299,7 +340,7 @@ major 10
 minor 0
 release 0
 x 130
-y 170
+y 195
 w 125
 h 20
 controlPv "$(P)$(R)DetDist"
@@ -318,7 +359,7 @@ major 4
 minor 1
 release 1
 x 10
-y 195
+y 220
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -326,7 +367,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Det V Offset"
+  "Det V Offset"
 }
 endObjectProperties
 
@@ -337,7 +378,7 @@ major 10
 minor 0
 release 0
 x 130
-y 195
+y 220
 w 125
 h 20
 controlPv "$(P)$(R)DetVOffset"
@@ -356,7 +397,7 @@ major 4
 minor 1
 release 1
 x 10
-y 220
+y 245
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -364,7 +405,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Beam X"
+  "Beam X"
 }
 endObjectProperties
 
@@ -375,7 +416,7 @@ major 10
 minor 0
 release 0
 x 130
-y 220
+y 245
 w 125
 h 20
 controlPv "$(P)$(R)BeamX"
@@ -394,7 +435,7 @@ major 4
 minor 1
 release 1
 x 10
-y 245
+y 270
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -402,7 +443,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Beam Y"
+  "Beam Y"
 }
 endObjectProperties
 
@@ -413,7 +454,7 @@ major 10
 minor 0
 release 0
 x 130
-y 245
+y 270
 w 125
 h 20
 controlPv "$(P)$(R)BeamY"
@@ -432,7 +473,7 @@ major 4
 minor 1
 release 1
 x 10
-y 270
+y 295
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -440,7 +481,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Flux"
+  "Flux"
 }
 endObjectProperties
 
@@ -451,7 +492,7 @@ major 10
 minor 0
 release 0
 x 130
-y 270
+y 295
 w 125
 h 20
 controlPv "$(P)$(R)Flux"
@@ -470,7 +511,7 @@ major 4
 minor 1
 release 1
 x 10
-y 295
+y 320
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -478,7 +519,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Filter Transm"
+  "Filter Transm"
 }
 endObjectProperties
 
@@ -489,7 +530,7 @@ major 10
 minor 0
 release 0
 x 130
-y 295
+y 320
 w 125
 h 20
 controlPv "$(P)$(R)FilterTransm"
@@ -508,7 +549,7 @@ major 4
 minor 1
 release 1
 x 10
-y 320
+y 345
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -516,7 +557,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Start Angle"
+  "Start Angle"
 }
 endObjectProperties
 
@@ -527,7 +568,7 @@ major 10
 minor 0
 release 0
 x 130
-y 320
+y 345
 w 125
 h 20
 controlPv "$(P)$(R)StartAngle"
@@ -546,7 +587,7 @@ major 4
 minor 1
 release 1
 x 10
-y 345
+y 370
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -554,7 +595,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Angle Incr"
+  "Angle Incr"
 }
 endObjectProperties
 
@@ -565,7 +606,7 @@ major 10
 minor 0
 release 0
 x 130
-y 345
+y 370
 w 125
 h 20
 controlPv "$(P)$(R)AngleIncr"
@@ -584,7 +625,7 @@ major 4
 minor 1
 release 1
 x 10
-y 370
+y 395
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -592,7 +633,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Det 2theta"
+  "Det 2theta"
 }
 endObjectProperties
 
@@ -603,7 +644,7 @@ major 10
 minor 0
 release 0
 x 130
-y 370
+y 395
 w 125
 h 20
 controlPv "$(P)$(R)Det2theta"
@@ -622,7 +663,7 @@ major 4
 minor 1
 release 1
 x 10
-y 395
+y 420
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -630,7 +671,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Polarization"
+  "Polarization"
 }
 endObjectProperties
 
@@ -641,7 +682,7 @@ major 10
 minor 0
 release 0
 x 130
-y 395
+y 420
 w 125
 h 20
 controlPv "$(P)$(R)Polarization"
@@ -660,7 +701,7 @@ major 4
 minor 1
 release 1
 x 10
-y 420
+y 445
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -668,7 +709,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Alpha"
+  "Alpha"
 }
 endObjectProperties
 
@@ -679,7 +720,7 @@ major 10
 minor 0
 release 0
 x 130
-y 420
+y 445
 w 125
 h 20
 controlPv "$(P)$(R)Alpha"
@@ -698,7 +739,7 @@ major 4
 minor 1
 release 1
 x 10
-y 445
+y 470
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -706,7 +747,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Kappa"
+  "Kappa"
 }
 endObjectProperties
 
@@ -717,7 +758,7 @@ major 10
 minor 0
 release 0
 x 130
-y 445
+y 470
 w 125
 h 20
 controlPv "$(P)$(R)Kappa"
@@ -736,7 +777,7 @@ major 4
 minor 1
 release 1
 x 10
-y 470
+y 495
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -744,7 +785,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Phi"
+  "Phi"
 }
 endObjectProperties
 
@@ -755,7 +796,7 @@ major 10
 minor 0
 release 0
 x 130
-y 470
+y 495
 w 125
 h 20
 controlPv "$(P)$(R)Phi"
@@ -774,7 +815,7 @@ major 4
 minor 1
 release 1
 x 10
-y 495
+y 520
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -782,7 +823,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Phi Incr"
+  "Phi Incr"
 }
 endObjectProperties
 
@@ -793,7 +834,7 @@ major 10
 minor 0
 release 0
 x 130
-y 495
+y 520
 w 125
 h 20
 controlPv "$(P)$(R)PhiIncr"
@@ -812,7 +853,7 @@ major 4
 minor 1
 release 1
 x 10
-y 520
+y 545
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -820,7 +861,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Chi"
+  "Chi"
 }
 endObjectProperties
 
@@ -831,7 +872,7 @@ major 10
 minor 0
 release 0
 x 130
-y 520
+y 545
 w 125
 h 20
 controlPv "$(P)$(R)Chi"
@@ -850,7 +891,7 @@ major 4
 minor 1
 release 1
 x 10
-y 545
+y 570
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -858,7 +899,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Chi Incr"
+  "Chi Incr"
 }
 endObjectProperties
 
@@ -869,7 +910,7 @@ major 10
 minor 0
 release 0
 x 130
-y 545
+y 570
 w 125
 h 20
 controlPv "$(P)$(R)ChiIncr"
@@ -888,7 +929,7 @@ major 4
 minor 1
 release 1
 x 10
-y 570
+y 595
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -896,7 +937,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Omega"
+  "Omega"
 }
 endObjectProperties
 
@@ -907,7 +948,7 @@ major 10
 minor 0
 release 0
 x 130
-y 570
+y 595
 w 125
 h 20
 controlPv "$(P)$(R)Omega"
@@ -926,7 +967,7 @@ major 4
 minor 1
 release 1
 x 10
-y 595
+y 620
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -934,7 +975,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Omega Incr"
+  "Omega Incr"
 }
 endObjectProperties
 
@@ -945,7 +986,7 @@ major 10
 minor 0
 release 0
 x 130
-y 595
+y 620
 w 125
 h 20
 controlPv "$(P)$(R)OmegaIncr"
@@ -964,7 +1005,7 @@ major 4
 minor 1
 release 1
 x 10
-y 620
+y 645
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -972,7 +1013,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Oscill Axis"
+  "Oscill Axis"
 }
 endObjectProperties
 
@@ -983,7 +1024,7 @@ major 10
 minor 0
 release 0
 x 130
-y 620
+y 645
 w 125
 h 20
 controlPv "$(P)$(R)OscillAxis"
@@ -1002,7 +1043,7 @@ major 4
 minor 1
 release 1
 x 10
-y 645
+y 670
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1010,7 +1051,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Num Oscill"
+  "Num Oscill"
 }
 endObjectProperties
 
@@ -1021,7 +1062,7 @@ major 10
 minor 0
 release 0
 x 130
-y 645
+y 670
 w 125
 h 20
 controlPv "$(P)$(R)NumOscill"
@@ -1040,7 +1081,7 @@ major 4
 minor 1
 release 1
 x 10
-y 670
+y 695
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1048,7 +1089,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Bad Pixel File"
+  "Bad Pixel File"
 }
 endObjectProperties
 
@@ -1059,7 +1100,7 @@ major 10
 minor 0
 release 0
 x 130
-y 670
+y 695
 w 125
 h 20
 controlPv "$(P)$(R)BadPixelFile"
@@ -1078,7 +1119,7 @@ major 4
 minor 1
 release 1
 x 10
-y 695
+y 720
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1086,7 +1127,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Flat Field File"
+  "Flat Field File"
 }
 endObjectProperties
 
@@ -1097,7 +1138,7 @@ major 10
 minor 0
 release 0
 x 130
-y 695
+y 720
 w 125
 h 20
 controlPv "$(P)$(R)FlatFieldFile"
@@ -1116,7 +1157,7 @@ major 4
 minor 1
 release 1
 x 10
-y 720
+y 745
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1124,7 +1165,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Cbf Template File"
+  "Cbf Template File"
 }
 endObjectProperties
 
@@ -1135,7 +1176,7 @@ major 10
 minor 0
 release 0
 x 130
-y 720
+y 745
 w 125
 h 20
 controlPv "$(P)$(R)CbfTemplateFile"
@@ -1154,7 +1195,7 @@ major 4
 minor 1
 release 1
 x 10
-y 745
+y 770
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1162,7 +1203,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Header String"
+  "Header String"
 }
 endObjectProperties
 
@@ -1173,7 +1214,7 @@ major 10
 minor 0
 release 0
 x 130
-y 745
+y 770
 w 125
 h 20
 controlPv "$(P)$(R)HeaderString"
@@ -1192,7 +1233,7 @@ major 4
 minor 1
 release 1
 x 10
-y 770
+y 795
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1200,7 +1241,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Armed"
+  "Armed"
 }
 endObjectProperties
 
@@ -1211,7 +1252,7 @@ major 4
 minor 0
 release 0
 x 182
-y 770
+y 795
 w 20
 h 20
 controlPv "$(P)$(R)Armed"
@@ -1229,7 +1270,7 @@ major 4
 minor 1
 release 1
 x 10
-y 795
+y 820
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1237,7 +1278,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Num Bad Pixels"
+  "Num Bad Pixels"
 }
 endObjectProperties
 
@@ -1248,7 +1289,7 @@ major 10
 minor 0
 release 0
 x 130
-y 795
+y 820
 w 125
 h 20
 controlPv "$(P)$(R)NumBadPixels"
@@ -1267,7 +1308,7 @@ major 4
 minor 1
 release 1
 x 10
-y 820
+y 845
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1275,7 +1316,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Flat Field Valid"
+  "Flat Field Valid"
 }
 endObjectProperties
 
@@ -1286,7 +1327,7 @@ major 4
 minor 0
 release 0
 x 182
-y 820
+y 845
 w 20
 h 20
 controlPv "$(P)$(R)FlatFieldValid"
@@ -1304,7 +1345,7 @@ major 4
 minor 1
 release 1
 x 10
-y 845
+y 870
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1312,7 +1353,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Pixel Cut Off"
+  "Pixel Cut Off"
 }
 endObjectProperties
 
@@ -1323,7 +1364,7 @@ major 10
 minor 0
 release 0
 x 130
-y 845
+y 870
 w 125
 h 20
 controlPv "$(P)$(R)PixelCutOff_RBV"
@@ -1342,7 +1383,7 @@ major 4
 minor 1
 release 1
 x 10
-y 870
+y 895
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1350,7 +1391,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Temp 0"
+  "Temp 0"
 }
 endObjectProperties
 
@@ -1361,7 +1402,7 @@ major 10
 minor 0
 release 0
 x 130
-y 870
+y 895
 w 125
 h 20
 controlPv "$(P)$(R)Temp0_RBV"
@@ -1379,8 +1420,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 10
-y 895
+x 260
+y 45
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1388,7 +1429,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Temp 1"
+  "Temp 1"
 }
 endObjectProperties
 
@@ -1398,8 +1439,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 130
-y 895
+x 380
+y 45
 w 125
 h 20
 controlPv "$(P)$(R)Temp1_RBV"
@@ -1418,7 +1459,7 @@ major 4
 minor 1
 release 1
 x 260
-y 45
+y 70
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1426,7 +1467,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Temp 2"
+  "Temp 2"
 }
 endObjectProperties
 
@@ -1437,7 +1478,7 @@ major 10
 minor 0
 release 0
 x 380
-y 45
+y 70
 w 125
 h 20
 controlPv "$(P)$(R)Temp2_RBV"
@@ -1456,7 +1497,7 @@ major 4
 minor 1
 release 1
 x 260
-y 70
+y 95
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1464,7 +1505,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Humid 0"
+  "Humid 0"
 }
 endObjectProperties
 
@@ -1475,7 +1516,7 @@ major 10
 minor 0
 release 0
 x 380
-y 70
+y 95
 w 125
 h 20
 controlPv "$(P)$(R)Humid0_RBV"
@@ -1494,7 +1535,7 @@ major 4
 minor 1
 release 1
 x 260
-y 95
+y 120
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1502,7 +1543,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Humid 1"
+  "Humid 1"
 }
 endObjectProperties
 
@@ -1513,7 +1554,7 @@ major 10
 minor 0
 release 0
 x 380
-y 95
+y 120
 w 125
 h 20
 controlPv "$(P)$(R)Humid1_RBV"
@@ -1532,7 +1573,7 @@ major 4
 minor 1
 release 1
 x 260
-y 120
+y 145
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1540,7 +1581,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Humid 2"
+  "Humid 2"
 }
 endObjectProperties
 
@@ -1551,7 +1592,7 @@ major 10
 minor 0
 release 0
 x 380
-y 120
+y 145
 w 125
 h 20
 controlPv "$(P)$(R)Humid2_RBV"
@@ -1570,7 +1611,7 @@ major 4
 minor 1
 release 1
 x 260
-y 145
+y 170
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1578,7 +1619,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " TVX Version"
+  "TVX Version"
 }
 endObjectProperties
 
@@ -1589,7 +1630,7 @@ major 10
 minor 0
 release 0
 x 380
-y 145
+y 170
 w 125
 h 20
 controlPv "$(P)$(R)TVXVersion_RBV"
@@ -1608,7 +1649,7 @@ major 4
 minor 1
 release 1
 x 260
-y 170
+y 195
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1616,7 +1657,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Reset Power Time"
+  "Reset Power Time"
 }
 endObjectProperties
 
@@ -1627,7 +1668,7 @@ major 10
 minor 0
 release 0
 x 380
-y 170
+y 195
 w 60
 h 20
 controlPv "$(P)$(R)ResetPowerTime"
@@ -1646,7 +1687,7 @@ major 10
 minor 0
 release 0
 x 445
-y 170
+y 195
 w 60
 h 20
 controlPv "$(P)$(R)ResetPowerTime_RBV"
@@ -1665,7 +1706,7 @@ major 4
 minor 1
 release 1
 x 260
-y 195
+y 220
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1673,7 +1714,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Delay Time"
+  "Delay Time"
 }
 endObjectProperties
 
@@ -1684,7 +1725,7 @@ major 10
 minor 0
 release 0
 x 380
-y 195
+y 220
 w 60
 h 20
 controlPv "$(P)$(R)DelayTime"
@@ -1703,7 +1744,7 @@ major 10
 minor 0
 release 0
 x 445
-y 195
+y 220
 w 60
 h 20
 controlPv "$(P)$(R)DelayTime_RBV"
@@ -1722,7 +1763,7 @@ major 4
 minor 1
 release 1
 x 260
-y 220
+y 245
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1730,7 +1771,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Threshold Energy"
+  "Threshold Energy"
 }
 endObjectProperties
 
@@ -1741,7 +1782,7 @@ major 10
 minor 0
 release 0
 x 380
-y 220
+y 245
 w 60
 h 20
 controlPv "$(P)$(R)ThresholdEnergy"
@@ -1760,7 +1801,7 @@ major 10
 minor 0
 release 0
 x 445
-y 220
+y 245
 w 60
 h 20
 controlPv "$(P)$(R)ThresholdEnergy_RBV"
@@ -1779,7 +1820,7 @@ major 4
 minor 1
 release 1
 x 260
-y 245
+y 270
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1787,7 +1828,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Threshold Auto Apply"
+  "Threshold Auto Apply"
 }
 endObjectProperties
 
@@ -1798,7 +1839,7 @@ major 4
 minor 0
 release 0
 x 380
-y 245
+y 270
 w 60
 h 20
 fgColor index 14
@@ -1820,7 +1861,7 @@ major 4
 minor 0
 release 0
 x 465
-y 245
+y 270
 w 20
 h 20
 controlPv "$(P)$(R)ThresholdAutoApply_RBV"
@@ -1838,7 +1879,7 @@ major 4
 minor 1
 release 1
 x 260
-y 270
+y 295
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1846,7 +1887,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Energy"
+  "Energy"
 }
 endObjectProperties
 
@@ -1857,7 +1898,7 @@ major 10
 minor 0
 release 0
 x 380
-y 270
+y 295
 w 60
 h 20
 controlPv "$(P)$(R)Energy"
@@ -1876,7 +1917,7 @@ major 10
 minor 0
 release 0
 x 445
-y 270
+y 295
 w 60
 h 20
 controlPv "$(P)$(R)Energy_RBV"
@@ -1895,7 +1936,7 @@ major 4
 minor 1
 release 1
 x 260
-y 295
+y 320
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1903,7 +1944,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Min Flat Field"
+  "Min Flat Field"
 }
 endObjectProperties
 
@@ -1914,7 +1955,7 @@ major 10
 minor 0
 release 0
 x 380
-y 295
+y 320
 w 60
 h 20
 controlPv "$(P)$(R)MinFlatField"
@@ -1933,7 +1974,7 @@ major 10
 minor 0
 release 0
 x 445
-y 295
+y 320
 w 60
 h 20
 controlPv "$(P)$(R)MinFlatField_RBV"
@@ -1952,7 +1993,7 @@ major 4
 minor 1
 release 1
 x 260
-y 320
+y 345
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1960,7 +2001,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  " Gap Fill"
+  "Gap Fill"
 }
 endObjectProperties
 
@@ -1971,7 +2012,7 @@ major 4
 minor 0
 release 0
 x 380
-y 320
+y 345
 w 60
 h 20
 fgColor index 25
@@ -1990,7 +2031,7 @@ major 10
 minor 0
 release 0
 x 445
-y 320
+y 345
 w 60
 h 20
 controlPv "$(P)$(R)GapFill_RBV"

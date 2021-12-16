@@ -1,17 +1,18 @@
 import json
 from pathlib import Path
-from typing import Optional, Type, TypeVar
+from typing import Optional, Type
 
-import jsonschema
 import typer
-from apischema import deserialize, serialize
 from apischema.json_schema import JsonSchemaVersion, deserialization_schema
-from ruamel.yaml import YAML
 
 from pvi import __version__
+from pvi._convert._source_convert import SourceConverter
+from pvi._convert._template_convert import TemplateConverter
 from pvi._format import Formatter
 from pvi._produce import Producer
-from pvi.device import Device
+from pvi._produce.asyn import AsynParameter
+from pvi._utils import deserialize_yaml, serialize_yaml
+from pvi.device import Device, walk
 
 app = typer.Typer()
 convert_app = typer.Typer()
@@ -59,21 +60,6 @@ def schema(output: Path = typer.Argument(..., help="filename to write the schema
     output.write_text(json.dumps(schema, indent=2))
 
 
-T = TypeVar("T")
-
-
-def deserialize_yaml(cls: Type[T], path: Path) -> T:
-    suffix = f".pvi.{cls.__name__.lower()}.yaml"
-    assert path.name.endswith(suffix), f"Expected '{path.name}' to end with '{suffix}'"
-    # Need to use the safe loader otherwise we get:
-    #    TypeError: Invalid JSON type <class 'ruamel.yaml.scalarfloat.ScalarFloat'>
-    d = YAML(typ="safe").load(path)
-    # first check the definition file with jsonschema since it has more
-    # legible error messages than apischema
-    jsonschema.validate(d, deserialization_schema(cls))
-    return deserialize(cls, d)
-
-
 @app.command()
 def produce(
     output: Path = typer.Argument(..., help="filename to write the product to"),
@@ -87,9 +73,7 @@ def produce(
         producer_inst.produce_csv(output)
     elif output.suffixes == [".pvi", ".device", ".yaml"]:
         device = producer_inst.produce_device()
-        serialized = serialize(device, exclude_none=True, exclude_defaults=True)
-        # TODO: add modeline
-        YAML().dump(serialized, output)
+        serialize_yaml(device, output)
     else:
         producer_inst.produce_other(output)
 
@@ -116,49 +100,39 @@ def asyn(
 ):
     """Convert template/cpp/h to producer YAML and stripped template/cpp/h"""
 
-    template_converter = TemplateConverter(
-        template_files=args.templates, formatter=dict(type=args.formatter)
-    )
+    template_converter = TemplateConverter(template)
 
     # Generate initial yaml to provide parameter info strings to source converter
-    converted_yaml = template_converter.convert()
+    producer = template_converter.convert()
 
-    parameter_infos = [
-        parameter["drv_info"]
-        for component in converted_yaml["components"]
-        for parameter in component["children"]
+    drv_infos = [
+        parameter.get_drv_info()
+        for parameter in walk(producer.parameters)
+        if isinstance(parameter, AsynParameter)
     ]
-    source_converter = SourceConverter(
-        cpp=args.cpp,
-        h=args.header,
-        module_root=args.root,
-        parameter_infos=parameter_infos,
-    )
+    source_converter = SourceConverter(cpp, h, output, drv_infos)
 
     # Process and recreate template files - pass source device for param set include
     extracted_templates = template_converter.top_level_text(
         source_converter.device_class
     )
-    for template_text, template_path in zip(extracted_templates, args.templates):
-        with open(args.output_dir / f"{template_path.stem}.template", "w") as f:
-            f.write(template_text)
+    for template_text, template_path in zip(extracted_templates, [template]):
+        (output / template_path.name).write_text(template_text)
 
     # Process and recreate source files
     extracted_source = source_converter.get_top_level_text()
-    with open(args.output_dir / f"{args.cpp.stem}{args.cpp.suffix}", "w") as f:
-        f.write(extracted_source.cpp)
-    with open(args.output_dir / f"{args.header.stem}{args.header.suffix}", "w") as f:
-        f.write(extracted_source.h)
+    (output / cpp.name).write_text(extracted_source.cpp)
+    (output / h.name).write_text(extracted_source.h)
 
     # Update yaml based on source file definitions and write
-    converted_yaml = insert_entry(
-        converted_yaml, "parent", source_converter.parent_class, "components"
+    producer.parent_class = source_converter.parent_class
+    index_map = source_converter.get_info_index_map()
+    for parameter in walk(producer.parameters):
+        if isinstance(parameter, AsynParameter):
+            parameter.index_name = index_map[parameter.get_drv_info()]
+    serialize_yaml(
+        producer, output / f"{source_converter.device_class}.pvi.producer.yaml"
     )
-    converted_yaml = merge_in_index_names(
-        converted_yaml, source_converter._get_index_info_map()
-    )
-
-    Schema.write(converted_yaml, args.output_dir, source_converter.device_class)
 
 
 if __name__ == "__main__":

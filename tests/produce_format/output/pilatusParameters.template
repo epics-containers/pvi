@@ -11,6 +11,15 @@ record(bo, "$(P)$(R)ResetPower")
     field(ONAM, "Reset")
 }
 
+record(busy, "$(P)$(R)ThresholdApply")
+{
+    field(DESC, "ThresholdApply")
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))THRESHOLD_APPLY")
+    field(ZNAM, "Done")
+    field(ONAM, "Apply")
+}
+
 record(ao, "$(P)$(R)ImageFileTmot")
 {
     field(DESC, "Timeout for image file")
@@ -578,6 +587,14 @@ $(PVI=#)                    {
 $(PVI=#)                        "type": "SignalW",
 $(PVI=#)                        "name": "ResetPower",
 $(PVI=#)                        "pv": "ResetPower",
+$(PVI=#)                        "widget": {
+$(PVI=#)                            "type": "CheckBox"
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        "type": "SignalW",
+$(PVI=#)                        "name": "ThresholdApply",
+$(PVI=#)                        "pv": "ThresholdApply",
 $(PVI=#)                        "widget": {
 $(PVI=#)                            "type": "CheckBox"
 $(PVI=#)                        }

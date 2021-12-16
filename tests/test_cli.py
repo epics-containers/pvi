@@ -7,11 +7,15 @@ from pvi import __version__
 from pvi.__main__ import app
 
 HERE = Path(__file__).parent
+PILATUS_PRODUCER = (
+    HERE / "produce_format" / "input" / "pilatusDetector.pvi.producer.yaml"
+)
 
 
 def test_version():
     result = CliRunner().invoke(app, ["--version"])
-    assert result.exit_code == 0, result
+    if result.exception:
+        raise result.exception
     assert result.stdout == __version__ + "\n"
 
 
@@ -20,7 +24,8 @@ def assert_output_matches(
 ):
     args = [cmd, str(output_path)] + [str(p) for p in paths]
     result = CliRunner().invoke(app, args)
-    assert result.exit_code == 0, result
+    if result.exception:
+        raise result.exception
     assert output_path.read_text() == expected_path.read_text()
 
 
@@ -48,8 +53,9 @@ def test_schemas(tmp_path, filename):
 )
 def test_produce(tmp_path, filename):
     expected_path = HERE / "produce_format" / "output" / filename
-    producer_path = HERE / "produce_format" / "input" / "pilatus.pvi.producer.yaml"
-    assert_output_matches(expected_path, "produce", tmp_path / filename, producer_path)
+    assert_output_matches(
+        expected_path, "produce", tmp_path / filename, PILATUS_PRODUCER
+    )
 
 
 @pytest.mark.parametrize(
@@ -61,8 +67,7 @@ def test_produce(tmp_path, filename):
 )
 def test_format(tmp_path, filename, formatter):
     expected_path = HERE / "produce_format" / "output" / filename
-    producer_path = HERE / "produce_format" / "input" / "pilatus.pvi.producer.yaml"
     formatter_path = HERE / "produce_format" / "input" / formatter
     assert_output_matches(
-        expected_path, "format", tmp_path / filename, producer_path, formatter_path
+        expected_path, "format", tmp_path / filename, PILATUS_PRODUCER, formatter_path
     )

@@ -1,8 +1,9 @@
 import re
-from itertools import chain
-from typing import Any, Callable, Dict, List, Tuple, TypeVar
+from pathlib import Path
+from typing import Dict, List, Tuple
 
-from pydantic import BaseModel, Field, FilePath
+from pvi._produce.asyn import AsynParameter, AsynProducer
+from pvi.device import Grid, Group
 
 from ._asyn_convert import (
     Action,
@@ -12,68 +13,24 @@ from ._asyn_convert import (
     RecordError,
     SettingPair,
 )
-from ._schema import FormatterUnion
-from ._types import Component, Record
-
-R = TypeVar("R", bound=Record)
-P = TypeVar("P", bound=Parameter)
 
 OVERRIDE_DESC = "# Overriding value in auto-generated template"
 
 
-class TemplateConverter(BaseModel):
-    template_files: List[FilePath] = Field(
-        ..., description="template file to convert to yaml"
-    )
-    formatter: FormatterUnion = Field(
-        ..., description="The Formatter class to format the output"
-    )
-    _text: List[str]
+class TemplateConverter:
+    def __init__(self, *templates: Path):
+        self.templates = templates
+        self._text = [t.read_text() for t in templates]
 
-    class Config:
-        extra = "forbid"
-
-    def __init__(self, **data: Any):
-        super().__init__(**data)
-        text = []
-        for template_file in self.template_files:
-            with open(template_file, "r") as f:
-                text.append(f.read())
-        object.__setattr__(self, "_text", text)
-
-    def top_level_text(self, driver_name=None):
+    def top_level_text(self, driver_name: str):
         extracted_templates = []
         for text in self._text:
             record_extractor = RecordExtractor(text)
-            driver_name = driver_name or self.template_file.stem
             extracted_templates.append(record_extractor.get_top_level_text(driver_name))
         return extracted_templates
 
-    def convert(self):
-        extractor_dict = dict(
-            producer=self._extract_asyn_producer,
-            formatter=lambda: self.formatter.dict(),
-            components=lambda: [
-                dict(
-                    type="ComponentGroup",
-                    name="ComponentGroupOne",
-                    children=self._extract_components(),
-                )
-            ],
-        )
-        yaml_dict = self._extract_to_dict(extractor_dict)
-        return yaml_dict
-
-    def _extract_to_dict(self, extractor_dict: Dict[str, Callable[[], Any]]):
-        filled_dict = dict()
-        for key, extractor_func in extractor_dict.items():
-            value = extractor_func()
-            if value:
-                filled_dict[key] = value
-        return filled_dict
-
-    def _extract_asyn_producer(self) -> Dict[str, str]:
-        def get_prefix(texts: List[str]) -> Dict[str, str]:
+    def convert(self) -> AsynProducer:
+        def get_prefix(texts: List[str]) -> str:
             # e.g. from: record(waveform, "$(P)$(R)FilePath")
             # extract: $(P)$(R)
             prefix_extractor = re.compile(
@@ -84,13 +41,9 @@ class TemplateConverter(BaseModel):
             prefixes = list(set(prefixes))
             if len(prefixes) > 1:
                 raise ValueError("Not all asyn records have the same macro prefix")
-            prefix_dict = dict(prefix=prefixes[0])
-            return prefix_dict
+            return prefixes.pop()
 
-        def get_asyn_parameters(texts: List[str]) -> Dict[str, str]:
-            default_asyn_parameters = dict(
-                asyn_port="$(PORT)", address="$(ADDR=0)", timeout="$(TIMEOUT=1)"
-            )
+        def get_asyn_parameters(texts: List[str]) -> Dict[int, str]:
             # e.g. from: field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1))FILE_PATH")
             # extract: $(PORT),$(ADDR=0),$(TIMEOUT=1))FILE_PATH
             asyn_parameter_extractor = r'(?:@asyn\()([^"]*)'
@@ -99,44 +52,37 @@ class TemplateConverter(BaseModel):
             # then: remove final close bracket and driver param name
             # $(PORT),$(ADDR=0),$(TIMEOUT=1)
             asyn_parameters = [match[: match.rfind(")")] for match in asyn_parameters]
-            asyn_parameters = list(set(asyn_parameters))
-            if len(asyn_parameters) > 1:
+            if len(set(asyn_parameters)) > 1:
                 print(
                     "More than one set of asyn params found. Taking the first instance"
                 )
-            asyn_parameters = [param.strip() for param in asyn_parameters[0].split(",")]
-            if len(asyn_parameters) > len(default_asyn_parameters):
-                raise ValueError("Found too many asyn params")
-            asyn_parameter_dict = dict(
-                zip(default_asyn_parameters.keys(), asyn_parameters)
-            )
-            asyn_parameter_dict = {**default_asyn_parameters, **asyn_parameter_dict}
-            return asyn_parameter_dict
+            return {i: p.strip() for i, p in enumerate(asyn_parameters[0].split(","))}
 
-        producer = {
-            **dict(type="AsynProducer"),
-            **get_prefix(self._text),
-            **get_asyn_parameters(self._text),
-        }
-        return producer
+        asyn_vars = get_asyn_parameters(self._text)
 
-    def _extract_components(self) -> List[Component]:
+        return AsynProducer(
+            prefix=get_prefix(self._text),
+            label=self.templates[0].stem,
+            asyn_port=asyn_vars.get(0, "$(PORT)"),
+            address=asyn_vars.get(1, "$(ADDR=0)"),
+            timeout=asyn_vars.get(2, "$(TIMEOUT=1)"),
+            parameters=[
+                Group(
+                    name="ComponentGroupOne",
+                    layout=Grid(),
+                    children=self._extract_components(),
+                )
+            ],
+        )
+
+    def _extract_components(self) -> List[AsynParameter]:
         components = []
         for text in self._text:
             record_extractor = RecordExtractor(text)
             asyn_records = record_extractor.get_asyn_records()
-            actions, readbacks, setting_pairs = RecordRoleSorter.sort_records(
-                asyn_records
-            )
-            for parameter in chain(actions, readbacks, setting_pairs):
+            for parameter in RecordRoleSorter.sort_records(asyn_records):
                 component = parameter.generate_component()
-                component_dict = component.dict(
-                    exclude_unset=True,
-                    exclude_none=True,
-                    exclude_defaults=True,
-                    by_alias=True,
-                )
-                components.append(component_dict)
+                components.append(component)
         return components
 
 
@@ -251,7 +197,12 @@ class RecordExtractor:
 
         # Get override strings for setting pair clashes
         asyn_records = self.get_asyn_records()
-        _, _, setting_pairs = RecordRoleSorter.sort_records(asyn_records)
+
+        setting_pairs = [
+            p
+            for p in RecordRoleSorter.sort_records(asyn_records)
+            if isinstance(p, SettingPair)
+        ]
         overrides = [
             setting_pair.get_naming_overrides()
             for setting_pair in setting_pairs
@@ -289,19 +240,19 @@ class RecordExtractor:
 
 class RecordRoleSorter:
     @staticmethod
-    def sort_records(
-        records: List[R],
-    ) -> Tuple[List[Action], List[Readback], List[SettingPair]]:
-        def _sort_inputs_outputs(records: List[R]) -> Tuple[List[R], List[R]]:
-            inp_records = [r for r in records if "INP" in r.fields_.keys()]
-            write_records = [r for r in records if "OUT" in r.fields_.keys()]
+    def sort_records(records: List[AsynRecord]) -> List[Parameter]:
+        def _sort_inputs_outputs(
+            records: List[AsynRecord],
+        ) -> Tuple[List[AsynRecord], List[AsynRecord]]:
+            inp_records = [r for r in records if "INP" in r.fields]
+            write_records = [r for r in records if "OUT" in r.fields]
 
             # Move waveform records with asynOctetWrite from read to write
             read_records = []
             for r in inp_records:
                 if r.type == "waveform" and (
-                    r.fields_["DTYP"] == "asynOctetWrite"
-                    or r.fields_["DTYP"].endswith("ArrayOut")
+                    r.fields["DTYP"] == "asynOctetWrite"
+                    or r.fields["DTYP"].endswith("ArrayOut")
                 ):
                     write_records.append(r)
                 else:
@@ -309,17 +260,20 @@ class RecordRoleSorter:
             return read_records, write_records
 
         read_records, write_records = _sort_inputs_outputs(records)
-        actions = ParameterRoleMatcher.get_actions(read_records, write_records)
-        readbacks = ParameterRoleMatcher.get_readbacks(read_records, write_records)
-        setting_pairs = ParameterRoleMatcher.get_setting_pairs(
+        parameters: List[Parameter] = []
+        parameters += ParameterRoleMatcher.get_actions(read_records, write_records)
+        parameters += ParameterRoleMatcher.get_readbacks(read_records, write_records)
+        parameters += ParameterRoleMatcher.get_setting_pairs(
             read_records, write_records
         )
-        return actions, readbacks, setting_pairs
+        return parameters
 
 
 class ParameterRoleMatcher:
     @staticmethod
-    def get_actions(read_records, write_records) -> List[Action]:
+    def get_actions(
+        read_records: List[AsynRecord], write_records: List[AsynRecord]
+    ) -> List[Action]:
         actions = [
             Action(write_record=w)
             for w in write_records
@@ -329,7 +283,9 @@ class ParameterRoleMatcher:
         return actions
 
     @staticmethod
-    def get_readbacks(read_records, write_records) -> List[Readback]:
+    def get_readbacks(
+        read_records: List[AsynRecord], write_records: List[AsynRecord]
+    ) -> List[Readback]:
         readbacks = [
             Readback(read_record=r)
             for r in read_records
@@ -339,7 +295,9 @@ class ParameterRoleMatcher:
         return readbacks
 
     @staticmethod
-    def get_setting_pairs(read_records, write_records) -> List[SettingPair]:
+    def get_setting_pairs(
+        read_records: List[AsynRecord], write_records: List[AsynRecord]
+    ) -> List[SettingPair]:
         setting_pairs = [
             SettingPair(read_record=r, write_record=w)
             for r in read_records
@@ -347,13 +305,3 @@ class ParameterRoleMatcher:
             if r.get_parameter_name() == w.get_parameter_name()
         ]
         return setting_pairs
-
-
-def merge_in_index_names(yaml_dict, index_info_mapping):
-    info_index_mapping = {info: index for index, info in index_info_mapping.items()}
-    components = yaml_dict["components"]
-    for group in components:
-        for child in group["children"]:
-            drv_info = child["drv_info"]
-            child["index_name"] = info_index_mapping[drv_info]
-    return yaml_dict

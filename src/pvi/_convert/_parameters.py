@@ -1,11 +1,18 @@
+from dataclasses import dataclass
 from typing import Dict, List, Optional
 
-from pydantic import BaseModel
-
-from ._types import Component, Record
+from pvi._produce.asyn import AsynParameter
 
 
-class Parameter(BaseModel):
+@dataclass
+class Record:
+    name: str  # The name of the record e.g. $(P)$(M)Status
+    type: str  # The record type string e.g. ao, stringin
+    fields: Dict[str, str]  # The record fields
+    infos: Dict[str, str]  # Any infos to be added to the record
+
+
+class Parameter:
     invalid = ["DESC", "DTYP", "INP", "OUT", "PINI", "VAL"]
 
     def _remove_invalid(self, fields: Dict[str, str]) -> Dict[str, str]:
@@ -14,7 +21,7 @@ class Parameter(BaseModel):
         }
         return valid_fields
 
-    def generate_component(self) -> Component:
+    def generate_component(self) -> AsynParameter:
         raise NotImplementedError(self)
 
 
@@ -26,12 +33,12 @@ class ReadParameterMixin:
 class WriteParameterMixin:
     def _get_initial(self, write_record: Record) -> str:
         try:
-            pini = write_record.fields_["PINI"].lower()
+            pini = write_record.fields["PINI"].lower()
         except KeyError:
             pini = "no"
         if pini == "yes":
             try:
-                initial = write_record.fields_["VAL"]
+                initial = write_record.fields["VAL"]
             except KeyError:
                 initial = "0"
         else:

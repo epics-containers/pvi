@@ -1,83 +1,83 @@
 import re
 import sys
-from typing import Any, Dict, List, Optional, Tuple, Type
+from dataclasses import dataclass
+from typing import Any, Dict, List, Optional, Tuple, Type, cast
 
-from pydantic import root_validator
+from pvi._produce.asyn import Access, AsynParameter, AsynWaveform
+from pvi._utils import rec_subclasses
 
-from ._asyn import AsynComponent, AsynWaveform, ParameterRole
-from ._parameters import Parameter, ReadParameterMixin, WriteParameterMixin
-from ._types import Record
+from ._parameters import Parameter, ReadParameterMixin, Record, WriteParameterMixin
 
 
 class RecordError(Exception):
     pass
 
 
+@dataclass
 class AsynRecord(Record):
-    def __init__(self, **fields_: Dict[str, str]):
-        super().__init__(**fields_)
-        # If there is no DESC field we must create one
-        if "DESC" not in self.fields_.keys():
-            self.fields_["DESC"] = self.name
-
-    @root_validator
-    def validate_template_file(cls, values):
-        v = values.get("fields_")
+    def __post_init__(self):
         # We don't care about records without INP or OUT or with both (error)
-        if all(k in v.keys() for k in ("INP", "OUT")) or not any(
-            k in v.keys() for k in ("INP", "OUT")
+        if all(k in self.fields.keys() for k in ("INP", "OUT")) or not any(
+            k in self.fields.keys() for k in ("INP", "OUT")
         ):
             raise RecordError("Record has no input or output field or both")
 
-        asyn_field = v.get("INP", v.get("OUT"))
+        asyn_field = self.fields.get("INP", self.fields.get("OUT"))
         if "@asyn(" not in asyn_field:
             # Is it Asyn, because if it's not we don't care about it
             raise RecordError("Record has no @asyn field")
-        return values
 
-    def get_parameter_name(self):
+        # If there is no DESC field we must create one
+        if "DESC" not in self.fields.keys():
+            self.fields["DESC"] = self.name
+
+    def get_parameter_name(self) -> Optional[str]:
         # e.g. from: field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1))FILE_PATH")
         # extract: FILE_PATH
         parameter_name_extractor = r"(?:@asyn\()(?:(?:\$\([^\)]*\)[,]*)*)(?:\))(\S+)"
-        for k, v in self.fields_.items():
+        parameter_name = None
+        for k, v in self.fields.items():
             if k == "INP" or k == "OUT":
                 if "@asyn(" in v:
-                    parameter_name = re.search(parameter_name_extractor, v).group(1)
+                    match = re.search(parameter_name_extractor, v)
+                    if match:
+                        parameter_name = match.group(1)
         return parameter_name
 
-    def asyn_component_type(self) -> Type[AsynComponent]:
-        asyn_components = [cls for cls in AsynComponent.__subclasses__()]
-        asyn_component_types = [
-            cls.type_strings for cls in AsynComponent.__subclasses__()
-        ]
+    def asyn_component_type(self) -> Type[AsynParameter]:
+        asyn_components = cast(List[Type[AsynParameter]], rec_subclasses(AsynParameter))
 
         # For waveform records the data type is defined by FTVL
         if self.type == "waveform":
             return AsynWaveform
 
-        if "INP" in self.fields_.keys():
+        if "INP" in self.fields.keys():
             type_fields = [
-                (type_string.read_record, type_string.asyn_read)
-                for type_string in asyn_component_types
+                (cls.record_fields.in_record_type.__name__, cls.type_strings.asyn_read)
+                for cls in asyn_components
             ]
-        elif "OUT" in self.fields_.keys():
+        elif "OUT" in self.fields.keys():
             type_fields = [
-                (type_string.write_record, type_string.asyn_write)
-                for type_string in asyn_component_types
+                (
+                    cls.record_fields.out_record_type.__name__,
+                    cls.type_strings.asyn_write,
+                )
+                for cls in asyn_components
             ]
         try:
-            idx = type_fields.index((self.type, self.fields_["DTYP"]))
+            idx = type_fields.index((self.type, self.fields["DTYP"]))
             asyn_class = asyn_components[idx]
             return asyn_class
         except ValueError as e:
             raise ValueError(
-                f"{self.name} asyn type: ({self.type}, {self.fields_['DTYP']}) "
-                f"not found"
+                f"{self.name} asyn type: ({self.type}, {self.fields['DTYP']}) "
+                f"not found in {type_fields}"
             ) from e
         except KeyError as e:
             raise KeyError(f"{self.name} DTYP not found") from e
 
 
+@dataclass
 class SettingPair(Parameter, WriteParameterMixin, ReadParameterMixin):
     read_record: AsynRecord
     write_record: AsynRecord
@@ -108,8 +108,8 @@ class SettingPair(Parameter, WriteParameterMixin, ReadParameterMixin):
     def _get_field_clashes(self) -> List[str]:
         # Check to see if there any clashing values in pairs
         clashing_fields = []
-        for (read_field_name, read_field_value) in self.read_record.fields_.items():
-            write_field_value = self.write_record.fields_.get(
+        for (read_field_name, read_field_value) in self.read_record.fields.items():
+            write_field_value = self.write_record.fields.get(
                 read_field_name, read_field_value
             )
             if (
@@ -121,8 +121,8 @@ class SettingPair(Parameter, WriteParameterMixin, ReadParameterMixin):
 
     def _handle_clashes(self, clashing_fields: List[str]):
         for field in clashing_fields:
-            chosen_value = self.dominant.fields_[field]
-            discarded_value = self.subordinate.fields_.get(field, chosen_value)
+            chosen_value = self.dominant.fields[field]
+            discarded_value = self.subordinate.fields.get(field, chosen_value)
             print(
                 f"Pair: {self.write_record.name}; "
                 f"Field: {field}; "
@@ -132,7 +132,7 @@ class SettingPair(Parameter, WriteParameterMixin, ReadParameterMixin):
                 f"for both",
                 file=sys.stderr,
             )
-            self.subordinate.fields_[field] = self.dominant.fields_.get(
+            self.subordinate.fields[field] = self.dominant.fields.get(
                 field, chosen_value
             )
 
@@ -145,14 +145,16 @@ class SettingPair(Parameter, WriteParameterMixin, ReadParameterMixin):
         empty = not self._get_field_clashes()
         return not empty
 
-    def generate_component(self) -> AsynComponent:
+    def generate_component(self) -> AsynParameter:
         asyn_class = self.write_record.asyn_component_type()
 
         non_default_args: Dict[str, Any] = dict()
         non_default_args["demand_auto_updates"] = self._get_demand_auto_updates(
             self.write_record
         )
-        non_default_args["autosave"] = self._get_autosave_fields(self.write_record)
+        autosave = self._get_autosave_fields(self.write_record)
+        if autosave:
+            non_default_args["autosave"] = autosave
 
         drv_info = self.write_record.get_parameter_name()
         if drv_info != self.write_record.name:
@@ -169,19 +171,23 @@ class SettingPair(Parameter, WriteParameterMixin, ReadParameterMixin):
         field_clashes = self._get_field_clashes()
         self._handle_clashes(field_clashes)
 
-        write_fields = self._remove_invalid(self.write_record.fields_)
-        read_fields = self._remove_invalid(self.read_record.fields_)
+        write_fields = self._remove_invalid(self.write_record.fields)
+        read_fields = self._remove_invalid(self.read_record.fields)
+        record = type(asyn_class.record_fields)(  # type: ignore
+            **{**write_fields, **read_fields}
+        )
 
         component = asyn_class(
-            description=self.write_record.fields_["DESC"],
+            description=self.write_record.fields["DESC"],
             name=self.write_record.name,
-            role=ParameterRole.SETTING,
-            record_fields={**write_fields, **read_fields},
+            access=Access.RW,
+            record_fields=record,
             **non_default_args,
         )
         return component
 
 
+@dataclass
 class Readback(Parameter, ReadParameterMixin):
     read_record: AsynRecord
 
@@ -191,7 +197,7 @@ class Readback(Parameter, ReadParameterMixin):
         else:
             return None
 
-    def generate_component(self) -> AsynComponent:
+    def generate_component(self) -> AsynParameter:
         asyn_class = self.read_record.asyn_component_type()
 
         non_default_args: Dict[str, Any] = dict()
@@ -206,29 +212,34 @@ class Readback(Parameter, ReadParameterMixin):
         if drv_info != self.read_record.name:
             non_default_args["drv_info"] = drv_info
 
-        read_fields = self._remove_invalid(self.read_record.fields_)
-
+        read_fields = self._remove_invalid(self.read_record.fields)
+        record = type(asyn_class.record_fields)(  # type: ignore
+            **read_fields
+        )
         component = asyn_class(
-            description=self.read_record.fields_["DESC"],
+            description=self.read_record.fields["DESC"],
             name=name,
-            role=ParameterRole.READBACK,
-            record_fields=read_fields,
+            access=Access.R,
+            record_fields=record,
             **non_default_args,
         )
         return component
 
 
+@dataclass
 class Action(Parameter, WriteParameterMixin):
     write_record: AsynRecord
 
-    def generate_component(self) -> AsynComponent:
+    def generate_component(self) -> AsynParameter:
         asyn_class = self.write_record.asyn_component_type()
 
         non_default_args: Dict[str, Any] = dict()
         non_default_args["demand_auto_updates"] = self._get_demand_auto_updates(
             self.write_record
         )
-        non_default_args["autosave"] = self._get_autosave_fields(self.write_record)
+        autosave_fields = self._get_autosave_fields(self.write_record)
+        if autosave_fields:
+            non_default_args["autosave"] = autosave_fields
 
         initial = self._get_initial(self.write_record)
         if initial:
@@ -238,13 +249,15 @@ class Action(Parameter, WriteParameterMixin):
         if drv_info != self.write_record.name:
             non_default_args["drv_info"] = drv_info
 
-        write_fields = self._remove_invalid(self.write_record.fields_)
-
+        write_fields = self._remove_invalid(self.write_record.fields)
+        record = type(asyn_class.record_fields)(  # type: ignore
+            **write_fields
+        )
         component = asyn_class(
-            description=self.write_record.fields_["DESC"],
+            description=self.write_record.fields["DESC"],
             name=self.write_record.name,
-            role=ParameterRole.ACTION,
-            record_fields=write_fields,
+            access=Access.W,
+            record_fields=record,
             **non_default_args,
         )
         return component

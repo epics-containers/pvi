@@ -4,6 +4,7 @@
 #include "ADDriverParamSet.h"
 
 #define PilatusResetPowerString "RESET_POWER"
+#define PilatusThresholdApplyString "THRESHOLD_APPLY"
 #define PilatusImageFileTmotString "IMAGE_FILE_TMOT"
 #define PilatusWavelengthString "WAVELENGTH"
 #define PilatusEnergyLowString "ENERGY_LOW"
@@ -55,6 +56,7 @@ class pilatusDetectorParamSet : public virtual ADDriverParamSet {
 public:
     pilatusDetectorParamSet() {
         this->add(PilatusResetPowerString, asynParamInt32, &PilatusResetPower);
+        this->add(PilatusThresholdApplyString, asynParamInt32, &PilatusThresholdApply);
         this->add(PilatusImageFileTmotString, asynParamFloat64, &PilatusImageFileTmot);
         this->add(PilatusWavelengthString, asynParamFloat64, &PilatusWavelength);
         this->add(PilatusEnergyLowString, asynParamFloat64, &PilatusEnergyLow);
@@ -105,6 +107,7 @@ public:
 
     int PilatusResetPower;
     #define FIRST_PILATUSDETECTORPARAMSET_PARAM PilatusResetPower
+    int PilatusThresholdApply;
     int PilatusImageFileTmot;
     int PilatusWavelength;
     int PilatusEnergyLow;

@@ -2,21 +2,6 @@
 # Mark Rivers
 # July 25, 2008
 
-# % macro, P, Device Prefix
-# % macro, R, Device Suffix
-# % macro, PORT, Asyn Port name
-# % macro, ADDR, Asyn Port address
-# % macro, TIMEOUT, Timeout
-# % macro, CAMSERVER_PORT, Asyn IPPort attached to camserver
-
-# All tags starting with gdatag are DLS specific for GDA
-# % gdatag, template, ADPilatus, $(PORT)_pilatus, $(PORT) Pilatus class instance
-
-# This associates the template with an edm screen
-# % gui, $(PORT), edmtab, pilatusDetector.edl, P=$(P),R=$(R)
-
-include "pilatus_detail.template"
-
 include "ADBase.template"
 include "NDFile.template"
 
@@ -67,7 +52,6 @@ record(mbbi, "$(P)$(R)FileFormat_RBV")
 }
 
 # Armed flag, which indicates Pilatus is ready for external triggers
-# % gdatag, binary, ro, $(PORT)_pilatus, Armed, Armed flag
 record(bi, "$(P)$(R)Armed")
 {
     field(DTYP, "asynInt32")
@@ -77,7 +61,7 @@ record(bi, "$(P)$(R)Armed")
     field(SCAN, "I/O Intr")
 }
 
-# Reset module power 
+# Reset module power
 record(bo, "$(P)$(R)ResetPower")
 {
     field(DTYP, "asynInt32")
@@ -108,7 +92,6 @@ record(longin, "$(P)$(R)ResetPowerTime_RBV")
 }
 
 # Delay time in External Trigger mode.
-# % gdatag, pv, rw, $(PORT)_pilatus, DelayTime, Set DelayTime
 record(ao, "$(P)$(R)DelayTime")
 {
     field(PINI, "YES")
@@ -117,10 +100,8 @@ record(ao, "$(P)$(R)DelayTime")
     field(EGU,  "s")
     field(VAL,  "0")
     field(PREC, "6")
-    info(autosaveFields, "VAL")
 }
 
-# % gdatag, pv, ro, $(PORT)_pilatus, DelayTime_RBV, Readback for DelayTime
 record(ai, "$(P)$(R)DelayTime_RBV")
 {
     field(DTYP, "asynFloat64")
@@ -131,7 +112,6 @@ record(ai, "$(P)$(R)DelayTime_RBV")
 }
 
 # Threshold energy
-# % gdatag, pv, rw, $(PORT)_pilatus, ThresholdEnergy, Set ThresholdEnergy
 record(ao, "$(P)$(R)ThresholdEnergy")
 {
     field(PINI, "YES")
@@ -141,11 +121,8 @@ record(ao, "$(P)$(R)ThresholdEnergy")
     field(EGU,  "keV")
     field(PREC, "3")
     field(VAL, "10.000")
-    info(autosaveFields, "VAL")
 }
 
-# % gdatag, pv, ro, $(PORT)_pilatus, ThresholdEnergy_RBV, Readback for ThresholdEnergy
-# % archiver 10 Monitor
 record(ai, "$(P)$(R)ThresholdEnergy_RBV")
 {
     field(DTYP, "asynFloat64")
@@ -175,7 +152,6 @@ record(bo, "$(P)$(R)ThresholdAutoApply")
     field(ZNAM, "No")
     field(ONAM, "Yes")
     field(VAL,  "1")
-    info(autosaveFields, "VAL")
 }
 
 # Threshold auto apply flag
@@ -211,11 +187,9 @@ record(ai, "$(P)$(R)Energy_RBV")
 }
 
 # Gain menu.  This writes to the Gain PV in the base database.
-# % gdatag, mbbinary, rw, $(PORT)_pilatus, GainMenu, Set Gain
 record(mbbo, "$(P)$(R)GainMenu")
 {
     field(DESC, "Shaping time and gain")
-    field(DTYP, "Raw Soft Channel")
     field(OUT,  "$(P)$(R)Gain.VAL PP MS")
     field(ZRST, "7-30KeV/Fast/LowG")
     field(ZRVL, "0")
@@ -226,12 +200,10 @@ record(mbbo, "$(P)$(R)GainMenu")
     field(THST, "2-5KeV/Slow/UltraG")
     field(THVL, "3")
     field(VAL,  "1")
-    info(autosaveFields, "VAL")
 }
 
 
 # Timeout waiting for image to be written to file system
-# % gdatag, pv, rw, $(PORT)_pilatus, ImageFileTmot, Set ImageFileTmot
 record(ao, "$(P)$(R)ImageFileTmot")
 {
     field(PINI, "YES")
@@ -241,11 +213,9 @@ record(ao, "$(P)$(R)ImageFileTmot")
     field(VAL,  "20")
     field(EGU,  "s")
     field(PREC, "3")
-    info(autosaveFields, "VAL")
 }
 
 # Bad pixel file
-# % gdatag, array, rw, $(PORT)_pilatus, BadPixelFile, Set BadPixelFile
 record(waveform, "$(P)$(R)BadPixelFile")
 {
     field(PINI, "YES")
@@ -253,11 +223,9 @@ record(waveform, "$(P)$(R)BadPixelFile")
     field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))BAD_PIXEL_FILE")
     field(FTVL, "CHAR")
     field(NELM, "256")
-    info(autosaveFields, "VAL")    
 }
 
 # Number of bad pixels
-# % gdatag, pv, ro, $(PORT)_pilatus, NumBadPixels, Read NumBadPixels
 record(longin, "$(P)$(R)NumBadPixels")
 {
     field(DTYP, "asynInt32")
@@ -267,7 +235,6 @@ record(longin, "$(P)$(R)NumBadPixels")
 }
 
 # Flat field file
-# % gdatag, array, rw, $(PORT)_pilatus, FlatFieldFile, Set FlatFieldFile
 record(waveform, "$(P)$(R)FlatFieldFile")
 {
     field(PINI, "YES")
@@ -275,11 +242,9 @@ record(waveform, "$(P)$(R)FlatFieldFile")
     field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FLAT_FIELD_FILE")
     field(FTVL, "CHAR")
     field(NELM, "256")
-    info(autosaveFields, "VAL")    
 }
 
 # Minimum flat field value
-# % gdatag, pv, rw, $(PORT)_pilatus, MinFlatField, Set MinFlatField
 record(longout, "$(P)$(R)MinFlatField")
 {
     field(PINI, "YES")
@@ -288,10 +253,8 @@ record(longout, "$(P)$(R)MinFlatField")
     field(DESC, "Minimum flat field value")
     field(VAL,  "100")
     field(EGU,  "Counts")
-    info(autosaveFields, "VAL")    
 }
 
-# % gdatag, pv, ro, $(PORT)_pilatus, MinFlatField_RBV, Readback for MinFlatField
 record(longin, "$(P)$(R)MinFlatField_RBV")
 {
     field(DTYP, "asynInt32")
@@ -302,7 +265,6 @@ record(longin, "$(P)$(R)MinFlatField_RBV")
 }
 
 # Flat field valid flag.
-# % gdatag, binary, ro, $(PORT)_pilatus, FlatFieldValid, FlatFieldValid flag
 record(bi, "$(P)$(R)FlatFieldValid")
 {
     field(DTYP, "asynInt32")
@@ -313,7 +275,6 @@ record(bi, "$(P)$(R)FlatFieldValid")
     field(SCAN, "I/O Intr")
 }
 
-# % gdatag, pv, rw, $(PORT)_pilatus, GapFill, Set GapFill
 record(mbbo, "$(P)$(R)GapFill")
 {
    field(PINI, "YES")
@@ -326,10 +287,8 @@ record(mbbo, "$(P)$(R)GapFill")
    field(TWST, "-1")
    field(TWVL, "-1")
    field(VAL,  "0")
-   info(autosaveFields, "VAL")
 }
 
-# % gdatag, pv, rw, $(PORT)_pilatus, GapFill_RBV, Readback for GapFill
 record(mbbi, "$(P)$(R)GapFill_RBV")
 {
    field(DTYP, "asynInt32")
@@ -355,7 +314,6 @@ record(asyn, "$(P)$(R)CamserverAsyn")
 
 # ancillary information
 
-# % gdatag, pv, rw, $(PORT)_pilatus, Wavelength, Set Wavelength
 record(ao, "$(P)$(R)Wavelength")
 {
     field(PINI, "YES")
@@ -364,10 +322,8 @@ record(ao, "$(P)$(R)Wavelength")
     field(PREC, "4")
     field(VAL,  "1.54")
     field(EGU,  "Angstroms")
-    info(autosaveFields, "VAL")    
 }
 
-# % gdatag, pv, rw, $(PORT)_pilatus, EnergyLow, Set EnergyLow
 record(ao, "$(P)$(R)EnergyLow")
 {
     field(PINI, "YES")
@@ -376,10 +332,8 @@ record(ao, "$(P)$(R)EnergyLow")
     field(PREC, "3")
     field(VAL,  "0")
     field(EGU,  "eV")
-    info(autosaveFields, "VAL")
 }
 
-# % gdatag, pv, rw, $(PORT)_pilatus, EnergyHigh, Set EnergyHigh
 record(ao, "$(P)$(R)EnergyHigh")
 {
     field(PINI, "YES")
@@ -388,10 +342,8 @@ record(ao, "$(P)$(R)EnergyHigh")
     field(PREC, "3")
     field(VAL,  "0")
     field(EGU,  "eV")
-    info(autosaveFields, "VAL")
 }
 
-# % gdatag, pv, rw, $(PORT)_pilatus, DetDist, Set DetDist
 record(ao, "$(P)$(R)DetDist")
 {
     field(PINI, "YES")
@@ -400,10 +352,8 @@ record(ao, "$(P)$(R)DetDist")
     field(PREC, "3")
     field(VAL,  "1000")
     field(EGU,  "mm")
-    info(autosaveFields, "VAL")    
 }
 
-# % gdatag, pv, rw, $(PORT)_pilatus, DetVOffset, Set DetVOffset
 record(ao, "$(P)$(R)DetVOffset")
 {
     field(PINI, "YES")
@@ -412,10 +362,8 @@ record(ao, "$(P)$(R)DetVOffset")
     field(PREC, "3")
     field(VAL,  "0")
     field(EGU,  "mm")
-    info(autosaveFields, "VAL")
 }
 
-# % gdatag, pv, rw, $(PORT)_pilatus, BeamX, Set BeamX
 record(ao, "$(P)$(R)BeamX")
 {
     field(PINI, "YES")
@@ -424,10 +372,8 @@ record(ao, "$(P)$(R)BeamX")
     field(PREC, "3")
     field(VAL,  "0")
     field(EGU,  "pixels")
-    info(autosaveFields, "VAL")
 }
 
-# % gdatag, pv, rw, $(PORT)_pilatus, BeamY, Set BeamY
 record(ao, "$(P)$(R)BeamY")
 {
     field(PINI, "YES")
@@ -436,10 +382,8 @@ record(ao, "$(P)$(R)BeamY")
     field(PREC, "3")
     field(VAL,  "0")
     field(EGU,  "pixels")
-    info(autosaveFields, "VAL")
 }
 
-# % gdatag, pv, rw, $(PORT)_pilatus, Flux, Set Flux
 record(ao, "$(P)$(R)Flux")
 {
     field(PINI, "YES")
@@ -448,10 +392,8 @@ record(ao, "$(P)$(R)Flux")
     field(PREC, "4")
     field(VAL,  "0")
     field(EGU,  "ph/s")
-    info(autosaveFields, "VAL")
 }
 
-# % gdatag, pv, rw, $(PORT)_pilatus, FilterTransm, Set FilterTransm
 record(ao, "$(P)$(R)FilterTransm")
 {
     field(PINI, "YES")
@@ -459,10 +401,8 @@ record(ao, "$(P)$(R)FilterTransm")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FILTER_TRANSM")
     field(VAL,  "1.0")
     field(PREC, "4")
-    info(autosaveFields, "VAL")
 }
 
-# % gdatag, pv, rw, $(PORT)_pilatus, StartAngle, Set StartAngle
 record(ao, "$(P)$(R)StartAngle")
 {
     field(PINI, "YES")
@@ -471,10 +411,8 @@ record(ao, "$(P)$(R)StartAngle")
     field(PREC, "4")
     field(VAL,  "0")
     field(EGU,  "deg")
-    info(autosaveFields, "VAL")
 }
 
-# % gdatag, pv, rw, $(PORT)_pilatus, AngleIncr, Set AngleIncr
 record(ao, "$(P)$(R)AngleIncr")
 {
     field(PINI, "YES")
@@ -483,10 +421,8 @@ record(ao, "$(P)$(R)AngleIncr")
     field(PREC, "4")
     field(VAL,  "0.1")
     field(EGU,  "deg")
-    info(autosaveFields, "VAL")
 }
 
-# % gdatag, pv, rw, $(PORT)_pilatus, Det2theta, Set Det2theta
 record(ao, "$(P)$(R)Det2theta")
 {
     field(PINI, "YES")
@@ -495,10 +431,8 @@ record(ao, "$(P)$(R)Det2theta")
     field(PREC, "4")
     field(VAL,  "0")
     field(EGU,  "deg")
-    info(autosaveFields, "VAL")
 }
 
-# % gdatag, pv, rw, $(PORT)_pilatus, Polarization, Set Polarization
 record(ao, "$(P)$(R)Polarization")
 {
     field(PINI, "YES")
@@ -506,10 +440,8 @@ record(ao, "$(P)$(R)Polarization")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))POLARIZATION")
     field(PREC, "4")
     field(VAL,  "0.99")
-    info(autosaveFields, "VAL")
 }
 
-# % gdatag, pv, rw, $(PORT)_pilatus, Alpha, Set Alpha
 record(ao, "$(P)$(R)Alpha")
 {
     field(PINI, "YES")
@@ -518,10 +450,8 @@ record(ao, "$(P)$(R)Alpha")
     field(PREC, "4")
     field(VAL,  "0")
     field(EGU,  "deg")
-    info(autosaveFields, "VAL")
 }
 
-# % gdatag, pv, rw, $(PORT)_pilatus, Kappa, Set Kappa
 record(ao, "$(P)$(R)Kappa")
 {
     field(PINI, "YES")
@@ -530,10 +460,8 @@ record(ao, "$(P)$(R)Kappa")
     field(PREC, "4")
     field(VAL,  "0")
     field(EGU,  "deg")
-    info(autosaveFields, "VAL")
 }
 
-# % gdatag, pv, rw, $(PORT)_pilatus, Phi, Set Phi
 record(ao, "$(P)$(R)Phi")
 {
     field(PINI, "YES")
@@ -542,10 +470,8 @@ record(ao, "$(P)$(R)Phi")
     field(PREC, "4")
     field(VAL,  "0")
     field(EGU,  "deg")
-    info(autosaveFields, "VAL")
 }
 
-# % gdatag, pv, rw, $(PORT)_pilatus, PhiIncr, Set PhiIncr
 record(ao, "$(P)$(R)PhiIncr")
 {
     field(PINI, "YES")
@@ -556,7 +482,6 @@ record(ao, "$(P)$(R)PhiIncr")
     field(EGU,  "deg")
 }
 
-# % gdatag, pv, rw, $(PORT)_pilatus, Chi, Set Chi
 record(ao, "$(P)$(R)Chi")
 {
     field(PINI, "YES")
@@ -565,10 +490,8 @@ record(ao, "$(P)$(R)Chi")
     field(PREC, "4")
     field(VAL,  "0")
     field(EGU,  "deg")
-    info(autosaveFields, "VAL")
 }
 
-# % gdatag, pv, rw, $(PORT)_pilatus, ChiIncr, Set ChiIncr
 record(ao, "$(P)$(R)ChiIncr")
 {
     field(PINI, "YES")
@@ -579,7 +502,6 @@ record(ao, "$(P)$(R)ChiIncr")
     field(EGU,  "deg")
 }
 
-# % gdatag, pv, rw, $(PORT)_pilatus, Omega, Set Omega
 record(ao, "$(P)$(R)Omega")
 {
     field(PINI, "YES")
@@ -590,7 +512,6 @@ record(ao, "$(P)$(R)Omega")
     field(EGU,  "deg")
 }
 
-# % gdatag, pv, rw, $(PORT)_pilatus, OmegaIncr, Set OmegaIncr
 record(ao, "$(P)$(R)OmegaIncr")
 {
     field(PINI, "YES")
@@ -601,24 +522,20 @@ record(ao, "$(P)$(R)OmegaIncr")
     field(EGU,  "deg")
 }
 
-# % gdatag, pv, rw, $(PORT)_pilatus, OscillAxis, Set OscillAxis
 record(stringout, "$(P)$(R)OscillAxis")
 {
     field(PINI, "YES")
     field(DTYP, "asynOctetWrite")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))OSCILL_AXIS")
     field(VAL,  "X, CW")
-    info(autosaveFields, "VAL")
 }
 
-# % gdatag, pv, rw, $(PORT)_pilatus, NumOscill, Set NumOscill
 record(longout, "$(P)$(R)NumOscill")
 {
     field(PINI, "YES")
     field(DTYP, "asynInt32")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))NUM_OSCILL")
     field(VAL,  "1")
-    info(autosaveFields, "VAL")
 }
 
 
@@ -705,7 +622,6 @@ record(bi, "$(P)$(R)ReverseY_RBV")
     field(DISA, "1")
 }
 
-# % gdatag, pv, ro, $(PORT)_pilatus, PixelCutOff_RBV, Readback for tau pixel cut off
 record(ai, "$(P)$(R)PixelCutOff_RBV")
 {
     field(DTYP, "asynInt32")
@@ -715,7 +631,6 @@ record(ai, "$(P)$(R)PixelCutOff_RBV")
     field(VAL,  "0")
 }
 
-# % archiver 10 Monitor
 record(ai, "$(P)$(R)Temp0_RBV")
 {
     field(DTYP, "asynFloat64")
@@ -726,7 +641,6 @@ record(ai, "$(P)$(R)Temp0_RBV")
     field(PREC, "1")
 }
 
-# % archiver 10 Monitor
 record(ai, "$(P)$(R)Temp1_RBV")
 {
     field(DTYP, "asynFloat64")
@@ -737,7 +651,6 @@ record(ai, "$(P)$(R)Temp1_RBV")
     field(PREC, "1")
 }
 
-# % archiver 10 Monitor
 record(ai, "$(P)$(R)Temp2_RBV")
 {
     field(DTYP, "asynFloat64")
@@ -748,7 +661,6 @@ record(ai, "$(P)$(R)Temp2_RBV")
     field(PREC, "1")
 }
 
-# % archiver 10 Monitor
 record(ai, "$(P)$(R)Humid0_RBV")
 {
     field(DTYP, "asynFloat64")
@@ -759,7 +671,6 @@ record(ai, "$(P)$(R)Humid0_RBV")
     field(PREC, "1")
 }
 
-# % archiver 10 Monitor
 record(ai, "$(P)$(R)Humid1_RBV")
 {
     field(DTYP, "asynFloat64")
@@ -770,7 +681,6 @@ record(ai, "$(P)$(R)Humid1_RBV")
     field(PREC, "1")
 }
 
-# % archiver 10 Monitor
 record(ai, "$(P)$(R)Humid2_RBV")
 {
     field(DTYP, "asynFloat64")
@@ -789,7 +699,6 @@ record(stringin, "$(P)$(R)TVXVersion_RBV")
    field(SCAN, "I/O Intr")
 }
 
-# % gdatag, array, rw, $(PORT)_pilatus, CbfTemplateFile, Set CbfTemplateFile
 record(waveform, "$(P)$(R)CbfTemplateFile")
 {
     field(PINI, "YES")
@@ -797,7 +706,6 @@ record(waveform, "$(P)$(R)CbfTemplateFile")
     field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))CBFTEMPLATEFILE")
     field(FTVL, "CHAR")
     field(NELM, "256")
-    info(autosaveFields, "VAL")
 }
 
 record(waveform, "$(P)$(R)HeaderString")
@@ -807,6 +715,4 @@ record(waveform, "$(P)$(R)HeaderString")
     field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))HEADERSTRING")
     field(FTVL, "CHAR")
     field(NELM, "68")
-    info(autosaveFields, "VAL")
 }
-

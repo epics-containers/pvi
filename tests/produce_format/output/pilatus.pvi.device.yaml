@@ -11,6 +11,11 @@ children:
     widget:
       type: CheckBox
   - type: SignalW
+    name: ThresholdApply
+    pv: ThresholdApply
+    widget:
+      type: CheckBox
+  - type: SignalW
     name: ImageFileTmot
     pv: ImageFileTmot
     widget:

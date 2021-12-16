@@ -72,6 +72,9 @@
           "$ref": "#/definitions/AsynBinary"
         },
         {
+          "$ref": "#/definitions/AsynBusy"
+        },
+        {
           "$ref": "#/definitions/AsynFloat64"
         },
         {
@@ -478,23 +481,32 @@
           "description": "Access Security Group"
         },
         "SCAN": {
-          "description": "Scan Mechanism",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/biSCAN"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Scan Mechanism"
         },
         "PINI": {
-          "description": "Process at iocInit",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/biPINI"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Process at iocInit"
         },
         "PHAS": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Scan Phase"
         },
         "EVNT": {
@@ -502,7 +514,10 @@
           "description": "Event Name"
         },
         "TSE": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Time Stamp Event"
         },
         "TSEL": {
@@ -514,11 +529,18 @@
           "description": "Device Type"
         },
         "DISV": {
-          "type": "integer",
-          "description": "Disable Value"
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Disable Value",
+          "default": "1"
         },
         "DISA": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Disable"
         },
         "SDIS": {
@@ -526,119 +548,177 @@
           "description": "Scanning Disable"
         },
         "DISP": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Disable putField"
         },
         "PROC": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Force Processing"
         },
         "STAT": {
-          "description": "Alarm Status",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/biSTAT"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Alarm Status",
+          "default": "UDF"
         },
         "SEVR": {
-          "description": "Alarm Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/biSEVR"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Alarm Severity"
         },
         "AMSG": {
           "type": "string",
           "description": "Alarm Message"
         },
         "NSTA": {
-          "description": "New Alarm Status",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/biNSTA"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "New Alarm Status"
         },
         "NSEV": {
-          "description": "New Alarm Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/biNSEV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "New Alarm Severity"
         },
         "NAMSG": {
           "type": "string",
           "description": "New Alarm Message"
         },
         "ACKS": {
-          "description": "Alarm Ack Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/biACKS"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Alarm Ack Severity"
         },
         "ACKT": {
-          "description": "Alarm Ack Transient",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/biACKT"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Alarm Ack Transient",
+          "default": "YES"
         },
         "DISS": {
-          "description": "Disable Alarm Sevrty",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/biDISS"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Disable Alarm Sevrty"
         },
         "LCNT": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Lock Count"
         },
         "PACT": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Record active"
         },
         "PUTF": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "dbPutField process"
         },
         "RPRO": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Reprocess "
         },
         "PRIO": {
-          "description": "Scheduling Priority",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/biPRIO"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Scheduling Priority"
         },
         "TPRO": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Trace Processing"
         },
         "UDF": {
-          "type": "integer",
-          "description": "Undefined"
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Undefined",
+          "default": "1"
         },
         "UDFS": {
-          "description": "Undefined Alarm Sevrty",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/biUDFS"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Undefined Alarm Sevrty",
+          "default": "INVALID"
         },
         "UTAG": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Time Tag"
         },
         "FLNK": {
@@ -658,47 +738,71 @@
           "description": "One Name"
         },
         "RVAL": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Raw Value"
         },
         "ORAW": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "prev Raw Value"
         },
         "MASK": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Hardware Mask"
         },
         "ZSV": {
-          "description": "Zero Error Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/biZSV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Zero Error Severity"
         },
         "OSV": {
-          "description": "One Error Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/biOSV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "One Error Severity"
         },
         "COSV": {
-          "description": "Change of State Svr",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/biCOSV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Change of State Svr"
         },
         "MLST": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Last Value Monitored"
         },
         "LALM": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Last Value Alarmed"
         },
         "SIOL": {
@@ -710,47 +814,67 @@
           "description": "Simulation Mode Link"
         },
         "SIMM": {
-          "description": "Simulation Mode",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/biSIMM"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Simulation Mode"
         },
         "SIMS": {
-          "description": "Simulation Mode Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/biSIMS"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Simulation Mode Severity"
         },
         "OLDSIMM": {
-          "description": "Prev. Simulation Mode",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/biOLDSIMM"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Prev. Simulation Mode"
         },
         "SSCN": {
-          "description": "Sim. Mode Scan",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/biSSCN"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Sim. Mode Scan",
+          "default": "65535"
         },
         "SDLY": {
-          "type": "number",
-          "description": "Sim. Mode Async Delay"
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Sim. Mode Async Delay",
+          "default": "-1.0"
         },
         "INP": {
           "type": "string",
           "description": "Input Specification"
         },
         "SVAL": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Simulation Value"
         }
       },
@@ -963,6 +1087,558 @@
         ".1 second"
       ]
     },
+    "AsynBusy": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "AsynBusy",
+          "default": "AsynBusy"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "([A-Z][a-z0-9]*)*$",
+          "description": "PascalCase name to uniquely identify"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of what this Parameter is for"
+        },
+        "index_name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Override name of index variable in source code (defaults to name)",
+          "default": null
+        },
+        "drv_info": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^\\S{1,40}$",
+          "description": "Info string for drvUserCreate for dynamically created parameters",
+          "default": null
+        },
+        "access": {
+          "type": "string",
+          "enum": [
+            "R",
+            "W",
+            "RW"
+          ],
+          "description": "What access does the user have. One of:\n\n    - R: Read only value that cannot be set. E.g. chipTemperature on a detector,\n      or isHomed for a motor\n    - W: Write only value that can be written to, but there is no current value.\n      E.g. reboot on a detector, or overwriteCurrentPosition for a motor\n    - RW: Read and Write value that can be written to and read back.\n      E.g. acquireTime on a detector, or velocity of a motor\n    ",
+          "default": "RW"
+        },
+        "demand_auto_updates": {
+          "type": "boolean",
+          "description": "Should demand update when readback changes?",
+          "default": false
+        },
+        "read_record_suffix": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The read record suffix, if not given then use $(name)_RBV",
+          "default": null
+        },
+        "write_record_suffix": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The write record suffix, if not given then use $(name)",
+          "default": null
+        },
+        "display_form": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "Default",
+            "String",
+            "Binary",
+            "Decimal",
+            "Hex",
+            "Exponential",
+            "Engineering"
+          ],
+          "description": "Display form for numeric/array fields",
+          "default": null
+        },
+        "initial": {
+          "type": [
+            "null",
+            "integer",
+            "string"
+          ],
+          "minimum": 0,
+          "maximum": 1,
+          "pattern": "(\\$\\(\\w+=([0-1])\\))",
+          "description": "The initial value of the parameter",
+          "default": null
+        },
+        "read_widget": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ReadWidget"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Widget to use for read record",
+          "default": {
+            "type": "LED"
+          }
+        },
+        "write_widget": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/WriteWidget"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Widget to use for write record",
+          "default": {
+            "type": "CheckBox"
+          }
+        },
+        "record_fields": {
+          "description": "Busy record fields",
+          "allOf": [
+            {
+              "$ref": "#/definitions/bi_busy"
+            }
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "description"
+      ],
+      "additionalProperties": false
+    },
+    "bi_busy": {
+      "type": "object",
+      "properties": {
+        "NAME": {
+          "type": "string",
+          "description": "Record Name"
+        },
+        "DESC": {
+          "type": "string",
+          "description": "Descriptor"
+        },
+        "ASG": {
+          "type": "string",
+          "description": "Access Security Group"
+        },
+        "SCAN": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biSCAN"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Scan Mechanism"
+        },
+        "PINI": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biPINI"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Process at iocInit"
+        },
+        "PHAS": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Scan Phase"
+        },
+        "EVNT": {
+          "type": "string",
+          "description": "Event Name"
+        },
+        "TSE": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Time Stamp Event"
+        },
+        "TSEL": {
+          "type": "string",
+          "description": "Time Stamp Link"
+        },
+        "DTYP": {
+          "type": "string",
+          "description": "Device Type"
+        },
+        "DISV": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Disable Value",
+          "default": "1"
+        },
+        "DISA": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Disable"
+        },
+        "SDIS": {
+          "type": "string",
+          "description": "Scanning Disable"
+        },
+        "DISP": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Disable putField"
+        },
+        "PROC": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Force Processing"
+        },
+        "STAT": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biSTAT"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Alarm Status",
+          "default": "UDF"
+        },
+        "SEVR": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biSEVR"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Alarm Severity"
+        },
+        "AMSG": {
+          "type": "string",
+          "description": "Alarm Message"
+        },
+        "NSTA": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biNSTA"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "New Alarm Status"
+        },
+        "NSEV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biNSEV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "New Alarm Severity"
+        },
+        "NAMSG": {
+          "type": "string",
+          "description": "New Alarm Message"
+        },
+        "ACKS": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biACKS"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Alarm Ack Severity"
+        },
+        "ACKT": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biACKT"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Alarm Ack Transient",
+          "default": "YES"
+        },
+        "DISS": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biDISS"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Disable Alarm Sevrty"
+        },
+        "LCNT": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Lock Count"
+        },
+        "PACT": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Record active"
+        },
+        "PUTF": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "dbPutField process"
+        },
+        "RPRO": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Reprocess "
+        },
+        "PRIO": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biPRIO"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Scheduling Priority"
+        },
+        "TPRO": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Trace Processing"
+        },
+        "UDF": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Undefined",
+          "default": "1"
+        },
+        "UDFS": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biUDFS"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Undefined Alarm Sevrty",
+          "default": "INVALID"
+        },
+        "UTAG": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Time Tag"
+        },
+        "FLNK": {
+          "type": "string",
+          "description": "Forward Process Link"
+        },
+        "VAL": {
+          "type": "string",
+          "description": "Current Value"
+        },
+        "ZNAM": {
+          "type": "string",
+          "description": "Zero Name"
+        },
+        "ONAM": {
+          "type": "string",
+          "description": "One Name"
+        },
+        "RVAL": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Raw Value"
+        },
+        "ORAW": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "prev Raw Value"
+        },
+        "MASK": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Hardware Mask"
+        },
+        "ZSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biZSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Zero Error Severity"
+        },
+        "OSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biOSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "One Error Severity"
+        },
+        "COSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biCOSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Change of State Svr"
+        },
+        "MLST": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Last Value Monitored"
+        },
+        "LALM": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Last Value Alarmed"
+        },
+        "SIOL": {
+          "type": "string",
+          "description": "Simulation Input Link"
+        },
+        "SIML": {
+          "type": "string",
+          "description": "Simulation Mode Link"
+        },
+        "SIMM": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biSIMM"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Simulation Mode"
+        },
+        "SIMS": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biSIMS"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Simulation Mode Severity"
+        },
+        "INP": {
+          "type": "string",
+          "description": "Input Specification"
+        },
+        "SVAL": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Simulation Value"
+        },
+        "OLDSIMM": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biOLDSIMM"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Prev. Simulation Mode"
+        },
+        "SSCN": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biSSCN"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Sim. Mode Scan",
+          "default": "65535"
+        },
+        "SDLY": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Sim. Mode Async Delay",
+          "default": "-1.0"
+        }
+      },
+      "additionalProperties": false
+    },
     "AsynFloat64": {
       "type": "object",
       "properties": {
@@ -1116,23 +1792,32 @@
           "description": "Access Security Group"
         },
         "SCAN": {
-          "description": "Scan Mechanism",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/aiSCAN"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Scan Mechanism"
         },
         "PINI": {
-          "description": "Process at iocInit",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/aiPINI"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Process at iocInit"
         },
         "PHAS": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Scan Phase"
         },
         "EVNT": {
@@ -1140,7 +1825,10 @@
           "description": "Event Name"
         },
         "TSE": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Time Stamp Event"
         },
         "TSEL": {
@@ -1152,11 +1840,18 @@
           "description": "Device Type"
         },
         "DISV": {
-          "type": "integer",
-          "description": "Disable Value"
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Disable Value",
+          "default": "1"
         },
         "DISA": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Disable"
         },
         "SDIS": {
@@ -1164,119 +1859,177 @@
           "description": "Scanning Disable"
         },
         "DISP": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Disable putField"
         },
         "PROC": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Force Processing"
         },
         "STAT": {
-          "description": "Alarm Status",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/aiSTAT"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Alarm Status",
+          "default": "UDF"
         },
         "SEVR": {
-          "description": "Alarm Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/aiSEVR"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Alarm Severity"
         },
         "AMSG": {
           "type": "string",
           "description": "Alarm Message"
         },
         "NSTA": {
-          "description": "New Alarm Status",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/aiNSTA"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "New Alarm Status"
         },
         "NSEV": {
-          "description": "New Alarm Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/aiNSEV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "New Alarm Severity"
         },
         "NAMSG": {
           "type": "string",
           "description": "New Alarm Message"
         },
         "ACKS": {
-          "description": "Alarm Ack Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/aiACKS"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Alarm Ack Severity"
         },
         "ACKT": {
-          "description": "Alarm Ack Transient",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/aiACKT"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Alarm Ack Transient",
+          "default": "YES"
         },
         "DISS": {
-          "description": "Disable Alarm Sevrty",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/aiDISS"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Disable Alarm Sevrty"
         },
         "LCNT": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Lock Count"
         },
         "PACT": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Record active"
         },
         "PUTF": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "dbPutField process"
         },
         "RPRO": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Reprocess "
         },
         "PRIO": {
-          "description": "Scheduling Priority",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/aiPRIO"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Scheduling Priority"
         },
         "TPRO": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Trace Processing"
         },
         "UDF": {
-          "type": "integer",
-          "description": "Undefined"
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Undefined",
+          "default": "1"
         },
         "UDFS": {
-          "description": "Undefined Alarm Sevrty",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/aiUDFS"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Undefined Alarm Sevrty",
+          "default": "INVALID"
         },
         "UTAG": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Time Tag"
         },
         "FLNK": {
@@ -1284,27 +2037,42 @@
           "description": "Forward Process Link"
         },
         "VAL": {
-          "type": "number",
+          "type": [
+            "number",
+            "string"
+          ],
           "description": "Current EGU Value"
         },
         "PREC": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Display Precision"
         },
         "LINR": {
-          "description": "Linearization",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/aiLINR"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Linearization"
         },
         "EGUF": {
-          "type": "number",
+          "type": [
+            "number",
+            "string"
+          ],
           "description": "Engineer Units Full"
         },
         "EGUL": {
-          "type": "number",
+          "type": [
+            "number",
+            "string"
+          ],
           "description": "Engineer Units Low"
         },
         "EGU": {
@@ -1312,119 +2080,196 @@
           "description": "Engineering Units"
         },
         "ROFF": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Raw Offset"
         },
         "EOFF": {
-          "type": "number",
+          "type": [
+            "number",
+            "string"
+          ],
           "description": "Raw to EGU Offset"
         },
         "ESLO": {
-          "type": "number",
-          "description": "Raw to EGU Slope"
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Raw to EGU Slope",
+          "default": "1"
         },
         "HOPR": {
-          "type": "number",
+          "type": [
+            "number",
+            "string"
+          ],
           "description": "High Operating Range"
         },
         "LOPR": {
-          "type": "number",
+          "type": [
+            "number",
+            "string"
+          ],
           "description": "Low Operating Range"
         },
         "AOFF": {
-          "type": "number",
+          "type": [
+            "number",
+            "string"
+          ],
           "description": "Adjustment Offset"
         },
         "ASLO": {
-          "type": "number",
-          "description": "Adjustment Slope"
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Adjustment Slope",
+          "default": "1"
         },
         "HIHI": {
-          "type": "number",
+          "type": [
+            "number",
+            "string"
+          ],
           "description": "Hihi Alarm Limit"
         },
         "LOLO": {
-          "type": "number",
+          "type": [
+            "number",
+            "string"
+          ],
           "description": "Lolo Alarm Limit"
         },
         "HIGH": {
-          "type": "number",
+          "type": [
+            "number",
+            "string"
+          ],
           "description": "High Alarm Limit"
         },
         "LOW": {
-          "type": "number",
+          "type": [
+            "number",
+            "string"
+          ],
           "description": "Low Alarm Limit"
         },
         "HHSV": {
-          "description": "Hihi Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/aiHHSV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Hihi Severity"
         },
         "LLSV": {
-          "description": "Lolo Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/aiLLSV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Lolo Severity"
         },
         "HSV": {
-          "description": "High Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/aiHSV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "High Severity"
         },
         "LSV": {
-          "description": "Low Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/aiLSV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Low Severity"
         },
         "HYST": {
-          "type": "number",
+          "type": [
+            "number",
+            "string"
+          ],
           "description": "Alarm Deadband"
         },
         "ADEL": {
-          "type": "number",
+          "type": [
+            "number",
+            "string"
+          ],
           "description": "Archive Deadband"
         },
         "MDEL": {
-          "type": "number",
+          "type": [
+            "number",
+            "string"
+          ],
           "description": "Monitor Deadband"
         },
         "RVAL": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Current Raw Value"
         },
         "ORAW": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Previous Raw Value"
         },
         "LALM": {
-          "type": "number",
+          "type": [
+            "number",
+            "string"
+          ],
           "description": "Last Value Alarmed"
         },
         "ALST": {
-          "type": "number",
+          "type": [
+            "number",
+            "string"
+          ],
           "description": "Last Value Archived"
         },
         "MLST": {
-          "type": "number",
+          "type": [
+            "number",
+            "string"
+          ],
           "description": "Last Val Monitored"
         },
         "INIT": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Initialized?"
         },
         "LBRK": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "LastBreak Point"
         },
         "SIOL": {
@@ -1436,59 +2281,88 @@
           "description": "Simulation Mode Link"
         },
         "SIMM": {
-          "description": "Simulation Mode",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/aiSIMM"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Simulation Mode"
         },
         "SIMS": {
-          "description": "Simulation Mode Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/aiSIMS"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Simulation Mode Severity"
         },
         "OLDSIMM": {
-          "description": "Prev. Simulation Mode",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/aiOLDSIMM"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Prev. Simulation Mode"
         },
         "SSCN": {
-          "description": "Sim. Mode Scan",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/aiSSCN"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Sim. Mode Scan",
+          "default": "65535"
         },
         "SDLY": {
-          "type": "number",
-          "description": "Sim. Mode Async Delay"
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Sim. Mode Async Delay",
+          "default": "-1.0"
         },
         "INP": {
           "type": "string",
           "description": "Input Specification"
         },
         "SMOO": {
-          "type": "number",
+          "type": [
+            "number",
+            "string"
+          ],
           "description": "Smoothing"
         },
         "AFTC": {
-          "type": "number",
+          "type": [
+            "number",
+            "string"
+          ],
           "description": "Alarm Filter Time Constant"
         },
         "AFVL": {
-          "type": "number",
+          "type": [
+            "number",
+            "string"
+          ],
           "description": "Alarm Filter Value"
         },
         "SVAL": {
-          "type": "number",
+          "type": [
+            "number",
+            "string"
+          ],
           "description": "Simulation Value"
         }
       },
@@ -2020,23 +2894,32 @@
           "description": "Access Security Group"
         },
         "SCAN": {
-          "description": "Scan Mechanism",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/longinSCAN"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Scan Mechanism"
         },
         "PINI": {
-          "description": "Process at iocInit",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/longinPINI"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Process at iocInit"
         },
         "PHAS": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Scan Phase"
         },
         "EVNT": {
@@ -2044,7 +2927,10 @@
           "description": "Event Name"
         },
         "TSE": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Time Stamp Event"
         },
         "TSEL": {
@@ -2056,11 +2942,18 @@
           "description": "Device Type"
         },
         "DISV": {
-          "type": "integer",
-          "description": "Disable Value"
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Disable Value",
+          "default": "1"
         },
         "DISA": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Disable"
         },
         "SDIS": {
@@ -2068,119 +2961,177 @@
           "description": "Scanning Disable"
         },
         "DISP": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Disable putField"
         },
         "PROC": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Force Processing"
         },
         "STAT": {
-          "description": "Alarm Status",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/longinSTAT"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Alarm Status",
+          "default": "UDF"
         },
         "SEVR": {
-          "description": "Alarm Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/longinSEVR"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Alarm Severity"
         },
         "AMSG": {
           "type": "string",
           "description": "Alarm Message"
         },
         "NSTA": {
-          "description": "New Alarm Status",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/longinNSTA"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "New Alarm Status"
         },
         "NSEV": {
-          "description": "New Alarm Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/longinNSEV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "New Alarm Severity"
         },
         "NAMSG": {
           "type": "string",
           "description": "New Alarm Message"
         },
         "ACKS": {
-          "description": "Alarm Ack Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/longinACKS"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Alarm Ack Severity"
         },
         "ACKT": {
-          "description": "Alarm Ack Transient",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/longinACKT"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Alarm Ack Transient",
+          "default": "YES"
         },
         "DISS": {
-          "description": "Disable Alarm Sevrty",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/longinDISS"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Disable Alarm Sevrty"
         },
         "LCNT": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Lock Count"
         },
         "PACT": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Record active"
         },
         "PUTF": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "dbPutField process"
         },
         "RPRO": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Reprocess "
         },
         "PRIO": {
-          "description": "Scheduling Priority",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/longinPRIO"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Scheduling Priority"
         },
         "TPRO": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Trace Processing"
         },
         "UDF": {
-          "type": "integer",
-          "description": "Undefined"
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Undefined",
+          "default": "1"
         },
         "UDFS": {
-          "description": "Undefined Alarm Sevrty",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/longinUDFS"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Undefined Alarm Sevrty",
+          "default": "INVALID"
         },
         "UTAG": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Time Tag"
         },
         "FLNK": {
@@ -2188,7 +3139,10 @@
           "description": "Forward Process Link"
         },
         "VAL": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Current value"
         },
         "EGU": {
@@ -2196,83 +3150,131 @@
           "description": "Engineering Units"
         },
         "HOPR": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "High Operating Range"
         },
         "LOPR": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Low Operating Range"
         },
         "HIHI": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Hihi Alarm Limit"
         },
         "LOLO": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Lolo Alarm Limit"
         },
         "HIGH": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "High Alarm Limit"
         },
         "LOW": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Low Alarm Limit"
         },
         "HHSV": {
-          "description": "Hihi Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/longinHHSV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Hihi Severity"
         },
         "LLSV": {
-          "description": "Lolo Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/longinLLSV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Lolo Severity"
         },
         "HSV": {
-          "description": "High Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/longinHSV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "High Severity"
         },
         "LSV": {
-          "description": "Low Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/longinLSV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Low Severity"
         },
         "HYST": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Alarm Deadband"
         },
         "ADEL": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Archive Deadband"
         },
         "MDEL": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Monitor Deadband"
         },
         "LALM": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Last Value Alarmed"
         },
         "ALST": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Last Value Archived"
         },
         "MLST": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Last Val Monitored"
         },
         "SIOL": {
@@ -2284,55 +3286,81 @@
           "description": "Sim Mode Location"
         },
         "SIMM": {
-          "description": "Simulation Mode",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/longinSIMM"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Simulation Mode"
         },
         "SIMS": {
-          "description": "Sim mode Alarm Svrty",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/longinSIMS"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Sim mode Alarm Svrty"
         },
         "OLDSIMM": {
-          "description": "Prev. Simulation Mode",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/longinOLDSIMM"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Prev. Simulation Mode"
         },
         "SSCN": {
-          "description": "Sim. Mode Scan",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/longinSSCN"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Sim. Mode Scan",
+          "default": "65535"
         },
         "SDLY": {
-          "type": "number",
-          "description": "Sim. Mode Async Delay"
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Sim. Mode Async Delay",
+          "default": "-1.0"
         },
         "INP": {
           "type": "string",
           "description": "Input Specification"
         },
         "AFTC": {
-          "type": "number",
+          "type": [
+            "number",
+            "string"
+          ],
           "description": "Alarm Filter Time Constant"
         },
         "AFVL": {
-          "type": "number",
+          "type": [
+            "number",
+            "string"
+          ],
           "description": "Alarm Filter Value"
         },
         "SVAL": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Simulation Value"
         }
       },
@@ -2707,23 +3735,32 @@
           "description": "Access Security Group"
         },
         "SCAN": {
-          "description": "Scan Mechanism",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/mbbiSCAN"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Scan Mechanism"
         },
         "PINI": {
-          "description": "Process at iocInit",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/mbbiPINI"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Process at iocInit"
         },
         "PHAS": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Scan Phase"
         },
         "EVNT": {
@@ -2731,7 +3768,10 @@
           "description": "Event Name"
         },
         "TSE": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Time Stamp Event"
         },
         "TSEL": {
@@ -2743,11 +3783,18 @@
           "description": "Device Type"
         },
         "DISV": {
-          "type": "integer",
-          "description": "Disable Value"
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Disable Value",
+          "default": "1"
         },
         "DISA": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Disable"
         },
         "SDIS": {
@@ -2755,119 +3802,177 @@
           "description": "Scanning Disable"
         },
         "DISP": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Disable putField"
         },
         "PROC": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Force Processing"
         },
         "STAT": {
-          "description": "Alarm Status",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/mbbiSTAT"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Alarm Status",
+          "default": "UDF"
         },
         "SEVR": {
-          "description": "Alarm Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/mbbiSEVR"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Alarm Severity"
         },
         "AMSG": {
           "type": "string",
           "description": "Alarm Message"
         },
         "NSTA": {
-          "description": "New Alarm Status",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/mbbiNSTA"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "New Alarm Status"
         },
         "NSEV": {
-          "description": "New Alarm Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/mbbiNSEV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "New Alarm Severity"
         },
         "NAMSG": {
           "type": "string",
           "description": "New Alarm Message"
         },
         "ACKS": {
-          "description": "Alarm Ack Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/mbbiACKS"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Alarm Ack Severity"
         },
         "ACKT": {
-          "description": "Alarm Ack Transient",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/mbbiACKT"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Alarm Ack Transient",
+          "default": "YES"
         },
         "DISS": {
-          "description": "Disable Alarm Sevrty",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/mbbiDISS"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Disable Alarm Sevrty"
         },
         "LCNT": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Lock Count"
         },
         "PACT": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Record active"
         },
         "PUTF": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "dbPutField process"
         },
         "RPRO": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Reprocess "
         },
         "PRIO": {
-          "description": "Scheduling Priority",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/mbbiPRIO"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Scheduling Priority"
         },
         "TPRO": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Trace Processing"
         },
         "UDF": {
-          "type": "integer",
-          "description": "Undefined"
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Undefined",
+          "default": "1"
         },
         "UDFS": {
-          "description": "Undefined Alarm Sevrty",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/mbbiUDFS"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Undefined Alarm Sevrty",
+          "default": "INVALID"
         },
         "UTAG": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Time Tag"
         },
         "FLNK": {
@@ -2879,71 +3984,122 @@
           "description": "Current Value"
         },
         "NOBT": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Number of Bits"
         },
         "ZRVL": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Zero Value"
         },
         "ONVL": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "One Value"
         },
         "TWVL": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Two Value"
         },
         "THVL": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Three Value"
         },
         "FRVL": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Four Value"
         },
         "FVVL": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Five Value"
         },
         "SXVL": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Six Value"
         },
         "SVVL": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Seven Value"
         },
         "EIVL": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Eight Value"
         },
         "NIVL": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Nine Value"
         },
         "TEVL": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Ten Value"
         },
         "ELVL": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Eleven Value"
         },
         "TVVL": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Twelve Value"
         },
         "TTVL": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Thirteen Value"
         },
         "FTVL": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Fourteen Value"
         },
         "FFVL": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Fifteen Value"
         },
         "ZRST": {
@@ -3011,175 +4167,250 @@
           "description": "Fifteen String"
         },
         "ZRSV": {
-          "description": "State Zero Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/mbbiZRSV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "State Zero Severity"
         },
         "ONSV": {
-          "description": "State One Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/mbbiONSV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "State One Severity"
         },
         "TWSV": {
-          "description": "State Two Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/mbbiTWSV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "State Two Severity"
         },
         "THSV": {
-          "description": "State Three Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/mbbiTHSV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "State Three Severity"
         },
         "FRSV": {
-          "description": "State Four Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/mbbiFRSV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "State Four Severity"
         },
         "FVSV": {
-          "description": "State Five Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/mbbiFVSV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "State Five Severity"
         },
         "SXSV": {
-          "description": "State Six Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/mbbiSXSV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "State Six Severity"
         },
         "SVSV": {
-          "description": "State Seven Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/mbbiSVSV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "State Seven Severity"
         },
         "EISV": {
-          "description": "State Eight Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/mbbiEISV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "State Eight Severity"
         },
         "NISV": {
-          "description": "State Nine Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/mbbiNISV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "State Nine Severity"
         },
         "TESV": {
-          "description": "State Ten Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/mbbiTESV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "State Ten Severity"
         },
         "ELSV": {
-          "description": "State Eleven Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/mbbiELSV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "State Eleven Severity"
         },
         "TVSV": {
-          "description": "State Twelve Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/mbbiTVSV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "State Twelve Severity"
         },
         "TTSV": {
-          "description": "State Thirteen Sevr",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/mbbiTTSV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "State Thirteen Sevr"
         },
         "FTSV": {
-          "description": "State Fourteen Sevr",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/mbbiFTSV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "State Fourteen Sevr"
         },
         "FFSV": {
-          "description": "State Fifteen Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/mbbiFFSV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "State Fifteen Severity"
         },
         "UNSV": {
-          "description": "Unknown State Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/mbbiUNSV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Unknown State Severity"
         },
         "COSV": {
-          "description": "Change of State Svr",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/mbbiCOSV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Change of State Svr"
         },
         "RVAL": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Raw Value"
         },
         "ORAW": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Prev Raw Value"
         },
         "MASK": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Hardware Mask"
         },
         "MLST": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Last Value Monitored"
         },
         "LALM": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Last Value Alarmed"
         },
         "SDEF": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "States Defined"
         },
         "SHFT": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Shift"
         },
         "SIOL": {
@@ -3191,55 +4422,81 @@
           "description": "Simulation Mode Link"
         },
         "SIMM": {
-          "description": "Simulation Mode",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/mbbiSIMM"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Simulation Mode"
         },
         "SIMS": {
-          "description": "Simulation Mode Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/mbbiSIMS"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Simulation Mode Severity"
         },
         "OLDSIMM": {
-          "description": "Prev. Simulation Mode",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/mbbiOLDSIMM"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Prev. Simulation Mode"
         },
         "SSCN": {
-          "description": "Sim. Mode Scan",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/mbbiSSCN"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Sim. Mode Scan",
+          "default": "65535"
         },
         "SDLY": {
-          "type": "number",
-          "description": "Sim. Mode Async Delay"
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Sim. Mode Async Delay",
+          "default": "-1.0"
         },
         "INP": {
           "type": "string",
           "description": "Input Specification"
         },
         "AFTC": {
-          "type": "number",
+          "type": [
+            "number",
+            "string"
+          ],
           "description": "Alarm Filter Time Constant"
         },
         "AFVL": {
-          "type": "number",
+          "type": [
+            "number",
+            "string"
+          ],
           "description": "Alarm Filter Value"
         },
         "SVAL": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Simulation Value"
         }
       },
@@ -3738,23 +4995,32 @@
           "description": "Access Security Group"
         },
         "SCAN": {
-          "description": "Scan Mechanism",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/stringinSCAN"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Scan Mechanism"
         },
         "PINI": {
-          "description": "Process at iocInit",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/stringinPINI"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Process at iocInit"
         },
         "PHAS": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Scan Phase"
         },
         "EVNT": {
@@ -3762,7 +5028,10 @@
           "description": "Event Name"
         },
         "TSE": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Time Stamp Event"
         },
         "TSEL": {
@@ -3774,11 +5043,18 @@
           "description": "Device Type"
         },
         "DISV": {
-          "type": "integer",
-          "description": "Disable Value"
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Disable Value",
+          "default": "1"
         },
         "DISA": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Disable"
         },
         "SDIS": {
@@ -3786,119 +5062,177 @@
           "description": "Scanning Disable"
         },
         "DISP": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Disable putField"
         },
         "PROC": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Force Processing"
         },
         "STAT": {
-          "description": "Alarm Status",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/stringinSTAT"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Alarm Status",
+          "default": "UDF"
         },
         "SEVR": {
-          "description": "Alarm Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/stringinSEVR"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Alarm Severity"
         },
         "AMSG": {
           "type": "string",
           "description": "Alarm Message"
         },
         "NSTA": {
-          "description": "New Alarm Status",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/stringinNSTA"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "New Alarm Status"
         },
         "NSEV": {
-          "description": "New Alarm Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/stringinNSEV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "New Alarm Severity"
         },
         "NAMSG": {
           "type": "string",
           "description": "New Alarm Message"
         },
         "ACKS": {
-          "description": "Alarm Ack Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/stringinACKS"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Alarm Ack Severity"
         },
         "ACKT": {
-          "description": "Alarm Ack Transient",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/stringinACKT"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Alarm Ack Transient",
+          "default": "YES"
         },
         "DISS": {
-          "description": "Disable Alarm Sevrty",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/stringinDISS"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Disable Alarm Sevrty"
         },
         "LCNT": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Lock Count"
         },
         "PACT": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Record active"
         },
         "PUTF": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "dbPutField process"
         },
         "RPRO": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Reprocess "
         },
         "PRIO": {
-          "description": "Scheduling Priority",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/stringinPRIO"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Scheduling Priority"
         },
         "TPRO": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Trace Processing"
         },
         "UDF": {
-          "type": "integer",
-          "description": "Undefined"
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Undefined",
+          "default": "1"
         },
         "UDFS": {
-          "description": "Undefined Alarm Sevrty",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/stringinUDFS"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Undefined Alarm Sevrty",
+          "default": "INVALID"
         },
         "UTAG": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Time Tag"
         },
         "FLNK": {
@@ -3914,20 +5248,26 @@
           "description": "Previous Value"
         },
         "MPST": {
-          "description": "Post Value Monitors",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/stringinMPST"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Post Value Monitors"
         },
         "APST": {
-          "description": "Post Archive Monitors",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/stringinAPST"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Post Archive Monitors"
         },
         "SIOL": {
           "type": "string",
@@ -3938,40 +5278,57 @@
           "description": "Simulation Mode Link"
         },
         "SIMM": {
-          "description": "Simulation Mode",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/stringinSIMM"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Simulation Mode"
         },
         "SIMS": {
-          "description": "Simulation Mode Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/stringinSIMS"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Simulation Mode Severity"
         },
         "OLDSIMM": {
-          "description": "Prev. Simulation Mode",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/stringinOLDSIMM"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Prev. Simulation Mode"
         },
         "SSCN": {
-          "description": "Sim. Mode Scan",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/stringinSSCN"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Sim. Mode Scan",
+          "default": "65535"
         },
         "SDLY": {
-          "type": "number",
-          "description": "Sim. Mode Async Delay"
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Sim. Mode Async Delay",
+          "default": "-1.0"
         },
         "INP": {
           "type": "string",
@@ -4323,23 +5680,32 @@
           "description": "Access Security Group"
         },
         "SCAN": {
-          "description": "Scan Mechanism",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/waveformSCAN"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Scan Mechanism"
         },
         "PINI": {
-          "description": "Process at iocInit",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/waveformPINI"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Process at iocInit"
         },
         "PHAS": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Scan Phase"
         },
         "EVNT": {
@@ -4347,7 +5713,10 @@
           "description": "Event Name"
         },
         "TSE": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Time Stamp Event"
         },
         "TSEL": {
@@ -4359,11 +5728,18 @@
           "description": "Device Type"
         },
         "DISV": {
-          "type": "integer",
-          "description": "Disable Value"
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Disable Value",
+          "default": "1"
         },
         "DISA": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Disable"
         },
         "SDIS": {
@@ -4371,119 +5747,177 @@
           "description": "Scanning Disable"
         },
         "DISP": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Disable putField"
         },
         "PROC": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Force Processing"
         },
         "STAT": {
-          "description": "Alarm Status",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/waveformSTAT"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Alarm Status",
+          "default": "UDF"
         },
         "SEVR": {
-          "description": "Alarm Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/waveformSEVR"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Alarm Severity"
         },
         "AMSG": {
           "type": "string",
           "description": "Alarm Message"
         },
         "NSTA": {
-          "description": "New Alarm Status",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/waveformNSTA"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "New Alarm Status"
         },
         "NSEV": {
-          "description": "New Alarm Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/waveformNSEV"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "New Alarm Severity"
         },
         "NAMSG": {
           "type": "string",
           "description": "New Alarm Message"
         },
         "ACKS": {
-          "description": "Alarm Ack Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/waveformACKS"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Alarm Ack Severity"
         },
         "ACKT": {
-          "description": "Alarm Ack Transient",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/waveformACKT"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Alarm Ack Transient",
+          "default": "YES"
         },
         "DISS": {
-          "description": "Disable Alarm Sevrty",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/waveformDISS"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Disable Alarm Sevrty"
         },
         "LCNT": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Lock Count"
         },
         "PACT": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Record active"
         },
         "PUTF": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "dbPutField process"
         },
         "RPRO": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Reprocess "
         },
         "PRIO": {
-          "description": "Scheduling Priority",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/waveformPRIO"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Scheduling Priority"
         },
         "TPRO": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Trace Processing"
         },
         "UDF": {
-          "type": "integer",
-          "description": "Undefined"
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Undefined",
+          "default": "1"
         },
         "UDFS": {
-          "description": "Undefined Alarm Sevrty",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/waveformUDFS"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Undefined Alarm Sevrty",
+          "default": "INVALID"
         },
         "UTAG": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Time Tag"
         },
         "FLNK": {
@@ -4491,11 +5925,17 @@
           "description": "Forward Process Link"
         },
         "RARM": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Rearm the waveform"
         },
         "PREC": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Display Precision"
         },
         "INP": {
@@ -4507,31 +5947,50 @@
           "description": "Engineering Units"
         },
         "HOPR": {
-          "type": "number",
+          "type": [
+            "number",
+            "string"
+          ],
           "description": "High Operating Range"
         },
         "LOPR": {
-          "type": "number",
+          "type": [
+            "number",
+            "string"
+          ],
           "description": "Low Operating Range"
         },
         "NELM": {
-          "type": "integer",
-          "description": "Number of Elements"
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Number of Elements",
+          "default": "1"
         },
         "FTVL": {
-          "description": "Field Type of Value",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/waveformFTVL"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Field Type of Value"
         },
         "BUSY": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Busy Indicator"
         },
         "NORD": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Number elements read"
         },
         "SIOL": {
@@ -4543,59 +6002,85 @@
           "description": "Simulation Mode Link"
         },
         "SIMM": {
-          "description": "Simulation Mode",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/waveformSIMM"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Simulation Mode"
         },
         "SIMS": {
-          "description": "Simulation Mode Severity",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/waveformSIMS"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Simulation Mode Severity"
         },
         "OLDSIMM": {
-          "description": "Prev. Simulation Mode",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/waveformOLDSIMM"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Prev. Simulation Mode"
         },
         "SSCN": {
-          "description": "Sim. Mode Scan",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/waveformSSCN"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Sim. Mode Scan",
+          "default": "65535"
         },
         "SDLY": {
-          "type": "number",
-          "description": "Sim. Mode Async Delay"
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Sim. Mode Async Delay",
+          "default": "-1.0"
         },
         "MPST": {
-          "description": "Post Value Monitors",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/waveformMPST"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Post Value Monitors"
         },
         "APST": {
-          "description": "Post Archive Monitors",
-          "allOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/waveformAPST"
+            },
+            {
+              "type": "string"
             }
-          ]
+          ],
+          "description": "Post Archive Monitors"
         },
         "HASH": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "description": "Hash of OnChange data."
         }
       },

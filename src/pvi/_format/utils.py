@@ -232,9 +232,9 @@ class Screen(Generic[T]):
             self.components[c.name] = c
         if add_label:
             left, bounds = bounds.split(self.label_width, self.spacing)
-            yield self.label_cls(left, c.label)
+            yield self.label_cls(left, c.get_label())
         if isinstance(c, SignalX):
-            yield self.action_button_cls(bounds, c.label, c.pv, c.value)
+            yield self.action_button_cls(bounds, c.get_label(), c.pv, c.value)
         elif isinstance(c, SignalR) and c.widget:
             yield self.pv_widget(c.widget, bounds, c.pv)
         elif isinstance(c, SignalRW) and c.read_pv and c.read_widget and c.widget:
@@ -293,7 +293,7 @@ class Screen(Generic[T]):
         widgets = concat(widget_lists)
         bounds.h = max_y(widgets)
         bounds.w = max_x(widgets)
-        return self.group_cls(bounds, group.label, widgets)
+        return self.group_cls(bounds, group.get_label(), widgets)
 
 
 def concat(items: List[List[T]]) -> List[T]:

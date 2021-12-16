@@ -1,69 +1,46 @@
 import os
 import re
+from dataclasses import dataclass
+from glob import glob
 from pathlib import Path
-from typing import Any, Dict, List, Tuple
+from typing import Dict, List, Tuple
 
-from pydantic import BaseModel, Field, FilePath
+from pvi._produce.asyn import AsynParameter, AsynProducer
+from pvi._produce.base import Producer
+from pvi._utils import deserialize_yaml
+from pvi.device import Tree, walk
 
-from ._schema import ComponentUnion, Schema
-from ._util import find_parent_modules, get_param_set
 
-
+@dataclass
 class Source:
-    def __init__(self, cpp: str, h: str):
-        self.cpp = cpp
-        self.h = h
+    cpp: str
+    h: str
 
 
-class SourceConverter(BaseModel):
-    cpp: FilePath = Field(..., description="cpp file to convert to yaml")
-    h: FilePath = Field(..., description="header file to convert to yaml")
-    module_root: Path = Field(..., description="Path to root of module")
-    parameter_infos: List[str]
-
-    def __init__(self, **data: Any):
-        super().__init__(**data)
-
-        with open(self.cpp) as f:
-            cpp = f.read()
-        with open(self.h) as f:
-            h = f.read()
-        object.__setattr__(self, "source", Source(cpp, h))
-
-        device_class, parent_class = self._extract_device_and_parent_class()
-        object.__setattr__(self, "device_class", device_class)
-        object.__setattr__(self, "parent_class", parent_class)
-        object.__setattr__(
-            self, "define_strings", self._extract_define_strs(self.parameter_infos)
+class SourceConverter:
+    def __init__(self, cpp: Path, h: Path, root: Path, drv_infos: List[str]):
+        self.source = Source(cpp.read_text(), h.read_text())
+        self.module_root = root
+        self.parameter_infos = drv_infos
+        self.device_class, self.parent_class = self._extract_device_and_parent_class()
+        self.define_strings = self._extract_define_strs(self.parameter_infos)
+        self.string_info_map = self._get_string_info_map(self.define_strings)
+        self.create_param_strings = self._extract_create_param_strs(
+            list(self.string_info_map)
         )
-
-        object.__setattr__(
-            self, "string_info_map", self._get_string_info_map(self.define_strings)
-        )
-        object.__setattr__(
-            self,
-            "create_param_strings",
-            self._extract_create_param_strs(self.string_info_map.keys()),
-        )
-
-        object.__setattr__(
-            self,
-            "string_index_map",
-            self._get_string_index_map(self.create_param_strings),
-        )
-        object.__setattr__(
-            self,
-            "declaration_strings",
-            self._extract_index_declarations(self.string_index_map.values()),
+        self.string_index_map = self._get_string_index_map(self.create_param_strings)
+        self.declaration_strings = self._extract_index_declarations(
+            list(self.string_index_map.values())
         )
 
     def _extract_device_and_parent_class(self) -> Tuple[str, str]:
         # e.g. extract 'NDPluginDriver' and 'asynNDArrayDriver' from
         # class epicsShareClass NDPluginDriver : public asynNDArrayDriver, public epicsThreadRunable {  # noqa
         class_extractor = re.compile(r"class.* (\w+) : \w+ (\w+) (?:, .*)?{")
-        classes = re.search(class_extractor, self.source.h).groups()
-
-        return classes
+        match = re.search(class_extractor, self.source.h)
+        assert match, "Can't find classes"
+        classname, parent = match.groups()
+        return classname, parent
 
     def _extract_define_strs(self, info_strings: List[str]) -> List[str]:
         # e.g. extract: #define SimGainXString                "SIM_GAIN_X";
@@ -130,17 +107,17 @@ class SourceConverter(BaseModel):
         string_index_pair = (create_param_args[0], create_param_args[2].strip("&"))
         return string_index_pair
 
-    def _get_index_info_map(self) -> Dict[str, str]:
+    def get_info_index_map(self) -> Dict[str, str]:
         index_string_map = dict(
             (index, string) for string, index in self.string_index_map.items()
         )
-        index_info_map = dict(
-            (index, self.string_info_map[string])
+        info_index_map = dict(
+            (self.string_info_map[string], index)
             for index, string in index_string_map.items()
         )
-        return index_info_map
+        return info_index_map
 
-    def get_top_level_text(self) -> str:
+    def get_top_level_text(self) -> Source:
         extracted_cpp = self._convert_cpp(self.source.cpp)
         extracted_h = self._convert_h(self.source.h)
 
@@ -161,11 +138,11 @@ class SourceConverter(BaseModel):
 
         # Insert accessors for parameters that have been moved to the param set
         parameters = list(self.string_index_map.values())
-        parent_components = find_parent_components(self.parent_class, self.module_root,)
+        parent_components = find_parent_components(self.parent_class, self.module_root)
         parameters += [
-            parameter.index_name
-            for component in parent_components
-            for parameter in component.children
+            parameter.get_index_name()
+            for parameter in walk(parent_components)
+            if isinstance(parameter, AsynParameter)
         ]
         cpp_text = self._insert_param_set_accessors(cpp_text, parameters)
 
@@ -209,8 +186,9 @@ class SourceConverter(BaseModel):
 
         # Remove FIRST_*_PARAM define
         first_param_extractor = re.compile(r"")
-        first_param_string = re.search(first_param_extractor, original_h).group()
-        unwanted_strings += first_param_string
+        match = re.search(first_param_extractor, original_h)
+        assert match, "Can't find first param"
+        unwanted_strings += match.group()
 
         # Re-create text with unwanted lines ommited
         lines = original_h.splitlines()
@@ -255,34 +233,66 @@ class SourceConverter(BaseModel):
         return text
 
 
-def find_parent_components(yaml_name: str, module_root: Path) -> List[ComponentUnion]:
+def find_parent_components(yaml_name: str, module_root: Path) -> Tree[AsynParameter]:
     if yaml_name == "asynPortDriver":
         return []  # asynPortDriver is the most base class and has no parameters
 
     yaml_directory = None
 
     # Look in this module first
-    here = module_root / "pvi"
-    if f"{yaml_name}.pvi.yaml" in os.listdir(here):
-        yaml_directory = here
+    producer_name = f"{yaml_name}.pvi.producer.yaml"
+    if producer_name in os.listdir(module_root):
+        yaml_directory = module_root
     else:
         parent_modules = find_parent_modules(module_root)
         for module in parent_modules:
             if os.path.isdir(module / "pvi"):
                 pvi = module / "pvi"
-                if f"{yaml_name}.pvi.yaml" in os.listdir(pvi):
+                if producer_name in os.listdir(pvi):
                     yaml_directory = pvi
                     break
 
     if yaml_directory is None:
-        raise IOError(f"Cannot find {yaml_name}.pvi.yaml")
+        raise IOError(f"Cannot find {producer_name}")
 
-    schema = Schema.load(Path(yaml_directory), yaml_name)
+    producer = deserialize_yaml(Producer, Path(yaml_directory) / producer_name)
 
-    return schema.components + find_parent_components(schema.parent, module_root)
+    return list(producer.parameters) + list(
+        find_parent_components(producer.parent_class, module_root)
+    )
 
 
 def filter_strings(strings: List[str], filters: List[str]) -> List[str]:
     return [
         string for string in strings if any(filter_ in string for filter_ in filters)
     ]
+
+
+def get_param_set(driver: str):
+    return "asynParamSet" if driver == "asynPortDriver" else driver + "ParamSet"
+
+
+def find_parent_modules(module_root: Path) -> List[Path]:
+
+    configure = module_root / "configure"
+    release_paths = glob(str(configure / "RELEASE*"))
+
+    macros: Dict[str, str] = {}
+    # e.g. extract (ADCORE, /path/to/ADCore) from ADCORE = /path/to/ADCore
+    module_definition_extractor = re.compile(r"^(\w+)\s*=\s*(\S+)", re.MULTILINE)
+    for release_path in release_paths:
+        with open(release_path) as release_file:
+            match = re.findall(module_definition_extractor, release_file.read())
+            macros.update(dict(match))
+
+    macro_re = re.compile(r"\$\(([^\)]+)\)")
+    for macro in macros:
+        for nested_macro in macro_re.findall(macros[macro]):
+            if nested_macro in macros.keys():
+                macros[macro] = macros[macro].replace(
+                    "$({})".format(nested_macro), macros[nested_macro]
+                )
+
+    modules = [Path(module) for module in macros.values()]
+
+    return modules

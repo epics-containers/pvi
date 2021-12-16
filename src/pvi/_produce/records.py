@@ -5,7 +5,7 @@ from ctypes import POINTER, c_char_p, c_int, c_void_p, pointer
 from enum import Enum
 from io import StringIO
 from pathlib import Path
-from typing import Any, ClassVar, Dict, List, TextIO, Tuple, Type, get_type_hints
+from typing import Any, ClassVar, Dict, List, TextIO, Tuple, Type, Union, get_type_hints
 
 from apischema import serialize
 from epicsdbbuilder import dbd, mydbstatic, records
@@ -143,7 +143,7 @@ def make_fields(entry: dbd.DBEntry, record_type: str) -> FieldList:
             fields.append(
                 (
                     field_name,
-                    A[field_type, desc(prompt)],
+                    A[Union[field_type, str], desc(prompt)],
                     dataclasses.field(default=default),
                 )
             )

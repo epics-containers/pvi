@@ -74,7 +74,7 @@ text {
 	"basic attribute" {
 		clr=54
 	}
-	textix=" Group One"
+	textix="Group One"
 	align="horiz. centered"
 }
 text {
@@ -87,7 +87,7 @@ text {
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Reset Power"
+	textix="Reset Power"
 	align="horiz. right"
 }
 "choice button" {
@@ -114,13 +114,40 @@ text {
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Image File Tmot"
+	textix="Threshold Apply"
+	align="horiz. right"
+}
+"choice button" {
+	object {
+		x=220
+		y=85
+		width=205
+		height=20
+	}
+	control {
+		chan="$(P)$(R)ThresholdApply"
+		clr=14
+		bclr=51
+	}
+	stacking="column"
+}
+text {
+	object {
+		x=10
+		y=110
+		width=205
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Image File Tmot"
 	align="horiz. right"
 }
 "text entry" {
 	object {
 		x=220
-		y=85
+		y=110
 		width=205
 		height=20
 	}
@@ -135,20 +162,20 @@ text {
 text {
 	object {
 		x=10
-		y=110
+		y=135
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Wavelength"
+	textix="Wavelength"
 	align="horiz. right"
 }
 "text entry" {
 	object {
 		x=220
-		y=110
+		y=135
 		width=205
 		height=20
 	}
@@ -163,20 +190,20 @@ text {
 text {
 	object {
 		x=10
-		y=135
+		y=160
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Energy Low"
+	textix="Energy Low"
 	align="horiz. right"
 }
 "text entry" {
 	object {
 		x=220
-		y=135
+		y=160
 		width=205
 		height=20
 	}
@@ -191,20 +218,20 @@ text {
 text {
 	object {
 		x=10
-		y=160
+		y=185
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Energy High"
+	textix="Energy High"
 	align="horiz. right"
 }
 "text entry" {
 	object {
 		x=220
-		y=160
+		y=185
 		width=205
 		height=20
 	}
@@ -219,20 +246,20 @@ text {
 text {
 	object {
 		x=10
-		y=185
+		y=210
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Det Dist"
+	textix="Det Dist"
 	align="horiz. right"
 }
 "text entry" {
 	object {
 		x=220
-		y=185
+		y=210
 		width=205
 		height=20
 	}
@@ -247,20 +274,20 @@ text {
 text {
 	object {
 		x=10
-		y=210
+		y=235
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Det V Offset"
+	textix="Det V Offset"
 	align="horiz. right"
 }
 "text entry" {
 	object {
 		x=220
-		y=210
+		y=235
 		width=205
 		height=20
 	}
@@ -275,20 +302,20 @@ text {
 text {
 	object {
 		x=10
-		y=235
+		y=260
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Beam X"
+	textix="Beam X"
 	align="horiz. right"
 }
 "text entry" {
 	object {
 		x=220
-		y=235
+		y=260
 		width=205
 		height=20
 	}
@@ -303,20 +330,20 @@ text {
 text {
 	object {
 		x=10
-		y=260
+		y=285
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Beam Y"
+	textix="Beam Y"
 	align="horiz. right"
 }
 "text entry" {
 	object {
 		x=220
-		y=260
+		y=285
 		width=205
 		height=20
 	}
@@ -331,20 +358,20 @@ text {
 text {
 	object {
 		x=10
-		y=285
+		y=310
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Flux"
+	textix="Flux"
 	align="horiz. right"
 }
 "text entry" {
 	object {
 		x=220
-		y=285
+		y=310
 		width=205
 		height=20
 	}
@@ -359,20 +386,20 @@ text {
 text {
 	object {
 		x=10
-		y=310
+		y=335
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Filter Transm"
+	textix="Filter Transm"
 	align="horiz. right"
 }
 "text entry" {
 	object {
 		x=220
-		y=310
+		y=335
 		width=205
 		height=20
 	}
@@ -387,20 +414,20 @@ text {
 text {
 	object {
 		x=10
-		y=335
+		y=360
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Start Angle"
+	textix="Start Angle"
 	align="horiz. right"
 }
 "text entry" {
 	object {
 		x=220
-		y=335
+		y=360
 		width=205
 		height=20
 	}
@@ -415,20 +442,20 @@ text {
 text {
 	object {
 		x=10
-		y=360
+		y=385
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Angle Incr"
+	textix="Angle Incr"
 	align="horiz. right"
 }
 "text entry" {
 	object {
 		x=220
-		y=360
+		y=385
 		width=205
 		height=20
 	}
@@ -443,20 +470,20 @@ text {
 text {
 	object {
 		x=10
-		y=385
+		y=410
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Det 2theta"
+	textix="Det 2theta"
 	align="horiz. right"
 }
 "text entry" {
 	object {
 		x=220
-		y=385
+		y=410
 		width=205
 		height=20
 	}
@@ -471,20 +498,20 @@ text {
 text {
 	object {
 		x=10
-		y=410
+		y=435
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Polarization"
+	textix="Polarization"
 	align="horiz. right"
 }
 "text entry" {
 	object {
 		x=220
-		y=410
+		y=435
 		width=205
 		height=20
 	}
@@ -499,20 +526,20 @@ text {
 text {
 	object {
 		x=10
-		y=435
+		y=460
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Alpha"
+	textix="Alpha"
 	align="horiz. right"
 }
 "text entry" {
 	object {
 		x=220
-		y=435
+		y=460
 		width=205
 		height=20
 	}
@@ -527,20 +554,20 @@ text {
 text {
 	object {
 		x=10
-		y=460
+		y=485
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Kappa"
+	textix="Kappa"
 	align="horiz. right"
 }
 "text entry" {
 	object {
 		x=220
-		y=460
+		y=485
 		width=205
 		height=20
 	}
@@ -555,20 +582,20 @@ text {
 text {
 	object {
 		x=10
-		y=485
+		y=510
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Phi"
+	textix="Phi"
 	align="horiz. right"
 }
 "text entry" {
 	object {
 		x=220
-		y=485
+		y=510
 		width=205
 		height=20
 	}
@@ -583,20 +610,20 @@ text {
 text {
 	object {
 		x=10
-		y=510
+		y=535
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Phi Incr"
+	textix="Phi Incr"
 	align="horiz. right"
 }
 "text entry" {
 	object {
 		x=220
-		y=510
+		y=535
 		width=205
 		height=20
 	}
@@ -611,20 +638,20 @@ text {
 text {
 	object {
 		x=10
-		y=535
+		y=560
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Chi"
+	textix="Chi"
 	align="horiz. right"
 }
 "text entry" {
 	object {
 		x=220
-		y=535
+		y=560
 		width=205
 		height=20
 	}
@@ -639,20 +666,20 @@ text {
 text {
 	object {
 		x=10
-		y=560
+		y=585
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Chi Incr"
+	textix="Chi Incr"
 	align="horiz. right"
 }
 "text entry" {
 	object {
 		x=220
-		y=560
+		y=585
 		width=205
 		height=20
 	}
@@ -667,20 +694,20 @@ text {
 text {
 	object {
 		x=10
-		y=585
+		y=610
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Omega"
+	textix="Omega"
 	align="horiz. right"
 }
 "text entry" {
 	object {
 		x=220
-		y=585
+		y=610
 		width=205
 		height=20
 	}
@@ -695,20 +722,20 @@ text {
 text {
 	object {
 		x=10
-		y=610
+		y=635
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Omega Incr"
+	textix="Omega Incr"
 	align="horiz. right"
 }
 "text entry" {
 	object {
 		x=220
-		y=610
+		y=635
 		width=205
 		height=20
 	}
@@ -723,20 +750,20 @@ text {
 text {
 	object {
 		x=10
-		y=635
+		y=660
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Oscill Axis"
+	textix="Oscill Axis"
 	align="horiz. right"
 }
 "text entry" {
 	object {
 		x=220
-		y=635
+		y=660
 		width=205
 		height=20
 	}
@@ -751,20 +778,20 @@ text {
 text {
 	object {
 		x=10
-		y=660
+		y=685
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Num Oscill"
+	textix="Num Oscill"
 	align="horiz. right"
 }
 "text entry" {
 	object {
 		x=220
-		y=660
+		y=685
 		width=205
 		height=20
 	}
@@ -779,20 +806,20 @@ text {
 text {
 	object {
 		x=10
-		y=685
+		y=710
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Bad Pixel File"
+	textix="Bad Pixel File"
 	align="horiz. right"
 }
 "text entry" {
 	object {
 		x=220
-		y=685
+		y=710
 		width=205
 		height=20
 	}
@@ -807,20 +834,20 @@ text {
 text {
 	object {
 		x=10
-		y=710
+		y=735
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Flat Field File"
+	textix="Flat Field File"
 	align="horiz. right"
 }
 "text entry" {
 	object {
 		x=220
-		y=710
+		y=735
 		width=205
 		height=20
 	}
@@ -835,20 +862,20 @@ text {
 text {
 	object {
 		x=10
-		y=735
+		y=760
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Cbf Template File"
+	textix="Cbf Template File"
 	align="horiz. right"
 }
 "text entry" {
 	object {
 		x=220
-		y=735
+		y=760
 		width=205
 		height=20
 	}
@@ -863,20 +890,20 @@ text {
 text {
 	object {
 		x=10
-		y=760
+		y=785
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Header String"
+	textix="Header String"
 	align="horiz. right"
 }
 "text entry" {
 	object {
 		x=220
-		y=760
+		y=785
 		width=205
 		height=20
 	}
@@ -891,20 +918,20 @@ text {
 text {
 	object {
 		x=10
-		y=785
+		y=810
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Armed"
+	textix="Armed"
 	align="horiz. right"
 }
 byte {
 	object {
 		x=312
-		y=785
+		y=810
 		width=20
 		height=20
 	}
@@ -918,20 +945,20 @@ byte {
 text {
 	object {
 		x=10
-		y=810
+		y=835
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Num Bad Pixels"
+	textix="Num Bad Pixels"
 	align="horiz. right"
 }
 "text update" {
 	object {
 		x=220
-		y=810
+		y=835
 		width=205
 		height=20
 	}
@@ -946,20 +973,20 @@ text {
 text {
 	object {
 		x=10
-		y=835
+		y=860
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Flat Field Valid"
+	textix="Flat Field Valid"
 	align="horiz. right"
 }
 byte {
 	object {
 		x=312
-		y=835
+		y=860
 		width=20
 		height=20
 	}
@@ -973,20 +1000,20 @@ byte {
 text {
 	object {
 		x=10
-		y=860
+		y=885
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Pixel Cut Off"
+	textix="Pixel Cut Off"
 	align="horiz. right"
 }
 "text update" {
 	object {
 		x=220
-		y=860
+		y=885
 		width=205
 		height=20
 	}
@@ -1001,20 +1028,20 @@ text {
 text {
 	object {
 		x=10
-		y=885
+		y=910
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Temp 0"
+	textix="Temp 0"
 	align="horiz. right"
 }
 "text update" {
 	object {
 		x=220
-		y=885
+		y=910
 		width=205
 		height=20
 	}
@@ -1028,21 +1055,21 @@ text {
 }
 text {
 	object {
-		x=10
-		y=910
+		x=430
+		y=60
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Temp 1"
+	textix="Temp 1"
 	align="horiz. right"
 }
 "text update" {
 	object {
-		x=220
-		y=910
+		x=640
+		y=60
 		width=205
 		height=20
 	}
@@ -1057,20 +1084,20 @@ text {
 text {
 	object {
 		x=430
-		y=60
+		y=85
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Temp 2"
+	textix="Temp 2"
 	align="horiz. right"
 }
 "text update" {
 	object {
 		x=640
-		y=60
+		y=85
 		width=205
 		height=20
 	}
@@ -1085,20 +1112,20 @@ text {
 text {
 	object {
 		x=430
-		y=85
+		y=110
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Humid 0"
+	textix="Humid 0"
 	align="horiz. right"
 }
 "text update" {
 	object {
 		x=640
-		y=85
+		y=110
 		width=205
 		height=20
 	}
@@ -1113,20 +1140,20 @@ text {
 text {
 	object {
 		x=430
-		y=110
+		y=135
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Humid 1"
+	textix="Humid 1"
 	align="horiz. right"
 }
 "text update" {
 	object {
 		x=640
-		y=110
+		y=135
 		width=205
 		height=20
 	}
@@ -1141,20 +1168,20 @@ text {
 text {
 	object {
 		x=430
-		y=135
+		y=160
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Humid 2"
+	textix="Humid 2"
 	align="horiz. right"
 }
 "text update" {
 	object {
 		x=640
-		y=135
+		y=160
 		width=205
 		height=20
 	}
@@ -1169,20 +1196,20 @@ text {
 text {
 	object {
 		x=430
-		y=160
+		y=185
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" TVX Version"
+	textix="TVX Version"
 	align="horiz. right"
 }
 "text update" {
 	object {
 		x=640
-		y=160
+		y=185
 		width=205
 		height=20
 	}
@@ -1197,20 +1224,20 @@ text {
 text {
 	object {
 		x=430
-		y=185
+		y=210
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Reset Power Time"
+	textix="Reset Power Time"
 	align="horiz. right"
 }
 "text entry" {
 	object {
 		x=640
-		y=185
+		y=210
 		width=100
 		height=20
 	}
@@ -1225,7 +1252,7 @@ text {
 "text update" {
 	object {
 		x=745
-		y=185
+		y=210
 		width=100
 		height=20
 	}
@@ -1240,20 +1267,20 @@ text {
 text {
 	object {
 		x=430
-		y=210
+		y=235
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Delay Time"
+	textix="Delay Time"
 	align="horiz. right"
 }
 "text entry" {
 	object {
 		x=640
-		y=210
+		y=235
 		width=100
 		height=20
 	}
@@ -1268,7 +1295,7 @@ text {
 "text update" {
 	object {
 		x=745
-		y=210
+		y=235
 		width=100
 		height=20
 	}
@@ -1283,20 +1310,20 @@ text {
 text {
 	object {
 		x=430
-		y=235
+		y=260
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Threshold Energy"
+	textix="Threshold Energy"
 	align="horiz. right"
 }
 "text entry" {
 	object {
 		x=640
-		y=235
+		y=260
 		width=100
 		height=20
 	}
@@ -1311,7 +1338,7 @@ text {
 "text update" {
 	object {
 		x=745
-		y=235
+		y=260
 		width=100
 		height=20
 	}
@@ -1326,20 +1353,20 @@ text {
 text {
 	object {
 		x=430
-		y=260
+		y=285
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Threshold Auto Apply"
+	textix="Threshold Auto Apply"
 	align="horiz. right"
 }
 "choice button" {
 	object {
 		x=640
-		y=260
+		y=285
 		width=100
 		height=20
 	}
@@ -1353,7 +1380,7 @@ text {
 byte {
 	object {
 		x=785
-		y=260
+		y=285
 		width=20
 		height=20
 	}
@@ -1367,20 +1394,20 @@ byte {
 text {
 	object {
 		x=430
-		y=285
+		y=310
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Energy"
+	textix="Energy"
 	align="horiz. right"
 }
 "text entry" {
 	object {
 		x=640
-		y=285
+		y=310
 		width=100
 		height=20
 	}
@@ -1395,7 +1422,7 @@ text {
 "text update" {
 	object {
 		x=745
-		y=285
+		y=310
 		width=100
 		height=20
 	}
@@ -1410,20 +1437,20 @@ text {
 text {
 	object {
 		x=430
-		y=310
+		y=335
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Min Flat Field"
+	textix="Min Flat Field"
 	align="horiz. right"
 }
 "text entry" {
 	object {
 		x=640
-		y=310
+		y=335
 		width=100
 		height=20
 	}
@@ -1438,7 +1465,7 @@ text {
 "text update" {
 	object {
 		x=745
-		y=310
+		y=335
 		width=100
 		height=20
 	}
@@ -1453,20 +1480,20 @@ text {
 text {
 	object {
 		x=430
-		y=335
+		y=360
 		width=205
 		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix=" Gap Fill"
+	textix="Gap Fill"
 	align="horiz. right"
 }
 menu {
 	object {
 		x=640
-		y=335
+		y=360
 		width=100
 		height=20
 	}
@@ -1479,7 +1506,7 @@ menu {
 "text update" {
 	object {
 		x=745
-		y=335
+		y=360
 		width=100
 		height=20
 	}

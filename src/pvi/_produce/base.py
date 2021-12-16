@@ -2,11 +2,13 @@ from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
 
+from apischema.conversions import as_names
+
 from pvi._utils import Annotated, as_discriminated_union, desc
 from pvi.device import Device
 
 
-class Access(str, Enum):
+class Access(Enum):
     """What access does the user have. One of:
 
     - R: Read only value that cannot be set. E.g. chipTemperature on a detector,
@@ -28,7 +30,7 @@ class Access(str, Enum):
         return self != self.R
 
 
-class DisplayForm(str, Enum):
+class DisplayForm(Enum):
     """Instructions for how a number should be formatted for display"""
 
     #: Use the default representation from value

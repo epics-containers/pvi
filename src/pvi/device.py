@@ -153,8 +153,7 @@ class Named:
     ]
 
     # TODO: add optional label in subclasses to override this
-    @property
-    def label(self):
+    def get_label(self):
         return to_title_case(self.name)
 
 

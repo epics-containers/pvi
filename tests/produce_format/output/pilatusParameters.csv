@@ -1,6 +1,7 @@
 Parameter,Records,Description
 *GroupOne*
 ResetPower,bo: $(P)$(R)ResetPower,ResetPower
+ThresholdApply,busy: $(P)$(R)ThresholdApply,ThresholdApply
 ImageFileTmot,ao: $(P)$(R)ImageFileTmot,Timeout for image file
 Wavelength,ao: $(P)$(R)Wavelength,Wavelength
 EnergyLow,ao: $(P)$(R)EnergyLow,EnergyLow
