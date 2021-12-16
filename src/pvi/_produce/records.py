@@ -17,10 +17,31 @@ from pvi.device import Device
 
 # Add DBDs
 dbd.InitialiseDbd()
-for module in ["asynDbd", "copyInfoDbd"]:
-    for dbd_path in (Path(__file__).parent / module).glob("*.dbd"):
-        if dbd_path.name not in ["asynCalc.dbd"]:
-            dbd.LoadDbdFile(dbd_path)
+for submodule_dbd in [
+    # "asyn/asyn/devEpics/asynCalc.dbd",
+    "asyn/asyn/devEpics/devAsynFloat32Array.dbd",
+    "asyn/asyn/devEpics/devAsynFloat64.dbd",
+    "asyn/asyn/devEpics/devAsynFloat64Array.dbd",
+    "asyn/asyn/devEpics/devAsynFloat64TimeSeries.dbd",
+    "asyn/asyn/devEpics/devAsynInt16Array.dbd",
+    "asyn/asyn/devEpics/devAsynInt32.dbd",
+    "asyn/asyn/devEpics/devAsynInt32Array.dbd",
+    "asyn/asyn/devEpics/devAsynInt32TimeSeries.dbd",
+    "asyn/asyn/devEpics/devAsynInt64.dbd",
+    "asyn/asyn/devEpics/devAsynInt64Array.dbd",
+    "asyn/asyn/devEpics/devAsynInt64Misc.dbd",
+    "asyn/asyn/devEpics/devAsynInt64TimeSeries.dbd",
+    "asyn/asyn/devEpics/devAsynInt8Array.dbd",
+    "asyn/asyn/devEpics/devAsynOctet.dbd",
+    "asyn/asyn/devEpics/devAsynOctetLs.dbd",
+    "asyn/asyn/devEpics/devAsynUInt32Digital.dbd",
+    "copyInfo/copyInfoApp/src/devCopyInfo.dbd",
+    "busy/busyApp/src/busyRecord.dbd",
+    # "busy/busyApp/src/busySupport_LOCAL.dbd",
+    "busy/busyApp/src/busySupport_withASYN.dbd",
+    # "busy/busyApp/src/testBusyAsynInclude.dbd",
+]:
+    dbd.LoadDbdFile(Path(__file__).parent.parent / "submodules" / submodule_dbd)
 
 
 # https://code.activestate.com/recipes/576731-c-function-decorator/
@@ -169,12 +190,11 @@ class RecordPair:
 # Populate records
 AnalogueRecordPair = RecordPair.for_record_types("ai", "ao")
 BinaryRecordPair = RecordPair.for_record_types("bi", "bo")
+BusyRecordPair = RecordPair.for_record_types("bi", "busy")
 LongRecordPair = RecordPair.for_record_types("longin", "longout")
 MultiBitBinaryRecordPair = RecordPair.for_record_types("mbbi", "mbbo")
 StringRecordPair = RecordPair.for_record_types("stringin", "stringout")
 WaveformRecordPair = RecordPair.for_record_types("waveform", "waveform")
-
-# TODO: add busy record
 
 
 class PVIRecord(records.waveform, Record):

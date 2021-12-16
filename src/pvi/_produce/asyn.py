@@ -40,6 +40,7 @@ from .base import Access, DisplayForm, Producer
 from .records import (
     AnalogueRecordPair,
     BinaryRecordPair,
+    BusyRecordPair,
     LongRecordPair,
     MultiBitBinaryRecordPair,
     PVIRecord,
@@ -99,6 +100,12 @@ class AsynParameter(Named):
     write_widget: Optional[AWriteWidget] = None
     record_fields: RecordPair = RecordPair()
 
+    def get_index_name(self):
+        return self.index_name or self.name
+
+    def get_drv_info(self):
+        return self.drv_info or self.name
+
 
 def initial_value(pattern: str = None, min: Number = None, max: Number = None):
     if pattern:
@@ -126,6 +133,15 @@ class AsynBinary(AsynParameter):
     record_fields: Annotated[  # type: ignore
         BinaryRecordPair, desc("Binary record fields")
     ] = BinaryRecordPair()
+
+
+@dataclass
+class AsynBusy(AsynBinary):
+    """Asyn Busy Parameter and records"""
+
+    record_fields: Annotated[  # type: ignore
+        BusyRecordPair, desc("Busy record fields")
+    ] = BusyRecordPair()
 
 
 @dataclass
@@ -314,8 +330,8 @@ This file was automatically generated
 
     def _produce_record(self, parameter: AsynParameter) -> Iterator[Record]:
         inp_fields, out_fields = parameter.record_fields.sort_records()
-        asyn_param_name = parameter.drv_info or parameter.name
-        io = f"@asyn({self.asyn_port},{self.address},{self.timeout}){asyn_param_name}"
+        drv_info = parameter.get_drv_info()
+        io = f"@asyn({self.asyn_port},{self.address},{self.timeout}){drv_info}"
         if parameter.access.needs_read_record():
             name = self.prefix + self._read_record_suffix(parameter)
             rtype = parameter.record_fields.in_record_type.__name__
@@ -356,9 +372,8 @@ This file was automatically generated
         for node in walk(self.parameters):
             if isinstance(node, AsynParameter):
                 param_type = node.type_strings.asyn_param
-                index_name = node.index_name or node.name
-                drv_info = node.drv_info or node.name
-                defines.append(f'#define {index_name}String "{drv_info}"')
+                index_name = node.get_index_name()
+                defines.append(f'#define {index_name}String "{node.get_drv_info()}"')
                 adds.append(
                     f"this->add({index_name}String, {param_type}, &{index_name});"
                 )

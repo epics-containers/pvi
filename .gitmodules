@@ -1,6 +1,9 @@
 [submodule "submodules/asyn"]
-	path = submodules/asyn
+	path = src/pvi/submodules/asyn
 	url = https://github.com/epics-modules/asyn.git
 [submodule "submodules/copyInfo"]
-	path = submodules/copyInfo
+	path = src/pvi/submodules/copyInfo
 	url = https://github.com/dls-controls/copyInfo.git
+[submodule "submodules/busy"]
+	path = src/pvi/submodules/busy
+	url = https://github.com/epics-modules/busy.git
