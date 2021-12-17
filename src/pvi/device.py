@@ -15,14 +15,9 @@ from typing import (
 )
 
 from apischema import deserialize, serialize
+from typing_extensions import Annotated
 
-from ._schema_utils import (
-    Annotated,
-    add_type_field,
-    as_discriminated_union,
-    desc,
-    to_title_case,
-)
+from ._schema_utils import add_type_field, as_discriminated_union, desc, to_title_case
 
 
 @as_discriminated_union

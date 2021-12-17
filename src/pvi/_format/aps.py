@@ -2,7 +2,9 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import List
 
-from pvi._schema_utils import Annotated, desc
+from typing_extensions import Annotated
+
+from pvi._schema_utils import desc
 from pvi.device import Device
 
 from .base import Formatter

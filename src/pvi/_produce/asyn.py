@@ -7,8 +7,9 @@ from apischema.schemas import schema
 from apischema.types import Number
 from epicsdbbuilder import WriteRecords, records
 from epicsdbbuilder.recordbase import Record
+from typing_extensions import Annotated
 
-from pvi._schema_utils import Annotated, as_discriminated_union, desc
+from pvi._schema_utils import as_discriminated_union, desc
 from pvi.device import (
     LED,
     CheckBox,

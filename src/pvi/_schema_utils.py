@@ -1,5 +1,4 @@
 import re
-import sys
 from dataclasses import field, make_dataclass
 from functools import lru_cache
 from typing import Any, Callable, List, Optional, Pattern, Set, TypeVar, Union
@@ -8,13 +7,7 @@ from apischema import deserializer, order, schema, serialized, type_name
 from apischema.conversions import Conversion
 from apischema.conversions.converters import serializer
 from apischema.utils import CAMEL_CASE_REGEX, identity
-
-if sys.version_info >= (3, 8):
-    from typing import Annotated, Literal
-else:
-    from typing_extensions import Annotated, Literal
-
-__all__ = ["Annotated", "Literal"]
+from typing_extensions import Literal
 
 Cls = TypeVar("Cls", bound=type)
 

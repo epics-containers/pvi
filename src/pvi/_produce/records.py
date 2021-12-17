@@ -10,7 +10,7 @@ from typing import Any, ClassVar, Dict, List, TextIO, Tuple, Type, Union, get_ty
 from apischema import serialize
 from epicsdbbuilder import dbd, mydbstatic, records
 from epicsdbbuilder.recordbase import Record
-from typing_extensions import Annotated as A
+from typing_extensions import Annotated
 
 from pvi._schema_utils import desc
 from pvi.device import Device
@@ -143,7 +143,7 @@ def make_fields(entry: dbd.DBEntry, record_type: str) -> FieldList:
             fields.append(
                 (
                     field_name,
-                    A[Union[field_type, str], desc(prompt)],
+                    Annotated[Union[field_type, str], desc(prompt)],
                     dataclasses.field(default=default),
                 )
             )

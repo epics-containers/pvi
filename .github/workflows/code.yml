@@ -58,7 +58,7 @@ jobs:
       - name: Test cli works from the installed wheel
         if: matrix.publish
         # Can remove the repository reference after https://github.com/pypa/pipx/pull/733
-        run: pipx run --python ${{ matrix.python }} --spec $(ls dist/*.whl)[cli] ${GITHUB_REPOSITORY##*/} --version
+        run: pipx run --python $(which python) --spec $(ls dist/*.whl)[cli] ${GITHUB_REPOSITORY##*/} --version
 
       - name: Use a non-editable install to test the installed wheel
         if: matrix.pipenv == 'skip-lock'
