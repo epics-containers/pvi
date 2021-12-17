@@ -125,7 +125,7 @@ def asyn(
     (output / h.name).write_text(extracted_source.h)
 
     # Update yaml based on source file definitions and write
-    producer.parent_class = source_converter.parent_class
+    producer.parent = source_converter.parent_class
     index_map = source_converter.get_info_index_map()
     for parameter in walk(producer.parameters):
         if isinstance(parameter, AsynParameter):

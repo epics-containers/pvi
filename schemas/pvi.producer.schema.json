@@ -36,10 +36,9 @@
           "type": "string",
           "description": "The timeout for the asyn port"
         },
-        "parent_class": {
+        "parent": {
           "type": "string",
-          "description": "The parent class for the ParamSet.h",
-          "default": "ADDriver"
+          "description": "The parent producer (basename of yaml file), asynPortDriver is the top of the tree"
         },
         "parameters": {
           "type": "array",
@@ -53,8 +52,7 @@
               }
             ]
           },
-          "description": "The parameters to make into an IOC",
-          "default": []
+          "description": "The parameters to make into an IOC"
         }
       },
       "required": [
@@ -62,7 +60,9 @@
         "label",
         "asyn_port",
         "address",
-        "timeout"
+        "timeout",
+        "parent",
+        "parameters"
       ],
       "additionalProperties": false
     },
@@ -129,14 +129,13 @@
           "default": null
         },
         "access": {
-          "type": "string",
-          "enum": [
-            "R",
-            "W",
-            "RW"
-          ],
           "description": "What access does the user have. One of:\n\n    - R: Read only value that cannot be set. E.g. chipTemperature on a detector,\n      or isHomed for a motor\n    - W: Write only value that can be written to, but there is no current value.\n      E.g. reboot on a detector, or overwriteCurrentPosition for a motor\n    - RW: Read and Write value that can be written to and read back.\n      E.g. acquireTime on a detector, or velocity of a motor\n    ",
-          "default": "RW"
+          "default": "RW",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Access"
+            }
+          ]
         },
         "demand_auto_updates": {
           "type": "boolean",
@@ -160,18 +159,13 @@
           "default": null
         },
         "display_form": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "enum": [
-            "Default",
-            "String",
-            "Binary",
-            "Decimal",
-            "Hex",
-            "Exponential",
-            "Engineering"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DisplayForm"
+            },
+            {
+              "type": "null"
+            }
           ],
           "description": "Display form for numeric/array fields",
           "default": null
@@ -230,6 +224,26 @@
         "description"
       ],
       "additionalProperties": false
+    },
+    "Access": {
+      "type": "string",
+      "enum": [
+        "R",
+        "W",
+        "RW"
+      ]
+    },
+    "DisplayForm": {
+      "type": "string",
+      "enum": [
+        "Default",
+        "String",
+        "Binary",
+        "Decimal",
+        "Hex",
+        "Exponential",
+        "Engineering"
+      ]
     },
     "ReadWidget": {
       "anyOf": [
@@ -1122,14 +1136,13 @@
           "default": null
         },
         "access": {
-          "type": "string",
-          "enum": [
-            "R",
-            "W",
-            "RW"
-          ],
           "description": "What access does the user have. One of:\n\n    - R: Read only value that cannot be set. E.g. chipTemperature on a detector,\n      or isHomed for a motor\n    - W: Write only value that can be written to, but there is no current value.\n      E.g. reboot on a detector, or overwriteCurrentPosition for a motor\n    - RW: Read and Write value that can be written to and read back.\n      E.g. acquireTime on a detector, or velocity of a motor\n    ",
-          "default": "RW"
+          "default": "RW",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Access"
+            }
+          ]
         },
         "demand_auto_updates": {
           "type": "boolean",
@@ -1153,18 +1166,13 @@
           "default": null
         },
         "display_form": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "enum": [
-            "Default",
-            "String",
-            "Binary",
-            "Decimal",
-            "Hex",
-            "Exponential",
-            "Engineering"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DisplayForm"
+            },
+            {
+              "type": "null"
+            }
           ],
           "description": "Display form for numeric/array fields",
           "default": null
@@ -1674,14 +1682,13 @@
           "default": null
         },
         "access": {
-          "type": "string",
-          "enum": [
-            "R",
-            "W",
-            "RW"
-          ],
           "description": "What access does the user have. One of:\n\n    - R: Read only value that cannot be set. E.g. chipTemperature on a detector,\n      or isHomed for a motor\n    - W: Write only value that can be written to, but there is no current value.\n      E.g. reboot on a detector, or overwriteCurrentPosition for a motor\n    - RW: Read and Write value that can be written to and read back.\n      E.g. acquireTime on a detector, or velocity of a motor\n    ",
-          "default": "RW"
+          "default": "RW",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Access"
+            }
+          ]
         },
         "demand_auto_updates": {
           "type": "boolean",
@@ -1705,18 +1712,13 @@
           "default": null
         },
         "display_form": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "enum": [
-            "Default",
-            "String",
-            "Binary",
-            "Decimal",
-            "Hex",
-            "Exponential",
-            "Engineering"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DisplayForm"
+            },
+            {
+              "type": "null"
+            }
           ],
           "description": "Display form for numeric/array fields",
           "default": null
@@ -2639,14 +2641,13 @@
           "default": null
         },
         "access": {
-          "type": "string",
-          "enum": [
-            "R",
-            "W",
-            "RW"
-          ],
           "description": "What access does the user have. One of:\n\n    - R: Read only value that cannot be set. E.g. chipTemperature on a detector,\n      or isHomed for a motor\n    - W: Write only value that can be written to, but there is no current value.\n      E.g. reboot on a detector, or overwriteCurrentPosition for a motor\n    - RW: Read and Write value that can be written to and read back.\n      E.g. acquireTime on a detector, or velocity of a motor\n    ",
-          "default": "RW"
+          "default": "RW",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Access"
+            }
+          ]
         },
         "demand_auto_updates": {
           "type": "boolean",
@@ -2670,18 +2671,13 @@
           "default": null
         },
         "display_form": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "enum": [
-            "Default",
-            "String",
-            "Binary",
-            "Decimal",
-            "Hex",
-            "Exponential",
-            "Engineering"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DisplayForm"
+            },
+            {
+              "type": "null"
+            }
           ],
           "description": "Display form for numeric/array fields",
           "default": null
@@ -2776,14 +2772,13 @@
           "default": null
         },
         "access": {
-          "type": "string",
-          "enum": [
-            "R",
-            "W",
-            "RW"
-          ],
           "description": "What access does the user have. One of:\n\n    - R: Read only value that cannot be set. E.g. chipTemperature on a detector,\n      or isHomed for a motor\n    - W: Write only value that can be written to, but there is no current value.\n      E.g. reboot on a detector, or overwriteCurrentPosition for a motor\n    - RW: Read and Write value that can be written to and read back.\n      E.g. acquireTime on a detector, or velocity of a motor\n    ",
-          "default": "RW"
+          "default": "RW",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Access"
+            }
+          ]
         },
         "demand_auto_updates": {
           "type": "boolean",
@@ -2807,18 +2802,13 @@
           "default": null
         },
         "display_form": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "enum": [
-            "Default",
-            "String",
-            "Binary",
-            "Decimal",
-            "Hex",
-            "Exponential",
-            "Engineering"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DisplayForm"
+            },
+            {
+              "type": "null"
+            }
           ],
           "description": "Display form for numeric/array fields",
           "default": null
@@ -3616,14 +3606,13 @@
           "default": null
         },
         "access": {
-          "type": "string",
-          "enum": [
-            "R",
-            "W",
-            "RW"
-          ],
           "description": "What access does the user have. One of:\n\n    - R: Read only value that cannot be set. E.g. chipTemperature on a detector,\n      or isHomed for a motor\n    - W: Write only value that can be written to, but there is no current value.\n      E.g. reboot on a detector, or overwriteCurrentPosition for a motor\n    - RW: Read and Write value that can be written to and read back.\n      E.g. acquireTime on a detector, or velocity of a motor\n    ",
-          "default": "RW"
+          "default": "RW",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Access"
+            }
+          ]
         },
         "demand_auto_updates": {
           "type": "boolean",
@@ -3647,18 +3636,13 @@
           "default": null
         },
         "display_form": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "enum": [
-            "Default",
-            "String",
-            "Binary",
-            "Decimal",
-            "Hex",
-            "Exponential",
-            "Engineering"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DisplayForm"
+            },
+            {
+              "type": "null"
+            }
           ],
           "description": "Display form for numeric/array fields",
           "default": null
@@ -4879,14 +4863,13 @@
           "default": null
         },
         "access": {
-          "type": "string",
-          "enum": [
-            "R",
-            "W",
-            "RW"
-          ],
           "description": "What access does the user have. One of:\n\n    - R: Read only value that cannot be set. E.g. chipTemperature on a detector,\n      or isHomed for a motor\n    - W: Write only value that can be written to, but there is no current value.\n      E.g. reboot on a detector, or overwriteCurrentPosition for a motor\n    - RW: Read and Write value that can be written to and read back.\n      E.g. acquireTime on a detector, or velocity of a motor\n    ",
-          "default": "RW"
+          "default": "RW",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Access"
+            }
+          ]
         },
         "demand_auto_updates": {
           "type": "boolean",
@@ -4910,18 +4893,13 @@
           "default": null
         },
         "display_form": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "enum": [
-            "Default",
-            "String",
-            "Binary",
-            "Decimal",
-            "Hex",
-            "Exponential",
-            "Engineering"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DisplayForm"
+            },
+            {
+              "type": "null"
+            }
           ],
           "description": "Display form for numeric/array fields",
           "default": null
@@ -5569,14 +5547,13 @@
           "default": null
         },
         "access": {
-          "type": "string",
-          "enum": [
-            "R",
-            "W",
-            "RW"
-          ],
           "description": "What access does the user have. One of:\n\n    - R: Read only value that cannot be set. E.g. chipTemperature on a detector,\n      or isHomed for a motor\n    - W: Write only value that can be written to, but there is no current value.\n      E.g. reboot on a detector, or overwriteCurrentPosition for a motor\n    - RW: Read and Write value that can be written to and read back.\n      E.g. acquireTime on a detector, or velocity of a motor\n    ",
-          "default": "RW"
+          "default": "RW",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Access"
+            }
+          ]
         },
         "demand_auto_updates": {
           "type": "boolean",
@@ -5600,18 +5577,13 @@
           "default": null
         },
         "display_form": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "enum": [
-            "Default",
-            "String",
-            "Binary",
-            "Decimal",
-            "Hex",
-            "Exponential",
-            "Engineering"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DisplayForm"
+            },
+            {
+              "type": "null"
+            }
           ],
           "description": "Display form for numeric/array fields",
           "default": null
@@ -6308,6 +6280,11 @@
           "type": "string",
           "pattern": "([A-Z][a-z0-9]*)*$",
           "description": "PascalCase name to uniquely identify"
+        },
+        "label": {
+          "type": "string",
+          "description": "Label for GUI. If empty, use name in Title Case",
+          "default": ""
         },
         "layout": {
           "description": "How to layout children on screen",

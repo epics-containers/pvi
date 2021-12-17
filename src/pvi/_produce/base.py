@@ -2,8 +2,6 @@ from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
 
-from apischema.conversions import as_names
-
 from pvi._utils import Annotated, as_discriminated_union, desc
 from pvi.device import Device
 

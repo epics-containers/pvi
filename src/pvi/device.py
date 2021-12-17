@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, fields
 from typing import (
     Any,
     Callable,
@@ -152,13 +152,29 @@ class Named:
         str, desc("PascalCase name to uniquely identify", pattern=r"([A-Z][a-z0-9]*)*$")
     ]
 
-    # TODO: add optional label in subclasses to override this
+
+class Labelled(Named):
+    label: str
+
+    def __init_subclass__(cls, **kwargs):
+        # Add an optional label to the end of the dataclass if not already there
+        has_label_field = [f for f in fields(cls) if f.name == "label"]
+        if not has_label_field:
+            cls.__annotations__["label"] = Annotated[
+                str, desc("Label for GUI. If empty, use name in Title Case")
+            ]
+            cls.label = ""
+            dataclass(cls)
+
     def get_label(self):
-        return to_title_case(self.name)
+        if getattr(self, "label", ""):
+            return self.label
+        else:
+            return to_title_case(self.name)
 
 
 @as_discriminated_union
-class Component(Named):
+class Component(Labelled):
     """These make up a Device"""
 
 
@@ -220,7 +236,7 @@ S = TypeVar("S")
 
 @add_type_field
 @dataclass
-class Group(Generic[T], Named):
+class Group(Generic[T], Labelled):
     """Group of child components in a Layout"""
 
     layout: Annotated[Layout, desc("How to layout children on screen")]

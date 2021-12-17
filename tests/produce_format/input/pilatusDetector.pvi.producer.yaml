@@ -1,11 +1,11 @@
 # yaml-language-server: $schema=../../../schemas/pvi.producer.schema.json
 type: AsynProducer
+parent: ADDriver
 label: Pilatus Detector
 prefix: $(P)$(R)
 asyn_port: $(PORT)
 address: $(ADDR)
 timeout: $(TIMEOUT)
-parent_class: ADDriver
 parameters:
 
 - type: Group

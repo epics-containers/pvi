@@ -66,6 +66,7 @@ class TemplateConverter:
             asyn_port=asyn_vars.get(0, "$(PORT)"),
             address=asyn_vars.get(1, "$(ADDR=0)"),
             timeout=asyn_vars.get(2, "$(TIMEOUT=1)"),
+            parent="asynPortDriver",
             parameters=[
                 Group(
                     name="ComponentGroupOne",

@@ -1,3 +1,4 @@
+import shutil
 from pathlib import Path
 
 import pytest
@@ -22,11 +23,16 @@ def test_version():
 def assert_output_matches(
     expected_path: Path, cmd: str, output_path: Path, *paths: Path
 ):
-    args = [cmd, str(output_path)] + [str(p) for p in paths]
+    args = cmd.split() + [str(output_path)] + [str(p) for p in paths]
     result = CliRunner().invoke(app, args)
     if result.exception:
         raise result.exception
-    assert output_path.read_text() == expected_path.read_text()
+    if expected_path.is_dir():
+        for child in expected_path.iterdir():
+            output_child = output_path / child.relative_to(expected_path)
+            assert output_child.read_text() == child.read_text()
+    else:
+        assert output_path.read_text() == expected_path.read_text()
 
 
 @pytest.mark.parametrize(
@@ -70,4 +76,19 @@ def test_format(tmp_path, filename, formatter):
     formatter_path = HERE / "produce_format" / "input" / formatter
     assert_output_matches(
         expected_path, "format", tmp_path / filename, PILATUS_PRODUCER, formatter_path
+    )
+
+
+def test_convert(tmp_path):
+    expected_path = HERE / "convert" / "output"
+    input_path = HERE / "convert" / "input"
+    for parent in ["ADDriver", "asynNDArrayDriver"]:
+        shutil.copy(input_path / f"{parent}.pvi.producer.yaml", tmp_path)
+    assert_output_matches(
+        expected_path,
+        "convert asyn",
+        tmp_path,
+        input_path / "pilatus.template",
+        input_path / "pilatusDetector.cpp",
+        input_path / "pilatusDetector.h",
     )

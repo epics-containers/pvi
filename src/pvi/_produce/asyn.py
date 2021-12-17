@@ -1,5 +1,5 @@
 import csv
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, ClassVar, Iterator, Optional, Union
 
@@ -243,12 +243,16 @@ class AsynProducer(Producer):
     asyn_port: Annotated[str, desc("The asyn port name")]
     address: Annotated[str, desc("The asyn address")]
     timeout: Annotated[str, desc("The timeout for the asyn port")]
-    parent_class: Annotated[
-        str, desc("The parent class for the ParamSet.h")
-    ] = "ADDriver"
+    parent: Annotated[
+        str,
+        desc(
+            "The parent producer (basename of yaml file), "
+            "asynPortDriver is the top of the tree"
+        ),
+    ]
     parameters: Annotated[
         Tree[AsynParameter], desc("The parameters to make into an IOC")
-    ] = field(default_factory=list)
+    ]
 
     def _read_record_suffix(self, parameter: AsynParameter) -> str:
         if parameter.read_record_suffix:
@@ -363,7 +367,7 @@ This file was automatically generated
     def produce_other(self, path: Path):
         """Make things like cpp, h files"""
         is_valid = path.suffix == ".h" and "." not in path.stem
-        parent_param_set = get_param_set(self.parent_class)
+        parent_param_set = get_param_set(self.parent)
         assert is_valid, f"Can only make header files not {path}"
         guard_define = path.stem[0].upper() + path.stem[1:] + "_H"
         defines = []

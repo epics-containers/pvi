@@ -5,7 +5,7 @@ asyn_port: $(PORT)
 address: $(ADDR=0)
 timeout: $(TIMEOUT=1)
 label: Asyn ND Array Driver
-parent_class: asynPortDriver
+parent: asynPortDriver
 parameters:
 
 - type: Group

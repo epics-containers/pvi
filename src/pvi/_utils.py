@@ -3,7 +3,7 @@ import sys
 from dataclasses import field, make_dataclass
 from functools import lru_cache
 from pathlib import Path
-from typing import Any, Callable, List, Optional, Pattern, Type, TypeVar, Union
+from typing import Any, Callable, List, Optional, Pattern, Set, Type, TypeVar, Union
 
 import jsonschema
 from apischema import (
@@ -18,7 +18,6 @@ from apischema import (
 from apischema.conversions import Conversion
 from apischema.conversions.converters import serializer
 from apischema.json_schema import deserialization_schema
-from apischema.serialization import PassThroughOptions
 from apischema.utils import CAMEL_CASE_REGEX, identity
 from ruamel.yaml import YAML
 from typing_extensions import Literal
@@ -42,6 +41,9 @@ def rec_subclasses(cls: Cls) -> List[Cls]:
     for sub_cls in cls.__subclasses__():
         subclasses += [sub_cls] + rec_subclasses(sub_cls)
     return subclasses
+
+
+has_type: Set[type] = set()
 
 
 def _make_converters(cls: Cls, classes: Callable[[Cls], List[Cls]]) -> Cls:
@@ -90,6 +92,7 @@ def _make_converters(cls: Cls, classes: Callable[[Cls], List[Cls]]) -> Cls:
     serializer(lazy=serialization, source=cls)
     deserializer(lazy=deserialization, target=cls)
     type_name(lambda tp, arg: f"{arg.__name__}{tp.__name__}")(cls)
+    has_type.add(cls)
     return cls
 
 
@@ -144,6 +147,9 @@ def serialize_yaml(obj, path: Path):
 
 
 def deserialize_yaml(cls: Type[T], path: Path) -> T:
+    # Walk up to find the deserialization root
+    while cls not in has_type and len(cls.__mro__) > 1:
+        cls = cls.__mro__[1]
     suffix = f".pvi.{cls.__name__.lower()}.yaml"
     assert path.name.endswith(suffix), f"Expected '{path.name}' to end with '{suffix}'"
     # Need to use the safe loader otherwise we get:

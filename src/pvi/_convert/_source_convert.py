@@ -6,7 +6,6 @@ from pathlib import Path
 from typing import Dict, List, Tuple
 
 from pvi._produce.asyn import AsynParameter, AsynProducer
-from pvi._produce.base import Producer
 from pvi._utils import deserialize_yaml
 from pvi.device import Tree, walk
 
@@ -255,10 +254,10 @@ def find_parent_components(yaml_name: str, module_root: Path) -> Tree[AsynParame
     if yaml_directory is None:
         raise IOError(f"Cannot find {producer_name}")
 
-    producer = deserialize_yaml(Producer, Path(yaml_directory) / producer_name)
+    producer = deserialize_yaml(AsynProducer, Path(yaml_directory) / producer_name)
 
     return list(producer.parameters) + list(
-        find_parent_components(producer.parent_class, module_root)
+        find_parent_components(producer.parent, module_root)
     )
 
 

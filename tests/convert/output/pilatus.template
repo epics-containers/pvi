@@ -3,21 +3,6 @@ include "pilatusDetectorParamSet.template"
 # Mark Rivers
 # July 25, 2008
 
-# % macro, P, Device Prefix
-# % macro, R, Device Suffix
-# % macro, PORT, Asyn Port name
-# % macro, ADDR, Asyn Port address
-# % macro, TIMEOUT, Timeout
-# % macro, CAMSERVER_PORT, Asyn IPPort attached to camserver
-
-# All tags starting with gdatag are DLS specific for GDA
-# % gdatag, template, ADPilatus, $(PORT)_pilatus, $(PORT) Pilatus class instance
-
-# This associates the template with an edm screen
-# % gui, $(PORT), edmtab, pilatusDetector.edl, P=$(P),R=$(R)
-
-include "pilatus_detail.template"
-
 include "ADBase.template"
 include "NDFile.template"
 
@@ -68,10 +53,9 @@ record(mbbi, "$(P)$(R)FileFormat_RBV")
 }
 
 # Armed flag, which indicates Pilatus is ready for external triggers
-# % gdatag, binary, ro, $(PORT)_pilatus, Armed, Armed flag
 
 
-# Reset module power 
+# Reset module power
 
 
 # Reset module power delay time
@@ -81,18 +65,13 @@ record(mbbi, "$(P)$(R)FileFormat_RBV")
 
 
 # Delay time in External Trigger mode.
-# % gdatag, pv, rw, $(PORT)_pilatus, DelayTime, Set DelayTime
 
 
-# % gdatag, pv, ro, $(PORT)_pilatus, DelayTime_RBV, Readback for DelayTime
 
 
 # Threshold energy
-# % gdatag, pv, rw, $(PORT)_pilatus, ThresholdEnergy, Set ThresholdEnergy
 
 
-# % gdatag, pv, ro, $(PORT)_pilatus, ThresholdEnergy_RBV, Readback for ThresholdEnergy
-# % archiver 10 Monitor
 
 
 # Threshold apply command
@@ -110,11 +89,9 @@ record(mbbi, "$(P)$(R)FileFormat_RBV")
 
 
 # Gain menu.  This writes to the Gain PV in the base database.
-# % gdatag, mbbinary, rw, $(PORT)_pilatus, GainMenu, Set Gain
 record(mbbo, "$(P)$(R)GainMenu")
 {
     field(DESC, "Shaping time and gain")
-    field(DTYP, "Raw Soft Channel")
     field(OUT,  "$(P)$(R)Gain.VAL PP MS")
     field(ZRST, "7-30KeV/Fast/LowG")
     field(ZRVL, "0")
@@ -125,41 +102,31 @@ record(mbbo, "$(P)$(R)GainMenu")
     field(THST, "2-5KeV/Slow/UltraG")
     field(THVL, "3")
     field(VAL,  "1")
-    info(autosaveFields, "VAL")
 }
 
 
 # Timeout waiting for image to be written to file system
-# % gdatag, pv, rw, $(PORT)_pilatus, ImageFileTmot, Set ImageFileTmot
 
 
 # Bad pixel file
-# % gdatag, array, rw, $(PORT)_pilatus, BadPixelFile, Set BadPixelFile
 
 
 # Number of bad pixels
-# % gdatag, pv, ro, $(PORT)_pilatus, NumBadPixels, Read NumBadPixels
 
 
 # Flat field file
-# % gdatag, array, rw, $(PORT)_pilatus, FlatFieldFile, Set FlatFieldFile
 
 
 # Minimum flat field value
-# % gdatag, pv, rw, $(PORT)_pilatus, MinFlatField, Set MinFlatField
 
 
-# % gdatag, pv, ro, $(PORT)_pilatus, MinFlatField_RBV, Readback for MinFlatField
 
 
 # Flat field valid flag.
-# % gdatag, binary, ro, $(PORT)_pilatus, FlatFieldValid, FlatFieldValid flag
 
 
-# % gdatag, pv, rw, $(PORT)_pilatus, GapFill, Set GapFill
 
 
-# % gdatag, pv, rw, $(PORT)_pilatus, GapFill_RBV, Readback for GapFill
 
 
 
@@ -174,73 +141,50 @@ record(asyn, "$(P)$(R)CamserverAsyn")
 
 # ancillary information
 
-# % gdatag, pv, rw, $(PORT)_pilatus, Wavelength, Set Wavelength
 
 
-# % gdatag, pv, rw, $(PORT)_pilatus, EnergyLow, Set EnergyLow
 
 
-# % gdatag, pv, rw, $(PORT)_pilatus, EnergyHigh, Set EnergyHigh
 
 
-# % gdatag, pv, rw, $(PORT)_pilatus, DetDist, Set DetDist
 
 
-# % gdatag, pv, rw, $(PORT)_pilatus, DetVOffset, Set DetVOffset
 
 
-# % gdatag, pv, rw, $(PORT)_pilatus, BeamX, Set BeamX
 
 
-# % gdatag, pv, rw, $(PORT)_pilatus, BeamY, Set BeamY
 
 
-# % gdatag, pv, rw, $(PORT)_pilatus, Flux, Set Flux
 
 
-# % gdatag, pv, rw, $(PORT)_pilatus, FilterTransm, Set FilterTransm
 
 
-# % gdatag, pv, rw, $(PORT)_pilatus, StartAngle, Set StartAngle
 
 
-# % gdatag, pv, rw, $(PORT)_pilatus, AngleIncr, Set AngleIncr
 
 
-# % gdatag, pv, rw, $(PORT)_pilatus, Det2theta, Set Det2theta
 
 
-# % gdatag, pv, rw, $(PORT)_pilatus, Polarization, Set Polarization
 
 
-# % gdatag, pv, rw, $(PORT)_pilatus, Alpha, Set Alpha
 
 
-# % gdatag, pv, rw, $(PORT)_pilatus, Kappa, Set Kappa
 
 
-# % gdatag, pv, rw, $(PORT)_pilatus, Phi, Set Phi
 
 
-# % gdatag, pv, rw, $(PORT)_pilatus, PhiIncr, Set PhiIncr
 
 
-# % gdatag, pv, rw, $(PORT)_pilatus, Chi, Set Chi
 
 
-# % gdatag, pv, rw, $(PORT)_pilatus, ChiIncr, Set ChiIncr
 
 
-# % gdatag, pv, rw, $(PORT)_pilatus, Omega, Set Omega
 
 
-# % gdatag, pv, rw, $(PORT)_pilatus, OmegaIncr, Set OmegaIncr
 
 
-# % gdatag, pv, rw, $(PORT)_pilatus, OscillAxis, Set OscillAxis
 
 
-# % gdatag, pv, rw, $(PORT)_pilatus, NumOscill, Set NumOscill
 
 
 
@@ -327,30 +271,21 @@ record(bi, "$(P)$(R)ReverseY_RBV")
     field(DISA, "1")
 }
 
-# % gdatag, pv, ro, $(PORT)_pilatus, PixelCutOff_RBV, Readback for tau pixel cut off
-
-
-# % archiver 10 Monitor
-
-
-# % archiver 10 Monitor
-
-
-# % archiver 10 Monitor
-
-
-# % archiver 10 Monitor
-
-
-# % archiver 10 Monitor
-
-
-# % archiver 10 Monitor
 
 
 
 
-# % gdatag, array, rw, $(PORT)_pilatus, CbfTemplateFile, Set CbfTemplateFile
+
+
+
+
+
+
+
+
+
+
+
 
 
 

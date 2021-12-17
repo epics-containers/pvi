@@ -68,6 +68,11 @@
           "pattern": "([A-Z][a-z0-9]*)*$",
           "description": "PascalCase name to uniquely identify"
         },
+        "label": {
+          "type": "string",
+          "description": "Label for GUI. If empty, use name in Title Case",
+          "default": ""
+        },
         "pv": {
           "type": "string",
           "description": "PV to be used for get and monitor"
@@ -238,6 +243,11 @@
           "pattern": "([A-Z][a-z0-9]*)*$",
           "description": "PascalCase name to uniquely identify"
         },
+        "label": {
+          "type": "string",
+          "description": "Label for GUI. If empty, use name in Title Case",
+          "default": ""
+        },
         "pv": {
           "type": "string",
           "description": "PV to be used for put"
@@ -374,6 +384,11 @@
           "pattern": "([A-Z][a-z0-9]*)*$",
           "description": "PascalCase name to uniquely identify"
         },
+        "label": {
+          "type": "string",
+          "description": "Label for GUI. If empty, use name in Title Case",
+          "default": ""
+        },
         "pv": {
           "type": "string",
           "description": "PV to be used for put"
@@ -427,6 +442,11 @@
           "pattern": "([A-Z][a-z0-9]*)*$",
           "description": "PascalCase name to uniquely identify"
         },
+        "label": {
+          "type": "string",
+          "description": "Label for GUI. If empty, use name in Title Case",
+          "default": ""
+        },
         "pv": {
           "type": "string",
           "description": "PV to be used for call"
@@ -455,6 +475,11 @@
           "pattern": "([A-Z][a-z0-9]*)*$",
           "description": "PascalCase name to uniquely identify"
         },
+        "label": {
+          "type": "string",
+          "description": "Label for GUI. If empty, use name in Title Case",
+          "default": ""
+        },
         "pv": {
           "type": "string",
           "description": "Child device PVI PV"
@@ -469,15 +494,20 @@
     "SignalRef": {
       "type": "object",
       "properties": {
-        "type": {
-          "type": "string",
-          "const": "SignalRef",
-          "default": "SignalRef"
-        },
         "name": {
           "type": "string",
           "pattern": "([A-Z][a-z0-9]*)*$",
           "description": "PascalCase name to uniquely identify"
+        },
+        "label": {
+          "type": "string",
+          "description": "Label for GUI. If empty, use name in Title Case",
+          "default": ""
+        },
+        "type": {
+          "type": "string",
+          "const": "SignalRef",
+          "default": "SignalRef"
         }
       },
       "required": [
@@ -497,6 +527,11 @@
           "type": "string",
           "pattern": "([A-Z][a-z0-9]*)*$",
           "description": "PascalCase name to uniquely identify"
+        },
+        "label": {
+          "type": "string",
+          "description": "Label for GUI. If empty, use name in Title Case",
+          "default": ""
         },
         "layout": {
           "description": "How to layout children on screen",

@@ -5,7 +5,7 @@ prefix: $(P)$(R)
 asyn_port: $(PORT)
 address: $(ADDR=0)
 timeout: $(TIMEOUT=1)
-parent_class: asynNDArrayDriver
+parent: asynNDArrayDriver
 parameters:
 
 - type: Group
