@@ -109,13 +109,9 @@ outputs them to file:
 Here's a cut down pilatus.yaml file that might describe a parameter in a
 detector:
 
-.. literalinclude:: ../../tests/pvi/pilatusDetector.pvi.yaml
+.. literalinclude:: ../../tests/produce_format/input/pilatusDetector.pvi.producer.yaml
     :language: yaml
 
-And these settings could then be overridden in a local YAML file:
-
-.. literalinclude:: ../../tests/pvi/pilatusDetector.local.yaml
-    :language: yaml
 
 Screen files
 ~~~~~~~~~~~~
@@ -141,7 +137,7 @@ The Parameter and record sections of the existing documentation could be
 reproduced, in tabular form as a csv file that can be included in rst docs:
 
 .. csv-table:: Pilatus Parameters
-   :file: ../../tests/expected/pilatusParamSet.csv
+   :file: ../../tests/produce_format/output/pilatusParameters.csv
    :widths: 15, 25, 60
    :header-rows: 1
 

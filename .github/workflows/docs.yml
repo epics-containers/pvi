@@ -22,6 +22,7 @@ jobs:
         with:
           # require history to get back to last tag for version number of branches
           fetch-depth: 0
+          submodules: true
 
       - name: Set up Python
         uses: actions/setup-python@v2
