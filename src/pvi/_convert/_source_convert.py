@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Dict, List, Tuple
 
 from pvi._produce.asyn import AsynParameter, AsynProducer
-from pvi._utils import deserialize_yaml
+from pvi._yaml_utils import deserialize_yaml
 from pvi.device import Tree, walk
 
 

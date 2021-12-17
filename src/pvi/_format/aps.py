@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import List
 
-from pvi._utils import Annotated, desc
+from pvi._schema_utils import Annotated, desc
 from pvi.device import Device
 
 from .base import Formatter

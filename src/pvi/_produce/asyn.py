@@ -8,14 +8,7 @@ from apischema.types import Number
 from epicsdbbuilder import WriteRecords, records
 from epicsdbbuilder.recordbase import Record
 
-from pvi._utils import (
-    Annotated,
-    as_discriminated_union,
-    desc,
-    get_param_set,
-    join_lines,
-    truncate_description,
-)
+from pvi._schema_utils import Annotated, as_discriminated_union, desc
 from pvi.device import (
     LED,
     CheckBox,
@@ -48,6 +41,7 @@ from .records import (
     StringRecordPair,
     WaveformRecordPair,
 )
+from .utils import get_param_set, join_lines, truncate_description
 
 
 @dataclass

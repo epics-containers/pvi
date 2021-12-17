@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from pathlib import Path
 
-from pvi._utils import as_discriminated_union
+from pvi._schema_utils import as_discriminated_union
 from pvi.device import Device
 
 

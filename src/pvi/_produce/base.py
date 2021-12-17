@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
 
-from pvi._utils import Annotated, as_discriminated_union, desc
+from pvi._schema_utils import Annotated, as_discriminated_union, desc
 from pvi.device import Device
 
 

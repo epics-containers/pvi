@@ -12,7 +12,7 @@ from epicsdbbuilder import dbd, mydbstatic, records
 from epicsdbbuilder.recordbase import Record
 from typing_extensions import Annotated as A
 
-from pvi._utils import desc
+from pvi._schema_utils import desc
 from pvi.device import Device
 
 # Add DBDs

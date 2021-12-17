@@ -2,25 +2,12 @@ import re
 import sys
 from dataclasses import field, make_dataclass
 from functools import lru_cache
-from pathlib import Path
-from typing import Any, Callable, List, Optional, Pattern, Set, Type, TypeVar, Union
+from typing import Any, Callable, List, Optional, Pattern, Set, TypeVar, Union
 
-import jsonschema
-from apischema import (
-    deserialize,
-    deserializer,
-    order,
-    schema,
-    serialize,
-    serialized,
-    type_name,
-)
+from apischema import deserializer, order, schema, serialized, type_name
 from apischema.conversions import Conversion
 from apischema.conversions.converters import serializer
-from apischema.json_schema import deserialization_schema
 from apischema.utils import CAMEL_CASE_REGEX, identity
-from ruamel.yaml import YAML
-from typing_extensions import Literal
 
 if sys.version_info >= (3, 8):
     from typing import Annotated, Literal
@@ -30,7 +17,6 @@ else:
 __all__ = ["Annotated", "Literal"]
 
 Cls = TypeVar("Cls", bound=type)
-T = TypeVar("T")
 
 
 # Permanently cache so we don't include deserialization subclasses defined below
@@ -120,42 +106,3 @@ def to_title_case(pascal_s: str) -> str:
         Title Case converted name. E.g. Pascal Case Field Name
     """
     return CAMEL_CASE_REGEX.sub(lambda m: " " + m.group(), pascal_s)[1:]
-
-
-def truncate_description(desc: str) -> str:
-    """Take the first line of a multiline description, truncated to 40 chars"""
-    first_line = desc.strip().split("\n")[0]
-    return first_line[:40]
-
-
-def join_lines(lines, indent=0):
-    return ("\n" + (" " * indent)).join(lines)
-
-
-def get_param_set(driver: str) -> str:
-    return "asynParamSet" if driver == "asynPortDriver" else driver + "ParamSet"
-
-
-def add_line_before_type(s: str) -> str:
-    return re.sub(r"(\s*- type:)", "\n\\g<1>", s)
-
-
-def serialize_yaml(obj, path: Path):
-    serialized = serialize(obj, exclude_none=True, exclude_defaults=True)
-    # TODO: add modeline
-    YAML().dump(serialized, path, transform=add_line_before_type)
-
-
-def deserialize_yaml(cls: Type[T], path: Path) -> T:
-    # Walk up to find the deserialization root
-    while cls not in has_type and len(cls.__mro__) > 1:
-        cls = cls.__mro__[1]
-    suffix = f".pvi.{cls.__name__.lower()}.yaml"
-    assert path.name.endswith(suffix), f"Expected '{path.name}' to end with '{suffix}'"
-    # Need to use the safe loader otherwise we get:
-    #    TypeError: Invalid JSON type <class 'ruamel.yaml.scalarfloat.ScalarFloat'>
-    d = YAML(typ="safe").load(path)
-    # first check the definition file with jsonschema since it has more
-    # legible error messages than apischema
-    jsonschema.validate(d, deserialization_schema(cls))
-    return deserialize(cls, d)

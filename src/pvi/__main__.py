@@ -11,7 +11,7 @@ from pvi._convert._template_convert import TemplateConverter
 from pvi._format import Formatter
 from pvi._produce import Producer
 from pvi._produce.asyn import AsynParameter
-from pvi._utils import deserialize_yaml, serialize_yaml
+from pvi._yaml_utils import deserialize_yaml, serialize_yaml
 from pvi.device import Device, walk
 
 app = typer.Typer()

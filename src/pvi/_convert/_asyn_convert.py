@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Tuple, Type, cast
 
 from pvi._produce.asyn import Access, AsynParameter, AsynWaveform
-from pvi._utils import rec_subclasses
+from pvi._schema_utils import rec_subclasses
 
 from ._parameters import Parameter, ReadParameterMixin, Record, WriteParameterMixin
 

@@ -16,7 +16,7 @@ from typing import (
 
 from apischema import deserialize, serialize
 
-from ._utils import (
+from ._schema_utils import (
     Annotated,
     add_type_field,
     as_discriminated_union,
