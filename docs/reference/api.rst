@@ -1,24 +1,24 @@
 API
 ===
 
-.. automodule:: dls_python3_skeleton
+.. automodule:: pvi
 
-    ``dls_python3_skeleton``
+    ``pvi``
     -----------------------------------
 
-This is the internal API reference for dls_python3_skeleton
+This is the internal API reference for pvi
 
 You can mix verbose text with docstring and signature extraction by
 using ``autoclass`` and ``autofunction`` directives instead of
 ``automodule`` below.
 
-.. data:: dls_python3_skeleton.__version__
+.. data:: pvi.__version__
     :type: str
 
     Version number as calculated by https://github.com/dls-controls/versiongit
 
-.. automodule:: dls_python3_skeleton.hello
+.. automodule:: pvi.hello
     :members:
 
-    ``dls_python3_skeleton.hello``
+    ``pvi.hello``
     -----------------------------------------

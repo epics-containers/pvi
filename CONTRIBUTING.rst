@@ -7,15 +7,15 @@ filing a new one. If you have a great idea but it involves big changes, please
 file a ticket before making a pull request! We want to make sure you don't spend
 your time coding something that might not fit the scope of the project.
 
-.. _Github: https://github.com/dls-controls/dls-python3-skeleton/issues
+.. _Github: https://github.com/epics-containers/pvi/issues
 
 Running the tests
 -----------------
 
 To get the source source code and run the unit tests, run::
 
-    $ git clone git://github.com/dls-controls/dls-python3-skeleton.git
-    $ cd dls-python3-skeleton
+    $ git clone git://github.com/epics-containers/pvi.git
+    $ cd pvi
     $ pipenv install --dev
     $ pipenv run tests
 
