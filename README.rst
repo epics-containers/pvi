@@ -27,16 +27,16 @@ prototype code is written.
 
 ****
 
-.. |code_ci| image:: https://github.com/dls-controls/pvi/workflows/Code%20CI/badge.svg?branch=master
-    :target: https://github.com/dls-controls/pvi/actions?query=workflow%3A%22Code+CI%22
+.. |code_ci| image:: https://github.com/epics-containers/pvi/workflows/Code%20CI/badge.svg?branch=master
+    :target: https://github.com/epics-containers/pvi/actions?query=workflow%3A%22Code+CI%22
     :alt: Code CI
 
-.. |docs_ci| image:: https://github.com/dls-controls/pvi/workflows/Docs%20CI/badge.svg?branch=master
-    :target: https://github.com/dls-controls/pvi/actions?query=workflow%3A%22Docs+CI%22
+.. |docs_ci| image:: https://github.com/epics-containers/pvi/workflows/Docs%20CI/badge.svg?branch=master
+    :target: https://github.com/epics-containers/pvi/actions?query=workflow%3A%22Docs+CI%22
     :alt: Docs CI
 
-.. |coverage| image:: https://codecov.io/gh/dls-controls/pvi/branch/master/graph/badge.svg
-    :target: https://codecov.io/gh/dls-controls/pvi
+.. |coverage| image:: https://codecov.io/gh/epics-containers/pvi/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/epics-containers/pvi
     :alt: Test Coverage
 
 .. |pypi_version| image:: https://img.shields.io/pypi/v/pvi.svg
