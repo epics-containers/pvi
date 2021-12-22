@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Drivers &mdash; pvi 0.0+untagged.g344a97c documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/pvi-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Why is something the way it is" href="../explanations/why-is-something-so.html" />
+    <link rel="prev" title="Installation Tutorial" href="../tutorials/installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: rgb(7, 43, 93)" >
+            <a href="../index.html" class="icon icon-home"> pvi
+            <img src="../_static/pvi-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                master
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/installation.html">Installation Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">How-to Guides</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Drivers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#database-template-file">Database Template File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ui">UI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ongoing-development">Ongoing Development</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#with-pvi">With PVI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#without-pvi">Without PVI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#class-hierarchy">Class Hierarchy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#change-summary">Change Summary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#caveats">Caveats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#next-steps">Next Steps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#possible-further-work">Possible Further Work</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Explanations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../explanations/why-is-something-so.html">Why is something the way it is</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/epics-containers/pvi/blob/master/CHANGELOG.rst">Changelog</a></li>
+<li class="toctree-l1"><a class="reference external" href="genindex.html#http://">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: rgb(7, 43, 93)" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pvi</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Drivers</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/how-to/drivers.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="drivers">
+<h1>Drivers<a class="headerlink" href="#drivers" title="Permalink to this headline"></a></h1>
+<p>The generated header file contains the string parameters, and defines the parameters to
+make the interface. In this example we have a header file pilatusDetectorParamSet.h:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#ifndef PilatusDetectorParamSet_H</span>
+<span class="cp">#define PilatusDetectorParamSet_H</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;ADDriverParamSet.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#define PilatusResetPowerString &quot;RESET_POWER&quot;</span>
+<span class="cp">#define PilatusThresholdApplyString &quot;THRESHOLD_APPLY&quot;</span>
+<span class="cp">#define PilatusImageFileTmotString &quot;IMAGE_FILE_TMOT&quot;</span>
+<span class="cp">#define PilatusWavelengthString &quot;WAVELENGTH&quot;</span>
+<span class="cp">#define PilatusEnergyLowString &quot;ENERGY_LOW&quot;</span>
+<span class="cp">#define PilatusEnergyHighString &quot;ENERGY_HIGH&quot;</span>
+<span class="cp">#define PilatusDetDistString &quot;DET_DIST&quot;</span>
+<span class="cp">#define PilatusDetVOffsetString &quot;DET_VOFFSET&quot;</span>
+<span class="cp">#define PilatusBeamXString &quot;BEAM_X&quot;</span>
+<span class="cp">#define PilatusBeamYString &quot;BEAM_Y&quot;</span>
+<span class="cp">#define PilatusFluxString &quot;FLUX&quot;</span>
+<span class="cp">#define PilatusFilterTransmString &quot;FILTER_TRANSM&quot;</span>
+<span class="cp">#define PilatusStartAngleString &quot;START_ANGLE&quot;</span>
+<span class="cp">#define PilatusAngleIncrString &quot;ANGLE_INCR&quot;</span>
+<span class="cp">#define PilatusDet2thetaString &quot;DET_2THETA&quot;</span>
+<span class="cp">#define PilatusPolarizationString &quot;POLARIZATION&quot;</span>
+<span class="cp">#define PilatusAlphaString &quot;ALPHA&quot;</span>
+<span class="cp">#define PilatusKappaString &quot;KAPPA&quot;</span>
+<span class="cp">#define PilatusPhiString &quot;PHI&quot;</span>
+<span class="cp">#define PilatusPhiIncrString &quot;PHI_INCR&quot;</span>
+<span class="cp">#define PilatusChiString &quot;CHI&quot;</span>
+<span class="cp">#define PilatusChiIncrString &quot;CHI_INCR&quot;</span>
+<span class="cp">#define PilatusOmegaString &quot;OMEGA&quot;</span>
+<span class="cp">#define PilatusOmegaIncrString &quot;OMEGA_INCR&quot;</span>
+<span class="cp">#define PilatusOscillAxisString &quot;OSCILL_AXIS&quot;</span>
+<span class="cp">#define PilatusNumOscillString &quot;NUM_OSCILL&quot;</span>
+<span class="cp">#define PilatusBadPixelFileString &quot;BAD_PIXEL_FILE&quot;</span>
+<span class="cp">#define PilatusFlatFieldFileString &quot;FLAT_FIELD_FILE&quot;</span>
+<span class="cp">#define PilatusCbfTemplateFileString &quot;CBFTEMPLATEFILE&quot;</span>
+<span class="cp">#define PilatusHeaderStringString &quot;HEADERSTRING&quot;</span>
+<span class="cp">#define PilatusArmedString &quot;ARMED&quot;</span>
+<span class="cp">#define PilatusNumBadPixelsString &quot;NUM_BAD_PIXELS&quot;</span>
+<span class="cp">#define PilatusFlatFieldValidString &quot;FLAT_FIELD_VALID&quot;</span>
+<span class="cp">#define PilatusPixelCutOffString &quot;PIXEL_CUTOFF&quot;</span>
+<span class="cp">#define PilatusThTemp0String &quot;TH_TEMP_0&quot;</span>
+<span class="cp">#define PilatusThTemp1String &quot;TH_TEMP_1&quot;</span>
+<span class="cp">#define PilatusThTemp2String &quot;TH_TEMP_2&quot;</span>
+<span class="cp">#define PilatusThHumid0String &quot;TH_HUMID_0&quot;</span>
+<span class="cp">#define PilatusThHumid1String &quot;TH_HUMID_1&quot;</span>
+<span class="cp">#define PilatusThHumid2String &quot;TH_HUMID_2&quot;</span>
+<span class="cp">#define PilatusTvxVersionString &quot;TVXVERSION&quot;</span>
+<span class="cp">#define PilatusResetPowerTimeString &quot;RESET_POWER_TIME&quot;</span>
+<span class="cp">#define PilatusDelayTimeString &quot;DELAY_TIME&quot;</span>
+<span class="cp">#define PilatusThresholdString &quot;THRESHOLD&quot;</span>
+<span class="cp">#define PilatusThresholdAutoApplyString &quot;THRESHOLD_AUTO_APPLY&quot;</span>
+<span class="cp">#define PilatusEnergyString &quot;ENERGY&quot;</span>
+<span class="cp">#define PilatusMinFlatFieldString &quot;MIN_FLAT_FIELD&quot;</span>
+<span class="cp">#define PilatusGapFillString &quot;GAP_FILL&quot;</span>
+
+<span class="k">class</span> <span class="nc">pilatusDetectorParamSet</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="k">virtual</span><span class="w"> </span><span class="n">ADDriverParamSet</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="k">public</span><span class="o">:</span><span class="w"></span>
+<span class="w">    </span><span class="n">pilatusDetectorParamSet</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusResetPowerString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamInt32</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusResetPower</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusThresholdApplyString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamInt32</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusThresholdApply</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusImageFileTmotString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamFloat64</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusImageFileTmot</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusWavelengthString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamFloat64</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusWavelength</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusEnergyLowString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamFloat64</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusEnergyLow</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusEnergyHighString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamFloat64</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusEnergyHigh</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusDetDistString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamFloat64</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusDetDist</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusDetVOffsetString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamFloat64</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusDetVOffset</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusBeamXString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamFloat64</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusBeamX</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusBeamYString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamFloat64</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusBeamY</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusFluxString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamFloat64</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusFlux</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusFilterTransmString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamFloat64</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusFilterTransm</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusStartAngleString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamFloat64</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusStartAngle</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusAngleIncrString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamFloat64</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusAngleIncr</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusDet2thetaString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamFloat64</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusDet2theta</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusPolarizationString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamFloat64</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusPolarization</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusAlphaString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamFloat64</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusAlpha</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusKappaString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamFloat64</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusKappa</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusPhiString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamFloat64</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusPhi</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusPhiIncrString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamFloat64</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusPhiIncr</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusChiString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamFloat64</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusChi</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusChiIncrString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamFloat64</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusChiIncr</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusOmegaString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamFloat64</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusOmega</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusOmegaIncrString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamFloat64</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusOmegaIncr</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusOscillAxisString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamOctet</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusOscillAxis</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusNumOscillString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamInt32</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusNumOscill</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusBadPixelFileString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamOctet</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusBadPixelFile</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusFlatFieldFileString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamOctet</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusFlatFieldFile</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusCbfTemplateFileString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamOctet</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusCbfTemplateFile</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusHeaderStringString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamOctet</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusHeaderString</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusArmedString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamInt32</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusArmed</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusNumBadPixelsString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamInt32</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusNumBadPixels</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusFlatFieldValidString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamInt32</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusFlatFieldValid</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusPixelCutOffString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamInt32</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusPixelCutOff</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusThTemp0String</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamFloat64</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusThTemp0</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusThTemp1String</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamFloat64</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusThTemp1</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusThTemp2String</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamFloat64</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusThTemp2</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusThHumid0String</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamFloat64</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusThHumid0</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusThHumid1String</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamFloat64</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusThHumid1</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusThHumid2String</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamFloat64</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusThHumid2</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusTvxVersionString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamOctet</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusTvxVersion</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusResetPowerTimeString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamInt32</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusResetPowerTime</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusDelayTimeString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamFloat64</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusDelayTime</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusThresholdString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamFloat64</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusThreshold</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusThresholdAutoApplyString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamInt32</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusThresholdAutoApply</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusEnergyString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamFloat64</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusEnergy</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusMinFlatFieldString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamInt32</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusMinFlatField</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">PilatusGapFillString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamInt32</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusGapFill</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusResetPower</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="cp">#define FIRST_PILATUSDETECTORPARAMSET_PARAM PilatusResetPower</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusThresholdApply</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusImageFileTmot</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusWavelength</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusEnergyLow</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusEnergyHigh</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusDetDist</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusDetVOffset</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusBeamX</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusBeamY</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusFlux</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusFilterTransm</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusStartAngle</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusAngleIncr</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusDet2theta</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusPolarization</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusAlpha</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusKappa</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusPhi</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusPhiIncr</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusChi</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusChiIncr</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusOmega</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusOmegaIncr</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusOscillAxis</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusNumOscill</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusBadPixelFile</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusFlatFieldFile</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusCbfTemplateFile</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusHeaderString</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusArmed</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusNumBadPixels</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusFlatFieldValid</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusPixelCutOff</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusThTemp0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusThTemp1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusThTemp2</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusThHumid0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusThHumid1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusThHumid2</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusTvxVersion</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusResetPowerTime</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusDelayTime</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusThreshold</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusThresholdAutoApply</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusEnergy</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusMinFlatField</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">PilatusGapFill</span><span class="p">;</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
+
+<span class="cp">#endif </span><span class="c1">// PilatusDetectorParamSet_H</span>
+</pre></div>
+</div>
+<p>The existing pilatus.cpp is then modified to remove these parameters definitions and
+use the param set API.</p>
+<section id="database-template-file">
+<h2>Database Template File<a class="headerlink" href="#database-template-file" title="Permalink to this headline"></a></h2>
+<p>According to the demand and readback properties of the component, the following
+records are created:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># This file was automatically generated
+# *** Please do not edit this file: edit the source file instead. ***
+
+# Group: GroupOne
+record(bo, &quot;$(P)$(R)ResetPower&quot;)
+{
+    field(DESC, &quot;ResetPower&quot;)
+    field(DTYP, &quot;asynInt32&quot;)
+    field(OUT,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))RESET_POWER&quot;)
+    field(ZNAM, &quot;Done&quot;)
+    field(ONAM, &quot;Reset&quot;)
+}
+
+record(busy, &quot;$(P)$(R)ThresholdApply&quot;)
+{
+    field(DESC, &quot;ThresholdApply&quot;)
+    field(DTYP, &quot;asynInt32&quot;)
+    field(OUT,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))THRESHOLD_APPLY&quot;)
+    field(ZNAM, &quot;Done&quot;)
+    field(ONAM, &quot;Apply&quot;)
+}
+
+record(ao, &quot;$(P)$(R)ImageFileTmot&quot;)
+{
+    field(DESC, &quot;Timeout for image file&quot;)
+    field(PINI, &quot;YES&quot;)
+    field(DTYP, &quot;asynFloat64&quot;)
+    field(VAL,  &quot;20.0&quot;)
+    field(OUT,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))IMAGE_FILE_TMOT&quot;)
+    field(PREC, &quot;3&quot;)
+    field(EGU,  &quot;s&quot;)
+}
+
+record(ao, &quot;$(P)$(R)Wavelength&quot;)
+{
+    field(DESC, &quot;Wavelength&quot;)
+    field(PINI, &quot;YES&quot;)
+    field(DTYP, &quot;asynFloat64&quot;)
+    field(VAL,  &quot;1.54&quot;)
+    field(OUT,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))WAVELENGTH&quot;)
+    field(PREC, &quot;4&quot;)
+    field(EGU,  &quot;Angstroms&quot;)
+}
+
+record(ao, &quot;$(P)$(R)EnergyLow&quot;)
+{
+    field(DESC, &quot;EnergyLow&quot;)
+    field(PINI, &quot;YES&quot;)
+    field(DTYP, &quot;asynFloat64&quot;)
+    field(VAL,  &quot;0.0&quot;)
+    field(OUT,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))ENERGY_LOW&quot;)
+    field(PREC, &quot;3&quot;)
+    field(EGU,  &quot;eV&quot;)
+}
+
+record(ao, &quot;$(P)$(R)EnergyHigh&quot;)
+{
+    field(DESC, &quot;EnergyHigh&quot;)
+    field(PINI, &quot;YES&quot;)
+    field(DTYP, &quot;asynFloat64&quot;)
+    field(VAL,  &quot;0.0&quot;)
+    field(OUT,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))ENERGY_HIGH&quot;)
+    field(PREC, &quot;3&quot;)
+    field(EGU,  &quot;eV&quot;)
+}
+
+record(ao, &quot;$(P)$(R)DetDist&quot;)
+{
+    field(DESC, &quot;DetDist&quot;)
+    field(PINI, &quot;YES&quot;)
+    field(DTYP, &quot;asynFloat64&quot;)
+    field(VAL,  &quot;1000.0&quot;)
+    field(OUT,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))DET_DIST&quot;)
+    field(PREC, &quot;3&quot;)
+    field(EGU,  &quot;mm&quot;)
+}
+
+record(ao, &quot;$(P)$(R)DetVOffset&quot;)
+{
+    field(DESC, &quot;DetVOffset&quot;)
+    field(PINI, &quot;YES&quot;)
+    field(DTYP, &quot;asynFloat64&quot;)
+    field(VAL,  &quot;0.0&quot;)
+    field(OUT,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))DET_VOFFSET&quot;)
+    field(PREC, &quot;3&quot;)
+    field(EGU,  &quot;mm&quot;)
+}
+
+record(ao, &quot;$(P)$(R)BeamX&quot;)
+{
+    field(DESC, &quot;BeamX&quot;)
+    field(PINI, &quot;YES&quot;)
+    field(DTYP, &quot;asynFloat64&quot;)
+    field(VAL,  &quot;0.0&quot;)
+    field(OUT,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))BEAM_X&quot;)
+    field(PREC, &quot;3&quot;)
+    field(EGU,  &quot;pixels&quot;)
+}
+
+record(ao, &quot;$(P)$(R)BeamY&quot;)
+{
+    field(DESC, &quot;BeamY&quot;)
+    field(PINI, &quot;YES&quot;)
+    field(DTYP, &quot;asynFloat64&quot;)
+    field(VAL,  &quot;0.0&quot;)
+    field(OUT,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))BEAM_Y&quot;)
+    field(PREC, &quot;3&quot;)
+    field(EGU,  &quot;pixels&quot;)
+}
+
+record(ao, &quot;$(P)$(R)Flux&quot;)
+{
+    field(DESC, &quot;Flux&quot;)
+    field(PINI, &quot;YES&quot;)
+    field(DTYP, &quot;asynFloat64&quot;)
+    field(VAL,  &quot;0.0&quot;)
+    field(OUT,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))FLUX&quot;)
+    field(PREC, &quot;4&quot;)
+    field(EGU,  &quot;ph/s&quot;)
+}
+
+record(ao, &quot;$(P)$(R)FilterTransm&quot;)
+{
+    field(DESC, &quot;FilterTransm&quot;)
+    field(PINI, &quot;YES&quot;)
+    field(DTYP, &quot;asynFloat64&quot;)
+    field(VAL,  &quot;1.0&quot;)
+    field(OUT,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))FILTER_TRANSM&quot;)
+    field(PREC, &quot;4&quot;)
+}
+
+record(ao, &quot;$(P)$(R)StartAngle&quot;)
+{
+    field(DESC, &quot;StartAngle&quot;)
+    field(PINI, &quot;YES&quot;)
+    field(DTYP, &quot;asynFloat64&quot;)
+    field(VAL,  &quot;0.0&quot;)
+    field(OUT,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))START_ANGLE&quot;)
+    field(PREC, &quot;4&quot;)
+    field(EGU,  &quot;deg&quot;)
+}
+
+record(ao, &quot;$(P)$(R)AngleIncr&quot;)
+{
+    field(DESC, &quot;AngleIncr&quot;)
+    field(PINI, &quot;YES&quot;)
+    field(DTYP, &quot;asynFloat64&quot;)
+    field(VAL,  &quot;0.1&quot;)
+    field(OUT,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))ANGLE_INCR&quot;)
+    field(PREC, &quot;4&quot;)
+    field(EGU,  &quot;deg&quot;)
+}
+
+record(ao, &quot;$(P)$(R)Det2theta&quot;)
+{
+    field(DESC, &quot;Det2theta&quot;)
+    field(PINI, &quot;YES&quot;)
+    field(DTYP, &quot;asynFloat64&quot;)
+    field(VAL,  &quot;0.0&quot;)
+    field(OUT,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))DET_2THETA&quot;)
+    field(PREC, &quot;4&quot;)
+    field(EGU,  &quot;deg&quot;)
+}
+
+record(ao, &quot;$(P)$(R)Polarization&quot;)
+{
+    field(DESC, &quot;Polarization&quot;)
+    field(PINI, &quot;YES&quot;)
+    field(DTYP, &quot;asynFloat64&quot;)
+    field(VAL,  &quot;0.99&quot;)
+    field(OUT,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))POLARIZATION&quot;)
+    field(PREC, &quot;4&quot;)
+}
+
+record(ao, &quot;$(P)$(R)Alpha&quot;)
+{
+    field(DESC, &quot;Alpha&quot;)
+    field(PINI, &quot;YES&quot;)
+    field(DTYP, &quot;asynFloat64&quot;)
+    field(VAL,  &quot;0.0&quot;)
+    field(OUT,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))ALPHA&quot;)
+    field(PREC, &quot;4&quot;)
+    field(EGU,  &quot;deg&quot;)
+}
+
+record(ao, &quot;$(P)$(R)Kappa&quot;)
+{
+    field(DESC, &quot;Kappa&quot;)
+    field(PINI, &quot;YES&quot;)
+    field(DTYP, &quot;asynFloat64&quot;)
+    field(VAL,  &quot;0.0&quot;)
+    field(OUT,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))KAPPA&quot;)
+    field(PREC, &quot;4&quot;)
+    field(EGU,  &quot;deg&quot;)
+}
+
+record(ao, &quot;$(P)$(R)Phi&quot;)
+{
+    field(DESC, &quot;Phi&quot;)
+    field(PINI, &quot;YES&quot;)
+    field(DTYP, &quot;asynFloat64&quot;)
+    field(VAL,  &quot;0.0&quot;)
+    field(OUT,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))PHI&quot;)
+    field(PREC, &quot;4&quot;)
+    field(EGU,  &quot;deg&quot;)
+}
+
+record(ao, &quot;$(P)$(R)PhiIncr&quot;)
+{
+    field(DESC, &quot;PhiIncr&quot;)
+    field(PINI, &quot;YES&quot;)
+    field(DTYP, &quot;asynFloat64&quot;)
+    field(VAL,  &quot;0.1&quot;)
+    field(OUT,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))PHI_INCR&quot;)
+    field(PREC, &quot;4&quot;)
+    field(EGU,  &quot;deg&quot;)
+}
+
+record(ao, &quot;$(P)$(R)Chi&quot;)
+{
+    field(DESC, &quot;Chi&quot;)
+    field(PINI, &quot;YES&quot;)
+    field(DTYP, &quot;asynFloat64&quot;)
+    field(VAL,  &quot;0.0&quot;)
+    field(OUT,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))CHI&quot;)
+    field(PREC, &quot;4&quot;)
+    field(EGU,  &quot;deg&quot;)
+}
+
+record(ao, &quot;$(P)$(R)ChiIncr&quot;)
+{
+    field(DESC, &quot;ChiIncr&quot;)
+    field(PINI, &quot;YES&quot;)
+    field(DTYP, &quot;asynFloat64&quot;)
+    field(VAL,  &quot;0.1&quot;)
+    field(OUT,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))CHI_INCR&quot;)
+    field(PREC, &quot;4&quot;)
+    field(EGU,  &quot;deg&quot;)
+}
+
+record(ao, &quot;$(P)$(R)Omega&quot;)
+{
+    field(DESC, &quot;Omega&quot;)
+    field(PINI, &quot;YES&quot;)
+    field(DTYP, &quot;asynFloat64&quot;)
+    field(VAL,  &quot;0.0&quot;)
+    field(OUT,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))OMEGA&quot;)
+    field(PREC, &quot;4&quot;)
+    field(EGU,  &quot;deg&quot;)
+}
+
+record(ao, &quot;$(P)$(R)OmegaIncr&quot;)
+{
+    field(DESC, &quot;OmegaIncr&quot;)
+    field(PINI, &quot;YES&quot;)
+    field(DTYP, &quot;asynFloat64&quot;)
+    field(VAL,  &quot;0.1&quot;)
+    field(OUT,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))OMEGA_INCR&quot;)
+    field(PREC, &quot;4&quot;)
+    field(EGU,  &quot;deg&quot;)
+}
+
+record(stringout, &quot;$(P)$(R)OscillAxis&quot;)
+{
+    field(DESC, &quot;OscillAxis&quot;)
+    field(PINI, &quot;YES&quot;)
+    field(DTYP, &quot;asynOctetWrite&quot;)
+    field(VAL,  &quot;X, CW&quot;)
+    field(OUT,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))OSCILL_AXIS&quot;)
+}
+
+record(longout, &quot;$(P)$(R)NumOscill&quot;)
+{
+    field(DESC, &quot;NumOscill&quot;)
+    field(PINI, &quot;YES&quot;)
+    field(DTYP, &quot;asynInt32&quot;)
+    field(VAL,  &quot;1&quot;)
+    field(OUT,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))NUM_OSCILL&quot;)
+}
+
+record(waveform, &quot;$(P)$(R)BadPixelFile&quot;)
+{
+    field(DESC, &quot;BadPixelFile&quot;)
+    field(DTYP, &quot;asynOctetWrite&quot;)
+    field(INP,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))BAD_PIXEL_FILE&quot;)
+    field(NELM, &quot;256&quot;)
+    field(FTVL, &quot;CHAR&quot;)
+}
+
+record(waveform, &quot;$(P)$(R)FlatFieldFile&quot;)
+{
+    field(DESC, &quot;FlatFieldFile&quot;)
+    field(DTYP, &quot;asynOctetWrite&quot;)
+    field(INP,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))FLAT_FIELD_FILE&quot;)
+    field(NELM, &quot;256&quot;)
+    field(FTVL, &quot;CHAR&quot;)
+}
+
+record(waveform, &quot;$(P)$(R)CbfTemplateFile&quot;)
+{
+    field(DESC, &quot;CbfTemplateFile&quot;)
+    field(DTYP, &quot;asynOctetWrite&quot;)
+    field(INP,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))CBFTEMPLATEFILE&quot;)
+    field(NELM, &quot;256&quot;)
+    field(FTVL, &quot;CHAR&quot;)
+}
+
+record(waveform, &quot;$(P)$(R)HeaderString&quot;)
+{
+    field(DESC, &quot;HeaderString&quot;)
+    field(DTYP, &quot;asynOctetWrite&quot;)
+    field(INP,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))HEADERSTRING&quot;)
+    field(NELM, &quot;68&quot;)
+    field(FTVL, &quot;CHAR&quot;)
+}
+
+record(bi, &quot;$(P)$(R)Armed&quot;)
+{
+    field(DESC, &quot;Armed&quot;)
+    field(SCAN, &quot;I/O Intr&quot;)
+    field(DTYP, &quot;asynInt32&quot;)
+    field(INP,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))ARMED&quot;)
+    field(ZNAM, &quot;Unarmed&quot;)
+    field(ONAM, &quot;Armed&quot;)
+}
+
+record(longin, &quot;$(P)$(R)NumBadPixels&quot;)
+{
+    field(DESC, &quot;Number of bad pixels&quot;)
+    field(SCAN, &quot;I/O Intr&quot;)
+    field(DTYP, &quot;asynInt32&quot;)
+    field(INP,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))NUM_BAD_PIXELS&quot;)
+}
+
+record(bi, &quot;$(P)$(R)FlatFieldValid&quot;)
+{
+    field(DESC, &quot;Flat field valid&quot;)
+    field(SCAN, &quot;I/O Intr&quot;)
+    field(DTYP, &quot;asynInt32&quot;)
+    field(INP,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))FLAT_FIELD_VALID&quot;)
+    field(ZNAM, &quot;No&quot;)
+    field(ONAM, &quot;Yes&quot;)
+}
+
+record(ai, &quot;$(P)$(R)PixelCutOff_RBV&quot;)
+{
+    field(DESC, &quot;PixelCutOff_RBV&quot;)
+    field(SCAN, &quot;I/O Intr&quot;)
+    field(DTYP, &quot;asynInt32&quot;)
+    field(INP,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))PIXEL_CUTOFF&quot;)
+    field(EGU,  &quot;counts&quot;)
+}
+
+record(ai, &quot;$(P)$(R)Temp0_RBV&quot;)
+{
+    field(DESC, &quot;Temp0_RBV&quot;)
+    field(SCAN, &quot;I/O Intr&quot;)
+    field(DTYP, &quot;asynFloat64&quot;)
+    field(INP,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))TH_TEMP_0&quot;)
+    field(PREC, &quot;1&quot;)
+    field(EGU,  &quot;C&quot;)
+}
+
+record(ai, &quot;$(P)$(R)Temp1_RBV&quot;)
+{
+    field(DESC, &quot;Temp1_RBV&quot;)
+    field(SCAN, &quot;I/O Intr&quot;)
+    field(DTYP, &quot;asynFloat64&quot;)
+    field(INP,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))TH_TEMP_1&quot;)
+    field(PREC, &quot;1&quot;)
+    field(EGU,  &quot;C&quot;)
+}
+
+record(ai, &quot;$(P)$(R)Temp2_RBV&quot;)
+{
+    field(DESC, &quot;Temp2_RBV&quot;)
+    field(SCAN, &quot;I/O Intr&quot;)
+    field(DTYP, &quot;asynFloat64&quot;)
+    field(INP,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))TH_TEMP_2&quot;)
+    field(PREC, &quot;1&quot;)
+    field(EGU,  &quot;C&quot;)
+}
+
+record(ai, &quot;$(P)$(R)Humid0_RBV&quot;)
+{
+    field(DESC, &quot;Humid0_RBV&quot;)
+    field(SCAN, &quot;I/O Intr&quot;)
+    field(DTYP, &quot;asynFloat64&quot;)
+    field(INP,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))TH_HUMID_0&quot;)
+    field(PREC, &quot;1&quot;)
+    field(EGU,  &quot;%&quot;)
+}
+
+record(ai, &quot;$(P)$(R)Humid1_RBV&quot;)
+{
+    field(DESC, &quot;Humid1_RBV&quot;)
+    field(SCAN, &quot;I/O Intr&quot;)
+    field(DTYP, &quot;asynFloat64&quot;)
+    field(INP,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))TH_HUMID_1&quot;)
+    field(PREC, &quot;1&quot;)
+    field(EGU,  &quot;%&quot;)
+}
+
+record(ai, &quot;$(P)$(R)Humid2_RBV&quot;)
+{
+    field(DESC, &quot;Humid2_RBV&quot;)
+    field(SCAN, &quot;I/O Intr&quot;)
+    field(DTYP, &quot;asynFloat64&quot;)
+    field(INP,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))TH_HUMID_2&quot;)
+    field(PREC, &quot;1&quot;)
+    field(EGU,  &quot;%&quot;)
+}
+
+record(stringin, &quot;$(P)$(R)TVXVersion_RBV&quot;)
+{
+    field(DESC, &quot;TVXVersion_RBV&quot;)
+    field(SCAN, &quot;I/O Intr&quot;)
+    field(DTYP, &quot;asynOctetRead&quot;)
+    field(INP,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))TVXVERSION&quot;)
+}
+
+record(longin, &quot;$(P)$(R)ResetPowerTime_RBV&quot;)
+{
+    field(DESC, &quot;Reset module power wait time&quot;)
+    field(SCAN, &quot;I/O Intr&quot;)
+    field(DTYP, &quot;asynInt32&quot;)
+    field(INP,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))RESET_POWER_TIME&quot;)
+    field(EGU,  &quot;Seconds&quot;)
+}
+
+record(longout, &quot;$(P)$(R)ResetPowerTime&quot;)
+{
+    field(DESC, &quot;Reset module power wait time&quot;)
+    field(PINI, &quot;YES&quot;)
+    field(DTYP, &quot;asynInt32&quot;)
+    field(VAL,  &quot;1&quot;)
+    field(OUT,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))RESET_POWER_TIME&quot;)
+    field(EGU,  &quot;Seconds&quot;)
+}
+
+record(ai, &quot;$(P)$(R)DelayTime_RBV&quot;)
+{
+    field(DESC, &quot;DelayTime&quot;)
+    field(SCAN, &quot;I/O Intr&quot;)
+    field(DTYP, &quot;asynFloat64&quot;)
+    field(INP,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))DELAY_TIME&quot;)
+    field(PREC, &quot;6&quot;)
+    field(EGU,  &quot;s&quot;)
+}
+
+record(ao, &quot;$(P)$(R)DelayTime&quot;)
+{
+    field(DESC, &quot;DelayTime&quot;)
+    field(PINI, &quot;YES&quot;)
+    field(DTYP, &quot;asynFloat64&quot;)
+    field(VAL,  &quot;0.0&quot;)
+    field(OUT,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))DELAY_TIME&quot;)
+    field(PREC, &quot;6&quot;)
+    field(EGU,  &quot;s&quot;)
+}
+
+record(ai, &quot;$(P)$(R)ThresholdEnergy_RBV&quot;)
+{
+    field(DESC, &quot;Energy threshold&quot;)
+    field(SCAN, &quot;I/O Intr&quot;)
+    field(DTYP, &quot;asynFloat64&quot;)
+    field(INP,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))THRESHOLD&quot;)
+    field(PREC, &quot;3&quot;)
+    field(EGU,  &quot;keV&quot;)
+}
+
+record(ao, &quot;$(P)$(R)ThresholdEnergy&quot;)
+{
+    field(DESC, &quot;Energy threshold&quot;)
+    field(PINI, &quot;YES&quot;)
+    field(DTYP, &quot;asynFloat64&quot;)
+    field(VAL,  &quot;10.0&quot;)
+    field(OUT,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))THRESHOLD&quot;)
+    field(PREC, &quot;3&quot;)
+    field(EGU,  &quot;keV&quot;)
+}
+
+record(bi, &quot;$(P)$(R)ThresholdAutoApply_RBV&quot;)
+{
+    field(DESC, &quot;ThresholdAutoApply&quot;)
+    field(SCAN, &quot;I/O Intr&quot;)
+    field(DTYP, &quot;asynInt32&quot;)
+    field(INP,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))THRESHOLD_AUTO_APPLY&quot;)
+    field(ZNAM, &quot;No&quot;)
+    field(ONAM, &quot;Yes&quot;)
+}
+
+record(bo, &quot;$(P)$(R)ThresholdAutoApply&quot;)
+{
+    field(DESC, &quot;ThresholdAutoApply&quot;)
+    field(PINI, &quot;YES&quot;)
+    field(DTYP, &quot;asynInt32&quot;)
+    field(VAL,  &quot;1&quot;)
+    field(OUT,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))THRESHOLD_AUTO_APPLY&quot;)
+    field(ZNAM, &quot;No&quot;)
+    field(ONAM, &quot;Yes&quot;)
+}
+
+record(ai, &quot;$(P)$(R)Energy_RBV&quot;)
+{
+    field(DESC, &quot;X-ray Energy&quot;)
+    field(SCAN, &quot;I/O Intr&quot;)
+    field(DTYP, &quot;asynFloat64&quot;)
+    field(INP,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))ENERGY&quot;)
+    field(PREC, &quot;3&quot;)
+    field(EGU,  &quot;keV&quot;)
+}
+
+record(ao, &quot;$(P)$(R)Energy&quot;)
+{
+    field(DESC, &quot;X-ray Energy&quot;)
+    field(PINI, &quot;YES&quot;)
+    field(DTYP, &quot;asynFloat64&quot;)
+    field(VAL,  &quot;20.0&quot;)
+    field(OUT,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))ENERGY&quot;)
+    field(PREC, &quot;3&quot;)
+    field(EGU,  &quot;keV&quot;)
+}
+
+record(longin, &quot;$(P)$(R)MinFlatField_RBV&quot;)
+{
+    field(DESC, &quot;Minimum flat field value&quot;)
+    field(SCAN, &quot;I/O Intr&quot;)
+    field(DTYP, &quot;asynInt32&quot;)
+    field(INP,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))MIN_FLAT_FIELD&quot;)
+    field(EGU,  &quot;Counts&quot;)
+}
+
+record(longout, &quot;$(P)$(R)MinFlatField&quot;)
+{
+    field(DESC, &quot;Minimum flat field value&quot;)
+    field(PINI, &quot;YES&quot;)
+    field(DTYP, &quot;asynInt32&quot;)
+    field(VAL,  &quot;100&quot;)
+    field(OUT,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))MIN_FLAT_FIELD&quot;)
+    field(EGU,  &quot;Counts&quot;)
+}
+
+record(mbbi, &quot;$(P)$(R)GapFill_RBV&quot;)
+{
+    field(DESC, &quot;GapFill&quot;)
+    field(SCAN, &quot;I/O Intr&quot;)
+    field(DTYP, &quot;asynInt32&quot;)
+    field(INP,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))GAP_FILL&quot;)
+    field(ZRVL, &quot;2&quot;)
+    field(ONVL, &quot;0&quot;)
+    field(TWVL, &quot;-1&quot;)
+    field(ZRST, &quot;N.A.&quot;)
+    field(ONST, &quot;0&quot;)
+    field(TWST, &quot;-1&quot;)
+}
+
+record(mbbo, &quot;$(P)$(R)GapFill&quot;)
+{
+    field(DESC, &quot;GapFill&quot;)
+    field(PINI, &quot;YES&quot;)
+    field(DTYP, &quot;asynInt32&quot;)
+    field(VAL,  &quot;0&quot;)
+    field(OUT,  &quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))GAP_FILL&quot;)
+    field(ZRVL, &quot;2&quot;)
+    field(ONVL, &quot;0&quot;)
+    field(TWVL, &quot;-1&quot;)
+    field(ZRST, &quot;N.A.&quot;)
+    field(ONST, &quot;0&quot;)
+    field(TWST, &quot;-1&quot;)
+}
+
+$(PVI=#)record(waveform, &quot;$(P)$(R)PVI&quot;)
+$(PVI=#){
+$(PVI=#)    field(DTYP, &quot;copyInfo&quot;)
+$(PVI=#)    info(copyInfo, {
+$(PVI=#)        &quot;label&quot;: &quot;Pilatus Detector&quot;,
+$(PVI=#)        &quot;children&quot;: [
+$(PVI=#)            {
+$(PVI=#)                &quot;type&quot;: &quot;Group&quot;,
+$(PVI=#)                &quot;name&quot;: &quot;GroupOne&quot;,
+$(PVI=#)                &quot;layout&quot;: {
+$(PVI=#)                    &quot;type&quot;: &quot;Grid&quot;
+$(PVI=#)                },
+$(PVI=#)                &quot;children&quot;: [
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;ResetPower&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;ResetPower&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;CheckBox&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;ThresholdApply&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;ThresholdApply&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;CheckBox&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;ImageFileTmot&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;ImageFileTmot&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextWrite&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;Wavelength&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;Wavelength&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextWrite&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;EnergyLow&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;EnergyLow&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextWrite&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;EnergyHigh&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;EnergyHigh&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextWrite&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;DetDist&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;DetDist&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextWrite&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;DetVOffset&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;DetVOffset&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextWrite&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;BeamX&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;BeamX&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextWrite&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;BeamY&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;BeamY&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextWrite&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;Flux&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;Flux&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextWrite&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;FilterTransm&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;FilterTransm&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextWrite&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;StartAngle&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;StartAngle&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextWrite&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;AngleIncr&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;AngleIncr&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextWrite&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;Det2theta&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;Det2theta&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextWrite&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;Polarization&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;Polarization&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextWrite&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;Alpha&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;Alpha&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextWrite&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;Kappa&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;Kappa&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextWrite&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;Phi&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;Phi&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextWrite&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;PhiIncr&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;PhiIncr&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextWrite&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;Chi&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;Chi&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextWrite&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;ChiIncr&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;ChiIncr&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextWrite&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;Omega&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;Omega&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextWrite&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;OmegaIncr&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;OmegaIncr&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextWrite&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;OscillAxis&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;OscillAxis&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextWrite&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;NumOscill&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;NumOscill&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextWrite&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;BadPixelFile&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;BadPixelFile&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextWrite&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;FlatFieldFile&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;FlatFieldFile&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextWrite&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;CbfTemplateFile&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;CbfTemplateFile&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextWrite&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;HeaderString&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;HeaderString&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextWrite&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalR&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;Armed&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;Armed&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;LED&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalR&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;NumBadPixels&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;NumBadPixels&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextRead&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalR&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;FlatFieldValid&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;FlatFieldValid&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;LED&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalR&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;PixelCutOff&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;PixelCutOff_RBV&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextRead&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalR&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;Temp0&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;Temp0_RBV&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextRead&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalR&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;Temp1&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;Temp1_RBV&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextRead&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalR&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;Temp2&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;Temp2_RBV&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextRead&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalR&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;Humid0&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;Humid0_RBV&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextRead&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalR&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;Humid1&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;Humid1_RBV&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextRead&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalR&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;Humid2&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;Humid2_RBV&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextRead&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalR&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;TVXVersion&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;TVXVersion_RBV&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextRead&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalRW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;ResetPowerTime&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;ResetPowerTime&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextWrite&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalRW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;DelayTime&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;DelayTime&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextWrite&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalRW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;ThresholdEnergy&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;ThresholdEnergy&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextWrite&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalRW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;ThresholdAutoApply&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;ThresholdAutoApply&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;CheckBox&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalRW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;Energy&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;Energy&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextWrite&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalRW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;MinFlatField&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;MinFlatField&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;TextWrite&quot;
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        &quot;type&quot;: &quot;SignalRW&quot;,
+$(PVI=#)                        &quot;name&quot;: &quot;GapFill&quot;,
+$(PVI=#)                        &quot;pv&quot;: &quot;GapFill&quot;,
+$(PVI=#)                        &quot;widget&quot;: {
+$(PVI=#)                            &quot;type&quot;: &quot;ComboBox&quot;
+$(PVI=#)                        }
+$(PVI=#)                    }
+$(PVI=#)                ]
+$(PVI=#)            }
+$(PVI=#)        ]
+$(PVI=#)    })
+$(PVI=#)}
+</pre></div>
+</div>
+<p>The top level pilatus.template includes this file, as well as records that
+provide logic (for things like the arrayRate and EPICSShutter in areaDetector).</p>
+</section>
+<section id="ui">
+<h2>UI<a class="headerlink" href="#ui" title="Permalink to this headline"></a></h2>
+<p>Finally, UI elements can be generated for each component for multiple graphical
+applications. For example, the following EDM screen is generated:</p>
+<a class="reference internal image-reference" href="../_images/pilatus_edl.png"><img alt="../_images/pilatus_edl.png" class="align-center" src="../_images/pilatus_edl.png" style="width: 50%;" /></a>
+<p>This can serve as a low level overview of the entire system, as well as a convenient
+pallette for constructing higher level, more structured screens.</p>
+</section>
+<section id="ongoing-development">
+<h2>Ongoing Development<a class="headerlink" href="#ongoing-development" title="Permalink to this headline"></a></h2>
+<p>Once a module is working with PVI (either an existing module after the YAML is created
+from the templates using the one time generation script, or a newly written module) it
+will then be necessary to update the YAML file in future development. Here is an
+example of necessary changes to add a new parameter, with and without
+PVI:</p>
+<section id="with-pvi">
+<h3>With PVI<a class="headerlink" href="#with-pvi" title="Permalink to this headline"></a></h3>
+<p>Update YAML file:</p>
+<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AsynFloat64</span>
+  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">DelayTime</span>
+  <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Delay in seconds between the external trigger and the start of image acquisition</span>
+  <span class="nt">role</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Setting</span>
+  <span class="nt">initial</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+  <span class="nt">record_fields</span><span class="p">:</span>
+    <span class="nt">PREC</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3</span>
+    <span class="nt">EGU</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">s</span>
+</pre></div>
+</div>
+<p>And then run pvi (or possibly just make, if it is integrated into a Makefile). It can
+then be shared with other sites who can generate their own required files.</p>
+</section>
+<section id="without-pvi">
+<h3>Without PVI<a class="headerlink" href="#without-pvi" title="Permalink to this headline"></a></h3>
+<p>Update template:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp"># Delay time in External Trigger mode.</span>
+<span class="n">record</span><span class="p">(</span><span class="n">ao</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;$(P)$(R)DelayTime&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">field</span><span class="p">(</span><span class="n">PINI</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;YES&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">field</span><span class="p">(</span><span class="n">DTYP</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;asynFloat64&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">field</span><span class="p">(</span><span class="n">OUT</span><span class="p">,</span><span class="w">  </span><span class="s">&quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))DELAY_TIME&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">field</span><span class="p">(</span><span class="n">EGU</span><span class="p">,</span><span class="w">  </span><span class="s">&quot;s&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">field</span><span class="p">(</span><span class="n">VAL</span><span class="p">,</span><span class="w">  </span><span class="s">&quot;0&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">field</span><span class="p">(</span><span class="n">PREC</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;6&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="n">record</span><span class="p">(</span><span class="n">ai</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;$(P)$(R)DelayTime_RBV&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">field</span><span class="p">(</span><span class="n">DTYP</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;asynFloat64&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">field</span><span class="p">(</span><span class="n">INP</span><span class="p">,</span><span class="w">  </span><span class="s">&quot;@asyn($(PORT),$(ADDR),$(TIMEOUT))DELAY_TIME&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">field</span><span class="p">(</span><span class="n">EGU</span><span class="p">,</span><span class="w">  </span><span class="s">&quot;s&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">field</span><span class="p">(</span><span class="n">PREC</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;6&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">field</span><span class="p">(</span><span class="n">SCAN</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;I/O Intr&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Update header file:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="p">...</span><span class="w"></span>
+<span class="cp">#define PilatusDelayTimeString &quot;DELAY_TIME&quot;</span>
+<span class="p">...</span><span class="w"></span>
+<span class="n">createParam</span><span class="p">(</span><span class="n">PilatusDelayTimeString</span><span class="p">,</span><span class="w"> </span><span class="n">asynParamFloat64</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">PilatusDelayTime</span><span class="p">);</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="n">PilatusDelayTime</span><span class="p">;</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Update docs:</p>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span><span class="m">*</span> - Delay in seconds between the external trigger and the start of image acquisition
+  <span class="m">-</span> DELAY_TIME
+  <span class="m">-</span> $(P)$(R)DelayTime
+  <span class="m">-</span> ao
+</pre></div>
+</div>
+<p>Update screens (of course, this will actually involve editing with a graphical
+interface):</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;text update&quot;</span> <span class="p">{</span>
+    <span class="nx">object</span> <span class="p">{</span>
+        <span class="nx">x</span><span class="o">=</span><span class="mf">604</span>
+        <span class="nx">y</span><span class="o">=</span><span class="mf">146</span>
+        <span class="nx">width</span><span class="o">=</span><span class="mf">80</span>
+        <span class="nx">height</span><span class="o">=</span><span class="mf">18</span>
+    <span class="p">}</span>
+    <span class="nx">monitor</span> <span class="p">{</span>
+        <span class="nx">chan</span><span class="o">=</span><span class="s2">&quot;$(P)$(R)DelayTime_RBV&quot;</span>
+        <span class="nx">clr</span><span class="o">=</span><span class="mf">54</span>
+        <span class="nx">bclr</span><span class="o">=</span><span class="mf">4</span>
+    <span class="p">}</span>
+    <span class="nx">align</span><span class="o">=</span><span class="s2">&quot;horiz. centered&quot;</span>
+    <span class="nx">limits</span> <span class="p">{</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="s2">&quot;text entry&quot;</span> <span class="p">{</span>
+    <span class="nx">object</span> <span class="p">{</span>
+        <span class="nx">x</span><span class="o">=</span><span class="mf">540</span>
+        <span class="nx">y</span><span class="o">=</span><span class="mf">145</span>
+        <span class="nx">width</span><span class="o">=</span><span class="mf">59</span>
+        <span class="nx">height</span><span class="o">=</span><span class="mf">20</span>
+    <span class="p">}</span>
+    <span class="nx">control</span> <span class="p">{</span>
+        <span class="nx">chan</span><span class="o">=</span><span class="s2">&quot;$(P)$(R)DelayTime&quot;</span>
+        <span class="nx">clr</span><span class="o">=</span><span class="mf">14</span>
+        <span class="nx">bclr</span><span class="o">=</span><span class="mf">51</span>
+    <span class="p">}</span>
+    <span class="nx">limits</span> <span class="p">{</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">text</span> <span class="p">{</span>
+    <span class="nx">object</span> <span class="p">{</span>
+        <span class="nx">x</span><span class="o">=</span><span class="mf">435</span>
+        <span class="nx">y</span><span class="o">=</span><span class="mf">145</span>
+        <span class="nx">width</span><span class="o">=</span><span class="mf">100</span>
+        <span class="nx">height</span><span class="o">=</span><span class="mf">20</span>
+    <span class="p">}</span>
+    <span class="s2">&quot;basic attribute&quot;</span> <span class="p">{</span>
+        <span class="nx">clr</span><span class="o">=</span><span class="mf">14</span>
+    <span class="p">}</span>
+    <span class="nx">textix</span><span class="o">=</span><span class="s2">&quot;Delay time&quot;</span>
+    <span class="nx">align</span><span class="o">=</span><span class="s2">&quot;horiz. right&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Then either add equivalent changes to other screen types or use autoconvert, if
+available, and add any site specific details to any of these files (such as autosave
+and archiver tags).</p>
+</section>
+</section>
+<section id="class-hierarchy">
+<h2>Class Hierarchy<a class="headerlink" href="#class-hierarchy" title="Permalink to this headline"></a></h2>
+<p>Drivers will access their parameters via a param set, either using inheritance or
+composition. The class hierarchy for param sets mirrors the drivers. Each of the ‘base’
+classes (classes not instantiated directly) has-a paramSet containing its parameters in
+addition to its parent class(es). The most derived classes inherit their param sets
+so that they have direct access to all parameter indexes (and so that the source code
+does not have to change to insert <code class="docutils literal notranslate"><span class="pre">paramSet-&gt;</span></code> to access them).</p>
+<p>There is a new method <code class="docutils literal notranslate"><span class="pre">asynPortDriver::createParams</span></code> that iterates the member vector
+of <code class="docutils literal notranslate"><span class="pre">asynParamSet</span></code> storing parameter definitions and calls
+<code class="docutils literal notranslate"><span class="pre">asynPortDriver::createParam</span></code> (no ‘s’) on each of them. If the vector is empty
+(i.e. if it only has the default <code class="docutils literal notranslate"><span class="pre">asynParamSet</span></code> and not a specific implementation)
+it has no effect. This means <code class="docutils literal notranslate"><span class="pre">asynPortDriver</span></code> can be inherited from as before with
+no change.</p>
+<p>Virtual inheritance is required for two reasons. Primarily, it ensures only a single
+instance of <code class="docutils literal notranslate"><span class="pre">asynParamSet</span></code> is created and it is shared throughout the class
+hierarchy to ensure asynPortDriver can find the child parameters. It also means that
+the most derived class must call the constructors for all virtual base classes before
+the non-virtual base classes. This means the constructors are called in the correct
+order such that when the asynPortDriver constructor the <code class="docutils literal notranslate"><span class="pre">asynParamSet</span></code>
+<code class="docutils literal notranslate"><span class="pre">parameterDefinitions</span></code> is fully populated when <code class="docutils literal notranslate"><span class="pre">createParams</span></code> is called.</p>
+<section id="change-summary">
+<h3>Change Summary<a class="headerlink" href="#change-summary" title="Permalink to this headline"></a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt>asyn - <a class="reference external" href="https://github.com/dls-controls/asyn/tree/pvi">https://github.com/dls-controls/asyn/tree/pvi</a></dt><dd><ul>
+<li><p>Created <code class="docutils literal notranslate"><span class="pre">asynParamSet</span></code></p></li>
+<li><p>New overloaded asynPortDriver constructor that takes an <code class="docutils literal notranslate"><span class="pre">asynParamSet*</span></code>
+and calls createParams()</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>ADCore - <a class="reference external" href="https://github.com/dls-controls/ADCore/tree/pvi">https://github.com/dls-controls/ADCore/tree/pvi</a></dt><dd><ul>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">asynNDArrayDriver</span></code> parameters split into <code class="docutils literal notranslate"><span class="pre">asynNDArrayDriverParamSet</span></code></dt><dd><p>Constructor updated to take an <code class="docutils literal notranslate"><span class="pre">asynNDArrayDriverParamSet*</span></code>.
+Updated to access parameters via <code class="docutils literal notranslate"><span class="pre">paramSet-&gt;</span></code></p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">ADDriver</span></code> parameters split into <code class="docutils literal notranslate"><span class="pre">ADDriverParamSet</span></code></dt><dd><p>Constructor updated to take an <code class="docutils literal notranslate"><span class="pre">ADDriverParamSet*</span></code>.
+Updated to access parameters via <code class="docutils literal notranslate"><span class="pre">paramSet-&gt;</span></code></p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">NDPluginDriver</span></code> inherits <code class="docutils literal notranslate"><span class="pre">asynNDArrayDriverParamSet</span></code> in addition to <code class="docutils literal notranslate"><span class="pre">asynNDArrayDriver</span></code></dt><dd><p>Updated to access parameters via <code class="docutils literal notranslate"><span class="pre">paramSet-&gt;</span></code>.
+Child classes work with no changes</p>
+</dd>
+</dl>
+</li>
+<li><p>Some trivial updates to the tests</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>ADSimDetector - <a class="reference external" href="https://github.com/dls-controls/ADSimDetector/tree/pvi">https://github.com/dls-controls/ADSimDetector/tree/pvi</a></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">simDetector</span></code> parameters split into <code class="docutils literal notranslate"><span class="pre">simDetectorParamSet</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">simDetector</span></code> inherits from <code class="docutils literal notranslate"><span class="pre">simDetectorParamSet</span></code> in addition to
+<code class="docutils literal notranslate"><span class="pre">ADDriver</span></code></p></li>
+<li><p>Can access parameters as before</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>ADPilatus - <a class="reference external" href="https://github.com/dls-controls/ADPilatus/tree/pvi">https://github.com/dls-controls/ADPilatus/tree/pvi</a></dt><dd><ul>
+<li><p>Equivalent to ADSimDetector changes</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>motor - <a class="reference external" href="https://github.com/dls-controls/motor/tree/pvi">https://github.com/dls-controls/motor/tree/pvi</a></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">asynMotorController</span></code> parameters split into <code class="docutils literal notranslate"><span class="pre">asynMotorControllerParamSet</span></code></p></li>
+<li><p>Updated to access parameters via <code class="docutils literal notranslate"><span class="pre">paramSet-&gt;</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>pmac - <a class="reference external" href="https://github.com/dls-controls/pmac/tree/pvi">https://github.com/dls-controls/pmac/tree/pvi</a></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">pmacController</span></code> parameters split into <code class="docutils literal notranslate"><span class="pre">pmacControllerParamSet</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pmacCSController</span></code> same</p></li>
+<li><p>Each inherit from their own param set (which inherits
+<code class="docutils literal notranslate"><span class="pre">asynMotorControllerParamSet</span></code>) in addition to <code class="docutils literal notranslate"><span class="pre">asynMotorController</span></code></p></li>
+<li><p>Can access parameters as before</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</section>
+<section id="caveats">
+<h3>Caveats<a class="headerlink" href="#caveats" title="Permalink to this headline"></a></h3>
+<p>There are some changes that are unavoidable without inserting edge cases into the
+generation logic and making the YAML schema more complicated. Some examples are:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>The first param index used for calling base class methods is inconsistently
+named, so we will have to agree a consistent way to generate them and make them
+the same.</p></li>
+<li><p>Any readback parameters will have an _RBV suffix added. Some existing readbacks
+do not have this, e.g. Armed in pilatusDetector.</p></li>
+<li><p>FIRST_DRIVER_PARAM needs to be defined in the main header file based on the
+FIRST_DRIVER_PARAM_INDEX defined in the param set header file, appending
+<code class="docutils literal notranslate"><span class="pre">paramSet-&gt;</span></code> or not depending on whether it inherits the param set or not. (This
+could possibly be handled in a better way by adding more logic to the
+<code class="docutils literal notranslate"><span class="pre">asynParamSet</span></code> - see <a class="reference internal" href="#possible-further-work">Possible Further Work</a>)</p></li>
+<li><p>Asyn parameter names will be the same as the name of the index variable. The
+value can be overridden to define drvInfo for drvUserCreate dynamic parameters.</p></li>
+</ol>
+</div></blockquote>
+</section>
+<section id="next-steps">
+<h3>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this headline"></a></h3>
+<p>A script is in development to perform the generation of an initial YAML file from a
+template. The idea being that after this point, everything is generated from the YAML
+file and any changes are made there and everything regenerated. New drivers can use
+a YAML file from the start.</p>
+<p>The current hierarchy (base classes have-a param set while the most derived class
+is-a param set) is inconsistent and confusing, but it has the benefit that people are
+not forced to change drivers inheriting from these base classes to access parameters
+via <code class="docutils literal notranslate"><span class="pre">paramSet-&gt;</span></code>, they just need to inherit the parent param set. It also means that
+the most derived classes cannot be inherited from alongside an extended param set
+(this is not necessarily a problem, but it seems like an unnecessary restriction).
+It would be clearer to remove this and require all child classes to use the param set
+explicitly, removing the need for virtual inheritance. This would just need an addition
+to the extern C calls to create the param set and pass it into the constructor of the
+driver. Another option is to create a class that inherits from the driver and the param
+set, with no additional logic. This could then instantiate the param set and pass it to
+the driver constructor. Either solution would resolve caveat 3, because all classes
+will access FIRST_DRIVER_PARAM via <code class="docutils literal notranslate"><span class="pre">paramSet-&gt;</span></code>.</p>
+</section>
+<section id="possible-further-work">
+<h3>Possible Further Work<a class="headerlink" href="#possible-further-work" title="Permalink to this headline"></a></h3>
+<p>Adopting this framework could make it easier to make other improvements to the C++ code,
+such as:</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt>Move some asynPortDriver functionality into <code class="docutils literal notranslate"><span class="pre">asynParamSet</span></code> / <code class="docutils literal notranslate"><span class="pre">asynParam</span></code> (See ADEiger eigerParam)</dt><dd><ul>
+<li><p>Reduce the size of <code class="docutils literal notranslate"><span class="pre">asynPortDriver</span></code></p></li>
+<li><p>Possibility of typed subclasses of <code class="docutils literal notranslate"><span class="pre">asynParam</span></code> to reduce if statements for
+handling the many <code class="docutils literal notranslate"><span class="pre">asynParamType</span></code> values in slightly different ways</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Simplify the sharing of file writing functionality between some drivers</dt><dd><ul>
+<li><p>ADPilatus and NDPluginFile-derived classes - Parameters could be split out
+of <code class="docutils literal notranslate"><span class="pre">asynNDArrayDriver</span></code> into a <code class="docutils literal notranslate"><span class="pre">FileWriterParamSet</span></code>, which could then be
+included via composition only where required, rather than every driver and
+plugin under <code class="docutils literal notranslate"><span class="pre">asynNDArrayDriver</span></code> having these parameters.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../tutorials/installation.html" class="btn btn-neutral float-left" title="Installation Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../explanations/why-is-something-so.html" class="btn btn-neutral float-right" title="Why is something the way it is" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+   
+  <div id="other-versions-div" class="rst-versions" data-toggle="rst-versions" role="note" aria-label="Versions" style="visibility: hidden">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Other Versions</span>
+      master
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl id="other-versions-dl"/>
+    </div>
+  </div>
+  <script>
+    function addVersion(name) {
+      var dd = document.createElement("dd");
+      var a = document.createElement("a");
+      a.href = "../../" + name;
+      a.innerText = name;
+      dd.appendChild(a);
+      document.getElementById('other-versions-dl').appendChild(dd);
+    }
+    // Get versions.txt and add a version for each line
+    fetch("../../versions.txt").then(response => {
+      if (response.ok) {
+        document.getElementById('other-versions-div').style.visibility = "visible";
+        return response.text().then(text => text.split(/\r?\n/).forEach(addVersion))
+      }
+    });
+  </script>
+
+
+</body>
+</html>
