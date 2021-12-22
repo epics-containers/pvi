@@ -10,8 +10,6 @@ import pvi
 
 # General information about the project.
 project = "pvi"
-copyright = "2021, Diamond Light Source"
-author = "Tom Cobb"
 
 # The full version, including alpha/beta/rc tags.
 release = pvi.__version__
@@ -26,8 +24,6 @@ else:
 extensions = [
     # Use this for generating API docs
     "sphinx.ext.autodoc",
-    # Use this to link to section labels across pages
-    "sphinx.ext.autosectionlabel",
     # This can parse google style docstrings
     "sphinx.ext.napoleon",
     # For linking to external sphinx documentation
@@ -111,7 +107,7 @@ html_static_path = ["_static"]
 html_show_sphinx = False
 
 # If true, "(C) Copyright ..." is shown in the HTML footer. Default is True.
-html_show_copyright = True
+html_show_copyright = False
 
 # Add some CSS classes for columns and other tweaks in a custom css file
 html_css_files = ["theme_overrides.css"]

@@ -14,6 +14,8 @@ from pvi._produce.asyn import AsynParameter
 from pvi._yaml_utils import deserialize_yaml, serialize_yaml
 from pvi.device import Device, walk
 
+from . import __version__
+
 app = typer.Typer()
 convert_app = typer.Typer()
 app.add_typer(convert_app, name="convert", help="Convert a module to use PVI")
@@ -135,5 +137,6 @@ def asyn(
     )
 
 
+# test with: pipenv run python -m pvi
 if __name__ == "__main__":
     app()

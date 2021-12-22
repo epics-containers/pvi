@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 PVI
 ===
 
@@ -14,9 +15,9 @@ and low level opis
 
 ============== ==============================================================
 PyPI           ``pip install pvi``
-Source code    https://github.com/dls-controls/pvi
-Documentation  https://dls-controls.github.io/pvi
-Changelog      https://github.com/dls-controls/pvi/blob/master/CHANGELOG.rst
+Source code    https://github.com/epics-containers/pvi
+Documentation  https://epics-containers.github.io/pvi
+Changelog      https://github.com/epics-containers/pvi/blob/master/CHANGELOG.rst
 ============== ==============================================================
 
 .. note::
@@ -50,4 +51,4 @@ Changelog      https://github.com/dls-controls/pvi/blob/master/CHANGELOG.rst
     Anything below this line is used when viewing README.rst and will be replaced
     when included in index.rst
 
-See https://dls-controls.github.io/pvi for more detailed documentation.
+See https://epics-containers.github.io/pvi for more detailed documentation.

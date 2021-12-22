@@ -17,4 +17,8 @@ using ``autoclass`` and ``autofunction`` directives instead of
 
     Version number as calculated by https://github.com/dls-controls/versiongit
 
+.. automodule:: pvi.device
+    :members:
 
+    ``pvi.device``
+    --------------
