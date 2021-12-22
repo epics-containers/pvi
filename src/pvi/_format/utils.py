@@ -36,11 +36,12 @@ class Bounds:
     def copy(self) -> "Bounds":
         return Bounds(self.x, self.y, self.w, self.h)
 
-    def split(self, w: int, spacing: int) -> Tuple["Bounds", "Bounds"]:
+    def split(self, width: int, spacing: int) -> Tuple["Bounds", "Bounds"]:
         """Split horizontally"""
-        assert w + spacing < self.w, f"Can't split off {w + spacing} from {self.w}"
-        left = Bounds(self.x, self.y, w, self.h)
-        right = Bounds(self.x + w + spacing, self.y, self.w - w - spacing, self.h)
+        to_split = width + spacing
+        assert to_split < self.w, f"Can't split off {to_split} from {self.w}"
+        left = Bounds(self.x, self.y, width, self.h)
+        right = Bounds(self.x + to_split, self.y, self.w - to_split, self.h)
         return left, right
 
     def square(self) -> "Bounds":
@@ -53,7 +54,7 @@ class Bounds:
             h=size,
         )
 
-    def padded(self, bounds: "Bounds") -> "Bounds":
+    def added_to(self, bounds: "Bounds") -> "Bounds":
         return Bounds(
             x=self.x + bounds.x,
             y=self.y + bounds.y,
@@ -307,7 +308,7 @@ def split_with_sep(text: str, sep: str, maxsplit: int = -1) -> List[str]:
 def with_title(spacing, title_height: int) -> Callable[[Bounds], Bounds]:
     return Bounds(
         spacing, spacing + title_height, 2 * spacing, 2 * spacing + title_height
-    ).padded
+    ).added_to
 
 
 class EdlTemplate(WidgetTemplate[str]):

@@ -207,7 +207,7 @@ class RecordExtractor:
         overrides = [
             setting_pair.get_naming_overrides()
             for setting_pair in setting_pairs
-            if setting_pair.are_clashes()
+            if setting_pair.has_clashes()
         ]
         record_lines = {
             self._parse_record(record_str)[1]: record_str.splitlines()

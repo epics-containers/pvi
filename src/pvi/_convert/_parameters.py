@@ -32,15 +32,9 @@ class ReadParameterMixin:
 
 class WriteParameterMixin:
     def _get_initial(self, write_record: Record) -> str:
-        try:
-            pini = write_record.fields["PINI"].lower()
-        except KeyError:
-            pini = "no"
+        pini = write_record.fields.get("PINI", "NO").lower()
         if pini == "yes":
-            try:
-                initial = write_record.fields["VAL"]
-            except KeyError:
-                initial = "0"
+            initial = write_record.fields.get("VAL", "0")
         else:
             initial = ""
         return initial

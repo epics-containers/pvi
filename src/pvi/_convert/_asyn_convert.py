@@ -53,7 +53,10 @@ class AsynRecord(Record):
 
         if "INP" in self.fields.keys():
             type_fields = [
-                (cls.record_fields.in_record_type.__name__, cls.type_strings.asyn_read)
+                (
+                    cls.record_fields.in_record_type.__name__,
+                    cls.type_strings.asyn_read,
+                )
                 for cls in asyn_components
             ]
         elif "OUT" in self.fields.keys():
@@ -85,19 +88,11 @@ class SettingPair(Parameter, WriteParameterMixin, ReadParameterMixin):
 
     @property
     def dominant(self):
-        if self._dominant_read:
-            dominant = self.read_record
-        else:
-            dominant = self.write_record
-        return dominant
+        return self.read_record if self._dominant_read else self.write_record
 
     @property
     def subordinate(self):
-        if self._dominant_read:
-            subordinate = self.write_record
-        else:
-            subordinate = self.read_record
-        return subordinate
+        return self.write_record if self._dominant_read else self.read_record
 
     def _get_read_record_suffix(self) -> Optional[str]:
         if self.read_record.name != self.write_record.name + "_RBV":
@@ -141,7 +136,7 @@ class SettingPair(Parameter, WriteParameterMixin, ReadParameterMixin):
         override_fields = self._get_field_clashes()
         return record_name, override_fields
 
-    def are_clashes(self) -> bool:
+    def has_clashes(self) -> bool:
         empty = not self._get_field_clashes()
         return not empty
 
@@ -165,7 +160,7 @@ class SettingPair(Parameter, WriteParameterMixin, ReadParameterMixin):
             non_default_args["initial"] = initial
 
         read_record_suffix = self._get_read_record_suffix()
-        if read_record_suffix:
+        if read_record_suffix is not None:
             non_default_args["read_record_suffix"] = read_record_suffix
 
         field_clashes = self._get_field_clashes()
@@ -173,9 +168,9 @@ class SettingPair(Parameter, WriteParameterMixin, ReadParameterMixin):
 
         write_fields = self._remove_invalid(self.write_record.fields)
         read_fields = self._remove_invalid(self.read_record.fields)
-        record = type(asyn_class.record_fields)(  # type: ignore
-            **{**write_fields, **read_fields}
-        )
+        record_class = type(asyn_class.record_fields)
+        kwargs = {**write_fields, **read_fields}
+        record = record_class(**kwargs)  # type: ignore
 
         component = asyn_class(
             description=self.write_record.fields["DESC"],

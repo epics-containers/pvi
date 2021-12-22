@@ -67,7 +67,7 @@ def produce(
     output: Path = typer.Argument(..., help="filename to write the product to"),
     producer: Path = typer.Argument(..., help="path to the producer .pvi.yaml file"),
 ):
-    """Create template/csv/device product from producer YAML"""
+    """Create template/csv/device/other product from producer YAML"""
     producer_inst = deserialize_yaml(Producer, producer)
     if output.suffix == ".template":
         producer_inst.produce_records(output)
