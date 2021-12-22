@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 PVI
 ===
 
@@ -20,12 +19,13 @@ Documentation  https://epics-containers.github.io/pvi
 Changelog      https://github.com/epics-containers/pvi/blob/master/CHANGELOG.rst
 ============== ==============================================================
 
-.. note::
+****
 
-    This module is currently a proposal only, so all details are subject to
-    change at any point. The documentation is written in the present tense, but
-    only prototype code is written.
+Note: This module is currently a proposal only, so all details are subject to
+change at any point. The documentation is written in the present tense, but only
+prototype code is written.
 
+****
 
 .. |code_ci| image:: https://github.com/dls-controls/pvi/workflows/Code%20CI/badge.svg?branch=master
     :target: https://github.com/dls-controls/pvi/actions?query=workflow%3A%22Code+CI%22
