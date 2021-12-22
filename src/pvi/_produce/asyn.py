@@ -118,7 +118,9 @@ class AsynBinary(AsynParameter):
     """Asyn Binary Parameter and records"""
 
     type_strings = TypeStrings(
-        asyn_read="asynInt32", asyn_write="asynInt32", asyn_param="asynParamInt32",
+        asyn_read="asynInt32",
+        asyn_write="asynInt32",
+        asyn_param="asynParamInt32",
     )
     initial: Annotated[
         Union[None, int, str], initial_value(r"[0-1]", min=0, max=1)
@@ -163,7 +165,9 @@ class AsynInt32(AsynParameter):
     """Asyn Int32 Parameter and records"""
 
     type_strings: ClassVar[TypeStrings] = TypeStrings(
-        asyn_read="asynInt32", asyn_write="asynInt32", asyn_param="asynParamInt32",
+        asyn_read="asynInt32",
+        asyn_write="asynInt32",
+        asyn_param="asynParamInt32",
     )
     initial: Annotated[Union[None, int, str], initial_value(r"-?\d+")] = None
     read_widget: AReadWidget = TextRead()
@@ -187,7 +191,9 @@ class AsynMultiBitBinary(AsynParameter):
     """Asyn MultiBitBinary Parameter and records"""
 
     type_strings: ClassVar[TypeStrings] = TypeStrings(
-        asyn_read="asynInt32", asyn_write="asynInt32", asyn_param="asynParamInt32",
+        asyn_read="asynInt32",
+        asyn_write="asynInt32",
+        asyn_param="asynParamInt32",
     )
     initial: Annotated[
         Union[None, int, str], initial_value(r"[0-15]", min=0, max=15)
@@ -273,9 +279,7 @@ class AsynProducer(Producer):
         if parameter.access == Access.R:
             yield SignalR(parameter.name, read_pv, parameter.read_widget)
         elif parameter.access == Access.W:
-            yield SignalW(
-                parameter.name, write_pv, parameter.write_widget,
-            )
+            yield SignalW(parameter.name, write_pv, parameter.write_widget)
         elif parameter.access == Access.RW:
             need_both = not parameter.demand_auto_updates
             yield SignalRW(

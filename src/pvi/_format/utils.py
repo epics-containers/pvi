@@ -306,7 +306,7 @@ def split_with_sep(text: str, sep: str, maxsplit: int = -1) -> List[str]:
 
 def with_title(spacing, title_height: int) -> Callable[[Bounds], Bounds]:
     return Bounds(
-        spacing, spacing + title_height, 2 * spacing, 2 * spacing + title_height,
+        spacing, spacing + title_height, 2 * spacing, 2 * spacing + title_height
     ).padded
 
 

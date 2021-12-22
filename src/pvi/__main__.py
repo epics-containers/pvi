@@ -41,7 +41,7 @@ def main(
 
 
 @app.command()
-def schema(output: Path = typer.Argument(..., help="filename to write the schema to"),):
+def schema(output: Path = typer.Argument(..., help="filename to write the schema to")):
     """Write the JSON schema for the pvi interface or producer interface"""
     cls: Type
     assert output.name.endswith(

@@ -1,4 +1,6 @@
 import shutil
+import subprocess
+import sys
 from pathlib import Path
 
 import pytest
@@ -13,11 +15,9 @@ PILATUS_PRODUCER = (
 )
 
 
-def test_version():
-    result = CliRunner().invoke(app, ["--version"])
-    if result.exception:
-        raise result.exception
-    assert result.stdout == __version__ + "\n"
+def test_cli_version():
+    cmd = [sys.executable, "-m", "pvi", "--version"]
+    assert subprocess.check_output(cmd).decode().strip() == __version__
 
 
 def assert_output_matches(

@@ -95,7 +95,7 @@ class APSFormatter(Formatter):
                 template, search='"TextWrite"', chan="pv"
             ),
             action_button_cls=ActionFactory.from_template(
-                template, search='"SignalX"', label="label", chan="pv",
+                template, search='"SignalX"', label="label", chan="pv"
             ),
             prefix=prefix,
             spacing=self.spacing,

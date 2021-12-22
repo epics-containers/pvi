@@ -213,9 +213,7 @@ class Readback(Parameter, ReadParameterMixin):
             non_default_args["drv_info"] = drv_info
 
         read_fields = self._remove_invalid(self.read_record.fields)
-        record = type(asyn_class.record_fields)(  # type: ignore
-            **read_fields
-        )
+        record = type(asyn_class.record_fields)(**read_fields)  # type: ignore
         component = asyn_class(
             description=self.read_record.fields["DESC"],
             name=name,
@@ -250,9 +248,7 @@ class Action(Parameter, WriteParameterMixin):
             non_default_args["drv_info"] = drv_info
 
         write_fields = self._remove_invalid(self.write_record.fields)
-        record = type(asyn_class.record_fields)(  # type: ignore
-            **write_fields
-        )
+        record = type(asyn_class.record_fields)(**write_fields)  # type: ignore
         component = asyn_class(
             description=self.write_record.fields["DESC"],
             name=self.write_record.name,

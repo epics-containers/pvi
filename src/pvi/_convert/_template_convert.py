@@ -162,7 +162,7 @@ class RecordExtractor:
         fields = dict(self._extract_fields(record_fields))
         info = dict(self._extract_infos(record_fields))
         record = AsynRecord(
-            name=record_name, type=record_type, fields=fields, infos=info,
+            name=record_name, type=record_type, fields=fields, infos=info
         )
         return record
 

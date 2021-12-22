@@ -101,9 +101,7 @@ class TextWrite(WriteWidget):
 class ArrayWrite(WriteWidget):
     """Control of an array PV"""
 
-    widget: Annotated[
-        WriteWidget, desc("What widget should be used for each item"),
-    ]
+    widget: Annotated[WriteWidget, desc("What widget should be used for each item")]
 
 
 @dataclass
@@ -202,7 +200,7 @@ class SignalRW(SignalW):
     # This was Optional[str] but produced JSON schema that YAML editor didn't understand
     read_pv: Annotated[str, desc("PV to be used for read, empty means use pv")] = ""
     read_widget: Annotated[
-        Optional[ReadWidget], desc("Widget to use for display, None means use widget"),
+        Optional[ReadWidget], desc("Widget to use for display, None means use widget")
     ] = None
 
 
@@ -247,7 +245,7 @@ def on_each_node(tree: Tree[T], func: Callable[[T], Iterator[S]]) -> Tree[S]:
     for t in tree:
         if isinstance(t, Group):
             group: Group[S] = Group(
-                name=t.name, layout=t.layout, children=on_each_node(t.children, func),
+                name=t.name, layout=t.layout, children=on_each_node(t.children, func)
             )
             out.append(group)
         else:
