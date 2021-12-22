@@ -5,51 +5,19 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Schema Generate",
+            "name": "Debug Unit Test",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder:pvi}/pvi",
-            "args": [
-                "schema",
-                "${workspaceFolder:pvi}/pvi/schema.json"
-            ],
-            "console": "integratedTerminal"
-        },
-        {
-            "name": "Pilatus header Generate",
-            "type": "python",
-            "request": "launch",
-            "program": "${workspaceFolder:pvi}/pvi",
-            "args": [
-                "generate",
-                "${workspaceFolder:pvi}/tests/pilatus.pvi.yaml",
-                "${workspaceFolder:pvi}/pilatusDetectorParamSet.h"
-            ],
-            "console": "integratedTerminal"
-        },
-        {
-            "name": "Pilatus template Generate",
-            "type": "python",
-            "request": "launch",
-            "program": "${workspaceFolder:pvi}/pvi",
-            "args": [
-                "generate",
-                "${workspaceFolder:pvi}/tests/pilatus.pvi.yaml",
-                "${workspaceFolder:pvi}/pilatusParameters.template"
-            ],
-            "console": "integratedTerminal"
-        },
-        {
-            "name": "SimDetector PVI Generate",
-            "type": "python",
-            "request": "launch",
-            "program": "${workspaceFolder:pvi}/pvi",
-            "args": [
-                "generate",
-                "${workspaceFolder:pvi}/tests/sim.pvi.yaml",
-                "${workspaceFolder:pvi}/simDetectorParamSet.h"
-            ],
-            "console": "integratedTerminal"
-        },
+            "justMyCode": false,
+            "program": "${file}",
+            "purpose": ["debug-test"],
+            "console": "integratedTerminal",
+            "env": {
+                // The default config in setup.cfg's "[tool:pytest]" adds coverage.
+                // Cannot have coverage and debugging at the same time.
+                // https://github.com/microsoft/vscode-python/issues/693
+                "PYTEST_ADDOPTS": "--no-cov"
+            },
+        }
     ]
 }

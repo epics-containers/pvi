@@ -1,69 +1,54 @@
-pvi
+<<<<<<< HEAD
+PVI
 ===
 
-|build_status| |coverage| |pypi_version| |readthedocs|
+|code_ci| |docs_ci| |coverage| |pypi_version| |license|
 
 PVI (PV Interface) is a framework for specifying the interface to an EPICS
-driver in a single `YAML`_ file. The initial target is asyn port driver based
+driver in a single YAML file. The initial target is asyn port driver based
 drivers, but it could be extended to streamDevice and other driver types at a
 later date.
 
-Documentation
--------------
+It allows the asyn parameter interface to be specified in a single place,
+and removes boilerplate code in the driver CPP, template files, documentation,
+and low level opis
 
-Full documentation is available at http://pvi.readthedocs.org
+============== ==============================================================
+PyPI           ``pip install pvi``
+Source code    https://github.com/epics-containers/pvi
+Documentation  https://epics-containers.github.io/pvi
+Changelog      https://github.com/epics-containers/pvi/blob/master/CHANGELOG.rst
+============== ==============================================================
 
-Source Code
------------
+.. note::
 
-Available from https://github.com/dls-controls/pvi
+    This module is currently a proposal only, so all details are subject to
+    change at any point. The documentation is written in the present tense, but
+    only prototype code is written.
 
-Installation
-------------
 
-To install the latest release, type::
+.. |code_ci| image:: https://github.com/dls-controls/pvi/workflows/Code%20CI/badge.svg?branch=master
+    :target: https://github.com/dls-controls/pvi/actions?query=workflow%3A%22Code+CI%22
+    :alt: Code CI
 
-    pip install pvi
+.. |docs_ci| image:: https://github.com/dls-controls/pvi/workflows/Docs%20CI/badge.svg?branch=master
+    :target: https://github.com/dls-controls/pvi/actions?query=workflow%3A%22Docs+CI%22
+    :alt: Docs CI
 
-Changelog
----------
+.. |coverage| image:: https://codecov.io/gh/dls-controls/pvi/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/dls-controls/pvi
+    :alt: Test Coverage
 
-See CHANGELOG_
-
-Contributing
-------------
-
-See CONTRIBUTING_
-
-License
--------
-
-APACHE License. (see LICENSE_)
-
-.. |build_status| image:: https://travis-ci.org/dls-controls/pvi.svg?branch=master
-    :target: https://travis-ci.org/dls-controls/pvi
-    :alt: Build Status
-
-.. |coverage| image:: https://coveralls.io/repos/github/dls-controls/pvi/badge.svg?branch=master
-    :target: https://coveralls.io/github/dls-controls/pvi?branch=master
-    :alt: Test coverage
-
-.. |pypi_version| image:: https://img.shields.io/pypi/p/pvi.svg
-    :target: https://pypi.python.org/pypi/pvi
+.. |pypi_version| image:: https://img.shields.io/pypi/v/pvi.svg
+    :target: https://pypi.org/project/pvi
     :alt: Latest PyPI version
 
-.. |readthedocs| image:: https://readthedocs.org/projects/pvi/badge/?version=latest
-    :target: http://pvi.readthedocs.org
-    :alt: Documentation
+.. |license| image:: https://img.shields.io/badge/License-Apache%202.0-blue.svg
+    :target: https://opensource.org/licenses/Apache-2.0
+    :alt: Apache License
 
-.. _YAML:
-    https://en.wikipedia.org/wiki/YAML
+..
+    Anything below this line is used when viewing README.rst and will be replaced
+    when included in index.rst
 
-.. _CHANGELOG:
-    https://github.com/dls-controls/pvi/blob/master/CHANGELOG.rst
-
-.. _CONTRIBUTING:
-    https://github.com/dls-controls/pvi/blob/master/CONTRIBUTING.rst
-
-.. _LICENSE:
-    https://github.com/dls-controls/pvi/blob/master/LICENSE
+See https://epics-containers.github.io/pvi for more detailed documentation.

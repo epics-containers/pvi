@@ -1,0 +1,33 @@
+-include $(PVI)/configure/CONFIG_SITE
+
+ifdef BIN_PVI
+
+# Find base names of components from YAML files
+PVIS := $(wildcard $(TOP)/pvi/*.pvi.yaml)
+COMPONENTS := $(patsubst $(TOP)/pvi/%.pvi.yaml, %, $(PVIS))
+
+ifdef PVI_TEMPLATES
+
+# Add templates to be generated for components to install target
+TEMPLATES := $(patsubst %, %ParamSet.template, $(COMPONENTS))
+install: $(TEMPLATES)
+
+# Rule to create a template file from a PVI yaml file
+%ParamSet.template: $(TOP)/pvi/%.pvi.yaml
+	$(BIN_PVI) generate $< $@
+
+endif # PVI_TEMPLATES
+
+ifdef PVI_PARAMSETS
+
+# Add ParamSet header files to be generated for components to install target
+PARAMSETS := $(patsubst %, %ParamSet.h, $(COMPONENTS))
+install: $(PARAMSETS)
+
+# Rule to create a ParamSet header file from a PVI yaml file
+%ParamSet.h: $(TOP)/pvi/%.pvi.yaml
+	$(BIN_PVI) generate $< $@
+
+endif # PVI_PARAMSETS
+
+endif # BIN_PVI

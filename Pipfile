@@ -4,27 +4,14 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-pytest-cov = "*"
-pytest-mypy = "*"
-pytest-flake8 = "*"
-pytest-black = "*"
-flake8-isort = "*"
-sphinx-rtd-theme = "*"
-pytest-asyncio = "*"
-# VSCode needs these
-rope = "*"
-black = "*"
-mypy = "*"
-pytest = ">=5.3.0"
+pvi = {editable = true, extras = ["dev"], path = "."}
 
 [packages]
-pydantic = "*"
-ruamel-yaml = "*"
+pvi = {editable = true, extras = ["cli"], path = "."}
 
 [scripts]
-# Put coverage here so we don't interfere with debugging in the IDE
-tests = "python -m pytest --cov-fail-under=90 --cov=pvi --cov-report term"
-docs = "sphinx-build -E -b html docs build/html"
-
-[pipenv]
-allow_prereleases = true
+lint = "pre-commit run --all-files --show-diff-on-failure --color=always -v"
+tests = "pytest"
+docs = "sphinx-build -EWT --keep-going docs build/html"
+# Delete any files that git ignore hides from us
+gitclean = "git clean -fdX"

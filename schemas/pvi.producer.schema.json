@@ -1,0 +1,6383 @@
+{
+  "allOf": [
+    {
+      "$ref": "#/definitions/Producer"
+    }
+  ],
+  "definitions": {
+    "Producer": {
+      "$ref": "#/definitions/AsynProducer"
+    },
+    "AsynProducer": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "AsynProducer",
+          "default": "AsynProducer"
+        },
+        "prefix": {
+          "type": "string",
+          "description": "The prefix for record names created by the template file"
+        },
+        "label": {
+          "type": "string",
+          "description": "Screen title"
+        },
+        "asyn_port": {
+          "type": "string",
+          "description": "The asyn port name"
+        },
+        "address": {
+          "type": "string",
+          "description": "The asyn address"
+        },
+        "timeout": {
+          "type": "string",
+          "description": "The timeout for the asyn port"
+        },
+        "parent": {
+          "type": "string",
+          "description": "The parent producer (basename of yaml file), asynPortDriver is the top of the tree"
+        },
+        "parameters": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/AsynParameter"
+              },
+              {
+                "$ref": "#/definitions/AsynParameterGroup"
+              }
+            ]
+          },
+          "description": "The parameters to make into an IOC"
+        }
+      },
+      "required": [
+        "prefix",
+        "label",
+        "asyn_port",
+        "address",
+        "timeout",
+        "parent",
+        "parameters"
+      ],
+      "additionalProperties": false
+    },
+    "AsynParameter": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/AsynBinary"
+        },
+        {
+          "$ref": "#/definitions/AsynBusy"
+        },
+        {
+          "$ref": "#/definitions/AsynFloat64"
+        },
+        {
+          "$ref": "#/definitions/AsynInt32"
+        },
+        {
+          "$ref": "#/definitions/AsynLong"
+        },
+        {
+          "$ref": "#/definitions/AsynMultiBitBinary"
+        },
+        {
+          "$ref": "#/definitions/AsynString"
+        },
+        {
+          "$ref": "#/definitions/AsynWaveform"
+        }
+      ]
+    },
+    "AsynBinary": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "AsynBinary",
+          "default": "AsynBinary"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "([A-Z][a-z0-9]*)*$",
+          "description": "PascalCase name to uniquely identify"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of what this Parameter is for"
+        },
+        "index_name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Override name of index variable in source code (defaults to name)",
+          "default": null
+        },
+        "drv_info": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^\\S{1,40}$",
+          "description": "Info string for drvUserCreate for dynamically created parameters",
+          "default": null
+        },
+        "access": {
+          "description": "What access does the user have. One of:\n\n    - R: Read only value that cannot be set. E.g. chipTemperature on a detector,\n      or isHomed for a motor\n    - W: Write only value that can be written to, but there is no current value.\n      E.g. reboot on a detector, or overwriteCurrentPosition for a motor\n    - RW: Read and Write value that can be written to and read back.\n      E.g. acquireTime on a detector, or velocity of a motor\n    ",
+          "default": "RW",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Access"
+            }
+          ]
+        },
+        "demand_auto_updates": {
+          "type": "boolean",
+          "description": "Should demand update when readback changes?",
+          "default": false
+        },
+        "read_record_suffix": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The read record suffix, if not given then use $(name)_RBV",
+          "default": null
+        },
+        "write_record_suffix": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The write record suffix, if not given then use $(name)",
+          "default": null
+        },
+        "display_form": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DisplayForm"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Display form for numeric/array fields",
+          "default": null
+        },
+        "initial": {
+          "type": [
+            "null",
+            "integer",
+            "string"
+          ],
+          "minimum": 0,
+          "maximum": 1,
+          "pattern": "(\\$\\(\\w+=([0-1])\\))",
+          "description": "The initial value of the parameter",
+          "default": null
+        },
+        "read_widget": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ReadWidget"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Widget to use for read record",
+          "default": {
+            "type": "LED"
+          }
+        },
+        "write_widget": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/WriteWidget"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Widget to use for write record",
+          "default": {
+            "type": "CheckBox"
+          }
+        },
+        "record_fields": {
+          "description": "Binary record fields",
+          "allOf": [
+            {
+              "$ref": "#/definitions/bi_bo"
+            }
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "description"
+      ],
+      "additionalProperties": false
+    },
+    "Access": {
+      "type": "string",
+      "enum": [
+        "R",
+        "W",
+        "RW"
+      ]
+    },
+    "DisplayForm": {
+      "type": "string",
+      "enum": [
+        "Default",
+        "String",
+        "Binary",
+        "Decimal",
+        "Hex",
+        "Exponential",
+        "Engineering"
+      ]
+    },
+    "ReadWidget": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/LED"
+        },
+        {
+          "$ref": "#/definitions/BitField"
+        },
+        {
+          "$ref": "#/definitions/ProgressBar"
+        },
+        {
+          "$ref": "#/definitions/TextRead"
+        },
+        {
+          "$ref": "#/definitions/ArrayTrace"
+        },
+        {
+          "$ref": "#/definitions/TableRead"
+        },
+        {
+          "$ref": "#/definitions/ImageRead"
+        }
+      ]
+    },
+    "LED": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "LED",
+          "default": "LED"
+        }
+      },
+      "additionalProperties": false
+    },
+    "BitField": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "BitField",
+          "default": "BitField"
+        },
+        "labels": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Label for each bit"
+        }
+      },
+      "required": [
+        "labels"
+      ],
+      "additionalProperties": false
+    },
+    "ProgressBar": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "ProgressBar",
+          "default": "ProgressBar"
+        }
+      },
+      "additionalProperties": false
+    },
+    "TextRead": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "TextRead",
+          "default": "TextRead"
+        },
+        "lines": {
+          "type": "integer",
+          "description": "Number of lines to display",
+          "default": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "ArrayTrace": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "ArrayTrace",
+          "default": "ArrayTrace"
+        },
+        "axis": {
+          "type": "string",
+          "description": "Traces with same axis name will appear on same axis, plotted against 'x' trace if it exists, or indexes if not. Only one traces with axis='x' allowed."
+        }
+      },
+      "required": [
+        "axis"
+      ],
+      "additionalProperties": false
+    },
+    "TableRead": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "TableRead",
+          "default": "TableRead"
+        },
+        "widgets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ReadWidget"
+          },
+          "description": "For each column, what widget should be repeated for every row"
+        }
+      },
+      "required": [
+        "widgets"
+      ],
+      "additionalProperties": false
+    },
+    "ImageRead": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "ImageRead",
+          "default": "ImageRead"
+        }
+      },
+      "additionalProperties": false
+    },
+    "WriteWidget": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/CheckBox"
+        },
+        {
+          "$ref": "#/definitions/ComboBox"
+        },
+        {
+          "$ref": "#/definitions/TextWrite"
+        },
+        {
+          "$ref": "#/definitions/ArrayWrite"
+        },
+        {
+          "$ref": "#/definitions/TableWrite"
+        }
+      ]
+    },
+    "CheckBox": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "CheckBox",
+          "default": "CheckBox"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ComboBox": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "ComboBox",
+          "default": "ComboBox"
+        }
+      },
+      "additionalProperties": false
+    },
+    "TextWrite": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "TextWrite",
+          "default": "TextWrite"
+        },
+        "lines": {
+          "type": "integer",
+          "description": "Number of lines to display",
+          "default": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "ArrayWrite": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "ArrayWrite",
+          "default": "ArrayWrite"
+        },
+        "widget": {
+          "description": "What widget should be used for each item",
+          "allOf": [
+            {
+              "$ref": "#/definitions/WriteWidget"
+            }
+          ]
+        }
+      },
+      "required": [
+        "widget"
+      ],
+      "additionalProperties": false
+    },
+    "TableWrite": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "TableWrite",
+          "default": "TableWrite"
+        },
+        "widgets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WriteWidget"
+          },
+          "description": "For each column, what widget should be repeated for every row"
+        }
+      },
+      "required": [
+        "widgets"
+      ],
+      "additionalProperties": false
+    },
+    "bi_bo": {
+      "type": "object",
+      "properties": {
+        "NAME": {
+          "type": "string",
+          "description": "Record Name"
+        },
+        "DESC": {
+          "type": "string",
+          "description": "Descriptor"
+        },
+        "ASG": {
+          "type": "string",
+          "description": "Access Security Group"
+        },
+        "SCAN": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biSCAN"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Scan Mechanism"
+        },
+        "PINI": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biPINI"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Process at iocInit"
+        },
+        "PHAS": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Scan Phase"
+        },
+        "EVNT": {
+          "type": "string",
+          "description": "Event Name"
+        },
+        "TSE": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Time Stamp Event"
+        },
+        "TSEL": {
+          "type": "string",
+          "description": "Time Stamp Link"
+        },
+        "DTYP": {
+          "type": "string",
+          "description": "Device Type"
+        },
+        "DISV": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Disable Value",
+          "default": "1"
+        },
+        "DISA": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Disable"
+        },
+        "SDIS": {
+          "type": "string",
+          "description": "Scanning Disable"
+        },
+        "DISP": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Disable putField"
+        },
+        "PROC": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Force Processing"
+        },
+        "STAT": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biSTAT"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Alarm Status",
+          "default": "UDF"
+        },
+        "SEVR": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biSEVR"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Alarm Severity"
+        },
+        "AMSG": {
+          "type": "string",
+          "description": "Alarm Message"
+        },
+        "NSTA": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biNSTA"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "New Alarm Status"
+        },
+        "NSEV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biNSEV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "New Alarm Severity"
+        },
+        "NAMSG": {
+          "type": "string",
+          "description": "New Alarm Message"
+        },
+        "ACKS": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biACKS"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Alarm Ack Severity"
+        },
+        "ACKT": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biACKT"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Alarm Ack Transient",
+          "default": "YES"
+        },
+        "DISS": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biDISS"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Disable Alarm Sevrty"
+        },
+        "LCNT": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Lock Count"
+        },
+        "PACT": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Record active"
+        },
+        "PUTF": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "dbPutField process"
+        },
+        "RPRO": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Reprocess "
+        },
+        "PRIO": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biPRIO"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Scheduling Priority"
+        },
+        "TPRO": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Trace Processing"
+        },
+        "UDF": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Undefined",
+          "default": "1"
+        },
+        "UDFS": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biUDFS"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Undefined Alarm Sevrty",
+          "default": "INVALID"
+        },
+        "UTAG": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Time Tag"
+        },
+        "FLNK": {
+          "type": "string",
+          "description": "Forward Process Link"
+        },
+        "VAL": {
+          "type": "string",
+          "description": "Current Value"
+        },
+        "ZNAM": {
+          "type": "string",
+          "description": "Zero Name"
+        },
+        "ONAM": {
+          "type": "string",
+          "description": "One Name"
+        },
+        "RVAL": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Raw Value"
+        },
+        "ORAW": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "prev Raw Value"
+        },
+        "MASK": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Hardware Mask"
+        },
+        "ZSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biZSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Zero Error Severity"
+        },
+        "OSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biOSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "One Error Severity"
+        },
+        "COSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biCOSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Change of State Svr"
+        },
+        "MLST": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Last Value Monitored"
+        },
+        "LALM": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Last Value Alarmed"
+        },
+        "SIOL": {
+          "type": "string",
+          "description": "Simulation Input Link"
+        },
+        "SIML": {
+          "type": "string",
+          "description": "Simulation Mode Link"
+        },
+        "SIMM": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biSIMM"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Simulation Mode"
+        },
+        "SIMS": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biSIMS"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Simulation Mode Severity"
+        },
+        "OLDSIMM": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biOLDSIMM"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Prev. Simulation Mode"
+        },
+        "SSCN": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biSSCN"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Sim. Mode Scan",
+          "default": "65535"
+        },
+        "SDLY": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Sim. Mode Async Delay",
+          "default": "-1.0"
+        },
+        "INP": {
+          "type": "string",
+          "description": "Input Specification"
+        },
+        "SVAL": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Simulation Value"
+        }
+      },
+      "additionalProperties": false
+    },
+    "biSCAN": {
+      "type": "string",
+      "enum": [
+        "Passive",
+        "Event",
+        "I/O Intr",
+        "10 second",
+        "5 second",
+        "2 second",
+        "1 second",
+        ".5 second",
+        ".2 second",
+        ".1 second"
+      ]
+    },
+    "biPINI": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "YES",
+        "RUN",
+        "RUNNING",
+        "PAUSE",
+        "PAUSED"
+      ]
+    },
+    "biSTAT": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "READ",
+        "WRITE",
+        "HIHI",
+        "HIGH",
+        "LOLO",
+        "LOW",
+        "STATE",
+        "COS",
+        "COMM",
+        "TIMEOUT",
+        "HWLIMIT",
+        "CALC",
+        "SCAN",
+        "LINK",
+        "SOFT",
+        "BAD_SUB",
+        "UDF",
+        "DISABLE",
+        "SIMM",
+        "READ_ACCESS",
+        "WRITE_ACCESS"
+      ]
+    },
+    "biSEVR": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "biNSTA": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "READ",
+        "WRITE",
+        "HIHI",
+        "HIGH",
+        "LOLO",
+        "LOW",
+        "STATE",
+        "COS",
+        "COMM",
+        "TIMEOUT",
+        "HWLIMIT",
+        "CALC",
+        "SCAN",
+        "LINK",
+        "SOFT",
+        "BAD_SUB",
+        "UDF",
+        "DISABLE",
+        "SIMM",
+        "READ_ACCESS",
+        "WRITE_ACCESS"
+      ]
+    },
+    "biNSEV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "biACKS": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "biACKT": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "YES"
+      ]
+    },
+    "biDISS": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "biPRIO": {
+      "type": "string",
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH"
+      ]
+    },
+    "biUDFS": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "biZSV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "biOSV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "biCOSV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "biSIMM": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "YES",
+        "RAW"
+      ]
+    },
+    "biSIMS": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "biOLDSIMM": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "YES",
+        "RAW"
+      ]
+    },
+    "biSSCN": {
+      "type": "string",
+      "enum": [
+        "Passive",
+        "Event",
+        "I/O Intr",
+        "10 second",
+        "5 second",
+        "2 second",
+        "1 second",
+        ".5 second",
+        ".2 second",
+        ".1 second"
+      ]
+    },
+    "AsynBusy": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "AsynBusy",
+          "default": "AsynBusy"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "([A-Z][a-z0-9]*)*$",
+          "description": "PascalCase name to uniquely identify"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of what this Parameter is for"
+        },
+        "index_name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Override name of index variable in source code (defaults to name)",
+          "default": null
+        },
+        "drv_info": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^\\S{1,40}$",
+          "description": "Info string for drvUserCreate for dynamically created parameters",
+          "default": null
+        },
+        "access": {
+          "description": "What access does the user have. One of:\n\n    - R: Read only value that cannot be set. E.g. chipTemperature on a detector,\n      or isHomed for a motor\n    - W: Write only value that can be written to, but there is no current value.\n      E.g. reboot on a detector, or overwriteCurrentPosition for a motor\n    - RW: Read and Write value that can be written to and read back.\n      E.g. acquireTime on a detector, or velocity of a motor\n    ",
+          "default": "RW",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Access"
+            }
+          ]
+        },
+        "demand_auto_updates": {
+          "type": "boolean",
+          "description": "Should demand update when readback changes?",
+          "default": false
+        },
+        "read_record_suffix": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The read record suffix, if not given then use $(name)_RBV",
+          "default": null
+        },
+        "write_record_suffix": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The write record suffix, if not given then use $(name)",
+          "default": null
+        },
+        "display_form": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DisplayForm"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Display form for numeric/array fields",
+          "default": null
+        },
+        "initial": {
+          "type": [
+            "null",
+            "integer",
+            "string"
+          ],
+          "minimum": 0,
+          "maximum": 1,
+          "pattern": "(\\$\\(\\w+=([0-1])\\))",
+          "description": "The initial value of the parameter",
+          "default": null
+        },
+        "read_widget": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ReadWidget"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Widget to use for read record",
+          "default": {
+            "type": "LED"
+          }
+        },
+        "write_widget": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/WriteWidget"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Widget to use for write record",
+          "default": {
+            "type": "CheckBox"
+          }
+        },
+        "record_fields": {
+          "description": "Busy record fields",
+          "allOf": [
+            {
+              "$ref": "#/definitions/bi_busy"
+            }
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "description"
+      ],
+      "additionalProperties": false
+    },
+    "bi_busy": {
+      "type": "object",
+      "properties": {
+        "NAME": {
+          "type": "string",
+          "description": "Record Name"
+        },
+        "DESC": {
+          "type": "string",
+          "description": "Descriptor"
+        },
+        "ASG": {
+          "type": "string",
+          "description": "Access Security Group"
+        },
+        "SCAN": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biSCAN"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Scan Mechanism"
+        },
+        "PINI": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biPINI"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Process at iocInit"
+        },
+        "PHAS": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Scan Phase"
+        },
+        "EVNT": {
+          "type": "string",
+          "description": "Event Name"
+        },
+        "TSE": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Time Stamp Event"
+        },
+        "TSEL": {
+          "type": "string",
+          "description": "Time Stamp Link"
+        },
+        "DTYP": {
+          "type": "string",
+          "description": "Device Type"
+        },
+        "DISV": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Disable Value",
+          "default": "1"
+        },
+        "DISA": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Disable"
+        },
+        "SDIS": {
+          "type": "string",
+          "description": "Scanning Disable"
+        },
+        "DISP": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Disable putField"
+        },
+        "PROC": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Force Processing"
+        },
+        "STAT": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biSTAT"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Alarm Status",
+          "default": "UDF"
+        },
+        "SEVR": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biSEVR"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Alarm Severity"
+        },
+        "AMSG": {
+          "type": "string",
+          "description": "Alarm Message"
+        },
+        "NSTA": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biNSTA"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "New Alarm Status"
+        },
+        "NSEV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biNSEV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "New Alarm Severity"
+        },
+        "NAMSG": {
+          "type": "string",
+          "description": "New Alarm Message"
+        },
+        "ACKS": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biACKS"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Alarm Ack Severity"
+        },
+        "ACKT": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biACKT"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Alarm Ack Transient",
+          "default": "YES"
+        },
+        "DISS": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biDISS"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Disable Alarm Sevrty"
+        },
+        "LCNT": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Lock Count"
+        },
+        "PACT": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Record active"
+        },
+        "PUTF": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "dbPutField process"
+        },
+        "RPRO": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Reprocess "
+        },
+        "PRIO": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biPRIO"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Scheduling Priority"
+        },
+        "TPRO": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Trace Processing"
+        },
+        "UDF": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Undefined",
+          "default": "1"
+        },
+        "UDFS": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biUDFS"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Undefined Alarm Sevrty",
+          "default": "INVALID"
+        },
+        "UTAG": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Time Tag"
+        },
+        "FLNK": {
+          "type": "string",
+          "description": "Forward Process Link"
+        },
+        "VAL": {
+          "type": "string",
+          "description": "Current Value"
+        },
+        "ZNAM": {
+          "type": "string",
+          "description": "Zero Name"
+        },
+        "ONAM": {
+          "type": "string",
+          "description": "One Name"
+        },
+        "RVAL": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Raw Value"
+        },
+        "ORAW": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "prev Raw Value"
+        },
+        "MASK": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Hardware Mask"
+        },
+        "ZSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biZSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Zero Error Severity"
+        },
+        "OSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biOSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "One Error Severity"
+        },
+        "COSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biCOSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Change of State Svr"
+        },
+        "MLST": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Last Value Monitored"
+        },
+        "LALM": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Last Value Alarmed"
+        },
+        "SIOL": {
+          "type": "string",
+          "description": "Simulation Input Link"
+        },
+        "SIML": {
+          "type": "string",
+          "description": "Simulation Mode Link"
+        },
+        "SIMM": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biSIMM"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Simulation Mode"
+        },
+        "SIMS": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biSIMS"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Simulation Mode Severity"
+        },
+        "INP": {
+          "type": "string",
+          "description": "Input Specification"
+        },
+        "SVAL": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Simulation Value"
+        },
+        "OLDSIMM": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biOLDSIMM"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Prev. Simulation Mode"
+        },
+        "SSCN": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/biSSCN"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Sim. Mode Scan",
+          "default": "65535"
+        },
+        "SDLY": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Sim. Mode Async Delay",
+          "default": "-1.0"
+        }
+      },
+      "additionalProperties": false
+    },
+    "AsynFloat64": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "AsynFloat64",
+          "default": "AsynFloat64"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "([A-Z][a-z0-9]*)*$",
+          "description": "PascalCase name to uniquely identify"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of what this Parameter is for"
+        },
+        "index_name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Override name of index variable in source code (defaults to name)",
+          "default": null
+        },
+        "drv_info": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^\\S{1,40}$",
+          "description": "Info string for drvUserCreate for dynamically created parameters",
+          "default": null
+        },
+        "access": {
+          "description": "What access does the user have. One of:\n\n    - R: Read only value that cannot be set. E.g. chipTemperature on a detector,\n      or isHomed for a motor\n    - W: Write only value that can be written to, but there is no current value.\n      E.g. reboot on a detector, or overwriteCurrentPosition for a motor\n    - RW: Read and Write value that can be written to and read back.\n      E.g. acquireTime on a detector, or velocity of a motor\n    ",
+          "default": "RW",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Access"
+            }
+          ]
+        },
+        "demand_auto_updates": {
+          "type": "boolean",
+          "description": "Should demand update when readback changes?",
+          "default": false
+        },
+        "read_record_suffix": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The read record suffix, if not given then use $(name)_RBV",
+          "default": null
+        },
+        "write_record_suffix": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The write record suffix, if not given then use $(name)",
+          "default": null
+        },
+        "display_form": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DisplayForm"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Display form for numeric/array fields",
+          "default": null
+        },
+        "initial": {
+          "type": [
+            "null",
+            "number",
+            "string"
+          ],
+          "pattern": "(\\$\\(\\w+=(-?[0-9]+(\\.[0-9]+)?)\\))",
+          "description": "The initial value of the parameter",
+          "default": null
+        },
+        "read_widget": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ReadWidget"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Widget to use for read record",
+          "default": {
+            "type": "TextRead",
+            "lines": 1
+          }
+        },
+        "write_widget": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/WriteWidget"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Widget to use for write record",
+          "default": {
+            "type": "TextWrite",
+            "lines": 1
+          }
+        },
+        "record_fields": {
+          "description": "Analogue record fields",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ai_ao"
+            }
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "description"
+      ],
+      "additionalProperties": false
+    },
+    "ai_ao": {
+      "type": "object",
+      "properties": {
+        "NAME": {
+          "type": "string",
+          "description": "Record Name"
+        },
+        "DESC": {
+          "type": "string",
+          "description": "Descriptor"
+        },
+        "ASG": {
+          "type": "string",
+          "description": "Access Security Group"
+        },
+        "SCAN": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/aiSCAN"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Scan Mechanism"
+        },
+        "PINI": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/aiPINI"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Process at iocInit"
+        },
+        "PHAS": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Scan Phase"
+        },
+        "EVNT": {
+          "type": "string",
+          "description": "Event Name"
+        },
+        "TSE": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Time Stamp Event"
+        },
+        "TSEL": {
+          "type": "string",
+          "description": "Time Stamp Link"
+        },
+        "DTYP": {
+          "type": "string",
+          "description": "Device Type"
+        },
+        "DISV": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Disable Value",
+          "default": "1"
+        },
+        "DISA": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Disable"
+        },
+        "SDIS": {
+          "type": "string",
+          "description": "Scanning Disable"
+        },
+        "DISP": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Disable putField"
+        },
+        "PROC": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Force Processing"
+        },
+        "STAT": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/aiSTAT"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Alarm Status",
+          "default": "UDF"
+        },
+        "SEVR": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/aiSEVR"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Alarm Severity"
+        },
+        "AMSG": {
+          "type": "string",
+          "description": "Alarm Message"
+        },
+        "NSTA": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/aiNSTA"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "New Alarm Status"
+        },
+        "NSEV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/aiNSEV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "New Alarm Severity"
+        },
+        "NAMSG": {
+          "type": "string",
+          "description": "New Alarm Message"
+        },
+        "ACKS": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/aiACKS"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Alarm Ack Severity"
+        },
+        "ACKT": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/aiACKT"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Alarm Ack Transient",
+          "default": "YES"
+        },
+        "DISS": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/aiDISS"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Disable Alarm Sevrty"
+        },
+        "LCNT": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Lock Count"
+        },
+        "PACT": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Record active"
+        },
+        "PUTF": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "dbPutField process"
+        },
+        "RPRO": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Reprocess "
+        },
+        "PRIO": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/aiPRIO"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Scheduling Priority"
+        },
+        "TPRO": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Trace Processing"
+        },
+        "UDF": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Undefined",
+          "default": "1"
+        },
+        "UDFS": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/aiUDFS"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Undefined Alarm Sevrty",
+          "default": "INVALID"
+        },
+        "UTAG": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Time Tag"
+        },
+        "FLNK": {
+          "type": "string",
+          "description": "Forward Process Link"
+        },
+        "VAL": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Current EGU Value"
+        },
+        "PREC": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Display Precision"
+        },
+        "LINR": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/aiLINR"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Linearization"
+        },
+        "EGUF": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Engineer Units Full"
+        },
+        "EGUL": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Engineer Units Low"
+        },
+        "EGU": {
+          "type": "string",
+          "description": "Engineering Units"
+        },
+        "ROFF": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Raw Offset"
+        },
+        "EOFF": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Raw to EGU Offset"
+        },
+        "ESLO": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Raw to EGU Slope",
+          "default": "1"
+        },
+        "HOPR": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "High Operating Range"
+        },
+        "LOPR": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Low Operating Range"
+        },
+        "AOFF": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Adjustment Offset"
+        },
+        "ASLO": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Adjustment Slope",
+          "default": "1"
+        },
+        "HIHI": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Hihi Alarm Limit"
+        },
+        "LOLO": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Lolo Alarm Limit"
+        },
+        "HIGH": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "High Alarm Limit"
+        },
+        "LOW": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Low Alarm Limit"
+        },
+        "HHSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/aiHHSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Hihi Severity"
+        },
+        "LLSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/aiLLSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Lolo Severity"
+        },
+        "HSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/aiHSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "High Severity"
+        },
+        "LSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/aiLSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Low Severity"
+        },
+        "HYST": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Alarm Deadband"
+        },
+        "ADEL": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Archive Deadband"
+        },
+        "MDEL": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Monitor Deadband"
+        },
+        "RVAL": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Current Raw Value"
+        },
+        "ORAW": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Previous Raw Value"
+        },
+        "LALM": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Last Value Alarmed"
+        },
+        "ALST": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Last Value Archived"
+        },
+        "MLST": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Last Val Monitored"
+        },
+        "INIT": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Initialized?"
+        },
+        "LBRK": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "LastBreak Point"
+        },
+        "SIOL": {
+          "type": "string",
+          "description": "Simulation Input Link"
+        },
+        "SIML": {
+          "type": "string",
+          "description": "Simulation Mode Link"
+        },
+        "SIMM": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/aiSIMM"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Simulation Mode"
+        },
+        "SIMS": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/aiSIMS"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Simulation Mode Severity"
+        },
+        "OLDSIMM": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/aiOLDSIMM"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Prev. Simulation Mode"
+        },
+        "SSCN": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/aiSSCN"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Sim. Mode Scan",
+          "default": "65535"
+        },
+        "SDLY": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Sim. Mode Async Delay",
+          "default": "-1.0"
+        },
+        "INP": {
+          "type": "string",
+          "description": "Input Specification"
+        },
+        "SMOO": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Smoothing"
+        },
+        "AFTC": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Alarm Filter Time Constant"
+        },
+        "AFVL": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Alarm Filter Value"
+        },
+        "SVAL": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Simulation Value"
+        }
+      },
+      "additionalProperties": false
+    },
+    "aiSCAN": {
+      "type": "string",
+      "enum": [
+        "Passive",
+        "Event",
+        "I/O Intr",
+        "10 second",
+        "5 second",
+        "2 second",
+        "1 second",
+        ".5 second",
+        ".2 second",
+        ".1 second"
+      ]
+    },
+    "aiPINI": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "YES",
+        "RUN",
+        "RUNNING",
+        "PAUSE",
+        "PAUSED"
+      ]
+    },
+    "aiSTAT": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "READ",
+        "WRITE",
+        "HIHI",
+        "HIGH",
+        "LOLO",
+        "LOW",
+        "STATE",
+        "COS",
+        "COMM",
+        "TIMEOUT",
+        "HWLIMIT",
+        "CALC",
+        "SCAN",
+        "LINK",
+        "SOFT",
+        "BAD_SUB",
+        "UDF",
+        "DISABLE",
+        "SIMM",
+        "READ_ACCESS",
+        "WRITE_ACCESS"
+      ]
+    },
+    "aiSEVR": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "aiNSTA": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "READ",
+        "WRITE",
+        "HIHI",
+        "HIGH",
+        "LOLO",
+        "LOW",
+        "STATE",
+        "COS",
+        "COMM",
+        "TIMEOUT",
+        "HWLIMIT",
+        "CALC",
+        "SCAN",
+        "LINK",
+        "SOFT",
+        "BAD_SUB",
+        "UDF",
+        "DISABLE",
+        "SIMM",
+        "READ_ACCESS",
+        "WRITE_ACCESS"
+      ]
+    },
+    "aiNSEV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "aiACKS": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "aiACKT": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "YES"
+      ]
+    },
+    "aiDISS": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "aiPRIO": {
+      "type": "string",
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH"
+      ]
+    },
+    "aiUDFS": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "aiLINR": {
+      "type": "string",
+      "enum": [
+        "NO CONVERSION",
+        "SLOPE",
+        "LINEAR",
+        "typeKdegF",
+        "typeKdegC",
+        "typeJdegF",
+        "typeJdegC",
+        "typeEdegF(ixe only)",
+        "typeEdegC(ixe only)",
+        "typeTdegF",
+        "typeTdegC",
+        "typeRdegF",
+        "typeRdegC",
+        "typeSdegF",
+        "typeSdegC"
+      ]
+    },
+    "aiHHSV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "aiLLSV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "aiHSV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "aiLSV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "aiSIMM": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "YES",
+        "RAW"
+      ]
+    },
+    "aiSIMS": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "aiOLDSIMM": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "YES",
+        "RAW"
+      ]
+    },
+    "aiSSCN": {
+      "type": "string",
+      "enum": [
+        "Passive",
+        "Event",
+        "I/O Intr",
+        "10 second",
+        "5 second",
+        "2 second",
+        "1 second",
+        ".5 second",
+        ".2 second",
+        ".1 second"
+      ]
+    },
+    "AsynInt32": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "AsynInt32",
+          "default": "AsynInt32"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "([A-Z][a-z0-9]*)*$",
+          "description": "PascalCase name to uniquely identify"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of what this Parameter is for"
+        },
+        "index_name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Override name of index variable in source code (defaults to name)",
+          "default": null
+        },
+        "drv_info": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^\\S{1,40}$",
+          "description": "Info string for drvUserCreate for dynamically created parameters",
+          "default": null
+        },
+        "access": {
+          "description": "What access does the user have. One of:\n\n    - R: Read only value that cannot be set. E.g. chipTemperature on a detector,\n      or isHomed for a motor\n    - W: Write only value that can be written to, but there is no current value.\n      E.g. reboot on a detector, or overwriteCurrentPosition for a motor\n    - RW: Read and Write value that can be written to and read back.\n      E.g. acquireTime on a detector, or velocity of a motor\n    ",
+          "default": "RW",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Access"
+            }
+          ]
+        },
+        "demand_auto_updates": {
+          "type": "boolean",
+          "description": "Should demand update when readback changes?",
+          "default": false
+        },
+        "read_record_suffix": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The read record suffix, if not given then use $(name)_RBV",
+          "default": null
+        },
+        "write_record_suffix": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The write record suffix, if not given then use $(name)",
+          "default": null
+        },
+        "display_form": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DisplayForm"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Display form for numeric/array fields",
+          "default": null
+        },
+        "initial": {
+          "type": [
+            "null",
+            "integer",
+            "string"
+          ],
+          "pattern": "(\\$\\(\\w+=(-?\\d+)\\))",
+          "description": "The initial value of the parameter",
+          "default": null
+        },
+        "read_widget": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ReadWidget"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Widget to use for read record",
+          "default": {
+            "type": "TextRead",
+            "lines": 1
+          }
+        },
+        "write_widget": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/WriteWidget"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Widget to use for write record",
+          "default": {
+            "type": "TextWrite",
+            "lines": 1
+          }
+        },
+        "record_fields": {
+          "description": "Analogue record fields",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ai_ao"
+            }
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "description"
+      ],
+      "additionalProperties": false
+    },
+    "AsynLong": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "AsynLong",
+          "default": "AsynLong"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "([A-Z][a-z0-9]*)*$",
+          "description": "PascalCase name to uniquely identify"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of what this Parameter is for"
+        },
+        "index_name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Override name of index variable in source code (defaults to name)",
+          "default": null
+        },
+        "drv_info": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^\\S{1,40}$",
+          "description": "Info string for drvUserCreate for dynamically created parameters",
+          "default": null
+        },
+        "access": {
+          "description": "What access does the user have. One of:\n\n    - R: Read only value that cannot be set. E.g. chipTemperature on a detector,\n      or isHomed for a motor\n    - W: Write only value that can be written to, but there is no current value.\n      E.g. reboot on a detector, or overwriteCurrentPosition for a motor\n    - RW: Read and Write value that can be written to and read back.\n      E.g. acquireTime on a detector, or velocity of a motor\n    ",
+          "default": "RW",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Access"
+            }
+          ]
+        },
+        "demand_auto_updates": {
+          "type": "boolean",
+          "description": "Should demand update when readback changes?",
+          "default": false
+        },
+        "read_record_suffix": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The read record suffix, if not given then use $(name)_RBV",
+          "default": null
+        },
+        "write_record_suffix": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The write record suffix, if not given then use $(name)",
+          "default": null
+        },
+        "display_form": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DisplayForm"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Display form for numeric/array fields",
+          "default": null
+        },
+        "initial": {
+          "type": [
+            "null",
+            "integer",
+            "string"
+          ],
+          "pattern": "(\\$\\(\\w+=(-?\\d+)\\))",
+          "description": "The initial value of the parameter",
+          "default": null
+        },
+        "read_widget": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ReadWidget"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Widget to use for read record",
+          "default": {
+            "type": "TextRead",
+            "lines": 1
+          }
+        },
+        "write_widget": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/WriteWidget"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Widget to use for write record",
+          "default": {
+            "type": "TextWrite",
+            "lines": 1
+          }
+        },
+        "record_fields": {
+          "description": "Long record fields",
+          "allOf": [
+            {
+              "$ref": "#/definitions/longin_longout"
+            }
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "description"
+      ],
+      "additionalProperties": false
+    },
+    "longin_longout": {
+      "type": "object",
+      "properties": {
+        "NAME": {
+          "type": "string",
+          "description": "Record Name"
+        },
+        "DESC": {
+          "type": "string",
+          "description": "Descriptor"
+        },
+        "ASG": {
+          "type": "string",
+          "description": "Access Security Group"
+        },
+        "SCAN": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/longinSCAN"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Scan Mechanism"
+        },
+        "PINI": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/longinPINI"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Process at iocInit"
+        },
+        "PHAS": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Scan Phase"
+        },
+        "EVNT": {
+          "type": "string",
+          "description": "Event Name"
+        },
+        "TSE": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Time Stamp Event"
+        },
+        "TSEL": {
+          "type": "string",
+          "description": "Time Stamp Link"
+        },
+        "DTYP": {
+          "type": "string",
+          "description": "Device Type"
+        },
+        "DISV": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Disable Value",
+          "default": "1"
+        },
+        "DISA": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Disable"
+        },
+        "SDIS": {
+          "type": "string",
+          "description": "Scanning Disable"
+        },
+        "DISP": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Disable putField"
+        },
+        "PROC": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Force Processing"
+        },
+        "STAT": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/longinSTAT"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Alarm Status",
+          "default": "UDF"
+        },
+        "SEVR": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/longinSEVR"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Alarm Severity"
+        },
+        "AMSG": {
+          "type": "string",
+          "description": "Alarm Message"
+        },
+        "NSTA": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/longinNSTA"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "New Alarm Status"
+        },
+        "NSEV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/longinNSEV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "New Alarm Severity"
+        },
+        "NAMSG": {
+          "type": "string",
+          "description": "New Alarm Message"
+        },
+        "ACKS": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/longinACKS"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Alarm Ack Severity"
+        },
+        "ACKT": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/longinACKT"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Alarm Ack Transient",
+          "default": "YES"
+        },
+        "DISS": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/longinDISS"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Disable Alarm Sevrty"
+        },
+        "LCNT": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Lock Count"
+        },
+        "PACT": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Record active"
+        },
+        "PUTF": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "dbPutField process"
+        },
+        "RPRO": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Reprocess "
+        },
+        "PRIO": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/longinPRIO"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Scheduling Priority"
+        },
+        "TPRO": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Trace Processing"
+        },
+        "UDF": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Undefined",
+          "default": "1"
+        },
+        "UDFS": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/longinUDFS"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Undefined Alarm Sevrty",
+          "default": "INVALID"
+        },
+        "UTAG": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Time Tag"
+        },
+        "FLNK": {
+          "type": "string",
+          "description": "Forward Process Link"
+        },
+        "VAL": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Current value"
+        },
+        "EGU": {
+          "type": "string",
+          "description": "Engineering Units"
+        },
+        "HOPR": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "High Operating Range"
+        },
+        "LOPR": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Low Operating Range"
+        },
+        "HIHI": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Hihi Alarm Limit"
+        },
+        "LOLO": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Lolo Alarm Limit"
+        },
+        "HIGH": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "High Alarm Limit"
+        },
+        "LOW": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Low Alarm Limit"
+        },
+        "HHSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/longinHHSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Hihi Severity"
+        },
+        "LLSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/longinLLSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Lolo Severity"
+        },
+        "HSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/longinHSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "High Severity"
+        },
+        "LSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/longinLSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Low Severity"
+        },
+        "HYST": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Alarm Deadband"
+        },
+        "ADEL": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Archive Deadband"
+        },
+        "MDEL": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Monitor Deadband"
+        },
+        "LALM": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Last Value Alarmed"
+        },
+        "ALST": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Last Value Archived"
+        },
+        "MLST": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Last Val Monitored"
+        },
+        "SIOL": {
+          "type": "string",
+          "description": "Sim Input Specifctn"
+        },
+        "SIML": {
+          "type": "string",
+          "description": "Sim Mode Location"
+        },
+        "SIMM": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/longinSIMM"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Simulation Mode"
+        },
+        "SIMS": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/longinSIMS"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Sim mode Alarm Svrty"
+        },
+        "OLDSIMM": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/longinOLDSIMM"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Prev. Simulation Mode"
+        },
+        "SSCN": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/longinSSCN"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Sim. Mode Scan",
+          "default": "65535"
+        },
+        "SDLY": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Sim. Mode Async Delay",
+          "default": "-1.0"
+        },
+        "INP": {
+          "type": "string",
+          "description": "Input Specification"
+        },
+        "AFTC": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Alarm Filter Time Constant"
+        },
+        "AFVL": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Alarm Filter Value"
+        },
+        "SVAL": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Simulation Value"
+        }
+      },
+      "additionalProperties": false
+    },
+    "longinSCAN": {
+      "type": "string",
+      "enum": [
+        "Passive",
+        "Event",
+        "I/O Intr",
+        "10 second",
+        "5 second",
+        "2 second",
+        "1 second",
+        ".5 second",
+        ".2 second",
+        ".1 second"
+      ]
+    },
+    "longinPINI": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "YES",
+        "RUN",
+        "RUNNING",
+        "PAUSE",
+        "PAUSED"
+      ]
+    },
+    "longinSTAT": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "READ",
+        "WRITE",
+        "HIHI",
+        "HIGH",
+        "LOLO",
+        "LOW",
+        "STATE",
+        "COS",
+        "COMM",
+        "TIMEOUT",
+        "HWLIMIT",
+        "CALC",
+        "SCAN",
+        "LINK",
+        "SOFT",
+        "BAD_SUB",
+        "UDF",
+        "DISABLE",
+        "SIMM",
+        "READ_ACCESS",
+        "WRITE_ACCESS"
+      ]
+    },
+    "longinSEVR": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "longinNSTA": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "READ",
+        "WRITE",
+        "HIHI",
+        "HIGH",
+        "LOLO",
+        "LOW",
+        "STATE",
+        "COS",
+        "COMM",
+        "TIMEOUT",
+        "HWLIMIT",
+        "CALC",
+        "SCAN",
+        "LINK",
+        "SOFT",
+        "BAD_SUB",
+        "UDF",
+        "DISABLE",
+        "SIMM",
+        "READ_ACCESS",
+        "WRITE_ACCESS"
+      ]
+    },
+    "longinNSEV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "longinACKS": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "longinACKT": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "YES"
+      ]
+    },
+    "longinDISS": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "longinPRIO": {
+      "type": "string",
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH"
+      ]
+    },
+    "longinUDFS": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "longinHHSV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "longinLLSV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "longinHSV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "longinLSV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "longinSIMM": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "YES"
+      ]
+    },
+    "longinSIMS": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "longinOLDSIMM": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "YES",
+        "RAW"
+      ]
+    },
+    "longinSSCN": {
+      "type": "string",
+      "enum": [
+        "Passive",
+        "Event",
+        "I/O Intr",
+        "10 second",
+        "5 second",
+        "2 second",
+        "1 second",
+        ".5 second",
+        ".2 second",
+        ".1 second"
+      ]
+    },
+    "AsynMultiBitBinary": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "AsynMultiBitBinary",
+          "default": "AsynMultiBitBinary"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "([A-Z][a-z0-9]*)*$",
+          "description": "PascalCase name to uniquely identify"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of what this Parameter is for"
+        },
+        "index_name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Override name of index variable in source code (defaults to name)",
+          "default": null
+        },
+        "drv_info": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^\\S{1,40}$",
+          "description": "Info string for drvUserCreate for dynamically created parameters",
+          "default": null
+        },
+        "access": {
+          "description": "What access does the user have. One of:\n\n    - R: Read only value that cannot be set. E.g. chipTemperature on a detector,\n      or isHomed for a motor\n    - W: Write only value that can be written to, but there is no current value.\n      E.g. reboot on a detector, or overwriteCurrentPosition for a motor\n    - RW: Read and Write value that can be written to and read back.\n      E.g. acquireTime on a detector, or velocity of a motor\n    ",
+          "default": "RW",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Access"
+            }
+          ]
+        },
+        "demand_auto_updates": {
+          "type": "boolean",
+          "description": "Should demand update when readback changes?",
+          "default": false
+        },
+        "read_record_suffix": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The read record suffix, if not given then use $(name)_RBV",
+          "default": null
+        },
+        "write_record_suffix": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The write record suffix, if not given then use $(name)",
+          "default": null
+        },
+        "display_form": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DisplayForm"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Display form for numeric/array fields",
+          "default": null
+        },
+        "initial": {
+          "type": [
+            "null",
+            "integer",
+            "string"
+          ],
+          "minimum": 0,
+          "maximum": 15,
+          "pattern": "(\\$\\(\\w+=([0-15])\\))",
+          "description": "The initial value of the parameter",
+          "default": null
+        },
+        "read_widget": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ReadWidget"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Widget to use for read record",
+          "default": {
+            "type": "TextRead",
+            "lines": 1
+          }
+        },
+        "write_widget": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/WriteWidget"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Widget to use for write record",
+          "default": {
+            "type": "ComboBox"
+          }
+        },
+        "record_fields": {
+          "description": "Multi-bit binary record fields",
+          "allOf": [
+            {
+              "$ref": "#/definitions/mbbi_mbbo"
+            }
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "description"
+      ],
+      "additionalProperties": false
+    },
+    "mbbi_mbbo": {
+      "type": "object",
+      "properties": {
+        "NAME": {
+          "type": "string",
+          "description": "Record Name"
+        },
+        "DESC": {
+          "type": "string",
+          "description": "Descriptor"
+        },
+        "ASG": {
+          "type": "string",
+          "description": "Access Security Group"
+        },
+        "SCAN": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbbiSCAN"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Scan Mechanism"
+        },
+        "PINI": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbbiPINI"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Process at iocInit"
+        },
+        "PHAS": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Scan Phase"
+        },
+        "EVNT": {
+          "type": "string",
+          "description": "Event Name"
+        },
+        "TSE": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Time Stamp Event"
+        },
+        "TSEL": {
+          "type": "string",
+          "description": "Time Stamp Link"
+        },
+        "DTYP": {
+          "type": "string",
+          "description": "Device Type"
+        },
+        "DISV": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Disable Value",
+          "default": "1"
+        },
+        "DISA": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Disable"
+        },
+        "SDIS": {
+          "type": "string",
+          "description": "Scanning Disable"
+        },
+        "DISP": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Disable putField"
+        },
+        "PROC": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Force Processing"
+        },
+        "STAT": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbbiSTAT"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Alarm Status",
+          "default": "UDF"
+        },
+        "SEVR": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbbiSEVR"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Alarm Severity"
+        },
+        "AMSG": {
+          "type": "string",
+          "description": "Alarm Message"
+        },
+        "NSTA": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbbiNSTA"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "New Alarm Status"
+        },
+        "NSEV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbbiNSEV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "New Alarm Severity"
+        },
+        "NAMSG": {
+          "type": "string",
+          "description": "New Alarm Message"
+        },
+        "ACKS": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbbiACKS"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Alarm Ack Severity"
+        },
+        "ACKT": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbbiACKT"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Alarm Ack Transient",
+          "default": "YES"
+        },
+        "DISS": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbbiDISS"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Disable Alarm Sevrty"
+        },
+        "LCNT": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Lock Count"
+        },
+        "PACT": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Record active"
+        },
+        "PUTF": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "dbPutField process"
+        },
+        "RPRO": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Reprocess "
+        },
+        "PRIO": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbbiPRIO"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Scheduling Priority"
+        },
+        "TPRO": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Trace Processing"
+        },
+        "UDF": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Undefined",
+          "default": "1"
+        },
+        "UDFS": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbbiUDFS"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Undefined Alarm Sevrty",
+          "default": "INVALID"
+        },
+        "UTAG": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Time Tag"
+        },
+        "FLNK": {
+          "type": "string",
+          "description": "Forward Process Link"
+        },
+        "VAL": {
+          "type": "string",
+          "description": "Current Value"
+        },
+        "NOBT": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Number of Bits"
+        },
+        "ZRVL": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Zero Value"
+        },
+        "ONVL": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "One Value"
+        },
+        "TWVL": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Two Value"
+        },
+        "THVL": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Three Value"
+        },
+        "FRVL": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Four Value"
+        },
+        "FVVL": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Five Value"
+        },
+        "SXVL": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Six Value"
+        },
+        "SVVL": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Seven Value"
+        },
+        "EIVL": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Eight Value"
+        },
+        "NIVL": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Nine Value"
+        },
+        "TEVL": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Ten Value"
+        },
+        "ELVL": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Eleven Value"
+        },
+        "TVVL": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Twelve Value"
+        },
+        "TTVL": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Thirteen Value"
+        },
+        "FTVL": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Fourteen Value"
+        },
+        "FFVL": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Fifteen Value"
+        },
+        "ZRST": {
+          "type": "string",
+          "description": "Zero String"
+        },
+        "ONST": {
+          "type": "string",
+          "description": "One String"
+        },
+        "TWST": {
+          "type": "string",
+          "description": "Two String"
+        },
+        "THST": {
+          "type": "string",
+          "description": "Three String"
+        },
+        "FRST": {
+          "type": "string",
+          "description": "Four String"
+        },
+        "FVST": {
+          "type": "string",
+          "description": "Five String"
+        },
+        "SXST": {
+          "type": "string",
+          "description": "Six String"
+        },
+        "SVST": {
+          "type": "string",
+          "description": "Seven String"
+        },
+        "EIST": {
+          "type": "string",
+          "description": "Eight String"
+        },
+        "NIST": {
+          "type": "string",
+          "description": "Nine String"
+        },
+        "TEST": {
+          "type": "string",
+          "description": "Ten String"
+        },
+        "ELST": {
+          "type": "string",
+          "description": "Eleven String"
+        },
+        "TVST": {
+          "type": "string",
+          "description": "Twelve String"
+        },
+        "TTST": {
+          "type": "string",
+          "description": "Thirteen String"
+        },
+        "FTST": {
+          "type": "string",
+          "description": "Fourteen String"
+        },
+        "FFST": {
+          "type": "string",
+          "description": "Fifteen String"
+        },
+        "ZRSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbbiZRSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "State Zero Severity"
+        },
+        "ONSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbbiONSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "State One Severity"
+        },
+        "TWSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbbiTWSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "State Two Severity"
+        },
+        "THSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbbiTHSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "State Three Severity"
+        },
+        "FRSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbbiFRSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "State Four Severity"
+        },
+        "FVSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbbiFVSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "State Five Severity"
+        },
+        "SXSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbbiSXSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "State Six Severity"
+        },
+        "SVSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbbiSVSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "State Seven Severity"
+        },
+        "EISV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbbiEISV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "State Eight Severity"
+        },
+        "NISV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbbiNISV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "State Nine Severity"
+        },
+        "TESV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbbiTESV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "State Ten Severity"
+        },
+        "ELSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbbiELSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "State Eleven Severity"
+        },
+        "TVSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbbiTVSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "State Twelve Severity"
+        },
+        "TTSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbbiTTSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "State Thirteen Sevr"
+        },
+        "FTSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbbiFTSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "State Fourteen Sevr"
+        },
+        "FFSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbbiFFSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "State Fifteen Severity"
+        },
+        "UNSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbbiUNSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Unknown State Severity"
+        },
+        "COSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbbiCOSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Change of State Svr"
+        },
+        "RVAL": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Raw Value"
+        },
+        "ORAW": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Prev Raw Value"
+        },
+        "MASK": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Hardware Mask"
+        },
+        "MLST": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Last Value Monitored"
+        },
+        "LALM": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Last Value Alarmed"
+        },
+        "SDEF": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "States Defined"
+        },
+        "SHFT": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Shift"
+        },
+        "SIOL": {
+          "type": "string",
+          "description": "Simulation Input Link"
+        },
+        "SIML": {
+          "type": "string",
+          "description": "Simulation Mode Link"
+        },
+        "SIMM": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbbiSIMM"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Simulation Mode"
+        },
+        "SIMS": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbbiSIMS"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Simulation Mode Severity"
+        },
+        "OLDSIMM": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbbiOLDSIMM"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Prev. Simulation Mode"
+        },
+        "SSCN": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbbiSSCN"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Sim. Mode Scan",
+          "default": "65535"
+        },
+        "SDLY": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Sim. Mode Async Delay",
+          "default": "-1.0"
+        },
+        "INP": {
+          "type": "string",
+          "description": "Input Specification"
+        },
+        "AFTC": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Alarm Filter Time Constant"
+        },
+        "AFVL": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Alarm Filter Value"
+        },
+        "SVAL": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Simulation Value"
+        }
+      },
+      "additionalProperties": false
+    },
+    "mbbiSCAN": {
+      "type": "string",
+      "enum": [
+        "Passive",
+        "Event",
+        "I/O Intr",
+        "10 second",
+        "5 second",
+        "2 second",
+        "1 second",
+        ".5 second",
+        ".2 second",
+        ".1 second"
+      ]
+    },
+    "mbbiPINI": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "YES",
+        "RUN",
+        "RUNNING",
+        "PAUSE",
+        "PAUSED"
+      ]
+    },
+    "mbbiSTAT": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "READ",
+        "WRITE",
+        "HIHI",
+        "HIGH",
+        "LOLO",
+        "LOW",
+        "STATE",
+        "COS",
+        "COMM",
+        "TIMEOUT",
+        "HWLIMIT",
+        "CALC",
+        "SCAN",
+        "LINK",
+        "SOFT",
+        "BAD_SUB",
+        "UDF",
+        "DISABLE",
+        "SIMM",
+        "READ_ACCESS",
+        "WRITE_ACCESS"
+      ]
+    },
+    "mbbiSEVR": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "mbbiNSTA": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "READ",
+        "WRITE",
+        "HIHI",
+        "HIGH",
+        "LOLO",
+        "LOW",
+        "STATE",
+        "COS",
+        "COMM",
+        "TIMEOUT",
+        "HWLIMIT",
+        "CALC",
+        "SCAN",
+        "LINK",
+        "SOFT",
+        "BAD_SUB",
+        "UDF",
+        "DISABLE",
+        "SIMM",
+        "READ_ACCESS",
+        "WRITE_ACCESS"
+      ]
+    },
+    "mbbiNSEV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "mbbiACKS": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "mbbiACKT": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "YES"
+      ]
+    },
+    "mbbiDISS": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "mbbiPRIO": {
+      "type": "string",
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH"
+      ]
+    },
+    "mbbiUDFS": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "mbbiZRSV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "mbbiONSV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "mbbiTWSV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "mbbiTHSV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "mbbiFRSV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "mbbiFVSV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "mbbiSXSV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "mbbiSVSV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "mbbiEISV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "mbbiNISV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "mbbiTESV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "mbbiELSV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "mbbiTVSV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "mbbiTTSV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "mbbiFTSV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "mbbiFFSV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "mbbiUNSV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "mbbiCOSV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "mbbiSIMM": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "YES",
+        "RAW"
+      ]
+    },
+    "mbbiSIMS": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "mbbiOLDSIMM": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "YES",
+        "RAW"
+      ]
+    },
+    "mbbiSSCN": {
+      "type": "string",
+      "enum": [
+        "Passive",
+        "Event",
+        "I/O Intr",
+        "10 second",
+        "5 second",
+        "2 second",
+        "1 second",
+        ".5 second",
+        ".2 second",
+        ".1 second"
+      ]
+    },
+    "AsynString": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "AsynString",
+          "default": "AsynString"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "([A-Z][a-z0-9]*)*$",
+          "description": "PascalCase name to uniquely identify"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of what this Parameter is for"
+        },
+        "index_name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Override name of index variable in source code (defaults to name)",
+          "default": null
+        },
+        "drv_info": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^\\S{1,40}$",
+          "description": "Info string for drvUserCreate for dynamically created parameters",
+          "default": null
+        },
+        "access": {
+          "description": "What access does the user have. One of:\n\n    - R: Read only value that cannot be set. E.g. chipTemperature on a detector,\n      or isHomed for a motor\n    - W: Write only value that can be written to, but there is no current value.\n      E.g. reboot on a detector, or overwriteCurrentPosition for a motor\n    - RW: Read and Write value that can be written to and read back.\n      E.g. acquireTime on a detector, or velocity of a motor\n    ",
+          "default": "RW",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Access"
+            }
+          ]
+        },
+        "demand_auto_updates": {
+          "type": "boolean",
+          "description": "Should demand update when readback changes?",
+          "default": false
+        },
+        "read_record_suffix": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The read record suffix, if not given then use $(name)_RBV",
+          "default": null
+        },
+        "write_record_suffix": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The write record suffix, if not given then use $(name)",
+          "default": null
+        },
+        "display_form": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DisplayForm"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Display form for numeric/array fields",
+          "default": null
+        },
+        "initial": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The initial value of the parameter",
+          "default": null
+        },
+        "read_widget": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ReadWidget"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Widget to use for read record",
+          "default": {
+            "type": "TextRead",
+            "lines": 1
+          }
+        },
+        "write_widget": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/WriteWidget"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Widget to use for write record",
+          "default": {
+            "type": "TextWrite",
+            "lines": 1
+          }
+        },
+        "record_fields": {
+          "description": "String record fields",
+          "allOf": [
+            {
+              "$ref": "#/definitions/stringin_stringout"
+            }
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "description"
+      ],
+      "additionalProperties": false
+    },
+    "stringin_stringout": {
+      "type": "object",
+      "properties": {
+        "NAME": {
+          "type": "string",
+          "description": "Record Name"
+        },
+        "DESC": {
+          "type": "string",
+          "description": "Descriptor"
+        },
+        "ASG": {
+          "type": "string",
+          "description": "Access Security Group"
+        },
+        "SCAN": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/stringinSCAN"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Scan Mechanism"
+        },
+        "PINI": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/stringinPINI"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Process at iocInit"
+        },
+        "PHAS": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Scan Phase"
+        },
+        "EVNT": {
+          "type": "string",
+          "description": "Event Name"
+        },
+        "TSE": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Time Stamp Event"
+        },
+        "TSEL": {
+          "type": "string",
+          "description": "Time Stamp Link"
+        },
+        "DTYP": {
+          "type": "string",
+          "description": "Device Type"
+        },
+        "DISV": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Disable Value",
+          "default": "1"
+        },
+        "DISA": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Disable"
+        },
+        "SDIS": {
+          "type": "string",
+          "description": "Scanning Disable"
+        },
+        "DISP": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Disable putField"
+        },
+        "PROC": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Force Processing"
+        },
+        "STAT": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/stringinSTAT"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Alarm Status",
+          "default": "UDF"
+        },
+        "SEVR": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/stringinSEVR"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Alarm Severity"
+        },
+        "AMSG": {
+          "type": "string",
+          "description": "Alarm Message"
+        },
+        "NSTA": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/stringinNSTA"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "New Alarm Status"
+        },
+        "NSEV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/stringinNSEV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "New Alarm Severity"
+        },
+        "NAMSG": {
+          "type": "string",
+          "description": "New Alarm Message"
+        },
+        "ACKS": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/stringinACKS"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Alarm Ack Severity"
+        },
+        "ACKT": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/stringinACKT"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Alarm Ack Transient",
+          "default": "YES"
+        },
+        "DISS": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/stringinDISS"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Disable Alarm Sevrty"
+        },
+        "LCNT": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Lock Count"
+        },
+        "PACT": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Record active"
+        },
+        "PUTF": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "dbPutField process"
+        },
+        "RPRO": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Reprocess "
+        },
+        "PRIO": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/stringinPRIO"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Scheduling Priority"
+        },
+        "TPRO": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Trace Processing"
+        },
+        "UDF": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Undefined",
+          "default": "1"
+        },
+        "UDFS": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/stringinUDFS"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Undefined Alarm Sevrty",
+          "default": "INVALID"
+        },
+        "UTAG": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Time Tag"
+        },
+        "FLNK": {
+          "type": "string",
+          "description": "Forward Process Link"
+        },
+        "VAL": {
+          "type": "string",
+          "description": "Current Value"
+        },
+        "OVAL": {
+          "type": "string",
+          "description": "Previous Value"
+        },
+        "MPST": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/stringinMPST"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Post Value Monitors"
+        },
+        "APST": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/stringinAPST"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Post Archive Monitors"
+        },
+        "SIOL": {
+          "type": "string",
+          "description": "Simulation Input Link"
+        },
+        "SIML": {
+          "type": "string",
+          "description": "Simulation Mode Link"
+        },
+        "SIMM": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/stringinSIMM"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Simulation Mode"
+        },
+        "SIMS": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/stringinSIMS"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Simulation Mode Severity"
+        },
+        "OLDSIMM": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/stringinOLDSIMM"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Prev. Simulation Mode"
+        },
+        "SSCN": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/stringinSSCN"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Sim. Mode Scan",
+          "default": "65535"
+        },
+        "SDLY": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Sim. Mode Async Delay",
+          "default": "-1.0"
+        },
+        "INP": {
+          "type": "string",
+          "description": "Input Specification"
+        },
+        "SVAL": {
+          "type": "string",
+          "description": "Simulation Value"
+        }
+      },
+      "additionalProperties": false
+    },
+    "stringinSCAN": {
+      "type": "string",
+      "enum": [
+        "Passive",
+        "Event",
+        "I/O Intr",
+        "10 second",
+        "5 second",
+        "2 second",
+        "1 second",
+        ".5 second",
+        ".2 second",
+        ".1 second"
+      ]
+    },
+    "stringinPINI": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "YES",
+        "RUN",
+        "RUNNING",
+        "PAUSE",
+        "PAUSED"
+      ]
+    },
+    "stringinSTAT": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "READ",
+        "WRITE",
+        "HIHI",
+        "HIGH",
+        "LOLO",
+        "LOW",
+        "STATE",
+        "COS",
+        "COMM",
+        "TIMEOUT",
+        "HWLIMIT",
+        "CALC",
+        "SCAN",
+        "LINK",
+        "SOFT",
+        "BAD_SUB",
+        "UDF",
+        "DISABLE",
+        "SIMM",
+        "READ_ACCESS",
+        "WRITE_ACCESS"
+      ]
+    },
+    "stringinSEVR": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "stringinNSTA": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "READ",
+        "WRITE",
+        "HIHI",
+        "HIGH",
+        "LOLO",
+        "LOW",
+        "STATE",
+        "COS",
+        "COMM",
+        "TIMEOUT",
+        "HWLIMIT",
+        "CALC",
+        "SCAN",
+        "LINK",
+        "SOFT",
+        "BAD_SUB",
+        "UDF",
+        "DISABLE",
+        "SIMM",
+        "READ_ACCESS",
+        "WRITE_ACCESS"
+      ]
+    },
+    "stringinNSEV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "stringinACKS": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "stringinACKT": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "YES"
+      ]
+    },
+    "stringinDISS": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "stringinPRIO": {
+      "type": "string",
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH"
+      ]
+    },
+    "stringinUDFS": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "stringinMPST": {
+      "type": "string",
+      "enum": [
+        "On Change",
+        "Always"
+      ]
+    },
+    "stringinAPST": {
+      "type": "string",
+      "enum": [
+        "On Change",
+        "Always"
+      ]
+    },
+    "stringinSIMM": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "YES"
+      ]
+    },
+    "stringinSIMS": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "stringinOLDSIMM": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "YES",
+        "RAW"
+      ]
+    },
+    "stringinSSCN": {
+      "type": "string",
+      "enum": [
+        "Passive",
+        "Event",
+        "I/O Intr",
+        "10 second",
+        "5 second",
+        "2 second",
+        "1 second",
+        ".5 second",
+        ".2 second",
+        ".1 second"
+      ]
+    },
+    "AsynWaveform": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "AsynWaveform",
+          "default": "AsynWaveform"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "([A-Z][a-z0-9]*)*$",
+          "description": "PascalCase name to uniquely identify"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of what this Parameter is for"
+        },
+        "index_name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Override name of index variable in source code (defaults to name)",
+          "default": null
+        },
+        "drv_info": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^\\S{1,40}$",
+          "description": "Info string for drvUserCreate for dynamically created parameters",
+          "default": null
+        },
+        "access": {
+          "description": "What access does the user have. One of:\n\n    - R: Read only value that cannot be set. E.g. chipTemperature on a detector,\n      or isHomed for a motor\n    - W: Write only value that can be written to, but there is no current value.\n      E.g. reboot on a detector, or overwriteCurrentPosition for a motor\n    - RW: Read and Write value that can be written to and read back.\n      E.g. acquireTime on a detector, or velocity of a motor\n    ",
+          "default": "RW",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Access"
+            }
+          ]
+        },
+        "demand_auto_updates": {
+          "type": "boolean",
+          "description": "Should demand update when readback changes?",
+          "default": false
+        },
+        "read_record_suffix": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The read record suffix, if not given then use $(name)_RBV",
+          "default": null
+        },
+        "write_record_suffix": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The write record suffix, if not given then use $(name)",
+          "default": null
+        },
+        "display_form": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DisplayForm"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Display form for numeric/array fields",
+          "default": null
+        },
+        "initial": {
+          "default": null
+        },
+        "read_widget": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ReadWidget"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Widget to use for read record",
+          "default": {
+            "type": "TextRead",
+            "lines": 1
+          }
+        },
+        "write_widget": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/WriteWidget"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Widget to use for write record",
+          "default": {
+            "type": "TextWrite",
+            "lines": 1
+          }
+        },
+        "record_fields": {
+          "description": "Waveform record fields",
+          "allOf": [
+            {
+              "$ref": "#/definitions/waveform_waveform"
+            }
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "description"
+      ],
+      "additionalProperties": false
+    },
+    "waveform_waveform": {
+      "type": "object",
+      "properties": {
+        "NAME": {
+          "type": "string",
+          "description": "Record Name"
+        },
+        "DESC": {
+          "type": "string",
+          "description": "Descriptor"
+        },
+        "ASG": {
+          "type": "string",
+          "description": "Access Security Group"
+        },
+        "SCAN": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/waveformSCAN"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Scan Mechanism"
+        },
+        "PINI": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/waveformPINI"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Process at iocInit"
+        },
+        "PHAS": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Scan Phase"
+        },
+        "EVNT": {
+          "type": "string",
+          "description": "Event Name"
+        },
+        "TSE": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Time Stamp Event"
+        },
+        "TSEL": {
+          "type": "string",
+          "description": "Time Stamp Link"
+        },
+        "DTYP": {
+          "type": "string",
+          "description": "Device Type"
+        },
+        "DISV": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Disable Value",
+          "default": "1"
+        },
+        "DISA": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Disable"
+        },
+        "SDIS": {
+          "type": "string",
+          "description": "Scanning Disable"
+        },
+        "DISP": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Disable putField"
+        },
+        "PROC": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Force Processing"
+        },
+        "STAT": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/waveformSTAT"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Alarm Status",
+          "default": "UDF"
+        },
+        "SEVR": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/waveformSEVR"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Alarm Severity"
+        },
+        "AMSG": {
+          "type": "string",
+          "description": "Alarm Message"
+        },
+        "NSTA": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/waveformNSTA"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "New Alarm Status"
+        },
+        "NSEV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/waveformNSEV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "New Alarm Severity"
+        },
+        "NAMSG": {
+          "type": "string",
+          "description": "New Alarm Message"
+        },
+        "ACKS": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/waveformACKS"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Alarm Ack Severity"
+        },
+        "ACKT": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/waveformACKT"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Alarm Ack Transient",
+          "default": "YES"
+        },
+        "DISS": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/waveformDISS"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Disable Alarm Sevrty"
+        },
+        "LCNT": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Lock Count"
+        },
+        "PACT": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Record active"
+        },
+        "PUTF": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "dbPutField process"
+        },
+        "RPRO": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Reprocess "
+        },
+        "PRIO": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/waveformPRIO"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Scheduling Priority"
+        },
+        "TPRO": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Trace Processing"
+        },
+        "UDF": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Undefined",
+          "default": "1"
+        },
+        "UDFS": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/waveformUDFS"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Undefined Alarm Sevrty",
+          "default": "INVALID"
+        },
+        "UTAG": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Time Tag"
+        },
+        "FLNK": {
+          "type": "string",
+          "description": "Forward Process Link"
+        },
+        "RARM": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Rearm the waveform"
+        },
+        "PREC": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Display Precision"
+        },
+        "INP": {
+          "type": "string",
+          "description": "Input Specification"
+        },
+        "EGU": {
+          "type": "string",
+          "description": "Engineering Units"
+        },
+        "HOPR": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "High Operating Range"
+        },
+        "LOPR": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Low Operating Range"
+        },
+        "NELM": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Number of Elements",
+          "default": "1"
+        },
+        "FTVL": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/waveformFTVL"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Field Type of Value"
+        },
+        "BUSY": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Busy Indicator"
+        },
+        "NORD": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Number elements read"
+        },
+        "SIOL": {
+          "type": "string",
+          "description": "Simulation Input Link"
+        },
+        "SIML": {
+          "type": "string",
+          "description": "Simulation Mode Link"
+        },
+        "SIMM": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/waveformSIMM"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Simulation Mode"
+        },
+        "SIMS": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/waveformSIMS"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Simulation Mode Severity"
+        },
+        "OLDSIMM": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/waveformOLDSIMM"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Prev. Simulation Mode"
+        },
+        "SSCN": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/waveformSSCN"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Sim. Mode Scan",
+          "default": "65535"
+        },
+        "SDLY": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Sim. Mode Async Delay",
+          "default": "-1.0"
+        },
+        "MPST": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/waveformMPST"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Post Value Monitors"
+        },
+        "APST": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/waveformAPST"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Post Archive Monitors"
+        },
+        "HASH": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Hash of OnChange data."
+        }
+      },
+      "additionalProperties": false
+    },
+    "waveformSCAN": {
+      "type": "string",
+      "enum": [
+        "Passive",
+        "Event",
+        "I/O Intr",
+        "10 second",
+        "5 second",
+        "2 second",
+        "1 second",
+        ".5 second",
+        ".2 second",
+        ".1 second"
+      ]
+    },
+    "waveformPINI": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "YES",
+        "RUN",
+        "RUNNING",
+        "PAUSE",
+        "PAUSED"
+      ]
+    },
+    "waveformSTAT": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "READ",
+        "WRITE",
+        "HIHI",
+        "HIGH",
+        "LOLO",
+        "LOW",
+        "STATE",
+        "COS",
+        "COMM",
+        "TIMEOUT",
+        "HWLIMIT",
+        "CALC",
+        "SCAN",
+        "LINK",
+        "SOFT",
+        "BAD_SUB",
+        "UDF",
+        "DISABLE",
+        "SIMM",
+        "READ_ACCESS",
+        "WRITE_ACCESS"
+      ]
+    },
+    "waveformSEVR": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "waveformNSTA": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "READ",
+        "WRITE",
+        "HIHI",
+        "HIGH",
+        "LOLO",
+        "LOW",
+        "STATE",
+        "COS",
+        "COMM",
+        "TIMEOUT",
+        "HWLIMIT",
+        "CALC",
+        "SCAN",
+        "LINK",
+        "SOFT",
+        "BAD_SUB",
+        "UDF",
+        "DISABLE",
+        "SIMM",
+        "READ_ACCESS",
+        "WRITE_ACCESS"
+      ]
+    },
+    "waveformNSEV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "waveformACKS": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "waveformACKT": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "YES"
+      ]
+    },
+    "waveformDISS": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "waveformPRIO": {
+      "type": "string",
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH"
+      ]
+    },
+    "waveformUDFS": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "waveformFTVL": {
+      "type": "string",
+      "enum": [
+        "STRING",
+        "CHAR",
+        "UCHAR",
+        "SHORT",
+        "USHORT",
+        "LONG",
+        "ULONG",
+        "INT64",
+        "UINT64",
+        "FLOAT",
+        "DOUBLE",
+        "ENUM"
+      ]
+    },
+    "waveformSIMM": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "YES"
+      ]
+    },
+    "waveformSIMS": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "waveformOLDSIMM": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "YES",
+        "RAW"
+      ]
+    },
+    "waveformSSCN": {
+      "type": "string",
+      "enum": [
+        "Passive",
+        "Event",
+        "I/O Intr",
+        "10 second",
+        "5 second",
+        "2 second",
+        "1 second",
+        ".5 second",
+        ".2 second",
+        ".1 second"
+      ]
+    },
+    "waveformMPST": {
+      "type": "string",
+      "enum": [
+        "Always",
+        "On Change"
+      ]
+    },
+    "waveformAPST": {
+      "type": "string",
+      "enum": [
+        "Always",
+        "On Change"
+      ]
+    },
+    "AsynParameterGroup": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "Group",
+          "default": "Group"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "([A-Z][a-z0-9]*)*$",
+          "description": "PascalCase name to uniquely identify"
+        },
+        "label": {
+          "type": "string",
+          "description": "Label for GUI. If empty, use name in Title Case",
+          "default": ""
+        },
+        "layout": {
+          "description": "How to layout children on screen",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Layout"
+            }
+          ]
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/AsynParameter"
+              },
+              {
+                "$ref": "#/definitions/AsynParameterGroup"
+              }
+            ]
+          },
+          "description": "Child Components"
+        }
+      },
+      "required": [
+        "name",
+        "layout",
+        "children"
+      ],
+      "additionalProperties": false
+    },
+    "Layout": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/Plot"
+        },
+        {
+          "$ref": "#/definitions/Row"
+        },
+        {
+          "$ref": "#/definitions/Grid"
+        }
+      ]
+    },
+    "Plot": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "Plot",
+          "default": "Plot"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Row": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "Row",
+          "default": "Row"
+        },
+        "header": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "description": "Labels for the items in the row, None means use previous row header",
+          "default": null
+        }
+      },
+      "additionalProperties": false
+    },
+    "Grid": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "Grid",
+          "default": "Grid"
+        },
+        "labelled": {
+          "type": "boolean",
+          "description": "If True use names of children as labels",
+          "default": true
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

@@ -1,0 +1,630 @@
+{
+  "allOf": [
+    {
+      "$ref": "#/definitions/Device"
+    }
+  ],
+  "definitions": {
+    "Device": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string",
+          "description": "Label for screen"
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/Component"
+              },
+              {
+                "$ref": "#/definitions/ComponentGroup"
+              }
+            ]
+          },
+          "description": "Child Components"
+        }
+      },
+      "required": [
+        "label",
+        "children"
+      ],
+      "additionalProperties": false
+    },
+    "Component": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/SignalR"
+        },
+        {
+          "$ref": "#/definitions/SignalW"
+        },
+        {
+          "$ref": "#/definitions/SignalRW"
+        },
+        {
+          "$ref": "#/definitions/SignalX"
+        },
+        {
+          "$ref": "#/definitions/DeviceRef"
+        },
+        {
+          "$ref": "#/definitions/SignalRef"
+        }
+      ]
+    },
+    "SignalR": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "SignalR",
+          "default": "SignalR"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "([A-Z][a-z0-9]*)*$",
+          "description": "PascalCase name to uniquely identify"
+        },
+        "label": {
+          "type": "string",
+          "description": "Label for GUI. If empty, use name in Title Case",
+          "default": ""
+        },
+        "pv": {
+          "type": "string",
+          "description": "PV to be used for get and monitor"
+        },
+        "widget": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ReadWidget"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Widget to use for display, None means don't display",
+          "default": null
+        }
+      },
+      "required": [
+        "name",
+        "pv"
+      ],
+      "additionalProperties": false
+    },
+    "ReadWidget": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/LED"
+        },
+        {
+          "$ref": "#/definitions/BitField"
+        },
+        {
+          "$ref": "#/definitions/ProgressBar"
+        },
+        {
+          "$ref": "#/definitions/TextRead"
+        },
+        {
+          "$ref": "#/definitions/ArrayTrace"
+        },
+        {
+          "$ref": "#/definitions/TableRead"
+        },
+        {
+          "$ref": "#/definitions/ImageRead"
+        }
+      ]
+    },
+    "LED": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "LED",
+          "default": "LED"
+        }
+      },
+      "additionalProperties": false
+    },
+    "BitField": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "BitField",
+          "default": "BitField"
+        },
+        "labels": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Label for each bit"
+        }
+      },
+      "required": [
+        "labels"
+      ],
+      "additionalProperties": false
+    },
+    "ProgressBar": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "ProgressBar",
+          "default": "ProgressBar"
+        }
+      },
+      "additionalProperties": false
+    },
+    "TextRead": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "TextRead",
+          "default": "TextRead"
+        },
+        "lines": {
+          "type": "integer",
+          "description": "Number of lines to display",
+          "default": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "ArrayTrace": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "ArrayTrace",
+          "default": "ArrayTrace"
+        },
+        "axis": {
+          "type": "string",
+          "description": "Traces with same axis name will appear on same axis, plotted against 'x' trace if it exists, or indexes if not. Only one traces with axis='x' allowed."
+        }
+      },
+      "required": [
+        "axis"
+      ],
+      "additionalProperties": false
+    },
+    "TableRead": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "TableRead",
+          "default": "TableRead"
+        },
+        "widgets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ReadWidget"
+          },
+          "description": "For each column, what widget should be repeated for every row"
+        }
+      },
+      "required": [
+        "widgets"
+      ],
+      "additionalProperties": false
+    },
+    "ImageRead": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "ImageRead",
+          "default": "ImageRead"
+        }
+      },
+      "additionalProperties": false
+    },
+    "SignalW": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "SignalW",
+          "default": "SignalW"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "([A-Z][a-z0-9]*)*$",
+          "description": "PascalCase name to uniquely identify"
+        },
+        "label": {
+          "type": "string",
+          "description": "Label for GUI. If empty, use name in Title Case",
+          "default": ""
+        },
+        "pv": {
+          "type": "string",
+          "description": "PV to be used for put"
+        },
+        "widget": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/WriteWidget"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Widget to use for control, None means don't display",
+          "default": null
+        }
+      },
+      "required": [
+        "name",
+        "pv"
+      ],
+      "additionalProperties": false
+    },
+    "WriteWidget": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/CheckBox"
+        },
+        {
+          "$ref": "#/definitions/ComboBox"
+        },
+        {
+          "$ref": "#/definitions/TextWrite"
+        },
+        {
+          "$ref": "#/definitions/ArrayWrite"
+        },
+        {
+          "$ref": "#/definitions/TableWrite"
+        }
+      ]
+    },
+    "CheckBox": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "CheckBox",
+          "default": "CheckBox"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ComboBox": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "ComboBox",
+          "default": "ComboBox"
+        }
+      },
+      "additionalProperties": false
+    },
+    "TextWrite": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "TextWrite",
+          "default": "TextWrite"
+        },
+        "lines": {
+          "type": "integer",
+          "description": "Number of lines to display",
+          "default": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "ArrayWrite": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "ArrayWrite",
+          "default": "ArrayWrite"
+        },
+        "widget": {
+          "description": "What widget should be used for each item",
+          "allOf": [
+            {
+              "$ref": "#/definitions/WriteWidget"
+            }
+          ]
+        }
+      },
+      "required": [
+        "widget"
+      ],
+      "additionalProperties": false
+    },
+    "TableWrite": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "TableWrite",
+          "default": "TableWrite"
+        },
+        "widgets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WriteWidget"
+          },
+          "description": "For each column, what widget should be repeated for every row"
+        }
+      },
+      "required": [
+        "widgets"
+      ],
+      "additionalProperties": false
+    },
+    "SignalRW": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "SignalRW",
+          "default": "SignalRW"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "([A-Z][a-z0-9]*)*$",
+          "description": "PascalCase name to uniquely identify"
+        },
+        "label": {
+          "type": "string",
+          "description": "Label for GUI. If empty, use name in Title Case",
+          "default": ""
+        },
+        "pv": {
+          "type": "string",
+          "description": "PV to be used for put"
+        },
+        "widget": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/WriteWidget"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Widget to use for control, None means don't display",
+          "default": null
+        },
+        "read_pv": {
+          "type": "string",
+          "description": "PV to be used for read, empty means use pv",
+          "default": ""
+        },
+        "read_widget": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ReadWidget"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Widget to use for display, None means use widget",
+          "default": null
+        }
+      },
+      "required": [
+        "name",
+        "pv"
+      ],
+      "additionalProperties": false
+    },
+    "SignalX": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "SignalX",
+          "default": "SignalX"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "([A-Z][a-z0-9]*)*$",
+          "description": "PascalCase name to uniquely identify"
+        },
+        "label": {
+          "type": "string",
+          "description": "Label for GUI. If empty, use name in Title Case",
+          "default": ""
+        },
+        "pv": {
+          "type": "string",
+          "description": "PV to be used for call"
+        },
+        "value": {
+          "description": "Value to write. None means zero",
+          "default": null
+        }
+      },
+      "required": [
+        "name",
+        "pv"
+      ],
+      "additionalProperties": false
+    },
+    "DeviceRef": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "DeviceRef",
+          "default": "DeviceRef"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "([A-Z][a-z0-9]*)*$",
+          "description": "PascalCase name to uniquely identify"
+        },
+        "label": {
+          "type": "string",
+          "description": "Label for GUI. If empty, use name in Title Case",
+          "default": ""
+        },
+        "pv": {
+          "type": "string",
+          "description": "Child device PVI PV"
+        }
+      },
+      "required": [
+        "name",
+        "pv"
+      ],
+      "additionalProperties": false
+    },
+    "SignalRef": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "([A-Z][a-z0-9]*)*$",
+          "description": "PascalCase name to uniquely identify"
+        },
+        "label": {
+          "type": "string",
+          "description": "Label for GUI. If empty, use name in Title Case",
+          "default": ""
+        },
+        "type": {
+          "type": "string",
+          "const": "SignalRef",
+          "default": "SignalRef"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "ComponentGroup": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "Group",
+          "default": "Group"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "([A-Z][a-z0-9]*)*$",
+          "description": "PascalCase name to uniquely identify"
+        },
+        "label": {
+          "type": "string",
+          "description": "Label for GUI. If empty, use name in Title Case",
+          "default": ""
+        },
+        "layout": {
+          "description": "How to layout children on screen",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Layout"
+            }
+          ]
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/Component"
+              },
+              {
+                "$ref": "#/definitions/ComponentGroup"
+              }
+            ]
+          },
+          "description": "Child Components"
+        }
+      },
+      "required": [
+        "name",
+        "layout",
+        "children"
+      ],
+      "additionalProperties": false
+    },
+    "Layout": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/Plot"
+        },
+        {
+          "$ref": "#/definitions/Row"
+        },
+        {
+          "$ref": "#/definitions/Grid"
+        }
+      ]
+    },
+    "Plot": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "Plot",
+          "default": "Plot"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Row": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "Row",
+          "default": "Row"
+        },
+        "header": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "description": "Labels for the items in the row, None means use previous row header",
+          "default": null
+        }
+      },
+      "additionalProperties": false
+    },
+    "Grid": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "Grid",
+          "default": "Grid"
+        },
+        "labelled": {
+          "type": "boolean",
+          "description": "If True use names of children as labels",
+          "default": true
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

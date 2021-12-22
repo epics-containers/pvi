@@ -2,20 +2,19 @@ Contributing
 ============
 
 Contributions and issues are most welcome! All issues and pull requests are
-handled through github on the `dls_controls repository`_. Also, please check for
-any existing issues before filing a new one. If you have a great idea but it
-involves big changes, please file a ticket before making a pull request! We
-want to make sure you don't spend your time coding something that might not fit
-the scope of the project.
+handled through Github_. Also, please check for any existing issues before
+filing a new one. If you have a great idea but it involves big changes, please
+file a ticket before making a pull request! We want to make sure you don't spend
+your time coding something that might not fit the scope of the project.
 
-.. _dls_controls repository: https://github.com/dls-controls/pvi/issues
+.. _Github: https://github.com/epics-containers/pvi/issues
 
 Running the tests
 -----------------
 
 To get the source source code and run the unit tests, run::
 
-    $ git clone git://github.com/dls-controls/pvi.git
+    $ git clone git://github.com/epics-containers/pvi.git
     $ cd pvi
     $ pipenv install --dev
     $ pipenv run tests
@@ -29,19 +28,26 @@ Code Styling
 
 The code in this repository conforms to standards set by the following tools:
 
+- black_ for code formatting
 - flake8_ for style checks
-- flake8-black_ for code formatting
-- flake8-isort_ for import ordering
+- isort_ for import ordering
 - mypy_ for static type checking
 
-.. _flake8: http://flake8.pycqa.org/en/latest/
-.. _flake8-isort: https://github.com/gforcada/flake8-isort
-.. _flake8-black: https://github.com/peterjc/flake8-black
-.. _mypy: https://github.com/python/mypy
+These checks will be run by pre-commit_. You can either choose to run these
+tests on all files tracked by git::
 
-These tests will be run on code when running ``pipenv run tests`` and also
-automatically at check in. Please read the tool documentation for details
-on how to fix the errors it reports.
+    $ pipenv run lint
+
+Or you can install a pre-commit hook that will run each time you do a ``git
+commit`` on just the files that have changed::
+
+    $ pipenv run pre-commit install
+
+.. _black: https://github.com/psf/black
+.. _flake8: http://flake8.pycqa.org/en/latest/
+.. _isort: https://github.com/timothycrosley/isort
+.. _mypy: https://github.com/python/mypy
+.. _pre-commit: https://pre-commit.com/
 
 Documentation
 -------------
@@ -60,17 +66,35 @@ Docs follow the underlining convention::
     Heading 3
     ~~~~~~~~~
 
-
 You can build the docs from the project directory by running::
 
     $ pipenv run docs
     $ firefox build/html/index.html
 
-Release Checklist
------------------
+Release Process
+---------------
 
-Before a new release, please go through the following checklist:
+To make a new release, please follow this checklist:
 
-* Add a release note in CHANGELOG.rst
-* Git tag the version with message from CHANGELOG
-* Push to github and travis will make a release on pypi
+- Choose a new PEP440 compliant release number
+- Add a release note in CHANGELOG.rst
+- Git tag the version
+- Push to github and the actions will make a release on pypi
+- Push to internal gitlab and do a dls-release.py of the tag
+
+Updating the tools
+------------------
+
+This module is merged with the dls-python3-skeleton_. This is a generic
+Python project structure which provides a means to keep tools and
+techniques in sync between multiple Python projects. To update to the
+latest version of the skeleton, run::
+
+    $ git pull https://github.com/dls-controls/dls-python3-skeleton
+
+Any merge conflicts will indicate an area where something has changed that
+conflicts with the setup of the current module. Check the `closed pull requests
+<https://github.com/dls-controls/dls-python3-skeleton/pulls?q=is%3Apr+is%3Aclosed>`_
+of the skeleton module for more details.
+
+.. _dls-python3-skeleton: https://dls-controls.github.io/dls-python3-skeleton
