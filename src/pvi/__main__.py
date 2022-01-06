@@ -3,7 +3,6 @@ from pathlib import Path
 from typing import Optional, Type
 
 import typer
-from apischema.json_schema import JsonSchemaVersion, deserialization_schema
 
 from pvi import __version__
 from pvi._convert._source_convert import SourceConverter
@@ -11,6 +10,7 @@ from pvi._convert._template_convert import TemplateConverter
 from pvi._format import Formatter
 from pvi._produce import Producer
 from pvi._produce.asyn import AsynParameter
+from pvi._schema_utils import make_json_schema
 from pvi._yaml_utils import deserialize_yaml, serialize_yaml
 from pvi.device import Device, walk
 
@@ -56,9 +56,7 @@ def schema(output: Path = typer.Argument(..., help="filename to write the schema
     else:
         typer.echo(f"Don't know how to create {output.name}")
         raise typer.Exit(code=1)
-    schema = deserialization_schema(
-        cls, all_refs=True, version=JsonSchemaVersion.DRAFT_7
-    )
+    schema = make_json_schema(cls)
     output.write_text(json.dumps(schema, indent=2))
 
 

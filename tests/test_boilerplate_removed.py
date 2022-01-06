@@ -65,16 +65,15 @@ def test_removed_CHANGELOG_note():
     assert_not_contains_text(
         "CHANGELOG.rst",
         "This is a template changelog",
-        "To remove the note at the top",
+        "to remove the note at the top",
     )
 
 
-@pytest.mark.skip(reason="no releases yet")
 def test_changed_CHANGELOG():
     assert_not_contains_text(
         "CHANGELOG.rst",
         "When you make a change, put it here",
-        "To summarize changes to your module as you make them",
+        "to summarize changes to your module as you make them",
     )
 
 
@@ -93,7 +92,7 @@ def test_how_tos_written():
     )
 
 
-@pytest.mark.skip(reason="not written yet")
+@pytest.mark.xfail(reason="not written yet")
 def test_explanations_written():
     assert_not_exists(
         "docs/explanations/why-is-something-so.rst", "and write some docs/explanations"

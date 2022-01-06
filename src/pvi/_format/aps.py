@@ -30,7 +30,7 @@ class APSFormatter(Formatter):
 
     def format(self, device: Device, prefix: str, path: Path):
         assert path.suffix == ".adl", "Can only write adl files"
-        template = AdlTemplate(open(Path(__file__).parent / "aps.adl").read())
+        template = AdlTemplate((Path(__file__).parent / "aps.adl").read_text())
         label_background_cls = group_box_cls = WidgetFactory.from_template(
             template, search="clr=2"
         )
