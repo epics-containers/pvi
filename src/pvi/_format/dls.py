@@ -30,7 +30,7 @@ class DLSFormatter(Formatter):
 
     def format(self, device: Device, prefix: str, path: Path):
         assert path.suffix == ".edl", "Can only write EDL files"
-        template = EdlTemplate(open(Path(__file__).parent / "dls.edl").read())
+        template = EdlTemplate((Path(__file__).parent / "dls.edl").read_text())
         screen_title_cls = LabelFactory.from_template(
             template, search='"Title"', value="text"
         )
