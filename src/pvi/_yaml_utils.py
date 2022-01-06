@@ -4,10 +4,9 @@ from typing import Type, TypeVar
 
 import jsonschema
 from apischema import deserialize, serialize
-from apischema.json_schema import deserialization_schema
 from ruamel.yaml import YAML
 
-from ._schema_utils import has_type
+from ._schema_utils import has_type, make_json_schema
 
 T = TypeVar("T")
 
@@ -33,5 +32,5 @@ def deserialize_yaml(cls: Type[T], path: Path) -> T:
     d = YAML(typ="safe").load(path)
     # first check the definition file with jsonschema since it has more
     # legible error messages than apischema
-    jsonschema.validate(d, deserialization_schema(cls))
+    jsonschema.validate(d, make_json_schema(cls))
     return deserialize(cls, d)

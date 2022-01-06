@@ -1,11 +1,12 @@
 import re
 from dataclasses import field, make_dataclass
 from functools import lru_cache
-from typing import Any, Callable, List, Optional, Pattern, Set, TypeVar, Union
+from typing import Any, Callable, List, Mapping, Optional, Pattern, Set, TypeVar, Union
 
 from apischema import deserializer, order, schema, serialized, type_name
 from apischema.conversions import Conversion
 from apischema.conversions.converters import serializer
+from apischema.json_schema import JsonSchemaVersion, deserialization_schema
 from apischema.utils import CAMEL_CASE_REGEX, identity
 from typing_extensions import Literal
 
@@ -99,3 +100,7 @@ def to_title_case(pascal_s: str) -> str:
         Title Case converted name. E.g. Pascal Case Field Name
     """
     return CAMEL_CASE_REGEX.sub(lambda m: " " + m.group(), pascal_s)[1:]
+
+
+def make_json_schema(cls: Cls) -> Mapping[str, Any]:
+    return deserialization_schema(cls, all_refs=True, version=JsonSchemaVersion.DRAFT_7)
