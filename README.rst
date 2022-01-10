@@ -16,7 +16,7 @@ and low level opis
 PyPI           ``pip install pvi``
 Source code    https://github.com/epics-containers/pvi
 Documentation  https://epics-containers.github.io/pvi
-Changelog      https://github.com/epics-containers/pvi/blob/master/CHANGELOG.rst
+Releases       https://github.com/epics-containers/pvi/releases
 ============== ==============================================================
 
 ****
