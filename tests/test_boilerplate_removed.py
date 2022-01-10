@@ -47,7 +47,7 @@ def test_module_description():
 def test_changed_README_intro():
     assert_not_contains_text(
         "README.rst",
-        "a generic Python project structure",
+        "This is where you should write a short paragraph",
         "to include an intro on what your module does",
     )
 
@@ -55,25 +55,8 @@ def test_changed_README_intro():
 def test_changed_README_body():
     assert_not_contains_text(
         "README.rst",
-        "It integrates the following tools",
+        "This is where you should put some images or code snippets",
         "to include some features and why people should use it",
-    )
-
-
-# CHANGELOG
-def test_removed_CHANGELOG_note():
-    assert_not_contains_text(
-        "CHANGELOG.rst",
-        "This is a template changelog",
-        "to remove the note at the top",
-    )
-
-
-def test_changed_CHANGELOG():
-    assert_not_contains_text(
-        "CHANGELOG.rst",
-        "When you make a change, put it here",
-        "to summarize changes to your module as you make them",
     )
 
 

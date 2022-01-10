@@ -10,7 +10,7 @@ Practical step-by-step guides for the more experienced user.
 
     reference/api
     reference/contributing
-    Changelog <https://github.com/epics-containers/pvi/blob/master/CHANGELOG.rst>
+    Releases <https://github.com/epics-containers/pvi/releases>
     Index <genindex.html#http://>
 
 ..
