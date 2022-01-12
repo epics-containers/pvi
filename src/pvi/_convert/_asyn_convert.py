@@ -149,7 +149,9 @@ class SettingPair(Parameter, WriteParameterMixin, ReadParameterMixin):
         )
         autosave = self._get_autosave_fields(self.write_record)
         if autosave:
-            non_default_args["autosave"] = autosave
+            pass
+            # TODO: Consider handling autosave fields - see Action.generate_component
+            # non_default_args["autosave"] = autosave
 
         drv_info = self.write_record.get_parameter_name()
         if drv_info != self.write_record.name:
@@ -232,7 +234,11 @@ class Action(Parameter, WriteParameterMixin):
         )
         autosave_fields = self._get_autosave_fields(self.write_record)
         if autosave_fields:
-            non_default_args["autosave"] = autosave_fields
+            print(
+                "Warning: Ignoring autosave fields. Consider how to handle this",
+                file=sys.stderr,
+            )
+            # non_default_args["autosave"] = autosave_fields
 
         initial = self._get_initial(self.write_record)
         if initial:
