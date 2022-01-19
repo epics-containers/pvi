@@ -32,12 +32,7 @@ class ReadParameterMixin:
 
 class WriteParameterMixin:
     def _get_initial(self, write_record: Record) -> str:
-        pini = write_record.fields.get("PINI", "NO").lower()
-        if pini == "yes":
-            initial = write_record.fields.get("VAL", "0")
-        else:
-            initial = ""
-        return initial
+        return write_record.fields.get("VAL", "")
 
     def _get_demand_auto_updates(self, write_record: Record) -> bool:
         return write_record.infos.get("asyn:READBACK") == "1"
