@@ -29,6 +29,7 @@ parameters:
     index_name: PilatusThresholdApply
     drv_info: THRESHOLD_APPLY
     access: W
+    initial: '0'
     record_fields:
       ZNAM: Done
       ONAM: Apply
@@ -295,7 +296,6 @@ parameters:
     index_name: PilatusBadPixelFile
     drv_info: BAD_PIXEL_FILE
     access: W
-    initial: '0'
     record_fields:
       NELM: '256'
       FTVL: CHAR
@@ -306,7 +306,6 @@ parameters:
     index_name: PilatusFlatFieldFile
     drv_info: FLAT_FIELD_FILE
     access: W
-    initial: '0'
     record_fields:
       NELM: '256'
       FTVL: CHAR
@@ -317,7 +316,6 @@ parameters:
     index_name: PilatusCbfTemplateFile
     drv_info: CBFTEMPLATEFILE
     access: W
-    initial: '0'
     record_fields:
       NELM: '256'
       FTVL: CHAR
@@ -328,7 +326,6 @@ parameters:
     index_name: PilatusHeaderString
     drv_info: HEADERSTRING
     access: W
-    initial: '0'
     record_fields:
       NELM: '68'
       FTVL: CHAR
