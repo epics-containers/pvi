@@ -104,7 +104,7 @@ class AsynParameter(Named):
 
 def initial_value(pattern: str = None, min: Number = None, max: Number = None):
     if pattern:
-        pattern = r"(\$\(\w+=(" + pattern + r")\))"
+        pattern = r"[\'\"]?(?:\$\(\w+=)?" + pattern + r"\)?[\'\"]?"
     return schema(
         description="The initial value of the parameter",
         min=min,
@@ -196,7 +196,8 @@ class AsynMultiBitBinary(AsynParameter):
         asyn_param="asynParamInt32",
     )
     initial: Annotated[
-        Union[None, int, str], initial_value(r"[0-15]", min=0, max=15)
+        # Regex: [0-9] OR 1[0-5] -> [0-15]  (Single character matching)
+        Union[None, int, str], initial_value(r"([0-9]|1[0-5])", min=0, max=15)
     ] = None
     read_widget: AReadWidget = TextRead()
     write_widget: AWriteWidget = ComboBox()
