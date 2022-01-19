@@ -7,3 +7,15 @@
 [submodule "submodules/busy"]
 	path = src/pvi/submodules/busy
 	url = https://github.com/epics-modules/busy.git
+[submodule "src/pvi/submodules/ADCore"]
+	path = src/pvi/submodules/ADCore
+	url = git@github.com:areaDetector/ADCore.git
+	branch = master
+[submodule "src/pvi/submodules/ADSimDetector"]
+	path = src/pvi/submodules/ADSimDetector
+	url = git@github.com:areaDetector/ADSimDetector.git
+	branch = master
+[submodule "src/pvi/submodules/ADPilatus"]
+	path = src/pvi/submodules/ADPilatus
+	url = git@github.com:areaDetector/ADPilatus.git
+	branch = master
