@@ -34,7 +34,7 @@ def assert_output_matches(
         raise result.exception
     if expected_path.is_dir():
         for child in expected_path.iterdir():
-            output_child = output_path / child.relative_to(expected_path)
+            output_child = output_path / "pvi" / child.relative_to(expected_path)
             assert output_child.read_text() == child.read_text()
     else:
         assert output_path.read_text() == expected_path.read_text()
@@ -87,13 +87,14 @@ def test_format(tmp_path, filename, formatter):
 def test_convert(tmp_path):
     expected_path = HERE / "convert" / "output"
     input_path = HERE / "convert" / "input"
+    pvi_dir = tmp_path / "pvi"
     for parent in ["ADDriver", "asynNDArrayDriver"]:
-        shutil.copy(input_path / f"{parent}.pvi.producer.yaml", tmp_path)
+        shutil.copy(input_path / f"{parent}.pvi.producer.yaml", pvi_dir)
     assert_output_matches(
         expected_path,
         "convert asyn",
         tmp_path,
-        input_path / "pilatus.template",
         input_path / "pilatusDetector.cpp",
         input_path / "pilatusDetector.h",
+        input_path / "pilatus.template",
     )

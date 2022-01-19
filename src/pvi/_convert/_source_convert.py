@@ -3,7 +3,7 @@ import re
 from dataclasses import dataclass
 from glob import glob
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Union
 
 from pvi._produce.asyn import AsynParameter, AsynProducer
 from pvi._yaml_utils import deserialize_yaml
@@ -17,9 +17,9 @@ class Source:
 
 
 class SourceConverter:
-    def __init__(self, cpp: Path, h: Path, root: Path, drv_infos: List[str]):
+    def __init__(self, cpp: Path, h: Path, module_root: Path, drv_infos: List[str]):
         self.source = Source(cpp.read_text(), h.read_text())
-        self.module_root = root
+        self.module_root = module_root
         self.parameter_infos = drv_infos
         self.device_class, self.parent_class = self._extract_device_and_parent_class()
         self.define_strings = self._extract_define_strs(self.parameter_infos)
@@ -151,7 +151,7 @@ class SourceConverter:
             f"::{self.device_class}({self.device_class}ParamSet* paramSet, ",
         )
 
-        # Add the param set parameter to the contructor call in the extern "C" function
+        # Add the param set parameter to the constructor call in the extern "C" function
         driver = self.device_class
         cpp_text = cpp_text.replace(
             f"new {driver}(",
@@ -236,29 +236,34 @@ def find_parent_components(yaml_name: str, module_root: Path) -> Tree[AsynParame
     if yaml_name == "asynPortDriver":
         return []  # asynPortDriver is the most base class and has no parameters
 
-    yaml_directory = None
-
     # Look in this module first
     producer_name = f"{yaml_name}.pvi.producer.yaml"
-    if producer_name in os.listdir(module_root):
-        yaml_directory = module_root
-    else:
+    producer_yaml = find_pvi_yaml(producer_name, module_root)
+    if producer_yaml is None:
+        # We didn't find it in this module, search dependencies
         parent_modules = find_parent_modules(module_root)
-        for module in parent_modules:
-            if os.path.isdir(module / "pvi"):
-                pvi = module / "pvi"
-                if producer_name in os.listdir(pvi):
-                    yaml_directory = pvi
-                    break
+        for module_path in parent_modules:
+            producer_yaml = find_pvi_yaml(producer_name, module_path)
+            if producer_yaml is not None:
+                break
 
-    if yaml_directory is None:
+    if producer_yaml is None:
         raise IOError(f"Cannot find {producer_name}")
 
-    producer = deserialize_yaml(AsynProducer, Path(yaml_directory) / producer_name)
+    producer = deserialize_yaml(AsynProducer, producer_yaml)
 
     return list(producer.parameters) + list(
         find_parent_components(producer.parent, module_root)
     )
+
+
+def find_pvi_yaml(yaml_name: str, module_root: Path) -> Union[Path, None]:
+    """Find a yaml file in the pvi directory of a module"""
+    pvi_directory = module_root / "pvi"
+    if os.path.isdir(pvi_directory):
+        if yaml_name in os.listdir(pvi_directory):
+            return pvi_directory / yaml_name
+    return None
 
 
 def filter_strings(strings: List[str], filters: List[str]) -> List[str]:

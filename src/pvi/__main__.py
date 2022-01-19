@@ -1,6 +1,7 @@
 import json
+import os
 from pathlib import Path
-from typing import Optional, Type
+from typing import List, Optional, Type
 
 import typer
 
@@ -93,14 +94,20 @@ def format(
 
 @convert_app.command()
 def asyn(
-    output: Path = typer.Argument(..., help="directory to put the output files in"),
-    template: Path = typer.Argument(..., help="path to the .template file to convert"),
-    cpp: Path = typer.Argument(..., help="path to the .cpp file to convert"),
-    h: Path = typer.Argument(..., help="path to the .h file to convert"),
+    module_root: Path = typer.Argument(..., help="Root directory of support module"),
+    cpp: Path = typer.Argument(..., help="Path to the .cpp file to convert"),
+    h: Path = typer.Argument(..., help="Path to the .h file to convert"),
+    templates: List[Path] = typer.Argument(
+        ..., help="Paths to .template files to convert"
+    ),
 ):
-    """Convert template/cpp/h to producer YAML and stripped template/cpp/h"""
+    """Convert cpp/h/template to producer YAML and stripped cpp/h/template"""
+    output = module_root / "pvi"
 
-    template_converter = TemplateConverter(template)
+    if not output.exists():
+        os.mkdir(output)
+
+    template_converter = TemplateConverter(templates)
 
     # Generate initial yaml to provide parameter info strings to source converter
     producer = template_converter.convert()
@@ -110,13 +117,13 @@ def asyn(
         for parameter in walk(producer.parameters)
         if isinstance(parameter, AsynParameter)
     ]
-    source_converter = SourceConverter(cpp, h, output, drv_infos)
+    source_converter = SourceConverter(cpp, h, module_root, drv_infos)
 
     # Process and recreate template files - pass source device for param set include
     extracted_templates = template_converter.top_level_text(
         source_converter.device_class
     )
-    for template_text, template_path in zip(extracted_templates, [template]):
+    for template_text, template_path in zip(extracted_templates, templates):
         (output / template_path.name).write_text(template_text)
 
     # Process and recreate source files

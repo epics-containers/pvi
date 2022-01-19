@@ -18,9 +18,9 @@ OVERRIDE_DESC = "# Overriding value in auto-generated template"
 
 
 class TemplateConverter:
-    def __init__(self, *templates: Path):
+    def __init__(self, templates: List[Path]):
         self.templates = templates
-        self._text = [t.read_text() for t in templates]
+        self._text = [t.read_text() for t in self.templates]
 
     def top_level_text(self, driver_name: str):
         extracted_templates = []
@@ -52,6 +52,7 @@ class TemplateConverter:
             # then: remove final close bracket and driver param name
             # $(PORT),$(ADDR=0),$(TIMEOUT=1)
             asyn_parameters = [match[: match.rfind(")")] for match in asyn_parameters]
+            assert asyn_parameters, "No Asyn parameters found"
             if len(set(asyn_parameters)) > 1:
                 print(
                     "More than one set of asyn params found. Taking the first instance"
