@@ -18,6 +18,130 @@
                 // https://github.com/microsoft/vscode-python/issues/693
                 "PYTEST_ADDOPTS": "--no-cov"
             },
-        }
+        },
+        {
+            "name": "ADCore Convert asynNDArrayDriver",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "convert",
+                "asyn",
+                "${workspaceFolder:ADCore}",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/ADSrc/asynNDArrayDriver.cpp",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/ADSrc/asynNDArrayDriver.h",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/Db/NDArrayBase.template",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/Db/NDFile.template",
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "ADCore Convert ADDriver",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "convert",
+                "asyn",
+                "${workspaceFolder:ADCore}",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/ADSrc/ADDriver.cpp",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/ADSrc/ADDriver.h",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/Db/ADBase.template",
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Convert Pilatus",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "convert",
+                "asyn",
+                "${workspaceFolder:ADPilatus}",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADPilatus/pilatusApp/src/pilatusDetector.cpp",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADPilatus/pilatusApp/src/pilatusDetector.cpp",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADPilatus/pilatusApp/Db/pilatus.template",
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Generate",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "produce",
+                "/scratch/work/R3.14.12.7/support/${input:Module}/pvi/${input:Driver}${input:FileType}",
+                "/scratch/work/R3.14.12.7/support/${input:Module}/pvi/${input:Driver}.pvi.producer.yaml",
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Write Schema",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "schema",
+                "${workspaceFolder:pvi}/schemas/pvi.producer.schema.json"
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "simDetector IOC",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder:ADSimDetector}/iocs/simDetector/bin/linux-x86_64/simDetector",
+            "args": [
+                "stsimDetector.boot"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder:ADSimDetector}/iocs/simDetector/bin/linux-x86_64",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+    ],
+    "inputs": [
+        {
+          "id": "Module",
+          "description": "Which Module?",
+          "type": "pickString",
+          "options": [
+            "ADCore",
+            "ADPilatus",
+          ],
+        },
+        {
+          "id": "Driver",
+          "description": "Which Driver?",
+          "type": "pickString",
+          "options": [
+            "asynNDArrayDriver",
+            "ADDriver",
+            "pilatusDetector",
+          ],
+        },
+        {
+          "id": "FileType",
+          "description": "What file to produce?",
+          "type": "pickString",
+          "options": [
+            "ParamSet.h",
+            "Parameters.template",
+            ".pvi.device.yaml",
+          ],
+        },
     ]
 }
