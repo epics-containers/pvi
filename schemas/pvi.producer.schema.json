@@ -178,7 +178,7 @@
           ],
           "minimum": 0,
           "maximum": 1,
-          "pattern": "(\\$\\(\\w+=([0-1])\\))",
+          "pattern": "[\\'\\\"]?(?:\\$\\(\\w+=)?[0-1]\\)?[\\'\\\"]?",
           "description": "The initial value of the parameter",
           "default": null
         },
@@ -1185,7 +1185,7 @@
           ],
           "minimum": 0,
           "maximum": 1,
-          "pattern": "(\\$\\(\\w+=([0-1])\\))",
+          "pattern": "[\\'\\\"]?(?:\\$\\(\\w+=)?[0-1]\\)?[\\'\\\"]?",
           "description": "The initial value of the parameter",
           "default": null
         },
@@ -1729,7 +1729,7 @@
             "number",
             "string"
           ],
-          "pattern": "(\\$\\(\\w+=(-?[0-9]+(\\.[0-9]+)?)\\))",
+          "pattern": "[\\'\\\"]?(?:\\$\\(\\w+=)?-?[0-9]+(\\.[0-9]+)?\\)?[\\'\\\"]?",
           "description": "The initial value of the parameter",
           "default": null
         },
@@ -2688,7 +2688,7 @@
             "integer",
             "string"
           ],
-          "pattern": "(\\$\\(\\w+=(-?\\d+)\\))",
+          "pattern": "[\\'\\\"]?(?:\\$\\(\\w+=)?-?\\d+\\)?[\\'\\\"]?",
           "description": "The initial value of the parameter",
           "default": null
         },
@@ -2819,7 +2819,7 @@
             "integer",
             "string"
           ],
-          "pattern": "(\\$\\(\\w+=(-?\\d+)\\))",
+          "pattern": "[\\'\\\"]?(?:\\$\\(\\w+=)?-?\\d+\\)?[\\'\\\"]?",
           "description": "The initial value of the parameter",
           "default": null
         },
@@ -3655,7 +3655,7 @@
           ],
           "minimum": 0,
           "maximum": 15,
-          "pattern": "(\\$\\(\\w+=([0-15])\\))",
+          "pattern": "[\\'\\\"]?(?:\\$\\(\\w+=)?([0-9]|1[0-5])\\)?[\\'\\\"]?",
           "description": "The initial value of the parameter",
           "default": null
         },
