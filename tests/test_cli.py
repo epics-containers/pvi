@@ -88,6 +88,7 @@ def test_convert(tmp_path):
     expected_path = HERE / "convert" / "output"
     input_path = HERE / "convert" / "input"
     pvi_dir = tmp_path / "pvi"
+    os.mkdir(pvi_dir)
     for parent in ["ADDriver", "asynNDArrayDriver"]:
         shutil.copy(input_path / f"{parent}.pvi.producer.yaml", pvi_dir)
     assert_output_matches(
