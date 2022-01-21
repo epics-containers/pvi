@@ -1,4 +1,3 @@
-import re
 from dataclasses import field, make_dataclass
 from functools import lru_cache
 from typing import Any, Callable, List, Mapping, Optional, Pattern, Set, TypeVar, Union
@@ -86,20 +85,6 @@ def as_discriminated_union(cls: Cls) -> Cls:
 
 def desc(description: str, *, pattern: Optional[Union[str, Pattern]] = None):
     return schema(description=description, pattern=pattern)
-
-
-CAMEL_CASE_REGEX = re.compile(r"(?<![A-Z])[A-Z]|[A-Z][a-z/d]|(?<=[a-z])\d")
-
-
-def to_title_case(pascal_s: str) -> str:
-    """Takes a PascalCaseFieldName and returns an Title Case Field Name
-
-    Args:
-        pascal_s: E.g. PascalCaseFieldName
-    Returns:
-        Title Case converted name. E.g. Pascal Case Field Name
-    """
-    return CAMEL_CASE_REGEX.sub(lambda m: " " + m.group(), pascal_s)[1:]
 
 
 def make_json_schema(cls: Cls) -> Mapping[str, Any]:

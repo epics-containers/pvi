@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, fields
 from typing import (
     Any,
@@ -17,7 +18,30 @@ from typing import (
 from apischema import deserialize, serialize
 from typing_extensions import Annotated
 
-from ._schema_utils import add_type_field, as_discriminated_union, desc, to_title_case
+from ._schema_utils import add_type_field, as_discriminated_union, desc
+
+PASCAL_CASE_REGEX = re.compile(r"(?<![A-Z])[A-Z]|[A-Z][a-z/d]|(?<=[a-z])\d")
+
+
+def to_title_case(pascal_s: str) -> str:
+    """Takes a PascalCaseFieldName and returns an Title Case Field Name
+
+    Args:
+        pascal_s: E.g. PascalCaseFieldName
+    Returns:
+        Title Case converted name. E.g. Pascal Case Field Name
+    """
+    return PASCAL_CASE_REGEX.sub(lambda m: " " + m.group(), pascal_s)[1:]
+
+
+def to_snake_case(pascal_s: str) -> str:
+    """Takes a PascalCaseFieldName and returns a snake_case_field_name
+    Args:
+        pascal_s: E.g. PascalCaseFieldName
+    Returns:
+        snake_case converted name. E.g. pascal_case_field_name
+    """
+    return PASCAL_CASE_REGEX.sub(lambda m: "_" + m.group().lower(), pascal_s)[1:]
 
 
 @as_discriminated_union
