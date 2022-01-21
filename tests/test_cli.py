@@ -1,3 +1,4 @@
+import os
 import shutil
 import subprocess
 import sys
@@ -23,6 +24,10 @@ def test_cli_version():
 def assert_output_matches(
     expected_path: Path, cmd: str, output_path: Path, *paths: Path
 ):
+    if os.environ.get("PVI_REGENERATE_OUTPUT", None):
+        # We were asked to regenerate output, so run with expected
+        # path
+        output_path = expected_path
     args = cmd.split() + [str(output_path)] + [str(p) for p in paths]
     result = CliRunner().invoke(app, args)
     if result.exception:

@@ -14,7 +14,7 @@ Running the tests
 
 To get the source source code and run the unit tests, run::
 
-    $ git clone git://github.com/epics-containers/pvi.git
+    $ git clone --recurse-submodules git://github.com/epics-containers/pvi.git
     $ cd pvi
     $ pipenv install --dev
     $ pipenv run tests

@@ -2,11 +2,10 @@ import re
 from pathlib import Path
 from typing import Type, TypeVar
 
-import jsonschema
 from apischema import deserialize, serialize
 from ruamel.yaml import YAML
 
-from ._schema_utils import has_type, make_json_schema
+from ._schema_utils import has_type
 
 T = TypeVar("T")
 
@@ -30,7 +29,4 @@ def deserialize_yaml(cls: Type[T], path: Path) -> T:
     # Need to use the safe loader otherwise we get:
     #    TypeError: Invalid JSON type <class 'ruamel.yaml.scalarfloat.ScalarFloat'>
     d = YAML(typ="safe").load(path)
-    # first check the definition file with jsonschema since it has more
-    # legible error messages than apischema
-    jsonschema.validate(d, make_json_schema(cls))
     return deserialize(cls, d)
