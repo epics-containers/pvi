@@ -71,7 +71,7 @@ class WidgetTemplate(Generic[T]):
         raise NotImplementedError(self)
 
     def set(self, t: T, bounds: Bounds = None, **properties) -> T:
-        """Set the properties on the internal representation"""
+        """Return a copy of the internal representation with the bounds and properties set"""
         raise NotImplementedError(self)
 
 
@@ -83,6 +83,7 @@ class WidgetFactory(Generic[T]):
     bounds: Bounds
 
     def format(self) -> List[T]:
+        """Will be filled in by from_template"""
         raise NotImplementedError(self)
 
     @classmethod
@@ -95,12 +96,12 @@ class WidgetFactory(Generic[T]):
     ) -> Type[WF]:
         t = template.search(search)
 
-        class AWidgetFactory(cls):  # type: ignore
+        class FormattableWidgetFactory(cls):  # type: ignore
             def format(self) -> List[T]:
                 properties = {k: getattr(self, v) for k, v in attrs.items()}
                 return [template.set(t, sized(self.bounds), **properties)]
 
-        return AWidgetFactory
+        return FormattableWidgetFactory
 
 
 @dataclass
@@ -140,7 +141,7 @@ class GroupFactory(WidgetFactory[T]):
         **attrs,
     ) -> Type["GroupFactory[T]"]:
         @dataclass
-        class AGroupFactory(GroupFactory[T]):
+        class FormattableGroupFactory(GroupFactory[T]):
             def format(self) -> List[T]:
                 padding = sized(self.bounds)
                 texts: List[T] = []
@@ -163,7 +164,7 @@ class GroupFactory(WidgetFactory[T]):
                 padding = sized(self.bounds)
                 self.bounds = replace(self.bounds, w=padding.w, h=padding.h)
 
-        return AGroupFactory
+        return FormattableGroupFactory
 
 
 def max_x(widgets: List[WidgetFactory[T]], spacing: int = 0) -> int:
@@ -346,8 +347,8 @@ class AdlTemplate(WidgetTemplate[str]):
     def __init__(self, text: str):
         assert "children {" not in text, "Can't do groups"
         widgets = split_with_sep(text, "\n}\n")
-        self.screen = "".join(widgets[:2])
-        self.widgets = widgets[2:]
+        self.screen = "".join(widgets[:3])
+        self.widgets = widgets[3:]
 
     def set(self, t: str, bounds: Bounds = None, **properties) -> str:
         if bounds:
