@@ -71,7 +71,8 @@ class WidgetTemplate(Generic[T]):
         raise NotImplementedError(self)
 
     def set(self, t: T, bounds: Bounds = None, **properties) -> T:
-        """Return a copy of the internal representation with the bounds and properties set"""
+        """Return a copy of the internal representation with the bounds and
+        properties set"""
         raise NotImplementedError(self)
 
 

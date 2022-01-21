@@ -6,7 +6,7 @@ from apischema import deserializer, order, schema, serialized, type_name
 from apischema.conversions import Conversion
 from apischema.conversions.converters import serializer
 from apischema.json_schema import JsonSchemaVersion, deserialization_schema
-from apischema.utils import CAMEL_CASE_REGEX, identity
+from apischema.utils import identity
 from typing_extensions import Literal
 
 Cls = TypeVar("Cls", bound=type)
