@@ -5,6 +5,8 @@ verify_ssl = true
 
 [dev-packages]
 pvi = {editable = true, extras = ["dev"], path = "."}
+mypy = "*"
+flake8 = "*"
 
 [packages]
 pvi = {editable = true, extras = ["cli"], path = "."}
