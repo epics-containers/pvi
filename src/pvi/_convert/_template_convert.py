@@ -236,7 +236,7 @@ class RecordExtractor:
         return top_level_str
 
     def _add_param_template_include(self, top_level_str: str, driver_name: str) -> str:
-        top_level_str = f'include "{driver_name}ParamSet.template"\n' + top_level_str
+        top_level_str = f'include "{driver_name}Parameters.template"\n' + top_level_str
         return top_level_str
 
 

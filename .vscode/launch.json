@@ -4,6 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
             "name": "Debug Unit Test",
             "type": "python",
@@ -71,14 +72,30 @@
             "console": "integratedTerminal"
         },
         {
-            "name": "Generate",
+            "name": "Convert ADSimDetector",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "convert",
+                "asyn",
+                "${workspaceFolder:ADSimDetector}",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADSimDetector/simDetectorApp/src/simDetector.cpp",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADSimDetector/simDetectorApp/src/simDetector.h",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADSimDetector/simDetectorApp/Db/simDetector.template",
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Produce",
             "type": "python",
             "request": "launch",
             "program": "${workspaceFolder:pvi}/src/pvi",
             "args": [
                 "produce",
-                "/scratch/work/R3.14.12.7/support/${input:Module}/pvi/${input:Driver}${input:FileType}",
-                "/scratch/work/R3.14.12.7/support/${input:Module}/pvi/${input:Driver}.pvi.producer.yaml",
+                "${workspaceFolder:pvi}/../${input:Module}/pvi/${input:Driver}${input:FileType}",
+                "${workspaceFolder:pvi}/../${input:Module}/pvi/${input:Driver}.pvi.producer.yaml",
             ],
             "console": "integratedTerminal"
         },
@@ -123,6 +140,7 @@
           "options": [
             "ADCore",
             "ADPilatus",
+            "ADSimDetector",
           ],
         },
         {
@@ -133,6 +151,7 @@
             "asynNDArrayDriver",
             "ADDriver",
             "pilatusDetector",
+            "simDetector",
           ],
         },
         {
