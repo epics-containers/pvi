@@ -1,4 +1,5 @@
 import re
+import xml.etree.ElementTree as ET
 from dataclasses import dataclass, field, replace
 from enum import Enum
 from typing import Callable, Dict, Iterator, List, Tuple, Type, TypeVar, Union
@@ -371,5 +372,52 @@ class AdlTemplate(WidgetTemplate[str]):
 
     def search(self, search: str) -> str:
         matches = [t for t in self.widgets if re.search(search, t)]
+        assert len(matches) == 1, f"Got {len(matches)} matches for {search!r}"
+        return matches[0]
+
+
+class BobTemplate(WidgetTemplate[ET.XML]):
+    """Extracts and modifies widgets from a template .bob file.
+
+    Args:
+        WidgetTemplate (ET.XML): Inherited class providing search and set functionalities of XML files
+    """
+
+    def __init__(self, text: ET.XML):
+        self.tree = ET.parse(text)
+        self.root = self.tree.getroot()
+
+    def set(self, t: ET.Element, bounds: Bounds = None, **properties) -> ET.Element:
+        """Modifies template XML elements (widgets) with component data and returns a copy of the element.
+
+        Args:
+            t (ET.Element): An XML widget
+            bounds (Bounds, optional): The dimensions of the widget (x,y,w,h). Defaults to None.
+
+        Returns:
+            ET.Element: The modified widget
+        """
+
+        if bounds:
+            properties["x"] = bounds.x
+            properties["y"] = bounds.y
+            properties["width"] = bounds.w
+            properties["height"] = bounds.h
+        for item, value in properties.items():
+            t.find(item).text = str(value)
+        return t
+
+    def search(self, search: str) -> ET.Element:
+        """Locates and extracts XML elements (widgets) from the Element tree
+
+        Args:
+            search (str): The unique identifier of the element to extract
+
+        Returns:
+            ET.Element: The extracted element
+        """
+
+        # 'name' subelement is the unique ID for each widget type
+        matches = [widget for widget in self.root.findall(f'./widget[name="{search}"]')]
         assert len(matches) == 1, f"Got {len(matches)} matches for {search!r}"
         return matches[0]
