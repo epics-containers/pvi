@@ -67,7 +67,6 @@ google-style_ is considered as standard for this repository. For example::
 
 .. _google-style: https://sphinxcontrib-napoleon.readthedocs.io/en/latest/index.html#google-vs-numpy
 
-
 Documentation
 -------------
 
