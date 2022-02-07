@@ -49,6 +49,25 @@ commit`` on just the files that have changed::
 .. _mypy: https://github.com/python/mypy
 .. _pre-commit: https://pre-commit.com/
 
+Docstrings are pre-processed using the Sphinx Napoleon extension. As such, 
+google-style_ is considered as standard for this repository. For example::
+
+    """[summary]
+
+    Args:
+        param1 (type): [description]
+        param2 (type, optional): [description]. Defaults to None.
+
+    Returns:
+        [returntype]: [description]
+
+    Raises:
+        [errorType]: [description]
+    """
+
+.. _google-style: <https://sphinxcontrib-napoleon.readthedocs.io/en/latest/index.html#google-vs-numpy>'
+
+
 Documentation
 -------------
 
