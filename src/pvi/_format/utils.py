@@ -1,5 +1,5 @@
 import re
-import xml.etree.ElementTree as ET
+from lxml import etree
 from dataclasses import dataclass, field, replace
 from enum import Enum
 from typing import Callable, Dict, Iterator, List, Tuple, Type, TypeVar, Union
@@ -376,26 +376,28 @@ class AdlTemplate(WidgetTemplate[str]):
         return matches[0]
 
 
-class BobTemplate(WidgetTemplate[ET.XML]):
+class BobTemplate(WidgetTemplate[str]):
     """Extracts and modifies widgets from a template .bob file.
 
     Args:
-        WidgetTemplate (ET.XML): Inherited class providing search and set functionalities of XML files
+        WidgetTemplate (str): Inherited class providing search and set functionalities of custom file types.
     """
 
-    def __init__(self, text: ET.XML):
-        self.tree = ET.parse(text)
-        self.root = self.tree.getroot()
+    def __init__(self, text: etree.ElementBase):
+        """Parses an XML string to an element tree object."""
 
-    def set(self, t: ET.Element, bounds: Bounds = None, **properties) -> ET.Element:
-        """Modifies template XML elements (widgets) with component data and returns a copy of the element.
+        self.tree = etree.parse(text)
+
+    def set(self, t: etree.ElementBase, bounds: Bounds = None, **properties) -> etree.ElementBase:
+        """Modifies template widget elements with component data.
 
         Args:
-            t (ET.Element): An XML widget
-            bounds (Bounds, optional): The dimensions of the widget (x,y,w,h). Defaults to None.
+            t (etree.ElementBase): A template widget element.
+            bounds (Bounds, optional): The dimensions of the widget (x,y,w,h).
+            Defaults to None.
 
         Returns:
-            ET.Element: The modified widget
+            etree.ElementBase: The modified widget element.
         """
 
         if bounds:
@@ -404,20 +406,23 @@ class BobTemplate(WidgetTemplate[ET.XML]):
             properties["width"] = bounds.w
             properties["height"] = bounds.h
         for item, value in properties.items():
-            t.find(item).text = str(value)
+            try:
+                t.xpath(f'./{item}')[0].text = str(value)
+            except IndexError as idx:
+                raise ValueError(f"Failed to locate '{item}' in {t}") from idx
         return t
 
-    def search(self, search: str) -> ET.Element:
-        """Locates and extracts XML elements (widgets) from the Element tree
+    def search(self, search: str) -> etree.ElementBase:
+        """Locates and extracts widget elements from the Element tree.
 
         Args:
-            search (str): The unique identifier of the element to extract
+            search (str): The unique name of the element to extract.
 
         Returns:
-            ET.Element: The extracted element
+            ET.Element: The extracted element.
         """
 
         # 'name' subelement is the unique ID for each widget type
-        matches = [widget for widget in self.root.findall(f'./widget[name="{search}"]')]
+        matches = [widget for widget in self.tree.xpath(f'./widget[name="{search}"]')]
         assert len(matches) == 1, f"Got {len(matches)} matches for {search!r}"
         return matches[0]
