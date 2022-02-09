@@ -49,6 +49,26 @@ commit`` on just the files that have changed::
 .. _mypy: https://github.com/python/mypy
 .. _pre-commit: https://pre-commit.com/
 
+Docstrings are pre-processed using the Sphinx Napoleon extension. As such, 
+`google style`_ is considered as standard for this repository. Note that 
+types should be defined using `PEP 484`_ annotations. If attribute, parameter, 
+and return types are annotated according to `PEP 484`_, they do not need to 
+be included in the docstring::
+
+    def function_with_pep484_type_annotations(param1: int, param2: str) -> bool:
+        """Example function with PEP 484 type annotations.
+
+        Args:
+            param1: The first parameter.
+            param2: The second parameter.
+
+        Returns:
+            The return value. True for success, False otherwise.
+        """
+
+.. _`google style`: https://sphinxcontrib-napoleon.readthedocs.io/en/latest/index.html#google-vs-numpy
+.. _`PEP 484`: https://www.python.org/dev/peps/pep-0484/
+
 Documentation
 -------------
 
