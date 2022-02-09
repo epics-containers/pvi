@@ -56,6 +56,55 @@
             "console": "integratedTerminal"
         },
         {
+            "name": "ADCore Convert NDPluginDriver",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "convert",
+                "asyn",
+                "${workspaceFolder:ADCore}",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/pluginSrc/NDPluginDriver.cpp",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/pluginSrc/NDPluginDriver.h",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/Db/NDPluginBase.template",
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "ADCore Convert NDPluginFile",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "convert",
+                "asyn",
+                "${workspaceFolder:ADCore}",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/pluginSrc/NDPluginFile.cpp",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/pluginSrc/NDPluginFile.h",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/Db/NDPluginBase.template",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/Db/NDFile.template",
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "ADCore Convert NDFileHDF5",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "convert",
+                "asyn",
+                "${workspaceFolder:ADCore}",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/pluginSrc/NDFileHDF5.cpp",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/pluginSrc/NDFileHDF5.h",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/Db/NDFileHDF5.template",
+            ],
+            "console": "integratedTerminal"
+        },
+        {
             "name": "Convert Pilatus",
             "type": "python",
             "request": "launch",
