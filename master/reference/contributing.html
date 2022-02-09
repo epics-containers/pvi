@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contributing &mdash; pvi 0.1+20.g28a116e documentation</title>
+  <title>Contributing &mdash; pvi 0.3+7.gc4f1f59 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -131,6 +131,23 @@ tests on all files tracked by git:</p>
 <p>Or you can install a pre-commit hook that will run each time you do a <code class="docutils literal notranslate"><span class="pre">git</span>
 <span class="pre">commit</span></code> on just the files that have changed:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pipenv run pre-commit install
+</pre></div>
+</div>
+<p>Docstrings are pre-processed using the Sphinx Napoleon extension. As such,
+<a class="reference external" href="https://sphinxcontrib-napoleon.readthedocs.io/en/latest/index.html#google-vs-numpy">google style</a> is considered as standard for this repository. Note that
+types should be defined using <a class="reference external" href="https://www.python.org/dev/peps/pep-0484/">PEP 484</a> annotations. If attribute, parameter,
+and return types are annotated according to <a class="reference external" href="https://www.python.org/dev/peps/pep-0484/">PEP 484</a>, they do not need to
+be included in the docstring:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">function_with_pep484_type_annotations</span><span class="p">(</span><span class="n">param1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">param2</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Example function with PEP 484 type annotations.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        param1: The first parameter.</span>
+<span class="sd">        param2: The second parameter.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The return value. True for success, False otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 </pre></div>
 </div>
 </section>
