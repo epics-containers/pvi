@@ -1,2 +1,3 @@
 # yaml-language-server: $schema=../../../schemas/pvi.formatter.schema.json
-type: DLSFormatter
+# type: DLSFormatter
+type: BobFormatter

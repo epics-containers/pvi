@@ -1,9 +1,10 @@
 import re
-from lxml import etree
 from dataclasses import dataclass, field, replace
 from enum import Enum
 from typing import Callable, Dict, Iterator, List, Tuple, Type, TypeVar, Union
 
+from lxml import etree
+from copy import deepcopy
 from pvi.device import (
     LED,
     CheckBox,
@@ -377,29 +378,29 @@ class AdlTemplate(WidgetTemplate[str]):
 
 
 class BobTemplate(WidgetTemplate[str]):
-    """Extracts and modifies widgets from a template .bob file.
+    """Extracts and modifies elements from a template .bob file."""
 
-    Args:
-        WidgetTemplate (str): Inherited class providing search and set functionalities of custom file types.
-    """
-
-    def __init__(self, text: etree.ElementBase):
+    def __init__(self, text: str):
         """Parses an XML string to an element tree object."""
 
         self.tree = etree.parse(text)
+        self.screen = self.search("Display")
 
-    def set(self, t: etree.ElementBase, bounds: Bounds = None, **properties) -> etree.ElementBase:
-        """Modifies template widget elements with component data.
+    def set(
+        self, t: etree.ElementBase, bounds: Bounds = None, **properties
+    ) -> etree.ElementBase:
+        """Modifies template elements (widgets) with component data.
 
         Args:
-            t (etree.ElementBase): A template widget element.
-            bounds (Bounds, optional): The dimensions of the widget (x,y,w,h).
-            Defaults to None.
+            t: A template element.
+            bounds: The dimensions of the widget (x,y,w,h). Defaults to None.
+            **properties: The element properties (SubElements) to update.
+                In the form: {[SubElement]: [Value]}
 
         Returns:
-            etree.ElementBase: The modified widget element.
+            The modified element.
         """
-
+        t_copy = deepcopy(t)
         if bounds:
             properties["x"] = bounds.x
             properties["y"] = bounds.y
@@ -407,22 +408,36 @@ class BobTemplate(WidgetTemplate[str]):
             properties["height"] = bounds.h
         for item, value in properties.items():
             try:
-                t.xpath(f'./{item}')[0].text = str(value)
+                t_copy.xpath(f"./{item}")[0].text = str(value)
             except IndexError as idx:
-                raise ValueError(f"Failed to locate '{item}' in {t}") from idx
-        return t
+                name = t_copy.find("name").text
+                raise ValueError(f"Failed to locate '{item}' in {name}") from idx
+        return t_copy
 
     def search(self, search: str) -> etree.ElementBase:
-        """Locates and extracts widget elements from the Element tree.
+        """Locates and extracts elements from the Element tree.
 
         Args:
-            search (str): The unique name of the element to extract.
+            search: The unique name of the element to extract.
+                Can be found in its name subelement.
 
         Returns:
-            ET.Element: The extracted element.
+            The extracted element.
         """
 
-        # 'name' subelement is the unique ID for each widget type
-        matches = [widget for widget in self.tree.xpath(f'./widget[name="{search}"]')]
+        tree_copy = deepcopy(self.tree)
+        # 'name' is the unique ID for each element
+        matches = [
+            element.getparent()
+            for element in tree_copy.iter("name")
+            if element.text == search
+        ]
         assert len(matches) == 1, f"Got {len(matches)} matches for {search!r}"
+
+        # Isolate the screen properties
+        if matches[0].tag == "display":
+            for child in matches[0]:
+                if child.tag == "widget":
+                    matches[0].remove(child)
+
         return matches[0]

@@ -12,6 +12,7 @@ from .utils import (
     ActionFactory,
     Bounds,
     EdlTemplate,
+    BobTemplate,
     GroupFactory,
     GroupType,
     LabelFactory,
@@ -20,7 +21,7 @@ from .utils import (
     WidgetFactory,
     with_title,
 )
-
+from lxml import etree
 
 @dataclass
 class DLSFormatter(Formatter):
@@ -100,3 +101,89 @@ class DLSFormatter(Formatter):
         title = f"{device.label} - {prefix}"
         texts = screen.screen(device.children, title).format()
         path.write_text("".join(texts))
+
+
+@dataclass
+class BobFormatter(Formatter):
+    spacing: Annotated[int, desc("Spacing between widgets")] = 5
+    title_height: Annotated[int, desc("Height of screen title bar")] = 25
+    max_height: Annotated[int, desc("Max height of the screen")] = 900
+
+    def format(self, device: Device, prefix: str, path: Path):
+        assert path.suffix == ".bob", "Can only write bob files"
+        template = BobTemplate(str(Path(__file__).parent / "dls.bob"))
+        screen_title_cls = LabelFactory.from_template(
+            template, search="Title", text="text"
+        )
+        group_title_cls = LabelFactory.from_template(
+            template, search="GroupLabel", text="text"
+        )
+        group_box_cls = WidgetFactory.from_template(
+            template, search="Rectangle"
+        )
+        group_label_height = 10
+
+        def make_group_widgets(bounds: Bounds, title: str) -> List[WidgetFactory[str]]:
+            x, y, w, h = bounds.x, bounds.y, bounds.w, bounds.h
+            return [
+                group_box_cls(Bounds(x, y + self.spacing, w, h - self.spacing)),
+                group_title_cls(Bounds(x, y, w, group_label_height), f"  {title}  "),
+            ]
+
+        def make_screen_widgets(bounds: Bounds, title: str) -> List[WidgetFactory[str]]:
+            return [screen_title_cls(Bounds(0, 0, bounds.w, self.title_height), title)]
+
+        screen = Screen(
+            screen_cls=GroupFactory.from_template(
+                template,
+                search=GroupType.SCREEN,
+                sized=with_title(self.spacing, self.title_height),
+                make_widgets=make_screen_widgets,
+            ),
+            group_cls=GroupFactory.from_template(
+                template,
+                search=GroupType.GROUP,
+                sized=with_title(self.spacing, group_label_height),
+                make_widgets=make_group_widgets,
+            ),
+            label_cls=LabelFactory.from_template(
+                template, search="Label", text="text"
+            ),
+            led_cls=PVWidgetFactory.from_template(
+                template, search="LED", sized=Bounds.square, pv_name="pv"
+            ),
+            text_read_cls=PVWidgetFactory.from_template(
+                template, search="TextUpdate", pv_name="pv"
+            ),
+            check_box_cls=PVWidgetFactory.from_template(
+                template, search="ChoiceButton", pv_name="pv"
+            ),
+            combo_box_cls=PVWidgetFactory.from_template(
+                template, search="ComboBox", pv_name="pv"
+            ),
+            text_write_cls=PVWidgetFactory.from_template(
+                template, search="TextEntry", pv_name="pv"
+            ),
+            action_button_cls=ActionFactory.from_template(
+                template,
+                search="ActionButton",
+                text="label",
+                pv_name="pv",
+            ),
+            prefix=prefix,
+            spacing=self.spacing,
+            label_width=115,
+            widget_width=60,
+            widget_height=20,
+            max_height=self.max_height - self.title_height - self.spacing,
+        )
+        title = f"{device.label} - {prefix}"
+        texts = screen.screen(device.children, title).format()
+        
+        # Display is always the first element in texts
+        ET = etree.fromstring(etree.tostring(texts[0]))
+        for element in texts[:1:-1]:
+            # print(etree.tostring(element, pretty_print=True, encoding='unicode'))
+            ET.insert(ET.index(ET.find("height"))+1, element)
+        ET = ET.getroottree()
+        ET.write(str(path), pretty_print=True)      
