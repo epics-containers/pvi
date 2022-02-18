@@ -35,7 +35,7 @@ class SourceConverter:
     def _extract_device_and_parent_class(self) -> Tuple[str, str]:
         # e.g. extract 'NDPluginDriver' and 'asynNDArrayDriver' from
         # class epicsShareClass NDPluginDriver : public asynNDArrayDriver, public epicsThreadRunable {  # noqa
-        class_extractor = re.compile(r"class.* (\w+) : \w+ (\w+) (?:, .*)?{")
+        class_extractor = re.compile(r"class .* (\w+) : \w+ (\w+).*")
         match = re.search(class_extractor, self.source.h)
         assert match, "Can't find classes"
         classname, parent = match.groups()
@@ -78,7 +78,7 @@ class SourceConverter:
         # extract:
         # Group1: SimGainXString
         # Group2: SIM_GAIN_X
-        define_extractor = re.compile(r'(?:\#define) ([A-Za-z0-9]*) *"([^"]*)')
+        define_extractor = re.compile(r'(?:\#define) (\w+) *"([^"]*)')
         string_info_pair = re.findall(define_extractor, definition_str)[0]
         return string_info_pair
 
