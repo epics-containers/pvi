@@ -197,7 +197,8 @@ class AsynMultiBitBinary(AsynParameter):
     )
     initial: Annotated[
         # Regex: [0-9] OR 1[0-5] -> [0-15]  (Single character matching)
-        Union[None, int, str], initial_value(r"([0-9]|1[0-5])", min=0, max=15)
+        Union[None, int, str],
+        initial_value(r"([0-9]|1[0-5])", min=0, max=15),
     ] = None
     read_widget: AReadWidget = TextRead()
     write_widget: AWriteWidget = ComboBox()
