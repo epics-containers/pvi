@@ -81,8 +81,6 @@
                 "${workspaceFolder:ADCore}",
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/pluginSrc/NDPluginFile.cpp",
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/pluginSrc/NDPluginFile.h",
-                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/Db/NDPluginBase.template",
-                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/Db/NDFile.template",
             ],
             "console": "integratedTerminal"
         },
@@ -197,6 +195,9 @@
           "options": [
             "asynNDArrayDriver",
             "ADDriver",
+            "NDPluginDriver",
+            "NDPluginFile",
+            "NDFileHDF5",
             "pilatusDetector",
             "simDetector",
           ],
