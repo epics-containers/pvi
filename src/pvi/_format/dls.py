@@ -197,7 +197,7 @@ class DLSFormatter(Formatter):
 
         # 'Display' is always the first element in texts
         ET = etree.fromstring(etree.tostring(texts[0]))
-        for element in texts[:1:-1]:
+        for element in texts[:0:-1]:
             ET.insert(ET.index(ET.find("height")) + 1, element)
         ET = ET.getroottree()
         ET.write(str(path), pretty_print=True)
