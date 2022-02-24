@@ -19,6 +19,7 @@ from .utils import (
     LabelFactory,
     PVWidgetFactory,
     Screen,
+    ScreenWidgets,
     WidgetFactory,
     with_title,
 )
@@ -39,7 +40,9 @@ class DLSFormatter(Formatter):
 
     def format_edl(self, device: Device, prefix: str, path: Path):
         assert path.suffix == ".edl", "Can only write EDL files"
+
         template = EdlTemplate((Path(__file__).parent / "dls.edl").read_text())
+
         screen_title_cls = LabelFactory.from_template(
             template, search='"Title"', value="text"
         )
@@ -51,29 +54,7 @@ class DLSFormatter(Formatter):
         )
         group_label_height = 10
 
-        def make_group_widgets(bounds: Bounds, title: str) -> List[WidgetFactory[str]]:
-            x, y, w, h = bounds.x, bounds.y, bounds.w, bounds.h
-            return [
-                group_box_cls(Bounds(x, y + self.spacing, w, h - self.spacing)),
-                group_title_cls(Bounds(x, y, w, group_label_height), f"  {title}  "),
-            ]
-
-        def make_screen_widgets(bounds: Bounds, title: str) -> List[WidgetFactory[str]]:
-            return [screen_title_cls(Bounds(0, 0, bounds.w, self.title_height), title)]
-
-        screen = Screen(
-            screen_cls=GroupFactory.from_template(
-                template,
-                search=GroupType.SCREEN,
-                sized=with_title(self.spacing, self.title_height),
-                make_widgets=make_screen_widgets,
-            ),
-            group_cls=GroupFactory.from_template(
-                template,
-                search=GroupType.GROUP,
-                sized=with_title(self.spacing, group_label_height),
-                make_widgets=make_group_widgets,
-            ),
+        screen_widgets = ScreenWidgets(
             label_cls=LabelFactory.from_template(
                 template, search='"Label"', value="text"
             ),
@@ -99,6 +80,32 @@ class DLSFormatter(Formatter):
                 offLabel="label",
                 controlPv="pv",
             ),
+        )
+
+        def make_group_widgets(bounds: Bounds, title: str) -> List[WidgetFactory[str]]:
+            x, y, w, h = bounds.x, bounds.y, bounds.w, bounds.h
+            return [
+                group_box_cls(Bounds(x, y + self.spacing, w, h - self.spacing)),
+                group_title_cls(Bounds(x, y, w, group_label_height), f"  {title}  "),
+            ]
+
+        def make_screen_widgets(bounds: Bounds, title: str) -> List[WidgetFactory[str]]:
+            return [screen_title_cls(Bounds(0, 0, bounds.w, self.title_height), title)]
+
+        screen = Screen(
+            screen_cls=GroupFactory.from_template(
+                template,
+                search=GroupType.SCREEN,
+                sized=with_title(self.spacing, self.title_height),
+                make_widgets=make_screen_widgets,
+            ),
+            group_cls=GroupFactory.from_template(
+                template,
+                search=GroupType.GROUP,
+                sized=with_title(self.spacing, group_label_height),
+                make_widgets=make_group_widgets,
+            ),
+            screen_widgets=screen_widgets,
             prefix=prefix,
             spacing=self.spacing,
             label_width=115,
@@ -112,26 +119,50 @@ class DLSFormatter(Formatter):
 
     def format_bob(self, device: Device, prefix: str, path: Path):
         assert path.suffix == ".bob", "Can only write bob files"
+
         template = BobTemplate(str(Path(__file__).parent / "dls.bob"))
+
         screen_title_cls = LabelFactory.from_template(
             template, search="Title", text="text"
         )
         group_object_cls = LabelFactory.from_template(
             template, search="Group", name="text"
         )
-        group_label_height = 20
+        group_label_height = 25
+
+        screen_widgets = ScreenWidgets(
+            label_cls=LabelFactory.from_template(template, search="Label", text="text"),
+            led_cls=PVWidgetFactory.from_template(
+                template, search="LED", sized=Bounds.square, pv_name="pv"
+            ),
+            text_read_cls=PVWidgetFactory.from_template(
+                template, search="TextUpdate", pv_name="pv"
+            ),
+            check_box_cls=PVWidgetFactory.from_template(
+                template, search="ChoiceButton", pv_name="pv"
+            ),
+            combo_box_cls=PVWidgetFactory.from_template(
+                template, search="ComboBox", pv_name="pv"
+            ),
+            text_write_cls=PVWidgetFactory.from_template(
+                template, search="TextEntry", pv_name="pv"
+            ),
+            action_button_cls=ActionFactory.from_template(
+                template, search="ActionButton", text="label", pv_name="pv"
+            ),
+        )
 
         def make_group_object(bounds: Bounds, title: str) -> List[WidgetFactory[str]]:
-            group_spacing = 20
+            group_padding = 18
 
             x, y, w, h = bounds.x, bounds.y, bounds.w, bounds.h
             return [
                 group_object_cls(
                     Bounds(
-                        x - group_spacing,
+                        x - group_padding,
                         y + self.spacing,
-                        w + group_spacing,
-                        h - self.spacing + group_spacing,
+                        w + group_padding,
+                        h + group_padding - self.spacing,
                     ),
                     f"  {title}  ",
                 ),
@@ -153,28 +184,7 @@ class DLSFormatter(Formatter):
                 sized=with_title(self.spacing, group_label_height),
                 make_widgets=make_group_object,
             ),
-            label_cls=LabelFactory.from_template(template, search="Label", text="text"),
-            led_cls=PVWidgetFactory.from_template(
-                template, search="LED", sized=Bounds.square, pv_name="pv"
-            ),
-            text_read_cls=PVWidgetFactory.from_template(
-                template, search="TextUpdate", pv_name="pv"
-            ),
-            check_box_cls=PVWidgetFactory.from_template(
-                template, search="ChoiceButton", pv_name="pv"
-            ),
-            combo_box_cls=PVWidgetFactory.from_template(
-                template, search="ComboBox", pv_name="pv"
-            ),
-            text_write_cls=PVWidgetFactory.from_template(
-                template, search="TextEntry", pv_name="pv"
-            ),
-            action_button_cls=ActionFactory.from_template(
-                template,
-                search="ActionButton",
-                text="label",
-                pv_name="pv",
-            ),
+            screen_widgets=screen_widgets,
             prefix=prefix,
             spacing=self.spacing,
             label_width=115,

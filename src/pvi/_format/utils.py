@@ -1,10 +1,11 @@
 import re
+from copy import deepcopy
 from dataclasses import dataclass, field, replace
 from enum import Enum
 from typing import Callable, Dict, Iterator, List, Tuple, Type, TypeVar, Union
 
 from lxml import etree
-from copy import deepcopy
+
 from pvi.device import (
     LED,
     CheckBox,
@@ -185,9 +186,7 @@ def max_y(widgets: List[WidgetFactory[T]], spacing: int = 0) -> int:
 
 
 @dataclass
-class Screen(Generic[T]):
-    screen_cls: Type[GroupFactory[T]]
-    group_cls: Type[GroupFactory[T]]
+class ScreenWidgets(Generic[T]):
     label_cls: Type[LabelFactory[T]]
     led_cls: Type[PVWidgetFactory[T]]
     # TODO: add bitfield, progress_bar, plot, table, image
@@ -196,6 +195,43 @@ class Screen(Generic[T]):
     combo_box_cls: Type[PVWidgetFactory[T]]
     text_write_cls: Type[PVWidgetFactory[T]]
     action_button_cls: Type[ActionFactory[T]]
+
+    def pv_widget(
+        self,
+        widget: Union[ReadWidget, WriteWidget],
+        bounds: Bounds,
+        pv: str,
+        prefix: str,
+    ) -> PVWidgetFactory[T]:
+        """Converts a component that reads/writes PV's into its WidgetFactory representitive
+
+        Args:
+            widget: The read/write widget property of a component
+            bounds: Size and positional data
+            pv: The process variable assigned to a component
+
+        Returns:
+            A WidgetFactory representing the component
+        """
+
+        widget_factory: Dict[type, Type[PVWidgetFactory[T]]] = {
+            # Currently supported instances of ReadWidget/WriteWidget Components
+            LED: self.led_cls,
+            TextRead: self.text_read_cls,
+            CheckBox: self.check_box_cls,
+            ComboBox: self.combo_box_cls,
+            TextWrite: self.text_write_cls,
+        }
+        if isinstance(widget, (TextRead, TextWrite)):
+            bounds.h *= widget.lines
+        return widget_factory[type(widget)](bounds, prefix + pv)
+
+
+@dataclass
+class Screen(Generic[T]):
+    screen_cls: Type[GroupFactory[T]]
+    group_cls: Type[GroupFactory[T]]
+    screen_widgets: ScreenWidgets
     prefix: str
     spacing: int
     label_width: int
