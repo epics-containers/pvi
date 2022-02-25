@@ -241,11 +241,25 @@ class Screen(Generic[T]):
     components: Dict[str, Component] = field(init=False, default_factory=dict)
 
     def screen(self, components: Tree[Component], title: str) -> WidgetFactory[T]:
-        # Make the contents of the screen
-        widgets: List[WidgetFactory[T]] = []
+        """Make the contents of the screen
+
+        Args:
+            components: A list of components that make up a device
+            title: The title of the screen
+
+        Returns:
+            A constructed screen object
+
+        """
+        full_w = self.label_width + 2 * (self.spacing + self.widget_width)
+        screen_bounds = Bounds(h=self.max_height)
+        widget_bounds = Bounds(w=full_w, h=self.widget_height)
+        screen_widgets: List[WidgetFactory[T]] = []
         columns: Dict[int, int] = {0: 0}  # x coord -> y coord of bottom of column
         for c in components:
             if isinstance(c, Group):
+                # Group width and height bounds are considered separate from those of
+                # individual widgets
                 for col_x, col_y in columns.items():
                     # Note: Group adjusts bounds to fit the components
                     group = self.group(
@@ -256,88 +270,117 @@ class Screen(Generic[T]):
                         # Group fits in this column
                         break
 
-                widgets.append(group)
+                screen_widgets.append(group)
 
                 # Update y for current column and ensure there is an empty column
                 columns[group.bounds.x] = group.bounds.y + group.bounds.h + self.spacing
-                columns[max_x(widgets) + self.spacing] = 0
+                columns[max_x(screen_widgets) + self.spacing] = 0
             else:
-                raise NotImplementedError(c)
+                component_widgets = self.make_component_widgets(
+                    c,
+                    bounds=widget_bounds,
+                    parent_bounds=screen_bounds,
+                )
+                for widget in component_widgets:
+                    screen_widgets.append(widget)
 
-        # Then the screen itself
-        bounds = Bounds(w=max_x(widgets), h=max_y(widgets))
-        return self.screen_cls(bounds, title, widgets)
+        screen_bounds.w = max_x(screen_widgets)
+        screen_bounds.h = max_y(screen_widgets)
+        return self.screen_cls(screen_bounds, title, screen_widgets)
 
     def component(
         self, c: Component, bounds: Bounds, add_label=True
     ) -> Iterator[WidgetFactory[T]]:
+        """Converts a component into its WidgetFactory representitives
+
+        Args:
+            c: Component object extracted from a producer.yaml
+            bounds: Size and positional data
+            add_label: Whether the component has an associated label. Defaults to True.
+
+        Yields:
+            A collection of widgets representing the component
+        """
+
         # Widgets are allowed to expand bounds
         if not isinstance(c, SignalRef):
             self.components[c.name] = c
+
         if add_label:
             left, bounds = bounds.split(self.label_width, self.spacing)
-            yield self.label_cls(left, c.get_label())
+            yield self.screen_widgets.label_cls(left, c.get_label())
+
         if isinstance(c, SignalX):
-            yield self.action_button_cls(bounds, c.get_label(), c.pv, c.value)
+            yield self.screen_widgets.action_button_cls(
+                bounds, c.get_label(), c.pv, c.value
+            )
         elif isinstance(c, SignalR) and c.widget:
-            yield self.pv_widget(c.widget, bounds, c.pv)
+            yield self.screen_widgets.pv_widget(c.widget, bounds, c.pv, self.prefix)
         elif isinstance(c, SignalRW) and c.read_pv and c.read_widget and c.widget:
             left, right = bounds.split(int((bounds.w - self.spacing) / 2), self.spacing)
-            yield self.pv_widget(c.widget, left, c.pv)
-            yield self.pv_widget(c.read_widget, right, c.read_pv)
+            yield self.screen_widgets.pv_widget(c.widget, left, c.pv, self.prefix)
+            yield self.screen_widgets.pv_widget(
+                c.read_widget, right, c.read_pv, self.prefix
+            )
         elif isinstance(c, (SignalW, SignalRW)) and c.widget:
-            yield self.pv_widget(c.widget, bounds, c.pv)
+            yield self.screen_widgets.pv_widget(c.widget, bounds, c.pv, self.prefix)
         elif isinstance(c, SignalRef):
             yield from self.component(self.components[c.name], bounds, add_label)
         # TODO: Need to handle DeviceRef
 
-    def pv_widget(
-        self, widget: Union[ReadWidget, WriteWidget], bounds: Bounds, pv: str
-    ) -> PVWidgetFactory[T]:
-        widget_factory: Dict[type, Type[PVWidgetFactory[T]]] = {
-            LED: self.led_cls,
-            TextRead: self.text_read_cls,
-            CheckBox: self.check_box_cls,
-            ComboBox: self.combo_box_cls,
-            TextWrite: self.text_write_cls,
-        }
-        if isinstance(widget, (TextRead, TextWrite)):
-            bounds.h *= widget.lines
-        return widget_factory[type(widget)](bounds, self.prefix + pv)
-
     def group(self, group: Group[Component], bounds: Bounds) -> WidgetFactory[T]:
-        x = 0
         full_w = self.label_width + 2 * (self.spacing + self.widget_width)
-        widget_lists: List[List[WidgetFactory[T]]] = [[]]
+        child_bounds = Bounds(w=full_w, h=self.widget_height)
+        widgets: List[WidgetFactory[T]] = []
         assert isinstance(group.layout, Grid), "Can only do grid at the moment"
         for c in group.children:
             if isinstance(c, Group):
                 # TODO: make a new screen
                 raise NotImplementedError(c)
             else:
+                component_widgets = self.make_component_widgets(
+                    c,
+                    bounds=child_bounds,
+                    parent_bounds=bounds,
+                    add_label=group.layout.labelled,
+                )
+                for w in component_widgets:
+                    widgets.append(w)
 
-                def make(y):
-                    return self.component(
-                        c,
-                        bounds=Bounds(x, y, full_w, self.widget_height),
-                        add_label=group.layout.labelled,
-                    )
-
-                widgets = list(make(y=max_y(widget_lists[-1], self.spacing)))
-                max_h = max(w.bounds.y + w.bounds.h for w in widgets)
-                if max_h > bounds.h:
-                    # Retry in the next row
-                    x = max_x(widget_lists[-1], self.spacing)
-                    widget_lists.append(list(make(y=0)))
-                else:
-                    # Add in this row
-                    for w in widgets:
-                        widget_lists[-1].append(w)
-
-        widgets = concat(widget_lists)
         bounds.h = max_y(widgets)
         bounds.w = max_x(widgets)
         return self.group_cls(bounds, group.get_label(), widgets)
+
+    def make_component_widgets(
+        self,
+        c: Component,
+        bounds: Bounds,
+        parent_bounds: Bounds,
+        add_label=True,
+    ) -> List[WidgetFactory[T]]:
+        """Generates widgets from component data and positions them in a grid format
+
+        Args:
+            c: Component object extracted from a device.yaml
+            bounds: Size and positional data of component widgets
+            parent_bounds: Size constraints from the object containing the widgets
+            add_label: Whether the widget should have an assiciated label.
+                Defaults to True.
+
+        Returns:
+            A collection of widgets representing the component
+        """
+
+        widgets = list(self.component(c, bounds=bounds, add_label=add_label))
+        bounds.y = max_y(widgets, self.spacing)
+        max_h = max(w.bounds.y + w.bounds.h for w in widgets)
+        if max_h > parent_bounds.h:
+            # Retry in the next row
+            bounds.x = max_x(widgets, self.spacing)
+            bounds.y = 0
+            widgets = list(self.component(c, bounds=bounds, add_label=add_label))
+            bounds.y = max_y(widgets, self.spacing)
+        return widgets
 
 
 def concat(items: List[List[T]]) -> List[T]:
