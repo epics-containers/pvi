@@ -10,7 +10,7 @@ from pvi._convert._source_convert import SourceConverter
 from pvi._convert._template_convert import TemplateConverter
 from pvi._format import Formatter
 from pvi._produce import Producer
-from pvi._produce.asyn import AsynParameter
+from pvi._produce.asyn import AsynParameter, AsynProducer
 from pvi._schema_utils import make_json_schema
 from pvi._yaml_utils import deserialize_yaml, serialize_yaml
 from pvi.device import Device, walk
@@ -95,8 +95,9 @@ def asyn(
     module_root: Path = typer.Argument(..., help="Root directory of support module"),
     cpp: Path = typer.Argument(..., help="Path to the .cpp file to convert"),
     h: Path = typer.Argument(..., help="Path to the .h file to convert"),
-    templates: List[Path] = typer.Argument(
-        ..., help="Paths to .template files to convert"
+    templates: Optional[List[Path]] = typer.Argument(
+        None,
+        help="Paths to .template files to convert",
     ),
 ):
     """Convert cpp/h/template to producer YAML and stripped cpp/h/template"""
@@ -105,24 +106,38 @@ def asyn(
     if not output.exists():
         os.mkdir(output)
 
-    template_converter = TemplateConverter(templates)
+    drv_infos = []
+    producer = AsynProducer(
+        prefix="$(P)$(R)",
+        label=h.stem,
+        asyn_port="$(PORT)",
+        address="$(ADDR=0)",
+        timeout="$(TIMEOUT=1)",
+        parent="asynPortDriver",
+        parameters=[],
+    )
 
-    # Generate initial yaml to provide parameter info strings to source converter
-    producer = template_converter.convert()
+    # if a template is given, convert it and populate drv_infos
+    if templates:
+        template_converter = TemplateConverter(templates)
 
-    drv_infos = [
-        parameter.get_drv_info()
-        for parameter in walk(producer.parameters)
-        if isinstance(parameter, AsynParameter)
-    ]
+        # Generate initial yaml to provide parameter info strings to source converter
+        producer = template_converter.convert()
+        drv_infos = [
+            parameter.get_drv_info()
+            for parameter in walk(producer.parameters)
+            if isinstance(parameter, AsynParameter)
+        ]
+
     source_converter = SourceConverter(cpp, h, module_root, drv_infos)
 
-    # Process and recreate template files - pass source device for param set include
-    extracted_templates = template_converter.top_level_text(
-        source_converter.device_class
-    )
-    for template_text, template_path in zip(extracted_templates, templates):
-        (output / template_path.name).write_text(template_text)
+    if templates:
+        # Process and recreate template files - pass source device for param set include
+        extracted_templates = template_converter.top_level_text(
+            source_converter.device_class
+        )
+        for template_text, template_path in zip(extracted_templates, templates):
+            (output / template_path.name).write_text(template_text)
 
     # Process and recreate source files
     extracted_source = source_converter.get_top_level_text()
@@ -131,10 +146,14 @@ def asyn(
 
     # Update yaml based on source file definitions and write
     producer.parent = source_converter.parent_class
-    index_map = source_converter.get_info_index_map()
-    for parameter in walk(producer.parameters):
-        if isinstance(parameter, AsynParameter):
-            parameter.index_name = index_map[parameter.get_drv_info()]
+    if source_converter.define_strings:
+        index_map = source_converter.get_info_index_map()
+        for parameter in walk(producer.parameters):
+            if isinstance(parameter, AsynParameter):
+                parameter.index_name = index_map.get(
+                    parameter.get_drv_info(), "INPUT MANUALLY"
+                )
+
     serialize_yaml(
         producer, output / f"{source_converter.device_class}.pvi.producer.yaml"
     )
