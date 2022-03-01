@@ -170,9 +170,18 @@ class RecordPair:
         in_record_type = dataclasses.make_dataclass(in_str, fields_dict[in_str])
         out_record_type = dataclasses.make_dataclass(out_str, fields_dict[out_str])
         namespace = dict(in_record_type=in_record_type, out_record_type=out_record_type)
-        subclass = type(
-            f"{in_str}_{out_str}", (cls, in_record_type, out_record_type), namespace
+
+        # Create combined record type for the record pair subclass
+        in_fields = dict((a, (b, c)) for a, b, c, in fields_dict[in_str])
+        in_fields.update(dict((a, (b, c)) for a, b, c, in fields_dict[out_str]))
+        all_fields = [(a, b, c) for [a, (b, c)] in in_fields.items()]
+
+        record_type = dataclasses.make_dataclass(
+            f"{in_str}_{out_str}",
+            all_fields,
         )
+        subclass = type(f"{in_str}_{out_str}", (cls, record_type), namespace)
+
         return subclass
 
     def sort_records(self) -> Tuple[Dict[str, Any], Dict[str, Any]]:
