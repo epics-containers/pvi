@@ -35,7 +35,7 @@ class SourceConverter:
     def _extract_device_and_parent_class(self) -> Tuple[str, str]:
         # e.g. extract 'NDPluginDriver' and 'asynNDArrayDriver' from
         # class epicsShareClass NDPluginDriver : public asynNDArrayDriver, public epicsThreadRunable {  # noqa
-        class_extractor = re.compile(r"class .* (\w+) : \w+ (\w+).*")
+        class_extractor = re.compile(r"class.* (\w+) : \w+ (\w+).*")
         match = re.search(class_extractor, self.source.h)
         assert match, "Can't find classes"
         classname, parent = match.groups()
@@ -207,11 +207,24 @@ class SourceConverter:
         )
         # Add the param set pointer member definition
         protected_extractor = re.compile(r".*protected:")
-        protected_str = re.findall(protected_extractor, h_text)[0]
+        class_extractor = re.compile(r"class.* " + self.device_class + r" :[\s\S]* {")
+
+        matches = re.findall(protected_extractor, h_text)
+        class_str = re.findall(class_extractor, h_text)[0]
         param_set_definition = f"    {self.device_class}ParamSet* paramSet;"
-        h_text = h_text.replace(
-            protected_str, protected_str + "\n" + param_set_definition
-        )
+
+        if matches:
+            protected_str = matches[0]
+            h_text = h_text.replace(
+                protected_str,
+                protected_str + "\n" + param_set_definition,
+                1,
+            )
+        else:
+            h_text = h_text.replace(
+                class_str,
+                class_str + "\n" + "protected:" + "\n" + param_set_definition,
+            )
 
         # Replace FIRST_*_PARAM definition
         h_text = re.sub(
