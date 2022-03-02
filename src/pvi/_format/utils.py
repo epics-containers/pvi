@@ -251,15 +251,15 @@ class Screen(Generic[T]):
             A constructed screen object
 
         """
-        full_w = self.label_width + 2 * (self.spacing + self.widget_width)
+        full_w = self.label_width + self.widget_width + 2 * self.spacing
         screen_bounds = Bounds(h=self.max_height)
         widget_bounds = Bounds(w=full_w, h=self.widget_height)
         screen_widgets: List[WidgetFactory[T]] = []
         columns: Dict[int, int] = {0: 0}  # x coord -> y coord of bottom of column
         for c in components:
             if isinstance(c, Group):
-                # Group width and height bounds are considered separate from those of
-                # individual widgets
+                # Group width and group height bounds are considered separate from
+                # those of individual widgets
                 for col_x, col_y in columns.items():
                     # Note: Group adjusts bounds to fit the components
                     group = self.group(
@@ -329,7 +329,7 @@ class Screen(Generic[T]):
         # TODO: Need to handle DeviceRef
 
     def group(self, group: Group[Component], bounds: Bounds) -> WidgetFactory[T]:
-        full_w = self.label_width + 2 * (self.spacing + self.widget_width)
+        full_w = self.label_width + self.widget_width + 2 * self.spacing
         child_bounds = Bounds(w=full_w, h=self.widget_height)
         widgets: List[WidgetFactory[T]] = []
         assert isinstance(group.layout, Grid), "Can only do grid at the moment"
@@ -456,7 +456,7 @@ class AdlTemplate(WidgetTemplate[str]):
         return matches[0]
 
 
-class BobTemplate(WidgetTemplate[str]):
+class BobTemplate(WidgetTemplate[etree.ElementBase]):
     """Extracts and modifies elements from a template .bob file."""
 
     def __init__(self, text: str):

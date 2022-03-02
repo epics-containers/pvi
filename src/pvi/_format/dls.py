@@ -109,7 +109,7 @@ class DLSFormatter(Formatter):
             prefix=prefix,
             spacing=self.spacing,
             label_width=115,
-            widget_width=60,
+            widget_width=120,
             widget_height=20,
             max_height=self.max_height - self.title_height - self.spacing,
         )
@@ -188,13 +188,12 @@ class DLSFormatter(Formatter):
             prefix=prefix,
             spacing=self.spacing,
             label_width=115,
-            widget_width=60,
+            widget_width=120,
             widget_height=20,
             max_height=self.max_height - self.title_height - self.spacing,
         )
         title = f"{device.label} - {prefix}"
         texts = screen.screen(device.children, title).format()
-
         # 'Display' is always the first element in texts
         ET = etree.fromstring(etree.tostring(texts[0]))
         for element in texts[:0:-1]:
