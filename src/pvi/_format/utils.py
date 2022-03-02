@@ -5,7 +5,9 @@ from enum import Enum
 from typing import Callable, Dict, Iterator, List, Tuple, Type, TypeVar, Union
 
 from lxml import etree
+from typing_extensions import Annotated
 
+from pvi._schema_utils import desc
 from pvi.device import (
     LED,
     CheckBox,
@@ -154,14 +156,47 @@ class GroupFactory(WidgetFactory[T]):
                     texts.append(
                         template.set(template.screen, self.bounds, **properties)
                     )
-                # TODO: group things?
-                if make_widgets:
-                    for widget in make_widgets(self.bounds, self.title):
-                        texts += widget.format()
+                    # TODO: group things?
+                    if make_widgets:
+                        print("Making widgets")
+                        # Makes the screen title and group cls widgets
+                        for widget in make_widgets(self.bounds, self.title):
+                            print(widget)
+                            texts += widget.format()
+
                 for c in self.children:
-                    c.bounds.x += padding.x
-                    c.bounds.y += padding.y
-                    texts += c.format()
+                    if isinstance(template, BobTemplate):
+                        if search == GroupType.SCREEN:
+                            # Group padding only
+                            c.bounds.x += padding.x
+                            c.bounds.y += padding.y
+                            texts += c.format()
+
+                    else:
+                        c.bounds.x += padding.x
+                        c.bounds.y += padding.y
+                        texts += c.format()
+
+                # When processing Bob groups...
+                if (
+                    isinstance(template, BobTemplate)
+                    and search == GroupType.GROUP
+                    and make_widgets
+                ):
+                    for widget in make_widgets(self.bounds, self.title):
+                        group_element = widget.format()[0]
+                    # print(etree.tostring(group_element))
+                    sub_elements = []
+                    for c in self.children:
+                        sub_elements.append(c.format()[0])
+                    for element in sub_elements:
+                        group_element.append(element)
+                    # print(
+                    #     etree.tostring(
+                    #         group_element, pretty_print=True, encoding="unicode"
+                    #     )
+                    # )
+                    texts += [group_element]
                 return texts
 
             def __post_init__(self):
@@ -183,6 +218,35 @@ def max_y(widgets: List[WidgetFactory[T]], spacing: int = 0) -> int:
         return max(w.bounds.y + w.bounds.h + spacing for w in widgets)
     else:
         return 0
+
+
+def next_x_pos(widget: WidgetFactory[T], spacing: int = 0) -> int:
+    """Given a single widget, calculate the next feasible location
+    for an additional widget in the x axis"""
+    return widget.bounds.x + widget.bounds.w + spacing
+
+
+def next_y_pos(widget: WidgetFactory[T], spacing: int = 0) -> int:
+    """Given a single widget, calculate the next feasible location
+    for an additional widget in the y axis"""
+    return widget.bounds.y + widget.bounds.h + spacing
+
+
+@dataclass
+class LayoutProperties:
+    spacing: Annotated[int, desc("Spacing between widgets")]
+    title_height: Annotated[int, desc("Height of screen title bar")]
+    max_height: Annotated[int, desc("Max height of the screen")]
+    group_label_height: Annotated[int, desc("Height of the group title label")]
+    label_width: Annotated[int, desc("Width of the labels describing widgets")]
+    widget_width: Annotated[int, desc("Width of the widgets")]
+    widget_height: Annotated[int, desc("Height of the widgets (Labels use this too)")]
+    group_widget_indent: Annotated[
+        int, desc("Indentation of widgets within groups. Defaults to 0")
+    ] = 0
+    group_width_offset: Annotated[
+        int, desc("Additional border width when using group objects. Defaults to 0")
+    ] = 0
 
 
 @dataclass
@@ -232,16 +296,12 @@ class Screen(Generic[T]):
     screen_cls: Type[GroupFactory[T]]
     group_cls: Type[GroupFactory[T]]
     screen_widgets: ScreenWidgets
+    layout: LayoutProperties
     prefix: str
-    spacing: int
-    label_width: int
-    widget_width: int
-    widget_height: int
-    max_height: int
     components: Dict[str, Component] = field(init=False, default_factory=dict)
 
     def screen(self, components: Tree[Component], title: str) -> WidgetFactory[T]:
-        """Make the contents of the screen
+        """Makes the contents of the screen and determines the layout of widgets
 
         Args:
             components: A list of components that make up a device
@@ -251,35 +311,40 @@ class Screen(Generic[T]):
             A constructed screen object
 
         """
-        full_w = self.label_width + self.widget_width + 2 * self.spacing
-        screen_bounds = Bounds(h=self.max_height)
-        widget_bounds = Bounds(w=full_w, h=self.widget_height)
+        full_w = (
+            self.layout.label_width + self.layout.widget_width + 2 * self.layout.spacing
+        )
+        screen_bounds = Bounds(h=self.layout.max_height)
+        widget_bounds = Bounds(w=full_w, h=self.layout.widget_height)
         screen_widgets: List[WidgetFactory[T]] = []
         columns: Dict[int, int] = {0: 0}  # x coord -> y coord of bottom of column
         for c in components:
             if isinstance(c, Group):
-                # Group width and group height bounds are considered separate from
-                # those of individual widgets
+                # Group 'width' and 'height' bounds are considered separate from
+                # those of other top level widgets
                 for col_x, col_y in columns.items():
                     # Note: Group adjusts bounds to fit the components
                     group = self.group(
-                        c, bounds=Bounds(col_x, col_y, h=self.max_height)
+                        c, bounds=Bounds(col_x, col_y, h=self.layout.max_height)
                     )
 
-                    if group.bounds.h + group.bounds.y <= self.max_height:
+                    if group.bounds.h + group.bounds.y <= self.layout.max_height:
                         # Group fits in this column
                         break
 
+                group.bounds.w += self.layout.group_width_offset
                 screen_widgets.append(group)
 
                 # Update y for current column and ensure there is an empty column
-                columns[group.bounds.x] = group.bounds.y + group.bounds.h + self.spacing
-                columns[max_x(screen_widgets) + self.spacing] = 0
+                columns[group.bounds.x] = next_y_pos(group, self.layout.spacing)
+                columns[max_x(screen_widgets, self.layout.spacing)] = 0
             else:
+                # Top level widgets
                 component_widgets = self.make_component_widgets(
                     c,
                     bounds=widget_bounds,
                     parent_bounds=screen_bounds,
+                    group_widget_indent=self.layout.group_widget_indent,
                 )
                 for widget in component_widgets:
                     screen_widgets.append(widget)
@@ -289,9 +354,9 @@ class Screen(Generic[T]):
         return self.screen_cls(screen_bounds, title, screen_widgets)
 
     def component(
-        self, c: Component, bounds: Bounds, add_label=True
+        self, c: Component, bounds: Bounds, group_widget_indent: int, add_label=True
     ) -> Iterator[WidgetFactory[T]]:
-        """Converts a component into its WidgetFactory representitives
+        """Converts a component into its WidgetFactory counterparts
 
         Args:
             c: Component object extracted from a producer.yaml
@@ -302,35 +367,62 @@ class Screen(Generic[T]):
             A collection of widgets representing the component
         """
 
+        def indent_widget(bounds: Bounds, indentation: int) -> Bounds:
+            """Shifts the x position of a widget. Used on top level widgets to align
+            them with group indentation"""
+            return Bounds(bounds.x + indentation, bounds.y, bounds.w, bounds.h)
+
         # Widgets are allowed to expand bounds
         if not isinstance(c, SignalRef):
             self.components[c.name] = c
 
         if add_label:
-            left, bounds = bounds.split(self.label_width, self.spacing)
-            yield self.screen_widgets.label_cls(left, c.get_label())
+            left, bounds = bounds.split(self.layout.label_width, self.layout.spacing)
+            yield self.screen_widgets.label_cls(
+                indent_widget(left, group_widget_indent), c.get_label()
+            )
 
         if isinstance(c, SignalX):
             yield self.screen_widgets.action_button_cls(
-                bounds, c.get_label(), c.pv, c.value
+                indent_widget(bounds, group_widget_indent),
+                c.get_label(),
+                c.pv,
+                c.value,
             )
         elif isinstance(c, SignalR) and c.widget:
-            yield self.screen_widgets.pv_widget(c.widget, bounds, c.pv, self.prefix)
-        elif isinstance(c, SignalRW) and c.read_pv and c.read_widget and c.widget:
-            left, right = bounds.split(int((bounds.w - self.spacing) / 2), self.spacing)
-            yield self.screen_widgets.pv_widget(c.widget, left, c.pv, self.prefix)
             yield self.screen_widgets.pv_widget(
-                c.read_widget, right, c.read_pv, self.prefix
+                c.widget, indent_widget(bounds, group_widget_indent), c.pv, self.prefix
+            )
+        elif isinstance(c, SignalRW) and c.read_pv and c.read_widget and c.widget:
+            left, right = bounds.split(
+                int((bounds.w - self.layout.spacing) / 2), self.layout.spacing
+            )
+            yield self.screen_widgets.pv_widget(
+                c.widget, indent_widget(left, group_widget_indent), c.pv, self.prefix
+            )
+            yield self.screen_widgets.pv_widget(
+                c.read_widget,
+                indent_widget(right, group_widget_indent),
+                c.read_pv,
+                self.prefix,
             )
         elif isinstance(c, (SignalW, SignalRW)) and c.widget:
-            yield self.screen_widgets.pv_widget(c.widget, bounds, c.pv, self.prefix)
+            yield self.screen_widgets.pv_widget(
+                c.widget, indent_widget(bounds, group_widget_indent), c.pv, self.prefix
+            )
         elif isinstance(c, SignalRef):
-            yield from self.component(self.components[c.name], bounds, add_label)
+            yield from self.component(
+                self.components[c.name],
+                indent_widget(bounds, group_widget_indent),
+                add_label,
+            )
         # TODO: Need to handle DeviceRef
 
     def group(self, group: Group[Component], bounds: Bounds) -> WidgetFactory[T]:
-        full_w = self.label_width + self.widget_width + 2 * self.spacing
-        child_bounds = Bounds(w=full_w, h=self.widget_height)
+        full_w = (
+            self.layout.label_width + self.layout.widget_width + 2 * self.layout.spacing
+        )
+        child_bounds = Bounds(w=full_w, h=self.layout.widget_height)
         widgets: List[WidgetFactory[T]] = []
         assert isinstance(group.layout, Grid), "Can only do grid at the moment"
         for c in group.children:
@@ -357,6 +449,7 @@ class Screen(Generic[T]):
         bounds: Bounds,
         parent_bounds: Bounds,
         add_label=True,
+        group_widget_indent: int = 0,
     ) -> List[WidgetFactory[T]]:
         """Generates widgets from component data and positions them in a grid format
 
@@ -370,16 +463,16 @@ class Screen(Generic[T]):
         Returns:
             A collection of widgets representing the component
         """
-
-        widgets = list(self.component(c, bounds=bounds, add_label=add_label))
-        bounds.y = max_y(widgets, self.spacing)
-        max_h = max(w.bounds.y + w.bounds.h for w in widgets)
+        widgets = list(self.component(c, bounds, group_widget_indent, add_label))
+        bounds.y = max_y(widgets, self.layout.spacing)
+        max_h = max_y(widgets)
         if max_h > parent_bounds.h:
             # Retry in the next row
-            bounds.x = max_x(widgets, self.spacing)
+            bounds.x = max_x(widgets, self.layout.spacing)
             bounds.y = 0
-            widgets = list(self.component(c, bounds=bounds, add_label=add_label))
-            bounds.y = max_y(widgets, self.spacing)
+            widgets = list(self.component(c, bounds, group_widget_indent, add_label))
+            # All widgets are on the same row
+            bounds.y = next_y_pos(widgets[0], self.layout.spacing)
         return widgets
 
 

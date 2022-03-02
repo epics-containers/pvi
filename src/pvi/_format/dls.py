@@ -3,9 +3,7 @@ from pathlib import Path
 from typing import List
 
 from lxml import etree
-from typing_extensions import Annotated
 
-from pvi._schema_utils import desc
 from pvi.device import Device
 
 from .base import Formatter
@@ -17,6 +15,7 @@ from .utils import (
     GroupFactory,
     GroupType,
     LabelFactory,
+    LayoutProperties,
     PVWidgetFactory,
     Screen,
     ScreenWidgets,
@@ -27,10 +26,6 @@ from .utils import (
 
 @dataclass
 class DLSFormatter(Formatter):
-    spacing: Annotated[int, desc("Spacing between widgets")] = 5
-    title_height: Annotated[int, desc("Height of screen title bar")] = 25
-    max_height: Annotated[int, desc("Max height of the screen")] = 900
-
     def format(self, device: Device, prefix: str, path: Path):
         if path.suffix == ".edl":
             f = self.format_edl
@@ -43,16 +38,16 @@ class DLSFormatter(Formatter):
 
         template = EdlTemplate((Path(__file__).parent / "dls.edl").read_text())
 
-        screen_title_cls = LabelFactory.from_template(
-            template, search='"Title"', value="text"
+        layout_properties = LayoutProperties(
+            spacing=5,
+            title_height=25,
+            max_height=900,
+            group_label_height=10,
+            label_width=115,
+            widget_width=120,
+            widget_height=20,
+            group_widget_indent=5,
         )
-        group_title_cls = LabelFactory.from_template(
-            template, search='"  Group  "', value="text"
-        )
-        group_box_cls = WidgetFactory.from_template(
-            template, search="fillColor index 5"
-        )
-        group_label_height = 10
 
         screen_widgets = ScreenWidgets(
             label_cls=LabelFactory.from_template(
@@ -82,36 +77,60 @@ class DLSFormatter(Formatter):
             ),
         )
 
-        def make_group_widgets(bounds: Bounds, title: str) -> List[WidgetFactory[str]]:
+        screen_title_cls = LabelFactory.from_template(
+            template, search='"Title"', value="text"
+        )
+        group_title_cls = LabelFactory.from_template(
+            template, search='"  Group  "', value="text"
+        )
+        group_box_cls = WidgetFactory.from_template(
+            template, search="fillColor index 5"
+        )
+
+        def make_group_box(bounds: Bounds, title: str) -> List[WidgetFactory[str]]:
             x, y, w, h = bounds.x, bounds.y, bounds.w, bounds.h
             return [
-                group_box_cls(Bounds(x, y + self.spacing, w, h - self.spacing)),
-                group_title_cls(Bounds(x, y, w, group_label_height), f"  {title}  "),
+                group_box_cls(
+                    Bounds(
+                        x,
+                        y + layout_properties.spacing,
+                        w,
+                        h - layout_properties.spacing,
+                    )
+                ),
+                group_title_cls(
+                    Bounds(x, y, w, layout_properties.group_label_height),
+                    f"  {title}  ",
+                ),
             ]
 
-        def make_screen_widgets(bounds: Bounds, title: str) -> List[WidgetFactory[str]]:
-            return [screen_title_cls(Bounds(0, 0, bounds.w, self.title_height), title)]
+        def make_screen_title(bounds: Bounds, title: str) -> List[WidgetFactory[str]]:
+            return [
+                screen_title_cls(
+                    Bounds(0, 0, bounds.w, layout_properties.title_height), title
+                )
+            ]
 
         screen = Screen(
             screen_cls=GroupFactory.from_template(
                 template,
                 search=GroupType.SCREEN,
-                sized=with_title(self.spacing, self.title_height),
-                make_widgets=make_screen_widgets,
+                sized=with_title(
+                    layout_properties.spacing, layout_properties.title_height
+                ),
+                make_widgets=make_screen_title,
             ),
             group_cls=GroupFactory.from_template(
                 template,
                 search=GroupType.GROUP,
-                sized=with_title(self.spacing, group_label_height),
-                make_widgets=make_group_widgets,
+                sized=with_title(
+                    layout_properties.spacing, layout_properties.group_label_height
+                ),
+                make_widgets=make_group_box,
             ),
             screen_widgets=screen_widgets,
             prefix=prefix,
-            spacing=self.spacing,
-            label_width=115,
-            widget_width=120,
-            widget_height=20,
-            max_height=self.max_height - self.title_height - self.spacing,
+            layout=layout_properties,
         )
         title = f"{device.label} - {prefix}"
         texts = screen.screen(device.children, title).format()
@@ -122,13 +141,17 @@ class DLSFormatter(Formatter):
 
         template = BobTemplate(str(Path(__file__).parent / "dls.bob"))
 
-        screen_title_cls = LabelFactory.from_template(
-            template, search="Title", text="text"
+        layout_properties = LayoutProperties(
+            spacing=4,
+            title_height=24,
+            max_height=900,
+            group_label_height=26,
+            label_width=120,
+            widget_width=120,
+            widget_height=20,
+            group_widget_indent=18,
+            group_width_offset=26,
         )
-        group_object_cls = LabelFactory.from_template(
-            template, search="Group", name="text"
-        )
-        group_label_height = 25
 
         screen_widgets = ScreenWidgets(
             label_cls=LabelFactory.from_template(template, search="Label", text="text"),
@@ -152,45 +175,47 @@ class DLSFormatter(Formatter):
             ),
         )
 
-        def make_group_object(bounds: Bounds, title: str) -> List[WidgetFactory[str]]:
-            group_padding = 18
+        screen_title_cls = LabelFactory.from_template(
+            template, search="Title", text="text"
+        )
+        group_object_cls = LabelFactory.from_template(
+            template, search="Group", name="text"
+        )
 
-            x, y, w, h = bounds.x, bounds.y, bounds.w, bounds.h
+        def make_group_object(bounds: Bounds, title: str) -> List[WidgetFactory[str]]:
             return [
                 group_object_cls(
-                    Bounds(
-                        x - group_padding,
-                        y + self.spacing,
-                        w + group_padding,
-                        h + group_padding - self.spacing,
-                    ),
-                    f"  {title}  ",
-                ),
+                    Bounds(bounds.x, bounds.y, bounds.w, bounds.h), f"{title}"
+                )
             ]
 
-        def make_screen_widgets(bounds: Bounds, title: str) -> List[WidgetFactory[str]]:
-            return [screen_title_cls(Bounds(0, 0, bounds.w, self.title_height), title)]
+        def make_screen_title(bounds: Bounds, title: str) -> List[WidgetFactory[str]]:
+            return [
+                screen_title_cls(
+                    Bounds(0, 0, bounds.w, layout_properties.title_height), title
+                )
+            ]
 
         screen = Screen(
             screen_cls=GroupFactory.from_template(
                 template,
                 search=GroupType.SCREEN,
-                sized=with_title(self.spacing, self.title_height),
-                make_widgets=make_screen_widgets,
+                sized=with_title(
+                    layout_properties.spacing, layout_properties.title_height
+                ),
+                make_widgets=make_screen_title,
             ),
             group_cls=GroupFactory.from_template(
                 template,
                 search=GroupType.GROUP,
-                sized=with_title(self.spacing, group_label_height),
+                sized=with_title(
+                    layout_properties.spacing, layout_properties.group_label_height
+                ),
                 make_widgets=make_group_object,
             ),
             screen_widgets=screen_widgets,
             prefix=prefix,
-            spacing=self.spacing,
-            label_width=115,
-            widget_width=120,
-            widget_height=20,
-            max_height=self.max_height - self.title_height - self.spacing,
+            layout=layout_properties,
         )
         title = f"{device.label} - {prefix}"
         texts = screen.screen(device.children, title).format()
