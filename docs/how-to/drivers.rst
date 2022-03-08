@@ -18,7 +18,7 @@ Database Template File
 According to the demand and readback properties of the component, the following
 records are created:
 
-.. literalinclude:: ../../tests/produce_format/output/pilatusParameters.template
+.. literalinclude:: ../../tests/produce_format/output/pilatusDetectorParameters.template
 
 
 The top level pilatus.template includes this file, as well as records that
