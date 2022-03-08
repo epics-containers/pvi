@@ -80,6 +80,15 @@ class WidgetTemplate(Generic[T]):
         properties set"""
         raise NotImplementedError(self)
 
+    # TODO: Investigate type checking for children argument (List[WidgetFactory[T]])
+    def create_group(
+        self,
+        group_object: List[T],
+        children: "List[WidgetFactory[T]]",
+        padding: Bounds = Bounds(),
+    ) -> List[T]:
+        raise NotImplementedError(self)
+
 
 WF = TypeVar("WF", bound="WidgetFactory")
 
@@ -151,52 +160,28 @@ class GroupFactory(WidgetFactory[T]):
             def format(self) -> List[T]:
                 padding = sized(self.bounds)
                 texts: List[T] = []
+                made_widgets: List[T] = []
+
                 if search == GroupType.SCREEN:
                     properties = {k: getattr(self, v) for k, v in attrs.items()}
                     texts.append(
                         template.set(template.screen, self.bounds, **properties)
                     )
-                    # TODO: group things?
+                    # Make screen title
                     if make_widgets:
-                        print("Making widgets")
-                        # Makes the screen title and group cls widgets
                         for widget in make_widgets(self.bounds, self.title):
-                            print(widget)
                             texts += widget.format()
-
-                for c in self.children:
-                    if isinstance(template, BobTemplate):
-                        if search == GroupType.SCREEN:
-                            # Group padding only
-                            c.bounds.x += padding.x
-                            c.bounds.y += padding.y
-                            texts += c.format()
-
-                    else:
+                    for c in self.children:
                         c.bounds.x += padding.x
                         c.bounds.y += padding.y
                         texts += c.format()
 
-                # When processing Bob groups...
-                if (
-                    isinstance(template, BobTemplate)
-                    and search == GroupType.GROUP
-                    and make_widgets
-                ):
-                    for widget in make_widgets(self.bounds, self.title):
-                        group_element = widget.format()[0]
-                    # print(etree.tostring(group_element))
-                    sub_elements = []
-                    for c in self.children:
-                        sub_elements.append(c.format()[0])
-                    for element in sub_elements:
-                        group_element.append(element)
-                    # print(
-                    #     etree.tostring(
-                    #         group_element, pretty_print=True, encoding="unicode"
-                    #     )
-                    # )
-                    texts += [group_element]
+                if search == GroupType.GROUP:
+                    # Make group object
+                    if make_widgets:
+                        for widget in make_widgets(self.bounds, self.title):
+                            made_widgets += widget.format()
+                    texts += template.create_group(made_widgets, self.children, padding)
                 return texts
 
             def __post_init__(self):
@@ -207,6 +192,8 @@ class GroupFactory(WidgetFactory[T]):
 
 
 def max_x(widgets: List[WidgetFactory[T]], spacing: int = 0) -> int:
+    """Given a list of widgets, calulate the next feasible location for
+    an additional widget in the x axis"""
     if widgets:
         return max(w.bounds.x + w.bounds.w + spacing for w in widgets)
     else:
@@ -214,6 +201,8 @@ def max_x(widgets: List[WidgetFactory[T]], spacing: int = 0) -> int:
 
 
 def max_y(widgets: List[WidgetFactory[T]], spacing: int = 0) -> int:
+    """Given a list of widgets, calulate the next feasible location for
+    an additional widget in the y axis"""
     if widgets:
         return max(w.bounds.y + w.bounds.h + spacing for w in widgets)
     else:
@@ -267,7 +256,7 @@ class ScreenWidgets(Generic[T]):
         pv: str,
         prefix: str,
     ) -> PVWidgetFactory[T]:
-        """Converts a component that reads/writes PV's into its WidgetFactory representitive
+        """Converts a component that reads or writes PV's into its WidgetFactory equivalent
 
         Args:
             widget: The read/write widget property of a component
@@ -520,6 +509,22 @@ class EdlTemplate(WidgetTemplate[str]):
         assert len(matches) == 1, f"Got {len(matches)} matches for {search!r}"
         return matches[0]
 
+    def create_group(
+        self,
+        group_object: List[str],
+        children: List[WidgetFactory[str]],
+        padding: Bounds = Bounds(),
+    ) -> List[str]:
+
+        texts: List[str] = []
+
+        for c in children:
+            c.bounds.x += padding.x
+            c.bounds.y += padding.y
+            texts += c.format()
+
+        return group_object + texts
+
 
 class AdlTemplate(WidgetTemplate[str]):
     def __init__(self, text: str):
@@ -613,3 +618,16 @@ class BobTemplate(WidgetTemplate[etree.ElementBase]):
                     matches[0].remove(child)
 
         return matches[0]
+
+    def create_group(
+        self,
+        group_object: List[etree.ElementBase],
+        children: List[WidgetFactory[etree.ElementBase]],
+        padding: Bounds = Bounds(),
+    ) -> List[etree.ElementBase]:
+        assert (
+            len(group_object) == 1
+        ), f"Size of group_object is {len(group_object)}, should be 1"
+        for c in children:
+            group_object[0].append(c.format()[0])
+        return group_object
