@@ -9,7 +9,7 @@
 	url = https://github.com/epics-modules/busy.git
 [submodule "src/pvi/submodules/ADCore"]
 	path = src/pvi/submodules/ADCore
-	url = https://gitlab.diamond.ac.uk/controls/support/ADCore.git
+	url = https://github.com/dls-controls/ADCore.git
 	branch = submodule-pvi
 [submodule "src/pvi/submodules/ADSimDetector"]
 	path = src/pvi/submodules/ADSimDetector
