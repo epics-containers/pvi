@@ -1,5 +1,5 @@
 Parameter,Records,Description
-*GroupOne*
+*ComponentGroupOne*
 ResetPower,bo: $(P)$(R)ResetPower,ResetPower
 ThresholdApply,busy: $(P)$(R)ThresholdApply,ThresholdApply
 ImageFileTmot,ao: $(P)$(R)ImageFileTmot,Timeout for image file

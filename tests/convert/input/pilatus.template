@@ -61,7 +61,7 @@ record(bi, "$(P)$(R)Armed")
     field(SCAN, "I/O Intr")
 }
 
-# Reset module power
+# Reset module power 
 record(bo, "$(P)$(R)ResetPower")
 {
     field(DTYP, "asynInt32")
@@ -716,3 +716,4 @@ record(waveform, "$(P)$(R)HeaderString")
     field(FTVL, "CHAR")
     field(NELM, "68")
 }
+

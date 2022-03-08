@@ -1,4 +1,4 @@
-include "pilatusDetectorParamSet.template"
+include "pilatusDetectorParameters.template"
 # Database for the records specific to the Pilatus driver
 # Mark Rivers
 # July 25, 2008
@@ -55,7 +55,7 @@ record(mbbi, "$(P)$(R)FileFormat_RBV")
 # Armed flag, which indicates Pilatus is ready for external triggers
 
 
-# Reset module power
+# Reset module power 
 
 
 # Reset module power delay time
@@ -270,6 +270,7 @@ record(bi, "$(P)$(R)ReverseY_RBV")
 {
     field(DISA, "1")
 }
+
 
 
 
