@@ -108,7 +108,7 @@ text {
 	"basic attribute" {
 		clr=54
 	}
-	textix="Pilatus Detector - $(P)$(R)"
+	textix="pilatus - $(P)$(R)"
 	align="horiz. centered"
 }
 rectangle {
@@ -144,7 +144,7 @@ text {
 	"basic attribute" {
 		clr=54
 	}
-	textix="Group One"
+	textix="Component Group One"
 	align="horiz. centered"
 }
 text {

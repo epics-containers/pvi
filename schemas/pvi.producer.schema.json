@@ -497,7 +497,7 @@
         "SCAN": {
           "anyOf": [
             {
-              "$ref": "#/definitions/biSCAN"
+              "$ref": "#/definitions/boSCAN"
             },
             {
               "type": "string"
@@ -508,7 +508,7 @@
         "PINI": {
           "anyOf": [
             {
-              "$ref": "#/definitions/biPINI"
+              "$ref": "#/definitions/boPINI"
             },
             {
               "type": "string"
@@ -578,7 +578,7 @@
         "STAT": {
           "anyOf": [
             {
-              "$ref": "#/definitions/biSTAT"
+              "$ref": "#/definitions/boSTAT"
             },
             {
               "type": "string"
@@ -590,7 +590,7 @@
         "SEVR": {
           "anyOf": [
             {
-              "$ref": "#/definitions/biSEVR"
+              "$ref": "#/definitions/boSEVR"
             },
             {
               "type": "string"
@@ -605,7 +605,7 @@
         "NSTA": {
           "anyOf": [
             {
-              "$ref": "#/definitions/biNSTA"
+              "$ref": "#/definitions/boNSTA"
             },
             {
               "type": "string"
@@ -616,7 +616,7 @@
         "NSEV": {
           "anyOf": [
             {
-              "$ref": "#/definitions/biNSEV"
+              "$ref": "#/definitions/boNSEV"
             },
             {
               "type": "string"
@@ -631,7 +631,7 @@
         "ACKS": {
           "anyOf": [
             {
-              "$ref": "#/definitions/biACKS"
+              "$ref": "#/definitions/boACKS"
             },
             {
               "type": "string"
@@ -642,7 +642,7 @@
         "ACKT": {
           "anyOf": [
             {
-              "$ref": "#/definitions/biACKT"
+              "$ref": "#/definitions/boACKT"
             },
             {
               "type": "string"
@@ -654,7 +654,7 @@
         "DISS": {
           "anyOf": [
             {
-              "$ref": "#/definitions/biDISS"
+              "$ref": "#/definitions/boDISS"
             },
             {
               "type": "string"
@@ -693,7 +693,7 @@
         "PRIO": {
           "anyOf": [
             {
-              "$ref": "#/definitions/biPRIO"
+              "$ref": "#/definitions/boPRIO"
             },
             {
               "type": "string"
@@ -719,7 +719,7 @@
         "UDFS": {
           "anyOf": [
             {
-              "$ref": "#/definitions/biUDFS"
+              "$ref": "#/definitions/boUDFS"
             },
             {
               "type": "string"
@@ -739,9 +739,46 @@
           "type": "string",
           "description": "Forward Process Link"
         },
+        "INP": {
+          "type": "string",
+          "description": "Input Specification"
+        },
         "VAL": {
           "type": "string",
           "description": "Current Value"
+        },
+        "ZSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/boZSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Zero Error Severity"
+        },
+        "OSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/boOSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "One Error Severity"
+        },
+        "COSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/boCOSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Change of State Sevr"
         },
         "ZNAM": {
           "type": "string",
@@ -772,38 +809,12 @@
           ],
           "description": "Hardware Mask"
         },
-        "ZSV": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/biZSV"
-            },
-            {
-              "type": "string"
-            }
+        "LALM": {
+          "type": [
+            "integer",
+            "string"
           ],
-          "description": "Zero Error Severity"
-        },
-        "OSV": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/biOSV"
-            },
-            {
-              "type": "string"
-            }
-          ],
-          "description": "One Error Severity"
-        },
-        "COSV": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/biCOSV"
-            },
-            {
-              "type": "string"
-            }
-          ],
-          "description": "Change of State Svr"
+          "description": "Last Value Alarmed"
         },
         "MLST": {
           "type": [
@@ -812,16 +823,16 @@
           ],
           "description": "Last Value Monitored"
         },
-        "LALM": {
+        "SIOL": {
+          "type": "string",
+          "description": "Simulation Output Link"
+        },
+        "SVAL": {
           "type": [
             "integer",
             "string"
           ],
-          "description": "Last Value Alarmed"
-        },
-        "SIOL": {
-          "type": "string",
-          "description": "Simulation Input Link"
+          "description": "Simulation Value"
         },
         "SIML": {
           "type": "string",
@@ -830,7 +841,7 @@
         "SIMM": {
           "anyOf": [
             {
-              "$ref": "#/definitions/biSIMM"
+              "$ref": "#/definitions/boSIMM"
             },
             {
               "type": "string"
@@ -841,7 +852,7 @@
         "SIMS": {
           "anyOf": [
             {
-              "$ref": "#/definitions/biSIMS"
+              "$ref": "#/definitions/boSIMS"
             },
             {
               "type": "string"
@@ -852,7 +863,7 @@
         "OLDSIMM": {
           "anyOf": [
             {
-              "$ref": "#/definitions/biOLDSIMM"
+              "$ref": "#/definitions/boOLDSIMM"
             },
             {
               "type": "string"
@@ -863,7 +874,7 @@
         "SSCN": {
           "anyOf": [
             {
-              "$ref": "#/definitions/biSSCN"
+              "$ref": "#/definitions/boSSCN"
             },
             {
               "type": "string"
@@ -880,21 +891,68 @@
           "description": "Sim. Mode Async Delay",
           "default": "-1.0"
         },
-        "INP": {
-          "type": "string",
-          "description": "Input Specification"
+        "OMSL": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/boOMSL"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Output Mode Select"
         },
-        "SVAL": {
+        "DOL": {
+          "type": "string",
+          "description": "Desired Output Link"
+        },
+        "OUT": {
+          "type": "string",
+          "description": "Output Specification"
+        },
+        "HIGH": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Seconds to Hold High"
+        },
+        "RBV": {
           "type": [
             "integer",
             "string"
           ],
-          "description": "Simulation Value"
+          "description": "Readback Value"
+        },
+        "ORBV": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Prev Readback Value"
+        },
+        "IVOA": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/boIVOA"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "INVALID outpt action"
+        },
+        "IVOV": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "INVALID output value"
         }
       },
       "additionalProperties": false
     },
-    "biSCAN": {
+    "boSCAN": {
       "type": "string",
       "enum": [
         "Passive",
@@ -909,7 +967,7 @@
         ".1 second"
       ]
     },
-    "biPINI": {
+    "boPINI": {
       "type": "string",
       "enum": [
         "NO",
@@ -920,7 +978,7 @@
         "PAUSED"
       ]
     },
-    "biSTAT": {
+    "boSTAT": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -947,7 +1005,7 @@
         "WRITE_ACCESS"
       ]
     },
-    "biSEVR": {
+    "boSEVR": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -956,7 +1014,7 @@
         "INVALID"
       ]
     },
-    "biNSTA": {
+    "boNSTA": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -983,7 +1041,7 @@
         "WRITE_ACCESS"
       ]
     },
-    "biNSEV": {
+    "boNSEV": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -992,7 +1050,7 @@
         "INVALID"
       ]
     },
-    "biACKS": {
+    "boACKS": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -1001,14 +1059,14 @@
         "INVALID"
       ]
     },
-    "biACKT": {
+    "boACKT": {
       "type": "string",
       "enum": [
         "NO",
         "YES"
       ]
     },
-    "biDISS": {
+    "boDISS": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -1017,7 +1075,7 @@
         "INVALID"
       ]
     },
-    "biPRIO": {
+    "boPRIO": {
       "type": "string",
       "enum": [
         "LOW",
@@ -1025,7 +1083,7 @@
         "HIGH"
       ]
     },
-    "biUDFS": {
+    "boUDFS": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -1034,7 +1092,7 @@
         "INVALID"
       ]
     },
-    "biZSV": {
+    "boZSV": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -1043,7 +1101,7 @@
         "INVALID"
       ]
     },
-    "biOSV": {
+    "boOSV": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -1052,7 +1110,7 @@
         "INVALID"
       ]
     },
-    "biCOSV": {
+    "boCOSV": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -1061,7 +1119,23 @@
         "INVALID"
       ]
     },
-    "biSIMM": {
+    "boSIMM": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "YES"
+      ]
+    },
+    "boSIMS": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "boOLDSIMM": {
       "type": "string",
       "enum": [
         "NO",
@@ -1069,24 +1143,7 @@
         "RAW"
       ]
     },
-    "biSIMS": {
-      "type": "string",
-      "enum": [
-        "NO_ALARM",
-        "MINOR",
-        "MAJOR",
-        "INVALID"
-      ]
-    },
-    "biOLDSIMM": {
-      "type": "string",
-      "enum": [
-        "NO",
-        "YES",
-        "RAW"
-      ]
-    },
-    "biSSCN": {
+    "boSSCN": {
       "type": "string",
       "enum": [
         "Passive",
@@ -1099,6 +1156,21 @@
         ".5 second",
         ".2 second",
         ".1 second"
+      ]
+    },
+    "boOMSL": {
+      "type": "string",
+      "enum": [
+        "supervisory",
+        "closed_loop"
+      ]
+    },
+    "boIVOA": {
+      "type": "string",
+      "enum": [
+        "Continue normally",
+        "Don't drive outputs",
+        "Set output to IVOV"
       ]
     },
     "AsynBusy": {
@@ -1250,7 +1322,7 @@
         "SCAN": {
           "anyOf": [
             {
-              "$ref": "#/definitions/biSCAN"
+              "$ref": "#/definitions/busySCAN"
             },
             {
               "type": "string"
@@ -1261,7 +1333,7 @@
         "PINI": {
           "anyOf": [
             {
-              "$ref": "#/definitions/biPINI"
+              "$ref": "#/definitions/busyPINI"
             },
             {
               "type": "string"
@@ -1331,7 +1403,7 @@
         "STAT": {
           "anyOf": [
             {
-              "$ref": "#/definitions/biSTAT"
+              "$ref": "#/definitions/busySTAT"
             },
             {
               "type": "string"
@@ -1343,7 +1415,7 @@
         "SEVR": {
           "anyOf": [
             {
-              "$ref": "#/definitions/biSEVR"
+              "$ref": "#/definitions/busySEVR"
             },
             {
               "type": "string"
@@ -1358,7 +1430,7 @@
         "NSTA": {
           "anyOf": [
             {
-              "$ref": "#/definitions/biNSTA"
+              "$ref": "#/definitions/busyNSTA"
             },
             {
               "type": "string"
@@ -1369,7 +1441,7 @@
         "NSEV": {
           "anyOf": [
             {
-              "$ref": "#/definitions/biNSEV"
+              "$ref": "#/definitions/busyNSEV"
             },
             {
               "type": "string"
@@ -1384,7 +1456,7 @@
         "ACKS": {
           "anyOf": [
             {
-              "$ref": "#/definitions/biACKS"
+              "$ref": "#/definitions/busyACKS"
             },
             {
               "type": "string"
@@ -1395,7 +1467,7 @@
         "ACKT": {
           "anyOf": [
             {
-              "$ref": "#/definitions/biACKT"
+              "$ref": "#/definitions/busyACKT"
             },
             {
               "type": "string"
@@ -1407,7 +1479,7 @@
         "DISS": {
           "anyOf": [
             {
-              "$ref": "#/definitions/biDISS"
+              "$ref": "#/definitions/busyDISS"
             },
             {
               "type": "string"
@@ -1446,7 +1518,7 @@
         "PRIO": {
           "anyOf": [
             {
-              "$ref": "#/definitions/biPRIO"
+              "$ref": "#/definitions/busyPRIO"
             },
             {
               "type": "string"
@@ -1472,7 +1544,7 @@
         "UDFS": {
           "anyOf": [
             {
-              "$ref": "#/definitions/biUDFS"
+              "$ref": "#/definitions/busyUDFS"
             },
             {
               "type": "string"
@@ -1492,17 +1564,56 @@
           "type": "string",
           "description": "Forward Process Link"
         },
+        "INP": {
+          "type": "string",
+          "description": "Input Specification"
+        },
         "VAL": {
           "type": "string",
           "description": "Current Value"
         },
+        "ZSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/busyZSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Zero Error Severity"
+        },
+        "OSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/busyOSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "One Error Severity"
+        },
+        "COSV": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/busyCOSV"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Change of State Sevr"
+        },
         "ZNAM": {
           "type": "string",
-          "description": "Zero Name"
+          "description": "Zero Name",
+          "default": "Done"
         },
         "ONAM": {
           "type": "string",
-          "description": "One Name"
+          "description": "One Name",
+          "default": "Busy"
         },
         "RVAL": {
           "type": [
@@ -1525,38 +1636,12 @@
           ],
           "description": "Hardware Mask"
         },
-        "ZSV": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/biZSV"
-            },
-            {
-              "type": "string"
-            }
+        "LALM": {
+          "type": [
+            "integer",
+            "string"
           ],
-          "description": "Zero Error Severity"
-        },
-        "OSV": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/biOSV"
-            },
-            {
-              "type": "string"
-            }
-          ],
-          "description": "One Error Severity"
-        },
-        "COSV": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/biCOSV"
-            },
-            {
-              "type": "string"
-            }
-          ],
-          "description": "Change of State Svr"
+          "description": "Last Value Alarmed"
         },
         "MLST": {
           "type": [
@@ -1565,25 +1650,25 @@
           ],
           "description": "Last Value Monitored"
         },
-        "LALM": {
+        "SIOL": {
+          "type": "string",
+          "description": "Sim Output Specifctn"
+        },
+        "SVAL": {
           "type": [
             "integer",
             "string"
           ],
-          "description": "Last Value Alarmed"
-        },
-        "SIOL": {
-          "type": "string",
-          "description": "Simulation Input Link"
+          "description": "Simulation Value"
         },
         "SIML": {
           "type": "string",
-          "description": "Simulation Mode Link"
+          "description": "Sim Mode Location"
         },
         "SIMM": {
           "anyOf": [
             {
-              "$ref": "#/definitions/biSIMM"
+              "$ref": "#/definitions/busySIMM"
             },
             {
               "type": "string"
@@ -1594,24 +1679,13 @@
         "SIMS": {
           "anyOf": [
             {
-              "$ref": "#/definitions/biSIMS"
+              "$ref": "#/definitions/busySIMS"
             },
             {
               "type": "string"
             }
           ],
-          "description": "Simulation Mode Severity"
-        },
-        "INP": {
-          "type": "string",
-          "description": "Input Specification"
-        },
-        "SVAL": {
-          "type": [
-            "integer",
-            "string"
-          ],
-          "description": "Simulation Value"
+          "description": "Sim mode Alarm Svrty"
         },
         "OLDSIMM": {
           "anyOf": [
@@ -1643,9 +1717,295 @@
           ],
           "description": "Sim. Mode Async Delay",
           "default": "-1.0"
+        },
+        "OMSL": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/busyOMSL"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Output Mode Select"
+        },
+        "DOL": {
+          "type": "string",
+          "description": "Desired Output Loc"
+        },
+        "OUT": {
+          "type": "string",
+          "description": "Output Specification"
+        },
+        "HIGH": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Seconds to Hold High"
+        },
+        "OVAL": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "prev Value"
+        },
+        "RBV": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Readback Value"
+        },
+        "ORBV": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Prev Readback Value"
+        },
+        "IVOA": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/busyIVOA"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "INVALID outpt action"
+        },
+        "IVOV": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "INVALID output value"
         }
       },
       "additionalProperties": false
+    },
+    "busySCAN": {
+      "type": "string",
+      "enum": [
+        "Passive",
+        "Event",
+        "I/O Intr",
+        "10 second",
+        "5 second",
+        "2 second",
+        "1 second",
+        ".5 second",
+        ".2 second",
+        ".1 second"
+      ]
+    },
+    "busyPINI": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "YES",
+        "RUN",
+        "RUNNING",
+        "PAUSE",
+        "PAUSED"
+      ]
+    },
+    "busySTAT": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "READ",
+        "WRITE",
+        "HIHI",
+        "HIGH",
+        "LOLO",
+        "LOW",
+        "STATE",
+        "COS",
+        "COMM",
+        "TIMEOUT",
+        "HWLIMIT",
+        "CALC",
+        "SCAN",
+        "LINK",
+        "SOFT",
+        "BAD_SUB",
+        "UDF",
+        "DISABLE",
+        "SIMM",
+        "READ_ACCESS",
+        "WRITE_ACCESS"
+      ]
+    },
+    "busySEVR": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "busyNSTA": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "READ",
+        "WRITE",
+        "HIHI",
+        "HIGH",
+        "LOLO",
+        "LOW",
+        "STATE",
+        "COS",
+        "COMM",
+        "TIMEOUT",
+        "HWLIMIT",
+        "CALC",
+        "SCAN",
+        "LINK",
+        "SOFT",
+        "BAD_SUB",
+        "UDF",
+        "DISABLE",
+        "SIMM",
+        "READ_ACCESS",
+        "WRITE_ACCESS"
+      ]
+    },
+    "busyNSEV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "busyACKS": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "busyACKT": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "YES"
+      ]
+    },
+    "busyDISS": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "busyPRIO": {
+      "type": "string",
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH"
+      ]
+    },
+    "busyUDFS": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "busyZSV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "busyOSV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "busyCOSV": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "busySIMM": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "YES"
+      ]
+    },
+    "busySIMS": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "biOLDSIMM": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "YES",
+        "RAW"
+      ]
+    },
+    "biSSCN": {
+      "type": "string",
+      "enum": [
+        "Passive",
+        "Event",
+        "I/O Intr",
+        "10 second",
+        "5 second",
+        "2 second",
+        "1 second",
+        ".5 second",
+        ".2 second",
+        ".1 second"
+      ]
+    },
+    "busyOMSL": {
+      "type": "string",
+      "enum": [
+        "supervisory",
+        "closed_loop"
+      ]
+    },
+    "busyIVOA": {
+      "type": "string",
+      "enum": [
+        "Continue normally",
+        "Don't drive outputs",
+        "Set output to IVOV"
+      ]
     },
     "AsynFloat64": {
       "type": "object",
@@ -1796,7 +2156,7 @@
         "SCAN": {
           "anyOf": [
             {
-              "$ref": "#/definitions/aiSCAN"
+              "$ref": "#/definitions/aoSCAN"
             },
             {
               "type": "string"
@@ -1807,7 +2167,7 @@
         "PINI": {
           "anyOf": [
             {
-              "$ref": "#/definitions/aiPINI"
+              "$ref": "#/definitions/aoPINI"
             },
             {
               "type": "string"
@@ -1877,7 +2237,7 @@
         "STAT": {
           "anyOf": [
             {
-              "$ref": "#/definitions/aiSTAT"
+              "$ref": "#/definitions/aoSTAT"
             },
             {
               "type": "string"
@@ -1889,7 +2249,7 @@
         "SEVR": {
           "anyOf": [
             {
-              "$ref": "#/definitions/aiSEVR"
+              "$ref": "#/definitions/aoSEVR"
             },
             {
               "type": "string"
@@ -1904,7 +2264,7 @@
         "NSTA": {
           "anyOf": [
             {
-              "$ref": "#/definitions/aiNSTA"
+              "$ref": "#/definitions/aoNSTA"
             },
             {
               "type": "string"
@@ -1915,7 +2275,7 @@
         "NSEV": {
           "anyOf": [
             {
-              "$ref": "#/definitions/aiNSEV"
+              "$ref": "#/definitions/aoNSEV"
             },
             {
               "type": "string"
@@ -1930,7 +2290,7 @@
         "ACKS": {
           "anyOf": [
             {
-              "$ref": "#/definitions/aiACKS"
+              "$ref": "#/definitions/aoACKS"
             },
             {
               "type": "string"
@@ -1941,7 +2301,7 @@
         "ACKT": {
           "anyOf": [
             {
-              "$ref": "#/definitions/aiACKT"
+              "$ref": "#/definitions/aoACKT"
             },
             {
               "type": "string"
@@ -1953,7 +2313,7 @@
         "DISS": {
           "anyOf": [
             {
-              "$ref": "#/definitions/aiDISS"
+              "$ref": "#/definitions/aoDISS"
             },
             {
               "type": "string"
@@ -1992,7 +2352,7 @@
         "PRIO": {
           "anyOf": [
             {
-              "$ref": "#/definitions/aiPRIO"
+              "$ref": "#/definitions/aoPRIO"
             },
             {
               "type": "string"
@@ -2018,7 +2378,7 @@
         "UDFS": {
           "anyOf": [
             {
-              "$ref": "#/definitions/aiUDFS"
+              "$ref": "#/definitions/aoUDFS"
             },
             {
               "type": "string"
@@ -2043,7 +2403,11 @@
             "number",
             "string"
           ],
-          "description": "Current EGU Value"
+          "description": "Desired Output"
+        },
+        "INP": {
+          "type": "string",
+          "description": "Input Specification"
         },
         "PREC": {
           "type": [
@@ -2055,7 +2419,7 @@
         "LINR": {
           "anyOf": [
             {
-              "$ref": "#/definitions/aiLINR"
+              "$ref": "#/definitions/aoLINR"
             },
             {
               "type": "string"
@@ -2068,40 +2432,18 @@
             "number",
             "string"
           ],
-          "description": "Engineer Units Full"
+          "description": "Eng Units Full"
         },
         "EGUL": {
           "type": [
             "number",
             "string"
           ],
-          "description": "Engineer Units Low"
+          "description": "Eng Units Low"
         },
         "EGU": {
           "type": "string",
           "description": "Engineering Units"
-        },
-        "ROFF": {
-          "type": [
-            "integer",
-            "string"
-          ],
-          "description": "Raw Offset"
-        },
-        "EOFF": {
-          "type": [
-            "number",
-            "string"
-          ],
-          "description": "Raw to EGU Offset"
-        },
-        "ESLO": {
-          "type": [
-            "number",
-            "string"
-          ],
-          "description": "Raw to EGU Slope",
-          "default": "1"
         },
         "HOPR": {
           "type": [
@@ -2129,8 +2471,14 @@
             "number",
             "string"
           ],
-          "description": "Adjustment Slope",
-          "default": "1"
+          "description": "Adjustment Slope"
+        },
+        "SMOO": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Smoothing"
         },
         "HIHI": {
           "type": [
@@ -2163,7 +2511,7 @@
         "HHSV": {
           "anyOf": [
             {
-              "$ref": "#/definitions/aiHHSV"
+              "$ref": "#/definitions/aoHHSV"
             },
             {
               "type": "string"
@@ -2174,7 +2522,7 @@
         "LLSV": {
           "anyOf": [
             {
-              "$ref": "#/definitions/aiLLSV"
+              "$ref": "#/definitions/aoLLSV"
             },
             {
               "type": "string"
@@ -2185,7 +2533,7 @@
         "HSV": {
           "anyOf": [
             {
-              "$ref": "#/definitions/aiHSV"
+              "$ref": "#/definitions/aoHSV"
             },
             {
               "type": "string"
@@ -2196,7 +2544,7 @@
         "LSV": {
           "anyOf": [
             {
-              "$ref": "#/definitions/aiLSV"
+              "$ref": "#/definitions/aoLSV"
             },
             {
               "type": "string"
@@ -2210,6 +2558,13 @@
             "string"
           ],
           "description": "Alarm Deadband"
+        },
+        "AFTC": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Alarm Filter Time Constant"
         },
         "ADEL": {
           "type": [
@@ -2225,26 +2580,19 @@
           ],
           "description": "Monitor Deadband"
         },
-        "RVAL": {
-          "type": [
-            "integer",
-            "string"
-          ],
-          "description": "Current Raw Value"
-        },
-        "ORAW": {
-          "type": [
-            "integer",
-            "string"
-          ],
-          "description": "Previous Raw Value"
-        },
         "LALM": {
           "type": [
             "number",
             "string"
           ],
           "description": "Last Value Alarmed"
+        },
+        "AFVL": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Alarm Filter Value"
         },
         "ALST": {
           "type": [
@@ -2260,6 +2608,28 @@
           ],
           "description": "Last Val Monitored"
         },
+        "ESLO": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "EGU to Raw Slope",
+          "default": "1"
+        },
+        "EOFF": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "EGU to Raw Offset"
+        },
+        "ROFF": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Raw Offset"
+        },
         "INIT": {
           "type": [
             "integer",
@@ -2274,9 +2644,30 @@
           ],
           "description": "LastBreak Point"
         },
+        "RVAL": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Current Raw Value"
+        },
+        "ORAW": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Previous Raw Value"
+        },
         "SIOL": {
           "type": "string",
-          "description": "Simulation Input Link"
+          "description": "Simulation Output Link"
+        },
+        "SVAL": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Simulation Value"
         },
         "SIML": {
           "type": "string",
@@ -2285,7 +2676,7 @@
         "SIMM": {
           "anyOf": [
             {
-              "$ref": "#/definitions/aiSIMM"
+              "$ref": "#/definitions/aoSIMM"
             },
             {
               "type": "string"
@@ -2296,7 +2687,7 @@
         "SIMS": {
           "anyOf": [
             {
-              "$ref": "#/definitions/aiSIMS"
+              "$ref": "#/definitions/aoSIMS"
             },
             {
               "type": "string"
@@ -2307,7 +2698,7 @@
         "OLDSIMM": {
           "anyOf": [
             {
-              "$ref": "#/definitions/aiOLDSIMM"
+              "$ref": "#/definitions/aoOLDSIMM"
             },
             {
               "type": "string"
@@ -2318,7 +2709,7 @@
         "SSCN": {
           "anyOf": [
             {
-              "$ref": "#/definitions/aiSSCN"
+              "$ref": "#/definitions/aoSSCN"
             },
             {
               "type": "string"
@@ -2335,42 +2726,114 @@
           "description": "Sim. Mode Async Delay",
           "default": "-1.0"
         },
-        "INP": {
+        "OVAL": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Output Value"
+        },
+        "OUT": {
           "type": "string",
-          "description": "Input Specification"
+          "description": "Output Specification"
         },
-        "SMOO": {
+        "OROC": {
           "type": [
             "number",
             "string"
           ],
-          "description": "Smoothing"
+          "description": "Output Rate of Change"
         },
-        "AFTC": {
+        "DOL": {
+          "type": "string",
+          "description": "Desired Output Link"
+        },
+        "OMSL": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/aoOMSL"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Output Mode Select"
+        },
+        "OIF": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/aoOIF"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Out Full/Incremental"
+        },
+        "DRVH": {
           "type": [
             "number",
             "string"
           ],
-          "description": "Alarm Filter Time Constant"
+          "description": "Drive High Limit"
         },
-        "AFVL": {
+        "DRVL": {
           "type": [
             "number",
             "string"
           ],
-          "description": "Alarm Filter Value"
+          "description": "Drive Low Limit"
         },
-        "SVAL": {
+        "RBV": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Readback Value"
+        },
+        "ORBV": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Prev Readback Value"
+        },
+        "PVAL": {
           "type": [
             "number",
             "string"
           ],
-          "description": "Simulation Value"
+          "description": "Previous value"
+        },
+        "IVOA": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/aoIVOA"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "INVALID output action"
+        },
+        "IVOV": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "INVALID output value"
+        },
+        "OMOD": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Was OVAL modified?"
         }
       },
       "additionalProperties": false
     },
-    "aiSCAN": {
+    "aoSCAN": {
       "type": "string",
       "enum": [
         "Passive",
@@ -2385,7 +2848,7 @@
         ".1 second"
       ]
     },
-    "aiPINI": {
+    "aoPINI": {
       "type": "string",
       "enum": [
         "NO",
@@ -2396,7 +2859,7 @@
         "PAUSED"
       ]
     },
-    "aiSTAT": {
+    "aoSTAT": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -2423,7 +2886,7 @@
         "WRITE_ACCESS"
       ]
     },
-    "aiSEVR": {
+    "aoSEVR": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -2432,7 +2895,7 @@
         "INVALID"
       ]
     },
-    "aiNSTA": {
+    "aoNSTA": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -2459,7 +2922,7 @@
         "WRITE_ACCESS"
       ]
     },
-    "aiNSEV": {
+    "aoNSEV": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -2468,7 +2931,7 @@
         "INVALID"
       ]
     },
-    "aiACKS": {
+    "aoACKS": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -2477,14 +2940,14 @@
         "INVALID"
       ]
     },
-    "aiACKT": {
+    "aoACKT": {
       "type": "string",
       "enum": [
         "NO",
         "YES"
       ]
     },
-    "aiDISS": {
+    "aoDISS": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -2493,7 +2956,7 @@
         "INVALID"
       ]
     },
-    "aiPRIO": {
+    "aoPRIO": {
       "type": "string",
       "enum": [
         "LOW",
@@ -2501,7 +2964,7 @@
         "HIGH"
       ]
     },
-    "aiUDFS": {
+    "aoUDFS": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -2510,7 +2973,7 @@
         "INVALID"
       ]
     },
-    "aiLINR": {
+    "aoLINR": {
       "type": "string",
       "enum": [
         "NO CONVERSION",
@@ -2530,7 +2993,7 @@
         "typeSdegC"
       ]
     },
-    "aiHHSV": {
+    "aoHHSV": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -2539,7 +3002,7 @@
         "INVALID"
       ]
     },
-    "aiLLSV": {
+    "aoLLSV": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -2548,7 +3011,7 @@
         "INVALID"
       ]
     },
-    "aiHSV": {
+    "aoHSV": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -2557,7 +3020,7 @@
         "INVALID"
       ]
     },
-    "aiLSV": {
+    "aoLSV": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -2566,7 +3029,23 @@
         "INVALID"
       ]
     },
-    "aiSIMM": {
+    "aoSIMM": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "YES"
+      ]
+    },
+    "aoSIMS": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "aoOLDSIMM": {
       "type": "string",
       "enum": [
         "NO",
@@ -2574,24 +3053,7 @@
         "RAW"
       ]
     },
-    "aiSIMS": {
-      "type": "string",
-      "enum": [
-        "NO_ALARM",
-        "MINOR",
-        "MAJOR",
-        "INVALID"
-      ]
-    },
-    "aiOLDSIMM": {
-      "type": "string",
-      "enum": [
-        "NO",
-        "YES",
-        "RAW"
-      ]
-    },
-    "aiSSCN": {
+    "aoSSCN": {
       "type": "string",
       "enum": [
         "Passive",
@@ -2604,6 +3066,28 @@
         ".5 second",
         ".2 second",
         ".1 second"
+      ]
+    },
+    "aoOMSL": {
+      "type": "string",
+      "enum": [
+        "supervisory",
+        "closed_loop"
+      ]
+    },
+    "aoOIF": {
+      "type": "string",
+      "enum": [
+        "Full",
+        "Incremental"
+      ]
+    },
+    "aoIVOA": {
+      "type": "string",
+      "enum": [
+        "Continue normally",
+        "Don't drive outputs",
+        "Set output to IVOV"
       ]
     },
     "AsynInt32": {
@@ -2886,7 +3370,7 @@
         "SCAN": {
           "anyOf": [
             {
-              "$ref": "#/definitions/longinSCAN"
+              "$ref": "#/definitions/longoutSCAN"
             },
             {
               "type": "string"
@@ -2897,7 +3381,7 @@
         "PINI": {
           "anyOf": [
             {
-              "$ref": "#/definitions/longinPINI"
+              "$ref": "#/definitions/longoutPINI"
             },
             {
               "type": "string"
@@ -2967,7 +3451,7 @@
         "STAT": {
           "anyOf": [
             {
-              "$ref": "#/definitions/longinSTAT"
+              "$ref": "#/definitions/longoutSTAT"
             },
             {
               "type": "string"
@@ -2979,7 +3463,7 @@
         "SEVR": {
           "anyOf": [
             {
-              "$ref": "#/definitions/longinSEVR"
+              "$ref": "#/definitions/longoutSEVR"
             },
             {
               "type": "string"
@@ -2994,7 +3478,7 @@
         "NSTA": {
           "anyOf": [
             {
-              "$ref": "#/definitions/longinNSTA"
+              "$ref": "#/definitions/longoutNSTA"
             },
             {
               "type": "string"
@@ -3005,7 +3489,7 @@
         "NSEV": {
           "anyOf": [
             {
-              "$ref": "#/definitions/longinNSEV"
+              "$ref": "#/definitions/longoutNSEV"
             },
             {
               "type": "string"
@@ -3020,7 +3504,7 @@
         "ACKS": {
           "anyOf": [
             {
-              "$ref": "#/definitions/longinACKS"
+              "$ref": "#/definitions/longoutACKS"
             },
             {
               "type": "string"
@@ -3031,7 +3515,7 @@
         "ACKT": {
           "anyOf": [
             {
-              "$ref": "#/definitions/longinACKT"
+              "$ref": "#/definitions/longoutACKT"
             },
             {
               "type": "string"
@@ -3043,7 +3527,7 @@
         "DISS": {
           "anyOf": [
             {
-              "$ref": "#/definitions/longinDISS"
+              "$ref": "#/definitions/longoutDISS"
             },
             {
               "type": "string"
@@ -3082,7 +3566,7 @@
         "PRIO": {
           "anyOf": [
             {
-              "$ref": "#/definitions/longinPRIO"
+              "$ref": "#/definitions/longoutPRIO"
             },
             {
               "type": "string"
@@ -3108,7 +3592,7 @@
         "UDFS": {
           "anyOf": [
             {
-              "$ref": "#/definitions/longinUDFS"
+              "$ref": "#/definitions/longoutUDFS"
             },
             {
               "type": "string"
@@ -3133,7 +3617,11 @@
             "integer",
             "string"
           ],
-          "description": "Current value"
+          "description": "Desired Output"
+        },
+        "INP": {
+          "type": "string",
+          "description": "Input Specification"
         },
         "EGU": {
           "type": "string",
@@ -3184,7 +3672,7 @@
         "HHSV": {
           "anyOf": [
             {
-              "$ref": "#/definitions/longinHHSV"
+              "$ref": "#/definitions/longoutHHSV"
             },
             {
               "type": "string"
@@ -3195,7 +3683,7 @@
         "LLSV": {
           "anyOf": [
             {
-              "$ref": "#/definitions/longinLLSV"
+              "$ref": "#/definitions/longoutLLSV"
             },
             {
               "type": "string"
@@ -3206,7 +3694,7 @@
         "HSV": {
           "anyOf": [
             {
-              "$ref": "#/definitions/longinHSV"
+              "$ref": "#/definitions/longoutHSV"
             },
             {
               "type": "string"
@@ -3217,7 +3705,7 @@
         "LSV": {
           "anyOf": [
             {
-              "$ref": "#/definitions/longinLSV"
+              "$ref": "#/definitions/longoutLSV"
             },
             {
               "type": "string"
@@ -3231,6 +3719,20 @@
             "string"
           ],
           "description": "Alarm Deadband"
+        },
+        "AFTC": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Alarm Filter Time Constant"
+        },
+        "AFVL": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Alarm Filter Value"
         },
         "ADEL": {
           "type": [
@@ -3269,7 +3771,14 @@
         },
         "SIOL": {
           "type": "string",
-          "description": "Sim Input Specifctn"
+          "description": "Sim Output Specifctn"
+        },
+        "SVAL": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Simulation Value"
         },
         "SIML": {
           "type": "string",
@@ -3278,7 +3787,7 @@
         "SIMM": {
           "anyOf": [
             {
-              "$ref": "#/definitions/longinSIMM"
+              "$ref": "#/definitions/longoutSIMM"
             },
             {
               "type": "string"
@@ -3289,7 +3798,7 @@
         "SIMS": {
           "anyOf": [
             {
-              "$ref": "#/definitions/longinSIMS"
+              "$ref": "#/definitions/longoutSIMS"
             },
             {
               "type": "string"
@@ -3300,7 +3809,7 @@
         "OLDSIMM": {
           "anyOf": [
             {
-              "$ref": "#/definitions/longinOLDSIMM"
+              "$ref": "#/definitions/longoutOLDSIMM"
             },
             {
               "type": "string"
@@ -3311,7 +3820,7 @@
         "SSCN": {
           "anyOf": [
             {
-              "$ref": "#/definitions/longinSSCN"
+              "$ref": "#/definitions/longoutSSCN"
             },
             {
               "type": "string"
@@ -3328,35 +3837,61 @@
           "description": "Sim. Mode Async Delay",
           "default": "-1.0"
         },
-        "INP": {
+        "OUT": {
           "type": "string",
-          "description": "Input Specification"
+          "description": "Output Specification"
         },
-        "AFTC": {
-          "type": [
-            "number",
-            "string"
+        "DOL": {
+          "type": "string",
+          "description": "Desired Output Link"
+        },
+        "OMSL": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/longoutOMSL"
+            },
+            {
+              "type": "string"
+            }
           ],
-          "description": "Alarm Filter Time Constant"
+          "description": "Output Mode Select"
         },
-        "AFVL": {
-          "type": [
-            "number",
-            "string"
-          ],
-          "description": "Alarm Filter Value"
-        },
-        "SVAL": {
+        "DRVH": {
           "type": [
             "integer",
             "string"
           ],
-          "description": "Simulation Value"
+          "description": "Drive High Limit"
+        },
+        "DRVL": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Drive Low Limit"
+        },
+        "IVOA": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/longoutIVOA"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "INVALID output action"
+        },
+        "IVOV": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "INVALID output value"
         }
       },
       "additionalProperties": false
     },
-    "longinSCAN": {
+    "longoutSCAN": {
       "type": "string",
       "enum": [
         "Passive",
@@ -3371,7 +3906,7 @@
         ".1 second"
       ]
     },
-    "longinPINI": {
+    "longoutPINI": {
       "type": "string",
       "enum": [
         "NO",
@@ -3382,7 +3917,7 @@
         "PAUSED"
       ]
     },
-    "longinSTAT": {
+    "longoutSTAT": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -3409,7 +3944,7 @@
         "WRITE_ACCESS"
       ]
     },
-    "longinSEVR": {
+    "longoutSEVR": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -3418,7 +3953,7 @@
         "INVALID"
       ]
     },
-    "longinNSTA": {
+    "longoutNSTA": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -3445,7 +3980,7 @@
         "WRITE_ACCESS"
       ]
     },
-    "longinNSEV": {
+    "longoutNSEV": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -3454,7 +3989,7 @@
         "INVALID"
       ]
     },
-    "longinACKS": {
+    "longoutACKS": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -3463,14 +3998,14 @@
         "INVALID"
       ]
     },
-    "longinACKT": {
+    "longoutACKT": {
       "type": "string",
       "enum": [
         "NO",
         "YES"
       ]
     },
-    "longinDISS": {
+    "longoutDISS": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -3479,7 +4014,7 @@
         "INVALID"
       ]
     },
-    "longinPRIO": {
+    "longoutPRIO": {
       "type": "string",
       "enum": [
         "LOW",
@@ -3487,7 +4022,7 @@
         "HIGH"
       ]
     },
-    "longinUDFS": {
+    "longoutUDFS": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -3496,7 +4031,7 @@
         "INVALID"
       ]
     },
-    "longinHHSV": {
+    "longoutHHSV": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -3505,7 +4040,7 @@
         "INVALID"
       ]
     },
-    "longinLLSV": {
+    "longoutLLSV": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -3514,7 +4049,7 @@
         "INVALID"
       ]
     },
-    "longinHSV": {
+    "longoutHSV": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -3523,7 +4058,7 @@
         "INVALID"
       ]
     },
-    "longinLSV": {
+    "longoutLSV": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -3532,14 +4067,14 @@
         "INVALID"
       ]
     },
-    "longinSIMM": {
+    "longoutSIMM": {
       "type": "string",
       "enum": [
         "NO",
         "YES"
       ]
     },
-    "longinSIMS": {
+    "longoutSIMS": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -3548,7 +4083,7 @@
         "INVALID"
       ]
     },
-    "longinOLDSIMM": {
+    "longoutOLDSIMM": {
       "type": "string",
       "enum": [
         "NO",
@@ -3556,7 +4091,7 @@
         "RAW"
       ]
     },
-    "longinSSCN": {
+    "longoutSSCN": {
       "type": "string",
       "enum": [
         "Passive",
@@ -3569,6 +4104,21 @@
         ".5 second",
         ".2 second",
         ".1 second"
+      ]
+    },
+    "longoutOMSL": {
+      "type": "string",
+      "enum": [
+        "supervisory",
+        "closed_loop"
+      ]
+    },
+    "longoutIVOA": {
+      "type": "string",
+      "enum": [
+        "Continue normally",
+        "Don't drive outputs",
+        "Set output to IVOV"
       ]
     },
     "AsynMultiBitBinary": {
@@ -3721,7 +4271,7 @@
         "SCAN": {
           "anyOf": [
             {
-              "$ref": "#/definitions/mbbiSCAN"
+              "$ref": "#/definitions/mbboSCAN"
             },
             {
               "type": "string"
@@ -3732,7 +4282,7 @@
         "PINI": {
           "anyOf": [
             {
-              "$ref": "#/definitions/mbbiPINI"
+              "$ref": "#/definitions/mbboPINI"
             },
             {
               "type": "string"
@@ -3802,7 +4352,7 @@
         "STAT": {
           "anyOf": [
             {
-              "$ref": "#/definitions/mbbiSTAT"
+              "$ref": "#/definitions/mbboSTAT"
             },
             {
               "type": "string"
@@ -3814,7 +4364,7 @@
         "SEVR": {
           "anyOf": [
             {
-              "$ref": "#/definitions/mbbiSEVR"
+              "$ref": "#/definitions/mbboSEVR"
             },
             {
               "type": "string"
@@ -3829,7 +4379,7 @@
         "NSTA": {
           "anyOf": [
             {
-              "$ref": "#/definitions/mbbiNSTA"
+              "$ref": "#/definitions/mbboNSTA"
             },
             {
               "type": "string"
@@ -3840,7 +4390,7 @@
         "NSEV": {
           "anyOf": [
             {
-              "$ref": "#/definitions/mbbiNSEV"
+              "$ref": "#/definitions/mbboNSEV"
             },
             {
               "type": "string"
@@ -3855,7 +4405,7 @@
         "ACKS": {
           "anyOf": [
             {
-              "$ref": "#/definitions/mbbiACKS"
+              "$ref": "#/definitions/mbboACKS"
             },
             {
               "type": "string"
@@ -3866,7 +4416,7 @@
         "ACKT": {
           "anyOf": [
             {
-              "$ref": "#/definitions/mbbiACKT"
+              "$ref": "#/definitions/mbboACKT"
             },
             {
               "type": "string"
@@ -3878,7 +4428,7 @@
         "DISS": {
           "anyOf": [
             {
-              "$ref": "#/definitions/mbbiDISS"
+              "$ref": "#/definitions/mbboDISS"
             },
             {
               "type": "string"
@@ -3917,7 +4467,7 @@
         "PRIO": {
           "anyOf": [
             {
-              "$ref": "#/definitions/mbbiPRIO"
+              "$ref": "#/definitions/mbboPRIO"
             },
             {
               "type": "string"
@@ -3943,7 +4493,7 @@
         "UDFS": {
           "anyOf": [
             {
-              "$ref": "#/definitions/mbbiUDFS"
+              "$ref": "#/definitions/mbboUDFS"
             },
             {
               "type": "string"
@@ -3965,7 +4515,7 @@
         },
         "VAL": {
           "type": "string",
-          "description": "Current Value"
+          "description": "Desired Value"
         },
         "NOBT": {
           "type": [
@@ -3973,6 +4523,10 @@
             "string"
           ],
           "description": "Number of Bits"
+        },
+        "INP": {
+          "type": "string",
+          "description": "Input Specification"
         },
         "ZRVL": {
           "type": [
@@ -4153,7 +4707,7 @@
         "ZRSV": {
           "anyOf": [
             {
-              "$ref": "#/definitions/mbbiZRSV"
+              "$ref": "#/definitions/mbboZRSV"
             },
             {
               "type": "string"
@@ -4164,7 +4718,7 @@
         "ONSV": {
           "anyOf": [
             {
-              "$ref": "#/definitions/mbbiONSV"
+              "$ref": "#/definitions/mbboONSV"
             },
             {
               "type": "string"
@@ -4175,7 +4729,7 @@
         "TWSV": {
           "anyOf": [
             {
-              "$ref": "#/definitions/mbbiTWSV"
+              "$ref": "#/definitions/mbboTWSV"
             },
             {
               "type": "string"
@@ -4186,7 +4740,7 @@
         "THSV": {
           "anyOf": [
             {
-              "$ref": "#/definitions/mbbiTHSV"
+              "$ref": "#/definitions/mbboTHSV"
             },
             {
               "type": "string"
@@ -4197,7 +4751,7 @@
         "FRSV": {
           "anyOf": [
             {
-              "$ref": "#/definitions/mbbiFRSV"
+              "$ref": "#/definitions/mbboFRSV"
             },
             {
               "type": "string"
@@ -4208,7 +4762,7 @@
         "FVSV": {
           "anyOf": [
             {
-              "$ref": "#/definitions/mbbiFVSV"
+              "$ref": "#/definitions/mbboFVSV"
             },
             {
               "type": "string"
@@ -4219,7 +4773,7 @@
         "SXSV": {
           "anyOf": [
             {
-              "$ref": "#/definitions/mbbiSXSV"
+              "$ref": "#/definitions/mbboSXSV"
             },
             {
               "type": "string"
@@ -4230,7 +4784,7 @@
         "SVSV": {
           "anyOf": [
             {
-              "$ref": "#/definitions/mbbiSVSV"
+              "$ref": "#/definitions/mbboSVSV"
             },
             {
               "type": "string"
@@ -4241,7 +4795,7 @@
         "EISV": {
           "anyOf": [
             {
-              "$ref": "#/definitions/mbbiEISV"
+              "$ref": "#/definitions/mbboEISV"
             },
             {
               "type": "string"
@@ -4252,7 +4806,7 @@
         "NISV": {
           "anyOf": [
             {
-              "$ref": "#/definitions/mbbiNISV"
+              "$ref": "#/definitions/mbboNISV"
             },
             {
               "type": "string"
@@ -4263,7 +4817,7 @@
         "TESV": {
           "anyOf": [
             {
-              "$ref": "#/definitions/mbbiTESV"
+              "$ref": "#/definitions/mbboTESV"
             },
             {
               "type": "string"
@@ -4274,7 +4828,7 @@
         "ELSV": {
           "anyOf": [
             {
-              "$ref": "#/definitions/mbbiELSV"
+              "$ref": "#/definitions/mbboELSV"
             },
             {
               "type": "string"
@@ -4285,7 +4839,7 @@
         "TVSV": {
           "anyOf": [
             {
-              "$ref": "#/definitions/mbbiTVSV"
+              "$ref": "#/definitions/mbboTVSV"
             },
             {
               "type": "string"
@@ -4296,7 +4850,7 @@
         "TTSV": {
           "anyOf": [
             {
-              "$ref": "#/definitions/mbbiTTSV"
+              "$ref": "#/definitions/mbboTTSV"
             },
             {
               "type": "string"
@@ -4307,7 +4861,7 @@
         "FTSV": {
           "anyOf": [
             {
-              "$ref": "#/definitions/mbbiFTSV"
+              "$ref": "#/definitions/mbboFTSV"
             },
             {
               "type": "string"
@@ -4318,35 +4872,49 @@
         "FFSV": {
           "anyOf": [
             {
-              "$ref": "#/definitions/mbbiFFSV"
+              "$ref": "#/definitions/mbboFFSV"
             },
             {
               "type": "string"
             }
           ],
-          "description": "State Fifteen Severity"
+          "description": "State Fifteen Sevr"
+        },
+        "AFTC": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Alarm Filter Time Constant"
+        },
+        "AFVL": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Alarm Filter Value"
         },
         "UNSV": {
           "anyOf": [
             {
-              "$ref": "#/definitions/mbbiUNSV"
+              "$ref": "#/definitions/mbboUNSV"
             },
             {
               "type": "string"
             }
           ],
-          "description": "Unknown State Severity"
+          "description": "Unknown State Sevr"
         },
         "COSV": {
           "anyOf": [
             {
-              "$ref": "#/definitions/mbbiCOSV"
+              "$ref": "#/definitions/mbboCOSV"
             },
             {
               "type": "string"
             }
           ],
-          "description": "Change of State Svr"
+          "description": "Change of State Sevr"
         },
         "RVAL": {
           "type": [
@@ -4399,7 +4967,14 @@
         },
         "SIOL": {
           "type": "string",
-          "description": "Simulation Input Link"
+          "description": "Simulation Output Link"
+        },
+        "SVAL": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Simulation Value"
         },
         "SIML": {
           "type": "string",
@@ -4408,7 +4983,7 @@
         "SIMM": {
           "anyOf": [
             {
-              "$ref": "#/definitions/mbbiSIMM"
+              "$ref": "#/definitions/mbboSIMM"
             },
             {
               "type": "string"
@@ -4419,7 +4994,7 @@
         "SIMS": {
           "anyOf": [
             {
-              "$ref": "#/definitions/mbbiSIMS"
+              "$ref": "#/definitions/mbboSIMS"
             },
             {
               "type": "string"
@@ -4430,7 +5005,7 @@
         "OLDSIMM": {
           "anyOf": [
             {
-              "$ref": "#/definitions/mbbiOLDSIMM"
+              "$ref": "#/definitions/mbboOLDSIMM"
             },
             {
               "type": "string"
@@ -4441,7 +5016,7 @@
         "SSCN": {
           "anyOf": [
             {
-              "$ref": "#/definitions/mbbiSSCN"
+              "$ref": "#/definitions/mbboSSCN"
             },
             {
               "type": "string"
@@ -4458,35 +5033,61 @@
           "description": "Sim. Mode Async Delay",
           "default": "-1.0"
         },
-        "INP": {
+        "DOL": {
           "type": "string",
-          "description": "Input Specification"
+          "description": "Desired Output Link"
         },
-        "AFTC": {
-          "type": [
-            "number",
-            "string"
+        "OMSL": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbboOMSL"
+            },
+            {
+              "type": "string"
+            }
           ],
-          "description": "Alarm Filter Time Constant"
+          "description": "Output Mode Select"
         },
-        "AFVL": {
-          "type": [
-            "number",
-            "string"
-          ],
-          "description": "Alarm Filter Value"
+        "OUT": {
+          "type": "string",
+          "description": "Output Specification"
         },
-        "SVAL": {
+        "RBV": {
           "type": [
             "integer",
             "string"
           ],
-          "description": "Simulation Value"
+          "description": "Readback Value"
+        },
+        "ORBV": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "Prev Readback Value"
+        },
+        "IVOA": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/mbboIVOA"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "INVALID outpt action"
+        },
+        "IVOV": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "INVALID output value"
         }
       },
       "additionalProperties": false
     },
-    "mbbiSCAN": {
+    "mbboSCAN": {
       "type": "string",
       "enum": [
         "Passive",
@@ -4501,7 +5102,7 @@
         ".1 second"
       ]
     },
-    "mbbiPINI": {
+    "mbboPINI": {
       "type": "string",
       "enum": [
         "NO",
@@ -4512,7 +5113,7 @@
         "PAUSED"
       ]
     },
-    "mbbiSTAT": {
+    "mbboSTAT": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -4539,7 +5140,7 @@
         "WRITE_ACCESS"
       ]
     },
-    "mbbiSEVR": {
+    "mbboSEVR": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -4548,7 +5149,7 @@
         "INVALID"
       ]
     },
-    "mbbiNSTA": {
+    "mbboNSTA": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -4575,7 +5176,7 @@
         "WRITE_ACCESS"
       ]
     },
-    "mbbiNSEV": {
+    "mbboNSEV": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -4584,7 +5185,7 @@
         "INVALID"
       ]
     },
-    "mbbiACKS": {
+    "mbboACKS": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -4593,14 +5194,14 @@
         "INVALID"
       ]
     },
-    "mbbiACKT": {
+    "mbboACKT": {
       "type": "string",
       "enum": [
         "NO",
         "YES"
       ]
     },
-    "mbbiDISS": {
+    "mbboDISS": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -4609,7 +5210,7 @@
         "INVALID"
       ]
     },
-    "mbbiPRIO": {
+    "mbboPRIO": {
       "type": "string",
       "enum": [
         "LOW",
@@ -4617,7 +5218,7 @@
         "HIGH"
       ]
     },
-    "mbbiUDFS": {
+    "mbboUDFS": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -4626,7 +5227,7 @@
         "INVALID"
       ]
     },
-    "mbbiZRSV": {
+    "mbboZRSV": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -4635,7 +5236,7 @@
         "INVALID"
       ]
     },
-    "mbbiONSV": {
+    "mbboONSV": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -4644,7 +5245,7 @@
         "INVALID"
       ]
     },
-    "mbbiTWSV": {
+    "mbboTWSV": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -4653,7 +5254,7 @@
         "INVALID"
       ]
     },
-    "mbbiTHSV": {
+    "mbboTHSV": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -4662,7 +5263,7 @@
         "INVALID"
       ]
     },
-    "mbbiFRSV": {
+    "mbboFRSV": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -4671,7 +5272,7 @@
         "INVALID"
       ]
     },
-    "mbbiFVSV": {
+    "mbboFVSV": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -4680,7 +5281,7 @@
         "INVALID"
       ]
     },
-    "mbbiSXSV": {
+    "mbboSXSV": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -4689,7 +5290,7 @@
         "INVALID"
       ]
     },
-    "mbbiSVSV": {
+    "mbboSVSV": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -4698,7 +5299,7 @@
         "INVALID"
       ]
     },
-    "mbbiEISV": {
+    "mbboEISV": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -4707,7 +5308,7 @@
         "INVALID"
       ]
     },
-    "mbbiNISV": {
+    "mbboNISV": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -4716,7 +5317,7 @@
         "INVALID"
       ]
     },
-    "mbbiTESV": {
+    "mbboTESV": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -4725,7 +5326,7 @@
         "INVALID"
       ]
     },
-    "mbbiELSV": {
+    "mbboELSV": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -4734,7 +5335,7 @@
         "INVALID"
       ]
     },
-    "mbbiTVSV": {
+    "mbboTVSV": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -4743,7 +5344,7 @@
         "INVALID"
       ]
     },
-    "mbbiTTSV": {
+    "mbboTTSV": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -4752,7 +5353,7 @@
         "INVALID"
       ]
     },
-    "mbbiFTSV": {
+    "mbboFTSV": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -4761,7 +5362,7 @@
         "INVALID"
       ]
     },
-    "mbbiFFSV": {
+    "mbboFFSV": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -4770,7 +5371,7 @@
         "INVALID"
       ]
     },
-    "mbbiUNSV": {
+    "mbboUNSV": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -4779,7 +5380,7 @@
         "INVALID"
       ]
     },
-    "mbbiCOSV": {
+    "mbboCOSV": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -4788,7 +5389,23 @@
         "INVALID"
       ]
     },
-    "mbbiSIMM": {
+    "mbboSIMM": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "YES"
+      ]
+    },
+    "mbboSIMS": {
+      "type": "string",
+      "enum": [
+        "NO_ALARM",
+        "MINOR",
+        "MAJOR",
+        "INVALID"
+      ]
+    },
+    "mbboOLDSIMM": {
       "type": "string",
       "enum": [
         "NO",
@@ -4796,24 +5413,7 @@
         "RAW"
       ]
     },
-    "mbbiSIMS": {
-      "type": "string",
-      "enum": [
-        "NO_ALARM",
-        "MINOR",
-        "MAJOR",
-        "INVALID"
-      ]
-    },
-    "mbbiOLDSIMM": {
-      "type": "string",
-      "enum": [
-        "NO",
-        "YES",
-        "RAW"
-      ]
-    },
-    "mbbiSSCN": {
+    "mbboSSCN": {
       "type": "string",
       "enum": [
         "Passive",
@@ -4826,6 +5426,21 @@
         ".5 second",
         ".2 second",
         ".1 second"
+      ]
+    },
+    "mbboOMSL": {
+      "type": "string",
+      "enum": [
+        "supervisory",
+        "closed_loop"
+      ]
+    },
+    "mbboIVOA": {
+      "type": "string",
+      "enum": [
+        "Continue normally",
+        "Don't drive outputs",
+        "Set output to IVOV"
       ]
     },
     "AsynString": {
@@ -4975,7 +5590,7 @@
         "SCAN": {
           "anyOf": [
             {
-              "$ref": "#/definitions/stringinSCAN"
+              "$ref": "#/definitions/stringoutSCAN"
             },
             {
               "type": "string"
@@ -4986,7 +5601,7 @@
         "PINI": {
           "anyOf": [
             {
-              "$ref": "#/definitions/stringinPINI"
+              "$ref": "#/definitions/stringoutPINI"
             },
             {
               "type": "string"
@@ -5056,7 +5671,7 @@
         "STAT": {
           "anyOf": [
             {
-              "$ref": "#/definitions/stringinSTAT"
+              "$ref": "#/definitions/stringoutSTAT"
             },
             {
               "type": "string"
@@ -5068,7 +5683,7 @@
         "SEVR": {
           "anyOf": [
             {
-              "$ref": "#/definitions/stringinSEVR"
+              "$ref": "#/definitions/stringoutSEVR"
             },
             {
               "type": "string"
@@ -5083,7 +5698,7 @@
         "NSTA": {
           "anyOf": [
             {
-              "$ref": "#/definitions/stringinNSTA"
+              "$ref": "#/definitions/stringoutNSTA"
             },
             {
               "type": "string"
@@ -5094,7 +5709,7 @@
         "NSEV": {
           "anyOf": [
             {
-              "$ref": "#/definitions/stringinNSEV"
+              "$ref": "#/definitions/stringoutNSEV"
             },
             {
               "type": "string"
@@ -5109,7 +5724,7 @@
         "ACKS": {
           "anyOf": [
             {
-              "$ref": "#/definitions/stringinACKS"
+              "$ref": "#/definitions/stringoutACKS"
             },
             {
               "type": "string"
@@ -5120,7 +5735,7 @@
         "ACKT": {
           "anyOf": [
             {
-              "$ref": "#/definitions/stringinACKT"
+              "$ref": "#/definitions/stringoutACKT"
             },
             {
               "type": "string"
@@ -5132,7 +5747,7 @@
         "DISS": {
           "anyOf": [
             {
-              "$ref": "#/definitions/stringinDISS"
+              "$ref": "#/definitions/stringoutDISS"
             },
             {
               "type": "string"
@@ -5171,7 +5786,7 @@
         "PRIO": {
           "anyOf": [
             {
-              "$ref": "#/definitions/stringinPRIO"
+              "$ref": "#/definitions/stringoutPRIO"
             },
             {
               "type": "string"
@@ -5197,7 +5812,7 @@
         "UDFS": {
           "anyOf": [
             {
-              "$ref": "#/definitions/stringinUDFS"
+              "$ref": "#/definitions/stringoutUDFS"
             },
             {
               "type": "string"
@@ -5225,10 +5840,14 @@
           "type": "string",
           "description": "Previous Value"
         },
+        "INP": {
+          "type": "string",
+          "description": "Input Specification"
+        },
         "MPST": {
           "anyOf": [
             {
-              "$ref": "#/definitions/stringinMPST"
+              "$ref": "#/definitions/stringoutMPST"
             },
             {
               "type": "string"
@@ -5239,7 +5858,7 @@
         "APST": {
           "anyOf": [
             {
-              "$ref": "#/definitions/stringinAPST"
+              "$ref": "#/definitions/stringoutAPST"
             },
             {
               "type": "string"
@@ -5249,7 +5868,11 @@
         },
         "SIOL": {
           "type": "string",
-          "description": "Simulation Input Link"
+          "description": "Simulation Output Link"
+        },
+        "SVAL": {
+          "type": "string",
+          "description": "Simulation Value"
         },
         "SIML": {
           "type": "string",
@@ -5258,7 +5881,7 @@
         "SIMM": {
           "anyOf": [
             {
-              "$ref": "#/definitions/stringinSIMM"
+              "$ref": "#/definitions/stringoutSIMM"
             },
             {
               "type": "string"
@@ -5269,7 +5892,7 @@
         "SIMS": {
           "anyOf": [
             {
-              "$ref": "#/definitions/stringinSIMS"
+              "$ref": "#/definitions/stringoutSIMS"
             },
             {
               "type": "string"
@@ -5280,7 +5903,7 @@
         "OLDSIMM": {
           "anyOf": [
             {
-              "$ref": "#/definitions/stringinOLDSIMM"
+              "$ref": "#/definitions/stringoutOLDSIMM"
             },
             {
               "type": "string"
@@ -5291,7 +5914,7 @@
         "SSCN": {
           "anyOf": [
             {
-              "$ref": "#/definitions/stringinSSCN"
+              "$ref": "#/definitions/stringoutSSCN"
             },
             {
               "type": "string"
@@ -5308,18 +5931,44 @@
           "description": "Sim. Mode Async Delay",
           "default": "-1.0"
         },
-        "INP": {
+        "DOL": {
           "type": "string",
-          "description": "Input Specification"
+          "description": "Desired Output Link"
         },
-        "SVAL": {
+        "OMSL": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/stringoutOMSL"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Output Mode Select"
+        },
+        "OUT": {
           "type": "string",
-          "description": "Simulation Value"
+          "description": "Output Specification"
+        },
+        "IVOA": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/stringoutIVOA"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "INVALID output action"
+        },
+        "IVOV": {
+          "type": "string",
+          "description": "INVALID output value"
         }
       },
       "additionalProperties": false
     },
-    "stringinSCAN": {
+    "stringoutSCAN": {
       "type": "string",
       "enum": [
         "Passive",
@@ -5334,7 +5983,7 @@
         ".1 second"
       ]
     },
-    "stringinPINI": {
+    "stringoutPINI": {
       "type": "string",
       "enum": [
         "NO",
@@ -5345,7 +5994,7 @@
         "PAUSED"
       ]
     },
-    "stringinSTAT": {
+    "stringoutSTAT": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -5372,7 +6021,7 @@
         "WRITE_ACCESS"
       ]
     },
-    "stringinSEVR": {
+    "stringoutSEVR": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -5381,7 +6030,7 @@
         "INVALID"
       ]
     },
-    "stringinNSTA": {
+    "stringoutNSTA": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -5408,7 +6057,7 @@
         "WRITE_ACCESS"
       ]
     },
-    "stringinNSEV": {
+    "stringoutNSEV": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -5417,7 +6066,7 @@
         "INVALID"
       ]
     },
-    "stringinACKS": {
+    "stringoutACKS": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -5426,14 +6075,14 @@
         "INVALID"
       ]
     },
-    "stringinACKT": {
+    "stringoutACKT": {
       "type": "string",
       "enum": [
         "NO",
         "YES"
       ]
     },
-    "stringinDISS": {
+    "stringoutDISS": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -5442,7 +6091,7 @@
         "INVALID"
       ]
     },
-    "stringinPRIO": {
+    "stringoutPRIO": {
       "type": "string",
       "enum": [
         "LOW",
@@ -5450,7 +6099,7 @@
         "HIGH"
       ]
     },
-    "stringinUDFS": {
+    "stringoutUDFS": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -5459,28 +6108,28 @@
         "INVALID"
       ]
     },
-    "stringinMPST": {
+    "stringoutMPST": {
       "type": "string",
       "enum": [
         "On Change",
         "Always"
       ]
     },
-    "stringinAPST": {
+    "stringoutAPST": {
       "type": "string",
       "enum": [
         "On Change",
         "Always"
       ]
     },
-    "stringinSIMM": {
+    "stringoutSIMM": {
       "type": "string",
       "enum": [
         "NO",
         "YES"
       ]
     },
-    "stringinSIMS": {
+    "stringoutSIMS": {
       "type": "string",
       "enum": [
         "NO_ALARM",
@@ -5489,7 +6138,7 @@
         "INVALID"
       ]
     },
-    "stringinOLDSIMM": {
+    "stringoutOLDSIMM": {
       "type": "string",
       "enum": [
         "NO",
@@ -5497,7 +6146,7 @@
         "RAW"
       ]
     },
-    "stringinSSCN": {
+    "stringoutSSCN": {
       "type": "string",
       "enum": [
         "Passive",
@@ -5510,6 +6159,21 @@
         ".5 second",
         ".2 second",
         ".1 second"
+      ]
+    },
+    "stringoutOMSL": {
+      "type": "string",
+      "enum": [
+        "supervisory",
+        "closed_loop"
+      ]
+    },
+    "stringoutIVOA": {
+      "type": "string",
+      "enum": [
+        "Continue normally",
+        "Don't drive outputs",
+        "Set output to IVOV"
       ]
     },
     "AsynWaveform": {

@@ -57,9 +57,9 @@ def test_schemas(tmp_path, filename):
     "filename",
     [
         "pilatusParameters.csv",
-        "pilatusParameters.template",
+        "pilatusDetectorParameters.template",
         "pilatusDetectorParamSet.h",
-        "pilatus.pvi.device.yaml",
+        "pilatusDetector.pvi.device.yaml",
     ],
 )
 def test_produce(tmp_path, filename):
