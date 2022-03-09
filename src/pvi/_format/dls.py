@@ -143,8 +143,8 @@ class DLSFormatter(Formatter):
 
         layout_properties = LayoutProperties(
             spacing=4,
-            title_height=24,
-            max_height=900,
+            title_height=28,
+            max_height=600,
             group_label_height=26,
             label_width=120,
             widget_width=120,
