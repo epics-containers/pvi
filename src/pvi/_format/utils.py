@@ -328,15 +328,14 @@ class Screen(Generic[T]):
                 columns[group.bounds.x] = next_y_pos(group, self.layout.spacing)
                 columns[max_x(screen_widgets, self.layout.spacing)] = 0
             else:
-                # Top level widgets
-                component_widgets = self.make_component_widgets(
+                # Create top level widget
+                screen_widgets = screen_widgets + self.make_component_widgets(
                     c,
                     bounds=widget_bounds,
                     parent_bounds=screen_bounds,
+                    next_column=max_x(screen_widgets, self.layout.spacing),
                     group_widget_indent=self.layout.group_widget_indent,
                 )
-                for widget in component_widgets:
-                    screen_widgets.append(widget)
 
         screen_bounds.w = max_x(screen_widgets)
         screen_bounds.h = max_y(screen_widgets)
@@ -419,14 +418,13 @@ class Screen(Generic[T]):
                 # TODO: make a new screen
                 raise NotImplementedError(c)
             else:
-                component_widgets = self.make_component_widgets(
+                widgets = widgets + self.make_component_widgets(
                     c,
                     bounds=child_bounds,
                     parent_bounds=bounds,
+                    next_column=max_x(widgets, self.layout.spacing),
                     add_label=group.layout.labelled,
                 )
-                for w in component_widgets:
-                    widgets.append(w)
 
         bounds.h = max_y(widgets)
         bounds.w = max_x(widgets)
@@ -456,11 +454,10 @@ class Screen(Generic[T]):
         bounds.y = max_y(widgets, self.layout.spacing)
         max_h = max_y(widgets)
         if max_h > parent_bounds.h:
-            # Retry in the next row
-            bounds.x = max_x(widgets, self.layout.spacing)
+            bounds.x = next_column
             bounds.y = 0
+            # Try again in new row
             widgets = list(self.component(c, bounds, group_widget_indent, add_label))
-            # All widgets are on the same row
             bounds.y = next_y_pos(widgets[0], self.layout.spacing)
         return widgets
 
