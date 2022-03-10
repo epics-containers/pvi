@@ -122,6 +122,12 @@ class SourceConverter:
 
         return Source(extracted_cpp, extracted_h)
 
+    def get_top_level_placeholder(self) -> Source:
+        extracted_cpp = self._convert_cpp_placeholder(self.source.cpp)
+        extracted_h = self._convert_h_placeholder(self.source.h)
+
+        return Source(extracted_cpp, extracted_h)
+
     def _convert_cpp(self, original_cpp_text: str) -> str:
         unwanted_strings = self.create_param_strings
 
@@ -176,6 +182,15 @@ class SourceConverter:
             cpp_text,
         )
 
+        return cpp_text
+
+    def _convert_cpp_placeholder(self, original_cpp_text: str) -> str:
+        cpp_text = original_cpp_text
+        parent_param_set = get_param_set(self.parent_class)
+        cpp_text = cpp_text.replace(
+            f"{self.parent_class}(",
+            f"{self.parent_class}(static_cast<{parent_param_set}*>(this), ",
+        )
         return cpp_text
 
     def _convert_h(self, original_h: str) -> str:
@@ -233,6 +248,17 @@ class SourceConverter:
             h_text,
         )
 
+        return h_text
+
+    def _convert_h_placeholder(self, original_h: str) -> str:
+        h_text = original_h
+        h_text = h_text.replace(
+            f" {self.device_class} : public {self.parent_class}",
+            (
+                f" {self.device_class} : public {self.parent_class}ParamSet,"
+                f" public {self.parent_class}"
+            ),
+        )
         return h_text
 
     @staticmethod
