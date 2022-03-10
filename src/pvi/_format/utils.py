@@ -87,6 +87,7 @@ class WidgetTemplate(Generic[T]):
         children: "List[WidgetFactory[T]]",
         padding: Bounds = Bounds(),
     ) -> List[T]:
+        """Return a group widget with its children attached and appropritately padded"""
         raise NotImplementedError(self)
 
 
@@ -256,7 +257,7 @@ class ScreenWidgets(Generic[T]):
         pv: str,
         prefix: str,
     ) -> PVWidgetFactory[T]:
-        """Converts a component that reads or writes PV's into its WidgetFactory equivalent
+        """Convert a component that reads or writes PV's into its WidgetFactory equivalent
 
         Args:
             widget: The read/write widget property of a component
@@ -290,7 +291,7 @@ class Screen(Generic[T]):
     components: Dict[str, Component] = field(init=False, default_factory=dict)
 
     def screen(self, components: Tree[Component], title: str) -> WidgetFactory[T]:
-        """Makes the contents of the screen and determines the layout of widgets
+        """Make the contents of the screen and determines the layout of widgets
 
         Args:
             components: A list of components that make up a device
@@ -309,8 +310,7 @@ class Screen(Generic[T]):
         columns: Dict[int, int] = {0: 0}  # x coord -> y coord of bottom of column
         for c in components:
             if isinstance(c, Group):
-                # Group 'width' and 'height' bounds are considered separate from
-                # those of other top level widgets
+                # Create group widget
                 for col_x, col_y in columns.items():
                     # Note: Group adjusts bounds to fit the components
                     group = self.group(
@@ -344,11 +344,11 @@ class Screen(Generic[T]):
     def component(
         self, c: Component, bounds: Bounds, group_widget_indent: int, add_label=True
     ) -> Iterator[WidgetFactory[T]]:
-        """Converts a component into its WidgetFactory counterparts
+        """Convert a component into its WidgetFactory equivalents
 
         Args:
             c: Component object extracted from a producer.yaml
-            bounds: Size and positional data
+            bounds: Size and positional constraints
             add_label: Whether the component has an associated label. Defaults to True.
 
         Yields:
@@ -407,6 +407,17 @@ class Screen(Generic[T]):
         # TODO: Need to handle DeviceRef
 
     def group(self, group: Group[Component], bounds: Bounds) -> WidgetFactory[T]:
+        """Convert components within groups into widgets and lay them out within a
+        group object.
+
+        Args:
+            group: Group of child components in a Layout
+            bounds: Size and positinal constraints
+
+        Returns:
+            A group object containing child widgets
+        """
+
         full_w = (
             self.layout.label_width + self.layout.widget_width + 2 * self.layout.spacing
         )
@@ -435,17 +446,21 @@ class Screen(Generic[T]):
         c: Component,
         bounds: Bounds,
         parent_bounds: Bounds,
+        next_column: int,
         add_label=True,
         group_widget_indent: int = 0,
     ) -> List[WidgetFactory[T]]:
-        """Generates widgets from component data and positions them in a grid format
+        """Generate widgets from component data and position them in a grid format
 
         Args:
             c: Component object extracted from a device.yaml
-            bounds: Size and positional data of component widgets
+            bounds: Size and positional constraints of component widgets
             parent_bounds: Size constraints from the object containing the widgets
-            add_label: Whether the widget should have an assiciated label.
+            next_column: A reference to the next columns position should widgets
+                exceed height limits
+            add_label: Whether the widget should have an associated label.
                 Defaults to True.
+            group_widget_indent: The x offset of widgets within groups.
 
         Returns:
             A collection of widgets representing the component
@@ -552,10 +567,10 @@ class AdlTemplate(WidgetTemplate[str]):
 
 
 class BobTemplate(WidgetTemplate[etree.ElementBase]):
-    """Extracts and modifies elements from a template .bob file."""
+    """Extract and modify elements from a template .bob file."""
 
     def __init__(self, text: str):
-        """Parses an XML string to an element tree object."""
+        """Parse an XML string to an element tree object."""
 
         self.tree = etree.parse(text)
         self.screen = self.search("Display")
@@ -563,7 +578,7 @@ class BobTemplate(WidgetTemplate[etree.ElementBase]):
     def set(
         self, t: etree.ElementBase, bounds: Bounds = None, **properties
     ) -> etree.ElementBase:
-        """Modifies template elements (widgets) with component data.
+        """Modify template elements (widgets) with component data.
 
         Args:
             t: A template element.
@@ -589,7 +604,7 @@ class BobTemplate(WidgetTemplate[etree.ElementBase]):
         return t_copy
 
     def search(self, search: str) -> etree.ElementBase:
-        """Locates and extracts elements from the Element tree.
+        """Locate and extract elements from the Element tree.
 
         Args:
             search: The unique name of the element to extract.
@@ -622,6 +637,17 @@ class BobTemplate(WidgetTemplate[etree.ElementBase]):
         children: List[WidgetFactory[etree.ElementBase]],
         padding: Bounds = Bounds(),
     ) -> List[etree.ElementBase]:
+        """Create an xml group object from a list of child widgets
+
+        Args:
+            group_object: Templated group xml element
+            children: List of child widgets within the group
+            padding: Additional placement data to fit the children to the group object.
+                Defaults to Bounds().
+
+        Returns:
+            An xml group with children attached as subelements
+        """
         assert (
             len(group_object) == 1
         ), f"Size of group_object is {len(group_object)}, should be 1"
