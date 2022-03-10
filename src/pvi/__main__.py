@@ -159,6 +159,26 @@ def asyn(
     )
 
 
+@app.command()
+def convertplaceholder(
+    module_root: Path = typer.Argument(..., help="Root directory of support module"),
+    cpp: Path = typer.Argument(..., help="Path to the .cpp file to convert"),
+    h: Path = typer.Argument(..., help="Path to the .h file to convert"),
+):
+    """Alter cpp and h files of unconverted drivers"""
+
+    output = module_root / "pvi" / "placeholders"
+    if not output.exists():
+        os.mkdir(output)
+
+    drv_infos: List[str] = []
+    source_converter = SourceConverter(cpp, h, module_root, drv_infos)
+    extracted_source = source_converter.get_top_level_placeholder()
+
+    (output / cpp.name).write_text(extracted_source.cpp)
+    (output / h.name).write_text(extracted_source.h)
+
+
 # test with: pipenv run python -m pvi
 if __name__ == "__main__":
     app()
