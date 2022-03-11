@@ -51,7 +51,7 @@ class SourceConverter:
 
     def _extract_create_param_strs(self, param_strings: List[str]) -> List[str]:
         # e.g. extract: createParam(SimGainXString, asynParamFloat64, &SimGainX);
-        create_param_extractor = re.compile(r"createParam\([^\)]*\);.*")
+        create_param_extractor = re.compile(r"((?:this->)?createParam\([^\)]*\);.*)")
         create_param_strs = re.findall(create_param_extractor, self.source.cpp)
         # We only want to extract the createParam calls for the given parameter strings
         create_param_strs = filter_strings(create_param_strs, param_strings)
