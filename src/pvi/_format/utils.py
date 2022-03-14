@@ -565,6 +565,22 @@ class AdlTemplate(WidgetTemplate[str]):
         assert len(matches) == 1, f"Got {len(matches)} matches for {search!r}"
         return matches[0]
 
+    def create_group(
+        self,
+        group_object: List[str],
+        children: List[WidgetFactory[str]],
+        padding: Bounds = Bounds(),
+    ) -> List[str]:
+
+        texts: List[str] = []
+
+        for c in children:
+            c.bounds.x += padding.x
+            c.bounds.y += padding.y
+            texts += c.format()
+
+        return group_object + texts
+
 
 class BobTemplate(WidgetTemplate[etree.ElementBase]):
     """Extract and modify elements from a template .bob file."""
