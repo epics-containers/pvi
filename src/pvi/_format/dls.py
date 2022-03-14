@@ -31,13 +31,12 @@ class DLSFormatter(Formatter):
             f = self.format_edl
         elif path.suffix == ".bob":
             f = self.format_bob
+        else:
+            raise ValueError("Can only write .edl or .bob files")
         f(device, prefix, path)
 
     def format_edl(self, device: Device, prefix: str, path: Path):
-        assert path.suffix == ".edl", "Can only write EDL files"
-
         template = EdlTemplate((Path(__file__).parent / "dls.edl").read_text())
-
         layout_properties = LayoutProperties(
             spacing=5,
             title_height=25,
@@ -48,7 +47,6 @@ class DLSFormatter(Formatter):
             widget_height=20,
             group_widget_indent=5,
         )
-
         screen_widgets = ScreenWidgets(
             label_cls=LabelFactory.from_template(
                 template, search='"Label"', value="text"
@@ -76,7 +74,6 @@ class DLSFormatter(Formatter):
                 controlPv="pv",
             ),
         )
-
         screen_title_cls = LabelFactory.from_template(
             template, search='"Title"', value="text"
         )
@@ -137,14 +134,11 @@ class DLSFormatter(Formatter):
         path.write_text("".join(texts))
 
     def format_bob(self, device: Device, prefix: str, path: Path):
-        assert path.suffix == ".bob", "Can only write bob files"
-
         template = BobTemplate(str(Path(__file__).parent / "dls.bob"))
-
         layout_properties = LayoutProperties(
             spacing=4,
             title_height=28,
-            max_height=600,
+            max_height=900,
             group_label_height=26,
             label_width=120,
             widget_width=120,
@@ -152,7 +146,6 @@ class DLSFormatter(Formatter):
             group_widget_indent=18,
             group_width_offset=26,
         )
-
         screen_widgets = ScreenWidgets(
             label_cls=LabelFactory.from_template(template, search="Label", text="text"),
             led_cls=PVWidgetFactory.from_template(
@@ -174,7 +167,6 @@ class DLSFormatter(Formatter):
                 template, search="ActionButton", text="label", pv_name="pv"
             ),
         )
-
         screen_title_cls = LabelFactory.from_template(
             template, search="Title", text="text"
         )
