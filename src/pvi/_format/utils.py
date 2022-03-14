@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import re
 from copy import deepcopy
 from dataclasses import dataclass, field, replace
@@ -38,10 +40,10 @@ class Bounds:
     w: int = 0
     h: int = 0
 
-    def copy(self) -> "Bounds":
+    def copy(self) -> Bounds:
         return Bounds(self.x, self.y, self.w, self.h)
 
-    def split(self, width: int, spacing: int) -> Tuple["Bounds", "Bounds"]:
+    def split(self, width: int, spacing: int) -> Tuple[Bounds, Bounds]:
         """Split horizontally"""
         to_split = width + spacing
         assert to_split < self.w, f"Can't split off {to_split} from {self.w}"
@@ -49,7 +51,7 @@ class Bounds:
         right = Bounds(self.x + to_split, self.y, self.w - to_split, self.h)
         return left, right
 
-    def square(self) -> "Bounds":
+    def square(self) -> Bounds:
         """Return the largest square that will fit in self"""
         size = min(self.w, self.h)
         return Bounds(
@@ -59,7 +61,7 @@ class Bounds:
             h=size,
         )
 
-    def added_to(self, bounds: "Bounds") -> "Bounds":
+    def added_to(self, bounds: Bounds) -> Bounds:
         return Bounds(
             x=self.x + bounds.x,
             y=self.y + bounds.y,
@@ -84,7 +86,7 @@ class WidgetTemplate(Generic[T]):
     def create_group(
         self,
         group_object: List[T],
-        children: "List[WidgetFactory[T]]",
+        children: List[WidgetFactory[T]],
         padding: Bounds = Bounds(),
     ) -> List[T]:
         """Return a group widget with its children attached and appropritately padded"""
@@ -155,7 +157,7 @@ class GroupFactory(WidgetFactory[T]):
         sized: Callable[[Bounds], Bounds] = Bounds.copy,
         make_widgets: Callable[[Bounds, str], List[WidgetFactory[T]]] = None,
         **attrs,
-    ) -> Type["GroupFactory[T]"]:
+    ) -> Type[GroupFactory[T]]:
         @dataclass
         class FormattableGroupFactory(GroupFactory[T]):
             def format(self) -> List[T]:
