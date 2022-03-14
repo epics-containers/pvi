@@ -263,7 +263,7 @@ class ScreenWidgets(Generic[T]):
 
         Args:
             widget: The read/write widget property of a component
-            bounds: Size and positional data
+            bounds: The size and position of the widget (x,y,w,h).
             pv: The process variable assigned to a component
 
         Returns:
@@ -350,7 +350,7 @@ class Screen(Generic[T]):
 
         Args:
             c: Component object extracted from a producer.yaml
-            bounds: Size and positional constraints
+            bounds: The size and position of the component widgets (x,y,w,h).
             add_label: Whether the component has an associated label. Defaults to True.
 
         Yields:
@@ -414,7 +414,7 @@ class Screen(Generic[T]):
 
         Args:
             group: Group of child components in a Layout
-            bounds: Size and positinal constraints
+            bounds: The size and position of the group widget (x,y,w,h).
 
         Returns:
             A group object containing child widgets
@@ -456,7 +456,7 @@ class Screen(Generic[T]):
 
         Args:
             c: Component object extracted from a device.yaml
-            bounds: Size and positional constraints of component widgets
+            bounds: The size and position of component widgets (x,y,w,h).
             parent_bounds: Size constraints from the object containing the widgets
             next_column: A reference to the next columns position should widgets
                 exceed height limits
@@ -468,7 +468,7 @@ class Screen(Generic[T]):
             A collection of widgets representing the component
         """
         widgets = list(self.component(c, bounds, group_widget_indent, add_label))
-        bounds.y = max_y(widgets, self.layout.spacing)
+        bounds.y = next_y_pos(widgets[0], self.layout.spacing)
         max_h = max_y(widgets)
         if max_h > parent_bounds.h:
             bounds.x = next_column
@@ -600,7 +600,7 @@ class BobTemplate(WidgetTemplate[etree.ElementBase]):
 
         Args:
             t: A template element.
-            bounds: The dimensions of the widget (x,y,w,h). Defaults to None.
+            bounds: The size and position of the widget.
             **properties: The element properties (SubElements) to update.
                 In the form: {[SubElement]: [Value]}
 
