@@ -294,3 +294,9 @@ children:
     pv: GapFill
     widget:
       type: ComboBox
+
+  - type: SignalR
+    name: ProgressBarTest
+    pv: ProgressBarTest_RBV
+    widget:
+      type: ProgressBar

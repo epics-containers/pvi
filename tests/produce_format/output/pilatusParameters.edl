@@ -5,8 +5,8 @@ minor 0
 release 1
 x 0
 y 0
-w 1015
-h 925
+w 515
+h 950
 font "arial-bold-r-12.0"
 ctlFont "arial-bold-r-12.0"
 btnFont "arial-bold-r-12.0"
@@ -52,8 +52,8 @@ minor 0
 release 0
 x 5
 y 35
-w 1005
-h 885
+w 505
+h 910
 lineColor index 14
 fill
 fillColor index 5
@@ -5743,8 +5743,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 760
-y 595
+x 10
+y 920
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -5762,8 +5762,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 880
-y 595
+x 130
+y 920
 w 125
 h 20
 controlPv "$(P)$(R)Temp1_RBV"
@@ -5781,8 +5781,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 760
-y 620
+x 260
+y 45
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -5800,8 +5800,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 880
-y 620
+x 380
+y 45
 w 125
 h 20
 controlPv "$(P)$(R)Temp2_RBV"
@@ -5819,8 +5819,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 760
-y 645
+x 260
+y 70
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -5838,8 +5838,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 880
-y 645
+x 380
+y 70
 w 125
 h 20
 controlPv "$(P)$(R)Humid0_RBV"
@@ -5857,8 +5857,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 760
-y 670
+x 260
+y 95
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -5876,8 +5876,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 880
-y 670
+x 380
+y 95
 w 125
 h 20
 controlPv "$(P)$(R)Humid1_RBV"
@@ -5895,8 +5895,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 760
-y 695
+x 260
+y 120
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -5914,8 +5914,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 880
-y 695
+x 380
+y 120
 w 125
 h 20
 controlPv "$(P)$(R)Humid2_RBV"
@@ -5933,8 +5933,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 760
-y 720
+x 260
+y 145
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -5952,8 +5952,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 880
-y 720
+x 380
+y 145
 w 125
 h 20
 controlPv "$(P)$(R)TVXVersion_RBV"
@@ -5971,8 +5971,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 760
-y 745
+x 260
+y 170
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -5990,8 +5990,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 880
-y 745
+x 380
+y 170
 w 60
 h 20
 controlPv "$(P)$(R)ResetPowerTime"
@@ -6009,8 +6009,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 945
-y 745
+x 445
+y 170
 w 60
 h 20
 controlPv "$(P)$(R)ResetPowerTime_RBV"
@@ -6028,8 +6028,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 760
-y 770
+x 260
+y 195
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -6047,8 +6047,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 880
-y 770
+x 380
+y 195
 w 60
 h 20
 controlPv "$(P)$(R)DelayTime"
@@ -6066,8 +6066,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 945
-y 770
+x 445
+y 195
 w 60
 h 20
 controlPv "$(P)$(R)DelayTime_RBV"
@@ -6085,8 +6085,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 760
-y 795
+x 260
+y 220
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -6104,8 +6104,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 880
-y 795
+x 380
+y 220
 w 60
 h 20
 controlPv "$(P)$(R)ThresholdEnergy"
@@ -6123,8 +6123,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 945
-y 795
+x 445
+y 220
 w 60
 h 20
 controlPv "$(P)$(R)ThresholdEnergy_RBV"
@@ -6142,8 +6142,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 760
-y 820
+x 260
+y 245
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -6161,8 +6161,8 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 880
-y 820
+x 380
+y 245
 w 60
 h 20
 fgColor index 14
@@ -6183,8 +6183,8 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 965
-y 820
+x 465
+y 245
 w 20
 h 20
 controlPv "$(P)$(R)ThresholdAutoApply_RBV"
@@ -6201,8 +6201,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 760
-y 845
+x 260
+y 270
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -6220,8 +6220,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 880
-y 845
+x 380
+y 270
 w 60
 h 20
 controlPv "$(P)$(R)Energy"
@@ -6239,8 +6239,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 945
-y 845
+x 445
+y 270
 w 60
 h 20
 controlPv "$(P)$(R)Energy_RBV"
@@ -6258,8 +6258,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 760
-y 870
+x 260
+y 295
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -6277,8 +6277,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 880
-y 870
+x 380
+y 295
 w 60
 h 20
 controlPv "$(P)$(R)MinFlatField"
@@ -6296,8 +6296,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 945
-y 870
+x 445
+y 295
 w 60
 h 20
 controlPv "$(P)$(R)MinFlatField_RBV"
@@ -6315,8 +6315,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 760
-y 895
+x 260
+y 320
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -6334,8 +6334,8 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 880
-y 895
+x 380
+y 320
 w 60
 h 20
 fgColor index 25
@@ -6353,8 +6353,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 945
-y 895
+x 445
+y 320
 w 60
 h 20
 controlPv "$(P)$(R)GapFill_RBV"
@@ -6364,4 +6364,45 @@ bgColor index 10
 fill
 font "arial-bold-r-12.0"
 fontAlign "center"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 260
+y 345
+w 115
+h 20
+font "arial-bold-r-10.0"
+fgColor index 14
+bgColor index 3
+useDisplayBg
+value {
+  "Progress Bar Test"
+}
+endObjectProperties
+
+# (Bar)
+object activeBarClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 380
+y 345
+w 125
+h 20
+indicatorColor index 16
+fgColor index 14
+bgColor index 10
+indicatorPv "$(P)$(R)ProgressBarTest_RBV"
+origin "0"
+font "arial-bold-r-12.0"
+border
+min "0"
+max "100"
+scaleFormat "FFloat"
 endObjectProperties

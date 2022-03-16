@@ -55,3 +55,4 @@ MinFlatField,"longin: $(P)$(R)MinFlatField_RBV
 longout: $(P)$(R)MinFlatField",Minimum flat field value
 GapFill,"mbbi: $(P)$(R)GapFill_RBV
 mbbo: $(P)$(R)GapFill",GapFill
+ProgressBarTest,ai: $(P)$(R)ProgressBarTest_RBV,ProgressBar

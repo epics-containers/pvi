@@ -571,6 +571,15 @@ record(mbbo, "$(P)$(R)GapFill")
     field(TWST, "-1")
 }
 
+record(ai, "$(P)$(R)ProgressBarTest_RBV")
+{
+    field(DESC, "ProgressBar")
+    field(DTYP, "asynFloat64")
+    field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))PROGRESS")
+    field(PREC, "4")
+    field(EGU,  "deg")
+}
+
 $(PVI=#)record(waveform, "$(P)$(R)PVI")
 $(PVI=#){
 $(PVI=#)    field(DTYP, "copyInfo")
@@ -966,6 +975,14 @@ $(PVI=#)                        "name": "GapFill",
 $(PVI=#)                        "pv": "GapFill",
 $(PVI=#)                        "widget": {
 $(PVI=#)                            "type": "ComboBox"
+$(PVI=#)                        }
+$(PVI=#)                    },
+$(PVI=#)                    {
+$(PVI=#)                        "type": "SignalR",
+$(PVI=#)                        "name": "ProgressBarTest",
+$(PVI=#)                        "pv": "ProgressBarTest_RBV",
+$(PVI=#)                        "widget": {
+$(PVI=#)                            "type": "ProgressBar"
 $(PVI=#)                        }
 $(PVI=#)                    }
 $(PVI=#)                ]
