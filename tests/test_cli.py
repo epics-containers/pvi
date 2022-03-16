@@ -77,6 +77,7 @@ def test_produce(tmp_path, filename):
     [
         ("pilatusParameters.edl", "dls.pvi.formatter.yaml"),
         ("pilatusParameters.adl", "aps.pvi.formatter.yaml"),
+        ("pilatusParameters.bob", "dls.pvi.formatter.yaml"),
     ],
 )
 def test_format(tmp_path, filename, formatter):
