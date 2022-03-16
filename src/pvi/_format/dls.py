@@ -3,7 +3,9 @@ from pathlib import Path
 from typing import List
 
 from lxml import etree
+from typing_extensions import Annotated
 
+from pvi._schema_utils import desc
 from pvi.device import Device
 
 from .base import Formatter
@@ -26,6 +28,10 @@ from .utils import (
 
 @dataclass
 class DLSFormatter(Formatter):
+    spacing: Annotated[int, desc("Spacing between widgets")] = 5
+    title_height: Annotated[int, desc("Height of screen title bar")] = 25
+    max_height: Annotated[int, desc("Max height of the screen")] = 900
+
     def format(self, device: Device, prefix: str, path: Path):
         if path.suffix == ".edl":
             f = self.format_edl
@@ -38,9 +44,9 @@ class DLSFormatter(Formatter):
     def format_edl(self, device: Device, prefix: str, path: Path):
         template = EdlTemplate((Path(__file__).parent / "dls.edl").read_text())
         layout_properties = LayoutProperties(
-            spacing=5,
-            title_height=25,
-            max_height=900,
+            spacing=self.spacing,
+            title_height=self.title_height,
+            max_height=self.max_height,
             group_label_height=10,
             label_width=115,
             widget_width=120,
@@ -139,9 +145,9 @@ class DLSFormatter(Formatter):
     def format_bob(self, device: Device, prefix: str, path: Path):
         template = BobTemplate(str(Path(__file__).parent / "dls.bob"))
         layout_properties = LayoutProperties(
-            spacing=4,
-            title_height=28,
-            max_height=900,
+            spacing=self.spacing,
+            title_height=self.title_height,
+            max_height=self.max_height,
             group_label_height=26,
             label_width=120,
             widget_width=120,

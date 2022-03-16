@@ -2,6 +2,9 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import List
 
+from typing_extensions import Annotated
+
+from pvi._schema_utils import desc
 from pvi.device import Device
 
 from .base import Formatter
@@ -23,21 +26,22 @@ from .utils import (
 
 @dataclass
 class APSFormatter(Formatter):
+    spacing: Annotated[int, desc("Spacing between widgets")] = 5
+    title_height: Annotated[int, desc("Height of screen title bar")] = 25
+    max_height: Annotated[int, desc("Max height of the screen")] = 900
+
     def format(self, device: Device, prefix: str, path: Path):
         assert path.suffix == ".adl", "Can only write adl files"
         template = AdlTemplate((Path(__file__).parent / "aps.adl").read_text())
-
-        layout_properties = LayoutProperties(
-            spacing=5,
-            title_height=25,
-            max_height=900,
+        layout = LayoutProperties(
+            spacing=self.spacing,
+            title_height=self.title_height,
+            max_height=self.max_height,
             group_label_height=25,
             label_width=205,
             widget_width=100,
             widget_height=20,
-            group_widget_indent=0,
         )
-
         screen_widgets = ScreenWidgets(
             label_cls=LabelFactory.from_template(
                 template, search='"Label"', textix="text"
@@ -78,10 +82,10 @@ class APSFormatter(Formatter):
 
         def make_group_widgets(bounds: Bounds, title: str) -> List[WidgetFactory[str]]:
             title_bounds = Bounds(
-                bounds.x + layout_properties.spacing,
-                bounds.y + layout_properties.spacing,
-                bounds.w - 2 * layout_properties.spacing,
-                layout_properties.group_label_height - layout_properties.spacing,
+                bounds.x + layout.spacing,
+                bounds.y + layout.spacing,
+                bounds.w - 2 * layout.spacing,
+                layout.group_label_height - layout.spacing,
             )
             return [
                 group_box_cls(bounds),
@@ -90,7 +94,7 @@ class APSFormatter(Formatter):
             ]
 
         def make_screen_widgets(bounds: Bounds, title: str) -> List[WidgetFactory[str]]:
-            title_bounds = Bounds(0, 0, bounds.w, layout_properties.title_height)
+            title_bounds = Bounds(0, 0, bounds.w, layout.title_height)
             return [
                 label_background_cls(title_bounds),
                 screen_title_cls(title_bounds, title),
@@ -100,22 +104,18 @@ class APSFormatter(Formatter):
             screen_cls=GroupFactory.from_template(
                 template,
                 search=GroupType.SCREEN,
-                sized=with_title(
-                    layout_properties.spacing, layout_properties.title_height
-                ),
+                sized=with_title(layout.spacing, layout.title_height),
                 make_widgets=make_screen_widgets,
             ),
             group_cls=GroupFactory.from_template(
                 template,
                 search=GroupType.GROUP,
-                sized=with_title(
-                    layout_properties.spacing, layout_properties.group_label_height
-                ),
+                sized=with_title(layout.spacing, layout.group_label_height),
                 make_widgets=make_group_widgets,
             ),
             screen_widgets=screen_widgets,
             prefix=prefix,
-            layout=layout_properties,
+            layout=layout,
         )
         title = f"{device.label} - {prefix}"
         texts = screen.screen(device.children, title).format()
