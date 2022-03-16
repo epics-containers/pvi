@@ -45,6 +45,9 @@ class APSFormatter(Formatter):
             led_cls=PVWidgetFactory.from_template(
                 template, search='"LED"', sized=Bounds.square, chan="pv"
             ),
+            progress_bar_cls=PVWidgetFactory.from_template(
+                template, search='"ProgressBar"', chan="pv"
+            ),
             text_read_cls=PVWidgetFactory.from_template(
                 template, search='"TextRead"', chan="pv"
             ),

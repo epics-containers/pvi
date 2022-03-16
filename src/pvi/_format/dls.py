@@ -54,6 +54,9 @@ class DLSFormatter(Formatter):
             led_cls=PVWidgetFactory.from_template(
                 template, search='"LED"', sized=Bounds.square, controlPv="pv"
             ),
+            progress_bar_cls=PVWidgetFactory.from_template(
+                template, search='"ProgressBar"', indicatorPv="pv"
+            ),
             text_read_cls=PVWidgetFactory.from_template(
                 template, search='"TextRead"', controlPv="pv"
             ),
@@ -150,6 +153,9 @@ class DLSFormatter(Formatter):
             label_cls=LabelFactory.from_template(template, search="Label", text="text"),
             led_cls=PVWidgetFactory.from_template(
                 template, search="LED", sized=Bounds.square, pv_name="pv"
+            ),
+            progress_bar_cls=PVWidgetFactory.from_template(
+                template, search="ProgressBar", pv_name="pv"
             ),
             text_read_cls=PVWidgetFactory.from_template(
                 template, search="TextUpdate", pv_name="pv"

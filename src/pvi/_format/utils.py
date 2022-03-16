@@ -18,6 +18,7 @@ from pvi.device import (
     Generic,
     Grid,
     Group,
+    ProgressBar,
     ReadWidget,
     SignalR,
     SignalRef,
@@ -245,6 +246,7 @@ class LayoutProperties:
 class ScreenWidgets(Generic[T]):
     label_cls: Type[LabelFactory[T]]
     led_cls: Type[PVWidgetFactory[T]]
+    progress_bar_cls: Type[PVWidgetFactory[T]]
     # TODO: add bitfield, progress_bar, plot, table, image
     text_read_cls: Type[PVWidgetFactory[T]]
     check_box_cls: Type[PVWidgetFactory[T]]
@@ -273,6 +275,7 @@ class ScreenWidgets(Generic[T]):
         widget_factory: Dict[type, Type[PVWidgetFactory[T]]] = {
             # Currently supported instances of ReadWidget/WriteWidget Components
             LED: self.led_cls,
+            ProgressBar: self.progress_bar_cls,
             TextRead: self.text_read_cls,
             CheckBox: self.check_box_cls,
             ComboBox: self.combo_box_cls,
