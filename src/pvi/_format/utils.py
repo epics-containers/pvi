@@ -213,18 +213,6 @@ def max_y(widgets: List[WidgetFactory[T]], spacing: int = 0) -> int:
         return 0
 
 
-def next_x_pos(widget: WidgetFactory[T], spacing: int = 0) -> int:
-    """Given a single widget, calculate the next feasible location
-    for an additional widget in the x axis"""
-    return widget.bounds.x + widget.bounds.w + spacing
-
-
-def next_y_pos(widget: WidgetFactory[T], spacing: int = 0) -> int:
-    """Given a single widget, calculate the next feasible location
-    for an additional widget in the y axis"""
-    return widget.bounds.y + widget.bounds.h + spacing
-
-
 @dataclass
 class LayoutProperties:
     spacing: Annotated[int, desc("Spacing between widgets")]
@@ -330,7 +318,9 @@ class Screen(Generic[T]):
                 screen_widgets.append(group)
 
                 # Update y for current column and ensure there is an empty column
-                columns[group.bounds.x] = next_y_pos(group, self.layout.spacing)
+                columns[group.bounds.x] = (
+                    group.bounds.y + group.bounds.h + self.layout.spacing
+                )
                 columns[max_x(screen_widgets, self.layout.spacing)] = 0
             else:
                 # Create top level widget
@@ -471,14 +461,14 @@ class Screen(Generic[T]):
             A collection of widgets representing the component
         """
         widgets = list(self.component(c, bounds, group_widget_indent, add_label))
-        bounds.y = next_y_pos(widgets[0], self.layout.spacing)
+        bounds.y = max_y(widgets, self.layout.spacing)
         max_h = max_y(widgets)
         if max_h > parent_bounds.h:
             bounds.x = next_column
             bounds.y = 0
             # Try again in new row
             widgets = list(self.component(c, bounds, group_widget_indent, add_label))
-            bounds.y = next_y_pos(widgets[0], self.layout.spacing)
+            bounds.y = max_y(widgets, self.layout.spacing)
         return widgets
 
 
