@@ -160,9 +160,9 @@ class SourceConverter:
         # Add the param set parameter to the constructor call in the extern "C" function
         driver = self.device_class
         cpp_text = cpp_text.replace(
-            f"new {driver}(",
+            f"{driver} *pPlugin = new {driver}(",
             f"{driver}ParamSet* paramSet = new {driver}ParamSet;\n"
-            f"    new {driver}(paramSet, ",
+            f"  {driver} *pPlugin = new {driver}(paramSet, ",
         )
 
         # Add the initialiser list base class param set parameter
