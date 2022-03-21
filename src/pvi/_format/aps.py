@@ -29,6 +29,9 @@ class APSFormatter(Formatter):
     spacing: Annotated[int, desc("Spacing between widgets")] = 5
     title_height: Annotated[int, desc("Height of screen title bar")] = 25
     max_height: Annotated[int, desc("Max height of the screen")] = 900
+    label_width: Annotated[int, desc("Width of the widget description labels")] = 205
+    widget_width: Annotated[int, desc("Width of the widgets")] = 100
+    widget_height: Annotated[int, desc("Height of the widgets")] = 20
 
     def format(self, device: Device, prefix: str, path: Path):
         assert path.suffix == ".adl", "Can only write adl files"
@@ -38,9 +41,11 @@ class APSFormatter(Formatter):
             title_height=self.title_height,
             max_height=self.max_height,
             group_label_height=25,
-            label_width=205,
-            widget_width=100,
-            widget_height=20,
+            label_width=self.label_width,
+            widget_width=self.widget_width,
+            widget_height=self.widget_height,
+            group_widget_indent=0,
+            group_width_offset=0,
         )
         screen_widgets = ScreenWidgets(
             label_cls=LabelFactory.from_template(

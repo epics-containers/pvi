@@ -31,6 +31,9 @@ class DLSFormatter(Formatter):
     spacing: Annotated[int, desc("Spacing between widgets")] = 5
     title_height: Annotated[int, desc("Height of screen title bar")] = 25
     max_height: Annotated[int, desc("Max height of the screen")] = 900
+    label_width: Annotated[int, desc("Width of the widget description labels")] = 115
+    widget_width: Annotated[int, desc("Width of the widgets")] = 120
+    widget_height: Annotated[int, desc("Height of the widgets")] = 20
 
     def format(self, device: Device, prefix: str, path: Path):
         if path.suffix == ".edl":
@@ -48,10 +51,11 @@ class DLSFormatter(Formatter):
             title_height=self.title_height,
             max_height=self.max_height,
             group_label_height=10,
-            label_width=115,
-            widget_width=120,
-            widget_height=20,
+            label_width=self.label_width,
+            widget_width=self.widget_width,
+            widget_height=self.widget_height,
             group_widget_indent=5,
+            group_width_offset=0,
         )
         screen_widgets = ScreenWidgets(
             label_cls=LabelFactory.from_template(
@@ -149,9 +153,9 @@ class DLSFormatter(Formatter):
             title_height=self.title_height,
             max_height=self.max_height,
             group_label_height=26,
-            label_width=120,
-            widget_width=120,
-            widget_height=20,
+            label_width=self.label_width,
+            widget_width=self.widget_width,
+            widget_height=self.widget_height,
             group_widget_indent=18,
             group_width_offset=26,
         )
