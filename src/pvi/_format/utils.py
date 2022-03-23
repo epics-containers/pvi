@@ -83,7 +83,6 @@ class WidgetTemplate(Generic[T]):
         properties set"""
         raise NotImplementedError(self)
 
-    # TODO: Investigate type checking for children argument (List[WidgetFactory[T]])
     def create_group(
         self,
         group_object: List[T],
