@@ -195,20 +195,44 @@ class GroupFactory(WidgetFactory[T]):
         return FormattableGroupFactory
 
 
-def max_x(widgets: List[WidgetFactory[T]], spacing: int = 0) -> int:
-    """Given a list of widgets, calulate the next feasible location for
-    an additional widget in the x axis"""
-    if widgets:
-        return max(w.bounds.x + w.bounds.w + spacing for w in widgets)
+def max_x(widgets: Union[WidgetFactory[T], List[WidgetFactory[T]]]) -> int:
+    """Given one or more widgets, calulate the maximum x position that they occupy"""
+    if isinstance(widgets, List):
+        return max(w.bounds.x + w.bounds.w for w in widgets)
+    elif isinstance(widgets, WidgetFactory):
+        return widgets.bounds.x + widgets.bounds.w
     else:
         return 0
 
 
-def max_y(widgets: List[WidgetFactory[T]], spacing: int = 0) -> int:
-    """Given a list of widgets, calulate the next feasible location for
-    an additional widget in the y axis"""
+def max_y(widgets: Union[WidgetFactory, List[WidgetFactory[T]]]) -> int:
+    """Given one or more widgets, calulate the maximum y position that they occupy"""
+    if isinstance(widgets, List):
+        return max(w.bounds.y + w.bounds.h for w in widgets)
+    elif isinstance(widgets, WidgetFactory):
+        return widgets.bounds.y + widgets.bounds.h
+    else:
+        return 0
+
+
+def next_x(
+    widgets: Union[WidgetFactory, List[WidgetFactory[T]]], spacing: int = 0
+) -> int:
+    """Given one or more widgets, calulate the next feasible location for an
+    additional widget in the x axis"""
     if widgets:
-        return max(w.bounds.y + w.bounds.h + spacing for w in widgets)
+        return max_x(widgets) + spacing
+    else:
+        return 0
+
+
+def next_y(
+    widgets: Union[WidgetFactory, List[WidgetFactory[T]]], spacing: int = 0
+) -> int:
+    """Given one or more widgets, calulate the next feasible location for an
+    additional widget in the y axis"""
+    if widgets:
+        return max_y(widgets) + spacing
     else:
         return 0
 
@@ -321,14 +345,14 @@ class Screen(Generic[T]):
                 columns[group.bounds.x] = (
                     group.bounds.y + group.bounds.h + self.layout.spacing
                 )
-                columns[max_x(screen_widgets, self.layout.spacing)] = 0
+                columns[next_x(screen_widgets, self.layout.spacing)] = 0
             else:
                 # Create top level widget
                 screen_widgets = screen_widgets + self.make_component_widgets(
                     c,
                     bounds=widget_bounds,
                     parent_bounds=screen_bounds,
-                    next_column=max_x(screen_widgets, self.layout.spacing),
+                    next_column=next_x(screen_widgets, self.layout.spacing),
                     group_widget_indent=self.layout.group_widget_indent,
                 )
 
@@ -428,7 +452,7 @@ class Screen(Generic[T]):
                     c,
                     bounds=child_bounds,
                     parent_bounds=bounds,
-                    next_column=max_x(widgets, self.layout.spacing),
+                    next_column=next_x(widgets, self.layout.spacing),
                     add_label=group.layout.labelled,
                 )
 
@@ -461,14 +485,13 @@ class Screen(Generic[T]):
             A collection of widgets representing the component
         """
         widgets = list(self.component(c, bounds, group_widget_indent, add_label))
-        bounds.y = max_y(widgets, self.layout.spacing)
-        max_h = max_y(widgets)
-        if max_h > parent_bounds.h:
+        bounds.y = next_y(widgets, self.layout.spacing)
+        if max_y(widgets) > parent_bounds.h:
             bounds.x = next_column
             bounds.y = 0
             # Try again in new row
             widgets = list(self.component(c, bounds, group_widget_indent, add_label))
-            bounds.y = max_y(widgets, self.layout.spacing)
+            bounds.y = next_y(widgets, self.layout.spacing)
         return widgets
 
 
