@@ -148,6 +148,7 @@ class DLSFormatter(Formatter):
 
     def format_bob(self, device: Device, prefix: str, path: Path):
         template = BobTemplate(str(Path(__file__).parent / "dls.bob"))
+        # LP DOCS REF: Define the layout properties
         layout_properties = LayoutProperties(
             spacing=self.spacing,
             title_height=self.title_height,
@@ -159,6 +160,7 @@ class DLSFormatter(Formatter):
             group_widget_indent=18,
             group_width_offset=26,
         )
+        # SW DOCS REF: Extract widget types from template file
         screen_widgets = ScreenWidgets(
             label_cls=LabelFactory.from_template(template, search="Label", text="text"),
             led_cls=PVWidgetFactory.from_template(
@@ -183,6 +185,7 @@ class DLSFormatter(Formatter):
                 template, search="ActionButton", text="label", pv_name="pv"
             ),
         )
+        # MAKE_WIDGETS DOCS REF: Define screen and group widgets
         screen_title_cls = LabelFactory.from_template(
             template, search="Title", text="text"
         )
@@ -204,6 +207,7 @@ class DLSFormatter(Formatter):
                 )
             ]
 
+        # SCREEN_INI DOCS REF: Construct a screen object
         screen = Screen(
             screen_cls=GroupFactory.from_template(
                 template,
@@ -225,9 +229,11 @@ class DLSFormatter(Formatter):
             prefix=prefix,
             layout=layout_properties,
         )
+        # SCREEN_FORMAT DOCS REF: Format the screen
         title = f"{device.label} - {prefix}"
         texts = screen.screen(device.children, title).format()
-        # 'Display' is always the first element in texts
+        # SCREEN_WRITE DOCS REF: Generate the screen file
+        # The root:'Display' is always the first element in texts
         ET = etree.fromstring(etree.tostring(texts[0]))
         for element in texts[:0:-1]:
             ET.insert(ET.index(ET.find("height")) + 1, element)
