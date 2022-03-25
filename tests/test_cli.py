@@ -14,6 +14,9 @@ HERE = Path(__file__).parent
 PILATUS_PRODUCER = (
     HERE / "produce_format" / "input" / "pilatusDetector.pvi.producer.yaml"
 )
+PILATUS_PRODUCER_MIXED_WIDGETS = (
+    HERE / "produce_format" / "input" / "mixedWidgets.pvi.producer.yaml"
+)
 
 
 def test_cli_version():
@@ -75,13 +78,13 @@ def test_produce(tmp_path, filename):
 @pytest.mark.parametrize(
     "filename,formatter",
     [
-        ("pilatusParameters.edl", "edl.pvi.formatter.yaml"),
+        ("pilatusParameters.edl", "dls.edl.pvi.formatter.yaml"),
         ("pilatusParameters.adl", "aps.pvi.formatter.yaml"),
-        ("pilatusParameters.bob", "bob.pvi.formatter.yaml"),
+        ("pilatusParameters.bob", "dls.bob.pvi.formatter.yaml"),
     ],
 )
-def test_format(tmp_path, filename, formatter):
-    expected_path = HERE / "produce_format" / "output" / filename
+def test_format_pilatus_parameters(tmp_path, filename, formatter):
+    expected_path = HERE / "produce_format" / "output" / "test_screens" / filename
     input_path = HERE / "produce_format" / "input"
     formatter_path = input_path / formatter
     assert_output_matches(
@@ -89,6 +92,27 @@ def test_format(tmp_path, filename, formatter):
         "format --yaml-paths " + str(input_path),
         tmp_path / filename,
         PILATUS_PRODUCER,
+        formatter_path,
+    )
+
+
+@pytest.mark.parametrize(
+    "filename,formatter",
+    [
+        ("mixedWidgets.edl", "dls.edl.pvi.formatter.yaml"),
+        ("mixedWidgets.adl", "aps.pvi.formatter.yaml"),
+        ("mixedWidgets.bob", "dls.bob.pvi.formatter.yaml"),
+    ],
+)
+def test_format_mixed_widgets(tmp_path, filename, formatter):
+    expected_path = HERE / "produce_format" / "output" / "test_screens" / filename
+    input_path = HERE / "produce_format" / "input"
+    formatter_path = input_path / formatter
+    assert_output_matches(
+        expected_path,
+        "format --yaml-paths " + str(input_path),
+        tmp_path / filename,
+        PILATUS_PRODUCER_MIXED_WIDGETS,
         formatter_path,
     )
 
