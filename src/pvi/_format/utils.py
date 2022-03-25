@@ -330,10 +330,10 @@ class Screen(Generic[T]):
                 for col_x, col_y in columns.items():
                     # Note: Group adjusts bounds to fit the components
                     group = self.group(
-                        c, bounds=Bounds(col_x, col_y, h=self.layout.max_height)
+                        c, bounds=Bounds(col_x, col_y, h=screen_bounds.h)
                     )
 
-                    if group.bounds.h + group.bounds.y <= self.layout.max_height:
+                    if group.bounds.h + group.bounds.y <= screen_bounds.h:
                         # Group fits in this column
                         break
 
