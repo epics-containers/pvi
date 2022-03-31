@@ -147,6 +147,50 @@
             "console": "integratedTerminal"
         },
         {
+            "name": "Regroup Producer asynNDArrayDriver",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "regroup",
+                "${workspaceFolder:ADCore}",
+                "${workspaceFolder:ADCore}/pvi/asynNDArrayDriver.pvi.producer.yaml",
+                "${workspaceFolder:ADCore}/ADApp/op/edl/NDFile.edl",
+                // add more
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Regroup Producer NDPluginDriver",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "regroup",
+                "${workspaceFolder:ADCore}",
+                "${workspaceFolder:ADCore}/pvi/NDPluginDriver.pvi.producer.yaml",
+                "${workspaceFolder:ADCore}/ADApp/op/edl/NDPluginBase.edl",
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Regroup Producer NDFileHDF5",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "regroup",
+                "${workspaceFolder:ADCore}",
+                "${workspaceFolder:ADCore}/pvi/NDFileHDF5.pvi.producer.yaml",
+                "${workspaceFolder:ADCore}/ADApp/op/edl/NDFileHDF5.edl",
+
+            ],
+            "console": "integratedTerminal"
+        },
+        {
             "name": "Produce",
             "type": "python",
             "request": "launch",
@@ -177,6 +221,24 @@
             "args": [
                 "stsimDetector.boot"
             ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder:ADSimDetector}/iocs/simDetector/bin/linux-x86_64",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "Plugin Test",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder:ADCore}/bin/linux-x86_64/plugin-test",
             "stopAtEntry": false,
             "cwd": "${workspaceFolder:ADSimDetector}/iocs/simDetector/bin/linux-x86_64",
             "environment": [],
@@ -231,19 +293,19 @@
             "description": "Which plugin to alter?",
             "type": "pickString",
             "options": [
-              "NDArrayRing",
-              "NDFileHDF5AttributeDataset",
-              "NDFileHDF5Dataset",
-              "NDFileHDF5Layout",
-              "NDFileHDF5LayoutXML",
+              //"NDArrayRing", no classes
+              //"NDFileHDF5AttributeDataset", no classes
+              //NDFileHDF5Dataset", no classes
+              //"NDFileHDF5Layout", no classes
+              //"NDFileHDF5LayoutXML", no classes
               "NDFileJPEG",
               "NDFileMagick",
               "NDFileNetCDF",
               "NDFileNexus",
               "NDFileNull",
               "NDFileTIFF",
-              "NDPluginAttribute",
-              "NDPluginAttrPlot",
+              "NDPluginAttribute", 
+              "NDPluginAttrPlot", // took the wrong class, manually edited.
               "NDPluginBadPixel",
               "NDPluginCircularBuff",
               "NDPluginCodec",
@@ -251,7 +313,7 @@
               "NDPluginFFT",
               "NDPluginGather",
               "NDPluginOverlay",
-              "NDPluginOverlayTextFont",
+              //"NDPluginOverlayTextFont", no classes
               "NDPluginProcess",
               "NDPluginPva",
               "NDPluginROI",
@@ -262,7 +324,7 @@
               "NDPluginTimeSeries",
               "NDPluginTransform",
               "NDPosPlugin",
-              "NDPosPluginFileReader",
+              // "NDPosPluginFileReader", no classes
             ],
           },
     ]
