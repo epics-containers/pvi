@@ -19,7 +19,7 @@ deserialised into component objects, which are later translated into widgets:
 
 To make a screen from this, we need a template file. This contains a blank representation
 of each supported widget for each of the supported file formats (bob, edl etc...). Below
-is an example of a text entry widget for a .bob file:
+is an example of a 'text entry' widget for a .bob file:
 
 .. literalinclude:: ../../src/pvi/_format/dls.bob
     :lines: 57-73
@@ -36,9 +36,9 @@ To start, we will need to create our own formatter class. These inherit from an 
 .. literalinclude:: ../../src/pvi/_format/base.py
     :pyobject: Formatter
 
-The format function takes in a device, which is a list of components obtained from our 
-deserialised device.yaml file. A prefix, which is the pv prefix of the device. And a path,
-which is the output destination for the generated screen file.
+The format function takes in a device: a list of components obtained from our 
+deserialised device.yaml file, A prefix: the pv prefix of the device, and a path: the 
+output destination for the generated screen file.
 
 With a formatter defined, we now can start to populate this by defining the screen
 dependencies. 
@@ -53,7 +53,7 @@ be imported from utils.py. Within the dataclass are the following configurable p
     :pyobject: LayoutProperties
 
 When defining these in our formatter, we have the option of deciding which properties
-should be configuarable inside of the formatter.yaml. Properties defined as member
+should be configurable inside of the formatter.yaml. Properties defined as member
 variables of the formatter class (and then referenced by the layout properties in the
 screen format function) will be available to adjust inside of the formatter.yaml.
 Anything else, should be considered as defaults for the formatter:
@@ -93,7 +93,7 @@ can then be used to identify what each widget should look like:
 Divide the Template into Widgets
 --------------------------------
 With a template defined, we now need to assign each part of it to a supported widget. 
-This is achieved using the ScreenWidgets dataclass from utils.py. With this, we can 
+This is achieved using the ScreenWidgets dataclass (from utils.py). With this, we can 
 assign each of the widget classes to a snippet of the template using the
 WidgetFactory.from_template method:
 
@@ -101,27 +101,23 @@ WidgetFactory.from_template method:
     :start-after: SW DOCS REF
     :end-before: MAKE_WIDGETS DOCS REF
 
-This function uses a unique search term to locate and extract the required widget 
-from the template. As such, the search term MUST be unique to avoid extracing multiple
-or irrelevant widgets from the template.    
+This function uses a unique search term to locate and extract a widget from the template. 
+As such, the search term MUST be unique to avoid extracing multiple or irrelevant 
+widgets from the template.    
 
 Define screen and group widget functions
 ----------------------------------------
-Two widgets that are not handled by ScreenWidgets are the screen title and group object,
-this is because the style of these widgets differ greatly for each file type. For instance, 
-with edl and adl files, groups are represented by a rectangle and title placed behind a 
-collection of widgets. Conversely, bob files handle groups using its dedicated group 
-object, which places widgets as children under the group object. Becuase of this, we need 
-to define two functions: one for the additional screen widgets (such as the title), and 
-one to represent the group widgets.
-
-In the following example for bob files, the screen title and group object are declared 
-as LabelFactories. This is because they only require a text property and do not rely on 
-monitoring pv's or storing values.
+Two widgets that are not handled by ScreenWidgets are the screen title and group object.
+This is because the style of these widgets differ greatly for each file type. For 
+instance, with edl and adl files, groups are represented by a rectangle and title placed 
+behind a collection of widgets. Conversely, bob files handle groups using its dedicated 
+group object, which places widgets as children under the group object. Becuase of this, 
+we need to define two functions: one for the additional screen widgets (such as the title), 
+and one to represent the group widgets.
 
 We then need to define two functions that can be used to create multiple instances of 
 these widgets. In this example, we provide two arguments: The 'bounds', to set the 
-widgets size and position, and the 'title' to populate the label with:
+widgets size and position, and the 'title' to populate the label with.
 
 .. literalinclude:: ../../src/pvi/_format/dls.py
     :start-after: MAKE_WIDGETS DOCS REF
