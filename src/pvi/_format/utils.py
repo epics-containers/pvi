@@ -194,30 +194,24 @@ class GroupFactory(WidgetFactory[T]):
         return FormattableGroupFactory
 
 
-def max_x(widgets: Union[WidgetFactory[T], List[WidgetFactory[T]]]) -> int:
-    """Given one or more widgets, calulate the maximum x position that they occupy"""
-    if isinstance(widgets, List):
+def max_x(widgets: List[WidgetFactory[T]]) -> int:
+    """Given multiple widgets, calulate the maximum x position that they occupy"""
+    if widgets:
         return max(w.bounds.x + w.bounds.w for w in widgets)
-    elif isinstance(widgets, WidgetFactory):
-        return widgets.bounds.x + widgets.bounds.w
     else:
         return 0
 
 
-def max_y(widgets: Union[WidgetFactory, List[WidgetFactory[T]]]) -> int:
-    """Given one or more widgets, calulate the maximum y position that they occupy"""
-    if isinstance(widgets, List):
+def max_y(widgets: List[WidgetFactory[T]]) -> int:
+    """Given multiple widgets, calulate the maximum y position that they occupy"""
+    if widgets:
         return max(w.bounds.y + w.bounds.h for w in widgets)
-    elif isinstance(widgets, WidgetFactory):
-        return widgets.bounds.y + widgets.bounds.h
     else:
         return 0
 
 
-def next_x(
-    widgets: Union[WidgetFactory, List[WidgetFactory[T]]], spacing: int = 0
-) -> int:
-    """Given one or more widgets, calulate the next feasible location for an
+def next_x(widgets: List[WidgetFactory[T]], spacing: int = 0) -> int:
+    """Given multiple widgets, calulate the next feasible location for an
     additional widget in the x axis"""
     if widgets:
         return max_x(widgets) + spacing
@@ -225,10 +219,8 @@ def next_x(
         return 0
 
 
-def next_y(
-    widgets: Union[WidgetFactory, List[WidgetFactory[T]]], spacing: int = 0
-) -> int:
-    """Given one or more widgets, calulate the next feasible location for an
+def next_y(widgets: List[WidgetFactory[T]], spacing: int = 0) -> int:
+    """Given multiple widgets, calulate the next feasible location for an
     additional widget in the y axis"""
     if widgets:
         return max_y(widgets) + spacing
