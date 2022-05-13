@@ -24,14 +24,16 @@ def test_cli_version():
 def assert_output_matches(
     expected_path: Path, cmd: str, output_path: Path, *paths: Path
 ):
-    if os.environ.get("PVI_REGENERATE_OUTPUT", None):
-        # We were asked to regenerate output, so run with expected
-        # path
-        output_path = expected_path
     args = cmd.split() + [str(output_path)] + [str(p) for p in paths]
     result = CliRunner().invoke(app, args)
     if result.exception:
         raise result.exception
+
+    if os.environ.get("PVI_REGENERATE_OUTPUT", None):
+        # We were asked to regenerate output, so copy output files to expected
+        for output_file in (output_path / "pvi").iterdir():
+            shutil.copy(output_file, expected_path / output_file.name)
+
     if expected_path.is_dir():
         for child in expected_path.iterdir():
             output_child = output_path / "pvi" / child.relative_to(expected_path)
