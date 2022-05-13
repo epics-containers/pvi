@@ -229,6 +229,7 @@ class SourceConverter:
         param_set_definition = f"    {self.device_class}ParamSet* paramSet;"
 
         if matches:
+            # Protected section exists - add param set here
             protected_str = matches[0]
             h_text = h_text.replace(
                 protected_str,
@@ -236,6 +237,7 @@ class SourceConverter:
                 1,
             )
         else:
+            # Protected section does not exist - create it to add param set
             h_text = h_text.replace(
                 class_str,
                 class_str + "\n" + "protected:" + "\n" + param_set_definition,
