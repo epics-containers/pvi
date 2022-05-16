@@ -159,10 +159,17 @@ class SourceConverter:
 
         # Add the param set parameter to the constructor call in the extern "C" function
         driver = self.device_class
-        cpp_text = cpp_text.replace(
-            f"{driver} *pPlugin = new {driver}(",
-            f"{driver}ParamSet* paramSet = new {driver}ParamSet;\n"
-            f"  {driver} *pPlugin = new {driver}(paramSet, ",
+
+        # Create paramSet and insert it into constructor arguments
+        # Group 1 is leading whitespace - used to indent added line
+        # Group 2 is the rest of the line up to driver constructor opening bracket
+        cpp_text = re.sub(
+            r"^(\s*)(.*new " + driver + r"\()",
+            r"\1"
+            + f"{driver}ParamSet* paramSet = new {driver}ParamSet;\n"
+            + r"\1\2paramSet, ",
+            cpp_text,
+            flags=re.MULTILINE,  # Make ^ match start of line
         )
 
         # Add the initialiser list base class param set parameter
