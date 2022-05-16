@@ -17,5 +17,5 @@
 	branch = master
 [submodule "src/pvi/submodules/ADPilatus"]
 	path = src/pvi/submodules/ADPilatus
-	url = git@github.com:areaDetector/ADPilatus.git
-	branch = master
+	url = git@github.com:dls-controls/ADPilatus.git
+	branch = pvi-pre-convert
