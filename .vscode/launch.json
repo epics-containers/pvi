@@ -225,7 +225,12 @@
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder:ADSimDetector}/iocs/simDetector/bin/linux-x86_64",
-            "environment": [],
+            "environment": [
+                {
+                    "name": "EPICS_CA_SERVER_PORT",
+                    "value": "6064"
+                }
+            ],
             "externalConsole": false,
             "MIMode": "gdb",
             "setupCommands": [
