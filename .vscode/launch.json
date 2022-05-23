@@ -113,7 +113,7 @@
                 "asyn",
                 "${workspaceFolder:ADPilatus}",
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADPilatus/pilatusApp/src/pilatusDetector.cpp",
-                "${workspaceFolder:pvi}/src/pvi/submodules/ADPilatus/pilatusApp/src/pilatusDetector.cpp",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADPilatus/pilatusApp/src/pilatusDetector.h",
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADPilatus/pilatusApp/Db/pilatus.template",
             ],
             "console": "integratedTerminal"
