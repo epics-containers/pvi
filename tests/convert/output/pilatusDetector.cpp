@@ -117,7 +117,7 @@ void pilatusDetector::readFlatFieldFile(const char *flatFieldFile)
         if (*pData < minFlatField) *pData = (epicsInt32)averageFlatField;
     }
     /* Call the NDArray callback */
-    doCallbacksGenericPointer(this->pFlatField, NDArrayData, 0);
+    doCallbacksGenericPointer(this->pFlatField, paramSet->NDArrayData, 0);
     setIntegerParam(paramSet->PilatusFlatFieldValid, 1);
 }
 
@@ -1037,7 +1037,7 @@ void pilatusDetector::pilatusTask()
                 /* Call the NDArray callback */
                 asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
                      "%s:%s: calling NDArray callback\n", driverName, functionName);
-                doCallbacksGenericPointer(pImage, NDArrayData, 0);
+                doCallbacksGenericPointer(pImage, paramSet->NDArrayData, 0);
                 /* Free the image buffer */
                 pImage->release();
             }

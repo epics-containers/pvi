@@ -21,6 +21,13 @@ class SourceConverter:
         self.source = Source(cpp.read_text(), h.read_text())
         self.module_root = module_root
         self.parameter_infos = drv_infos
+
+        if cpp.name.startswith("asynNDArrayDriver"):
+            # Special case to include NDArrayData to be removed from source files
+            # There is also a special case to add it to the paramSet without it
+            # appearing in the producer.yaml
+            self.parameter_infos.append("ARRAY_DATA")
+
         self.device_class, self.parent_class = self._extract_device_and_parent_class()
         self.define_strings = self._extract_define_strs(self.parameter_infos)
         self.string_info_map = self._get_string_info_map(self.define_strings)
@@ -272,6 +279,7 @@ class SourceConverter:
 
     @staticmethod
     def _insert_param_set_accessors(text: str, parameters: List[str]) -> str:
+        parameters.append("NDArrayData")  # Special case to update NDArrayData
         for parameter in parameters:
             # Only match parameter name exactly, not others with same prefix
             text = re.sub(

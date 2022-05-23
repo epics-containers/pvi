@@ -374,15 +374,28 @@ This file was automatically generated
         defines = []
         adds = []
         indexes = []
+
+        # Special case to add NDArrayData as first asynNDArrayDriver parameter
+        # There is also a special case to remove it from the source files
+        if path.name.startswith("asynNDArrayDriver"):
+            defines.append('#define NDArrayDataString "ARRAY_DATA"')
+            adds.append(
+                "this->add(NDArrayDataString, asynParamGenericPointer, &NDArrayData);"
+            )
+            indexes.append("int NDArrayData;")
+            indexes.append(f"#define FIRST_{path.stem.upper()}_PARAM NDArrayData")
+
         for node in walk(self.parameters):
             if isinstance(node, AsynParameter):
                 param_type = node.type_strings.asyn_param
                 index_name = node.get_index_name()
+
                 defines.append(f'#define {index_name}String "{node.get_drv_info()}"')
                 adds.append(
                     f"this->add({index_name}String, {param_type}, &{index_name});"
                 )
                 indexes.append(f"int {index_name};")
+
                 if len(indexes) == 1:
                     indexes.append(
                         f"#define FIRST_{path.stem.upper()}_PARAM {index_name}"
