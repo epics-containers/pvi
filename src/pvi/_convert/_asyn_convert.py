@@ -45,12 +45,20 @@ class AsynRecord(Record):
         return parameter_name
 
     def asyn_component_type(self) -> Type[AsynParameter]:
-        asyn_components = cast(List[Type[AsynParameter]], rec_subclasses(AsynParameter))
-
-        # For waveform records the data type is defined by FTVL
+        # For waveform records the data type is defined by DTYP
         if self.type == "waveform":
-            return AsynWaveform
+            waveform_components = [AsynWaveform] + cast(
+                List[Type[AsynWaveform]], rec_subclasses(AsynWaveform)
+            )
+            for waveform_cls in waveform_components:
+                if self.fields["DTYP"] in (
+                    waveform_cls.type_strings.asyn_read,
+                    waveform_cls.type_strings.asyn_write,
+                ):
+                    return waveform_cls
+            assert False, f"Waveform type for {self} not found in {waveform_components}"
 
+        asyn_components = cast(List[Type[AsynParameter]], rec_subclasses(AsynParameter))
         if "INP" in self.fields.keys():
             type_fields = [
                 (

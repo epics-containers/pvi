@@ -91,6 +91,12 @@
         },
         {
           "$ref": "#/definitions/AsynWaveform"
+        },
+        {
+          "$ref": "#/definitions/AsynInt32Waveform"
+        },
+        {
+          "$ref": "#/definitions/AsynFloat64Waveform"
         }
       ]
     },
@@ -6931,6 +6937,254 @@
         "Always",
         "On Change"
       ]
+    },
+    "AsynInt32Waveform": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "AsynInt32Waveform",
+          "default": "AsynInt32Waveform"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "([A-Z][a-z0-9]*)*$",
+          "description": "PascalCase name to uniquely identify"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of what this Parameter is for"
+        },
+        "index_name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Override name of index variable in source code (defaults to name)",
+          "default": null
+        },
+        "drv_info": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^\\S{1,40}$",
+          "description": "Info string for drvUserCreate for dynamically created parameters",
+          "default": null
+        },
+        "access": {
+          "description": "What access does the user have. One of:\n\n    - R: Read only value that cannot be set. E.g. chipTemperature on a detector,\n      or isHomed for a motor\n    - W: Write only value that can be written to, but there is no current value.\n      E.g. reboot on a detector, or overwriteCurrentPosition for a motor\n    - RW: Read and Write value that can be written to and read back.\n      E.g. acquireTime on a detector, or velocity of a motor\n    ",
+          "default": "RW",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Access"
+            }
+          ]
+        },
+        "demand_auto_updates": {
+          "type": "boolean",
+          "description": "Should demand update when readback changes?",
+          "default": false
+        },
+        "read_record_suffix": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The read record suffix, if not given then use $(name)_RBV",
+          "default": null
+        },
+        "write_record_suffix": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The write record suffix, if not given then use $(name)",
+          "default": null
+        },
+        "display_form": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DisplayForm"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Display form for numeric/array fields",
+          "default": null
+        },
+        "initial": {
+          "default": null
+        },
+        "read_widget": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ReadWidget"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Widget to use for read record",
+          "default": {
+            "type": "TextRead",
+            "lines": 1
+          }
+        },
+        "write_widget": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/WriteWidget"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Widget to use for write record",
+          "default": {
+            "type": "TextWrite",
+            "lines": 1
+          }
+        },
+        "record_fields": {
+          "description": "Waveform record fields",
+          "allOf": [
+            {
+              "$ref": "#/definitions/waveform_waveform"
+            }
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "description"
+      ],
+      "additionalProperties": false
+    },
+    "AsynFloat64Waveform": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "AsynFloat64Waveform",
+          "default": "AsynFloat64Waveform"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "([A-Z][a-z0-9]*)*$",
+          "description": "PascalCase name to uniquely identify"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of what this Parameter is for"
+        },
+        "index_name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Override name of index variable in source code (defaults to name)",
+          "default": null
+        },
+        "drv_info": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^\\S{1,40}$",
+          "description": "Info string for drvUserCreate for dynamically created parameters",
+          "default": null
+        },
+        "access": {
+          "description": "What access does the user have. One of:\n\n    - R: Read only value that cannot be set. E.g. chipTemperature on a detector,\n      or isHomed for a motor\n    - W: Write only value that can be written to, but there is no current value.\n      E.g. reboot on a detector, or overwriteCurrentPosition for a motor\n    - RW: Read and Write value that can be written to and read back.\n      E.g. acquireTime on a detector, or velocity of a motor\n    ",
+          "default": "RW",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Access"
+            }
+          ]
+        },
+        "demand_auto_updates": {
+          "type": "boolean",
+          "description": "Should demand update when readback changes?",
+          "default": false
+        },
+        "read_record_suffix": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The read record suffix, if not given then use $(name)_RBV",
+          "default": null
+        },
+        "write_record_suffix": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The write record suffix, if not given then use $(name)",
+          "default": null
+        },
+        "display_form": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DisplayForm"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Display form for numeric/array fields",
+          "default": null
+        },
+        "initial": {
+          "default": null
+        },
+        "read_widget": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ReadWidget"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Widget to use for read record",
+          "default": {
+            "type": "TextRead",
+            "lines": 1
+          }
+        },
+        "write_widget": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/WriteWidget"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Widget to use for write record",
+          "default": {
+            "type": "TextWrite",
+            "lines": 1
+          }
+        },
+        "record_fields": {
+          "description": "Waveform record fields",
+          "allOf": [
+            {
+              "$ref": "#/definitions/waveform_waveform"
+            }
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "description"
+      ],
+      "additionalProperties": false
     },
     "AsynParameterGroup": {
       "type": "object",

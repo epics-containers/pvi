@@ -241,6 +241,28 @@ class AsynWaveform(AsynParameter):
 
 
 @dataclass
+class AsynInt32Waveform(AsynWaveform):
+    """Asyn Waveform Parameter and records with int32 array elements"""
+
+    type_strings: ClassVar[TypeStrings] = TypeStrings(
+        asyn_read="asynInt32ArrayIn",
+        asyn_write="asynInt32ArrayOut",
+        asyn_param="asynParamInt32",
+    )
+
+
+@dataclass
+class AsynFloat64Waveform(AsynWaveform):
+    """Asyn Waveform Parameter and records with int32 array elements"""
+
+    type_strings: ClassVar[TypeStrings] = TypeStrings(
+        asyn_read="asynFloat64ArrayIn",
+        asyn_write="asynFloat64ArrayOut",
+        asyn_param="asynParamFloat64",
+    )
+
+
+@dataclass
 class AsynProducer(Producer):
     label: Annotated[str, desc("Screen title")]
     asyn_port: Annotated[str, desc("The asyn port name")]
