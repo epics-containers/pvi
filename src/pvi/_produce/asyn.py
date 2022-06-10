@@ -113,6 +113,13 @@ def initial_value(pattern: str = None, min: Number = None, max: Number = None):
     )
 
 
+# The child classes of AsynParameter redefine record_fields with a dynamic type to
+# generate a schema with fields specific to the parameter type. However, the dymanic
+# types make mypy unhappy when it tries to do static type checking, so we use
+# `type: ignore`.
+# https://mypy.readthedocs.io/en/stable/common_issues.html#variables-vs-type-aliases
+
+
 @dataclass
 class AsynBinary(AsynParameter):
     """Asyn Binary Parameter and records"""
@@ -249,6 +256,10 @@ class AsynInt32Waveform(AsynWaveform):
         asyn_write="asynInt32ArrayOut",
         asyn_param="asynParamInt32",
     )
+    # We have to redefine this to retain the `type: ignore` for mypy
+    record_fields: Annotated[  # type: ignore
+        WaveformRecordPair, desc("Waveform record fields")
+    ] = WaveformRecordPair()
 
 
 @dataclass
@@ -260,6 +271,10 @@ class AsynFloat64Waveform(AsynWaveform):
         asyn_write="asynFloat64ArrayOut",
         asyn_param="asynParamFloat64",
     )
+    # We have to redefine this to retain the `type: ignore` for mypy
+    record_fields: Annotated[  # type: ignore
+        WaveformRecordPair, desc("Waveform record fields")
+    ] = WaveformRecordPair()
 
 
 @dataclass
