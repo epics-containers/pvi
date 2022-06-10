@@ -4,7 +4,6 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-
         {
             "name": "Debug Unit Test",
             "type": "python",
@@ -188,7 +187,6 @@
                 "${workspaceFolder:ADCore}",
                 "${workspaceFolder:ADCore}/pvi/NDFileHDF5.pvi.producer.yaml",
                 "${workspaceFolder:ADCore}/ADApp/op/edl/NDFileHDF5.edl",
-
             ],
             "console": "integratedTerminal"
         },
@@ -196,6 +194,7 @@
             "name": "Produce",
             "type": "python",
             "request": "launch",
+            "justMyCode": false,
             "program": "${workspaceFolder:pvi}/src/pvi",
             "args": [
                 "produce",
@@ -262,77 +261,77 @@
     ],
     "inputs": [
         {
-          "id": "Module",
-          "description": "Which Module?",
-          "type": "pickString",
-          "options": [
-            "ADCore",
-            "ADPilatus",
-            "ADSimDetector",
-          ],
+            "id": "Module",
+            "description": "Which Module?",
+            "type": "pickString",
+            "options": [
+                "ADCore",
+                "ADPilatus",
+                "ADSimDetector",
+            ],
         },
         {
-          "id": "Driver",
-          "description": "Which Driver?",
-          "type": "pickString",
-          "options": [
-            "asynNDArrayDriver",
-            "ADDriver",
-            "NDPluginDriver",
-            "NDPluginFile",
-            "NDFileHDF5",
-            "pilatusDetector",
-            "simDetector",
-          ],
+            "id": "Driver",
+            "description": "Which Driver?",
+            "type": "pickString",
+            "options": [
+                "asynNDArrayDriver",
+                "ADDriver",
+                "NDPluginDriver",
+                "NDPluginFile",
+                "NDFileHDF5",
+                "pilatusDetector",
+                "simDetector",
+            ],
         },
         {
-          "id": "FileType",
-          "description": "What file to produce?",
-          "type": "pickString",
-          "options": [
-            "ParamSet.h",
-            "Parameters.template",
-            ".pvi.device.yaml",
-          ],
+            "id": "FileType",
+            "description": "What file to produce?",
+            "type": "pickString",
+            "options": [
+                "ParamSet.h",
+                "Parameters.template",
+                ".pvi.device.yaml",
+            ],
         },
         {
             "id": "plugin",
             "description": "Which plugin to alter?",
             "type": "pickString",
             "options": [
-              //"NDArrayRing", no classes
-              //"NDFileHDF5AttributeDataset", no classes
-              //NDFileHDF5Dataset", no classes
-              //"NDFileHDF5Layout", no classes
-              //"NDFileHDF5LayoutXML", no classes
-              "NDFileJPEG",
-              "NDFileMagick",
-              "NDFileNetCDF",
-              "NDFileNexus",
-              "NDFileNull",
-              "NDFileTIFF",
-              "NDPluginAttribute", 
-              "NDPluginAttrPlot", // took the wrong class, manually edited.
-              "NDPluginBadPixel",
-              "NDPluginCircularBuff",
-              "NDPluginCodec",
-              "NDPluginColorConvert",
-              "NDPluginFFT",
-              "NDPluginGather",
-              "NDPluginOverlay",
-              //"NDPluginOverlayTextFont", no classes
-              "NDPluginProcess",
-              "NDPluginPva",
-              "NDPluginROI",
-              "NDPluginROIStat",
-              "NDPluginScatter",
-              "NDPluginStats",
-              "NDPluginStdArrays",
-              "NDPluginTimeSeries",
-              "NDPluginTransform",
-              "NDPosPlugin",
-              // "NDPosPluginFileReader", no classes
+                //"NDArrayRing", no classes
+                //"NDFileHDF5AttributeDataset", no classes
+                //NDFileHDF5Dataset", no classes
+                //"NDFileHDF5Layout", no classes
+                //"NDFileHDF5LayoutXML", no classes
+                "NDFileJPEG",
+                "NDFileMagick",
+                "NDFileNetCDF",
+                "NDFileNexus",
+                "NDFileNull",
+                "NDFileTIFF",
+                "NDPluginAttribute",
+                "NDPluginAttrPlot", // took the wrong class, manually edited.
+                "NDPluginBadPixel",
+                "NDPluginCircularBuff",
+                "NDPluginCodec",
+                "NDPluginColorConvert",
+                "NDPluginFFT",
+                "NDPluginGather",
+                "NDPluginOverlay",
+                //"NDPluginOverlayTextFont", no classes
+                "NDPluginProcess",
+                "NDPluginPva",
+                "NDPluginROI",
+                "NDPluginROIStat",
+                "NDPluginScatter",
+                "NDPluginStats",
+                "NDPluginStdArrays",
+                "NDPluginTimeSeries",
+                "NDPluginTransform",
+                "NDPosPlugin",
+                // "NDPosPluginFileReader", no classes
             ],
-          },
+        },
     ]
 }
