@@ -1,7 +1,7 @@
 import json
 import os
 from pathlib import Path
-from typing import Dict, List, NewType, Optional, Type, cast
+from typing import Dict, List, NewType, Optional, Type
 
 import typer
 
@@ -11,7 +11,7 @@ from pvi._convert._template_convert import TemplateConverter
 from pvi._format import Formatter
 from pvi._produce import Producer
 from pvi._produce.asyn import AsynParameter, AsynProducer
-from pvi._pv_group import pv_group
+from pvi._pv_group import find_producer_pvs
 from pvi._schema_utils import make_json_schema
 from pvi._yaml_utils import deserialize_yaml, serialize_yaml
 from pvi.device import Device, Grid, Group, Tree, walk
@@ -179,90 +179,58 @@ def convertplaceholder(
     (output / h.name).write_text(extracted_source.h)
 
 
-ScreenName = NewType("ScreenName", str)
-GroupName = NewType("GroupName", str)
-PVName = NewType("PVName", str)
-
-
-def create_screen(
-    screen_name: ScreenName,
-    group_pv_map: Dict[GroupName, List[PVName]],
-    records: Tree[AsynParameter],
-) -> Group[Group[AsynParameter]]:
-    return Group(
-        screen_name,
-        Grid(labelled=True),
-        [
-            create_group(group_name, pv_names, records)
-            for group_name, pv_names in group_pv_map.items()
-        ],
-    )
-
-
-def create_group(
-    group_name: GroupName, pv_names: List[PVName], records: Tree[AsynParameter]
-) -> Group[AsynParameter]:
-    return Group(
-        group_name,
-        Grid(labelled=True),
-        [record for record in records if record.name in set(pv_names)],
-    )
-
-
 @app.command()
 def regroup(
     module_root: Path = typer.Argument(..., help="Root directory of support module"),
     producer_path: Path = typer.Argument(
         ..., help="Path to the producer.yaml file to regroup"
     ),
-    screen_paths: List[Path] = typer.Argument(
-        None, help="Path to the screen to regroup the pv's by"
+    ui_paths: List[Path] = typer.Argument(
+        ..., help="Path to the ui files to regroup the PVs by"
     ),
 ):
     """
     Regroup a drivers producer.yaml file on pv groupings from one/many edl screens.
     """
 
+    # Get original parameters from yaml
+    producer = deserialize_yaml(AsynProducer, producer_path)
+    initial_group: Group[AsynParameter] = producer.parameters[0]  # type: ignore
+    assert isinstance(initial_group, Group)  # This could be a Group or a single node
+
+    # Group PVs that appear in the given ui files
+    group_pv_map: Dict[str, List[str]] = {
+        ui.stem: find_producer_pvs(producer, ui) for ui in ui_paths
+    }
+
+    # Create groups for parameters we found in the files
+    ui_groups: List[Group[AsynParameter]] = [
+        Group(
+            group_name,
+            Grid(labelled=True),
+            [param for param in initial_group.children if param.name in group_pvs],
+        )
+        for group_name, group_pvs in group_pv_map.items()
+    ]
+
+    # Filter out the parameters we found a group for
+    grouped_parameters = [param for group in ui_groups for param in group.children]
+    ungrouped_parameters = [
+        param for param in initial_group.children if param not in grouped_parameters
+    ]
+    ungrouped_group: Group[AsynParameter] = Group(
+        "Misc",
+        initial_group.layout,
+        ungrouped_parameters,
+    )
+
+    # Replace with grouped parameters and ungrouped parameters on the end
+    producer.parameters = [*ui_groups, ungrouped_group]
+
+    # Create new yaml
     output = module_root.joinpath("pvi/grouped_producers")
     if not output.exists():
         os.mkdir(output)
-
-    producer = deserialize_yaml(AsynProducer, producer_path)
-    screen_pv_map: Dict[ScreenName, Dict[GroupName, List[PVName]]] = {
-        ScreenName(screen.stem): pv_group(screen) for screen in screen_paths
-    }
-
-    component_group_one = producer.parameters[0]
-    assert isinstance(component_group_one, Group)
-    component_group_one_pvs = component_group_one.children
-
-    grouped_pvs: List[Group[Group[AsynParameter]]] = [
-        create_screen(screen_name, group_pv_map, component_group_one_pvs)
-        for screen_name, group_pv_map in screen_pv_map.items()
-    ]
-
-    flat_grouped_pvs: List[AsynParameter] = [
-        cast(AsynParameter, pv)
-        for screen_pvs in grouped_pvs
-        for group_pvs in screen_pvs.children
-        for pv in group_pvs.children
-    ]
-
-    # delete them out of the unsorted group
-    unthingmied_pvs = Group(
-        component_group_one.name,
-        component_group_one.layout,
-        [pv for pv in component_group_one_pvs if pv not in flat_grouped_pvs],
-    )
-
-    new_pvs: Tree[Group[AsynParameter]] = [
-        unthingmied_pvs,
-        *grouped_pvs,
-    ]
-
-    producer.parameters = new_pvs  # type: ignore
-
-    # create new producer file
     serialize_yaml(producer, output.joinpath(f"{producer_path.stem}.yaml"))
 
 
