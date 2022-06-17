@@ -209,7 +209,7 @@ class Screen(Generic[T]):
         for c in components:
             if isinstance(c, Group):
                 group = self.group(c, bounds=Bounds(x, y))
-                if group.bounds.h + group.bounds.x > self.max_height:
+                if group.bounds.h + group.bounds.y > self.max_height:
                     if group.bounds.h > self.max_height:
                         # Group will be wider to fit
                         h = self.max_height
@@ -217,10 +217,11 @@ class Screen(Generic[T]):
                         # Group will cap to height
                         h = 0
                     # Retry in a new column
-                    x = max_x(widgets)
+                    x = max_x(widgets) + self.spacing
                     y = 0
                     group = self.group(c, bounds=Bounds(x, y, h=h))
                 widgets.append(group)
+                y += group.bounds.h + self.spacing
             else:
                 raise NotImplementedError(c)
         bounds = Bounds(w=max_x(widgets), h=max_y(widgets))
