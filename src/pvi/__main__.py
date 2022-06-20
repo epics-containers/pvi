@@ -1,7 +1,7 @@
 import json
 import os
 from pathlib import Path
-from typing import Dict, List, NewType, Optional, Type
+from typing import Dict, List, Optional, Type
 
 import typer
 
@@ -11,10 +11,10 @@ from pvi._convert._template_convert import TemplateConverter
 from pvi._format import Formatter
 from pvi._produce import Producer
 from pvi._produce.asyn import AsynParameter, AsynProducer
-from pvi._pv_group import find_producer_pvs
+from pvi._pv_group import find_pvs
 from pvi._schema_utils import make_json_schema
 from pvi._yaml_utils import deserialize_yaml, serialize_yaml
-from pvi.device import Device, Grid, Group, Tree, walk
+from pvi.device import Device, Grid, Group, walk
 
 app = typer.Typer()
 convert_app = typer.Typer()
@@ -186,7 +186,7 @@ def regroup(
         ..., help="Path to the producer.yaml file to regroup"
     ),
     ui_paths: List[Path] = typer.Argument(
-        ..., help="Path to the ui files to regroup the PVs by"
+        ..., help="Paths to the ui files to regroup the PVs by"
     ),
 ):
     """
@@ -195,37 +195,56 @@ def regroup(
 
     # Get original parameters from yaml
     producer = deserialize_yaml(AsynProducer, producer_path)
-    initial_group: Group[AsynParameter] = producer.parameters[0]  # type: ignore
-    assert isinstance(initial_group, Group)  # This could be a Group or a single node
+    initial_parameters: List[AsynParameter] = [
+        param for param in walk(producer.parameters) if isinstance(param, AsynParameter)
+    ]
 
     # Group PVs that appear in the given ui files
-    group_pv_map: Dict[str, List[str]] = {
-        ui.stem: find_producer_pvs(producer, ui) for ui in ui_paths
-    }
+    pvs = [
+        node.name
+        for node in walk(producer.parameters)
+        if isinstance(node, AsynParameter)
+    ]
+    group_pv_map: Dict[str, List[str]] = {}
+    for ui in ui_paths:
+        ui_pvs, pvs = find_pvs(pvs, ui)
+        if ui_pvs:
+            group_pv_map[ui.stem] = ui_pvs
+
+    if pvs:
+        print(f'Did not find group for {"|".join(pvs)}')
 
     # Create groups for parameters we found in the files
     ui_groups: List[Group[AsynParameter]] = [
         Group(
             group_name,
             Grid(labelled=True),
-            [param for param in initial_group.children if param.name in group_pvs],
+            [  # Note: Need to preserve order in group_pvs here
+                param
+                for pv in group_pvs
+                for param in initial_parameters
+                if param.name == pv
+            ],
         )
         for group_name, group_pvs in group_pv_map.items()
     ]
 
-    # Filter out the parameters we found a group for
+    # Separate any parameters we failed to find a group for
     grouped_parameters = [param for group in ui_groups for param in group.children]
     ungrouped_parameters = [
-        param for param in initial_group.children if param not in grouped_parameters
+        param for param in initial_parameters if param not in grouped_parameters
     ]
-    ungrouped_group: Group[AsynParameter] = Group(
-        "Misc",
-        initial_group.layout,
-        ungrouped_parameters,
-    )
 
-    # Replace with grouped parameters and ungrouped parameters on the end
-    producer.parameters = [*ui_groups, ungrouped_group]
+    # Replace with grouped parameters and any ungrouped parameters on the end
+    if ungrouped_parameters:
+        ui_groups.append(
+            Group(
+                producer.label + "Misc",
+                Grid(labelled=True),
+                ungrouped_parameters,
+            )
+        )
+    producer.parameters = ui_groups
 
     # Create new yaml
     output = module_root.joinpath("pvi/grouped_producers")
