@@ -163,6 +163,24 @@
             "console": "integratedTerminal"
         },
         {
+            "name": "Regroup ADDriver",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "regroup",
+                "${workspaceFolder:ADCore}",
+                "${workspaceFolder:ADCore}/pvi/ADDriver.pvi.producer.yaml",
+                "${workspaceFolder:ADCore}/ADApp/op/adl/ADSetup.adl",
+                "${workspaceFolder:ADCore}/ADApp/op/adl/ADReadout.adl",
+                "${workspaceFolder:ADCore}/ADApp/op/adl/ADShutter.adl",
+                "${workspaceFolder:ADCore}/ADApp/op/adl/ADCollect.adl",
+                "${workspaceFolder:ADCore}/ADApp/op/adl/ADAttrFile.adl",
+            ],
+            "console": "integratedTerminal"
+        },
+        {
             "name": "Regroup Producer NDPluginDriver",
             "type": "python",
             "request": "launch",
