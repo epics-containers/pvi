@@ -150,7 +150,7 @@ class SourceConverter:
 
         # Insert accessors for parameters that have been moved to the param set
         parameters = list(self.string_index_map.values())
-        parent_components = find_parent_components(self.parent_class, self.module_root)
+        parent_components = find_components(self.parent_class, self.module_root)
         parameters += [
             parameter.get_index_name()
             for parameter in walk(parent_components)
@@ -288,7 +288,7 @@ class SourceConverter:
         return text
 
 
-def find_parent_components(yaml_name: str, module_root: Path) -> Tree[AsynParameter]:
+def find_components(yaml_name: str, module_root: Path) -> Tree[AsynParameter]:
     if yaml_name == "asynPortDriver":
         return []  # asynPortDriver is the most base class and has no parameters
 
@@ -309,7 +309,7 @@ def find_parent_components(yaml_name: str, module_root: Path) -> Tree[AsynParame
     producer = deserialize_yaml(AsynProducer, producer_yaml)
 
     return list(producer.parameters) + list(
-        find_parent_components(producer.parent, module_root)
+        find_components(producer.parent, module_root)
     )
 
 
