@@ -1,7 +1,6 @@
 import os
 import re
 from dataclasses import dataclass
-from glob import glob
 from pathlib import Path
 from typing import Dict, List, Tuple, Union
 
@@ -17,9 +16,11 @@ class Source:
 
 
 class SourceConverter:
-    def __init__(self, cpp: Path, h: Path, module_root: Path, drv_infos: List[str]):
+    def __init__(
+        self, cpp: Path, h: Path, yaml_paths: List[Path], drv_infos: List[str]
+    ):
         self.source = Source(cpp.read_text(), h.read_text())
-        self.module_root = module_root
+        self.yaml_paths = yaml_paths
         self.parameter_infos = drv_infos
 
         if cpp.name.startswith("asynNDArrayDriver"):
@@ -150,7 +151,7 @@ class SourceConverter:
 
         # Insert accessors for parameters that have been moved to the param set
         parameters = list(self.string_index_map.values())
-        parent_components = find_components(self.parent_class, self.module_root)
+        parent_components = find_components(self.parent_class, self.yaml_paths)
         parameters += [
             parameter.get_index_name()
             for parameter in walk(parent_components)
@@ -288,20 +289,13 @@ class SourceConverter:
         return text
 
 
-def find_components(yaml_name: str, module_root: Path) -> Tree[AsynParameter]:
+def find_components(yaml_name: str, yaml_paths: List[Path]) -> Tree[AsynParameter]:
     if yaml_name == "asynPortDriver":
         return []  # asynPortDriver is the most base class and has no parameters
 
     # Look in this module first
     producer_name = f"{yaml_name}.pvi.producer.yaml"
-    producer_yaml = find_pvi_yaml(producer_name, module_root)
-    if producer_yaml is None:
-        # We didn't find it in this module, search dependencies
-        parent_modules = find_parent_modules(module_root)
-        for module_path in parent_modules:
-            producer_yaml = find_pvi_yaml(producer_name, module_path)
-            if producer_yaml is not None:
-                break
+    producer_yaml = find_pvi_yaml(producer_name, yaml_paths)
 
     if producer_yaml is None:
         raise IOError(f"Cannot find {producer_name}")
@@ -309,16 +303,16 @@ def find_components(yaml_name: str, module_root: Path) -> Tree[AsynParameter]:
     producer = deserialize_yaml(AsynProducer, producer_yaml)
 
     return list(producer.parameters) + list(
-        find_components(producer.parent, module_root)
+        find_components(producer.parent, yaml_paths)
     )
 
 
-def find_pvi_yaml(yaml_name: str, module_root: Path) -> Union[Path, None]:
-    """Find a yaml file in the pvi directory of a module"""
-    pvi_directory = module_root / "pvi"
-    if os.path.isdir(pvi_directory):
-        if yaml_name in os.listdir(pvi_directory):
-            return pvi_directory / yaml_name
+def find_pvi_yaml(yaml_name: str, yaml_paths: List[Path]) -> Union[Path, None]:
+    """Find a yaml file in given directory"""
+    for yaml_path in yaml_paths:
+        if os.path.isdir(yaml_path):
+            if yaml_name in os.listdir(yaml_path):
+                return yaml_path / yaml_name
     return None
 
 
@@ -330,29 +324,3 @@ def filter_strings(strings: List[str], filters: List[str]) -> List[str]:
 
 def get_param_set(driver: str):
     return "asynParamSet" if driver == "asynPortDriver" else driver + "ParamSet"
-
-
-def find_parent_modules(module_root: Path) -> List[Path]:
-
-    configure = module_root / "configure"
-    release_paths = glob(str(configure / "RELEASE*"))
-
-    macros: Dict[str, str] = {}
-    # e.g. extract (ADCORE, /path/to/ADCore) from ADCORE = /path/to/ADCore
-    module_definition_extractor = re.compile(r"^(\w+)\s*=\s*(\S+)", re.MULTILINE)
-    for release_path in release_paths:
-        with open(release_path) as release_file:
-            match = re.findall(module_definition_extractor, release_file.read())
-            macros.update(dict(match))
-
-    macro_re = re.compile(r"\$\(([^\)]+)\)")
-    for macro in macros:
-        for nested_macro in macro_re.findall(macros[macro]):
-            if nested_macro in macros.keys():
-                macros[macro] = macros[macro].replace(
-                    "$({})".format(nested_macro), macros[nested_macro]
-                )
-
-    modules = [Path(module) for module in macros.values()]
-
-    return modules

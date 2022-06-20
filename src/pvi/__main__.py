@@ -80,9 +80,12 @@ def produce(
 
 @app.command()
 def format(
-    output: Path = typer.Argument(..., help="filename to write the product to"),
+    output: Path = typer.Argument(..., help="Directory to write output file(s) to"),
     producer: Path = typer.Argument(..., help="path to the .pvi.producer.yaml file"),
     formatter: Path = typer.Argument(..., help="path to the .pvi.formatter.yaml file"),
+    yaml_paths: List[Path] = typer.Option(
+        ..., help="Paths to directories with .pvi.producer.yaml files"
+    ),
 ):
     """Create screen product from producer and formatter YAML"""
     producer_inst = deserialize_yaml(Producer, producer)
@@ -93,16 +96,18 @@ def format(
 
 @convert_app.command()
 def asyn(
-    module_root: Path = typer.Argument(..., help="Root directory of support module"),
+    output: Path = typer.Argument(..., help="Directory to write output file(s) to"),
     cpp: Path = typer.Argument(..., help="Path to the .cpp file to convert"),
     h: Path = typer.Argument(..., help="Path to the .h file to convert"),
     templates: Optional[List[Path]] = typer.Argument(
         None,
         help="Paths to .template files to convert",
     ),
+    yaml_paths: List[Path] = typer.Option(
+        ..., help="Paths to directories with .pvi.producer.yaml files"
+    ),
 ):
     """Convert cpp/h/template to producer YAML and stripped cpp/h/template"""
-    output = module_root / "pvi"
     if not output.exists():
         os.mkdir(output)
 
@@ -129,7 +134,7 @@ def asyn(
             if isinstance(parameter, AsynParameter)
         ]
 
-    source_converter = SourceConverter(cpp, h, module_root, drv_infos)
+    source_converter = SourceConverter(cpp, h, yaml_paths, drv_infos)
 
     if templates:
         # Process and recreate template files - pass source device for param set include
@@ -161,18 +166,19 @@ def asyn(
 
 @app.command()
 def convertplaceholder(
-    module_root: Path = typer.Argument(..., help="Root directory of support module"),
+    output: Path = typer.Argument(..., help="Directory to write output file(s) to"),
     cpp: Path = typer.Argument(..., help="Path to the .cpp file to convert"),
     h: Path = typer.Argument(..., help="Path to the .h file to convert"),
+    yaml_paths: List[Path] = typer.Option(
+        ..., help="Paths to directories with .pvi.producer.yaml files"
+    ),
 ):
     """Alter cpp and h files of unconverted drivers"""
-
-    output = module_root / "pvi" / "placeholders"
     if not output.exists():
         os.mkdir(output)
 
     drv_infos: List[str] = []
-    source_converter = SourceConverter(cpp, h, module_root, drv_infos)
+    source_converter = SourceConverter(cpp, h, yaml_paths, drv_infos)
     extracted_source = source_converter.get_top_level_placeholder()
 
     (output / cpp.name).write_text(extracted_source.cpp)
@@ -181,7 +187,7 @@ def convertplaceholder(
 
 @app.command()
 def regroup(
-    module_root: Path = typer.Argument(..., help="Root directory of support module"),
+    output: Path = typer.Argument(..., help="Directory to write output file(s) to"),
     producer_path: Path = typer.Argument(
         ..., help="Path to the producer.yaml file to regroup"
     ),
@@ -247,7 +253,6 @@ def regroup(
     producer.parameters = ui_groups
 
     # Create new yaml
-    output = module_root.joinpath("pvi/grouped_producers")
     if not output.exists():
         os.mkdir(output)
     serialize_yaml(producer, output.joinpath(f"{producer_path.stem}.yaml"))
