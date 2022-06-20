@@ -222,6 +222,20 @@
             "console": "integratedTerminal"
         },
         {
+            "name": "Format",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "format",
+                "${workspaceFolder:pvi}/../${input:Module}/pvi/${input:Driver}${input:FileType}",
+                "${workspaceFolder:pvi}/../${input:Module}/pvi/${input:Driver}.pvi.producer.yaml",
+                "${workspaceFolder:pvi}/tests/produce_format/input/${input:Formatter}.pvi.formatter.yaml",
+            ],
+            "console": "integratedTerminal"
+        },
+        {
             "name": "Write Schema",
             "type": "python",
             "request": "launch",
@@ -304,12 +318,24 @@
         },
         {
             "id": "FileType",
-            "description": "What file to produce?",
+            "description": "What file to create?",
             "type": "pickString",
             "options": [
                 "ParamSet.h",
                 "Parameters.template",
                 ".pvi.device.yaml",
+                ".csv",
+                ".adl",
+                ".edl",
+            ],
+        },
+        {
+            "id": "Formatter",
+            "description": "What formatter to use?",
+            "type": "pickString",
+            "options": [
+                "dls",
+                "aps",
             ],
         },
         {
