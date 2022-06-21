@@ -9,7 +9,7 @@ def find_pvs(pvs: List[str], file_path: Path) -> Tuple[List[str], List[str]]:
     with open(file_path, "r") as f:
         file_content = f.read()
 
-    pv_coordinates: Dict[int, str] = {}
+    pv_coordinates: Dict[int, List[str]] = {}
     remaining_pvs = [pv for pv in pvs]
     for pv in pvs:
         if pv not in file_content:
@@ -32,8 +32,18 @@ def find_pvs(pvs: List[str], file_path: Path) -> Tuple[List[str], List[str]]:
         )
         match = re.search(widget_regex, file_content)
 
-        if match:
-            pv_coordinates[int(match["y"])] = pv
-            remaining_pvs.remove(pv)
+        assert match, f"{pv} found in {file_path.name} but did not match a y coordinate"
 
-    return [pv_coordinates[y] for y in sorted(pv_coordinates.keys())], remaining_pvs
+        y = int(match["y"])
+        if y in pv_coordinates:
+            pv_coordinates[y].append(pv)
+        else:
+            pv_coordinates[y] = [pv]
+
+        remaining_pvs.remove(pv)
+
+    grouped_pvs = []
+    for coord in sorted(pv_coordinates.keys()):
+        grouped_pvs.extend(pv_coordinates[coord])
+
+    return grouped_pvs, remaining_pvs
