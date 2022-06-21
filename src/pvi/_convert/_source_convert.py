@@ -1,12 +1,10 @@
-import os
 import re
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Tuple, Union
+from typing import Dict, List, Tuple
 
-from pvi._produce.asyn import AsynParameter, AsynProducer
-from pvi._yaml_utils import deserialize_yaml
-from pvi.device import Tree, walk
+from pvi._produce.asyn import AsynParameter, find_components
+from pvi.device import walk
 
 
 @dataclass
@@ -287,33 +285,6 @@ class SourceConverter:
                 r"(\W)" + parameter + r"(\W)", r"\1paramSet->" + parameter + r"\2", text
             )
         return text
-
-
-def find_components(yaml_name: str, yaml_paths: List[Path]) -> Tree[AsynParameter]:
-    if yaml_name == "asynPortDriver":
-        return []  # asynPortDriver is the most base class and has no parameters
-
-    # Look in this module first
-    producer_name = f"{yaml_name}.pvi.producer.yaml"
-    producer_yaml = find_pvi_yaml(producer_name, yaml_paths)
-
-    if producer_yaml is None:
-        raise IOError(f"Cannot find {producer_name}")
-
-    producer = deserialize_yaml(AsynProducer, producer_yaml)
-
-    return list(producer.parameters) + list(
-        find_components(producer.parent, yaml_paths)
-    )
-
-
-def find_pvi_yaml(yaml_name: str, yaml_paths: List[Path]) -> Union[Path, None]:
-    """Find a yaml file in given directory"""
-    for yaml_path in yaml_paths:
-        if os.path.isdir(yaml_path):
-            if yaml_name in os.listdir(yaml_path):
-                return yaml_path / yaml_name
-    return None
 
 
 def filter_strings(strings: List[str], filters: List[str]) -> List[str]:
