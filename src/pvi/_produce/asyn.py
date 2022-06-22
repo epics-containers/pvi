@@ -43,7 +43,7 @@ from .records import (
     StringRecordPair,
     WaveformRecordPair,
 )
-from .utils import get_param_set, join_lines, truncate_description
+from .utils import get_param_set, join_lines, narrow_type, truncate_description
 
 
 @dataclass
@@ -327,9 +327,19 @@ class AsynProducer(Producer):
         if self.parent == "asynPortDriver":
             pass
 
-        self.parameters = list(self.parameters) + list(
-            find_components(self.parent, yaml_paths)
-        )
+        parent_parameters = find_components(self.parent, yaml_paths)
+        for parent_group in parent_parameters:
+            parent_group = narrow_type(parent_group, Group)
+            for param_group in self.parameters:
+                param_group = narrow_type(param_group, Group)
+                if param_group.name == parent_group.name:
+                    param_group.children = list(parent_group.children) + list(
+                        param_group.children
+                    )
+                    break  # Groups merged - skip to next parent group
+            else:
+                # Group only exists in parent - inherit it as a new group
+                self.parameters = list(self.parameters) + [parent_group]
 
     def _read_record_suffix(self, parameter: AsynParameter) -> str:
         if parameter.read_record_suffix:
