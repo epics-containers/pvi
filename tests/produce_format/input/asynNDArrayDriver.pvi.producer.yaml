@@ -1,0 +1,670 @@
+# yaml-language-server: $schema=../../../schemas/pvi.producer.schema.json
+type: AsynProducer
+prefix: $(P)$(R)
+asyn_port: $(PORT)
+address: $(ADDR=0)
+timeout: $(TIMEOUT=1)
+label: Asyn ND Array Driver
+parent: asynPortDriver
+parameters:
+
+- type: Group
+  name: ComponentGroupOne
+  layout:
+    type: Grid
+  children:
+
+  - type: AsynBinary
+    name: WaitForPlugins
+    description: WaitForPlugins
+    drv_info: WAIT_FOR_PLUGINS
+    access: W
+    initial: 0
+    record_fields:
+      ONAM: Yes
+      ZNAM: No
+    index_name: ADWaitForPlugins
+
+  - type: AsynBinary
+    name: EmptyFreeList
+    description: EmptyFreeList
+    drv_info: POOL_EMPTY_FREELIST
+    access: W
+    index_name: NDPoolEmptyFreeList
+
+  - type: AsynWaveform
+    name: NDAttributesMacros
+    description: NDAttributesMacros
+    drv_info: ND_ATTRIBUTES_MACROS
+    access: W
+    initial: '0'
+    record_fields:
+      FTVL: CHAR
+      NELM: '256'
+    index_name: NDAttributesMacros
+
+  - type: AsynWaveform
+    name: NDAttributesFile
+    description: NDAttributesFile
+    drv_info: ND_ATTRIBUTES_FILE
+    access: W
+    initial: '0'
+    record_fields:
+      FTVL: CHAR
+      NELM: '256'
+    index_name: NDAttributesFile
+
+  - type: AsynString
+    name: ADCoreVersion
+    description: ADCoreVersion_RBV
+    drv_info: ADCORE_VERSION
+    access: R
+    record_fields:
+      SCAN: I/O Intr
+    index_name: NDADCoreVersion
+
+  - type: AsynString
+    name: DriverVersion
+    description: DriverVersion_RBV
+    drv_info: DRIVER_VERSION
+    access: R
+    record_fields:
+      SCAN: I/O Intr
+    index_name: NDDriverVersion
+
+  - type: AsynString
+    name: PortName
+    description: PortName_RBV
+    drv_info: PORT_NAME_SELF
+    access: R
+    record_fields:
+      SCAN: I/O Intr
+    index_name: NDPortNameSelf
+
+  - type: AsynString
+    name: Manufacturer
+    description: Manufacturer_RBV
+    drv_info: MANUFACTURER
+    access: R
+    record_fields:
+      SCAN: I/O Intr
+    index_name: ADManufacturer
+
+  - type: AsynString
+    name: Model
+    description: Model_RBV
+    drv_info: MODEL
+    access: R
+    record_fields:
+      SCAN: I/O Intr
+    index_name: ADModel
+
+  - type: AsynString
+    name: SerialNumber
+    description: SerialNumber_RBV
+    drv_info: SERIAL_NUMBER
+    access: R
+    record_fields:
+      SCAN: I/O Intr
+    index_name: ADSerialNumber
+
+  - type: AsynString
+    name: SDKVersion
+    description: SDKVersion_RBV
+    drv_info: SDK_VERSION
+    access: R
+    record_fields:
+      SCAN: I/O Intr
+    index_name: ADSDKVersion
+
+  - type: AsynString
+    name: FirmwareVersion
+    description: FirmwareVersion_RBV
+    drv_info: FIRMWARE_VERSION
+    access: R
+    record_fields:
+      SCAN: I/O Intr
+    index_name: ADFirmwareVersion
+
+  - type: AsynBinary
+    name: AcquireBusyCB
+    description: AcquireBusyCB
+    drv_info: ACQUIRE_BUSY
+    access: R
+    read_record_suffix: AcquireBusyCB
+    record_fields:
+      SCAN: I/O Intr
+      ONAM: Acquiring
+      OSV: MINOR
+      ZNAM: Done
+      ZSV: NO_ALARM
+    index_name: ADAcquireBusy
+
+  - type: AsynMultiBitBinary
+    name: BayerPattern
+    description: BayerPattern_RBV
+    drv_info: BAYER_PATTERN
+    access: R
+    record_fields:
+      SCAN: I/O Intr
+      ONST: GBRG
+      ONVL: '1'
+      THST: BGGR
+      THVL: '3'
+      TWST: GRBG
+      TWVL: '2'
+      ZRST: RGGB
+      ZRVL: '0'
+    index_name: NDBayerPattern
+
+  - type: AsynLong
+    name: ArraySizeX
+    description: ArraySizeX_RBV
+    drv_info: ARRAY_SIZE_X
+    access: R
+    record_fields:
+      SCAN: I/O Intr
+    index_name: NDArraySizeX
+
+  - type: AsynLong
+    name: ArraySizeY
+    description: ArraySizeY_RBV
+    drv_info: ARRAY_SIZE_Y
+    access: R
+    record_fields:
+      SCAN: I/O Intr
+    index_name: NDArraySizeY
+
+  - type: AsynLong
+    name: ArraySizeZ
+    description: ArraySizeZ_RBV
+    drv_info: ARRAY_SIZE_Z
+    access: R
+    record_fields:
+      SCAN: I/O Intr
+    index_name: NDArraySizeZ
+
+  - type: AsynLong
+    name: ArraySize
+    description: ArraySize_RBV
+    drv_info: ARRAY_SIZE
+    access: R
+    record_fields:
+      SCAN: I/O Intr
+    index_name: NDArraySize
+
+  - type: AsynString
+    name: Codec
+    description: Codec_RBV
+    drv_info: CODEC
+    access: R
+    record_fields:
+      SCAN: I/O Intr
+    index_name: NDCodec
+
+  - type: AsynLong
+    name: CompressedSize
+    description: CompressedSize_RBV
+    drv_info: COMPRESSED_SIZE
+    access: R
+    record_fields:
+      SCAN: I/O Intr
+    index_name: NDCompressedSize
+
+  - type: AsynLong
+    name: UniqueId
+    description: UniqueId_RBV
+    drv_info: UNIQUE_ID
+    access: R
+    record_fields:
+      SCAN: $(SCANRATE=I/O Intr)
+    index_name: NDUniqueId
+
+  - type: AsynFloat64
+    name: TimeStamp
+    description: TimeStamp_RBV
+    drv_info: TIME_STAMP
+    access: R
+    record_fields:
+      SCAN: $(SCANRATE=I/O Intr)
+      PREC: 3
+    index_name: NDTimeStamp
+
+  - type: AsynLong
+    name: EpicsTSSec
+    description: EpicsTSSec_RBV
+    drv_info: EPICS_TS_SEC
+    access: R
+    record_fields:
+      SCAN: I/O Intr
+    index_name: NDEpicsTSSec
+
+  - type: AsynLong
+    name: EpicsTSNsec
+    description: EpicsTSNsec_RBV
+    drv_info: EPICS_TS_NSEC
+    access: R
+    record_fields:
+      SCAN: I/O Intr
+    index_name: NDEpicsTSNsec
+
+  - type: AsynMultiBitBinary
+    name: NDAttributesStatus
+    description: NDAttributesStatus
+    drv_info: ND_ATTRIBUTES_STATUS
+    access: R
+    read_record_suffix: NDAttributesStatus
+    record_fields:
+      SCAN: I/O Intr
+      ONST: File not found
+      ONSV: MINOR
+      ONVL: '1'
+      THST: Macro substitution error
+      THSV: MAJOR
+      THVL: '3'
+      TWST: XML syntax error
+      TWSV: MAJOR
+      TWVL: '2'
+      ZRST: Attributes file OK
+      ZRSV: NO_ALARM
+      ZRVL: '0'
+    index_name: NDAttributesStatus
+
+  - type: AsynFloat64
+    name: PoolMaxMem
+    description: PoolMaxMem
+    drv_info: POOL_MAX_MEMORY
+    access: R
+    read_record_suffix: PoolMaxMem
+    record_fields:
+      SCAN: Passive
+      EGU: MB
+      PREC: 1
+    index_name: NDPoolMaxMemory
+
+  - type: AsynFloat64
+    name: PoolUsedMem
+    description: PoolUsedMem
+    drv_info: POOL_USED_MEMORY
+    access: R
+    read_record_suffix: PoolUsedMem
+    record_fields:
+      FLNK: $(P)$(R)PoolAllocBuffers
+      SCAN: 1 second
+      EGU: MB
+      PREC: 1
+    index_name: NDPoolUsedMemory
+
+  - type: AsynLong
+    name: PoolAllocBuffers
+    description: PoolAllocBuffers
+    drv_info: POOL_ALLOC_BUFFERS
+    access: R
+    read_record_suffix: PoolAllocBuffers
+    record_fields:
+      FLNK: $(P)$(R)PoolFreeBuffers
+    index_name: NDPoolAllocBuffers
+
+  - type: AsynLong
+    name: PoolFreeBuffers
+    description: PoolFreeBuffers
+    drv_info: POOL_FREE_BUFFERS
+    access: R
+    read_record_suffix: PoolFreeBuffers
+    record_fields:
+      FLNK: $(P)$(R)PoolUsedBuffers
+    index_name: NDPoolFreeBuffers
+
+  - type: AsynLong
+    name: NumQueuedArrays
+    description: NumQueuedArrays
+    drv_info: NUM_QUEUED_ARRAYS
+    access: R
+    read_record_suffix: NumQueuedArrays
+    record_fields:
+      SCAN: $(SCANRATE=I/O Intr)
+    index_name: NDNumQueuedArrays
+
+  - type: AsynBinary
+    name: Acquire
+    description: Acquire
+    drv_info: ACQUIRE
+    demand_auto_updates: true
+    record_fields:
+      FLNK: $(P)$(R)SetAcquireBusy
+      SCAN: I/O Intr
+      ONAM: Acquiring
+      OSV: MINOR
+      ZNAM: Done
+      ZSV: NO_ALARM
+    index_name: ADAcquire
+
+  - type: AsynLong
+    name: NDimensions
+    description: NDimensions
+    drv_info: ARRAY_NDIMENSIONS
+    record_fields:
+      SCAN: I/O Intr
+    index_name: NDNDimensions
+
+  - type: AsynWaveform
+    name: Dimensions
+    description: Dimensions
+    drv_info: ARRAY_DIMENSIONS
+    record_fields:
+      FLNK: $(P)$(R)Dim0SA_RBV
+      SCAN: I/O Intr
+      FTVL: LONG
+      NELM: '10'
+    index_name: NDDimensions
+
+  - type: AsynMultiBitBinary
+    name: DataType
+    description: DataType
+    drv_info: DATA_TYPE
+    initial: $(DATATYPE=0)
+    record_fields:
+      SCAN: I/O Intr
+      EIST: Float32
+      EIVL: '8'
+      FRST: Int32
+      FRVL: '4'
+      FVST: UInt32
+      FVVL: '5'
+      NIST: Float64
+      NIVL: '9'
+      ONST: UInt8
+      ONVL: '1'
+      SVST: UInt64
+      SVVL: '7'
+      SXST: Int64
+      SXVL: '6'
+      THST: UInt16
+      THVL: '3'
+      TWST: Int16
+      TWVL: '2'
+      ZRST: Int8
+      ZRVL: '0'
+    index_name: NDDataType
+
+  - type: AsynMultiBitBinary
+    name: ColorMode
+    description: ColorMode
+    drv_info: COLOR_MODE
+    initial: 0
+    record_fields:
+      SCAN: I/O Intr
+      FRST: RGB3
+      FRVL: '4'
+      FVST: YUV444
+      FVVL: '5'
+      ONST: Bayer
+      ONVL: '1'
+      SVST: YUV421
+      SVVL: '7'
+      SXST: YUV422
+      SXVL: '6'
+      THST: RGB2
+      THVL: '3'
+      TWST: RGB1
+      TWVL: '2'
+      ZRST: Mono
+      ZRVL: '0'
+    index_name: NDColorMode
+
+  - type: AsynLong
+    name: ArrayCounter
+    description: ArrayCounter
+    drv_info: ARRAY_COUNTER
+    record_fields:
+      SCAN: $(SCANRATE=I/O Intr)
+    index_name: NDArrayCounter
+
+  - type: AsynBinary
+    name: ArrayCallbacks
+    description: ArrayCallbacks
+    drv_info: ARRAY_CALLBACKS
+    initial: 1
+    record_fields:
+      SCAN: I/O Intr
+      ONAM: Enable
+      OSV: MINOR
+      ZNAM: Disable
+      ZSV: NO_ALARM
+    index_name: NDArrayCallbacks
+
+  - type: AsynBinary
+    name: FilePathExists
+    description: FilePathExists_RBV
+    drv_info: FILE_PATH_EXISTS
+    access: R
+    record_fields:
+      SCAN: I/O Intr
+      ONAM: Yes
+      OSV: NO_ALARM
+      ZNAM: No
+      ZSV: MAJOR
+    index_name: NDFilePathExists
+
+  - type: AsynWaveform
+    name: FullFileName
+    description: FullFileName_RBV
+    drv_info: FULL_FILE_NAME
+    access: R
+    record_fields:
+      SCAN: I/O Intr
+      FTVL: CHAR
+      NELM: '256'
+    index_name: NDFullFileName
+
+  - type: AsynLong
+    name: NumCaptured
+    description: NumCaptured_RBV
+    drv_info: NUM_CAPTURED
+    access: R
+    record_fields:
+      SCAN: $(SCANRATE=I/O Intr)
+    index_name: NDFileNumCaptured
+
+  - type: AsynBinary
+    name: WriteStatus
+    description: WriteStatus
+    drv_info: WRITE_STATUS
+    access: R
+    read_record_suffix: WriteStatus
+    record_fields:
+      SCAN: I/O Intr
+      ONAM: Write error
+      OSV: MAJOR
+      ZNAM: Write OK
+      ZSV: NO_ALARM
+    index_name: NDFileWriteStatus
+
+  - type: AsynWaveform
+    name: WriteMessage
+    description: WriteMessage
+    drv_info: WRITE_MESSAGE
+    access: R
+    read_record_suffix: WriteMessage
+    record_fields:
+      SCAN: I/O Intr
+      FTVL: CHAR
+      NELM: '256'
+    index_name: NDFileWriteMessage
+
+  - type: AsynWaveform
+    name: FilePath
+    description: FilePath
+    drv_info: FILE_PATH
+    initial: '0'
+    record_fields:
+      SCAN: I/O Intr
+      FTVL: CHAR
+      NELM: '256'
+    index_name: NDFilePath
+
+  - type: AsynLong
+    name: CreateDirectory
+    description: CreateDirectory
+    drv_info: CREATE_DIR
+    initial: 0
+    record_fields:
+      SCAN: I/O Intr
+    index_name: NDFileCreateDir
+
+  - type: AsynWaveform
+    name: FileName
+    description: FileName
+    drv_info: FILE_NAME
+    initial: '0'
+    record_fields:
+      SCAN: I/O Intr
+      FTVL: CHAR
+      NELM: '256'
+    index_name: NDFileName
+
+  - type: AsynLong
+    name: FileNumber
+    description: FileNumber
+    drv_info: FILE_NUMBER
+    demand_auto_updates: true
+    initial: 1
+    record_fields:
+      SCAN: I/O Intr
+    index_name: NDFileNumber
+
+  - type: AsynBinary
+    name: AutoIncrement
+    description: AutoIncrement
+    drv_info: AUTO_INCREMENT
+    initial: 1
+    record_fields:
+      SCAN: I/O Intr
+      ONAM: Yes
+      ZNAM: No
+    index_name: NDAutoIncrement
+
+  - type: AsynWaveform
+    name: FileTemplate
+    description: FileTemplate
+    drv_info: FILE_TEMPLATE
+    initial: '0'
+    record_fields:
+      SCAN: I/O Intr
+      FTVL: CHAR
+      NELM: '256'
+    index_name: NDFileTemplate
+
+  - type: AsynBinary
+    name: AutoSave
+    description: AutoSave
+    drv_info: AUTO_SAVE
+    initial: 0
+    record_fields:
+      SCAN: I/O Intr
+      ONAM: Yes
+      ZNAM: No
+    index_name: NDAutoSave
+
+  - type: AsynBusy
+    name: WriteFile
+    description: WriteFile
+    drv_info: WRITE_FILE
+    record_fields:
+      SCAN: I/O Intr
+      ONAM: Writing
+      OSV: MINOR
+      ZNAM: Done
+      ZSV: NO_ALARM
+    index_name: NDWriteFile
+
+  - type: AsynBusy
+    name: ReadFile
+    description: ReadFile
+    drv_info: READ_FILE
+    record_fields:
+      SCAN: I/O Intr
+      ONAM: Reading
+      OSV: MINOR
+      ZNAM: Done
+      ZSV: NO_ALARM
+    index_name: NDReadFile
+
+  - type: AsynMultiBitBinary
+    name: FileFormat
+    description: FileFormat
+    drv_info: FILE_FORMAT
+    initial: 0
+    record_fields:
+      SCAN: I/O Intr
+      ONST: Undefined
+      ONVL: '1'
+      ZRST: netCDF
+      ZRVL: '0'
+    index_name: NDFileFormat
+
+  - type: AsynMultiBitBinary
+    name: FileWriteMode
+    description: FileWriteMode
+    drv_info: WRITE_MODE
+    initial: 0
+    record_fields:
+      SCAN: I/O Intr
+      ONST: Capture
+      ONVL: '1'
+      TWST: Stream
+      TWVL: '2'
+      ZRST: Single
+      ZRVL: '0'
+    index_name: NDFileWriteMode
+
+  - type: AsynBusy
+    name: Capture
+    description: Capture
+    drv_info: CAPTURE
+    record_fields:
+      SCAN: I/O Intr
+      ONAM: Capturing
+      OSV: MINOR
+      ZNAM: Done
+      ZSV: NO_ALARM
+    index_name: NDFileCapture
+
+  - type: AsynLong
+    name: NumCapture
+    description: NumCapture
+    drv_info: NUM_CAPTURE
+    initial: 1
+    record_fields:
+      SCAN: I/O Intr
+    index_name: NDFileNumCapture
+
+  - type: AsynBinary
+    name: DeleteDriverFile
+    description: DeleteDriverFile
+    drv_info: DELETE_DRIVER_FILE
+    initial: 0
+    record_fields:
+      SCAN: I/O Intr
+      ONAM: Yes
+      ZNAM: No
+    index_name: NDFileDeleteDriverFile
+
+  - type: AsynBinary
+    name: LazyOpen
+    description: LazyOpen
+    drv_info: FILE_LAZY_OPEN
+    initial: 0
+    record_fields:
+      SCAN: I/O Intr
+      ONAM: Yes
+      ZNAM: No
+    index_name: NDFileLazyOpen
+
+  - type: AsynString
+    name: TempSuffix
+    description: TempSuffix
+    drv_info: FILE_TEMP_SUFFIX
+    record_fields:
+      SCAN: I/O Intr
+    index_name: NDFileTempSuffix
