@@ -222,10 +222,16 @@ def regroup(
     if pvs:
         print(f'Did not find group for {"|".join(pvs)}')
 
+    def sanitize_name(name: str) -> str:
+        name = name.replace(" ", "")
+        name = name.replace("-", "")
+        name = name.replace("_", "")
+        return name
+
     # Create groups for parameters we found in the files
     ui_groups: List[Group[AsynParameter]] = [
         Group(
-            group_name,
+            sanitize_name(group_name),
             Grid(labelled=True),
             [  # Note: Need to preserve order in group_pvs here
                 param
