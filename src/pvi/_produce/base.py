@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
+from typing import List
 
 from typing_extensions import Annotated
 
@@ -56,6 +57,10 @@ class Producer:
     prefix: Annotated[
         str, desc("The prefix for record names created by the template file")
     ]
+
+    def deserialize_parents(self, yaml_paths: List[Path]):
+        """Deserialize yaml of parents and extract parameters"""
+        raise NotImplementedError(self)
 
     def produce_device(self) -> Device:
         """Make signals from components"""

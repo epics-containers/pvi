@@ -88,9 +88,11 @@ def format(
     ),
 ):
     """Create screen product from producer and formatter YAML"""
-    producer_inst = deserialize_yaml(Producer, producer)
-    formatter_inst = deserialize_yaml(Formatter, formatter)
+    producer_inst: Producer = deserialize_yaml(Producer, producer)
+    producer_inst.deserialize_parents(yaml_paths)
     device = producer_inst.produce_device()
+
+    formatter_inst: Formatter = deserialize_yaml(Formatter, formatter)
     formatter_inst.format(device, producer_inst.prefix, output)
 
 

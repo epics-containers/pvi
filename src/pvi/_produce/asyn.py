@@ -322,6 +322,15 @@ class AsynProducer(Producer):
         Tree[AsynParameter], desc("The parameters to make into an IOC")
     ]
 
+    def deserialize_parents(self, yaml_paths: List[Path]):
+        """Deserialize yaml of parents and extract parameters"""
+        if self.parent == "asynPortDriver":
+            pass
+
+        self.parameters = list(self.parameters) + list(
+            find_components(self.parent, yaml_paths)
+        )
+
     def _read_record_suffix(self, parameter: AsynParameter) -> str:
         if parameter.read_record_suffix:
             return parameter.read_record_suffix
