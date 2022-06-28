@@ -29,17 +29,18 @@ def assert_output_matches(
     if result.exception:
         raise result.exception
 
+    if output_path.is_file():
+        output_path = output_path.parent
+        expected_path = expected_path.parent
+
     if os.environ.get("PVI_REGENERATE_OUTPUT", None):
         # We were asked to regenerate output, so copy output files to expected
-        for output_file in (output_path / "pvi").iterdir():
+        for output_file in output_path.iterdir():
             shutil.copy(output_file, expected_path / output_file.name)
 
-    if expected_path.is_dir():
-        for child in expected_path.iterdir():
-            output_child = output_path / "pvi" / child.relative_to(expected_path)
-            assert output_child.read_text() == child.read_text()
-    else:
-        assert output_path.read_text() == expected_path.read_text()
+    for output_file in output_path.iterdir():
+        expected_child = expected_path / output_file.relative_to(output_path)
+        assert expected_child.read_text() == output_file.read_text()
 
 
 @pytest.mark.parametrize(
@@ -80,22 +81,23 @@ def test_produce(tmp_path, filename):
 )
 def test_format(tmp_path, filename, formatter):
     expected_path = HERE / "produce_format" / "output" / filename
-    formatter_path = HERE / "produce_format" / "input" / formatter
+    input_path = HERE / "produce_format" / "input"
+    formatter_path = input_path / formatter
     assert_output_matches(
-        expected_path, "format", tmp_path / filename, PILATUS_PRODUCER, formatter_path
+        expected_path,
+        "format --yaml-paths " + str(input_path),
+        tmp_path / filename,
+        PILATUS_PRODUCER,
+        formatter_path,
     )
 
 
 def test_convert(tmp_path):
     expected_path = HERE / "convert" / "output"
     input_path = HERE / "convert" / "input"
-    pvi_dir = tmp_path / "pvi"
-    os.mkdir(pvi_dir)
-    for parent in ["ADDriver", "asynNDArrayDriver"]:
-        shutil.copy(input_path / f"{parent}.pvi.producer.yaml", pvi_dir)
     assert_output_matches(
         expected_path,
-        "convert asyn",
+        "convert asyn --yaml-paths " + str(input_path),
         tmp_path,
         input_path / "pilatusDetector.cpp",
         input_path / "pilatusDetector.h",
