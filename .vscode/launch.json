@@ -169,14 +169,14 @@
             "program": "${workspaceFolder:pvi}/src/pvi",
             "args": [
                 "regroup",
-                "${workspaceFolder:ADCore}/pvi/grouped_producers",
+                "${workspaceFolder:ADCore}/pvi",
                 "${workspaceFolder:ADCore}/pvi/asynNDArrayDriver.pvi.producer.yaml",
-                "${workspaceFolder:ADCore}/ADApp/op/edl/NDFile.edl",
                 "${workspaceFolder:ADCore}/ADApp/op/adl/ADSetup.adl",
                 "${workspaceFolder:ADCore}/ADApp/op/adl/ADReadout.adl",
                 "${workspaceFolder:ADCore}/ADApp/op/adl/ADShutter.adl",
                 "${workspaceFolder:ADCore}/ADApp/op/adl/ADCollect.adl",
                 "${workspaceFolder:ADCore}/ADApp/op/adl/ADAttrFile.adl",
+                "${workspaceFolder:ADCore}/ADApp/op/adl/NDFile.adl",
                 // add more
             ],
             "console": "integratedTerminal"
@@ -189,7 +189,7 @@
             "program": "${workspaceFolder:pvi}/src/pvi",
             "args": [
                 "regroup",
-                "${workspaceFolder:ADCore}/pvi/grouped_producers",
+                "${workspaceFolder:ADCore}/pvi",
                 "${workspaceFolder:ADCore}/pvi/ADDriver.pvi.producer.yaml",
                 "${workspaceFolder:ADCore}/ADApp/op/adl/ADSetup.adl",
                 "${workspaceFolder:ADCore}/ADApp/op/adl/ADReadout.adl",
@@ -200,30 +200,63 @@
             "console": "integratedTerminal"
         },
         {
-            "name": "Regroup Producer NDPluginDriver",
+            "name": "Regroup simDetector",
             "type": "python",
             "request": "launch",
             "justMyCode": false,
             "program": "${workspaceFolder:pvi}/src/pvi",
             "args": [
                 "regroup",
-                "${workspaceFolder:ADCore}/grouped_producers",
-                "${workspaceFolder:ADCore}/pvi/NDPluginDriver.pvi.producer.yaml",
-                "${workspaceFolder:ADCore}/ADApp/op/edl/NDPluginBase.edl",
+                "${workspaceFolder:ADSimDetector}/pvi",
+                "${workspaceFolder:ADSimDetector}/pvi/simDetector.pvi.producer.yaml",
+                "${workspaceFolder:ADSimDetector}/simDetectorApp/op/adl/simDetector.adl",
+                "${workspaceFolder:ADSimDetector}/simDetectorApp/op/adl/simDetectorSetup.adl",
             ],
             "console": "integratedTerminal"
         },
         {
-            "name": "Regroup Producer NDFileHDF5",
+            "name": "Regroup NDPluginDriver",
             "type": "python",
             "request": "launch",
             "justMyCode": false,
             "program": "${workspaceFolder:pvi}/src/pvi",
             "args": [
                 "regroup",
-                "${workspaceFolder:ADCore}/grouped_producers",
+                "${workspaceFolder:ADCore}/pvi",
+                "${workspaceFolder:ADCore}/pvi/NDPluginDriver.pvi.producer.yaml",
+                "${workspaceFolder:ADCore}/ADApp/op/adl/NDPluginBase.adl",
+                "${workspaceFolder:ADCore}/ADApp/op/adl/NDPluginBaseFull.adl",
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Regroup NDPluginFile",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "regroup",
+                "${workspaceFolder:ADCore}/pvi",
+                "${workspaceFolder:ADCore}/pvi/NDPluginFile.pvi.producer.yaml",
+                "${workspaceFolder:ADCore}/ADApp/op/adl/NDFile.adl",
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Regroup NDFileHDF5",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "regroup",
+                "${workspaceFolder:ADCore}/pvi",
                 "${workspaceFolder:ADCore}/pvi/NDFileHDF5.pvi.producer.yaml",
-                "${workspaceFolder:ADCore}/ADApp/op/edl/NDFileHDF5.edl",
+                "${workspaceFolder:ADCore}/ADApp/op/adl/NDFileHDF5.adl",
+                "${workspaceFolder:ADCore}/ADApp/op/adl/NDFileHDF5_ChunkingFull.adl",
+                "${workspaceFolder:ADCore}/ADApp/op/adl/NDFileHDF5_ExtraDims.adl",
+                "${workspaceFolder:ADCore}/ADApp/op/adl/NDFileHDF5_Positions.adl",
             ],
             "console": "integratedTerminal"
         },
