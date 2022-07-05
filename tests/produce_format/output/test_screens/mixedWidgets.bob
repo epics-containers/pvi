@@ -3,7 +3,7 @@
   <x>0</x>
   <y>0</y>
   <width>576</width>
-  <height>688</height>
+  <height>866</height>
   <widget type="label" version="2.0.0">
     <name>Title</name>
     <class>TITLE</class>
@@ -1184,8 +1184,8 @@
   </widget>
   <widget type="group" version="2.0.0">
     <name>Group Three</name>
-    <x>290</x>
-    <y>472</y>
+    <x>4</x>
+    <y>688</y>
     <width>282</width>
     <height>174</height>
     <background_color>

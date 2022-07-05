@@ -6,7 +6,7 @@ release 1
 x 0
 y 0
 w 525
-h 700
+h 870
 font "arial-bold-r-12.0"
 ctlFont "arial-bold-r-12.0"
 btnFont "arial-bold-r-12.0"
@@ -1798,8 +1798,8 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 265
-y 480
+x 5
+y 705
 w 255
 h 160
 lineColor index 14
@@ -1813,8 +1813,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 265
-y 475
+x 5
+y 700
 w 255
 h 10
 font "arial-medium-r-12.0"
@@ -1834,8 +1834,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 270
-y 490
+x 10
+y 715
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1853,8 +1853,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 390
-y 490
+x 130
+y 715
 w 60
 h 20
 controlPv "$(P)$(R)ThresholdEnergy"
@@ -1872,8 +1872,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 455
-y 490
+x 195
+y 715
 w 60
 h 20
 controlPv "$(P)$(R)ThresholdEnergy_RBV"
@@ -1891,8 +1891,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 270
-y 515
+x 10
+y 740
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1910,8 +1910,8 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 390
-y 515
+x 130
+y 740
 w 60
 h 20
 fgColor index 14
@@ -1932,8 +1932,8 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 475
-y 515
+x 215
+y 740
 w 20
 h 20
 controlPv "$(P)$(R)ThresholdAutoApply_RBV"
@@ -1950,8 +1950,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 270
-y 540
+x 10
+y 765
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1969,8 +1969,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 390
-y 540
+x 130
+y 765
 w 60
 h 20
 controlPv "$(P)$(R)Energy"
@@ -1988,8 +1988,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 455
-y 540
+x 195
+y 765
 w 60
 h 20
 controlPv "$(P)$(R)Energy_RBV"
@@ -2007,8 +2007,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 270
-y 565
+x 10
+y 790
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -2026,8 +2026,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 390
-y 565
+x 130
+y 790
 w 60
 h 20
 controlPv "$(P)$(R)MinFlatField"
@@ -2045,8 +2045,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 455
-y 565
+x 195
+y 790
 w 60
 h 20
 controlPv "$(P)$(R)MinFlatField_RBV"
@@ -2064,8 +2064,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 270
-y 590
+x 10
+y 815
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -2083,8 +2083,8 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 390
-y 590
+x 130
+y 815
 w 60
 h 20
 fgColor index 25
@@ -2102,8 +2102,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 455
-y 590
+x 195
+y 815
 w 60
 h 20
 controlPv "$(P)$(R)GapFill_RBV"
@@ -2121,8 +2121,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 270
-y 615
+x 10
+y 840
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -2140,8 +2140,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 390
-y 615
+x 130
+y 840
 w 125
 h 20
 indicatorColor index 16
