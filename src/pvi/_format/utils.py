@@ -205,27 +205,29 @@ class Screen(Generic[T]):
     def screen(self, components: Tree[Component], title: str) -> WidgetFactory[T]:
         # Make the contents of the screen
         widgets: List[WidgetFactory[T]] = []
-        x, y = 0, 0
+        columns: Dict[int, int] = {0: 0}  # x coord -> y coord of bottom of column
         for c in components:
             if isinstance(c, Group):
-                group = self.group(c, bounds=Bounds(x, y))
-                if group.bounds.h + group.bounds.y > self.max_height:
-                    if group.bounds.h > self.max_height:
-                        # Group will be wider to fit
-                        h = self.max_height
-                    else:
-                        # Group will cap to height
-                        h = 0
-                    # Retry in a new column
-                    x = max_x(widgets) + self.spacing
-                    y = 0
-                    group = self.group(c, bounds=Bounds(x, y, h=h))
+                for col_x, col_y in columns.items():
+                    # Note: Group adjusts bounds to fit the components
+                    group = self.group(
+                        c, bounds=Bounds(col_x, col_y, h=self.max_height)
+                    )
+
+                    if group.bounds.h + group.bounds.y <= self.max_height:
+                        # Group fits in this column
+                        break
+
                 widgets.append(group)
-                y += group.bounds.h + self.spacing
+
+                # Update y for current column and ensure there is an empty column
+                columns[group.bounds.x] = group.bounds.y + group.bounds.h + self.spacing
+                columns[max_x(widgets) + self.spacing] = 0
             else:
                 raise NotImplementedError(c)
-        bounds = Bounds(w=max_x(widgets), h=max_y(widgets))
+
         # Then the screen itself
+        bounds = Bounds(w=max_x(widgets), h=max_y(widgets))
         return self.screen_cls(bounds, title, widgets)
 
     def component(
@@ -285,7 +287,7 @@ class Screen(Generic[T]):
 
                 widgets = list(make(y=max_y(widget_lists[-1], self.spacing)))
                 max_h = max(w.bounds.y + w.bounds.h for w in widgets)
-                if bounds.h > 0 and max_h > bounds.h:
+                if max_h > bounds.h:
                     # Retry in the next row
                     x = max_x(widget_lists[-1], self.spacing)
                     widget_lists.append(list(make(y=0)))
