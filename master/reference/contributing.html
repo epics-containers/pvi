@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contributing &mdash; pvi 0.3+7.gc4f1f59 documentation</title>
+  <title>Contributing &mdash; pvi 0.3+21.g0a84fbf documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -119,8 +119,8 @@ same or is improved by a pull request!</p>
 <p>The code in this repository conforms to standards set by the following tools:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/psf/black">black</a> for code formatting</p></li>
-<li><p><a class="reference external" href="http://flake8.pycqa.org/en/latest/">flake8</a> for style checks</p></li>
-<li><p><a class="reference external" href="https://github.com/timothycrosley/isort">isort</a> for import ordering</p></li>
+<li><p><a class="reference external" href="https://flake8.pycqa.org/en/latest/">flake8</a> for style checks</p></li>
+<li><p><a class="reference external" href="https://github.com/PyCQA/isort">isort</a> for import ordering</p></li>
 <li><p><a class="reference external" href="https://github.com/python/mypy">mypy</a> for static type checking</p></li>
 </ul>
 <p>These checks will be run by <a class="reference external" href="https://pre-commit.com/">pre-commit</a>. You can either choose to run these
@@ -134,20 +134,21 @@ tests on all files tracked by git:</p>
 </pre></div>
 </div>
 <p>Docstrings are pre-processed using the Sphinx Napoleon extension. As such,
-<a class="reference external" href="https://sphinxcontrib-napoleon.readthedocs.io/en/latest/index.html#google-vs-numpy">google style</a> is considered as standard for this repository. Note that
-types should be defined using <a class="reference external" href="https://www.python.org/dev/peps/pep-0484/">PEP 484</a> annotations. If attribute, parameter,
-and return types are annotated according to <a class="reference external" href="https://www.python.org/dev/peps/pep-0484/">PEP 484</a>, they do not need to
-be included in the docstring:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">function_with_pep484_type_annotations</span><span class="p">(</span><span class="n">param1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">param2</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Example function with PEP 484 type annotations.</span>
+<a class="reference external" href="https://sphinxcontrib-napoleon.readthedocs.io/en/latest/index.html#google-vs-numpy">google-style</a> is considered as standard for this repository. Please use type
+hints in the function signature for types. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">arg1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">arg2</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Summary line.</span>
+
+<span class="sd">    Extended description of function.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        param1: The first parameter.</span>
-<span class="sd">        param2: The second parameter.</span>
+<span class="sd">        arg1: Description of arg1</span>
+<span class="sd">        arg2: Description of arg2</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        The return value. True for success, False otherwise.</span>
+<span class="sd">        Description of return value</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="kc">True</span>
 </pre></div>
 </div>
 </section>
