@@ -284,7 +284,7 @@
                 "format",
                 "${workspaceFolder:pvi}/../${input:Module}/pvi/${input:Driver}${input:FileType}",
                 "${workspaceFolder:pvi}/../${input:Module}/pvi/${input:Driver}.pvi.producer.yaml",
-                "${workspaceFolder:pvi}/tests/produce_format/input/${input:Formatter}.pvi.formatter.yaml",
+                "${workspaceFolder:pvi}/tests/produce_format/input/${input:Formatter}${input:FileType}.pvi.formatter.yaml",
                 "--yaml-paths",
                 "${workspaceFolder:ADCore}/pvi",
             ],
@@ -382,6 +382,7 @@
                 ".csv",
                 ".adl",
                 ".edl",
+                ".bob",
             ],
         },
         {
