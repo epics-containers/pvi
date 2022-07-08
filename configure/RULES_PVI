@@ -1,33 +1,23 @@
 -include $(PVI)/configure/CONFIG_SITE
 
+# Note in these rules, we create the target in-source and then copy it to the build
+# target. This is so that the resulting changes can be commited and used in builds
+# without PVI available `$(@F)` is the file-within-directory part of the file name of
+# the target, so `../$(@F)` is the source location of the file we want to generate
+# See: https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html
+
 ifdef BIN_PVI
 
-# Find base names of components from YAML files
-PVIS := $(wildcard $(TOP)/pvi/*.pvi.producer.yaml)
-COMPONENTS := $(patsubst $(TOP)/pvi/%.pvi.producer.yaml, %, $(PVIS))
+# Rules
 
-ifdef PVI_TEMPLATES
-
-# Add templates to be generated for components to install target
-TEMPLATES := $(patsubst %, %Parameters.template, $(COMPONENTS))
-install: $(TEMPLATES)
-
-# Rule to create a template file from a PVI yaml file
+## Rule to create a Parameters template
 %Parameters.template: $(TOP)/pvi/%.pvi.producer.yaml
-	$(BIN_PVI) produce $@ $<
+	$(BIN_PVI) produce ../$(@F) $<
+	cp ../$(@F) $@
 
-endif # PVI_TEMPLATES
-
-ifdef PVI_PARAMSETS
-
-# Add ParamSet header files to be generated for components to install target
-PARAMSETS := $(patsubst %, %ParamSet.h, $(COMPONENTS))
-install: $(PARAMSETS)
-
-# Rule to create a ParamSet header file from a PVI yaml file
+## Rule to create a ParamSet header
 %ParamSet.h: $(TOP)/pvi/%.pvi.producer.yaml
-	$(BIN_PVI) produce $@ $<
-
-endif # PVI_PARAMSETS
+	$(BIN_PVI) produce ../$(@F) $<
+	cp ../$(@F) $@
 
 endif # BIN_PVI
