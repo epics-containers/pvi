@@ -20,4 +20,34 @@ ifdef BIN_PVI
 	$(BIN_PVI) produce ../$(@F) $<
 	cp ../$(@F) $@
 
+## Rule to create an adl UI
+%.adl: $(TOP)/pvi/%.pvi.producer.yaml
+	$(BIN_PVI) format $(PVI_ADLS)/$@ $< $(PVI)/tests/produce_format/input/aps.pvi.formatter.yaml --yaml-paths $(TOP)/pvi
+
+## Rule to create an edl UI
+%.edl: $(TOP)/pvi/%.pvi.producer.yaml
+	$(BIN_PVI) format $(PVI_EDLS)/$@ $< $(PVI)/tests/produce_format/input/dls.pvi.formatter.yaml --yaml-paths $(TOP)/pvi
+
+# Generate UIs
+
+## Find base names of components from YAML files
+PVIS := $(wildcard $(TOP)/pvi/*.pvi.producer.yaml)
+COMPONENTS := $(patsubst $(TOP)/pvi/%.pvi.producer.yaml, %, $(PVIS))
+
+ifdef PVI_ADLS
+
+## Generate an adl for every yaml
+ADLS := $(patsubst %, %.adl, $(COMPONENTS))
+install: $(ADLS)
+
+endif # PVI_ADLS
+
+ifdef PVI_EDLS
+
+## Generate an edl for every yaml
+EDLS := $(patsubst %, %.edl, $(COMPONENTS))
+install: $(EDLS)
+
+endif # PVI_EDLS
+
 endif # BIN_PVI
