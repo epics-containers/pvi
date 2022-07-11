@@ -42,7 +42,10 @@ ifdef PVI_ADLS
 
 ## Generate an adl for every yaml
 ADLS := $(patsubst %, %.adl, $(COMPONENTS))
-install: $(ADLS)
+install: $(PVI_ADLS) $(ADLS)
+
+$(PVI_ADLS):
+	mkdir -p $@
 
 endif # PVI_ADLS
 
@@ -50,7 +53,10 @@ ifdef PVI_EDLS
 
 ## Generate an edl for every yaml
 EDLS := $(patsubst %, %.edl, $(COMPONENTS))
-install: $(EDLS)
+install:  $(PVI_EDLS) $(EDLS)
+
+$(PVI_EDLS):
+	mkdir -p $@
 
 endif # PVI_EDLS
 
@@ -58,7 +64,10 @@ ifdef PVI_BOBS
 
 ## Generate a bob for every yaml
 BOBS := $(patsubst %, %.bob, $(COMPONENTS))
-install: $(BOBS)
+install: $(PVI_BOBS) $(BOBS)
+
+$(PVI_BOBS):
+	mkdir -p $@
 
 endif # PVI_BOBS
 
