@@ -83,11 +83,14 @@ def format(
     output: Path = typer.Argument(..., help="Directory to write output file(s) to"),
     producer: Path = typer.Argument(..., help="path to the .pvi.producer.yaml file"),
     formatter: Path = typer.Argument(..., help="path to the .pvi.formatter.yaml file"),
-    yaml_paths: List[Path] = typer.Option(
-        ..., help="Paths to directories with .pvi.producer.yaml files"
+    yaml_paths: Optional[List[Path]] = typer.Option(
+        None, help="Paths to directories with .pvi.producer.yaml files"
     ),
 ):
     """Create screen product from producer and formatter YAML"""
+    if yaml_paths is None:
+        yaml_paths = []
+
     producer_inst: Producer = deserialize_yaml(Producer, producer)
     producer_inst.deserialize_parents(yaml_paths)
     device = producer_inst.produce_device()
@@ -102,14 +105,16 @@ def asyn(
     cpp: Path = typer.Argument(..., help="Path to the .cpp file to convert"),
     h: Path = typer.Argument(..., help="Path to the .h file to convert"),
     templates: Optional[List[Path]] = typer.Argument(
-        None,
-        help="Paths to .template files to convert",
+        None, help="Paths to .template files to convert"
     ),
-    yaml_paths: List[Path] = typer.Option(
-        ..., help="Paths to directories with .pvi.producer.yaml files"
+    yaml_paths: Optional[List[Path]] = typer.Option(
+        None, help="Paths to directories with .pvi.producer.yaml files"
     ),
 ):
     """Convert cpp/h/template to producer YAML and stripped cpp/h/template"""
+    if yaml_paths is None:
+        yaml_paths = []
+
     if not output.exists():
         os.mkdir(output)
 
@@ -171,11 +176,14 @@ def convertplaceholder(
     output: Path = typer.Argument(..., help="Directory to write output file(s) to"),
     cpp: Path = typer.Argument(..., help="Path to the .cpp file to convert"),
     h: Path = typer.Argument(..., help="Path to the .h file to convert"),
-    yaml_paths: List[Path] = typer.Option(
-        ..., help="Paths to directories with .pvi.producer.yaml files"
+    yaml_paths: Optional[List[Path]] = typer.Option(
+        None, help="Paths to directories with .pvi.producer.yaml files"
     ),
 ):
     """Alter cpp and h files of unconverted drivers"""
+    if yaml_paths is None:
+        yaml_paths = []
+
     if not output.exists():
         os.mkdir(output)
 
