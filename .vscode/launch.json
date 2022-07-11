@@ -177,7 +177,8 @@
                 "${workspaceFolder:ADCore}/ADApp/op/adl/ADCollect.adl",
                 "${workspaceFolder:ADCore}/ADApp/op/adl/ADAttrFile.adl",
                 "${workspaceFolder:ADCore}/ADApp/op/adl/NDFile.adl",
-                // add more
+                "${workspaceFolder:ADCore}/ADApp/op/adl/NDFileBase.adl",
+                // "${workspaceFolder:ADCore}/ADApp/op/adl/NDFileDetails.adl",
             ],
             "console": "integratedTerminal"
         },
