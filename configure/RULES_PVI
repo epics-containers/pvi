@@ -21,16 +21,16 @@ ifdef BIN_PVI
 	cp ../$(@F) $@
 
 ## Rule to create an adl UI
-%.adl: $(TOP)/pvi/%.pvi.producer.yaml
-	$(BIN_PVI) format $(PVI_ADLS)/$@ $< $(PVI)/tests/produce_format/input/aps.pvi.formatter.yaml --yaml-paths $(TOP)/pvi
+$(PVI_ADLS)/%.adl: $(TOP)/pvi/%.pvi.producer.yaml
+	$(BIN_PVI) format $@ $< $(PVI)/tests/produce_format/input/aps.pvi.formatter.yaml --yaml-paths $(TOP)/pvi
 
 ## Rule to create an edl UI
-%.edl: $(TOP)/pvi/%.pvi.producer.yaml
-	$(BIN_PVI) format $(PVI_EDLS)/$@ $< $(PVI)/tests/produce_format/input/dls.edl.pvi.formatter.yaml --yaml-paths $(TOP)/pvi
+$(PVI_EDLS)/%.edl: $(TOP)/pvi/%.pvi.producer.yaml
+	$(BIN_PVI) format $@ $< $(PVI)/tests/produce_format/input/dls.edl.pvi.formatter.yaml --yaml-paths $(TOP)/pvi
 
 ## Rule to create a bob UI
-%.bob: $(TOP)/pvi/%.pvi.producer.yaml
-	$(BIN_PVI) format $(PVI_BOBS)/$@ $< $(PVI)/tests/produce_format/input/dls.bob.pvi.formatter.yaml --yaml-paths $(TOP)/pvi
+$(PVI_BOBS)/%.bob: $(TOP)/pvi/%.pvi.producer.yaml
+	$(BIN_PVI) format $@ $< $(PVI)/tests/produce_format/input/dls.bob.pvi.formatter.yaml --yaml-paths $(TOP)/pvi
 
 # Generate UIs
 
@@ -41,7 +41,7 @@ COMPONENTS := $(patsubst $(TOP)/pvi/%.pvi.producer.yaml, %, $(PVIS))
 ifdef PVI_ADLS
 
 ## Generate an adl for every yaml
-ADLS := $(patsubst %, %.adl, $(COMPONENTS))
+ADLS := $(patsubst %, $(PVI_ADLS)/%.adl, $(COMPONENTS))
 install: $(PVI_ADLS) $(ADLS)
 
 $(PVI_ADLS):
@@ -52,7 +52,7 @@ endif # PVI_ADLS
 ifdef PVI_EDLS
 
 ## Generate an edl for every yaml
-EDLS := $(patsubst %, %.edl, $(COMPONENTS))
+EDLS := $(patsubst %, $(PVI_EDLS)/%.edl, $(COMPONENTS))
 install:  $(PVI_EDLS) $(EDLS)
 
 $(PVI_EDLS):
@@ -63,7 +63,7 @@ endif # PVI_EDLS
 ifdef PVI_BOBS
 
 ## Generate a bob for every yaml
-BOBS := $(patsubst %, %.bob, $(COMPONENTS))
+BOBS := $(patsubst %, $(PVI_BOBS)/%.bob, $(COMPONENTS))
 install: $(PVI_BOBS) $(BOBS)
 
 $(PVI_BOBS):
