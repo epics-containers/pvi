@@ -26,7 +26,11 @@ ifdef BIN_PVI
 
 ## Rule to create an edl UI
 %.edl: $(TOP)/pvi/%.pvi.producer.yaml
-	$(BIN_PVI) format $(PVI_EDLS)/$@ $< $(PVI)/tests/produce_format/input/dls.pvi.formatter.yaml --yaml-paths $(TOP)/pvi
+	$(BIN_PVI) format $(PVI_EDLS)/$@ $< $(PVI)/tests/produce_format/input/dls.edl.pvi.formatter.yaml --yaml-paths $(TOP)/pvi
+
+## Rule to create a bob UI
+%.bob: $(TOP)/pvi/%.pvi.producer.yaml
+	$(BIN_PVI) format $(PVI_BOBS)/$@ $< $(PVI)/tests/produce_format/input/dls.bob.pvi.formatter.yaml --yaml-paths $(TOP)/pvi
 
 # Generate UIs
 
@@ -49,5 +53,13 @@ EDLS := $(patsubst %, %.edl, $(COMPONENTS))
 install: $(EDLS)
 
 endif # PVI_EDLS
+
+ifdef PVI_BOBS
+
+## Generate a bob for every yaml
+BOBS := $(patsubst %, %.bob, $(COMPONENTS))
+install: $(BOBS)
+
+endif # PVI_BOBS
 
 endif # BIN_PVI
