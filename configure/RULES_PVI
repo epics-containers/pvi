@@ -1,10 +1,15 @@
--include $(PVI)/configure/CONFIG_SITE
-
 # Note in these rules, we create the target in-source and then copy it to the build
 # target. This is so that the resulting changes can be commited and used in builds
 # without PVI available `$(@F)` is the file-within-directory part of the file name of
 # the target, so `../$(@F)` is the source location of the file we want to generate
 # See: https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html
+
+ifndef BIN_PVI
+# If not defined explicitly try to use from PATH
+BIN_PVI := $(shell which pvi 2>/dev/null)
+endif
+
+ifdef BIN_PVI
 
 EMPTY :=
 SPACE := $(EMPTY) $(EMPTY)
@@ -13,8 +18,6 @@ ifdef PVI_YAML_PATHS
 # e.g. `PVI_YAML_PATHS=foo bar` -> `... --yaml-paths foo --yaml-paths bar`
 EXPAND_PVI_YAML_PATHS = $(subst $(SPACE), --yaml-paths , $(PVI_YAML_PATHS))
 endif
-
-ifdef BIN_PVI
 
 # Rules
 
