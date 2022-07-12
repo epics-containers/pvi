@@ -33,15 +33,15 @@ endif
 
 ## Rule to create an adl UI
 $(PVI_ADLS)/%.adl: $(TOP)/pvi/%.pvi.producer.yaml
-	$(BIN_PVI) format $@ $< $(PVI)/tests/produce_format/input/aps.pvi.formatter.yaml $(EXPAND_PVI_YAML_PATHS)
+	$(BIN_PVI) format $@ $< $(PVI)/formatters/aps.pvi.formatter.yaml $(EXPAND_PVI_YAML_PATHS)
 
 ## Rule to create an edl UI
 $(PVI_EDLS)/%.edl: $(TOP)/pvi/%.pvi.producer.yaml
-	$(BIN_PVI) format $@ $< $(PVI)/tests/produce_format/input/dls.edl.pvi.formatter.yaml $(EXPAND_PVI_YAML_PATHS)
+	$(BIN_PVI) format $@ $< $(PVI)/formatters/dls.edl.pvi.formatter.yaml $(EXPAND_PVI_YAML_PATHS)
 
 ## Rule to create a bob UI
 $(PVI_BOBS)/%.bob: $(TOP)/pvi/%.pvi.producer.yaml
-	$(BIN_PVI) format $@ $< $(PVI)/tests/produce_format/input/dls.bob.pvi.formatter.yaml $(EXPAND_PVI_YAML_PATHS)
+	$(BIN_PVI) format $@ $< $(PVI)/formatters/dls.bob.pvi.formatter.yaml $(EXPAND_PVI_YAML_PATHS)
 
 # Generate UIs
 
