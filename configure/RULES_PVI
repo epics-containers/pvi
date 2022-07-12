@@ -6,6 +6,14 @@
 # the target, so `../$(@F)` is the source location of the file we want to generate
 # See: https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html
 
+EMPTY :=
+SPACE := $(EMPTY) $(EMPTY)
+ifdef PVI_YAML_PATHS
+# Prepend each path in PVI_YAML_PATHS with ' --yaml-paths ' to pass to pvi call
+# e.g. `PVI_YAML_PATHS=foo bar` -> `... --yaml-paths foo --yaml-paths bar`
+EXPAND_PVI_YAML_PATHS = $(subst $(SPACE), --yaml-paths , $(PVI_YAML_PATHS))
+endif
+
 ifdef BIN_PVI
 
 # Rules
@@ -22,15 +30,15 @@ ifdef BIN_PVI
 
 ## Rule to create an adl UI
 $(PVI_ADLS)/%.adl: $(TOP)/pvi/%.pvi.producer.yaml
-	$(BIN_PVI) format $@ $< $(PVI)/tests/produce_format/input/aps.pvi.formatter.yaml --yaml-paths $(TOP)/pvi
+	$(BIN_PVI) format $@ $< $(PVI)/tests/produce_format/input/aps.pvi.formatter.yaml $(EXPAND_PVI_YAML_PATHS)
 
 ## Rule to create an edl UI
 $(PVI_EDLS)/%.edl: $(TOP)/pvi/%.pvi.producer.yaml
-	$(BIN_PVI) format $@ $< $(PVI)/tests/produce_format/input/dls.edl.pvi.formatter.yaml --yaml-paths $(TOP)/pvi
+	$(BIN_PVI) format $@ $< $(PVI)/tests/produce_format/input/dls.edl.pvi.formatter.yaml $(EXPAND_PVI_YAML_PATHS)
 
 ## Rule to create a bob UI
 $(PVI_BOBS)/%.bob: $(TOP)/pvi/%.pvi.producer.yaml
-	$(BIN_PVI) format $@ $< $(PVI)/tests/produce_format/input/dls.bob.pvi.formatter.yaml --yaml-paths $(TOP)/pvi
+	$(BIN_PVI) format $@ $< $(PVI)/tests/produce_format/input/dls.bob.pvi.formatter.yaml $(EXPAND_PVI_YAML_PATHS)
 
 # Generate UIs
 
