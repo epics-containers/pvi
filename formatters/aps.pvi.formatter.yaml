@@ -1,2 +1,9 @@
 # yaml-language-server: $schema=../../../schemas/pvi.formatter.schema.json
 type: APSFormatter
+# Remove screen property to use default value
+spacing: 4
+title_height: 26
+max_height: 900
+label_width: 150
+widget_width: 250
+widget_height: 20
