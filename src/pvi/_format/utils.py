@@ -313,16 +313,16 @@ class Screen(Generic[T]):
             self.layout.label_width + self.layout.widget_width + 2 * self.layout.spacing
         )
         screen_bounds = Bounds(h=self.layout.max_height)
-        widget_bounds = Bounds(w=full_w, h=self.layout.widget_height)
+        widget_dims = dict(w=full_w, h=self.layout.widget_height)
         screen_widgets: List[WidgetFactory[T]] = []
-        columns: Dict[int, int] = {0: 0}  # x coord -> y coord of bottom of column
+        columns: List[Bounds] = [Bounds(**widget_dims)]
         for c in components:
             if isinstance(c, Group):
                 # Create group widget
-                for col_x, col_y in columns.items():
+                for bounds in columns:
                     # Note: Group adjusts bounds to fit the components
                     group = self.group(
-                        c, bounds=Bounds(col_x, col_y, h=screen_bounds.h)
+                        c, bounds=Bounds(bounds.x, bounds.y, h=screen_bounds.h)
                     )
 
                     if group.bounds.h + group.bounds.y <= screen_bounds.h:
@@ -332,20 +332,30 @@ class Screen(Generic[T]):
                 group.bounds.w += self.layout.group_width_offset
                 screen_widgets.append(group)
 
-                # Update y for current column and ensure there is an empty column
-                columns[group.bounds.x] = (
-                    group.bounds.y + group.bounds.h + self.layout.spacing
-                )
-                columns[next_x(screen_widgets, self.layout.spacing)] = 0
+                # Update y for current column
+                bounds.y = group.bounds.y + group.bounds.h + self.layout.spacing
             else:
-                # Create top level widget
+                # Create top level widget - note this will change columns in place
                 screen_widgets = screen_widgets + self.make_component_widgets(
                     c,
-                    bounds=widget_bounds,
+                    column_bounds=columns[-2],  # Second last column
                     parent_bounds=screen_bounds,
-                    next_column=next_x(screen_widgets, self.layout.spacing),
+                    next_column_bounds=columns[-1],  # Last column
                     group_widget_indent=self.layout.group_widget_indent,
                 )
+
+            # We added to the last column - make a new empty column
+            if columns[-1].y != 0:
+                columns.append(
+                    Bounds(
+                        x=next_x(screen_widgets, self.layout.spacing),
+                        y=0,
+                        **widget_dims,
+                    )
+                )
+            else:
+                # Update next column start in case we have added something wider
+                columns[-1].x = next_x(screen_widgets, self.layout.spacing)
 
         screen_bounds.w = max_x(screen_widgets)
         screen_bounds.h = max_y(screen_widgets)
@@ -431,7 +441,7 @@ class Screen(Generic[T]):
         full_w = (
             self.layout.label_width + self.layout.widget_width + 2 * self.layout.spacing
         )
-        child_bounds = Bounds(w=full_w, h=self.layout.widget_height)
+        column_bounds = Bounds(w=full_w, h=self.layout.widget_height)
         widgets: List[WidgetFactory[T]] = []
         assert isinstance(group.layout, Grid), "Can only do grid at the moment"
         for c in group.children:
@@ -439,13 +449,21 @@ class Screen(Generic[T]):
                 # TODO: make a new screen
                 raise NotImplementedError(c)
             else:
+                next_column_bounds = Bounds(
+                    x=next_x(widgets, self.layout.spacing),
+                    w=full_w,
+                    h=self.layout.widget_height,
+                )
                 widgets = widgets + self.make_component_widgets(
                     c,
-                    bounds=child_bounds,
+                    column_bounds=column_bounds,
                     parent_bounds=bounds,
-                    next_column=next_x(widgets, self.layout.spacing),
+                    next_column_bounds=next_column_bounds,
                     add_label=group.layout.labelled,
                 )
+                if next_column_bounds.y != 0:
+                    # We have moved onto the next column
+                    column_bounds = next_column_bounds
 
         bounds.h = max_y(widgets)
         bounds.w = max_x(widgets)
@@ -454,9 +472,9 @@ class Screen(Generic[T]):
     def make_component_widgets(
         self,
         c: Component,
-        bounds: Bounds,
+        column_bounds: Bounds,
         parent_bounds: Bounds,
-        next_column: int,
+        next_column_bounds: Bounds,
         add_label=True,
         group_widget_indent: int = 0,
     ) -> List[WidgetFactory[T]]:
@@ -464,25 +482,32 @@ class Screen(Generic[T]):
 
         Args:
             c: Component object extracted from a device.yaml
-            bounds: The size and position of component widgets (x,y,w,h).
+            column_bounds: Bounds of widget in current column
             parent_bounds: Size constraints from the object containing the widgets
-            next_column: A reference to the next columns position should widgets
-                exceed height limits
+            next_column_bounds: Bounds of widget in next column should widgets exceed
+                height limits
             add_label: Whether the widget should have an associated label.
                 Defaults to True.
             group_widget_indent: The x offset of widgets within groups.
 
         Returns:
             A collection of widgets representing the component
+
+        Side Effect:
+            One of {column_bounds,next_column_bounds}.y will be updated to fit the
+            added widget
+
         """
-        widgets = list(self.component(c, bounds, group_widget_indent, add_label))
-        bounds.y = next_y(widgets, self.layout.spacing)
+        widgets = list(self.component(c, column_bounds, group_widget_indent, add_label))
         if max_y(widgets) > parent_bounds.h:
-            bounds.x = next_column
-            bounds.y = 0
-            # Try again in new row
-            widgets = list(self.component(c, bounds, group_widget_indent, add_label))
-            bounds.y = next_y(widgets, self.layout.spacing)
+            # Add to next column
+            widgets = list(
+                self.component(c, next_column_bounds, group_widget_indent, add_label)
+            )
+            next_column_bounds.y = next_y(widgets, self.layout.spacing)
+        else:
+            column_bounds.y = next_y(widgets, self.layout.spacing)
+
         return widgets
 
 
