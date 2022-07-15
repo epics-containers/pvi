@@ -93,7 +93,7 @@ class RecordExtractor:
         self._text = text
 
     def _extract_record_strs(self):
-        # extract a whole record definition inc. fields e.g.
+        # extract a whole record definition inc. fields and leading empty lines e.g.
         # record(waveform, "$(P)$(R)FilePath")
         # {
         #    field(PINI, "YES")
@@ -103,7 +103,7 @@ class RecordExtractor:
         #    field(NELM, "256")
         #    info(autosaveFields, "VAL")
         # }
-        record_extractor = re.compile(r"^[^#\n]*record\([^{]*{[^}]*}", re.MULTILINE)
+        record_extractor = re.compile(r"\s*^[^#\n]*record\([^{]*{[^}]*}", re.MULTILINE)
         return re.findall(record_extractor, self._text)
 
     def _parse_record(self, record_str: str) -> Tuple:
@@ -225,7 +225,7 @@ class RecordExtractor:
                 + [
                     line
                     for line in record_lines[record_name]
-                    if keep_line(line, clashing_fields)
+                    if line and keep_line(line, clashing_fields)
                 ]
             )
             for record_name, clashing_fields in overrides
