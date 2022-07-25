@@ -287,7 +287,7 @@ def find_components(yaml_name: str, yaml_paths: List[Path]) -> Tree[AsynParamete
     producer_yaml = find_pvi_yaml(producer_name, yaml_paths)
 
     if producer_yaml is None:
-        raise IOError(f"Cannot find {producer_name}")
+        raise IOError(f"Cannot find {producer_name} in {yaml_paths}")
 
     producer = deserialize_yaml(AsynProducer, producer_yaml)
 
