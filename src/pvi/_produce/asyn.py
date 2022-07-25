@@ -43,7 +43,7 @@ from .records import (
     StringRecordPair,
     WaveformRecordPair,
 )
-from .utils import get_param_set, join_lines, narrow_type, truncate_description
+from .utils import get_param_set, join_lines, truncate_description
 
 
 @dataclass
@@ -328,18 +328,25 @@ class AsynProducer(Producer):
             pass
 
         parent_parameters = find_components(self.parent, yaml_paths)
-        for parent_group in parent_parameters:
-            parent_group = narrow_type(parent_group, Group)
-            for param_group in self.parameters:
-                param_group = narrow_type(param_group, Group)
-                if param_group.name == parent_group.name:
-                    param_group.children = list(parent_group.children) + list(
-                        param_group.children
-                    )
-                    break  # Groups merged - skip to next parent group
+        for node in parent_parameters:
+            if isinstance(node, Group):
+                for param_group in self.parameters:
+                    if not isinstance(param_group, Group):
+                        continue
+                    elif param_group.name == node.name:
+                        param_group.children = list(node.children) + list(
+                            param_group.children
+                        )
+                        break  # Groups merged - skip to next parent group
+
+                else:  # No break - Did not find the Group
+                    # Inherit as a new Group
+                    self.parameters = list(self.parameters) + [node]
+                    continue  # Skip to next parent group
+
             else:
-                # Group only exists in parent - inherit it as a new group
-                self.parameters = list(self.parameters) + [parent_group]
+                # Node is an individual AsynParameter - just append it
+                self.parameters = list(self.parameters) + [node]
 
     def _read_record_suffix(self, parameter: AsynParameter) -> str:
         if parameter.read_record_suffix:

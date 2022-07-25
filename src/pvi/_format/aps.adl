@@ -1,12 +1,12 @@
 
 file {
-	name="/dls/science/users/tmc43/common/python/pvi/src/pvi/_formatters/aps.adl"
+	name="/home/ima16823/Environments/phoebus/pvi/src/pvi/_format/aps.adl"
 	version=030107
 }
 display {
 	object {
-		x=1708
-		y=268
+		x=1728
+		y=547
 		width=610
 		height=845
 	}
@@ -182,7 +182,7 @@ text {
 byte {
 	object {
 		x=165
-		y=220
+		y=250
 		width=20
 		height=19
 	}
@@ -233,5 +233,20 @@ menu {
 		chan="ComboBox"
 		clr=14
 		bclr=51
+	}
+}
+bar {
+	object {
+		x=165
+		y=215
+		width=140
+		height=19
+	}
+	monitor {
+		chan="ProgressBar"
+		clr=51
+		bclr=4
+	}
+	limits {
 	}
 }

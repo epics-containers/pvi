@@ -51,6 +51,7 @@
 #define PilatusEnergyString "ENERGY"
 #define PilatusMinFlatFieldString "MIN_FLAT_FIELD"
 #define PilatusGapFillString "GAP_FILL"
+#define ProgressBarTestString "PROGRESS"
 
 class pilatusDetectorParamSet : public virtual ADDriverParamSet {
 public:
@@ -103,6 +104,7 @@ public:
         this->add(PilatusEnergyString, asynParamFloat64, &PilatusEnergy);
         this->add(PilatusMinFlatFieldString, asynParamInt32, &PilatusMinFlatField);
         this->add(PilatusGapFillString, asynParamInt32, &PilatusGapFill);
+        this->add(ProgressBarTestString, asynParamFloat64, &ProgressBarTest);
     }
 
     int PilatusResetPower;
@@ -154,6 +156,7 @@ public:
     int PilatusEnergy;
     int PilatusMinFlatField;
     int PilatusGapFill;
+    int ProgressBarTest;
 };
 
 #endif // PilatusDetectorParamSet_H

@@ -1,8 +1,15 @@
+from __future__ import annotations
+
 import re
+from copy import deepcopy
 from dataclasses import dataclass, field, replace
 from enum import Enum
 from typing import Callable, Dict, Iterator, List, Tuple, Type, TypeVar, Union
 
+from lxml import etree
+from typing_extensions import Annotated
+
+from pvi._schema_utils import desc
 from pvi.device import (
     LED,
     CheckBox,
@@ -11,6 +18,7 @@ from pvi.device import (
     Generic,
     Grid,
     Group,
+    ProgressBar,
     ReadWidget,
     SignalR,
     SignalRef,
@@ -33,10 +41,10 @@ class Bounds:
     w: int = 0
     h: int = 0
 
-    def copy(self) -> "Bounds":
+    def copy(self) -> Bounds:
         return Bounds(self.x, self.y, self.w, self.h)
 
-    def split(self, width: int, spacing: int) -> Tuple["Bounds", "Bounds"]:
+    def split(self, width: int, spacing: int) -> Tuple[Bounds, Bounds]:
         """Split horizontally"""
         to_split = width + spacing
         assert to_split < self.w, f"Can't split off {to_split} from {self.w}"
@@ -44,7 +52,7 @@ class Bounds:
         right = Bounds(self.x + to_split, self.y, self.w - to_split, self.h)
         return left, right
 
-    def square(self) -> "Bounds":
+    def square(self) -> Bounds:
         """Return the largest square that will fit in self"""
         size = min(self.w, self.h)
         return Bounds(
@@ -54,7 +62,7 @@ class Bounds:
             h=size,
         )
 
-    def added_to(self, bounds: "Bounds") -> "Bounds":
+    def added_to(self, bounds: Bounds) -> Bounds:
         return Bounds(
             x=self.x + bounds.x,
             y=self.y + bounds.y,
@@ -73,6 +81,15 @@ class WidgetTemplate(Generic[T]):
     def set(self, t: T, bounds: Bounds = None, **properties) -> T:
         """Return a copy of the internal representation with the bounds and
         properties set"""
+        raise NotImplementedError(self)
+
+    def create_group(
+        self,
+        group_object: List[T],
+        children: List[WidgetFactory[T]],
+        padding: Bounds = Bounds(),
+    ) -> List[T]:
+        """Return a group widget with its children attached and appropritately padded"""
         raise NotImplementedError(self)
 
 
@@ -140,25 +157,34 @@ class GroupFactory(WidgetFactory[T]):
         sized: Callable[[Bounds], Bounds] = Bounds.copy,
         make_widgets: Callable[[Bounds, str], List[WidgetFactory[T]]] = None,
         **attrs,
-    ) -> Type["GroupFactory[T]"]:
+    ) -> Type[GroupFactory[T]]:
         @dataclass
         class FormattableGroupFactory(GroupFactory[T]):
             def format(self) -> List[T]:
                 padding = sized(self.bounds)
                 texts: List[T] = []
+                made_widgets: List[T] = []
+
                 if search == GroupType.SCREEN:
                     properties = {k: getattr(self, v) for k, v in attrs.items()}
                     texts.append(
                         template.set(template.screen, self.bounds, **properties)
                     )
-                # TODO: group things?
-                if make_widgets:
-                    for widget in make_widgets(self.bounds, self.title):
-                        texts += widget.format()
-                for c in self.children:
-                    c.bounds.x += padding.x
-                    c.bounds.y += padding.y
-                    texts += c.format()
+                    # Make screen title
+                    if make_widgets:
+                        for widget in make_widgets(self.bounds, self.title):
+                            texts += widget.format()
+                    for c in self.children:
+                        c.bounds.x += padding.x
+                        c.bounds.y += padding.y
+                        texts += c.format()
+
+                if search == GroupType.GROUP:
+                    # Make group object
+                    if make_widgets:
+                        for widget in make_widgets(self.bounds, self.title):
+                            made_widgets += widget.format()
+                    texts += template.create_group(made_widgets, self.children, padding)
                 return texts
 
             def __post_init__(self):
@@ -168,96 +194,91 @@ class GroupFactory(WidgetFactory[T]):
         return FormattableGroupFactory
 
 
-def max_x(widgets: List[WidgetFactory[T]], spacing: int = 0) -> int:
+def max_x(widgets: List[WidgetFactory[T]]) -> int:
+    """Given multiple widgets, calulate the maximum x position that they occupy"""
     if widgets:
-        return max(w.bounds.x + w.bounds.w + spacing for w in widgets)
+        return max(w.bounds.x + w.bounds.w for w in widgets)
     else:
         return 0
 
 
-def max_y(widgets: List[WidgetFactory[T]], spacing: int = 0) -> int:
+def max_y(widgets: List[WidgetFactory[T]]) -> int:
+    """Given multiple widgets, calulate the maximum y position that they occupy"""
     if widgets:
-        return max(w.bounds.y + w.bounds.h + spacing for w in widgets)
+        return max(w.bounds.y + w.bounds.h for w in widgets)
+    else:
+        return 0
+
+
+def next_x(widgets: List[WidgetFactory[T]], spacing: int = 0) -> int:
+    """Given multiple widgets, calulate the next feasible location for an
+    additional widget in the x axis"""
+    if widgets:
+        return max_x(widgets) + spacing
+    else:
+        return 0
+
+
+def next_y(widgets: List[WidgetFactory[T]], spacing: int = 0) -> int:
+    """Given multiple widgets, calulate the next feasible location for an
+    additional widget in the y axis"""
+    if widgets:
+        return max_y(widgets) + spacing
     else:
         return 0
 
 
 @dataclass
-class Screen(Generic[T]):
-    screen_cls: Type[GroupFactory[T]]
-    group_cls: Type[GroupFactory[T]]
+class LayoutProperties:
+    spacing: Annotated[int, desc("Spacing between widgets")]
+    title_height: Annotated[int, desc("Height of screen title bar")]
+    max_height: Annotated[int, desc("Max height of the screen")]
+    group_label_height: Annotated[int, desc("Height of the group title label")]
+    label_width: Annotated[int, desc("Width of the labels describing widgets")]
+    widget_width: Annotated[int, desc("Width of the widgets")]
+    widget_height: Annotated[int, desc("Height of the widgets (Labels use this too)")]
+    group_widget_indent: Annotated[
+        int, desc("Indentation of widgets within groups. Defaults to 0")
+    ] = 0
+    group_width_offset: Annotated[
+        int, desc("Additional border width when using group objects. Defaults to 0")
+    ] = 0
+
+
+@dataclass
+class ScreenWidgets(Generic[T]):
     label_cls: Type[LabelFactory[T]]
     led_cls: Type[PVWidgetFactory[T]]
+    progress_bar_cls: Type[PVWidgetFactory[T]]
     # TODO: add bitfield, progress_bar, plot, table, image
     text_read_cls: Type[PVWidgetFactory[T]]
     check_box_cls: Type[PVWidgetFactory[T]]
     combo_box_cls: Type[PVWidgetFactory[T]]
     text_write_cls: Type[PVWidgetFactory[T]]
     action_button_cls: Type[ActionFactory[T]]
-    prefix: str
-    spacing: int
-    label_width: int
-    widget_width: int
-    widget_height: int
-    max_height: int
-    components: Dict[str, Component] = field(init=False, default_factory=dict)
-
-    def screen(self, components: Tree[Component], title: str) -> WidgetFactory[T]:
-        # Make the contents of the screen
-        widgets: List[WidgetFactory[T]] = []
-        columns: Dict[int, int] = {0: 0}  # x coord -> y coord of bottom of column
-        for c in components:
-            if isinstance(c, Group):
-                for col_x, col_y in columns.items():
-                    # Note: Group adjusts bounds to fit the components
-                    group = self.group(
-                        c, bounds=Bounds(col_x, col_y, h=self.max_height)
-                    )
-
-                    if group.bounds.h + group.bounds.y <= self.max_height:
-                        # Group fits in this column
-                        break
-
-                widgets.append(group)
-
-                # Update y for current column and ensure there is an empty column
-                columns[group.bounds.x] = group.bounds.y + group.bounds.h + self.spacing
-                columns[max_x(widgets) + self.spacing] = 0
-            else:
-                raise NotImplementedError(c)
-
-        # Then the screen itself
-        bounds = Bounds(w=max_x(widgets), h=max_y(widgets))
-        return self.screen_cls(bounds, title, widgets)
-
-    def component(
-        self, c: Component, bounds: Bounds, add_label=True
-    ) -> Iterator[WidgetFactory[T]]:
-        # Widgets are allowed to expand bounds
-        if not isinstance(c, SignalRef):
-            self.components[c.name] = c
-        if add_label:
-            left, bounds = bounds.split(self.label_width, self.spacing)
-            yield self.label_cls(left, c.get_label())
-        if isinstance(c, SignalX):
-            yield self.action_button_cls(bounds, c.get_label(), c.pv, c.value)
-        elif isinstance(c, SignalR) and c.widget:
-            yield self.pv_widget(c.widget, bounds, c.pv)
-        elif isinstance(c, SignalRW) and c.read_pv and c.read_widget and c.widget:
-            left, right = bounds.split(int((bounds.w - self.spacing) / 2), self.spacing)
-            yield self.pv_widget(c.widget, left, c.pv)
-            yield self.pv_widget(c.read_widget, right, c.read_pv)
-        elif isinstance(c, (SignalW, SignalRW)) and c.widget:
-            yield self.pv_widget(c.widget, bounds, c.pv)
-        elif isinstance(c, SignalRef):
-            yield from self.component(self.components[c.name], bounds, add_label)
-        # TODO: Need to handle DeviceRef
 
     def pv_widget(
-        self, widget: Union[ReadWidget, WriteWidget], bounds: Bounds, pv: str
+        self,
+        widget: Union[ReadWidget, WriteWidget],
+        bounds: Bounds,
+        pv: str,
+        prefix: str,
     ) -> PVWidgetFactory[T]:
+        """Convert a component that reads or writes PV's into its WidgetFactory equivalent
+
+        Args:
+            widget: The read/write widget property of a component
+            bounds: The size and position of the widget (x,y,w,h).
+            pv: The process variable assigned to a component
+
+        Returns:
+            A WidgetFactory representing the component
+        """
+
         widget_factory: Dict[type, Type[PVWidgetFactory[T]]] = {
+            # Currently supported instances of ReadWidget/WriteWidget Components
             LED: self.led_cls,
+            ProgressBar: self.progress_bar_cls,
             TextRead: self.text_read_cls,
             CheckBox: self.check_box_cls,
             ComboBox: self.combo_box_cls,
@@ -265,41 +286,229 @@ class Screen(Generic[T]):
         }
         if isinstance(widget, (TextRead, TextWrite)):
             bounds.h *= widget.lines
-        return widget_factory[type(widget)](bounds, self.prefix + pv)
+        return widget_factory[type(widget)](bounds, prefix + pv)
+
+
+@dataclass
+class Screen(Generic[T]):
+    screen_cls: Type[GroupFactory[T]]
+    group_cls: Type[GroupFactory[T]]
+    screen_widgets: ScreenWidgets
+    layout: LayoutProperties
+    prefix: str
+    components: Dict[str, Component] = field(init=False, default_factory=dict)
+
+    def screen(self, components: Tree[Component], title: str) -> WidgetFactory[T]:
+        """Make the contents of the screen and determines the layout of widgets
+
+        Args:
+            components: A list of components that make up a device
+            title: The title of the screen
+
+        Returns:
+            A constructed screen object
+
+        """
+        full_w = (
+            self.layout.label_width + self.layout.widget_width + 2 * self.layout.spacing
+        )
+        screen_bounds = Bounds(h=self.layout.max_height)
+        widget_dims = dict(w=full_w, h=self.layout.widget_height)
+        screen_widgets: List[WidgetFactory[T]] = []
+        columns: List[Bounds] = [Bounds(**widget_dims)]
+        for c in components:
+            if isinstance(c, Group):
+                # Create group widget
+                for bounds in columns:
+                    # Note: Group adjusts bounds to fit the components
+                    group = self.group(
+                        c, bounds=Bounds(bounds.x, bounds.y, h=screen_bounds.h)
+                    )
+
+                    if group.bounds.h + group.bounds.y <= screen_bounds.h:
+                        # Group fits in this column
+                        break
+
+                group.bounds.w += self.layout.group_width_offset
+                screen_widgets.append(group)
+
+                # Update y for current column
+                bounds.y = group.bounds.y + group.bounds.h + self.layout.spacing
+            else:
+                # Create top level widget - note this will change columns in place
+                screen_widgets = screen_widgets + self.make_component_widgets(
+                    c,
+                    column_bounds=columns[-2],  # Second last column
+                    parent_bounds=screen_bounds,
+                    next_column_bounds=columns[-1],  # Last column
+                    group_widget_indent=self.layout.group_widget_indent,
+                )
+
+            # We added to the last column - make a new empty column
+            if columns[-1].y != 0:
+                columns.append(
+                    Bounds(
+                        x=next_x(screen_widgets, self.layout.spacing),
+                        y=0,
+                        **widget_dims,
+                    )
+                )
+            else:
+                # Update next column start in case we have added something wider
+                columns[-1].x = next_x(screen_widgets, self.layout.spacing)
+
+        screen_bounds.w = max_x(screen_widgets)
+        screen_bounds.h = max_y(screen_widgets)
+        return self.screen_cls(screen_bounds, title, screen_widgets)
+
+    def component(
+        self, c: Component, bounds: Bounds, group_widget_indent: int, add_label=True
+    ) -> Iterator[WidgetFactory[T]]:
+        """Convert a component into its WidgetFactory equivalents
+
+        Args:
+            c: Component object extracted from a producer.yaml
+            bounds: The size and position of the component widgets (x,y,w,h).
+            add_label: Whether the component has an associated label. Defaults to True.
+
+        Yields:
+            A collection of widgets representing the component
+        """
+
+        def indent_widget(bounds: Bounds, indentation: int) -> Bounds:
+            """Shifts the x position of a widget. Used on top level widgets to align
+            them with group indentation"""
+            return Bounds(bounds.x + indentation, bounds.y, bounds.w, bounds.h)
+
+        # Widgets are allowed to expand bounds
+        if not isinstance(c, SignalRef):
+            self.components[c.name] = c
+
+        if add_label:
+            left, bounds = bounds.split(self.layout.label_width, self.layout.spacing)
+            yield self.screen_widgets.label_cls(
+                indent_widget(left, group_widget_indent), c.get_label()
+            )
+
+        if isinstance(c, SignalX):
+            yield self.screen_widgets.action_button_cls(
+                indent_widget(bounds, group_widget_indent),
+                c.get_label(),
+                c.pv,
+                c.value,
+            )
+        elif isinstance(c, SignalR) and c.widget:
+            yield self.screen_widgets.pv_widget(
+                c.widget, indent_widget(bounds, group_widget_indent), c.pv, self.prefix
+            )
+        elif isinstance(c, SignalRW) and c.read_pv and c.read_widget and c.widget:
+            left, right = bounds.split(
+                int((bounds.w - self.layout.spacing) / 2), self.layout.spacing
+            )
+            yield self.screen_widgets.pv_widget(
+                c.widget, indent_widget(left, group_widget_indent), c.pv, self.prefix
+            )
+            yield self.screen_widgets.pv_widget(
+                c.read_widget,
+                indent_widget(right, group_widget_indent),
+                c.read_pv,
+                self.prefix,
+            )
+        elif isinstance(c, (SignalW, SignalRW)) and c.widget:
+            yield self.screen_widgets.pv_widget(
+                c.widget, indent_widget(bounds, group_widget_indent), c.pv, self.prefix
+            )
+        elif isinstance(c, SignalRef):
+            yield from self.component(
+                self.components[c.name],
+                indent_widget(bounds, group_widget_indent),
+                add_label,
+            )
+        # TODO: Need to handle DeviceRef
 
     def group(self, group: Group[Component], bounds: Bounds) -> WidgetFactory[T]:
-        x = 0
-        full_w = self.label_width + 2 * (self.spacing + self.widget_width)
-        widget_lists: List[List[WidgetFactory[T]]] = [[]]
+        """Convert components within groups into widgets and lay them out within a
+        group object.
+
+        Args:
+            group: Group of child components in a Layout
+            bounds: The size and position of the group widget (x,y,w,h).
+
+        Returns:
+            A group object containing child widgets
+        """
+
+        full_w = (
+            self.layout.label_width + self.layout.widget_width + 2 * self.layout.spacing
+        )
+        column_bounds = Bounds(w=full_w, h=self.layout.widget_height)
+        widgets: List[WidgetFactory[T]] = []
         assert isinstance(group.layout, Grid), "Can only do grid at the moment"
         for c in group.children:
             if isinstance(c, Group):
                 # TODO: make a new screen
                 raise NotImplementedError(c)
             else:
+                next_column_bounds = Bounds(
+                    x=next_x(widgets, self.layout.spacing),
+                    w=full_w,
+                    h=self.layout.widget_height,
+                )
+                widgets = widgets + self.make_component_widgets(
+                    c,
+                    column_bounds=column_bounds,
+                    parent_bounds=bounds,
+                    next_column_bounds=next_column_bounds,
+                    add_label=group.layout.labelled,
+                )
+                if next_column_bounds.y != 0:
+                    # We have moved onto the next column
+                    column_bounds = next_column_bounds
 
-                def make(y):
-                    return self.component(
-                        c,
-                        bounds=Bounds(x, y, full_w, self.widget_height),
-                        add_label=group.layout.labelled,
-                    )
-
-                widgets = list(make(y=max_y(widget_lists[-1], self.spacing)))
-                max_h = max(w.bounds.y + w.bounds.h for w in widgets)
-                if max_h > bounds.h:
-                    # Retry in the next row
-                    x = max_x(widget_lists[-1], self.spacing)
-                    widget_lists.append(list(make(y=0)))
-                else:
-                    # Add in this row
-                    for w in widgets:
-                        widget_lists[-1].append(w)
-
-        widgets = concat(widget_lists)
         bounds.h = max_y(widgets)
         bounds.w = max_x(widgets)
         return self.group_cls(bounds, group.get_label(), widgets)
+
+    def make_component_widgets(
+        self,
+        c: Component,
+        column_bounds: Bounds,
+        parent_bounds: Bounds,
+        next_column_bounds: Bounds,
+        add_label=True,
+        group_widget_indent: int = 0,
+    ) -> List[WidgetFactory[T]]:
+        """Generate widgets from component data and position them in a grid format
+
+        Args:
+            c: Component object extracted from a device.yaml
+            column_bounds: Bounds of widget in current column
+            parent_bounds: Size constraints from the object containing the widgets
+            next_column_bounds: Bounds of widget in next column should widgets exceed
+                height limits
+            add_label: Whether the widget should have an associated label.
+                Defaults to True.
+            group_widget_indent: The x offset of widgets within groups.
+
+        Returns:
+            A collection of widgets representing the component
+
+        Side Effect:
+            One of {column_bounds,next_column_bounds}.y will be updated to fit the
+            added widget
+
+        """
+        widgets = list(self.component(c, column_bounds, group_widget_indent, add_label))
+        if max_y(widgets) > parent_bounds.h:
+            # Add to next column
+            widgets = list(
+                self.component(c, next_column_bounds, group_widget_indent, add_label)
+            )
+            next_column_bounds.y = next_y(widgets, self.layout.spacing)
+        else:
+            column_bounds.y = next_y(widgets, self.layout.spacing)
+
+        return widgets
 
 
 def concat(items: List[List[T]]) -> List[T]:
@@ -346,6 +555,22 @@ class EdlTemplate(WidgetTemplate[str]):
         assert len(matches) == 1, f"Got {len(matches)} matches for {search!r}"
         return matches[0]
 
+    def create_group(
+        self,
+        group_object: List[str],
+        children: List[WidgetFactory[str]],
+        padding: Bounds = Bounds(),
+    ) -> List[str]:
+
+        texts: List[str] = []
+
+        for c in children:
+            c.bounds.x += padding.x
+            c.bounds.y += padding.y
+            texts += c.format()
+
+        return group_object + texts
+
 
 class AdlTemplate(WidgetTemplate[str]):
     def __init__(self, text: str):
@@ -373,3 +598,109 @@ class AdlTemplate(WidgetTemplate[str]):
         matches = [t for t in self.widgets if re.search(search, t)]
         assert len(matches) == 1, f"Got {len(matches)} matches for {search!r}"
         return matches[0]
+
+    def create_group(
+        self,
+        group_object: List[str],
+        children: List[WidgetFactory[str]],
+        padding: Bounds = Bounds(),
+    ) -> List[str]:
+
+        texts: List[str] = []
+
+        for c in children:
+            c.bounds.x += padding.x
+            c.bounds.y += padding.y
+            texts += c.format()
+
+        return group_object + texts
+
+
+class BobTemplate(WidgetTemplate[etree.ElementBase]):
+    """Extract and modify elements from a template .bob file."""
+
+    def __init__(self, text: str):
+        """Parse an XML string to an element tree object."""
+
+        self.tree = etree.parse(text)
+        self.screen = self.search("Display")
+
+    def set(
+        self, t: etree.ElementBase, bounds: Bounds = None, **properties
+    ) -> etree.ElementBase:
+        """Modify template elements (widgets) with component data.
+
+        Args:
+            t: A template element.
+            bounds: The size and position of the widget.
+            **properties: The element properties (SubElements) to update.
+                In the form: {[SubElement]: [Value]}
+
+        Returns:
+            The modified element.
+        """
+        t_copy = deepcopy(t)
+        if bounds:
+            properties["x"] = bounds.x
+            properties["y"] = bounds.y
+            properties["width"] = bounds.w
+            properties["height"] = bounds.h
+        for item, value in properties.items():
+            try:
+                t_copy.xpath(f"./{item}")[0].text = str(value)
+            except IndexError as idx:
+                name = t_copy.find("name").text
+                raise ValueError(f"Failed to locate '{item}' in {name}") from idx
+        return t_copy
+
+    def search(self, search: str) -> etree.ElementBase:
+        """Locate and extract elements from the Element tree.
+
+        Args:
+            search: The unique name of the element to extract.
+                Can be found in its name subelement.
+
+        Returns:
+            The extracted element.
+        """
+
+        tree_copy = deepcopy(self.tree)
+        # 'name' is the unique ID for each element
+        matches = [
+            element.getparent()
+            for element in tree_copy.iter("name")
+            if element.text == search
+        ]
+        assert len(matches) == 1, f"Got {len(matches)} matches for {search!r}"
+
+        # Isolate the screen properties
+        if matches[0].tag == "display":
+            for child in matches[0]:
+                if child.tag == "widget":
+                    matches[0].remove(child)
+
+        return matches[0]
+
+    def create_group(
+        self,
+        group_object: List[etree.ElementBase],
+        children: List[WidgetFactory[etree.ElementBase]],
+        padding: Bounds = Bounds(),
+    ) -> List[etree.ElementBase]:
+        """Create an xml group object from a list of child widgets
+
+        Args:
+            group_object: Templated group xml element
+            children: List of child widgets within the group
+            padding: Additional placement data to fit the children to the group object.
+                Defaults to Bounds().
+
+        Returns:
+            An xml group with children attached as subelements
+        """
+        assert (
+            len(group_object) == 1
+        ), f"Size of group_object is {len(group_object)}, should be 1"
+        for c in children:
+            group_object[0].append(c.format()[0])
+        return group_object

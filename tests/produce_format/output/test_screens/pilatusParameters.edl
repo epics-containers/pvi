@@ -6,7 +6,7 @@ release 1
 x 0
 y 0
 w 1015
-h 925
+h 950
 font "arial-bold-r-12.0"
 ctlFont "arial-bold-r-12.0"
 btnFont "arial-bold-r-12.0"
@@ -53,7 +53,7 @@ release 0
 x 5
 y 35
 w 1005
-h 885
+h 910
 lineColor index 14
 fill
 fillColor index 5
@@ -1500,8 +1500,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 260
-y 45
+x 10
+y 920
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1519,8 +1519,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 380
-y 45
+x 130
+y 920
 w 60
 h 20
 controlPv "$(P)$(R)ArrayCounter"
@@ -1538,8 +1538,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 445
-y 45
+x 195
+y 920
 w 60
 h 20
 controlPv "$(P)$(R)ArrayCounter_RBV"
@@ -1558,7 +1558,7 @@ major 4
 minor 1
 release 1
 x 260
-y 70
+y 45
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1577,7 +1577,7 @@ major 4
 minor 0
 release 0
 x 380
-y 70
+y 45
 w 60
 h 20
 fgColor index 14
@@ -1599,7 +1599,7 @@ major 4
 minor 0
 release 0
 x 465
-y 70
+y 45
 w 20
 h 20
 controlPv "$(P)$(R)ArrayCallbacks_RBV"
@@ -1617,7 +1617,7 @@ major 4
 minor 1
 release 1
 x 260
-y 95
+y 70
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1636,7 +1636,7 @@ major 4
 minor 0
 release 0
 x 432
-y 95
+y 70
 w 20
 h 20
 controlPv "$(P)$(R)FilePathExists_RBV"
@@ -1654,7 +1654,7 @@ major 4
 minor 1
 release 1
 x 260
-y 120
+y 95
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1673,7 +1673,7 @@ major 10
 minor 0
 release 0
 x 380
-y 120
+y 95
 w 125
 h 20
 controlPv "$(P)$(R)FullFileName_RBV"
@@ -1692,7 +1692,7 @@ major 4
 minor 1
 release 1
 x 260
-y 145
+y 120
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1711,7 +1711,7 @@ major 10
 minor 0
 release 0
 x 380
-y 145
+y 120
 w 125
 h 20
 controlPv "$(P)$(R)NumCaptured_RBV"
@@ -1730,7 +1730,7 @@ major 4
 minor 1
 release 1
 x 260
-y 170
+y 145
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1749,7 +1749,7 @@ major 4
 minor 0
 release 0
 x 432
-y 170
+y 145
 w 20
 h 20
 controlPv "$(P)$(R)WriteStatus"
@@ -1767,7 +1767,7 @@ major 4
 minor 1
 release 1
 x 260
-y 195
+y 170
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1786,7 +1786,7 @@ major 10
 minor 0
 release 0
 x 380
-y 195
+y 170
 w 125
 h 20
 controlPv "$(P)$(R)WriteMessage"
@@ -1805,7 +1805,7 @@ major 4
 minor 1
 release 1
 x 260
-y 220
+y 195
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1824,7 +1824,7 @@ major 10
 minor 0
 release 0
 x 380
-y 220
+y 195
 w 60
 h 20
 controlPv "$(P)$(R)FilePath"
@@ -1843,7 +1843,7 @@ major 10
 minor 0
 release 0
 x 445
-y 220
+y 195
 w 60
 h 20
 controlPv "$(P)$(R)FilePath_RBV"
@@ -1862,7 +1862,7 @@ major 4
 minor 1
 release 1
 x 260
-y 245
+y 220
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1881,7 +1881,7 @@ major 10
 minor 0
 release 0
 x 380
-y 245
+y 220
 w 60
 h 20
 controlPv "$(P)$(R)CreateDirectory"
@@ -1900,7 +1900,7 @@ major 10
 minor 0
 release 0
 x 445
-y 245
+y 220
 w 60
 h 20
 controlPv "$(P)$(R)CreateDirectory_RBV"
@@ -1919,7 +1919,7 @@ major 4
 minor 1
 release 1
 x 260
-y 270
+y 245
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1938,7 +1938,7 @@ major 10
 minor 0
 release 0
 x 380
-y 270
+y 245
 w 60
 h 20
 controlPv "$(P)$(R)FileName"
@@ -1957,7 +1957,7 @@ major 10
 minor 0
 release 0
 x 445
-y 270
+y 245
 w 60
 h 20
 controlPv "$(P)$(R)FileName_RBV"
@@ -1976,7 +1976,7 @@ major 4
 minor 1
 release 1
 x 260
-y 295
+y 270
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -1995,7 +1995,7 @@ major 10
 minor 0
 release 0
 x 380
-y 295
+y 270
 w 125
 h 20
 controlPv "$(P)$(R)FileNumber"
@@ -2014,7 +2014,7 @@ major 4
 minor 1
 release 1
 x 260
-y 320
+y 295
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -2033,7 +2033,7 @@ major 4
 minor 0
 release 0
 x 380
-y 320
+y 295
 w 60
 h 20
 fgColor index 14
@@ -2055,7 +2055,7 @@ major 4
 minor 0
 release 0
 x 465
-y 320
+y 295
 w 20
 h 20
 controlPv "$(P)$(R)AutoIncrement_RBV"
@@ -2073,7 +2073,7 @@ major 4
 minor 1
 release 1
 x 260
-y 345
+y 320
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -2092,7 +2092,7 @@ major 10
 minor 0
 release 0
 x 380
-y 345
+y 320
 w 60
 h 20
 controlPv "$(P)$(R)FileTemplate"
@@ -2111,7 +2111,7 @@ major 10
 minor 0
 release 0
 x 445
-y 345
+y 320
 w 60
 h 20
 controlPv "$(P)$(R)FileTemplate_RBV"
@@ -2130,7 +2130,7 @@ major 4
 minor 1
 release 1
 x 260
-y 370
+y 345
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -2149,7 +2149,7 @@ major 4
 minor 0
 release 0
 x 380
-y 370
+y 345
 w 60
 h 20
 fgColor index 14
@@ -2171,7 +2171,7 @@ major 4
 minor 0
 release 0
 x 465
-y 370
+y 345
 w 20
 h 20
 controlPv "$(P)$(R)AutoSave_RBV"
@@ -2189,7 +2189,7 @@ major 4
 minor 1
 release 1
 x 260
-y 395
+y 370
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -2208,7 +2208,7 @@ major 4
 minor 0
 release 0
 x 380
-y 395
+y 370
 w 60
 h 20
 fgColor index 14
@@ -2230,7 +2230,7 @@ major 4
 minor 0
 release 0
 x 465
-y 395
+y 370
 w 20
 h 20
 controlPv "$(P)$(R)WriteFile_RBV"
@@ -2248,7 +2248,7 @@ major 4
 minor 1
 release 1
 x 260
-y 420
+y 395
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -2267,7 +2267,7 @@ major 4
 minor 0
 release 0
 x 380
-y 420
+y 395
 w 60
 h 20
 fgColor index 14
@@ -2289,7 +2289,7 @@ major 4
 minor 0
 release 0
 x 465
-y 420
+y 395
 w 20
 h 20
 controlPv "$(P)$(R)ReadFile_RBV"
@@ -2307,7 +2307,7 @@ major 4
 minor 1
 release 1
 x 260
-y 445
+y 420
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -2326,7 +2326,7 @@ major 4
 minor 0
 release 0
 x 380
-y 445
+y 420
 w 60
 h 20
 fgColor index 25
@@ -2345,7 +2345,7 @@ major 10
 minor 0
 release 0
 x 445
-y 445
+y 420
 w 60
 h 20
 controlPv "$(P)$(R)FileFormat_RBV"
@@ -2364,7 +2364,7 @@ major 4
 minor 1
 release 1
 x 260
-y 470
+y 445
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -2383,7 +2383,7 @@ major 4
 minor 0
 release 0
 x 380
-y 470
+y 445
 w 60
 h 20
 fgColor index 25
@@ -2402,7 +2402,7 @@ major 10
 minor 0
 release 0
 x 445
-y 470
+y 445
 w 60
 h 20
 controlPv "$(P)$(R)FileWriteMode_RBV"
@@ -2421,7 +2421,7 @@ major 4
 minor 1
 release 1
 x 260
-y 495
+y 470
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -2440,7 +2440,7 @@ major 4
 minor 0
 release 0
 x 380
-y 495
+y 470
 w 60
 h 20
 fgColor index 14
@@ -2462,7 +2462,7 @@ major 4
 minor 0
 release 0
 x 465
-y 495
+y 470
 w 20
 h 20
 controlPv "$(P)$(R)Capture_RBV"
@@ -2480,7 +2480,7 @@ major 4
 minor 1
 release 1
 x 260
-y 520
+y 495
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -2499,7 +2499,7 @@ major 10
 minor 0
 release 0
 x 380
-y 520
+y 495
 w 60
 h 20
 controlPv "$(P)$(R)NumCapture"
@@ -2518,7 +2518,7 @@ major 10
 minor 0
 release 0
 x 445
-y 520
+y 495
 w 60
 h 20
 controlPv "$(P)$(R)NumCapture_RBV"
@@ -2537,7 +2537,7 @@ major 4
 minor 1
 release 1
 x 260
-y 545
+y 520
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -2556,7 +2556,7 @@ major 4
 minor 0
 release 0
 x 380
-y 545
+y 520
 w 60
 h 20
 fgColor index 14
@@ -2578,7 +2578,7 @@ major 4
 minor 0
 release 0
 x 465
-y 545
+y 520
 w 20
 h 20
 controlPv "$(P)$(R)DeleteDriverFile_RBV"
@@ -2596,7 +2596,7 @@ major 4
 minor 1
 release 1
 x 260
-y 570
+y 545
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -2615,7 +2615,7 @@ major 4
 minor 0
 release 0
 x 380
-y 570
+y 545
 w 60
 h 20
 fgColor index 14
@@ -2637,7 +2637,7 @@ major 4
 minor 0
 release 0
 x 465
-y 570
+y 545
 w 20
 h 20
 controlPv "$(P)$(R)LazyOpen_RBV"
@@ -2655,7 +2655,7 @@ major 4
 minor 1
 release 1
 x 260
-y 595
+y 570
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -2674,7 +2674,7 @@ major 10
 minor 0
 release 0
 x 380
-y 595
+y 570
 w 60
 h 20
 controlPv "$(P)$(R)TempSuffix"
@@ -2693,7 +2693,7 @@ major 10
 minor 0
 release 0
 x 445
-y 595
+y 570
 w 60
 h 20
 controlPv "$(P)$(R)TempSuffix_RBV"
@@ -2712,7 +2712,7 @@ major 4
 minor 1
 release 1
 x 260
-y 620
+y 595
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -2731,7 +2731,7 @@ major 4
 minor 0
 release 0
 x 380
-y 620
+y 595
 w 125
 h 20
 fgColor index 14
@@ -2753,7 +2753,7 @@ major 4
 minor 1
 release 1
 x 260
-y 645
+y 620
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -2772,7 +2772,7 @@ major 10
 minor 0
 release 0
 x 380
-y 645
+y 620
 w 125
 h 20
 controlPv "$(P)$(R)MaxSizeX_RBV"
@@ -2791,7 +2791,7 @@ major 4
 minor 1
 release 1
 x 260
-y 670
+y 645
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -2810,7 +2810,7 @@ major 10
 minor 0
 release 0
 x 380
-y 670
+y 645
 w 125
 h 20
 controlPv "$(P)$(R)MaxSizeY_RBV"
@@ -2829,7 +2829,7 @@ major 4
 minor 1
 release 1
 x 260
-y 695
+y 670
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -2848,7 +2848,7 @@ major 10
 minor 0
 release 0
 x 380
-y 695
+y 670
 w 125
 h 20
 controlPv "$(P)$(R)TimeRemaining_RBV"
@@ -2867,7 +2867,7 @@ major 4
 minor 1
 release 1
 x 260
-y 720
+y 695
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -2886,7 +2886,7 @@ major 10
 minor 0
 release 0
 x 380
-y 720
+y 695
 w 125
 h 20
 controlPv "$(P)$(R)NumExposuresCounter_RBV"
@@ -2905,7 +2905,7 @@ major 4
 minor 1
 release 1
 x 260
-y 745
+y 720
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -2924,7 +2924,7 @@ major 10
 minor 0
 release 0
 x 380
-y 745
+y 720
 w 125
 h 20
 controlPv "$(P)$(R)NumImagesCounter_RBV"
@@ -2943,7 +2943,7 @@ major 4
 minor 1
 release 1
 x 260
-y 770
+y 745
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -2962,7 +2962,7 @@ major 10
 minor 0
 release 0
 x 380
-y 770
+y 745
 w 125
 h 20
 controlPv "$(P)$(R)DetectorState_RBV"
@@ -2981,7 +2981,7 @@ major 4
 minor 1
 release 1
 x 260
-y 795
+y 770
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -3000,7 +3000,7 @@ major 10
 minor 0
 release 0
 x 380
-y 795
+y 770
 w 125
 h 20
 controlPv "$(P)$(R)StatusMessage_RBV"
@@ -3019,7 +3019,7 @@ major 4
 minor 1
 release 1
 x 260
-y 820
+y 795
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -3038,7 +3038,7 @@ major 10
 minor 0
 release 0
 x 380
-y 820
+y 795
 w 125
 h 20
 controlPv "$(P)$(R)StringToServer_RBV"
@@ -3057,7 +3057,7 @@ major 4
 minor 1
 release 1
 x 260
-y 845
+y 820
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -3076,7 +3076,7 @@ major 10
 minor 0
 release 0
 x 380
-y 845
+y 820
 w 125
 h 20
 controlPv "$(P)$(R)StringFromServer_RBV"
@@ -3095,7 +3095,7 @@ major 4
 minor 1
 release 1
 x 260
-y 870
+y 845
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -3114,10 +3114,47 @@ major 4
 minor 0
 release 0
 x 432
-y 870
+y 845
 w 20
 h 20
 controlPv "$(P)$(R)ShutterStatus_RBV"
+lineColor index 14
+onColor index 15
+offColor index 19
+lineWidth 2
+numBits 1
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 260
+y 870
+w 115
+h 20
+font "arial-bold-r-10.0"
+fgColor index 14
+bgColor index 3
+useDisplayBg
+value {
+  "Shutter Control EPICS"
+}
+endObjectProperties
+
+# (Byte)
+object ByteClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 432
+y 870
+w 20
+h 20
+controlPv "$(P)$(R)ShutterControlEPICS"
 lineColor index 14
 onColor index 15
 offColor index 19
@@ -3140,43 +3177,6 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  "Shutter Control EPICS"
-}
-endObjectProperties
-
-# (Byte)
-object ByteClass
-beginObjectProperties
-major 4
-minor 0
-release 0
-x 432
-y 895
-w 20
-h 20
-controlPv "$(P)$(R)ShutterControlEPICS"
-lineColor index 14
-onColor index 15
-offColor index 19
-lineWidth 2
-numBits 1
-endObjectProperties
-
-# (Static Text)
-object activeXTextClass
-beginObjectProperties
-major 4
-minor 1
-release 1
-x 510
-y 45
-w 115
-h 20
-font "arial-bold-r-10.0"
-fgColor index 14
-bgColor index 3
-useDisplayBg
-value {
   "Temperature Actual"
 }
 endObjectProperties
@@ -3187,8 +3187,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 630
-y 45
+x 380
+y 895
 w 125
 h 20
 controlPv "$(P)$(R)TemperatureActual"
@@ -3206,8 +3206,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 510
-y 70
+x 260
+y 920
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -3225,8 +3225,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 630
-y 70
+x 380
+y 920
 w 60
 h 20
 controlPv "$(P)$(R)BinX"
@@ -3244,8 +3244,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 695
-y 70
+x 445
+y 920
 w 60
 h 20
 controlPv "$(P)$(R)BinX_RBV"
@@ -3264,7 +3264,7 @@ major 4
 minor 1
 release 1
 x 510
-y 95
+y 45
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -3283,7 +3283,7 @@ major 10
 minor 0
 release 0
 x 630
-y 95
+y 45
 w 60
 h 20
 controlPv "$(P)$(R)BinY"
@@ -3302,7 +3302,7 @@ major 10
 minor 0
 release 0
 x 695
-y 95
+y 45
 w 60
 h 20
 controlPv "$(P)$(R)BinY_RBV"
@@ -3321,7 +3321,7 @@ major 4
 minor 1
 release 1
 x 510
-y 120
+y 70
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -3340,7 +3340,7 @@ major 10
 minor 0
 release 0
 x 630
-y 120
+y 70
 w 60
 h 20
 controlPv "$(P)$(R)MinX"
@@ -3359,7 +3359,7 @@ major 10
 minor 0
 release 0
 x 695
-y 120
+y 70
 w 60
 h 20
 controlPv "$(P)$(R)MinX_RBV"
@@ -3378,7 +3378,7 @@ major 4
 minor 1
 release 1
 x 510
-y 145
+y 95
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -3397,7 +3397,7 @@ major 10
 minor 0
 release 0
 x 630
-y 145
+y 95
 w 60
 h 20
 controlPv "$(P)$(R)MinY"
@@ -3416,7 +3416,7 @@ major 10
 minor 0
 release 0
 x 695
-y 145
+y 95
 w 60
 h 20
 controlPv "$(P)$(R)MinY_RBV"
@@ -3435,7 +3435,7 @@ major 4
 minor 1
 release 1
 x 510
-y 170
+y 120
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -3454,7 +3454,7 @@ major 10
 minor 0
 release 0
 x 630
-y 170
+y 120
 w 60
 h 20
 controlPv "$(P)$(R)SizeX"
@@ -3473,7 +3473,7 @@ major 10
 minor 0
 release 0
 x 695
-y 170
+y 120
 w 60
 h 20
 controlPv "$(P)$(R)SizeX_RBV"
@@ -3492,7 +3492,7 @@ major 4
 minor 1
 release 1
 x 510
-y 195
+y 145
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -3511,7 +3511,7 @@ major 10
 minor 0
 release 0
 x 630
-y 195
+y 145
 w 60
 h 20
 controlPv "$(P)$(R)SizeY"
@@ -3530,7 +3530,7 @@ major 10
 minor 0
 release 0
 x 695
-y 195
+y 145
 w 60
 h 20
 controlPv "$(P)$(R)SizeY_RBV"
@@ -3549,7 +3549,7 @@ major 4
 minor 1
 release 1
 x 510
-y 220
+y 170
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -3568,7 +3568,7 @@ major 4
 minor 0
 release 0
 x 630
-y 220
+y 170
 w 60
 h 20
 fgColor index 14
@@ -3590,7 +3590,7 @@ major 4
 minor 0
 release 0
 x 715
-y 220
+y 170
 w 20
 h 20
 controlPv "$(P)$(R)ReverseX_RBV"
@@ -3608,7 +3608,7 @@ major 4
 minor 1
 release 1
 x 510
-y 245
+y 195
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -3627,7 +3627,7 @@ major 4
 minor 0
 release 0
 x 630
-y 245
+y 195
 w 60
 h 20
 fgColor index 14
@@ -3649,7 +3649,7 @@ major 4
 minor 0
 release 0
 x 715
-y 245
+y 195
 w 20
 h 20
 controlPv "$(P)$(R)ReverseY_RBV"
@@ -3667,7 +3667,7 @@ major 4
 minor 1
 release 1
 x 510
-y 270
+y 220
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -3686,7 +3686,7 @@ major 10
 minor 0
 release 0
 x 630
-y 270
+y 220
 w 60
 h 20
 controlPv "$(P)$(R)AcquireTime"
@@ -3705,7 +3705,7 @@ major 10
 minor 0
 release 0
 x 695
-y 270
+y 220
 w 60
 h 20
 controlPv "$(P)$(R)AcquireTime_RBV"
@@ -3724,7 +3724,7 @@ major 4
 minor 1
 release 1
 x 510
-y 295
+y 245
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -3743,7 +3743,7 @@ major 10
 minor 0
 release 0
 x 630
-y 295
+y 245
 w 60
 h 20
 controlPv "$(P)$(R)AcquirePeriod"
@@ -3762,7 +3762,7 @@ major 10
 minor 0
 release 0
 x 695
-y 295
+y 245
 w 60
 h 20
 controlPv "$(P)$(R)AcquirePeriod_RBV"
@@ -3781,7 +3781,7 @@ major 4
 minor 1
 release 1
 x 510
-y 320
+y 270
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -3800,7 +3800,7 @@ major 10
 minor 0
 release 0
 x 630
-y 320
+y 270
 w 60
 h 20
 controlPv "$(P)$(R)Gain"
@@ -3819,7 +3819,7 @@ major 10
 minor 0
 release 0
 x 695
-y 320
+y 270
 w 60
 h 20
 controlPv "$(P)$(R)Gain_RBV"
@@ -3838,7 +3838,7 @@ major 4
 minor 1
 release 1
 x 510
-y 345
+y 295
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -3857,7 +3857,7 @@ major 4
 minor 0
 release 0
 x 630
-y 345
+y 295
 w 60
 h 20
 fgColor index 25
@@ -3876,7 +3876,7 @@ major 10
 minor 0
 release 0
 x 695
-y 345
+y 295
 w 60
 h 20
 controlPv "$(P)$(R)FrameType_RBV"
@@ -3895,7 +3895,7 @@ major 4
 minor 1
 release 1
 x 510
-y 370
+y 320
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -3914,7 +3914,7 @@ major 4
 minor 0
 release 0
 x 630
-y 370
+y 320
 w 60
 h 20
 fgColor index 25
@@ -3933,7 +3933,7 @@ major 10
 minor 0
 release 0
 x 695
-y 370
+y 320
 w 60
 h 20
 controlPv "$(P)$(R)ImageMode_RBV"
@@ -3952,7 +3952,7 @@ major 4
 minor 1
 release 1
 x 510
-y 395
+y 345
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -3971,7 +3971,7 @@ major 4
 minor 0
 release 0
 x 630
-y 395
+y 345
 w 60
 h 20
 fgColor index 25
@@ -3990,7 +3990,7 @@ major 10
 minor 0
 release 0
 x 695
-y 395
+y 345
 w 60
 h 20
 controlPv "$(P)$(R)TriggerMode_RBV"
@@ -4009,7 +4009,7 @@ major 4
 minor 1
 release 1
 x 510
-y 420
+y 370
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -4028,7 +4028,7 @@ major 10
 minor 0
 release 0
 x 630
-y 420
+y 370
 w 60
 h 20
 controlPv "$(P)$(R)NumExposures"
@@ -4047,7 +4047,7 @@ major 10
 minor 0
 release 0
 x 695
-y 420
+y 370
 w 60
 h 20
 controlPv "$(P)$(R)NumExposures_RBV"
@@ -4066,7 +4066,7 @@ major 4
 minor 1
 release 1
 x 510
-y 445
+y 395
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -4085,7 +4085,7 @@ major 10
 minor 0
 release 0
 x 630
-y 445
+y 395
 w 60
 h 20
 controlPv "$(P)$(R)NumImages"
@@ -4104,7 +4104,7 @@ major 10
 minor 0
 release 0
 x 695
-y 445
+y 395
 w 60
 h 20
 controlPv "$(P)$(R)NumImages_RBV"
@@ -4123,7 +4123,7 @@ major 4
 minor 1
 release 1
 x 510
-y 470
+y 420
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -4142,7 +4142,7 @@ major 4
 minor 0
 release 0
 x 630
-y 470
+y 420
 w 60
 h 20
 fgColor index 25
@@ -4161,7 +4161,7 @@ major 10
 minor 0
 release 0
 x 695
-y 470
+y 420
 w 60
 h 20
 controlPv "$(P)$(R)ShutterMode_RBV"
@@ -4180,7 +4180,7 @@ major 4
 minor 1
 release 1
 x 510
-y 495
+y 445
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -4199,7 +4199,7 @@ major 4
 minor 0
 release 0
 x 630
-y 495
+y 445
 w 60
 h 20
 fgColor index 14
@@ -4221,7 +4221,7 @@ major 4
 minor 0
 release 0
 x 715
-y 495
+y 445
 w 20
 h 20
 controlPv "$(P)$(R)ShutterControl_RBV"
@@ -4239,7 +4239,7 @@ major 4
 minor 1
 release 1
 x 510
-y 520
+y 470
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -4258,7 +4258,7 @@ major 10
 minor 0
 release 0
 x 630
-y 520
+y 470
 w 60
 h 20
 controlPv "$(P)$(R)ShutterOpenDelay"
@@ -4277,7 +4277,7 @@ major 10
 minor 0
 release 0
 x 695
-y 520
+y 470
 w 60
 h 20
 controlPv "$(P)$(R)ShutterOpenDelay_RBV"
@@ -4296,7 +4296,7 @@ major 4
 minor 1
 release 1
 x 510
-y 545
+y 495
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -4315,7 +4315,7 @@ major 10
 minor 0
 release 0
 x 630
-y 545
+y 495
 w 60
 h 20
 controlPv "$(P)$(R)ShutterCloseDelay"
@@ -4334,7 +4334,7 @@ major 10
 minor 0
 release 0
 x 695
-y 545
+y 495
 w 60
 h 20
 controlPv "$(P)$(R)ShutterCloseDelay_RBV"
@@ -4353,7 +4353,7 @@ major 4
 minor 1
 release 1
 x 510
-y 570
+y 520
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -4372,7 +4372,7 @@ major 10
 minor 0
 release 0
 x 630
-y 570
+y 520
 w 60
 h 20
 controlPv "$(P)$(R)Temperature"
@@ -4391,7 +4391,7 @@ major 10
 minor 0
 release 0
 x 695
-y 570
+y 520
 w 60
 h 20
 controlPv "$(P)$(R)Temperature_RBV"
@@ -4410,7 +4410,7 @@ major 4
 minor 1
 release 1
 x 510
-y 595
+y 545
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -4429,7 +4429,7 @@ major 4
 minor 0
 release 0
 x 630
-y 595
+y 545
 w 125
 h 20
 fgColor index 14
@@ -4451,7 +4451,7 @@ major 4
 minor 1
 release 1
 x 510
-y 620
+y 570
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -4470,7 +4470,7 @@ major 4
 minor 0
 release 0
 x 630
-y 620
+y 570
 w 125
 h 20
 fgColor index 14
@@ -4492,7 +4492,7 @@ major 4
 minor 1
 release 1
 x 510
-y 645
+y 595
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -4511,7 +4511,7 @@ major 10
 minor 0
 release 0
 x 630
-y 645
+y 595
 w 125
 h 20
 controlPv "$(P)$(R)ImageFileTmot"
@@ -4530,7 +4530,7 @@ major 4
 minor 1
 release 1
 x 510
-y 670
+y 620
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -4549,7 +4549,7 @@ major 10
 minor 0
 release 0
 x 630
-y 670
+y 620
 w 125
 h 20
 controlPv "$(P)$(R)Wavelength"
@@ -4568,7 +4568,7 @@ major 4
 minor 1
 release 1
 x 510
-y 695
+y 645
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -4587,7 +4587,7 @@ major 10
 minor 0
 release 0
 x 630
-y 695
+y 645
 w 125
 h 20
 controlPv "$(P)$(R)EnergyLow"
@@ -4606,7 +4606,7 @@ major 4
 minor 1
 release 1
 x 510
-y 720
+y 670
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -4625,7 +4625,7 @@ major 10
 minor 0
 release 0
 x 630
-y 720
+y 670
 w 125
 h 20
 controlPv "$(P)$(R)EnergyHigh"
@@ -4644,7 +4644,7 @@ major 4
 minor 1
 release 1
 x 510
-y 745
+y 695
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -4663,7 +4663,7 @@ major 10
 minor 0
 release 0
 x 630
-y 745
+y 695
 w 125
 h 20
 controlPv "$(P)$(R)DetDist"
@@ -4682,7 +4682,7 @@ major 4
 minor 1
 release 1
 x 510
-y 770
+y 720
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -4701,7 +4701,7 @@ major 10
 minor 0
 release 0
 x 630
-y 770
+y 720
 w 125
 h 20
 controlPv "$(P)$(R)DetVOffset"
@@ -4720,7 +4720,7 @@ major 4
 minor 1
 release 1
 x 510
-y 795
+y 745
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -4739,7 +4739,7 @@ major 10
 minor 0
 release 0
 x 630
-y 795
+y 745
 w 125
 h 20
 controlPv "$(P)$(R)BeamX"
@@ -4758,7 +4758,7 @@ major 4
 minor 1
 release 1
 x 510
-y 820
+y 770
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -4777,7 +4777,7 @@ major 10
 minor 0
 release 0
 x 630
-y 820
+y 770
 w 125
 h 20
 controlPv "$(P)$(R)BeamY"
@@ -4796,7 +4796,7 @@ major 4
 minor 1
 release 1
 x 510
-y 845
+y 795
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -4815,7 +4815,7 @@ major 10
 minor 0
 release 0
 x 630
-y 845
+y 795
 w 125
 h 20
 controlPv "$(P)$(R)Flux"
@@ -4834,7 +4834,7 @@ major 4
 minor 1
 release 1
 x 510
-y 870
+y 820
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -4853,10 +4853,86 @@ major 10
 minor 0
 release 0
 x 630
-y 870
+y 820
 w 125
 h 20
 controlPv "$(P)$(R)FilterTransm"
+fgColor index 25
+fgAlarm
+bgColor index 3
+fill
+font "arial-bold-r-12.0"
+fontAlign "center"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 510
+y 845
+w 115
+h 20
+font "arial-bold-r-10.0"
+fgColor index 14
+bgColor index 3
+useDisplayBg
+value {
+  "Start Angle"
+}
+endObjectProperties
+
+# (Textentry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 630
+y 845
+w 125
+h 20
+controlPv "$(P)$(R)StartAngle"
+fgColor index 25
+fgAlarm
+bgColor index 3
+fill
+font "arial-bold-r-12.0"
+fontAlign "center"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 510
+y 870
+w 115
+h 20
+font "arial-bold-r-10.0"
+fgColor index 14
+bgColor index 3
+useDisplayBg
+value {
+  "Angle Incr"
+}
+endObjectProperties
+
+# (Textentry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 630
+y 870
+w 125
+h 20
+controlPv "$(P)$(R)AngleIncr"
 fgColor index 25
 fgAlarm
 bgColor index 3
@@ -4880,7 +4956,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  "Start Angle"
+  "Det 2theta"
 }
 endObjectProperties
 
@@ -4892,82 +4968,6 @@ minor 0
 release 0
 x 630
 y 895
-w 125
-h 20
-controlPv "$(P)$(R)StartAngle"
-fgColor index 25
-fgAlarm
-bgColor index 3
-fill
-font "arial-bold-r-12.0"
-fontAlign "center"
-endObjectProperties
-
-# (Static Text)
-object activeXTextClass
-beginObjectProperties
-major 4
-minor 1
-release 1
-x 760
-y 45
-w 115
-h 20
-font "arial-bold-r-10.0"
-fgColor index 14
-bgColor index 3
-useDisplayBg
-value {
-  "Angle Incr"
-}
-endObjectProperties
-
-# (Textentry)
-object TextentryClass
-beginObjectProperties
-major 10
-minor 0
-release 0
-x 880
-y 45
-w 125
-h 20
-controlPv "$(P)$(R)AngleIncr"
-fgColor index 25
-fgAlarm
-bgColor index 3
-fill
-font "arial-bold-r-12.0"
-fontAlign "center"
-endObjectProperties
-
-# (Static Text)
-object activeXTextClass
-beginObjectProperties
-major 4
-minor 1
-release 1
-x 760
-y 70
-w 115
-h 20
-font "arial-bold-r-10.0"
-fgColor index 14
-bgColor index 3
-useDisplayBg
-value {
-  "Det 2theta"
-}
-endObjectProperties
-
-# (Textentry)
-object TextentryClass
-beginObjectProperties
-major 10
-minor 0
-release 0
-x 880
-y 70
 w 125
 h 20
 controlPv "$(P)$(R)Det2theta"
@@ -4985,8 +4985,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 760
-y 95
+x 510
+y 920
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -5004,8 +5004,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 880
-y 95
+x 630
+y 920
 w 125
 h 20
 controlPv "$(P)$(R)Polarization"
@@ -5024,7 +5024,7 @@ major 4
 minor 1
 release 1
 x 760
-y 120
+y 45
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -5043,7 +5043,7 @@ major 10
 minor 0
 release 0
 x 880
-y 120
+y 45
 w 125
 h 20
 controlPv "$(P)$(R)Alpha"
@@ -5062,7 +5062,7 @@ major 4
 minor 1
 release 1
 x 760
-y 145
+y 70
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -5081,7 +5081,7 @@ major 10
 minor 0
 release 0
 x 880
-y 145
+y 70
 w 125
 h 20
 controlPv "$(P)$(R)Kappa"
@@ -5100,7 +5100,7 @@ major 4
 minor 1
 release 1
 x 760
-y 170
+y 95
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -5119,7 +5119,7 @@ major 10
 minor 0
 release 0
 x 880
-y 170
+y 95
 w 125
 h 20
 controlPv "$(P)$(R)Phi"
@@ -5138,7 +5138,7 @@ major 4
 minor 1
 release 1
 x 760
-y 195
+y 120
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -5157,7 +5157,7 @@ major 10
 minor 0
 release 0
 x 880
-y 195
+y 120
 w 125
 h 20
 controlPv "$(P)$(R)PhiIncr"
@@ -5176,7 +5176,7 @@ major 4
 minor 1
 release 1
 x 760
-y 220
+y 145
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -5195,7 +5195,7 @@ major 10
 minor 0
 release 0
 x 880
-y 220
+y 145
 w 125
 h 20
 controlPv "$(P)$(R)Chi"
@@ -5214,7 +5214,7 @@ major 4
 minor 1
 release 1
 x 760
-y 245
+y 170
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -5233,7 +5233,7 @@ major 10
 minor 0
 release 0
 x 880
-y 245
+y 170
 w 125
 h 20
 controlPv "$(P)$(R)ChiIncr"
@@ -5252,7 +5252,7 @@ major 4
 minor 1
 release 1
 x 760
-y 270
+y 195
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -5271,7 +5271,7 @@ major 10
 minor 0
 release 0
 x 880
-y 270
+y 195
 w 125
 h 20
 controlPv "$(P)$(R)Omega"
@@ -5290,7 +5290,7 @@ major 4
 minor 1
 release 1
 x 760
-y 295
+y 220
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -5309,7 +5309,7 @@ major 10
 minor 0
 release 0
 x 880
-y 295
+y 220
 w 125
 h 20
 controlPv "$(P)$(R)OmegaIncr"
@@ -5328,7 +5328,7 @@ major 4
 minor 1
 release 1
 x 760
-y 320
+y 245
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -5347,7 +5347,7 @@ major 10
 minor 0
 release 0
 x 880
-y 320
+y 245
 w 125
 h 20
 controlPv "$(P)$(R)OscillAxis"
@@ -5366,7 +5366,7 @@ major 4
 minor 1
 release 1
 x 760
-y 345
+y 270
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -5385,7 +5385,7 @@ major 10
 minor 0
 release 0
 x 880
-y 345
+y 270
 w 125
 h 20
 controlPv "$(P)$(R)NumOscill"
@@ -5404,7 +5404,7 @@ major 4
 minor 1
 release 1
 x 760
-y 370
+y 295
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -5423,7 +5423,7 @@ major 10
 minor 0
 release 0
 x 880
-y 370
+y 295
 w 125
 h 20
 controlPv "$(P)$(R)BadPixelFile"
@@ -5442,7 +5442,7 @@ major 4
 minor 1
 release 1
 x 760
-y 395
+y 320
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -5461,7 +5461,7 @@ major 10
 minor 0
 release 0
 x 880
-y 395
+y 320
 w 125
 h 20
 controlPv "$(P)$(R)FlatFieldFile"
@@ -5480,7 +5480,7 @@ major 4
 minor 1
 release 1
 x 760
-y 420
+y 345
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -5499,7 +5499,7 @@ major 10
 minor 0
 release 0
 x 880
-y 420
+y 345
 w 125
 h 20
 controlPv "$(P)$(R)CbfTemplateFile"
@@ -5518,7 +5518,7 @@ major 4
 minor 1
 release 1
 x 760
-y 445
+y 370
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -5537,7 +5537,7 @@ major 10
 minor 0
 release 0
 x 880
-y 445
+y 370
 w 125
 h 20
 controlPv "$(P)$(R)HeaderString"
@@ -5556,7 +5556,7 @@ major 4
 minor 1
 release 1
 x 760
-y 470
+y 395
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -5575,7 +5575,7 @@ major 4
 minor 0
 release 0
 x 932
-y 470
+y 395
 w 20
 h 20
 controlPv "$(P)$(R)Armed"
@@ -5593,7 +5593,7 @@ major 4
 minor 1
 release 1
 x 760
-y 495
+y 420
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -5612,7 +5612,7 @@ major 10
 minor 0
 release 0
 x 880
-y 495
+y 420
 w 125
 h 20
 controlPv "$(P)$(R)NumBadPixels"
@@ -5631,7 +5631,7 @@ major 4
 minor 1
 release 1
 x 760
-y 520
+y 445
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -5650,7 +5650,7 @@ major 4
 minor 0
 release 0
 x 932
-y 520
+y 445
 w 20
 h 20
 controlPv "$(P)$(R)FlatFieldValid"
@@ -5668,7 +5668,7 @@ major 4
 minor 1
 release 1
 x 760
-y 545
+y 470
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -5687,7 +5687,7 @@ major 10
 minor 0
 release 0
 x 880
-y 545
+y 470
 w 125
 h 20
 controlPv "$(P)$(R)PixelCutOff_RBV"
@@ -5706,7 +5706,7 @@ major 4
 minor 1
 release 1
 x 760
-y 570
+y 495
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -5725,7 +5725,7 @@ major 10
 minor 0
 release 0
 x 880
-y 570
+y 495
 w 125
 h 20
 controlPv "$(P)$(R)Temp0_RBV"
@@ -5744,7 +5744,7 @@ major 4
 minor 1
 release 1
 x 760
-y 595
+y 520
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -5763,7 +5763,7 @@ major 10
 minor 0
 release 0
 x 880
-y 595
+y 520
 w 125
 h 20
 controlPv "$(P)$(R)Temp1_RBV"
@@ -5782,7 +5782,7 @@ major 4
 minor 1
 release 1
 x 760
-y 620
+y 545
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -5801,7 +5801,7 @@ major 10
 minor 0
 release 0
 x 880
-y 620
+y 545
 w 125
 h 20
 controlPv "$(P)$(R)Temp2_RBV"
@@ -5820,7 +5820,7 @@ major 4
 minor 1
 release 1
 x 760
-y 645
+y 570
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -5839,7 +5839,7 @@ major 10
 minor 0
 release 0
 x 880
-y 645
+y 570
 w 125
 h 20
 controlPv "$(P)$(R)Humid0_RBV"
@@ -5858,7 +5858,7 @@ major 4
 minor 1
 release 1
 x 760
-y 670
+y 595
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -5877,7 +5877,7 @@ major 10
 minor 0
 release 0
 x 880
-y 670
+y 595
 w 125
 h 20
 controlPv "$(P)$(R)Humid1_RBV"
@@ -5896,7 +5896,7 @@ major 4
 minor 1
 release 1
 x 760
-y 695
+y 620
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -5915,7 +5915,7 @@ major 10
 minor 0
 release 0
 x 880
-y 695
+y 620
 w 125
 h 20
 controlPv "$(P)$(R)Humid2_RBV"
@@ -5934,7 +5934,7 @@ major 4
 minor 1
 release 1
 x 760
-y 720
+y 645
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -5953,7 +5953,7 @@ major 10
 minor 0
 release 0
 x 880
-y 720
+y 645
 w 125
 h 20
 controlPv "$(P)$(R)TVXVersion_RBV"
@@ -5972,7 +5972,7 @@ major 4
 minor 1
 release 1
 x 760
-y 745
+y 670
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -5991,7 +5991,7 @@ major 10
 minor 0
 release 0
 x 880
-y 745
+y 670
 w 60
 h 20
 controlPv "$(P)$(R)ResetPowerTime"
@@ -6010,7 +6010,7 @@ major 10
 minor 0
 release 0
 x 945
-y 745
+y 670
 w 60
 h 20
 controlPv "$(P)$(R)ResetPowerTime_RBV"
@@ -6029,7 +6029,7 @@ major 4
 minor 1
 release 1
 x 760
-y 770
+y 695
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -6048,7 +6048,7 @@ major 10
 minor 0
 release 0
 x 880
-y 770
+y 695
 w 60
 h 20
 controlPv "$(P)$(R)DelayTime"
@@ -6067,7 +6067,7 @@ major 10
 minor 0
 release 0
 x 945
-y 770
+y 695
 w 60
 h 20
 controlPv "$(P)$(R)DelayTime_RBV"
@@ -6086,7 +6086,7 @@ major 4
 minor 1
 release 1
 x 760
-y 795
+y 720
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -6105,7 +6105,7 @@ major 10
 minor 0
 release 0
 x 880
-y 795
+y 720
 w 60
 h 20
 controlPv "$(P)$(R)ThresholdEnergy"
@@ -6124,7 +6124,7 @@ major 10
 minor 0
 release 0
 x 945
-y 795
+y 720
 w 60
 h 20
 controlPv "$(P)$(R)ThresholdEnergy_RBV"
@@ -6143,7 +6143,7 @@ major 4
 minor 1
 release 1
 x 760
-y 820
+y 745
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -6162,7 +6162,7 @@ major 4
 minor 0
 release 0
 x 880
-y 820
+y 745
 w 60
 h 20
 fgColor index 14
@@ -6184,7 +6184,7 @@ major 4
 minor 0
 release 0
 x 965
-y 820
+y 745
 w 20
 h 20
 controlPv "$(P)$(R)ThresholdAutoApply_RBV"
@@ -6202,7 +6202,7 @@ major 4
 minor 1
 release 1
 x 760
-y 845
+y 770
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -6221,7 +6221,7 @@ major 10
 minor 0
 release 0
 x 880
-y 845
+y 770
 w 60
 h 20
 controlPv "$(P)$(R)Energy"
@@ -6240,7 +6240,7 @@ major 10
 minor 0
 release 0
 x 945
-y 845
+y 770
 w 60
 h 20
 controlPv "$(P)$(R)Energy_RBV"
@@ -6259,7 +6259,7 @@ major 4
 minor 1
 release 1
 x 760
-y 870
+y 795
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -6278,7 +6278,7 @@ major 10
 minor 0
 release 0
 x 880
-y 870
+y 795
 w 60
 h 20
 controlPv "$(P)$(R)MinFlatField"
@@ -6297,7 +6297,7 @@ major 10
 minor 0
 release 0
 x 945
-y 870
+y 795
 w 60
 h 20
 controlPv "$(P)$(R)MinFlatField_RBV"
@@ -6316,7 +6316,7 @@ major 4
 minor 1
 release 1
 x 760
-y 895
+y 820
 w 115
 h 20
 font "arial-bold-r-10.0"
@@ -6335,7 +6335,7 @@ major 4
 minor 0
 release 0
 x 880
-y 895
+y 820
 w 60
 h 20
 fgColor index 25
@@ -6354,7 +6354,7 @@ major 10
 minor 0
 release 0
 x 945
-y 895
+y 820
 w 60
 h 20
 controlPv "$(P)$(R)GapFill_RBV"
@@ -6364,4 +6364,45 @@ bgColor index 10
 fill
 font "arial-bold-r-12.0"
 fontAlign "center"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 760
+y 845
+w 115
+h 20
+font "arial-bold-r-10.0"
+fgColor index 14
+bgColor index 3
+useDisplayBg
+value {
+  "Progress Bar Test"
+}
+endObjectProperties
+
+# (Bar)
+object activeBarClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 880
+y 845
+w 125
+h 20
+indicatorColor index 16
+fgColor index 14
+bgColor index 10
+indicatorPv "$(P)$(R)ProgressBarTest_RBV"
+origin "0"
+font "arial-bold-r-12.0"
+border
+min "0"
+max "100"
+scaleFormat "FFloat"
 endObjectProperties
