@@ -344,8 +344,8 @@ class Screen(Generic[T]):
                     group_widget_indent=self.layout.group_widget_indent,
                 )
 
-            # We added to the last column - make a new empty column
             if columns[-1].y != 0:
+                # We added to the last column - make a new empty column
                 columns.append(
                     Bounds(
                         x=next_x(screen_widgets, self.layout.spacing),
