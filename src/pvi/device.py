@@ -176,7 +176,11 @@ class Labelled(Named):
     def __init_subclass__(cls, **kwargs):
         # Add an optional label to the end of the dataclass if not already there
         has_label_field = [f for f in fields(cls) if f.name == "label"]
-        if not has_label_field:
+        # Hack so this doesn't fire for the Component class below, or anything
+        # else that doesn't add annotations. We really want this to be on terminal
+        # classes, but no way of knowing this in __init_subclass__
+        adds_annotations = bool(cls.__annotations__)
+        if not has_label_field and adds_annotations:
             cls.__annotations__["label"] = Annotated[
                 str, desc("Label for GUI. If empty, use name in Title Case")
             ]
