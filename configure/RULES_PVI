@@ -117,6 +117,22 @@ $(PVI_BOBS):
 
 endif
 
+ifneq ($(PVI_PARAMSETS)$(PVI_TEMPLATES),)
+
+ifeq ($(BASE_3_14),YES)
+clean::
+else
+clean:
+endif
+	touch $(TOP)/pvi/*pvi.producer.yaml
+
+else ifneq ($(PVI_ADLS)$(PVI_EDLS)$(PVI_BOBS),)
+
+clean:
+	touch $(TOP)/pvi/*pvi.producer.yaml
+
+endif
+
 else
 
 $(info pvi not found)
