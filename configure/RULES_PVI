@@ -41,7 +41,7 @@ endif
 
 ## Rule to create a ParamSet header file from a PVI yaml file ##
 %ParamSet.h: $(TOP)/pvi/%.pvi.producer.yaml
-	$(BIN_PVI) produce $@ $<
+	$(BIN_PVI) produce $@ $< $(EXPAND_PVI_YAML_PATHS)
 
 ## Rule to create an adl UI ##
 $(PVI_ADLS)/%.adl: $(TOP)/pvi/%.pvi.producer.yaml

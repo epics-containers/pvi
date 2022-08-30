@@ -271,6 +271,8 @@
                 "produce",
                 "${workspaceFolder:pvi}/../${input:Module}/pvi/${input:Driver}${input:FileType}",
                 "${workspaceFolder:pvi}/../${input:Module}/pvi/${input:Driver}.pvi.producer.yaml",
+                "--yaml-paths",
+                "${workspaceFolder:ADCore}/pvi",
             ],
             "console": "integratedTerminal"
         },

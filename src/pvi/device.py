@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import re
 from dataclasses import dataclass, fields
 from typing import (
@@ -304,3 +305,8 @@ class Device:
     def deserialize(cls, serialized: Mapping[str, Any]) -> Device:
         """Deserialize the Device from a dictionary."""
         return deserialize(cls, serialized)
+
+    def generate_param_tree(self) -> str:
+        param_tree = ", ".join(json.dumps(serialize(group)) for group in self.children)
+        # Encode again to quote the string as a value and escape double quotes within
+        return json.dumps('{"parameters":[' + param_tree + "]}")

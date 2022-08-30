@@ -3,9 +3,8 @@ from __future__ import annotations
 import dataclasses
 from ctypes import POINTER, c_char_p, c_int, c_void_p, pointer
 from enum import Enum
-from io import StringIO
 from pathlib import Path
-from typing import Any, ClassVar, Dict, List, TextIO, Tuple, Type, Union, get_type_hints
+from typing import Any, ClassVar, Dict, List, Tuple, Type, Union, get_type_hints
 
 from apischema import serialize
 from epicsdbbuilder import dbd, mydbstatic, records
@@ -13,7 +12,6 @@ from epicsdbbuilder.recordbase import Record
 from typing_extensions import Annotated
 
 from pvi._schema_utils import desc
-from pvi.device import Device
 
 # Add DBDs
 dbd.InitialiseDbd()
@@ -205,17 +203,17 @@ MultiBitBinaryRecordPair = RecordPair.for_record_types("mbbi", "mbbo")
 StringRecordPair = RecordPair.for_record_types("stringin", "stringout")
 WaveformRecordPair = RecordPair.for_record_types("waveform", "waveform")
 
+PVI_NELM = 100000
+
 
 class PVIRecord(records.waveform, Record):
-    def __init__(self, record: str, device: Device):
-        super().__init__(record, DTYP="copyInfo")
-        self.add_info("copyInfo", device.serialize())
-
-    def Print(self, output: TextIO, alphabetical=True):
-        record_output = StringIO()
-        super().Print(record_output, alphabetical=alphabetical)
-        for line in record_output.getvalue().splitlines():
-            if line:
-                print("$(PVI=#)" + line, file=output)
-            else:
-                print(file=output)
+    def __init__(self, record: str):
+        super().__init__(
+            record,
+            DESC="Driver PV Interface",
+            DTYP="asynOctetRead",
+            FTVL="CHAR",
+            INP="@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1))PVI_PARAM_TREE",
+            NELM=PVI_NELM,
+            SCAN="I/O Intr",
+        )

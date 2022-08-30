@@ -64,8 +64,14 @@ def schema(output: Path = typer.Argument(..., help="filename to write the schema
 def produce(
     output: Path = typer.Argument(..., help="filename to write the product to"),
     producer: Path = typer.Argument(..., help="path to the producer .pvi.yaml file"),
+    yaml_paths: Optional[List[Path]] = typer.Option(
+        None, help="Paths to directories with .pvi.producer.yaml files"
+    ),
 ):
     """Create template/csv/device/other product from producer YAML"""
+    if yaml_paths is None:
+        yaml_paths = []
+
     producer_inst = deserialize_yaml(Producer, producer)
     if output.suffix == ".template":
         producer_inst.produce_records(output)
@@ -75,7 +81,7 @@ def produce(
         device = producer_inst.produce_device()
         serialize_yaml(device, output)
     else:
-        producer_inst.produce_other(output)
+        producer_inst.produce_other(output, yaml_paths)
 
 
 @app.command()

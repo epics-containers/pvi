@@ -74,6 +74,6 @@ class Producer:
         """Make epicsdbbuilder records"""
         raise NotImplementedError(self)
 
-    def produce_other(self, path: Path):
+    def produce_other(self, path: Path, yaml_paths: List[Path]):
         """Make things like cpp, h files"""
         raise NotImplementedError(self)
