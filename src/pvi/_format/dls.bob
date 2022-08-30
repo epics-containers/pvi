@@ -5,10 +5,6 @@
   <y>12</y>
   <width>1000</width>
   <height>800</height>
-  <background_color>
-    <color red="200" green="200" blue="200">
-    </color>
-  </background_color>
   <grid_step_x>4</grid_step_x>
   <grid_step_y>4</grid_step_y>
   <widget type="rectangle" version="2.0.0">
@@ -18,14 +14,6 @@
     <width>140</width>
     <height>364</height>
     <line_width>1</line_width>
-    <line_color>
-      <color name="Text" red="0" green="0" blue="0">
-      </color>
-    </line_color>
-    <background_color>
-      <color red="200" green="200" blue="200">
-      </color>
-    </background_color>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Title</name>
@@ -39,10 +27,6 @@
       <font name="Header 1" family="Liberation Sans" style="BOLD" size="22.0">
       </font>
     </font>
-    <foreground_color use_class="true">
-      <color name="Text" red="0" green="0" blue="0">
-      </color>
-    </foreground_color>
     <transparent use_class="true">true</transparent>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
@@ -61,14 +45,6 @@
     <y>78</y>
     <width>120</width>
     <height>30</height>
-    <foreground_color>
-      <color red="0" green="0" blue="196">
-      </color>
-    </foreground_color>
-    <background_color>
-      <color red="200" green="200" blue="200">
-      </color>
-    </background_color>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="action_button" version="3.0.0">
@@ -79,14 +55,6 @@
     <y>118</y>
     <width>120</width>
     <height>40</height>
-    <foreground_color>
-      <color red="0" green="0" blue="196">
-      </color>
-    </foreground_color>
-    <background_color>
-      <color red="205" green="205" blue="205">
-      </color>
-    </background_color>
     <tooltip>$(actions)</tooltip>
   </widget>
   <widget type="textupdate" version="2.0.0">
@@ -100,14 +68,6 @@
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
       </font>
     </font>
-    <foreground_color>
-      <color red="96" green="255" blue="96">
-      </color>
-    </foreground_color>
-    <background_color>
-      <color red="64" green="64" blue="64">
-      </color>
-    </background_color>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="led" version="2.0.0">
@@ -117,10 +77,6 @@
     <y>336</y>
     <width>30</width>
     <height>30</height>
-    <off_color>
-      <color red="0" green="96" blue="0">
-      </color>
-    </off_color>
   </widget>
   <widget type="choice" version="2.0.0">
     <name>ChoiceButton</name>
@@ -142,14 +98,6 @@
     <y>248</y>
     <width>120</width>
     <height>40</height>
-    <foreground_color>
-      <color red="0" green="0" blue="196">
-      </color>
-    </foreground_color>
-    <background_color>
-      <color red="200" green="200" blue="200">
-      </color>
-    </background_color>
   </widget>
   <widget type="group" version="2.0.0">
     <name>Group</name>
@@ -157,10 +105,6 @@
     <y>40</y>
     <width>350</width>
     <height>250</height>
-    <background_color>
-      <color red="200" green="200" blue="200">
-      </color>
-    </background_color>
     <transparent>true</transparent>
   </widget>
   <widget type="checkbox" version="2.0.0">
@@ -178,10 +122,6 @@
     <y>300</y>
     <width>120</width>
     <height>30</height>
-    <background_color>
-      <color name="Grid" red="128" green="128" blue="128">
-      </color>
-    </background_color>
     <transparent>false</transparent>
     <border_width>1</border_width>
   </widget>
