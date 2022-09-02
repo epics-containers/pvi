@@ -70,8 +70,12 @@ def test_schemas(tmp_path, filename):
 )
 def test_produce(tmp_path, filename):
     expected_path = HERE / "produce_format" / "output" / filename
+    input_path = HERE / "produce_format" / "input"
     assert_output_matches(
-        expected_path, "produce", tmp_path / filename, PILATUS_PRODUCER
+        expected_path,
+        "produce --yaml-paths " + str(input_path),
+        tmp_path / filename,
+        PILATUS_PRODUCER,
     )
 
 
