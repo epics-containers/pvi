@@ -387,23 +387,45 @@ class AsynProducer(Producer):
     def produce_csv(self, path: Path):
         with open(path, "w", newline="") as csvfile:
             writer = csv.writer(csvfile, delimiter=",", quotechar='"')
-            writer.writerow(["Parameter", "Records", "Description"])
+            writer.writerow(
+                [
+                    "Parameter Index Variable",
+                    "Asyn Interface",
+                    "Access",
+                    "drvInfo String",
+                    "Record Names",
+                    "Record Types",
+                    "Description",
+                ]
+            )
             for node in walk(self.parameters):
                 if isinstance(node, Group):
-                    writer.writerow([f"*{node.name}*"])
+                    writer.writerow([f"*{node.name}*"] + [""] * 6)
                 else:
-                    records = []
-                    if node.access.needs_read_record():
-                        name = self.prefix + self._read_record_suffix(node)
-                        rtype = node.record_fields.in_record_type.__name__
-                        records.append(f"{rtype}: {name}")
+                    names = []
+                    types = []
+                    interfaces = []
                     if node.access.needs_write_record():
-                        name = self.prefix + self._write_record_suffix(node)
-                        rtype = node.record_fields.out_record_type.__name__
-                        records.append(f"{rtype}: {name}")
-                    record_txt = "\n".join(records)
-                    if records:
-                        writer.writerow([node.name, record_txt, node.description])
+                        names.append(self.prefix + self._write_record_suffix(node))
+                        types.append(node.record_fields.out_record_type.__name__)
+                        interfaces.append(node.type_strings.asyn_write)
+                    if node.access.needs_read_record():
+                        names.append(self.prefix + self._read_record_suffix(node))
+                        types.append(node.record_fields.in_record_type.__name__)
+                        if node.type_strings.asyn_read not in interfaces:
+                            interfaces.append(node.type_strings.asyn_read)
+
+                    writer.writerow(
+                        [
+                            node.index_name,
+                            ",\n".join(interfaces),
+                            node.access.name,
+                            node.drv_info,
+                            ",\n".join(names),
+                            ",\n".join(types),
+                            node.description,
+                        ]
+                    )
 
     def produce_records(self, path: Path):
         """Make epicsdbbuilder records"""
