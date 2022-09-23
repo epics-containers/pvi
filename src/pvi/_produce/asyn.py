@@ -117,7 +117,7 @@ def initial_value(pattern: str = None, min: Number = None, max: Number = None):
 
 
 # The child classes of AsynParameter redefine record_fields with a dynamic type to
-# generate a schema with fields specific to the parameter type. However, the dymanic
+# generate a schema with fields specific to the parameter type. However, the dynamic
 # types make mypy unhappy when it tries to do static type checking, so we use
 # `type: ignore`.
 # https://mypy.readthedocs.io/en/stable/common_issues.html#variables-vs-type-aliases
