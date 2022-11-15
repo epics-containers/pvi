@@ -317,45 +317,35 @@ class Screen(Generic[T]):
         screen_widgets: List[WidgetFactory[T]] = []
         columns: List[Bounds] = [Bounds(**widget_dims)]
         for c in components:
+            last_column_bounds = columns[-1]
+            next_column_bounds = Bounds(
+                x=next_x(screen_widgets, self.layout.spacing),
+                y=0,
+                **widget_dims,
+            )
             if isinstance(c, Group):
                 # Create group widget
-                for bounds in columns:
-                    # Note: Group adjusts bounds to fit the components
-                    group = self.group(
-                        c, bounds=Bounds(bounds.x, bounds.y, h=screen_bounds.h)
-                    )
+                # Note: Group adjusts bounds to fit the components
+                screen_widgets = screen_widgets + self.make_group_widget(
+                    c,
+                    screen_bounds=screen_bounds,
+                    column_bounds=last_column_bounds,
+                    next_column_bounds=next_column_bounds,
+                )
 
-                    if group.bounds.h + group.bounds.y <= screen_bounds.h:
-                        # Group fits in this column
-                        break
-
-                group.bounds.w += self.layout.group_width_offset
-                screen_widgets.append(group)
-
-                # Update y for current column
-                bounds.y = group.bounds.y + group.bounds.h + self.layout.spacing
             else:
                 # Create top level widget - note this will change columns in place
                 screen_widgets = screen_widgets + self.make_component_widgets(
                     c,
-                    column_bounds=columns[-2],  # Second last column
+                    column_bounds=last_column_bounds,
                     parent_bounds=screen_bounds,
-                    next_column_bounds=columns[-1],  # Last column
+                    next_column_bounds=next_column_bounds,
                     group_widget_indent=self.layout.group_widget_indent,
                 )
 
-            if columns[-1].y != 0:
+            if next_column_bounds.y != 0:
                 # We added to the last column - make a new empty column
-                columns.append(
-                    Bounds(
-                        x=next_x(screen_widgets, self.layout.spacing),
-                        y=0,
-                        **widget_dims,
-                    )
-                )
-            else:
-                # Update next column start in case we have added something wider
-                columns[-1].x = next_x(screen_widgets, self.layout.spacing)
+                columns.append(next_column_bounds)
 
         screen_bounds.w = max_x(screen_widgets)
         screen_bounds.h = max_y(screen_widgets)
@@ -425,6 +415,57 @@ class Screen(Generic[T]):
                 add_label,
             )
         # TODO: Need to handle DeviceRef
+
+    def make_group_widget(
+        self,
+        c: Group[Component],
+        screen_bounds: Bounds,
+        column_bounds: Bounds,
+        next_column_bounds: Bounds,
+    ) -> List[WidgetFactory[T]]:
+        """Generate widget from Group component data
+
+        Args:
+            c: Group of Component objects extracted from a device.yaml
+            screen_bounds: Bounds of the top level screen
+            column_bounds: Bounds of widget in current column
+            parent_bounds: Size constraints from the object containing the widgets
+            next_column_bounds: Bounds of widget in next column should widgets exceed
+                height limits
+
+        Returns:
+            A collection of widgets representing the component
+
+        Side Effect:
+            One of {column_bounds,next_column_bounds}.y will be updated to fit the
+            added widget
+
+        """
+        group = self.group(
+            c,
+            bounds=Bounds(column_bounds.x, column_bounds.y, h=screen_bounds.h),
+        )
+
+        if group.bounds.h + group.bounds.y <= screen_bounds.h:
+            # Group fits in this column
+            group.bounds.w += self.layout.group_width_offset
+
+            # Update y for current column
+            column_bounds.y = group.bounds.y + group.bounds.h + self.layout.spacing
+
+        else:
+            # Won't fit in first column, force it into next column
+            group = self.group(
+                c,
+                bounds=Bounds(
+                    next_column_bounds.x, next_column_bounds.y, h=screen_bounds.h
+                ),
+            )
+            group.bounds.w += self.layout.group_width_offset
+
+            next_column_bounds.y = group.bounds.y + group.bounds.h + self.layout.spacing
+
+        return [group]
 
     def group(self, group: Group[Component], bounds: Bounds) -> WidgetFactory[T]:
         """Convert components within groups into widgets and lay them out within a
