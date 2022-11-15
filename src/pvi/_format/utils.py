@@ -326,25 +326,28 @@ class Screen(Generic[T]):
             if isinstance(c, Group):
                 # Create group widget
                 # Note: Group adjusts bounds to fit the components
-                screen_widgets = screen_widgets + self.make_group_widget(
-                    c,
-                    screen_bounds=screen_bounds,
-                    column_bounds=last_column_bounds,
-                    next_column_bounds=next_column_bounds,
+                screen_widgets.extend(
+                    self.make_group_widget(
+                        c,
+                        screen_bounds=screen_bounds,
+                        column_bounds=last_column_bounds,
+                        next_column_bounds=next_column_bounds,
+                    )
                 )
 
             else:
                 # Create top level widget - note this will change columns in place
-                screen_widgets = screen_widgets + self.make_component_widgets(
-                    c,
-                    column_bounds=last_column_bounds,
-                    parent_bounds=screen_bounds,
-                    next_column_bounds=next_column_bounds,
-                    group_widget_indent=self.layout.group_widget_indent,
+                screen_widgets.extend(
+                    self.make_component_widgets(
+                        c,
+                        column_bounds=last_column_bounds,
+                        parent_bounds=screen_bounds,
+                        next_column_bounds=next_column_bounds,
+                        group_widget_indent=self.layout.group_widget_indent,
+                    )
                 )
 
             if next_column_bounds.y != 0:
-                # We added to the last column - make a new empty column
                 columns.append(next_column_bounds)
 
         screen_bounds.w = max_x(screen_widgets)
