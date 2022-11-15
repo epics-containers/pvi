@@ -1129,7 +1129,8 @@
       "type": "string",
       "enum": [
         "NO",
-        "YES"
+        "YES",
+        "RAW"
       ]
     },
     "boSIMS": {
@@ -3039,7 +3040,8 @@
       "type": "string",
       "enum": [
         "NO",
-        "YES"
+        "YES",
+        "RAW"
       ]
     },
     "aoSIMS": {
@@ -5399,7 +5401,8 @@
       "type": "string",
       "enum": [
         "NO",
-        "YES"
+        "YES",
+        "RAW"
       ]
     },
     "mbboSIMS": {
