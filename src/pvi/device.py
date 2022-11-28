@@ -168,6 +168,13 @@ class Grid(Layout):
 
 
 @dataclass
+class SubScreen(Layout):
+    """Children are displayed on another screen opened with a button."""
+
+    labelled: Annotated[bool, desc("Display labels for components")] = True
+
+
+@dataclass
 class Named:
     name: Annotated[
         str, desc("PascalCase name to uniquely identify", pattern=r"([A-Z][a-z0-9]*)*$")

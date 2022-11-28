@@ -19,6 +19,7 @@ from .utils import (
     PVWidgetFactory,
     Screen,
     ScreenWidgets,
+    SubScreenFactory,
     WidgetFactory,
     with_title,
 )
@@ -48,6 +49,9 @@ class APSFormatter(Formatter):
             group_width_offset=0,
         )
         screen_widgets = ScreenWidgets(
+            heading_cls=LabelFactory.from_template(
+                template, search='"Heading"', textix="text"
+            ),
             label_cls=LabelFactory.from_template(
                 template, search='"Label"', textix="text"
             ),
@@ -71,6 +75,9 @@ class APSFormatter(Formatter):
             ),
             action_button_cls=ActionFactory.from_template(
                 template, search='"SignalX"', label="label", chan="pv"
+            ),
+            sub_screen_cls=SubScreenFactory.from_template(
+                template, search='"SubScreenFile"', name="file_name"
             ),
         )
 
@@ -121,7 +128,13 @@ class APSFormatter(Formatter):
             screen_widgets=screen_widgets,
             prefix=prefix,
             layout=layout,
+            base_file_name=path.stem,
         )
         title = f"{device.label} - {prefix}"
-        texts = screen.screen(device.children, title).format()
-        path.write_text("".join(texts))
+
+        main_screen, sub_screens = screen.screen(device.children, title)
+
+        path.write_text("".join(main_screen.format()))
+        for screen_name, screen_text in sub_screens:
+            screen_path = Path(path.parent / f"{screen_name}{path.suffix}")
+            screen_path.write_text("".join(screen_text.format()))

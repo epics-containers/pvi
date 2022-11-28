@@ -1,0 +1,304 @@
+<display version="2.0.0">
+  <name>Display</name>
+  <x>0</x>
+  <y>0</y>
+  <width>1030</width>
+  <height>150</height>
+  <grid_step_x>4</grid_step_x>
+  <grid_step_y>4</grid_step_y>
+  <widget type="label" version="2.0.0">
+    <name>Title</name>
+    <class>TITLE</class>
+    <text>BigTableA</text>
+    <x use_class="true">0</x>
+    <y use_class="true">0</y>
+    <width>1030</width>
+    <height>26</height>
+    <font use_class="true">
+      <font name="Header 1" family="Liberation Sans" style="BOLD" size="22.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="Text" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <transparent use_class="true">true</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Heading</name>
+    <text>Binary Column</text>
+    <x>22</x>
+    <y>30</y>
+    <width>248</width>
+    <height>20</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="16.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Header_ForeGround" red="255" green="255" blue="255">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Header_Background" red="77" green="77" blue="77">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Heading</name>
+    <text>Long Column</text>
+    <x>274</x>
+    <y>30</y>
+    <width>248</width>
+    <height>20</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="16.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Header_ForeGround" red="255" green="255" blue="255">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Header_Background" red="77" green="77" blue="77">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Heading</name>
+    <text>Float Column</text>
+    <x>526</x>
+    <y>30</y>
+    <width>248</width>
+    <height>20</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="16.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Header_ForeGround" red="255" green="255" blue="255">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Header_Background" red="77" green="77" blue="77">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Heading</name>
+    <text>String Column</text>
+    <x>778</x>
+    <y>30</y>
+    <width>248</width>
+    <height>20</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="16.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Header_ForeGround" red="255" green="255" blue="255">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Header_Background" red="77" green="77" blue="77">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LED</name>
+    <pv_name>$(P)$(R)BINARYA_1</pv_name>
+    <x>136</x>
+    <y>54</y>
+    <width>20</width>
+    <height>20</height>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>TextUpdate</name>
+    <pv_name>$(P)$(R)LONGA_1</pv_name>
+    <x>274</x>
+    <y>54</y>
+    <width>248</width>
+    <height>20</height>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>TextUpdate</name>
+    <pv_name>$(P)$(R)FLOATA_1</pv_name>
+    <x>526</x>
+    <y>54</y>
+    <width>248</width>
+    <height>20</height>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>TextUpdate</name>
+    <pv_name>$(P)$(R)STRINGA_1</pv_name>
+    <x>778</x>
+    <y>54</y>
+    <width>248</width>
+    <height>20</height>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LED</name>
+    <pv_name>$(P)$(R)BINARYA_2</pv_name>
+    <x>136</x>
+    <y>78</y>
+    <width>20</width>
+    <height>20</height>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>TextUpdate</name>
+    <pv_name>$(P)$(R)LONGA_2</pv_name>
+    <x>274</x>
+    <y>78</y>
+    <width>248</width>
+    <height>20</height>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>TextUpdate</name>
+    <pv_name>$(P)$(R)FLOATA_2</pv_name>
+    <x>526</x>
+    <y>78</y>
+    <width>248</width>
+    <height>20</height>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>TextUpdate</name>
+    <pv_name>$(P)$(R)STRINGA_2</pv_name>
+    <x>778</x>
+    <y>78</y>
+    <width>248</width>
+    <height>20</height>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LED</name>
+    <pv_name>$(P)$(R)BINARYA_3</pv_name>
+    <x>136</x>
+    <y>102</y>
+    <width>20</width>
+    <height>20</height>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>TextUpdate</name>
+    <pv_name>$(P)$(R)LONGA_3</pv_name>
+    <x>274</x>
+    <y>102</y>
+    <width>248</width>
+    <height>20</height>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>TextUpdate</name>
+    <pv_name>$(P)$(R)FLOATA_3</pv_name>
+    <x>526</x>
+    <y>102</y>
+    <width>248</width>
+    <height>20</height>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>TextUpdate</name>
+    <pv_name>$(P)$(R)STRINGA_3</pv_name>
+    <x>778</x>
+    <y>102</y>
+    <width>248</width>
+    <height>20</height>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LED</name>
+    <pv_name>$(P)$(R)BINARYA_4</pv_name>
+    <x>136</x>
+    <y>126</y>
+    <width>20</width>
+    <height>20</height>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>TextUpdate</name>
+    <pv_name>$(P)$(R)LONGA_4</pv_name>
+    <x>274</x>
+    <y>126</y>
+    <width>248</width>
+    <height>20</height>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>TextUpdate</name>
+    <pv_name>$(P)$(R)FLOATA_4</pv_name>
+    <x>526</x>
+    <y>126</y>
+    <width>248</width>
+    <height>20</height>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>TextUpdate</name>
+    <pv_name>$(P)$(R)STRINGA_4</pv_name>
+    <x>778</x>
+    <y>126</y>
+    <width>248</width>
+    <height>20</height>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+</display>

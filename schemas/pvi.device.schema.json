@@ -578,6 +578,9 @@
         },
         {
           "$ref": "#/definitions/Grid"
+        },
+        {
+          "$ref": "#/definitions/SubScreen"
         }
       ]
     },
@@ -625,6 +628,22 @@
         "labelled": {
           "type": "boolean",
           "description": "If True use names of children as labels",
+          "default": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "SubScreen": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "SubScreen",
+          "default": "SubScreen"
+        },
+        "labelled": {
+          "type": "boolean",
+          "description": "Display labels for components",
           "default": true
         }
       },

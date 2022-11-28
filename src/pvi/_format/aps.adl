@@ -1,12 +1,12 @@
 
 file {
-	name="/home/ima16823/Environments/phoebus/pvi/src/pvi/_format/aps.adl"
+	name="/scratch/development/pvi/src/pvi/_format/aps.adl"
 	version=030107
 }
 display {
 	object {
-		x=1728
-		y=547
+		x=1722
+		y=541
 		width=610
 		height=845
 	}
@@ -249,4 +249,30 @@ bar {
 	}
 	limits {
 	}
+}
+text {
+	object {
+		x=165
+		y=280
+		width=145
+		height=15
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Heading"
+	align="horiz. centered"
+}
+"related display" {
+	object {
+		x=165
+		y=305
+		width=140
+		height=20
+	}
+	display[0] {
+		name="SubScreenFile"
+	}
+	clr=14
+	bclr=4
 }

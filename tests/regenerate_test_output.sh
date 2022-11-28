@@ -5,4 +5,4 @@
 # change. Examine the git diff carefully to make sure the new test output files
 # are as you expect them to be
 
-cd $(dirname $0)/.. && PVI_REGENERATE_OUTPUT=1 pipenv run tests
+cd $(dirname $0)/.. && PVI_REGENERATE_OUTPUT=1 pytest .

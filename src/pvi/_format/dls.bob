@@ -12,7 +12,7 @@
     <x>8</x>
     <y>48</y>
     <width>140</width>
-    <height>364</height>
+    <height>412</height>
     <line_width>1</line_width>
   </widget>
   <widget type="label" version="2.0.0">
@@ -27,6 +27,10 @@
       <font name="Header 1" family="Liberation Sans" style="BOLD" size="22.0">
       </font>
     </font>
+    <foreground_color use_class="true">
+      <color name="Text" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
     <transparent use_class="true">true</transparent>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
@@ -139,5 +143,43 @@
     <y>376</y>
     <width>104</width>
     <height>24</height>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Heading</name>
+    <text>Heading</text>
+    <x>160</x>
+    <y>348</y>
+    <width>120</width>
+    <height>30</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="16.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Header_ForeGround" red="255" green="255" blue="255">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Header_Background" red="77" green="77" blue="77">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>SubScreen</name>
+    <actions>
+      <action type="open_display">
+        <file>SubScreenFile</file>
+        <target>tab</target>
+        <description>Open Display</description>
+      </action>
+    </actions>
+    <text>...</text>
+    <x>20</x>
+    <y>412</y>
+    <width>120</width>
+    <height>40</height>
+    <tooltip>$(actions)</tooltip>
   </widget>
 </display>

@@ -21,6 +21,7 @@ from .utils import (
     PVWidgetFactory,
     Screen,
     ScreenWidgets,
+    SubScreenFactory,
     WidgetFactory,
     with_title,
 )
@@ -58,6 +59,9 @@ class DLSFormatter(Formatter):
             group_width_offset=0,
         )
         screen_widgets = ScreenWidgets(
+            heading_cls=LabelFactory.from_template(
+                template, search='"Heading"', value="text"
+            ),
             label_cls=LabelFactory.from_template(
                 template, search='"Label"', value="text"
             ),
@@ -85,6 +89,9 @@ class DLSFormatter(Formatter):
                 onLabel="label",
                 offLabel="label",
                 controlPv="pv",
+            ),
+            sub_screen_cls=SubScreenFactory.from_template(
+                template, search='"SubScreenFile"', displayFileName="file_name"
             ),
         )
         screen_title_cls = LabelFactory.from_template(
@@ -141,10 +148,16 @@ class DLSFormatter(Formatter):
             screen_widgets=screen_widgets,
             prefix=prefix,
             layout=layout_properties,
+            base_file_name=path.stem,
         )
         title = f"{device.label} - {prefix}"
-        texts = screen.screen(device.children, title).format()
-        path.write_text("".join(texts))
+
+        main_screen, sub_screens = screen.screen(device.children, title)
+
+        path.write_text("".join(main_screen.format()))
+        for screen_name, screen_text in sub_screens:
+            screen_path = Path(path.parent / f"{screen_name}{path.suffix}")
+            screen_path.write_text("".join(screen_text.format()))
 
     def format_bob(self, device: Device, prefix: str, path: Path):
         template = BobTemplate(str(Path(__file__).parent / "dls.bob"))
@@ -162,6 +175,9 @@ class DLSFormatter(Formatter):
         )
         # SW DOCS REF: Extract widget types from template file
         screen_widgets = ScreenWidgets(
+            heading_cls=LabelFactory.from_template(
+                template, search="Heading", text="text"
+            ),
             label_cls=LabelFactory.from_template(template, search="Label", text="text"),
             led_cls=PVWidgetFactory.from_template(
                 template, search="LED", sized=Bounds.square, pv_name="pv"
@@ -183,6 +199,9 @@ class DLSFormatter(Formatter):
             ),
             action_button_cls=ActionFactory.from_template(
                 template, search="ActionButton", text="label", pv_name="pv"
+            ),
+            sub_screen_cls=SubScreenFactory.from_template(
+                template, search="SubScreen", file="file_name"
             ),
         )
         # MAKE_WIDGETS DOCS REF: Define screen and group widgets
@@ -228,14 +247,25 @@ class DLSFormatter(Formatter):
             screen_widgets=screen_widgets,
             prefix=prefix,
             layout=layout_properties,
+            base_file_name=path.stem,
         )
         # SCREEN_FORMAT DOCS REF: Format the screen
         title = f"{device.label} - {prefix}"
-        texts = screen.screen(device.children, title).format()
-        # SCREEN_WRITE DOCS REF: Generate the screen file
-        # The root:'Display' is always the first element in texts
-        ET = etree.fromstring(etree.tostring(texts[0]))
-        for element in texts[:0:-1]:
-            ET.insert(ET.index(ET.find("height")) + 1, element)
-        ET = ET.getroottree()
-        ET.write(str(path), pretty_print=True)
+
+        main_screen_widgets, sub_screens = screen.screen(device.children, title)
+
+        write_bob(main_screen_widgets, path)
+        for screen_name, widgets in sub_screens:
+            screen_path = Path(path.parent / f"{screen_name}{path.suffix}")
+            write_bob(widgets, screen_path)
+
+
+def write_bob(widgets: WidgetFactory, path: Path):
+    # SCREEN_WRITE DOCS REF: Generate the screen file
+    # The root:'Display' is always the first element in texts
+    texts = widgets.format()
+    ET = etree.fromstring(etree.tostring(texts[0]))
+    for element in texts[:0:-1]:
+        ET.insert(ET.index(ET.find("grid_step_y")) + 1, element)
+    ET = ET.getroottree()
+    ET.write(str(path), pretty_print=True)

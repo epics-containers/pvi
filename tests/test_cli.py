@@ -85,3 +85,36 @@ def test_convert(tmp_path):
         "--template",
         input_path / "simDetector.template",
     )
+
+
+@pytest.mark.parametrize(
+    "input_yaml,formatter,output",
+    [
+        (
+            "static_table.pvi.device.yaml",
+            "dls.edl.pvi.formatter.yaml",
+            "static_table.edl",
+        ),
+        (
+            "static_table.pvi.device.yaml",
+            "dls.bob.pvi.formatter.yaml",
+            "static_table.bob",
+        ),
+        (
+            "static_table.pvi.device.yaml",
+            "aps.pvi.formatter.yaml",
+            "static_table.adl",
+        ),
+    ],
+)
+def test_static_table(tmp_path, helper, input_yaml, formatter, output):
+    expected_path = HERE / "format" / "output" / output
+    input_path = HERE / "format" / "input"
+    formatter_path = HERE / "../formatters/" / formatter
+    assert_output_matches(
+        expected_path,
+        "format --yaml-path " + str(input_path),
+        tmp_path / output,
+        input_path / input_yaml,
+        formatter_path,
+    )

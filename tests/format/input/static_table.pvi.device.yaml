@@ -1,0 +1,123 @@
+# yaml-language-server: $schema=../../../schemas/pvi.device.schema.json
+label: StaticTable
+children:
+  - type: SignalR
+    name: Binary
+    pv: BINARYA
+    widget:
+      type: LED
+
+  - type: Group
+    name: BigTable
+    layout:
+      type: Grid
+      labelled: true
+    children:
+      - type: Group
+        name: Row1
+        layout:
+          type: Row
+          header:
+            - "Binary Column"
+            - "Long Column"
+            - "Float Column"
+            - "String Column"
+        children:
+          - type: SignalR
+            name: Binary1
+            pv: BINARY_1
+            widget:
+              type: LED
+          - type: SignalR
+            name: Long1
+            pv: LONG_1
+            widget:
+              type: TextRead
+          - type: SignalR
+            name: Float1
+            pv: FLOAT_1
+            widget:
+              type: TextRead
+          - type: SignalR
+            name: String1
+            pv: STRING_1
+            widget:
+              type: TextRead
+
+      - type: Group
+        name: Row2
+        layout:
+          type: Row
+        children:
+          - type: SignalR
+            name: Binary2
+            pv: BINARY_2
+            widget:
+              type: LED
+          - type: SignalR
+            name: Long2
+            pv: LONG_2
+            widget:
+              type: TextRead
+          - type: SignalR
+            name: Float2
+            pv: FLOAT_2
+            widget:
+              type: TextRead
+          - type: SignalR
+            name: String2
+            pv: STRING_2
+            widget:
+              type: TextRead
+
+      - type: Group
+        name: Row3
+        layout:
+          type: Row
+        children:
+          - type: SignalR
+            name: Binary3
+            pv: BINARY_3
+            widget:
+              type: LED
+          - type: SignalR
+            name: Long3
+            pv: LONG_3
+            widget:
+              type: TextRead
+          - type: SignalR
+            name: Float3
+            pv: FLOAT_3
+            widget:
+              type: TextRead
+          - type: SignalR
+            name: String3
+            pv: STRING_3
+            widget:
+              type: TextRead
+
+      - type: Group
+        name: Row4
+        layout:
+          type: Row
+        children:
+          - type: SignalR
+            name: Binary4
+            pv: BINARY_4
+            widget:
+              type: LED
+          - type: SignalR
+            name: Long4
+            pv: LONG_4
+            widget:
+              type: TextRead
+          - type: SignalR
+            name: Float4
+            pv: FLOAT_4
+            widget:
+              type: TextRead
+          - type: SignalR
+            name: String4
+            pv: STRING_4
+            widget:
+              type: TextRead
