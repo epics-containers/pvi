@@ -3,7 +3,7 @@ beginScreenProperties
 major 4
 minor 0
 release 1
-x 1339
+x 1351
 y 392
 w 540
 h 900
@@ -33,8 +33,8 @@ minor 0
 release 0
 x 5
 y 50
-w 135
-h 175
+w 130
+h 220
 lineColor index 14
 fill
 fillColor index 5
@@ -273,5 +273,47 @@ border
 min "0"
 max "100"
 scaleFormat "FFloat"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 10
+y 220
+w 120
+h 20
+font "arial-bold-r-12.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 8
+value {
+  "Heading"
+}
+endObjectProperties
+
+# (Extended Related Display)
+object ExtendedRelatedDisplayClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 10
+y 245
+w 120
+h 20
+fgColor index 25
+bgColor index 3
+topShadowColor index 1
+botShadowColor index 11
+font "arial-bold-r-12.0"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "SubScreenFile"
+}
+icon
 endObjectProperties
 

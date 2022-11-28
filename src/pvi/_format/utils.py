@@ -20,11 +20,13 @@ from pvi.device import (
     Group,
     ProgressBar,
     ReadWidget,
+    Row,
     SignalR,
     SignalRef,
     SignalRW,
     SignalW,
     SignalX,
+    SubScreen,
     TextRead,
     TextWrite,
     Tree,
@@ -69,6 +71,12 @@ class Bounds:
             w=self.w + bounds.w,
             h=self.h + bounds.h,
         )
+
+
+def indent_widget(bounds: Bounds, indentation: int) -> Bounds:
+    """Shifts the x position of a widget. Used on top level widgets to align
+    them with group indentation"""
+    return Bounds(bounds.x + indentation, bounds.y, bounds.w, bounds.h)
 
 
 class WidgetTemplate(Generic[T]):
@@ -137,6 +145,12 @@ class ActionFactory(WidgetFactory[T]):
     label: str
     pv: str
     value: str
+
+
+@dataclass
+class SubScreenFactory(WidgetFactory[T]):
+    file_name: str
+    components: Group
 
 
 class GroupType(Enum):
@@ -247,6 +261,7 @@ class LayoutProperties:
 
 @dataclass
 class ScreenWidgets(Generic[T]):
+    heading_cls: Type[LabelFactory[T]]
     label_cls: Type[LabelFactory[T]]
     led_cls: Type[PVWidgetFactory[T]]
     progress_bar_cls: Type[PVWidgetFactory[T]]
@@ -256,6 +271,7 @@ class ScreenWidgets(Generic[T]):
     combo_box_cls: Type[PVWidgetFactory[T]]
     text_write_cls: Type[PVWidgetFactory[T]]
     action_button_cls: Type[ActionFactory[T]]
+    sub_screen_cls: Type[SubScreenFactory[T]]
 
     def pv_widget(
         self,
@@ -297,8 +313,11 @@ class Screen(Generic[T]):
     layout: LayoutProperties
     prefix: str
     components: Dict[str, Component] = field(init=False, default_factory=dict)
+    base_file_name: str = ""
 
-    def screen(self, components: Tree[Component], title: str) -> WidgetFactory[T]:
+    def screen(
+        self, components: Tree[Component], title: str
+    ) -> Tuple[WidgetFactory[T], List[Tuple[str, WidgetFactory[T]]]]:
         """Make the contents of the screen and determines the layout of widgets
 
         Args:
@@ -306,7 +325,7 @@ class Screen(Generic[T]):
             title: The title of the screen
 
         Returns:
-            A constructed screen object
+            A constructed screen object and a list of zero or more sub screen objects
 
         """
         full_w = (
@@ -316,6 +335,15 @@ class Screen(Generic[T]):
         widget_dims = dict(w=full_w, h=self.layout.widget_height)
         screen_widgets: List[WidgetFactory[T]] = []
         columns: List[Bounds] = [Bounds(**widget_dims)]
+
+        if len(components) == 1:
+            # Expand single group as only component on screen
+            # This is where the actual content of sub screens are created after being
+            # replaced by a sub screen button in the original location
+            component = components[0]
+            if isinstance(component, Group) and is_table(component):
+                components = component.children
+
         for c in components:
             last_column_bounds = columns[-1]
             next_column_bounds = Bounds(
@@ -323,8 +351,8 @@ class Screen(Generic[T]):
                 y=0,
                 **widget_dims,
             )
-            if isinstance(c, Group):
-                # Create group widget
+            if isinstance(c, Group) and not isinstance(c.layout, Row):
+                # Create group widget containing its components
                 # Note: Group adjusts bounds to fit the components
                 screen_widgets.extend(
                     self.make_group_widget(
@@ -334,9 +362,9 @@ class Screen(Generic[T]):
                         next_column_bounds=next_column_bounds,
                     )
                 )
-
             else:
-                # Create top level widget - note this will change columns in place
+                # Create top level single line widget or Row of widgets
+                # Note: This will change columns in place
                 screen_widgets.extend(
                     self.make_component_widgets(
                         c,
@@ -350,12 +378,63 @@ class Screen(Generic[T]):
             if next_column_bounds.y != 0:
                 columns.append(next_column_bounds)
 
+        sub_screens = self.create_sub_screens(screen_widgets)
+
         screen_bounds.w = max_x(screen_widgets)
         screen_bounds.h = max_y(screen_widgets)
-        return self.screen_cls(screen_bounds, title, screen_widgets)
+        return self.screen_cls(screen_bounds, title, screen_widgets), sub_screens
+
+    def create_sub_screens(
+        self, screen_widgets: List[WidgetFactory[T]]
+    ) -> List[Tuple[str, WidgetFactory[T]]]:
+        """Create and return Screens from SubScreenFactorys in screen widgets
+
+        Args:
+            screen_widgets: List of WidgetFactorys containing 0-or-more
+            SubScreenFactorys to be found and
+
+        Returns:
+            List of (file name, Screen) created from found SubScreenFactorys
+
+        """
+        sub_screen_factories = [
+            # At the root
+            widget_factory
+            for widget_factory in screen_widgets
+            if isinstance(widget_factory, SubScreenFactory)
+        ] + [
+            # Nested in a Group
+            group_widget_factory
+            for widget_factory in screen_widgets
+            if isinstance(widget_factory, GroupFactory)
+            for group_widget_factory in widget_factory.children
+            if isinstance(group_widget_factory, SubScreenFactory)
+        ]
+
+        sub_screens: List[Tuple[str, WidgetFactory[T]]] = []
+        for sub_screen_factory in sub_screen_factories:
+            # Create a screen with just the table
+            _screen = Screen(
+                screen_cls=self.screen_cls,
+                group_cls=self.group_cls,
+                screen_widgets=self.screen_widgets,
+                prefix=self.prefix,
+                layout=self.layout,
+            )
+            sub_screen, sub_sub_screens = _screen.screen(
+                [sub_screen_factory.components], sub_screen_factory.components.name
+            )
+            assert not sub_sub_screens, "Only one level of sub screens allowed"
+            sub_screens.append((sub_screen_factory.file_name, sub_screen))
+
+        return sub_screens
 
     def component(
-        self, c: Component, bounds: Bounds, group_widget_indent: int, add_label=True
+        self,
+        c: Union[Group[Component], Component],
+        bounds: Bounds,
+        group_widget_indent: int,
+        add_label=True,
     ) -> Iterator[WidgetFactory[T]]:
         """Convert a component into its WidgetFactory equivalents
 
@@ -368,56 +447,107 @@ class Screen(Generic[T]):
             A collection of widgets representing the component
         """
 
-        def indent_widget(bounds: Bounds, indentation: int) -> Bounds:
-            """Shifts the x position of a widget. Used on top level widgets to align
-            them with group indentation"""
-            return Bounds(bounds.x + indentation, bounds.y, bounds.w, bounds.h)
-
         # Widgets are allowed to expand bounds
-        if not isinstance(c, SignalRef):
+        if not isinstance(c, (SignalRef, Group)):
             self.components[c.name] = c
 
+        # Take a copy to modify in this scope
+        component_bounds = bounds.copy()
+
+        # Row of column headings
+        if isinstance(c, Group) and isinstance(c.layout, Row):
+            if c.layout.header is not None:
+                assert len(c.layout.header) == len(
+                    c.children
+                ), "Header length does not match number of elements"
+
+                # Create column headers
+                for column_header in c.layout.header:
+                    yield self.screen_widgets.heading_cls(
+                        indent_widget(component_bounds, group_widget_indent),
+                        column_header,
+                    )
+                    component_bounds.x += component_bounds.w + self.layout.spacing
+
+                # Reset x and shift down y
+                component_bounds.x = bounds.x
+                component_bounds.y += self.layout.widget_height + self.layout.spacing
+
+            add_label = False  # Do not add row labels for Groups
+            sub_components = c.children
+        else:
+            sub_components = [c]
+
+        # Row label
         if add_label:
-            left, bounds = bounds.split(self.layout.label_width, self.layout.spacing)
+            # Insert label and reduce width for widget
+            left, row_bounds = component_bounds.split(
+                self.layout.label_width, self.layout.spacing
+            )
             yield self.screen_widgets.label_cls(
                 indent_widget(left, group_widget_indent), c.get_label()
             )
+        else:
+            # Allow full width for widget
+            row_bounds = component_bounds
 
-        if isinstance(c, SignalX):
-            yield self.screen_widgets.action_button_cls(
-                indent_widget(bounds, group_widget_indent),
-                c.get_label(),
-                c.pv,
-                c.value,
-            )
-        elif isinstance(c, SignalR) and c.widget:
-            yield self.screen_widgets.pv_widget(
-                c.widget, indent_widget(bounds, group_widget_indent), c.pv, self.prefix
-            )
-        elif isinstance(c, SignalRW) and c.read_pv and c.read_widget and c.widget:
-            left, right = bounds.split(
-                int((bounds.w - self.layout.spacing) / 2), self.layout.spacing
-            )
-            yield self.screen_widgets.pv_widget(
-                c.widget, indent_widget(left, group_widget_indent), c.pv, self.prefix
-            )
-            yield self.screen_widgets.pv_widget(
-                c.read_widget,
-                indent_widget(right, group_widget_indent),
-                c.read_pv,
-                self.prefix,
-            )
-        elif isinstance(c, (SignalW, SignalRW)) and c.widget:
-            yield self.screen_widgets.pv_widget(
-                c.widget, indent_widget(bounds, group_widget_indent), c.pv, self.prefix
-            )
-        elif isinstance(c, SignalRef):
-            yield from self.component(
-                self.components[c.name],
-                indent_widget(bounds, group_widget_indent),
-                add_label,
-            )
-        # TODO: Need to handle DeviceRef
+        # Actual widgets
+        for sc in sub_components:
+            if isinstance(sc, SignalX):
+                yield self.screen_widgets.action_button_cls(
+                    indent_widget(row_bounds, group_widget_indent),
+                    sc.get_label(),
+                    sc.pv,
+                    sc.value,
+                )
+            elif isinstance(sc, SignalR) and sc.widget:
+                yield self.screen_widgets.pv_widget(
+                    sc.widget,
+                    indent_widget(row_bounds, group_widget_indent),
+                    sc.pv,
+                    self.prefix,
+                )
+            elif (
+                isinstance(sc, SignalRW) and sc.read_pv and sc.read_widget and sc.widget
+            ):
+                left, right = row_bounds.split(
+                    int((row_bounds.w - self.layout.spacing) / 2), self.layout.spacing
+                )
+                yield self.screen_widgets.pv_widget(
+                    sc.widget,
+                    indent_widget(left, group_widget_indent),
+                    sc.pv,
+                    self.prefix,
+                )
+                yield self.screen_widgets.pv_widget(
+                    sc.read_widget,
+                    indent_widget(right, group_widget_indent),
+                    sc.read_pv,
+                    self.prefix,
+                )
+            elif isinstance(sc, (SignalW, SignalRW)) and sc.widget:
+                yield self.screen_widgets.pv_widget(
+                    sc.widget,
+                    indent_widget(row_bounds, group_widget_indent),
+                    sc.pv,
+                    self.prefix,
+                )
+            elif isinstance(sc, SignalRef):
+                yield from self.component(
+                    self.components[sc.name],
+                    indent_widget(row_bounds, group_widget_indent),
+                    add_label,
+                )
+            elif isinstance(sc, Group) and isinstance(sc.layout, SubScreen):
+                yield self.screen_widgets.sub_screen_cls(
+                    indent_widget(row_bounds, group_widget_indent),
+                    f"{self.base_file_name}_{sc.name}",
+                    sc,
+                )
+            # TODO: Need to handle DeviceRef
+
+            # Shift bounds along row for next widget
+            row_bounds.x += row_bounds.w + self.layout.spacing
 
     def make_group_widget(
         self,
@@ -432,7 +562,6 @@ class Screen(Generic[T]):
             c: Group of Component objects extracted from a device.yaml
             screen_bounds: Bounds of the top level screen
             column_bounds: Bounds of widget in current column
-            parent_bounds: Size constraints from the object containing the widgets
             next_column_bounds: Bounds of widget in next column should widgets exceed
                 height limits
 
@@ -444,6 +573,18 @@ class Screen(Generic[T]):
             added widget
 
         """
+        if is_table(c):
+            # Make a sub screen button at the root to display this Group instead of
+            # embedding the components within a Group widget
+            return self.make_component_widgets(
+                Group(c.name, SubScreen(), c.children),
+                column_bounds=column_bounds,
+                parent_bounds=screen_bounds,
+                next_column_bounds=next_column_bounds,
+                group_widget_indent=self.layout.group_widget_indent,
+                add_label=True,
+            )
+
         group = self.group(
             c,
             bounds=Bounds(column_bounds.x, column_bounds.y, h=screen_bounds.h),
@@ -487,27 +628,40 @@ class Screen(Generic[T]):
         )
         column_bounds = Bounds(w=full_w, h=self.layout.widget_height)
         widgets: List[WidgetFactory[T]] = []
+
         assert isinstance(group.layout, Grid), "Can only do grid at the moment"
+
         for c in group.children:
-            if isinstance(c, Group):
-                # TODO: make a new screen
-                raise NotImplementedError(c)
+            component: Union[Group[Component], Component]
+            if isinstance(c, Group) and not isinstance(c.layout, Row):
+                if len(c.children) > 1 and is_table(c):
+                    # Make a sub screen to display this Group
+                    component = Group(c.name, SubScreen(), c.children)
+                else:
+                    raise NotImplementedError(
+                        "Only tables can be nested in a sub screen currently"
+                    )
             else:
-                next_column_bounds = Bounds(
-                    x=next_x(widgets, self.layout.spacing),
-                    w=full_w,
-                    h=self.layout.widget_height,
-                )
-                widgets = widgets + self.make_component_widgets(
-                    c,
+                # Make single line with a component or Row of components
+                component = c
+
+            next_column_bounds = Bounds(
+                x=next_x(widgets, self.layout.spacing),
+                w=full_w,
+                h=self.layout.widget_height,
+            )
+            widgets.extend(
+                self.make_component_widgets(
+                    component,
                     column_bounds=column_bounds,
                     parent_bounds=bounds,
                     next_column_bounds=next_column_bounds,
                     add_label=group.layout.labelled,
                 )
-                if next_column_bounds.y != 0:
-                    # We have moved onto the next column
-                    column_bounds = next_column_bounds
+            )
+            if next_column_bounds.y != 0:
+                # We have moved onto the next column
+                column_bounds = next_column_bounds
 
         bounds.h = max_y(widgets)
         bounds.w = max_x(widgets)
@@ -515,7 +669,7 @@ class Screen(Generic[T]):
 
     def make_component_widgets(
         self,
-        c: Component,
+        c: Union[Group[Component], Component],
         column_bounds: Bounds,
         parent_bounds: Bounds,
         next_column_bounds: Bounds,
@@ -580,6 +734,8 @@ class EdlTemplate(WidgetTemplate[str]):
             for k in "xywh":
                 properties[k] = getattr(bounds, k)
         for item, value in properties.items():
+            if item == "displayFileName":
+                value = f"0 {value}"  # These are items in an array but we only use one
             multiline = re.compile(r"^%s {[^}]*}$" % item, re.MULTILINE | re.DOTALL)
             if multiline.search(t):
                 pattern = multiline
@@ -630,6 +786,8 @@ class AdlTemplate(WidgetTemplate[str]):
             properties["width"] = bounds.w
             properties["height"] = bounds.h
         for item, value in properties.items():
+            if t.startswith('"related display"'):
+                value = f"{value}.adl"  # Must include file extension
             # Only need single line
             pattern = re.compile(r"^(\s*%s)=.*$" % item, re.MULTILINE)
             if isinstance(value, str):
@@ -691,8 +849,11 @@ class BobTemplate(WidgetTemplate[etree.ElementBase]):
             properties["width"] = bounds.w
             properties["height"] = bounds.h
         for item, value in properties.items():
+            if item == "file":
+                value = f"{value}.bob"  # Must include file extension
             try:
-                t_copy.xpath(f"./{item}")[0].text = str(value)
+                # Iterate tree to find item and replace value
+                list(t_copy.iter(tag=item))[0].text = str(value)
             except IndexError as idx:
                 name = t_copy.find("name").text
                 raise ValueError(f"Failed to locate '{item}' in {name}") from idx
@@ -749,3 +910,10 @@ class BobTemplate(WidgetTemplate[etree.ElementBase]):
         for c in children:
             group_object[0].append(c.format()[0])
         return group_object
+
+
+def is_table(component: Group) -> bool:
+    return all(
+        isinstance(sub_component, Group) and isinstance(sub_component.layout, Row)
+        for sub_component in component.children
+    )
