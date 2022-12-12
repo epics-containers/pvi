@@ -45,12 +45,20 @@ class AsynRecord(Record):
         return parameter_name
 
     def asyn_component_type(self) -> Type[AsynParameter]:
-        asyn_components = cast(List[Type[AsynParameter]], rec_subclasses(AsynParameter))
-
-        # For waveform records the data type is defined by FTVL
+        # For waveform records the data type is defined by DTYP
         if self.type == "waveform":
-            return AsynWaveform
+            waveform_components = [AsynWaveform] + cast(
+                List[Type[AsynWaveform]], rec_subclasses(AsynWaveform)
+            )
+            for waveform_cls in waveform_components:
+                if self.fields["DTYP"] in (
+                    waveform_cls.type_strings.asyn_read,
+                    waveform_cls.type_strings.asyn_write,
+                ):
+                    return waveform_cls
+            assert False, f"Waveform type for {self} not found in {waveform_components}"
 
+        asyn_components = cast(List[Type[AsynParameter]], rec_subclasses(AsynParameter))
         if "INP" in self.fields.keys():
             type_fields = [
                 (
@@ -149,7 +157,9 @@ class SettingPair(Parameter, WriteParameterMixin, ReadParameterMixin):
         )
         autosave = self._get_autosave_fields(self.write_record)
         if autosave:
-            non_default_args["autosave"] = autosave
+            pass
+            # TODO: Consider handling autosave fields - see Action.generate_component
+            # non_default_args["autosave"] = autosave
 
         drv_info = self.write_record.get_parameter_name()
         if drv_info != self.write_record.name:
@@ -232,7 +242,11 @@ class Action(Parameter, WriteParameterMixin):
         )
         autosave_fields = self._get_autosave_fields(self.write_record)
         if autosave_fields:
-            non_default_args["autosave"] = autosave_fields
+            print(
+                "Warning: Ignoring autosave fields. Consider how to handle this",
+                file=sys.stderr,
+            )
+            # non_default_args["autosave"] = autosave_fields
 
         initial = self._get_initial(self.write_record)
         if initial:

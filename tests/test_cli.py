@@ -14,6 +14,9 @@ HERE = Path(__file__).parent
 PILATUS_PRODUCER = (
     HERE / "produce_format" / "input" / "pilatusDetector.pvi.producer.yaml"
 )
+PILATUS_PRODUCER_MIXED_WIDGETS = (
+    HERE / "produce_format" / "input" / "mixedWidgets.pvi.producer.yaml"
+)
 
 
 def test_cli_version():
@@ -24,20 +27,23 @@ def test_cli_version():
 def assert_output_matches(
     expected_path: Path, cmd: str, output_path: Path, *paths: Path
 ):
-    if os.environ.get("PVI_REGENERATE_OUTPUT", None):
-        # We were asked to regenerate output, so run with expected
-        # path
-        output_path = expected_path
     args = cmd.split() + [str(output_path)] + [str(p) for p in paths]
     result = CliRunner().invoke(app, args)
     if result.exception:
         raise result.exception
-    if expected_path.is_dir():
-        for child in expected_path.iterdir():
-            output_child = output_path / child.relative_to(expected_path)
-            assert output_child.read_text() == child.read_text()
-    else:
-        assert output_path.read_text() == expected_path.read_text()
+
+    if output_path.is_file():
+        output_path = output_path.parent
+        expected_path = expected_path.parent
+
+    if os.environ.get("PVI_REGENERATE_OUTPUT", None):
+        # We were asked to regenerate output, so copy output files to expected
+        for output_file in output_path.iterdir():
+            shutil.copy(output_file, expected_path / output_file.name)
+
+    for output_file in output_path.iterdir():
+        expected_child = expected_path / output_file.relative_to(output_path)
+        assert expected_child.read_text() == output_file.read_text()
 
 
 @pytest.mark.parametrize(
@@ -57,43 +63,72 @@ def test_schemas(tmp_path, filename):
     "filename",
     [
         "pilatusParameters.csv",
-        "pilatusParameters.template",
+        "pilatusDetectorParameters.template",
         "pilatusDetectorParamSet.h",
-        "pilatus.pvi.device.yaml",
+        "pilatusDetector.pvi.device.yaml",
     ],
 )
 def test_produce(tmp_path, filename):
     expected_path = HERE / "produce_format" / "output" / filename
+    input_path = HERE / "produce_format" / "input"
     assert_output_matches(
-        expected_path, "produce", tmp_path / filename, PILATUS_PRODUCER
+        expected_path,
+        "produce --yaml-paths " + str(input_path),
+        tmp_path / filename,
+        PILATUS_PRODUCER,
     )
 
 
 @pytest.mark.parametrize(
     "filename,formatter",
     [
-        ("pilatusParameters.edl", "dls.pvi.formatter.yaml"),
+        ("pilatusParameters.edl", "dls.edl.pvi.formatter.yaml"),
         ("pilatusParameters.adl", "aps.pvi.formatter.yaml"),
+        ("pilatusParameters.bob", "dls.bob.pvi.formatter.yaml"),
     ],
 )
-def test_format(tmp_path, filename, formatter):
-    expected_path = HERE / "produce_format" / "output" / filename
-    formatter_path = HERE / "produce_format" / "input" / formatter
+def test_format_pilatus_parameters(tmp_path, filename, formatter):
+    expected_path = HERE / "produce_format" / "output" / "test_screens" / filename
+    input_path = HERE / "produce_format" / "input"
+    formatter_path = input_path / formatter
     assert_output_matches(
-        expected_path, "format", tmp_path / filename, PILATUS_PRODUCER, formatter_path
+        expected_path,
+        "format --yaml-paths " + str(input_path),
+        tmp_path / filename,
+        PILATUS_PRODUCER,
+        formatter_path,
+    )
+
+
+@pytest.mark.parametrize(
+    "filename,formatter",
+    [
+        ("mixedWidgets.edl", "dls.edl.pvi.formatter.yaml"),
+        ("mixedWidgets.adl", "aps.pvi.formatter.yaml"),
+        ("mixedWidgets.bob", "dls.bob.pvi.formatter.yaml"),
+    ],
+)
+def test_format_mixed_widgets(tmp_path, filename, formatter):
+    expected_path = HERE / "produce_format" / "output" / "test_screens" / filename
+    input_path = HERE / "produce_format" / "input"
+    formatter_path = input_path / formatter
+    assert_output_matches(
+        expected_path,
+        "format --yaml-paths " + str(input_path),
+        tmp_path / filename,
+        PILATUS_PRODUCER_MIXED_WIDGETS,
+        formatter_path,
     )
 
 
 def test_convert(tmp_path):
     expected_path = HERE / "convert" / "output"
     input_path = HERE / "convert" / "input"
-    for parent in ["ADDriver", "asynNDArrayDriver"]:
-        shutil.copy(input_path / f"{parent}.pvi.producer.yaml", tmp_path)
     assert_output_matches(
         expected_path,
-        "convert asyn",
+        "convert asyn --yaml-paths " + str(input_path),
         tmp_path,
-        input_path / "pilatus.template",
         input_path / "pilatusDetector.cpp",
         input_path / "pilatusDetector.h",
+        input_path / "pilatus.template",
     )

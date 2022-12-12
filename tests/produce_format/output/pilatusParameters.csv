@@ -1,57 +1,65 @@
-Parameter,Records,Description
-*GroupOne*
-ResetPower,bo: $(P)$(R)ResetPower,ResetPower
-ThresholdApply,busy: $(P)$(R)ThresholdApply,ThresholdApply
-ImageFileTmot,ao: $(P)$(R)ImageFileTmot,Timeout for image file
-Wavelength,ao: $(P)$(R)Wavelength,Wavelength
-EnergyLow,ao: $(P)$(R)EnergyLow,EnergyLow
-EnergyHigh,ao: $(P)$(R)EnergyHigh,EnergyHigh
-DetDist,ao: $(P)$(R)DetDist,DetDist
-DetVOffset,ao: $(P)$(R)DetVOffset,DetVOffset
-BeamX,ao: $(P)$(R)BeamX,BeamX
-BeamY,ao: $(P)$(R)BeamY,BeamY
-Flux,ao: $(P)$(R)Flux,Flux
-FilterTransm,ao: $(P)$(R)FilterTransm,FilterTransm
-StartAngle,ao: $(P)$(R)StartAngle,StartAngle
-AngleIncr,ao: $(P)$(R)AngleIncr,AngleIncr
-Det2theta,ao: $(P)$(R)Det2theta,Det2theta
-Polarization,ao: $(P)$(R)Polarization,Polarization
-Alpha,ao: $(P)$(R)Alpha,Alpha
-Kappa,ao: $(P)$(R)Kappa,Kappa
-Phi,ao: $(P)$(R)Phi,Phi
-PhiIncr,ao: $(P)$(R)PhiIncr,PhiIncr
-Chi,ao: $(P)$(R)Chi,Chi
-ChiIncr,ao: $(P)$(R)ChiIncr,ChiIncr
-Omega,ao: $(P)$(R)Omega,Omega
-OmegaIncr,ao: $(P)$(R)OmegaIncr,OmegaIncr
-OscillAxis,stringout: $(P)$(R)OscillAxis,OscillAxis
-NumOscill,longout: $(P)$(R)NumOscill,NumOscill
-BadPixelFile,waveform: $(P)$(R)BadPixelFile,BadPixelFile
-FlatFieldFile,waveform: $(P)$(R)FlatFieldFile,FlatFieldFile
-CbfTemplateFile,waveform: $(P)$(R)CbfTemplateFile,CbfTemplateFile
-HeaderString,waveform: $(P)$(R)HeaderString,HeaderString
-Armed,bi: $(P)$(R)Armed,Armed
-NumBadPixels,longin: $(P)$(R)NumBadPixels,Number of bad pixels
-FlatFieldValid,bi: $(P)$(R)FlatFieldValid,Flat field valid
-PixelCutOff,ai: $(P)$(R)PixelCutOff_RBV,PixelCutOff_RBV
-Temp0,ai: $(P)$(R)Temp0_RBV,Temp0_RBV
-Temp1,ai: $(P)$(R)Temp1_RBV,Temp1_RBV
-Temp2,ai: $(P)$(R)Temp2_RBV,Temp2_RBV
-Humid0,ai: $(P)$(R)Humid0_RBV,Humid0_RBV
-Humid1,ai: $(P)$(R)Humid1_RBV,Humid1_RBV
-Humid2,ai: $(P)$(R)Humid2_RBV,Humid2_RBV
-TVXVersion,stringin: $(P)$(R)TVXVersion_RBV,TVXVersion_RBV
-ResetPowerTime,"longin: $(P)$(R)ResetPowerTime_RBV
-longout: $(P)$(R)ResetPowerTime",Reset module power wait time
-DelayTime,"ai: $(P)$(R)DelayTime_RBV
-ao: $(P)$(R)DelayTime",DelayTime
-ThresholdEnergy,"ai: $(P)$(R)ThresholdEnergy_RBV
-ao: $(P)$(R)ThresholdEnergy",Energy threshold
-ThresholdAutoApply,"bi: $(P)$(R)ThresholdAutoApply_RBV
-bo: $(P)$(R)ThresholdAutoApply",ThresholdAutoApply
-Energy,"ai: $(P)$(R)Energy_RBV
-ao: $(P)$(R)Energy",X-ray Energy
-MinFlatField,"longin: $(P)$(R)MinFlatField_RBV
-longout: $(P)$(R)MinFlatField",Minimum flat field value
-GapFill,"mbbi: $(P)$(R)GapFill_RBV
-mbbo: $(P)$(R)GapFill",GapFill
+Parameter Index Variable,Asyn Interface,Access,drvInfo String,Record Names,Record Types,Description
+*ComponentGroupOne*,,,,,,
+PilatusResetPower,asynInt32,W,RESET_POWER,$(P)$(R)ResetPower,bo,ResetPower
+PilatusThresholdApply,asynInt32,W,THRESHOLD_APPLY,$(P)$(R)ThresholdApply,busy,ThresholdApply
+PilatusImageFileTmot,asynFloat64,W,IMAGE_FILE_TMOT,$(P)$(R)ImageFileTmot,ao,Timeout for image file
+PilatusWavelength,asynFloat64,W,WAVELENGTH,$(P)$(R)Wavelength,ao,Wavelength
+PilatusEnergyLow,asynFloat64,W,ENERGY_LOW,$(P)$(R)EnergyLow,ao,EnergyLow
+PilatusEnergyHigh,asynFloat64,W,ENERGY_HIGH,$(P)$(R)EnergyHigh,ao,EnergyHigh
+PilatusDetDist,asynFloat64,W,DET_DIST,$(P)$(R)DetDist,ao,DetDist
+PilatusDetVOffset,asynFloat64,W,DET_VOFFSET,$(P)$(R)DetVOffset,ao,DetVOffset
+PilatusBeamX,asynFloat64,W,BEAM_X,$(P)$(R)BeamX,ao,BeamX
+PilatusBeamY,asynFloat64,W,BEAM_Y,$(P)$(R)BeamY,ao,BeamY
+PilatusFlux,asynFloat64,W,FLUX,$(P)$(R)Flux,ao,Flux
+PilatusFilterTransm,asynFloat64,W,FILTER_TRANSM,$(P)$(R)FilterTransm,ao,FilterTransm
+PilatusStartAngle,asynFloat64,W,START_ANGLE,$(P)$(R)StartAngle,ao,StartAngle
+PilatusAngleIncr,asynFloat64,W,ANGLE_INCR,$(P)$(R)AngleIncr,ao,AngleIncr
+PilatusDet2theta,asynFloat64,W,DET_2THETA,$(P)$(R)Det2theta,ao,Det2theta
+PilatusPolarization,asynFloat64,W,POLARIZATION,$(P)$(R)Polarization,ao,Polarization
+PilatusAlpha,asynFloat64,W,ALPHA,$(P)$(R)Alpha,ao,Alpha
+PilatusKappa,asynFloat64,W,KAPPA,$(P)$(R)Kappa,ao,Kappa
+PilatusPhi,asynFloat64,W,PHI,$(P)$(R)Phi,ao,Phi
+PilatusPhiIncr,asynFloat64,W,PHI_INCR,$(P)$(R)PhiIncr,ao,PhiIncr
+PilatusChi,asynFloat64,W,CHI,$(P)$(R)Chi,ao,Chi
+PilatusChiIncr,asynFloat64,W,CHI_INCR,$(P)$(R)ChiIncr,ao,ChiIncr
+PilatusOmega,asynFloat64,W,OMEGA,$(P)$(R)Omega,ao,Omega
+PilatusOmegaIncr,asynFloat64,W,OMEGA_INCR,$(P)$(R)OmegaIncr,ao,OmegaIncr
+PilatusOscillAxis,asynOctetWrite,W,OSCILL_AXIS,$(P)$(R)OscillAxis,stringout,OscillAxis
+PilatusNumOscill,asynInt32,W,NUM_OSCILL,$(P)$(R)NumOscill,longout,NumOscill
+PilatusBadPixelFile,asynOctetWrite,W,BAD_PIXEL_FILE,$(P)$(R)BadPixelFile,waveform,BadPixelFile
+PilatusFlatFieldFile,asynOctetWrite,W,FLAT_FIELD_FILE,$(P)$(R)FlatFieldFile,waveform,FlatFieldFile
+PilatusCbfTemplateFile,asynOctetWrite,W,CBFTEMPLATEFILE,$(P)$(R)CbfTemplateFile,waveform,CbfTemplateFile
+PilatusHeaderString,asynOctetWrite,W,HEADERSTRING,$(P)$(R)HeaderString,waveform,HeaderString
+PilatusArmed,asynInt32,R,ARMED,$(P)$(R)Armed,bi,Armed
+PilatusNumBadPixels,asynInt32,R,NUM_BAD_PIXELS,$(P)$(R)NumBadPixels,longin,Number of bad pixels
+PilatusFlatFieldValid,asynInt32,R,FLAT_FIELD_VALID,$(P)$(R)FlatFieldValid,bi,Flat field valid
+PilatusPixelCutOff,asynInt32,R,PIXEL_CUTOFF,$(P)$(R)PixelCutOff_RBV,ai,PixelCutOff_RBV
+PilatusThTemp0,asynFloat64,R,TH_TEMP_0,$(P)$(R)Temp0_RBV,ai,Temp0_RBV
+PilatusThTemp1,asynFloat64,R,TH_TEMP_1,$(P)$(R)Temp1_RBV,ai,Temp1_RBV
+PilatusThTemp2,asynFloat64,R,TH_TEMP_2,$(P)$(R)Temp2_RBV,ai,Temp2_RBV
+PilatusThHumid0,asynFloat64,R,TH_HUMID_0,$(P)$(R)Humid0_RBV,ai,Humid0_RBV
+PilatusThHumid1,asynFloat64,R,TH_HUMID_1,$(P)$(R)Humid1_RBV,ai,Humid1_RBV
+PilatusThHumid2,asynFloat64,R,TH_HUMID_2,$(P)$(R)Humid2_RBV,ai,Humid2_RBV
+PilatusTvxVersion,asynOctetRead,R,TVXVERSION,$(P)$(R)TVXVersion_RBV,stringin,TVXVersion_RBV
+PilatusResetPowerTime,asynInt32,RW,RESET_POWER_TIME,"$(P)$(R)ResetPowerTime,
+$(P)$(R)ResetPowerTime_RBV","longout,
+longin",Reset module power wait time
+PilatusDelayTime,asynFloat64,RW,DELAY_TIME,"$(P)$(R)DelayTime,
+$(P)$(R)DelayTime_RBV","ao,
+ai",DelayTime
+PilatusThreshold,asynFloat64,RW,THRESHOLD,"$(P)$(R)ThresholdEnergy,
+$(P)$(R)ThresholdEnergy_RBV","ao,
+ai",Energy threshold
+PilatusThresholdAutoApply,asynInt32,RW,THRESHOLD_AUTO_APPLY,"$(P)$(R)ThresholdAutoApply,
+$(P)$(R)ThresholdAutoApply_RBV","bo,
+bi",ThresholdAutoApply
+PilatusEnergy,asynFloat64,RW,ENERGY,"$(P)$(R)Energy,
+$(P)$(R)Energy_RBV","ao,
+ai",X-ray Energy
+PilatusMinFlatField,asynInt32,RW,MIN_FLAT_FIELD,"$(P)$(R)MinFlatField,
+$(P)$(R)MinFlatField_RBV","longout,
+longin",Minimum flat field value
+PilatusGapFill,asynInt32,RW,GAP_FILL,"$(P)$(R)GapFill,
+$(P)$(R)GapFill_RBV","mbbo,
+mbbi",GapFill
+ProgressBarTest,asynFloat64,R,PROGRESS,$(P)$(R)ProgressBarTest_RBV,ai,ProgressBar

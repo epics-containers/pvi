@@ -37,6 +37,21 @@
           "type": "integer",
           "description": "Max height of the screen",
           "default": 900
+        },
+        "label_width": {
+          "type": "integer",
+          "description": "Width of the widget description labels",
+          "default": 205
+        },
+        "widget_width": {
+          "type": "integer",
+          "description": "Width of the widgets",
+          "default": 100
+        },
+        "widget_height": {
+          "type": "integer",
+          "description": "Height of the widgets",
+          "default": 20
         }
       },
       "additionalProperties": false
@@ -63,6 +78,21 @@
           "type": "integer",
           "description": "Max height of the screen",
           "default": 900
+        },
+        "label_width": {
+          "type": "integer",
+          "description": "Width of the widget description labels",
+          "default": 115
+        },
+        "widget_width": {
+          "type": "integer",
+          "description": "Width of the widgets",
+          "default": 120
+        },
+        "widget_height": {
+          "type": "integer",
+          "description": "Height of the widgets",
+          "default": 20
         }
       },
       "additionalProperties": false

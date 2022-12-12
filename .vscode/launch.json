@@ -20,6 +20,420 @@
                 // https://github.com/microsoft/vscode-python/issues/693
                 "PYTEST_ADDOPTS": "--no-cov"
             },
-        }
+        },
+        {
+            "name": "ADCore Convert asynNDArrayDriver",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "convert",
+                "asyn",
+                "${workspaceFolder:ADCore}/pvi",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/ADSrc/asynNDArrayDriver.cpp",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/ADSrc/asynNDArrayDriver.h",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/Db/NDArrayBase.template",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/Db/NDFile.template",
+                "--yaml-paths",
+                "${workspaceFolder:ADCore}/pvi",
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "ADCore Convert ADDriver",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "convert",
+                "asyn",
+                "${workspaceFolder:ADCore}/pvi",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/ADSrc/ADDriver.cpp",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/ADSrc/ADDriver.h",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/Db/ADBase.template",
+                "--yaml-paths",
+                "${workspaceFolder:ADCore}/pvi",
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "ADCore Convert NDPluginDriver",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "convert",
+                "asyn",
+                "${workspaceFolder:ADCore}/pvi",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/pluginSrc/NDPluginDriver.cpp",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/pluginSrc/NDPluginDriver.h",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/Db/NDPluginBase.template",
+                "--yaml-paths",
+                "${workspaceFolder:ADCore}/pvi",
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "ADCore Convert NDPluginFile",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "convert",
+                "asyn",
+                "${workspaceFolder:ADCore}/pvi",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/pluginSrc/NDPluginFile.cpp",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/pluginSrc/NDPluginFile.h",
+                "--yaml-paths",
+                "${workspaceFolder:ADCore}/pvi",
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "ADCore Convert NDFileHDF5",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "convert",
+                "asyn",
+                "${workspaceFolder:ADCore}/pvi",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/pluginSrc/NDFileHDF5.cpp",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/pluginSrc/NDFileHDF5.h",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/Db/NDFileHDF5.template",
+                "--yaml-paths",
+                "${workspaceFolder:ADCore}/pvi",
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Convert Pilatus",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "convert",
+                "asyn",
+                "${workspaceFolder:ADPilatus}/pvi",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADPilatus/pilatusApp/src/pilatusDetector.cpp",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADPilatus/pilatusApp/src/pilatusDetector.h",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADPilatus/pilatusApp/Db/pilatus.template",
+                "--yaml-paths",
+                "${workspaceFolder:ADCore}/pvi",
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Convert ADSimDetector",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "convert",
+                "asyn",
+                "${workspaceFolder:ADSimDetector}/pvi",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADSimDetector/simDetectorApp/src/simDetector.cpp",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADSimDetector/simDetectorApp/src/simDetector.h",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADSimDetector/simDetectorApp/Db/simDetector.template",
+                "--yaml-paths",
+                "${workspaceFolder:ADCore}/pvi",
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Convert Single Place Holder",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "convertplaceholder",
+                "${workspaceFolder:ADCore}",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/pluginSrc/${input:plugin}.cpp",
+                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/pluginSrc/${input:plugin}.h",
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Regroup asynNDArrayDriver",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "regroup",
+                "${workspaceFolder:ADCore}/pvi",
+                "${workspaceFolder:ADCore}/pvi/asynNDArrayDriver.pvi.producer.yaml",
+                "${workspaceFolder:ADCore}/ADApp/op/adl/ADSetup.adl",
+                "${workspaceFolder:ADCore}/ADApp/op/adl/ADReadout.adl",
+                "${workspaceFolder:ADCore}/ADApp/op/adl/ADShutter.adl",
+                "${workspaceFolder:ADCore}/ADApp/op/adl/ADCollect.adl",
+                "${workspaceFolder:ADCore}/ADApp/op/adl/ADAttrFile.adl",
+                "${workspaceFolder:ADCore}/ADApp/op/adl/NDFile.adl",
+                "${workspaceFolder:ADCore}/ADApp/op/adl/NDFileBase.adl",
+                // "${workspaceFolder:ADCore}/ADApp/op/adl/NDFileDetails.adl",
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Regroup ADDriver",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "regroup",
+                "${workspaceFolder:ADCore}/pvi",
+                "${workspaceFolder:ADCore}/pvi/ADDriver.pvi.producer.yaml",
+                "${workspaceFolder:ADCore}/ADApp/op/adl/ADSetup.adl",
+                "${workspaceFolder:ADCore}/ADApp/op/adl/ADReadout.adl",
+                "${workspaceFolder:ADCore}/ADApp/op/adl/ADShutter.adl",
+                "${workspaceFolder:ADCore}/ADApp/op/adl/ADCollect.adl",
+                "${workspaceFolder:ADCore}/ADApp/op/adl/ADAttrFile.adl",
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Regroup simDetector",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "regroup",
+                "${workspaceFolder:ADSimDetector}/pvi",
+                "${workspaceFolder:ADSimDetector}/pvi/simDetector.pvi.producer.yaml",
+                "${workspaceFolder:ADSimDetector}/simDetectorApp/op/adl/simDetector.adl",
+                "${workspaceFolder:ADSimDetector}/simDetectorApp/op/adl/simDetectorSetup.adl",
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Regroup NDPluginDriver",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "regroup",
+                "${workspaceFolder:ADCore}/pvi",
+                "${workspaceFolder:ADCore}/pvi/NDPluginDriver.pvi.producer.yaml",
+                "${workspaceFolder:ADCore}/ADApp/op/adl/NDPluginBase.adl",
+                "${workspaceFolder:ADCore}/ADApp/op/adl/NDPluginBaseFull.adl",
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Regroup NDPluginFile",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "regroup",
+                "${workspaceFolder:ADCore}/pvi",
+                "${workspaceFolder:ADCore}/pvi/NDPluginFile.pvi.producer.yaml",
+                "${workspaceFolder:ADCore}/ADApp/op/adl/NDFile.adl",
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Regroup NDFileHDF5",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "regroup",
+                "${workspaceFolder:ADCore}/pvi",
+                "${workspaceFolder:ADCore}/pvi/NDFileHDF5.pvi.producer.yaml",
+                "${workspaceFolder:ADCore}/ADApp/op/adl/NDFileHDF5.adl",
+                "${workspaceFolder:ADCore}/ADApp/op/adl/NDFileHDF5_ChunkingFull.adl",
+                "${workspaceFolder:ADCore}/ADApp/op/adl/NDFileHDF5_ExtraDims.adl",
+                "${workspaceFolder:ADCore}/ADApp/op/adl/NDFileHDF5_Positions.adl",
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Produce",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "produce",
+                "${workspaceFolder:pvi}/../${input:Module}/pvi/${input:Driver}${input:FileType}",
+                "${workspaceFolder:pvi}/../${input:Module}/pvi/${input:Driver}.pvi.producer.yaml",
+                "--yaml-paths",
+                "${workspaceFolder:ADCore}/pvi",
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Format",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "format",
+                "${workspaceFolder:pvi}/../${input:Module}/pvi/${input:Driver}${input:FileType}",
+                "${workspaceFolder:pvi}/../${input:Module}/pvi/${input:Driver}.pvi.producer.yaml",
+                "${workspaceFolder:pvi}/tests/produce_format/input/${input:Formatter}${input:FileType}.pvi.formatter.yaml",
+                "--yaml-paths",
+                "${workspaceFolder:ADCore}/pvi",
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Write Schema",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "schema",
+                "${workspaceFolder:pvi}/schemas/pvi.producer.schema.json"
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "simDetector IOC",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder:ADSimDetector}/iocs/simDetector/bin/linux-x86_64/simDetector",
+            "args": [
+                "stsimDetector.boot"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder:ADSimDetector}/iocs/simDetector/bin/linux-x86_64",
+            "environment": [
+                {
+                    "name": "EPICS_CA_SERVER_PORT",
+                    "value": "6064"
+                }
+            ],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "Plugin Test",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder:ADCore}/bin/linux-x86_64/plugin-test",
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder:ADSimDetector}/iocs/simDetector/bin/linux-x86_64",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+    ],
+    "inputs": [
+        {
+            "id": "Module",
+            "description": "Which Module?",
+            "type": "pickString",
+            "options": [
+                "ADCore",
+                "ADPilatus",
+                "ADSimDetector",
+            ],
+        },
+        {
+            "id": "Driver",
+            "description": "Which Driver?",
+            "type": "pickString",
+            "options": [
+                "asynNDArrayDriver",
+                "ADDriver",
+                "NDPluginDriver",
+                "NDPluginFile",
+                "NDFileHDF5",
+                "pilatusDetector",
+                "simDetector",
+            ],
+        },
+        {
+            "id": "FileType",
+            "description": "What file to create?",
+            "type": "pickString",
+            "options": [
+                "ParamSet.h",
+                "Parameters.template",
+                ".pvi.device.yaml",
+                ".csv",
+                ".adl",
+                ".edl",
+                ".bob",
+            ],
+        },
+        {
+            "id": "Formatter",
+            "description": "What formatter to use?",
+            "type": "pickString",
+            "options": [
+                "dls",
+                "aps",
+            ],
+        },
+        {
+            "id": "plugin",
+            "description": "Which plugin to alter?",
+            "type": "pickString",
+            "options": [
+                //"NDArrayRing", no classes
+                //"NDFileHDF5AttributeDataset", no classes
+                //NDFileHDF5Dataset", no classes
+                //"NDFileHDF5Layout", no classes
+                //"NDFileHDF5LayoutXML", no classes
+                "NDFileJPEG",
+                "NDFileMagick",
+                "NDFileNetCDF",
+                "NDFileNexus",
+                "NDFileNull",
+                "NDFileTIFF",
+                "NDPluginAttribute",
+                "NDPluginAttrPlot", // took the wrong class, manually edited.
+                "NDPluginBadPixel",
+                "NDPluginCircularBuff",
+                "NDPluginCodec",
+                "NDPluginColorConvert",
+                "NDPluginFFT",
+                "NDPluginGather",
+                "NDPluginOverlay",
+                //"NDPluginOverlayTextFont", no classes
+                "NDPluginProcess",
+                "NDPluginPva",
+                "NDPluginROI",
+                "NDPluginROIStat",
+                "NDPluginScatter",
+                "NDPluginStats",
+                "NDPluginStdArrays",
+                "NDPluginTimeSeries",
+                "NDPluginTransform",
+                "NDPosPlugin",
+                // "NDPosPluginFileReader", no classes
+            ],
+        },
     ]
 }

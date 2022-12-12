@@ -1,8 +1,8 @@
-label: Pilatus Detector
+label: pilatus
 children:
 
 - type: Group
-  name: GroupOne
+  name: ComponentGroupOne
   layout:
     type: Grid
   children:

@@ -1,0 +1,4 @@
+# This is file included by $(EPICS_BASE)/configure/RULES_FILE_TYPE
+# Needed with older Base which doesn't include $(INSTALL_LOCATION)/cfg/RULES_*
+
+include $(dir $(lastword $(MAKEFILE_LIST)))/RULES_PVI

@@ -86,6 +86,22 @@ Docs follow the underlining convention::
     Heading 3
     ~~~~~~~~~
 
+When using comments to reference sections of code, please use the following format:
+
+.. code-block:: python3
+
+    # {REFERENCE_NAME} DOCS REF: {Description of code snippet}
+    # INSERT CODE HERE
+    # {REFERENCE_NAME} END
+
+From the documentation, you can then refer to the code within the comments using:
+
+.. code-block:: python3
+
+   .. literalinclude:: path/to/source/code
+       :start-after: {REFERENCE_NAME} DOCS REF
+       :end-before: {REFERENCE_NAME} END
+
 You can build the docs from the project directory by running::
 
     $ pipenv run docs

@@ -1,4 +1,4 @@
-include "pilatusDetectorParamSet.template"
+include "pilatusDetectorParameters.template"
 # Database for the records specific to the Pilatus driver
 # Mark Rivers
 # July 25, 2008
@@ -54,39 +54,23 @@ record(mbbi, "$(P)$(R)FileFormat_RBV")
 
 # Armed flag, which indicates Pilatus is ready for external triggers
 
-
 # Reset module power
 
-
 # Reset module power delay time
 
-
 # Reset module power delay time
-
 
 # Delay time in External Trigger mode.
 
-
-
-
 # Threshold energy
-
-
-
 
 # Threshold apply command
 
-
 # Threshold auto apply flag
 
-
 # Threshold auto apply flag
-
 
 # X-ray energy
-
-
-
 
 # Gain menu.  This writes to the Gain PV in the base database.
 record(mbbo, "$(P)$(R)GainMenu")
@@ -107,27 +91,15 @@ record(mbbo, "$(P)$(R)GainMenu")
 
 # Timeout waiting for image to be written to file system
 
-
 # Bad pixel file
-
 
 # Number of bad pixels
 
-
 # Flat field file
-
 
 # Minimum flat field value
 
-
-
-
 # Flat field valid flag.
-
-
-
-
-
 
 
 # asyn record for interactive communication with camserver
@@ -140,52 +112,6 @@ record(asyn, "$(P)$(R)CamserverAsyn")
 }
 
 # ancillary information
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 # Set DISA for PVs in ADBase that do not apply to Pilatus
@@ -270,23 +196,4 @@ record(bi, "$(P)$(R)ReverseY_RBV")
 {
     field(DISA, "1")
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

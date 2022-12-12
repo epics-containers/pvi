@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<display version="2.0.0">
+  <name>Display</name>
+  <x>12</x>
+  <y>12</y>
+  <width>1000</width>
+  <height>800</height>
+  <grid_step_x>4</grid_step_x>
+  <grid_step_y>4</grid_step_y>
+  <widget type="rectangle" version="2.0.0">
+    <name>Rectangle</name>
+    <x>8</x>
+    <y>48</y>
+    <width>140</width>
+    <height>364</height>
+    <line_width>1</line_width>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Title</name>
+    <class>TITLE</class>
+    <text>Title</text>
+    <x use_class="true">0</x>
+    <y use_class="true">0</y>
+    <width>550</width>
+    <height>31</height>
+    <font use_class="true">
+      <font name="Header 1" family="Liberation Sans" style="BOLD" size="22.0">
+      </font>
+    </font>
+    <transparent use_class="true">true</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>Label</text>
+    <x>18</x>
+    <y>58</y>
+    <width>120</width>
+    <height>30</height>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>TextEntry</name>
+    <pv_name>TextWrite</pv_name>
+    <x>18</x>
+    <y>78</y>
+    <width>120</width>
+    <height>30</height>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>ActionButton</name>
+    <pv_name>SignalX</pv_name>
+    <text>SignalX</text>
+    <x>18</x>
+    <y>118</y>
+    <width>120</width>
+    <height>40</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>TextUpdate</name>
+    <pv_name>TextRead</pv_name>
+    <x>18</x>
+    <y>168</y>
+    <width>120</width>
+    <height>30</height>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LED</name>
+    <pv_name>LED</pv_name>
+    <x>64</x>
+    <y>336</y>
+    <width>30</width>
+    <height>30</height>
+  </widget>
+  <widget type="choice" version="2.0.0">
+    <name>ChoiceButton</name>
+    <pv_name>CheckBox</pv_name>
+    <x>18</x>
+    <y>207</y>
+    <width>120</width>
+    <height>31</height>
+    <items>
+      <item>0</item>
+      <item>1</item>
+      <item>2</item>
+    </items>
+  </widget>
+  <widget type="combo" version="2.0.0">
+    <name>ComboBox</name>
+    <pv_name>ComboBox</pv_name>
+    <x>18</x>
+    <y>248</y>
+    <width>120</width>
+    <height>40</height>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>Group</name>
+    <x>160</x>
+    <y>40</y>
+    <width>350</width>
+    <height>250</height>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="checkbox" version="2.0.0">
+    <name>CheckBox</name>
+    <label>CheckBox</label>
+    <x>24</x>
+    <y>296</y>
+    <width>110</width>
+    <height>30</height>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>GroupLabel</name>
+    <text>Group Label</text>
+    <x>160</x>
+    <y>300</y>
+    <width>120</width>
+    <height>30</height>
+    <transparent>false</transparent>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="arc" version="2.0.0">
+    <name>Arc</name>
+    <x>544</x>
+    <y>116</y>
+    <width>1</width>
+    <height>1</height>
+  </widget>
+  <widget type="progressbar" version="2.0.0">
+    <name>ProgressBar</name>
+    <pv_name>sim://sine(0,1,0.1,0.4)</pv_name>
+    <x>28</x>
+    <y>376</y>
+    <width>104</width>
+    <height>24</height>
+  </widget>
+</display>

@@ -18,9 +18,9 @@ OVERRIDE_DESC = "# Overriding value in auto-generated template"
 
 
 class TemplateConverter:
-    def __init__(self, *templates: Path):
+    def __init__(self, templates: List[Path]):
         self.templates = templates
-        self._text = [t.read_text() for t in templates]
+        self._text = [t.read_text() for t in self.templates]
 
     def top_level_text(self, driver_name: str):
         extracted_templates = []
@@ -52,6 +52,7 @@ class TemplateConverter:
             # then: remove final close bracket and driver param name
             # $(PORT),$(ADDR=0),$(TIMEOUT=1)
             asyn_parameters = [match[: match.rfind(")")] for match in asyn_parameters]
+            assert asyn_parameters, "No Asyn parameters found"
             if len(set(asyn_parameters)) > 1:
                 print(
                     "More than one set of asyn params found. Taking the first instance"
@@ -92,7 +93,7 @@ class RecordExtractor:
         self._text = text
 
     def _extract_record_strs(self):
-        # extract a whole record definition inc. fields e.g.
+        # extract a whole record definition inc. fields and leading empty lines e.g.
         # record(waveform, "$(P)$(R)FilePath")
         # {
         #    field(PINI, "YES")
@@ -102,7 +103,7 @@ class RecordExtractor:
         #    field(NELM, "256")
         #    info(autosaveFields, "VAL")
         # }
-        record_extractor = re.compile(r"^[^#\n]*record\([^{]*{[^}]*}", re.MULTILINE)
+        record_extractor = re.compile(r"\s*^[^#\n]*record\([^{]*{[^}]*}", re.MULTILINE)
         return re.findall(record_extractor, self._text)
 
     def _parse_record(self, record_str: str) -> Tuple:
@@ -224,7 +225,7 @@ class RecordExtractor:
                 + [
                     line
                     for line in record_lines[record_name]
-                    if keep_line(line, clashing_fields)
+                    if line and keep_line(line, clashing_fields)
                 ]
             )
             for record_name, clashing_fields in overrides
@@ -235,7 +236,7 @@ class RecordExtractor:
         return top_level_str
 
     def _add_param_template_include(self, top_level_str: str, driver_name: str) -> str:
-        top_level_str = f'include "{driver_name}ParamSet.template"\n' + top_level_str
+        top_level_str = f'include "{driver_name}Parameters.template"\n' + top_level_str
         return top_level_str
 
 
