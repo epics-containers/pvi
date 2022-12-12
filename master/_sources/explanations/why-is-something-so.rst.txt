@@ -138,7 +138,7 @@ reproduced, in tabular form as a csv file that can be included in rst docs:
 
 .. csv-table:: Pilatus Parameters
    :file: ../../tests/produce_format/output/pilatusParameters.csv
-   :widths: 15, 25, 60
+   :widths: 15, 10, 8, 25, 25, 10, 60
    :header-rows: 1
 
 
