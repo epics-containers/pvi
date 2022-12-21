@@ -274,7 +274,18 @@
             "console": "integratedTerminal"
         },
         {
-            "name": "Write Schema",
+            "name": "Write Producer Schema",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "schema",
+                "${workspaceFolder:pvi}/schemas/pvi.device.schema.json"
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Write Device Schema",
             "type": "python",
             "request": "launch",
             "program": "${workspaceFolder:pvi}/src/pvi",
