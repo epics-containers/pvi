@@ -4,9 +4,9 @@ import re
 from copy import deepcopy
 from dataclasses import dataclass, field, replace
 from enum import Enum
-from typing import Callable, Dict, Iterator, List, Tuple, Type, TypeVar, Union
+from typing import Callable, Dict, Iterator, List, Sequence, Tuple, Type, TypeVar, Union
 
-from lxml import etree
+from lxml.etree import ElementBase, SubElement, XMLParser, parse
 from typing_extensions import Annotated
 
 from pvi._schema_utils import desc
@@ -27,6 +27,8 @@ from pvi.device import (
     SignalW,
     SignalX,
     SubScreen,
+    TableRead,
+    TableWrite,
     TextRead,
     TextWrite,
     Tree,
@@ -138,6 +140,7 @@ class LabelFactory(WidgetFactory[T]):
 @dataclass
 class PVWidgetFactory(WidgetFactory[T]):
     pv: str
+    widget_spec: Union[ReadWidget, WriteWidget]
 
 
 @dataclass
@@ -265,17 +268,18 @@ class ScreenWidgets(Generic[T]):
     label_cls: Type[LabelFactory[T]]
     led_cls: Type[PVWidgetFactory[T]]
     progress_bar_cls: Type[PVWidgetFactory[T]]
-    # TODO: add bitfield, progress_bar, plot, table, image
+    # TODO: add bitfield, progress_bar, plot, image
     text_read_cls: Type[PVWidgetFactory[T]]
     check_box_cls: Type[PVWidgetFactory[T]]
     combo_box_cls: Type[PVWidgetFactory[T]]
     text_write_cls: Type[PVWidgetFactory[T]]
+    table_cls: Type[PVWidgetFactory]
     action_button_cls: Type[ActionFactory[T]]
     sub_screen_cls: Type[SubScreenFactory[T]]
 
     def pv_widget(
         self,
-        widget: Union[ReadWidget, WriteWidget],
+        widget_spec: Union[ReadWidget, WriteWidget],
         bounds: Bounds,
         pv: str,
         prefix: str,
@@ -296,13 +300,15 @@ class ScreenWidgets(Generic[T]):
             LED: self.led_cls,
             ProgressBar: self.progress_bar_cls,
             TextRead: self.text_read_cls,
+            TableRead: self.table_cls,
             CheckBox: self.check_box_cls,
             ComboBox: self.combo_box_cls,
             TextWrite: self.text_write_cls,
+            TableWrite: self.table_cls,
         }
-        if isinstance(widget, (TextRead, TextWrite)):
-            bounds.h *= widget.lines
-        return widget_factory[type(widget)](bounds, prefix + pv)
+        if isinstance(widget_spec, (TextRead, TextWrite)):
+            bounds.h *= widget_spec.lines
+        return widget_factory[type(widget_spec)](bounds, prefix + pv, widget_spec)
 
 
 @dataclass
@@ -454,8 +460,8 @@ class Screen(Generic[T]):
         # Take a copy to modify in this scope
         component_bounds = bounds.copy()
 
-        # Row of column headings
         if isinstance(c, Group) and isinstance(c.layout, Row):
+            # This Group should be formatted as a table - check if headers are required
             if c.layout.header is not None:
                 assert len(c.layout.header) == len(
                     c.children
@@ -473,12 +479,13 @@ class Screen(Generic[T]):
                 component_bounds.x = bounds.x
                 component_bounds.y += self.layout.widget_height + self.layout.spacing
 
-            add_label = False  # Do not add row labels for Groups
-            sub_components = c.children
+            add_label = False  # Don't add a row label
+            sub_components = c.children  # Create a widget for each row of Group
         else:
-            sub_components = [c]
+            sub_components = [c]  # Create one widget for Group/Component
+            if hasattr(c, "widget") and isinstance(c.widget, (TableRead, TableWrite)):
+                add_label = False  # Do not add row labels for Tables
 
-        # Row label
         if add_label:
             # Insert label and reduce width for widget
             left, row_bounds = component_bounds.split(
@@ -492,6 +499,9 @@ class Screen(Generic[T]):
             row_bounds = component_bounds
 
         # Actual widgets
+        sub_components = (
+            c.children if isinstance(c, Group) and isinstance(c.layout, Row) else [c]
+        )
         for sc in sub_components:
             if isinstance(sc, SignalX):
                 yield self.screen_widgets.action_button_cls(
@@ -501,9 +511,19 @@ class Screen(Generic[T]):
                     sc.value,
                 )
             elif isinstance(sc, SignalR) and sc.widget:
+                if (
+                    isinstance(sc.widget, (TableRead, TableWrite))
+                    and len(sc.widget.widgets) > 0
+                ):
+                    widget_bounds = row_bounds.copy()
+                    widget_bounds.w = 100 * len(sc.widget.widgets)
+                    widget_bounds.h *= 10  # TODO: How do we know the number of rows?
+                else:
+                    widget_bounds = row_bounds
+
                 yield self.screen_widgets.pv_widget(
                     sc.widget,
-                    indent_widget(row_bounds, group_widget_indent),
+                    indent_widget(widget_bounds, group_widget_indent),
                     sc.pv,
                     self.prefix,
                 )
@@ -818,19 +838,17 @@ class AdlTemplate(WidgetTemplate[str]):
         return group_object + texts
 
 
-class BobTemplate(WidgetTemplate[etree.ElementBase]):
+class BobTemplate(WidgetTemplate[ElementBase]):
     """Extract and modify elements from a template .bob file."""
 
     def __init__(self, text: str):
         """Parse an XML string to an element tree object."""
 
         # Passing `remove_blank_text` means we can pretty print our additions
-        self.tree = etree.parse(text, parser=etree.XMLParser(remove_blank_text=True))
+        self.tree = parse(text, parser=XMLParser(remove_blank_text=True))
         self.screen = self.search("Display")
 
-    def set(
-        self, t: etree.ElementBase, bounds: Bounds = None, **properties
-    ) -> etree.ElementBase:
+    def set(self, t: ElementBase, bounds: Bounds = None, **properties) -> ElementBase:
         """Modify template elements (widgets) with component data.
 
         Args:
@@ -842,24 +860,34 @@ class BobTemplate(WidgetTemplate[etree.ElementBase]):
         Returns:
             The modified element.
         """
-        t_copy = deepcopy(t)
         if bounds:
             properties["x"] = bounds.x
             properties["y"] = bounds.y
             properties["width"] = bounds.w
             properties["height"] = bounds.h
+
+        t_copy = deepcopy(t)
         for item, value in properties.items():
-            if item == "file":
-                value = f"{value}.bob"  # Must include file extension
-            try:
-                # Iterate tree to find item and replace value
-                list(t_copy.iter(tag=item))[0].text = str(value)
-            except IndexError as idx:
-                name = t_copy.find("name").text
-                raise ValueError(f"Failed to locate '{item}' in {name}") from idx
+            widget_type = t.attrib.get("type", "")
+
+            new_text = ""
+            if widget_type == "table" and item == "widget":
+                add_table_columns(t_copy, value)
+            elif widget_type == "combo" and item == "widget":
+                add_combo_box_items(t_copy, value)
+            elif widget_type == "table" and item == "pv_name":
+                new_text = f"pva://{value}"  # Must include pva prefix
+            elif item == "file":
+                new_text = f"{value}.bob"  # Must include file extension
+            else:
+                new_text = str(value)
+
+            if new_text:
+                replace_text(t_copy, item, new_text)
+
         return t_copy
 
-    def search(self, search: str) -> etree.ElementBase:
+    def search(self, search: str) -> ElementBase:
         """Locate and extract elements from the Element tree.
 
         Args:
@@ -889,10 +917,10 @@ class BobTemplate(WidgetTemplate[etree.ElementBase]):
 
     def create_group(
         self,
-        group_object: List[etree.ElementBase],
-        children: List[WidgetFactory[etree.ElementBase]],
+        group_object: List[ElementBase],
+        children: List[WidgetFactory[ElementBase]],
         padding: Bounds = Bounds(),
-    ) -> List[etree.ElementBase]:
+    ) -> List[ElementBase]:
         """Create an xml group object from a list of child widgets
 
         Args:
@@ -917,3 +945,61 @@ def is_table(component: Group) -> bool:
         isinstance(sub_component, Group) and isinstance(sub_component.layout, Row)
         for sub_component in component.children
     )
+
+
+def add_table_columns(widget_element: ElementBase, table: Union[TableRead, TableWrite]):
+    if not table.widgets:
+        # Default empty -> get options from pv
+        return
+
+    columns_element = SubElement(widget_element, "columns")
+    for column, widget in enumerate(table.widgets):
+        add_table_column(columns_element, f"Column {column + 1}", widget)
+
+    add_editable(widget_element, editable=isinstance(table, TableWrite))
+
+
+def add_table_column(
+    columns_element: ElementBase,
+    name: str,
+    widget: Union[ReadWidget, WriteWidget],
+):
+    options: Sequence[str] = []
+    if isinstance(widget, LED):
+        options = ["false", "true"]
+    elif isinstance(widget, ComboBox):
+        options = widget.choices
+
+    column_element = SubElement(columns_element, "column")
+    SubElement(column_element, "name").text = name
+    add_editable(column_element, editable=isinstance(widget, WriteWidget))
+
+    if options:
+        options_element = SubElement(column_element, "options")
+        for option in options:
+            SubElement(options_element, "option").text = option
+
+
+def add_combo_box_items(widget_element: ElementBase, combo_box: ComboBox):
+    if not combo_box.choices:
+        # Default empty -> get items from pv
+        return
+
+    items_element = SubElement(widget_element, "items")
+    for item in combo_box.choices:
+        SubElement(items_element, "item").text = item
+
+    SubElement(widget_element, "items_from_pv").text = "false"
+
+
+def add_editable(element: ElementBase, editable: bool):
+    SubElement(element, "editable").text = "true" if editable else "false"
+
+
+def replace_text(element: ElementBase, tag: str, text: str):
+    try:
+        # Iterate tree to find tag and replace text
+        list(element.iter(tag=tag))[0].text = text
+    except IndexError as idx:
+        name = element.find("name").text
+        raise ValueError(f"Failed to locate '{tag}' in {name}") from idx

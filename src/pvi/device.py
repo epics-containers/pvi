@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 import re
-from dataclasses import dataclass, fields
+from dataclasses import dataclass, field, fields
 from pathlib import Path
 from typing import (
     Any,
@@ -97,7 +97,7 @@ class TableRead(ReadWidget):
     widgets: Annotated[
         Sequence[ReadWidget],
         desc("For each column, what widget should be repeated for every row"),
-    ]
+    ] = field(default_factory=list)
 
 
 class ImageRead(ReadWidget):
@@ -114,8 +114,13 @@ class CheckBox(WriteWidget):
     """Checkable control of a boolean PV"""
 
 
+@dataclass
 class ComboBox(WriteWidget):
     """Selection of an enum PV"""
+
+    choices: Annotated[Sequence[str], desc("Choices to select from")] = field(
+        default_factory=list
+    )
 
 
 @dataclass
@@ -135,9 +140,9 @@ class ArrayWrite(WriteWidget):
 @dataclass
 class TableWrite(WriteWidget):
     widgets: Annotated[
-        Sequence[WriteWidget],
+        Sequence[Union[ReadWidget, WriteWidget]],
         desc("For each column, what widget should be repeated for every row"),
-    ]
+    ] = field(default_factory=list)
 
 
 @as_discriminated_union

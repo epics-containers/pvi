@@ -83,6 +83,10 @@ class DLSFormatter(Formatter):
             text_write_cls=PVWidgetFactory.from_template(
                 template, search='"TextWrite"', controlPv="pv"
             ),
+            # Cannot handle dynamic tables so insert a label with the PV name
+            table_cls=PVWidgetFactory.from_template(
+                template, search='"Label"', value="pv"
+            ),
             action_button_cls=ActionFactory.from_template(
                 template,
                 search='"SignalX"',
@@ -192,10 +196,13 @@ class DLSFormatter(Formatter):
                 template, search="ChoiceButton", pv_name="pv"
             ),
             combo_box_cls=PVWidgetFactory.from_template(
-                template, search="ComboBox", pv_name="pv"
+                template, search="ComboBox", pv_name="pv", widget="widget_spec"
             ),
             text_write_cls=PVWidgetFactory.from_template(
                 template, search="TextEntry", pv_name="pv"
+            ),
+            table_cls=PVWidgetFactory.from_template(
+                template, search="Table", pv_name="pv", widget="widget_spec"
             ),
             action_button_cls=ActionFactory.from_template(
                 template, search="ActionButton", text="label", pv_name="pv"

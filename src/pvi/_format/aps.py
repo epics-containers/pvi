@@ -73,6 +73,10 @@ class APSFormatter(Formatter):
             text_write_cls=PVWidgetFactory.from_template(
                 template, search='"TextWrite"', chan="pv"
             ),
+            # Cannot handle dynamic tables so insert a label with the PV name
+            table_cls=PVWidgetFactory.from_template(
+                template, search='"Label"', textix="pv"
+            ),
             action_button_cls=ActionFactory.from_template(
                 template, search='"SignalX"', label="label", chan="pv"
             ),
