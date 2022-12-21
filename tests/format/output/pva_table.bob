@@ -1,0 +1,60 @@
+<display version="2.0.0">
+  <name>Display</name>
+  <x>0</x>
+  <y>0</y>
+  <width>326</width>
+  <height>234</height>
+  <grid_step_x>4</grid_step_x>
+  <grid_step_y>4</grid_step_y>
+  <widget type="label" version="2.0.0">
+    <name>Title</name>
+    <class>TITLE</class>
+    <text>TableDevice - $(P)$(R)</text>
+    <x use_class="true">0</x>
+    <y use_class="true">0</y>
+    <width>326</width>
+    <height>26</height>
+    <font use_class="true">
+      <font name="Header 1" family="Liberation Sans" style="BOLD" size="22.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="Text" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <transparent use_class="true">true</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="table" version="2.0.0">
+    <name>Table</name>
+    <pv_name>pva://$(P)$(R)PVATable</pv_name>
+    <x>22</x>
+    <y>30</y>
+    <width>300</width>
+    <height>200</height>
+    <columns>
+      <column>
+        <name>Column 1</name>
+        <editable>true</editable>
+      </column>
+      <column>
+        <name>Column 2</name>
+        <editable>false</editable>
+        <options>
+          <option>false</option>
+          <option>true</option>
+        </options>
+      </column>
+      <column>
+        <name>Column 3</name>
+        <editable>true</editable>
+        <options>
+          <option>1</option>
+          <option>A</option>
+          <option>True</option>
+        </options>
+      </column>
+    </columns>
+    <editable>true</editable>
+  </widget>
+</display>

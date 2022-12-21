@@ -182,4 +182,12 @@
     <height>40</height>
     <tooltip>$(actions)</tooltip>
   </widget>
+  <widget type="table" version="2.0.0">
+    <name>Table</name>
+    <pv_name>pva://Table</pv_name>
+    <x>300</x>
+    <y>300</y>
+    <width>200</width>
+    <height>100</height>
+  </widget>
 </display>
