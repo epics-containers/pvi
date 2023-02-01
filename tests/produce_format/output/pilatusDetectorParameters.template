@@ -9,6 +9,14 @@ record(bo, "$(P)$(R)ResetPower")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))RESET_POWER")
     field(ZNAM, "Done")
     field(ONAM, "Reset")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)ResetPower.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(busy, "$(P)$(R)ThresholdApply")
@@ -19,6 +27,14 @@ record(busy, "$(P)$(R)ThresholdApply")
     field(VAL,  "0")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))THRESHOLD_APPLY")
     field(ONAM, "Apply")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)ThresholdApply.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ao, "$(P)$(R)ImageFileTmot")
@@ -30,6 +46,14 @@ record(ao, "$(P)$(R)ImageFileTmot")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))IMAGE_FILE_TMOT")
     field(PREC, "3")
     field(EGU,  "s")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)ImageFileTmot.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ao, "$(P)$(R)Wavelength")
@@ -41,6 +65,14 @@ record(ao, "$(P)$(R)Wavelength")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))WAVELENGTH")
     field(PREC, "4")
     field(EGU,  "Angstroms")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)Wavelength.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ao, "$(P)$(R)EnergyLow")
@@ -52,6 +84,14 @@ record(ao, "$(P)$(R)EnergyLow")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))ENERGY_LOW")
     field(PREC, "3")
     field(EGU,  "eV")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)EnergyLow.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ao, "$(P)$(R)EnergyHigh")
@@ -63,6 +103,14 @@ record(ao, "$(P)$(R)EnergyHigh")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))ENERGY_HIGH")
     field(PREC, "3")
     field(EGU,  "eV")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)EnergyHigh.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ao, "$(P)$(R)DetDist")
@@ -74,6 +122,14 @@ record(ao, "$(P)$(R)DetDist")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))DET_DIST")
     field(PREC, "3")
     field(EGU,  "mm")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)DetDist.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ao, "$(P)$(R)DetVOffset")
@@ -85,6 +141,14 @@ record(ao, "$(P)$(R)DetVOffset")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))DET_VOFFSET")
     field(PREC, "3")
     field(EGU,  "mm")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)DetVOffset.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ao, "$(P)$(R)BeamX")
@@ -96,6 +160,14 @@ record(ao, "$(P)$(R)BeamX")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))BEAM_X")
     field(PREC, "3")
     field(EGU,  "pixels")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)BeamX.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ao, "$(P)$(R)BeamY")
@@ -107,6 +179,14 @@ record(ao, "$(P)$(R)BeamY")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))BEAM_Y")
     field(PREC, "3")
     field(EGU,  "pixels")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)BeamY.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ao, "$(P)$(R)Flux")
@@ -118,6 +198,14 @@ record(ao, "$(P)$(R)Flux")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FLUX")
     field(PREC, "4")
     field(EGU,  "ph/s")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)Flux.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ao, "$(P)$(R)FilterTransm")
@@ -128,6 +216,14 @@ record(ao, "$(P)$(R)FilterTransm")
     field(VAL,  "1.0")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FILTER_TRANSM")
     field(PREC, "4")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)FilterTransm.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ao, "$(P)$(R)StartAngle")
@@ -139,6 +235,14 @@ record(ao, "$(P)$(R)StartAngle")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))START_ANGLE")
     field(PREC, "4")
     field(EGU,  "deg")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)StartAngle.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ao, "$(P)$(R)AngleIncr")
@@ -150,6 +254,14 @@ record(ao, "$(P)$(R)AngleIncr")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))ANGLE_INCR")
     field(PREC, "4")
     field(EGU,  "deg")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)AngleIncr.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ao, "$(P)$(R)Det2theta")
@@ -161,6 +273,14 @@ record(ao, "$(P)$(R)Det2theta")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))DET_2THETA")
     field(PREC, "4")
     field(EGU,  "deg")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)Det2theta.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ao, "$(P)$(R)Polarization")
@@ -171,6 +291,14 @@ record(ao, "$(P)$(R)Polarization")
     field(VAL,  "0.99")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))POLARIZATION")
     field(PREC, "4")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)Polarization.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ao, "$(P)$(R)Alpha")
@@ -182,6 +310,14 @@ record(ao, "$(P)$(R)Alpha")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))ALPHA")
     field(PREC, "4")
     field(EGU,  "deg")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)Alpha.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ao, "$(P)$(R)Kappa")
@@ -193,6 +329,14 @@ record(ao, "$(P)$(R)Kappa")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))KAPPA")
     field(PREC, "4")
     field(EGU,  "deg")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)Kappa.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ao, "$(P)$(R)Phi")
@@ -204,6 +348,14 @@ record(ao, "$(P)$(R)Phi")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))PHI")
     field(PREC, "4")
     field(EGU,  "deg")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)Phi.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ao, "$(P)$(R)PhiIncr")
@@ -215,6 +367,14 @@ record(ao, "$(P)$(R)PhiIncr")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))PHI_INCR")
     field(PREC, "4")
     field(EGU,  "deg")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)PhiIncr.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ao, "$(P)$(R)Chi")
@@ -226,6 +386,14 @@ record(ao, "$(P)$(R)Chi")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))CHI")
     field(PREC, "4")
     field(EGU,  "deg")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)Chi.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ao, "$(P)$(R)ChiIncr")
@@ -237,6 +405,14 @@ record(ao, "$(P)$(R)ChiIncr")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))CHI_INCR")
     field(PREC, "4")
     field(EGU,  "deg")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)ChiIncr.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ao, "$(P)$(R)Omega")
@@ -248,6 +424,14 @@ record(ao, "$(P)$(R)Omega")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))OMEGA")
     field(PREC, "4")
     field(EGU,  "deg")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)Omega.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ao, "$(P)$(R)OmegaIncr")
@@ -259,6 +443,14 @@ record(ao, "$(P)$(R)OmegaIncr")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))OMEGA_INCR")
     field(PREC, "4")
     field(EGU,  "deg")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)OmegaIncr.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(stringout, "$(P)$(R)OscillAxis")
@@ -268,6 +460,14 @@ record(stringout, "$(P)$(R)OscillAxis")
     field(DTYP, "asynOctetWrite")
     field(VAL,  "X, CW")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))OSCILL_AXIS")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)OscillAxis.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(longout, "$(P)$(R)NumOscill")
@@ -277,6 +477,14 @@ record(longout, "$(P)$(R)NumOscill")
     field(DTYP, "asynInt32")
     field(VAL,  "1")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))NUM_OSCILL")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)NumOscill.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(waveform, "$(P)$(R)BadPixelFile")
@@ -286,6 +494,14 @@ record(waveform, "$(P)$(R)BadPixelFile")
     field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))BAD_PIXEL_FILE")
     field(NELM, "256")
     field(FTVL, "CHAR")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)BadPixelFile.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(waveform, "$(P)$(R)FlatFieldFile")
@@ -295,6 +511,14 @@ record(waveform, "$(P)$(R)FlatFieldFile")
     field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FLAT_FIELD_FILE")
     field(NELM, "256")
     field(FTVL, "CHAR")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)FlatFieldFile.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(waveform, "$(P)$(R)CbfTemplateFile")
@@ -304,6 +528,14 @@ record(waveform, "$(P)$(R)CbfTemplateFile")
     field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))CBFTEMPLATEFILE")
     field(NELM, "256")
     field(FTVL, "CHAR")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)CbfTemplateFile.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(waveform, "$(P)$(R)HeaderString")
@@ -313,6 +545,14 @@ record(waveform, "$(P)$(R)HeaderString")
     field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))HEADERSTRING")
     field(NELM, "68")
     field(FTVL, "CHAR")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)HeaderString.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(bi, "$(P)$(R)Armed")
@@ -323,6 +563,14 @@ record(bi, "$(P)$(R)Armed")
     field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))ARMED")
     field(ZNAM, "Unarmed")
     field(ONAM, "Armed")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)Armed.r": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(longin, "$(P)$(R)NumBadPixels")
@@ -331,6 +579,14 @@ record(longin, "$(P)$(R)NumBadPixels")
     field(SCAN, "I/O Intr")
     field(DTYP, "asynInt32")
     field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))NUM_BAD_PIXELS")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)NumBadPixels.r": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(bi, "$(P)$(R)FlatFieldValid")
@@ -341,6 +597,14 @@ record(bi, "$(P)$(R)FlatFieldValid")
     field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FLAT_FIELD_VALID")
     field(ZNAM, "No")
     field(ONAM, "Yes")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)FlatFieldValid.r": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ai, "$(P)$(R)PixelCutOff_RBV")
@@ -350,6 +614,14 @@ record(ai, "$(P)$(R)PixelCutOff_RBV")
     field(DTYP, "asynInt32")
     field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))PIXEL_CUTOFF")
     field(EGU,  "counts")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)PixelCutOff_RBV.r": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ai, "$(P)$(R)Temp0_RBV")
@@ -360,6 +632,14 @@ record(ai, "$(P)$(R)Temp0_RBV")
     field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))TH_TEMP_0")
     field(PREC, "1")
     field(EGU,  "C")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)Temp0_RBV.r": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ai, "$(P)$(R)Temp1_RBV")
@@ -370,6 +650,14 @@ record(ai, "$(P)$(R)Temp1_RBV")
     field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))TH_TEMP_1")
     field(PREC, "1")
     field(EGU,  "C")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)Temp1_RBV.r": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ai, "$(P)$(R)Temp2_RBV")
@@ -380,6 +668,14 @@ record(ai, "$(P)$(R)Temp2_RBV")
     field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))TH_TEMP_2")
     field(PREC, "1")
     field(EGU,  "C")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)Temp2_RBV.r": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ai, "$(P)$(R)Humid0_RBV")
@@ -390,6 +686,14 @@ record(ai, "$(P)$(R)Humid0_RBV")
     field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))TH_HUMID_0")
     field(PREC, "1")
     field(EGU,  "%")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)Humid0_RBV.r": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ai, "$(P)$(R)Humid1_RBV")
@@ -400,6 +704,14 @@ record(ai, "$(P)$(R)Humid1_RBV")
     field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))TH_HUMID_1")
     field(PREC, "1")
     field(EGU,  "%")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)Humid1_RBV.r": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ai, "$(P)$(R)Humid2_RBV")
@@ -410,6 +722,14 @@ record(ai, "$(P)$(R)Humid2_RBV")
     field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))TH_HUMID_2")
     field(PREC, "1")
     field(EGU,  "%")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)Humid2_RBV.r": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(stringin, "$(P)$(R)TVXVersion_RBV")
@@ -418,6 +738,14 @@ record(stringin, "$(P)$(R)TVXVersion_RBV")
     field(SCAN, "I/O Intr")
     field(DTYP, "asynOctetRead")
     field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))TVXVERSION")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)TVXVersion_RBV.r": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(longin, "$(P)$(R)ResetPowerTime_RBV")
@@ -427,6 +755,14 @@ record(longin, "$(P)$(R)ResetPowerTime_RBV")
     field(DTYP, "asynInt32")
     field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))RESET_POWER_TIME")
     field(EGU,  "Seconds")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)ResetPowerTime_RBV.r": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(longout, "$(P)$(R)ResetPowerTime")
@@ -437,6 +773,14 @@ record(longout, "$(P)$(R)ResetPowerTime")
     field(VAL,  "1")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))RESET_POWER_TIME")
     field(EGU,  "Seconds")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)ResetPowerTime.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ai, "$(P)$(R)DelayTime_RBV")
@@ -447,6 +791,14 @@ record(ai, "$(P)$(R)DelayTime_RBV")
     field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))DELAY_TIME")
     field(PREC, "6")
     field(EGU,  "s")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)DelayTime_RBV.r": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ao, "$(P)$(R)DelayTime")
@@ -458,6 +810,14 @@ record(ao, "$(P)$(R)DelayTime")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))DELAY_TIME")
     field(PREC, "6")
     field(EGU,  "s")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)DelayTime.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ai, "$(P)$(R)ThresholdEnergy_RBV")
@@ -468,6 +828,14 @@ record(ai, "$(P)$(R)ThresholdEnergy_RBV")
     field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))THRESHOLD")
     field(PREC, "3")
     field(EGU,  "keV")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)ThresholdEnergy_RBV.r": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ao, "$(P)$(R)ThresholdEnergy")
@@ -479,6 +847,14 @@ record(ao, "$(P)$(R)ThresholdEnergy")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))THRESHOLD")
     field(PREC, "3")
     field(EGU,  "keV")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)ThresholdEnergy.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(bi, "$(P)$(R)ThresholdAutoApply_RBV")
@@ -489,6 +865,14 @@ record(bi, "$(P)$(R)ThresholdAutoApply_RBV")
     field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))THRESHOLD_AUTO_APPLY")
     field(ZNAM, "No")
     field(ONAM, "Yes")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)ThresholdAutoApply_RBV.r": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(bo, "$(P)$(R)ThresholdAutoApply")
@@ -500,6 +884,14 @@ record(bo, "$(P)$(R)ThresholdAutoApply")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))THRESHOLD_AUTO_APPLY")
     field(ZNAM, "No")
     field(ONAM, "Yes")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)ThresholdAutoApply.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ai, "$(P)$(R)Energy_RBV")
@@ -510,6 +902,14 @@ record(ai, "$(P)$(R)Energy_RBV")
     field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))ENERGY")
     field(PREC, "3")
     field(EGU,  "keV")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)Energy_RBV.r": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ao, "$(P)$(R)Energy")
@@ -521,6 +921,14 @@ record(ao, "$(P)$(R)Energy")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))ENERGY")
     field(PREC, "3")
     field(EGU,  "keV")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)Energy.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(longin, "$(P)$(R)MinFlatField_RBV")
@@ -530,6 +938,14 @@ record(longin, "$(P)$(R)MinFlatField_RBV")
     field(DTYP, "asynInt32")
     field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))MIN_FLAT_FIELD")
     field(EGU,  "Counts")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)MinFlatField_RBV.r": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(longout, "$(P)$(R)MinFlatField")
@@ -540,6 +956,14 @@ record(longout, "$(P)$(R)MinFlatField")
     field(VAL,  "100")
     field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))MIN_FLAT_FIELD")
     field(EGU,  "Counts")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)MinFlatField.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(mbbi, "$(P)$(R)GapFill_RBV")
@@ -554,6 +978,14 @@ record(mbbi, "$(P)$(R)GapFill_RBV")
     field(ZRST, "N.A.")
     field(ONST, "0")
     field(TWST, "-1")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)GapFill_RBV.r": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(mbbo, "$(P)$(R)GapFill")
@@ -569,6 +1001,14 @@ record(mbbo, "$(P)$(R)GapFill")
     field(ZRST, "N.A.")
     field(ONST, "0")
     field(TWST, "-1")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)GapFill.w": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
 
 record(ai, "$(P)$(R)ProgressBarTest_RBV")
@@ -578,4 +1018,12 @@ record(ai, "$(P)$(R)ProgressBarTest_RBV")
     field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))PROGRESS")
     field(PREC, "4")
     field(EGU,  "deg")
+$(PVI=#)    info(Q:group, {
+$(PVI=#)        "$(P)$(R):PVI": {
+$(PVI=#)            "pvi.$(P)$(R)ProgressBarTest_RBV.r": {
+$(PVI=#)                "+channel": "NAME",
+$(PVI=#)                "+type": "plain"
+$(PVI=#)            }
+$(PVI=#)        }
+$(PVI=#)    })
 }
