@@ -119,6 +119,12 @@ class WidgetFactory(Generic[T]):
                 properties = {k: getattr(self, v) for k, v in attrs.items()}
                 return [template.set(t, sized(self.bounds), **properties)]
 
+        # Make debugging the sorcery a bit easier
+        FormattableWidgetFactory.__name__ = (
+            f"{FormattableWidgetFactory.__name__}<{cls.__name__}<{search}>>"
+        )
+        FormattableWidgetFactory.__qualname__ = FormattableWidgetFactory.__name__
+
         return FormattableWidgetFactory
 
 
