@@ -666,7 +666,8 @@ class BobTemplate(WidgetTemplate[etree.ElementBase]):
     def __init__(self, text: str):
         """Parse an XML string to an element tree object."""
 
-        self.tree = etree.parse(text)
+        # Passing `remove_blank_text` means we can pretty print our additions
+        self.tree = etree.parse(text, parser=etree.XMLParser(remove_blank_text=True))
         self.screen = self.search("Display")
 
     def set(
