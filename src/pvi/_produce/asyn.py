@@ -359,7 +359,7 @@ class AsynProducer(Producer):
     def produce_device(self) -> Device:
         """Make signals from components"""
         components = on_each_node(self.parameters, self._produce_component)
-        return Device(self.label, components)
+        return Device(self.label, self.parent, components)
 
     def _produce_component(self, parameter: AsynParameter) -> Iterator[Component]:
         # TODO: what about SignalX?

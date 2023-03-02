@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import re
 from dataclasses import dataclass, fields
+from pathlib import Path
 from typing import (
     Any,
     Callable,
@@ -17,9 +18,11 @@ from typing import (
 )
 
 from apischema import deserialize, serialize
+from ruamel.yaml import YAML
 from typing_extensions import Annotated
 
-from ._schema_utils import add_type_field, as_discriminated_union, desc
+from pvi._schema_utils import add_type_field, as_discriminated_union, desc
+from pvi.utils import find_pvi_yaml
 
 PASCAL_CASE_REGEX = re.compile(r"(?<![A-Z])[A-Z]|[A-Z][a-z/d]|(?<=[a-z])\d")
 
@@ -223,9 +226,14 @@ class SignalW(Component):
 
 
 @dataclass
-class SignalRW(SignalW):
+class SignalRW(Component):
     """Read/write value backed by one or two PVs"""
 
+    pv: Annotated[str, desc("PV to be used for put")]
+    widget: Annotated[
+        Optional[WriteWidget],
+        desc("Widget to use for control, None means don't display"),
+    ] = None
     # This was Optional[str] but produced JSON schema that YAML editor didn't understand
     read_pv: Annotated[str, desc("PV to be used for read, empty means use pv")] = ""
     read_widget: Annotated[
@@ -295,6 +303,13 @@ class Device:
     """Collection of Components"""
 
     label: Annotated[str, desc("Label for screen")]
+    parent: Annotated[
+        str,
+        desc(
+            "The parent device (basename of yaml file), "
+            "asynPortDriver is the top of the tree"
+        ),
+    ]
     children: Annotated[Tree[Component], desc("Child Components")]
 
     def serialize(self) -> Mapping[str, Any]:
@@ -302,11 +317,53 @@ class Device:
         return serialize(self, exclude_none=True, exclude_defaults=True)
 
     @classmethod
-    def deserialize(cls, serialized: Mapping[str, Any]) -> Device:
-        """Deserialize the Device from a dictionary."""
-        return deserialize(cls, serialized)
+    def deserialize(cls, serialized: Path) -> Device:
+        """Deserialize the Device from a YAML file"""
+        return deserialize(cls, YAML(typ="safe").load(serialized))
+
+    def deserialize_parents(self, yaml_paths: List[Path]):
+        """Deserialize yaml of parents and extract parameters"""
+        if self.parent == "asynPortDriver":
+            pass
+
+        parent_parameters = find_components(self.parent, yaml_paths)
+        for node in parent_parameters:
+            if isinstance(node, Group):
+                for param_group in self.children:
+                    if not isinstance(param_group, Group):
+                        continue
+                    elif param_group.name == node.name:
+                        param_group.children = list(node.children) + list(
+                            param_group.children
+                        )
+                        break  # Groups merged - skip to next parent group
+
+                else:  # No break - Did not find the Group
+                    # Inherit as a new Group
+                    self.children = list(self.children) + [node]
+                    continue  # Skip to next parent group
+
+            else:
+                # Node is an individual AsynParameter - just append it
+                self.children = list(self.children) + [node]
 
     def generate_param_tree(self) -> str:
         param_tree = ", ".join(json.dumps(serialize(group)) for group in self.children)
         # Encode again to quote the string as a value and escape double quotes within
         return json.dumps('{"parameters":[' + param_tree + "]}")
+
+
+def find_components(yaml_name: str, yaml_paths: List[Path]) -> Tree[Component]:
+    if yaml_name == "asynPortDriver":
+        return []  # asynPortDriver is the most base class and has no parameters
+
+    # Look in this module first
+    device_name = f"{yaml_name}.pvi.device.yaml"
+    device_yaml = find_pvi_yaml(device_name, yaml_paths)
+
+    if device_yaml is None:
+        raise IOError(f"Cannot find {device_name} in {yaml_paths}")
+
+    device = Device.deserialize(device_yaml)
+
+    return list(device.children) + list(find_components(device.parent, yaml_paths))

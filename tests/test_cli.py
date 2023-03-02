@@ -102,9 +102,7 @@ def test_convert(tmp_path):
     input_path = HERE / "convert" / "input"
     assert_output_matches(
         expected_path,
-        "convert asyn --yaml-path " + str(input_path),
+        "convert device --yaml-path " + str(input_path),
         tmp_path,
-        input_path / "pilatusDetector.cpp",
-        input_path / "pilatusDetector.h",
         input_path / "pilatus.template",
     )
