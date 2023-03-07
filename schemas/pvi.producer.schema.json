@@ -16,29 +16,34 @@
           "const": "AsynProducer",
           "default": "AsynProducer"
         },
-        "prefix": {
-          "type": "string",
-          "description": "The prefix for record names created by the template file"
-        },
         "label": {
           "type": "string",
           "description": "Screen title"
         },
+        "prefix": {
+          "type": "string",
+          "description": "The prefix for record names created by the template file",
+          "default": "$(P)$(R)"
+        },
         "asyn_port": {
           "type": "string",
-          "description": "The asyn port name"
+          "description": "The asyn port name",
+          "default": "$(PORT)"
         },
         "address": {
           "type": "string",
-          "description": "The asyn address"
+          "description": "The asyn address",
+          "default": "$(ADDR=0)"
         },
         "timeout": {
           "type": "string",
-          "description": "The timeout for the asyn port"
+          "description": "The timeout for the asyn port",
+          "default": "$(TIMEOUT=1)"
         },
         "parent": {
           "type": "string",
-          "description": "The parent producer (basename of yaml file), asynPortDriver is the top of the tree"
+          "description": "The parent producer (basename of yaml file), asynPortDriver is the top of the tree",
+          "default": "asynPortDriver"
         },
         "parameters": {
           "type": "array",
@@ -52,17 +57,12 @@
               }
             ]
           },
-          "description": "The parameters to make into an IOC"
+          "description": "The parameters to make into an IOC",
+          "default": []
         }
       },
       "required": [
-        "prefix",
-        "label",
-        "asyn_port",
-        "address",
-        "timeout",
-        "parent",
-        "parameters"
+        "label"
       ],
       "additionalProperties": false
     },

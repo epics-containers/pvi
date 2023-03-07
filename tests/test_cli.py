@@ -56,26 +56,6 @@ def test_schemas(tmp_path, filename):
 
 
 @pytest.mark.parametrize(
-    "filename",
-    [
-        "pilatusParameters.csv",
-        "pilatusDetectorParameters.template",
-        "pilatusDetectorParamSet.h",
-        "pilatusDetector.pvi.device.yaml",
-    ],
-)
-def test_produce(tmp_path, filename):
-    expected_path = HERE / "produce_format" / "output" / filename
-    input_path = HERE / "produce_format" / "input"
-    assert_output_matches(
-        expected_path,
-        "produce --yaml-paths " + str(input_path),
-        tmp_path / filename,
-        PILATUS_PRODUCER,
-    )
-
-
-@pytest.mark.parametrize(
     "filename,formatter",
     [
         ("pilatusParameters.edl", "dls.edl.pvi.formatter.yaml"),

@@ -92,7 +92,7 @@ def format(
 ):
     """Create screen product from producer and formatter YAML"""
 
-    producer_inst: Producer = deserialize_yaml(Producer, producer)
+    producer_inst: AsynProducer = deserialize_yaml(AsynProducer, producer)
     producer_inst.deserialize_parents(yaml_paths)
     device = producer_inst.produce_device()
 
@@ -116,18 +116,8 @@ def asyn(
     if not output.exists():
         os.mkdir(output)
 
-    drv_infos = []
-    producer = AsynProducer(
-        prefix="$(P)$(R)",
-        label=h.stem,
-        asyn_port="$(PORT)",
-        address="$(ADDR=0)",
-        timeout="$(TIMEOUT=1)",
-        parent="asynPortDriver",
-        parameters=[],
-    )
-
     # if a template is given, convert it and populate drv_infos
+    template_converter: Optional[TemplateConverter] = None
     if templates:
         template_converter = TemplateConverter(templates)
 
@@ -138,10 +128,13 @@ def asyn(
             for parameter in walk(producer.parameters)
             if isinstance(parameter, AsynParameter)
         ]
+    else:
+        producer = AsynProducer(label=h.stem)
+        drv_infos = []
 
     source_converter = SourceConverter(cpp, h, yaml_paths, drv_infos)
 
-    if templates:
+    if template_converter is not None:
         # Process and recreate template files - pass source device for param set include
         extracted_templates = template_converter.top_level_text(
             source_converter.device_class

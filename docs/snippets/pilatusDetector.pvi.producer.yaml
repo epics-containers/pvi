@@ -1,0 +1,540 @@
+type: AsynProducer
+prefix: $(P)$(R)
+label: pilatus
+asyn_port: $(PORT)
+address: $(ADDR)
+timeout: $(TIMEOUT)
+parent: ADDriver
+parameters:
+  - type: Group
+    name: ComponentGroupOne
+    layout:
+      type: Grid
+    children:
+      - type: AsynBinary
+        name: ResetPower
+        description: ResetPower
+        index_name: PilatusResetPower
+        drv_info: RESET_POWER
+        access: W
+        record_fields:
+          ZNAM: Done
+          ONAM: Reset
+
+      - type: AsynBusy
+        name: ThresholdApply
+        description: ThresholdApply
+        index_name: PilatusThresholdApply
+        drv_info: THRESHOLD_APPLY
+        access: W
+        initial: "0"
+        record_fields:
+          ZNAM: Done
+          ONAM: Apply
+
+      - type: AsynFloat64
+        name: ImageFileTmot
+        description: Timeout for image file
+        index_name: PilatusImageFileTmot
+        drv_info: IMAGE_FILE_TMOT
+        access: W
+        initial: "20"
+        record_fields:
+          PREC: "3"
+          EGU: s
+
+      - type: AsynFloat64
+        name: Wavelength
+        description: Wavelength
+        index_name: PilatusWavelength
+        drv_info: WAVELENGTH
+        access: W
+        initial: "1.54"
+        record_fields:
+          PREC: "4"
+          EGU: Angstroms
+
+      - type: AsynFloat64
+        name: EnergyLow
+        description: EnergyLow
+        index_name: PilatusEnergyLow
+        drv_info: ENERGY_LOW
+        access: W
+        initial: "0"
+        record_fields:
+          PREC: "3"
+          EGU: eV
+
+      - type: AsynFloat64
+        name: EnergyHigh
+        description: EnergyHigh
+        index_name: PilatusEnergyHigh
+        drv_info: ENERGY_HIGH
+        access: W
+        initial: "0"
+        record_fields:
+          PREC: "3"
+          EGU: eV
+
+      - type: AsynFloat64
+        name: DetDist
+        description: DetDist
+        index_name: PilatusDetDist
+        drv_info: DET_DIST
+        access: W
+        initial: "1000"
+        record_fields:
+          PREC: "3"
+          EGU: mm
+
+      - type: AsynFloat64
+        name: DetVOffset
+        description: DetVOffset
+        index_name: PilatusDetVOffset
+        drv_info: DET_VOFFSET
+        access: W
+        initial: "0"
+        record_fields:
+          PREC: "3"
+          EGU: mm
+
+      - type: AsynFloat64
+        name: BeamX
+        description: BeamX
+        index_name: PilatusBeamX
+        drv_info: BEAM_X
+        access: W
+        initial: "0"
+        record_fields:
+          PREC: "3"
+          EGU: pixels
+
+      - type: AsynFloat64
+        name: BeamY
+        description: BeamY
+        index_name: PilatusBeamY
+        drv_info: BEAM_Y
+        access: W
+        initial: "0"
+        record_fields:
+          PREC: "3"
+          EGU: pixels
+
+      - type: AsynFloat64
+        name: Flux
+        description: Flux
+        index_name: PilatusFlux
+        drv_info: FLUX
+        access: W
+        initial: "0"
+        record_fields:
+          PREC: "4"
+          EGU: ph/s
+
+      - type: AsynFloat64
+        name: FilterTransm
+        description: FilterTransm
+        index_name: PilatusFilterTransm
+        drv_info: FILTER_TRANSM
+        access: W
+        initial: "1.0"
+        record_fields:
+          PREC: "4"
+
+      - type: AsynFloat64
+        name: StartAngle
+        description: StartAngle
+        index_name: PilatusStartAngle
+        drv_info: START_ANGLE
+        access: W
+        initial: "0"
+        record_fields:
+          PREC: "4"
+          EGU: deg
+
+      - type: AsynFloat64
+        name: AngleIncr
+        description: AngleIncr
+        index_name: PilatusAngleIncr
+        drv_info: ANGLE_INCR
+        access: W
+        initial: "0.1"
+        record_fields:
+          PREC: "4"
+          EGU: deg
+
+      - type: AsynFloat64
+        name: Det2theta
+        description: Det2theta
+        index_name: PilatusDet2theta
+        drv_info: DET_2THETA
+        access: W
+        initial: "0"
+        record_fields:
+          PREC: "4"
+          EGU: deg
+
+      - type: AsynFloat64
+        name: Polarization
+        description: Polarization
+        index_name: PilatusPolarization
+        drv_info: POLARIZATION
+        access: W
+        initial: "0.99"
+        record_fields:
+          PREC: "4"
+
+      - type: AsynFloat64
+        name: Alpha
+        description: Alpha
+        index_name: PilatusAlpha
+        drv_info: ALPHA
+        access: W
+        initial: "0"
+        record_fields:
+          PREC: "4"
+          EGU: deg
+
+      - type: AsynFloat64
+        name: Kappa
+        description: Kappa
+        index_name: PilatusKappa
+        drv_info: KAPPA
+        access: W
+        initial: "0"
+        record_fields:
+          PREC: "4"
+          EGU: deg
+
+      - type: AsynFloat64
+        name: Phi
+        description: Phi
+        index_name: PilatusPhi
+        drv_info: PHI
+        access: W
+        initial: "0"
+        record_fields:
+          PREC: "4"
+          EGU: deg
+
+      - type: AsynFloat64
+        name: PhiIncr
+        description: PhiIncr
+        index_name: PilatusPhiIncr
+        drv_info: PHI_INCR
+        access: W
+        initial: "0.1"
+        record_fields:
+          PREC: "4"
+          EGU: deg
+
+      - type: AsynFloat64
+        name: Chi
+        description: Chi
+        index_name: PilatusChi
+        drv_info: CHI
+        access: W
+        initial: "0"
+        record_fields:
+          PREC: "4"
+          EGU: deg
+
+      - type: AsynFloat64
+        name: ChiIncr
+        description: ChiIncr
+        index_name: PilatusChiIncr
+        drv_info: CHI_INCR
+        access: W
+        initial: "0.1"
+        record_fields:
+          PREC: "4"
+          EGU: deg
+
+      - type: AsynFloat64
+        name: Omega
+        description: Omega
+        index_name: PilatusOmega
+        drv_info: OMEGA
+        access: W
+        initial: "0"
+        record_fields:
+          PREC: "4"
+          EGU: deg
+
+      - type: AsynFloat64
+        name: OmegaIncr
+        description: OmegaIncr
+        index_name: PilatusOmegaIncr
+        drv_info: OMEGA_INCR
+        access: W
+        initial: "0.1"
+        record_fields:
+          PREC: "4"
+          EGU: deg
+
+      - type: AsynString
+        name: OscillAxis
+        description: OscillAxis
+        index_name: PilatusOscillAxis
+        drv_info: OSCILL_AXIS
+        access: W
+        initial: X, CW
+
+      - type: AsynLong
+        name: NumOscill
+        description: NumOscill
+        index_name: PilatusNumOscill
+        drv_info: NUM_OSCILL
+        access: W
+        initial: "1"
+
+      - type: AsynWaveform
+        name: BadPixelFile
+        description: BadPixelFile
+        index_name: PilatusBadPixelFile
+        drv_info: BAD_PIXEL_FILE
+        access: W
+        record_fields:
+          NELM: "256"
+          FTVL: CHAR
+
+      - type: AsynWaveform
+        name: FlatFieldFile
+        description: FlatFieldFile
+        index_name: PilatusFlatFieldFile
+        drv_info: FLAT_FIELD_FILE
+        access: W
+        record_fields:
+          NELM: "256"
+          FTVL: CHAR
+
+      - type: AsynWaveform
+        name: CbfTemplateFile
+        description: CbfTemplateFile
+        index_name: PilatusCbfTemplateFile
+        drv_info: CBFTEMPLATEFILE
+        access: W
+        record_fields:
+          NELM: "256"
+          FTVL: CHAR
+
+      - type: AsynWaveform
+        name: HeaderString
+        description: HeaderString
+        index_name: PilatusHeaderString
+        drv_info: HEADERSTRING
+        access: W
+        record_fields:
+          NELM: "68"
+          FTVL: CHAR
+
+      - type: AsynBinary
+        name: Armed
+        description: Armed
+        index_name: PilatusArmed
+        drv_info: ARMED
+        access: R
+        read_record_suffix: Armed
+        record_fields:
+          SCAN: I/O Intr
+          ZNAM: Unarmed
+          ONAM: Armed
+
+      - type: AsynLong
+        name: NumBadPixels
+        description: Number of bad pixels
+        index_name: PilatusNumBadPixels
+        drv_info: NUM_BAD_PIXELS
+        access: R
+        read_record_suffix: NumBadPixels
+        record_fields:
+          SCAN: I/O Intr
+
+      - type: AsynBinary
+        name: FlatFieldValid
+        description: Flat field valid
+        index_name: PilatusFlatFieldValid
+        drv_info: FLAT_FIELD_VALID
+        access: R
+        read_record_suffix: FlatFieldValid
+        record_fields:
+          SCAN: I/O Intr
+          ZNAM: No
+          ONAM: Yes
+
+      - type: AsynInt32
+        name: PixelCutOff
+        description: PixelCutOff_RBV
+        index_name: PilatusPixelCutOff
+        drv_info: PIXEL_CUTOFF
+        access: R
+        record_fields:
+          SCAN: I/O Intr
+          EGU: counts
+
+      - type: AsynFloat64
+        name: Temp0
+        description: Temp0_RBV
+        index_name: PilatusThTemp0
+        drv_info: TH_TEMP_0
+        access: R
+        record_fields:
+          SCAN: I/O Intr
+          PREC: "1"
+          EGU: C
+
+      - type: AsynFloat64
+        name: Temp1
+        description: Temp1_RBV
+        index_name: PilatusThTemp1
+        drv_info: TH_TEMP_1
+        access: R
+        record_fields:
+          SCAN: I/O Intr
+          PREC: "1"
+          EGU: C
+
+      - type: AsynFloat64
+        name: Temp2
+        description: Temp2_RBV
+        index_name: PilatusThTemp2
+        drv_info: TH_TEMP_2
+        access: R
+        record_fields:
+          SCAN: I/O Intr
+          PREC: "1"
+          EGU: C
+
+      - type: AsynFloat64
+        name: Humid0
+        description: Humid0_RBV
+        index_name: PilatusThHumid0
+        drv_info: TH_HUMID_0
+        access: R
+        record_fields:
+          SCAN: I/O Intr
+          PREC: "1"
+          EGU: "%"
+
+      - type: AsynFloat64
+        name: Humid1
+        description: Humid1_RBV
+        index_name: PilatusThHumid1
+        drv_info: TH_HUMID_1
+        access: R
+        record_fields:
+          SCAN: I/O Intr
+          PREC: "1"
+          EGU: "%"
+
+      - type: AsynFloat64
+        name: Humid2
+        description: Humid2_RBV
+        index_name: PilatusThHumid2
+        drv_info: TH_HUMID_2
+        access: R
+        record_fields:
+          SCAN: I/O Intr
+          PREC: "1"
+          EGU: "%"
+
+      - type: AsynString
+        name: TVXVersion
+        description: TVXVersion_RBV
+        index_name: PilatusTvxVersion
+        drv_info: TVXVERSION
+        access: R
+        record_fields:
+          SCAN: I/O Intr
+
+      - type: AsynLong
+        name: ResetPowerTime
+        description: Reset module power wait time
+        index_name: PilatusResetPowerTime
+        drv_info: RESET_POWER_TIME
+        initial: "1"
+        record_fields:
+          SCAN: I/O Intr
+          EGU: Seconds
+
+      - type: AsynFloat64
+        name: DelayTime
+        description: DelayTime
+        index_name: PilatusDelayTime
+        drv_info: DELAY_TIME
+        initial: "0"
+        record_fields:
+          SCAN: I/O Intr
+          PREC: "6"
+          EGU: s
+
+      - type: AsynFloat64
+        name: ThresholdEnergy
+        description: Energy threshold
+        index_name: PilatusThreshold
+        drv_info: THRESHOLD
+        initial: "10.000"
+        record_fields:
+          SCAN: I/O Intr
+          PREC: "3"
+          EGU: keV
+
+      - type: AsynBinary
+        name: ThresholdAutoApply
+        description: ThresholdAutoApply
+        index_name: PilatusThresholdAutoApply
+        drv_info: THRESHOLD_AUTO_APPLY
+        initial: "1"
+        record_fields:
+          SCAN: I/O Intr
+          ZNAM: No
+          ONAM: Yes
+
+      - type: AsynFloat64
+        name: Energy
+        description: X-ray Energy
+        index_name: PilatusEnergy
+        drv_info: ENERGY
+        initial: "20.000"
+        record_fields:
+          SCAN: I/O Intr
+          PREC: "3"
+          EGU: keV
+
+      - type: AsynLong
+        name: MinFlatField
+        description: Minimum flat field value
+        index_name: PilatusMinFlatField
+        drv_info: MIN_FLAT_FIELD
+        initial: "100"
+        record_fields:
+          SCAN: I/O Intr
+          EGU: Counts
+
+      - type: AsynMultiBitBinary
+        name: GapFill
+        description: GapFill
+        index_name: PilatusGapFill
+        drv_info: GAP_FILL
+        initial: "0"
+        record_fields:
+          SCAN: I/O Intr
+          ZRVL: "2"
+          ONVL: "0"
+          TWVL: "-1"
+          ZRST: N.A.
+          ONST: "0"
+          TWST: "-1"
+
+      - type: AsynFloat64
+        name: ProgressBarTest
+        description: ProgressBar
+        drv_info: PROGRESS
+        access: R
+        read_widget:
+          type: ProgressBar
+        initial: 50.0
+        record_fields:
+          EGU: deg
+          PREC: 4
+        index_name: ProgressBarTest
