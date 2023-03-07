@@ -11,12 +11,8 @@ from pvi import __version__
 from pvi.__main__ import app
 
 HERE = Path(__file__).parent
-PILATUS_PRODUCER = (
-    HERE / "produce_format" / "input" / "pilatusDetector.pvi.producer.yaml"
-)
-PILATUS_PRODUCER_MIXED_WIDGETS = (
-    HERE / "produce_format" / "input" / "mixedWidgets.pvi.producer.yaml"
-)
+PILATUS_YAML = HERE / "format" / "input" / "pilatusDetector.pvi.device.yaml"
+MIXED_WIDGETS_YAML = HERE / "format" / "input" / "mixedWidgets.pvi.device.yaml"
 
 
 def test_cli_version():
@@ -88,14 +84,14 @@ def test_produce(tmp_path, filename):
     ],
 )
 def test_format_pilatus_parameters(tmp_path, filename, formatter):
-    expected_path = HERE / "produce_format" / "output" / "test_screens" / filename
-    input_path = HERE / "produce_format" / "input"
+    expected_path = HERE / "format" / "output" / "test_screens" / filename
+    input_path = HERE / "format" / "input"
     formatter_path = input_path / formatter
     assert_output_matches(
         expected_path,
         "format --yaml-paths " + str(input_path),
         tmp_path / filename,
-        PILATUS_PRODUCER,
+        PILATUS_YAML,
         formatter_path,
     )
 
@@ -109,14 +105,14 @@ def test_format_pilatus_parameters(tmp_path, filename, formatter):
     ],
 )
 def test_format_mixed_widgets(tmp_path, filename, formatter):
-    expected_path = HERE / "produce_format" / "output" / "test_screens" / filename
-    input_path = HERE / "produce_format" / "input"
+    expected_path = HERE / "format" / "output" / "test_screens" / filename
+    input_path = HERE / "format" / "input"
     formatter_path = input_path / formatter
     assert_output_matches(
         expected_path,
         "format --yaml-paths " + str(input_path),
         tmp_path / filename,
-        PILATUS_PRODUCER_MIXED_WIDGETS,
+        MIXED_WIDGETS_YAML,
         formatter_path,
     )
 
