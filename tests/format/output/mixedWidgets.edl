@@ -40,7 +40,7 @@ fontAlign "center"
 fgColor index 14
 bgColor index 48
 value {
-  "Pilatus Detector - $(P)$(R)"
+  "Mixed Widgets - $(P)$(R)"
 }
 endObjectProperties
 

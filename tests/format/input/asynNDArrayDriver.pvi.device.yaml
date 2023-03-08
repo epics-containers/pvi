@@ -1,0 +1,420 @@
+label: NDArrayBase
+parent: asynPortDriver
+children:
+
+- type: Group
+  name: ComponentGroupOne
+  layout:
+    type: Grid
+  children:
+
+  - type: SignalW
+    name: WaitForPlugins
+    pv: WaitForPlugins
+    widget:
+      type: CheckBox
+
+  - type: SignalW
+    name: EmptyFreeList
+    pv: EmptyFreeList
+    widget:
+      type: CheckBox
+
+  - type: SignalW
+    name: NDAttributesMacros
+    pv: NDAttributesMacros
+    widget:
+      type: TextWrite
+
+  - type: SignalW
+    name: NDAttributesFile
+    pv: NDAttributesFile
+    widget:
+      type: TextWrite
+
+  - type: SignalR
+    name: ADCoreVersion
+    pv: ADCoreVersion_RBV
+    widget:
+      type: TextRead
+
+  - type: SignalR
+    name: DriverVersion
+    pv: DriverVersion_RBV
+    widget:
+      type: TextRead
+
+  - type: SignalR
+    name: PortName
+    pv: PortName_RBV
+    widget:
+      type: TextRead
+
+  - type: SignalR
+    name: Manufacturer
+    pv: Manufacturer_RBV
+    widget:
+      type: TextRead
+
+  - type: SignalR
+    name: Model
+    pv: Model_RBV
+    widget:
+      type: TextRead
+
+  - type: SignalR
+    name: SerialNumber
+    pv: SerialNumber_RBV
+    widget:
+      type: TextRead
+
+  - type: SignalR
+    name: SDKVersion
+    pv: SDKVersion_RBV
+    widget:
+      type: TextRead
+
+  - type: SignalR
+    name: FirmwareVersion
+    pv: FirmwareVersion_RBV
+    widget:
+      type: TextRead
+
+  - type: SignalR
+    name: AcquireBusyCB
+    pv: AcquireBusyCB
+    widget:
+      type: LED
+
+  - type: SignalR
+    name: BayerPattern
+    pv: BayerPattern_RBV
+    widget:
+      type: TextRead
+
+  - type: SignalR
+    name: ArraySizeX
+    pv: ArraySizeX_RBV
+    widget:
+      type: TextRead
+
+  - type: SignalR
+    name: ArraySizeY
+    pv: ArraySizeY_RBV
+    widget:
+      type: TextRead
+
+  - type: SignalR
+    name: ArraySizeZ
+    pv: ArraySizeZ_RBV
+    widget:
+      type: TextRead
+
+  - type: SignalR
+    name: ArraySize
+    pv: ArraySize_RBV
+    widget:
+      type: TextRead
+
+  - type: SignalR
+    name: Codec
+    pv: Codec_RBV
+    widget:
+      type: TextRead
+
+  - type: SignalR
+    name: CompressedSize
+    pv: CompressedSize_RBV
+    widget:
+      type: TextRead
+
+  - type: SignalR
+    name: UniqueId
+    pv: UniqueId_RBV
+    widget:
+      type: TextRead
+
+  - type: SignalR
+    name: TimeStamp
+    pv: TimeStamp_RBV
+    widget:
+      type: TextRead
+
+  - type: SignalR
+    name: EpicsTSSec
+    pv: EpicsTSSec_RBV
+    widget:
+      type: TextRead
+
+  - type: SignalR
+    name: EpicsTSNsec
+    pv: EpicsTSNsec_RBV
+    widget:
+      type: TextRead
+
+  - type: SignalR
+    name: NDAttributesStatus
+    pv: NDAttributesStatus
+    widget:
+      type: TextRead
+
+  - type: SignalR
+    name: PoolMaxMem
+    pv: PoolMaxMem
+    widget:
+      type: TextRead
+
+  - type: SignalR
+    name: PoolUsedMem
+    pv: PoolUsedMem
+    widget:
+      type: TextRead
+
+  - type: SignalR
+    name: PoolAllocBuffers
+    pv: PoolAllocBuffers
+    widget:
+      type: TextRead
+
+  - type: SignalR
+    name: PoolFreeBuffers
+    pv: PoolFreeBuffers
+    widget:
+      type: TextRead
+
+  - type: SignalR
+    name: NumQueuedArrays
+    pv: NumQueuedArrays
+    widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: Acquire
+    pv: Acquire
+    widget:
+      type: CheckBox
+
+  - type: SignalRW
+    name: NDimensions
+    pv: NDimensions
+    widget:
+      type: TextWrite
+    read_pv: NDimensions_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: Dimensions
+    pv: Dimensions
+    widget:
+      type: TextWrite
+    read_pv: Dimensions_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: DataType
+    pv: DataType
+    widget:
+      type: ComboBox
+    read_pv: DataType_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: ColorMode
+    pv: ColorMode
+    widget:
+      type: ComboBox
+    read_pv: ColorMode_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: ArrayCounter
+    pv: ArrayCounter
+    widget:
+      type: TextWrite
+    read_pv: ArrayCounter_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: ArrayCallbacks
+    pv: ArrayCallbacks
+    widget:
+      type: CheckBox
+    read_pv: ArrayCallbacks_RBV
+    read_widget:
+      type: LED
+
+  - type: SignalR
+    name: FilePathExists
+    pv: FilePathExists_RBV
+    widget:
+      type: LED
+
+  - type: SignalR
+    name: FullFileName
+    pv: FullFileName_RBV
+    widget:
+      type: TextRead
+
+  - type: SignalR
+    name: NumCaptured
+    pv: NumCaptured_RBV
+    widget:
+      type: TextRead
+
+  - type: SignalR
+    name: WriteStatus
+    pv: WriteStatus
+    widget:
+      type: LED
+
+  - type: SignalR
+    name: WriteMessage
+    pv: WriteMessage
+    widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: FilePath
+    pv: FilePath
+    widget:
+      type: TextWrite
+    read_pv: FilePath_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: CreateDirectory
+    pv: CreateDirectory
+    widget:
+      type: TextWrite
+    read_pv: CreateDirectory_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: FileName
+    pv: FileName
+    widget:
+      type: TextWrite
+    read_pv: FileName_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: FileNumber
+    pv: FileNumber
+    widget:
+      type: TextWrite
+
+  - type: SignalRW
+    name: AutoIncrement
+    pv: AutoIncrement
+    widget:
+      type: CheckBox
+    read_pv: AutoIncrement_RBV
+    read_widget:
+      type: LED
+
+  - type: SignalRW
+    name: FileTemplate
+    pv: FileTemplate
+    widget:
+      type: TextWrite
+    read_pv: FileTemplate_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: AutoSave
+    pv: AutoSave
+    widget:
+      type: CheckBox
+    read_pv: AutoSave_RBV
+    read_widget:
+      type: LED
+
+  - type: SignalRW
+    name: WriteFile
+    pv: WriteFile
+    widget:
+      type: CheckBox
+    read_pv: WriteFile_RBV
+    read_widget:
+      type: LED
+
+  - type: SignalRW
+    name: ReadFile
+    pv: ReadFile
+    widget:
+      type: CheckBox
+    read_pv: ReadFile_RBV
+    read_widget:
+      type: LED
+
+  - type: SignalRW
+    name: FileFormat
+    pv: FileFormat
+    widget:
+      type: ComboBox
+    read_pv: FileFormat_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: FileWriteMode
+    pv: FileWriteMode
+    widget:
+      type: ComboBox
+    read_pv: FileWriteMode_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: Capture
+    pv: Capture
+    widget:
+      type: CheckBox
+    read_pv: Capture_RBV
+    read_widget:
+      type: LED
+
+  - type: SignalRW
+    name: NumCapture
+    pv: NumCapture
+    widget:
+      type: TextWrite
+    read_pv: NumCapture_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: DeleteDriverFile
+    pv: DeleteDriverFile
+    widget:
+      type: CheckBox
+    read_pv: DeleteDriverFile_RBV
+    read_widget:
+      type: LED
+
+  - type: SignalRW
+    name: LazyOpen
+    pv: LazyOpen
+    widget:
+      type: CheckBox
+    read_pv: LazyOpen_RBV
+    read_widget:
+      type: LED
+
+  - type: SignalRW
+    name: TempSuffix
+    pv: TempSuffix
+    widget:
+      type: TextWrite
+    read_pv: TempSuffix_RBV
+    read_widget:
+      type: TextRead

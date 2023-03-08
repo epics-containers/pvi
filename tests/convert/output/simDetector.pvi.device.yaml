@@ -1,0 +1,297 @@
+label: simDetector
+parent: ADDriver
+children:
+
+- type: Group
+  name: ComponentGroupOne
+  layout:
+    type: Grid
+  children:
+
+  - type: SignalRW
+    name: GainX
+    pv: GainX
+    widget:
+      type: TextWrite
+    read_pv: GainX_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: GainY
+    pv: GainY
+    widget:
+      type: TextWrite
+    read_pv: GainY_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: GainRed
+    pv: GainRed
+    widget:
+      type: TextWrite
+    read_pv: GainRed_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: GainGreen
+    pv: GainGreen
+    widget:
+      type: TextWrite
+    read_pv: GainGreen_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: GainBlue
+    pv: GainBlue
+    widget:
+      type: TextWrite
+    read_pv: GainBlue_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: Reset
+    pv: Reset
+    widget:
+      type: TextWrite
+    read_pv: Reset_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: Offset
+    pv: Offset
+    widget:
+      type: TextWrite
+    read_pv: Offset_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: Noise
+    pv: Noise
+    widget:
+      type: TextWrite
+    read_pv: Noise_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: SimMode
+    pv: SimMode
+    widget:
+      type: ComboBox
+    read_pv: SimMode_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: PeakStartX
+    pv: PeakStartX
+    widget:
+      type: TextWrite
+    read_pv: PeakStartX_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: PeakStartY
+    pv: PeakStartY
+    widget:
+      type: TextWrite
+    read_pv: PeakStartY_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: PeakNumX
+    pv: PeakNumX
+    widget:
+      type: TextWrite
+    read_pv: PeakNumX_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: PeakNumY
+    pv: PeakNumY
+    widget:
+      type: TextWrite
+    read_pv: PeakNumY_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: PeakStepX
+    pv: PeakStepX
+    widget:
+      type: TextWrite
+    read_pv: PeakStepX_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: PeakStepY
+    pv: PeakStepY
+    widget:
+      type: TextWrite
+    read_pv: PeakStepY_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: PeakWidthX
+    pv: PeakWidthX
+    widget:
+      type: TextWrite
+    read_pv: PeakWidthX_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: PeakWidthY
+    pv: PeakWidthY
+    widget:
+      type: TextWrite
+    read_pv: PeakWidthY_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: PeakVariation
+    pv: PeakVariation
+    widget:
+      type: TextWrite
+    read_pv: PeakVariation_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: XSineOperation
+    pv: XSineOperation
+    widget:
+      type: ComboBox
+    read_pv: XSineOperation_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: XSine1Amplitude
+    pv: XSine1Amplitude
+    widget:
+      type: TextWrite
+    read_pv: XSine1Amplitude_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: XSine1Frequency
+    pv: XSine1Frequency
+    widget:
+      type: TextWrite
+    read_pv: XSine1Frequency_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: XSine1Phase
+    pv: XSine1Phase
+    widget:
+      type: TextWrite
+    read_pv: XSine1Phase_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: XSine2Amplitude
+    pv: XSine2Amplitude
+    widget:
+      type: TextWrite
+    read_pv: XSine2Amplitude_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: XSine2Frequency
+    pv: XSine2Frequency
+    widget:
+      type: TextWrite
+    read_pv: XSine2Frequency_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: XSine2Phase
+    pv: XSine2Phase
+    widget:
+      type: TextWrite
+    read_pv: XSine2Phase_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: YSineOperation
+    pv: YSineOperation
+    widget:
+      type: ComboBox
+    read_pv: YSineOperation_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: YSine1Amplitude
+    pv: YSine1Amplitude
+    widget:
+      type: TextWrite
+    read_pv: YSine1Amplitude_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: YSine1Frequency
+    pv: YSine1Frequency
+    widget:
+      type: TextWrite
+    read_pv: YSine1Frequency_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: YSine1Phase
+    pv: YSine1Phase
+    widget:
+      type: TextWrite
+    read_pv: YSine1Phase_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: YSine2Amplitude
+    pv: YSine2Amplitude
+    widget:
+      type: TextWrite
+    read_pv: YSine2Amplitude_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: YSine2Frequency
+    pv: YSine2Frequency
+    widget:
+      type: TextWrite
+    read_pv: YSine2Frequency_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: YSine2Phase
+    pv: YSine2Phase
+    widget:
+      type: TextWrite
+    read_pv: YSine2Phase_RBV
+    read_widget:
+      type: TextRead
