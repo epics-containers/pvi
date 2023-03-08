@@ -89,7 +89,7 @@ def test_format_pilatus_parameters(tmp_path, filename, formatter):
     formatter_path = input_path / formatter
     assert_output_matches(
         expected_path,
-        "format --yaml-paths " + str(input_path),
+        "format --yaml-path " + str(input_path),
         tmp_path / filename,
         PILATUS_YAML,
         formatter_path,
@@ -110,7 +110,7 @@ def test_format_mixed_widgets(tmp_path, filename, formatter):
     formatter_path = input_path / formatter
     assert_output_matches(
         expected_path,
-        "format --yaml-paths " + str(input_path),
+        "format --yaml-path " + str(input_path),
         tmp_path / filename,
         MIXED_WIDGETS_YAML,
         formatter_path,
@@ -122,7 +122,7 @@ def test_convert(tmp_path):
     input_path = HERE / "convert" / "input"
     assert_output_matches(
         expected_path,
-        "convert asyn --yaml-paths " + str(input_path),
+        "convert asyn --yaml-path " + str(input_path),
         tmp_path,
         input_path / "pilatusDetector.cpp",
         input_path / "pilatusDetector.h",

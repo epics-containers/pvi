@@ -18,13 +18,13 @@ ifdef BIN_PVI
 
 $(info pvi found: $(BIN_PVI))
 
-# Create --yaml-paths arguments to pass to pvi commands
+# Create --yaml-path arguments to pass to pvi commands
 EMPTY :=
 SPACE := $(EMPTY) $(EMPTY)
 ifdef PVI_YAML_PATHS
-# Prepend each path in PVI_YAML_PATHS with ' --yaml-paths ' to pass to pvi call
-# e.g. `PVI_YAML_PATHS=foo bar` -> `... --yaml-paths foo --yaml-paths bar`
-EXPAND_PVI_YAML_PATHS = $(subst $(SPACE), --yaml-paths , $(PVI_YAML_PATHS))
+# Prepend each path in PVI_YAML_PATHS with ' --yaml-path ' to pass to pvi call
+# e.g. `PVI_YAML_PATHS=foo bar` -> `... --yaml-path foo --yaml-path bar`
+EXPAND_PVI_YAML_PATHS = $(subst $(SPACE), --yaml-path , $(PVI_YAML_PATHS))
 endif
 
 # Rules #

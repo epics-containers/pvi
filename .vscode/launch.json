@@ -35,7 +35,7 @@
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/ADSrc/asynNDArrayDriver.h",
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/Db/NDArrayBase.template",
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/Db/NDFile.template",
-                "--yaml-paths",
+                "--yaml-path",
                 "${workspaceFolder:ADCore}/pvi",
             ],
             "console": "integratedTerminal"
@@ -53,7 +53,7 @@
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/ADSrc/ADDriver.cpp",
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/ADSrc/ADDriver.h",
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/Db/ADBase.template",
-                "--yaml-paths",
+                "--yaml-path",
                 "${workspaceFolder:ADCore}/pvi",
             ],
             "console": "integratedTerminal"
@@ -71,7 +71,7 @@
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/pluginSrc/NDPluginDriver.cpp",
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/pluginSrc/NDPluginDriver.h",
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/Db/NDPluginBase.template",
-                "--yaml-paths",
+                "--yaml-path",
                 "${workspaceFolder:ADCore}/pvi",
             ],
             "console": "integratedTerminal"
@@ -88,7 +88,7 @@
                 "${workspaceFolder:ADCore}/pvi",
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/pluginSrc/NDPluginFile.cpp",
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/pluginSrc/NDPluginFile.h",
-                "--yaml-paths",
+                "--yaml-path",
                 "${workspaceFolder:ADCore}/pvi",
             ],
             "console": "integratedTerminal"
@@ -106,7 +106,7 @@
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/pluginSrc/NDFileHDF5.cpp",
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/pluginSrc/NDFileHDF5.h",
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/Db/NDFileHDF5.template",
-                "--yaml-paths",
+                "--yaml-path",
                 "${workspaceFolder:ADCore}/pvi",
             ],
             "console": "integratedTerminal"
@@ -124,7 +124,7 @@
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADPilatus/pilatusApp/src/pilatusDetector.cpp",
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADPilatus/pilatusApp/src/pilatusDetector.h",
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADPilatus/pilatusApp/Db/pilatus.template",
-                "--yaml-paths",
+                "--yaml-path",
                 "${workspaceFolder:ADCore}/pvi",
             ],
             "console": "integratedTerminal"
@@ -142,7 +142,7 @@
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADSimDetector/simDetectorApp/src/simDetector.cpp",
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADSimDetector/simDetectorApp/src/simDetector.h",
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADSimDetector/simDetectorApp/Db/simDetector.template",
-                "--yaml-paths",
+                "--yaml-path",
                 "${workspaceFolder:ADCore}/pvi",
             ],
             "console": "integratedTerminal"
@@ -271,7 +271,7 @@
                 "produce",
                 "${workspaceFolder:pvi}/../${input:Module}/pvi/${input:Driver}${input:FileType}",
                 "${workspaceFolder:pvi}/../${input:Module}/pvi/${input:Driver}.pvi.producer.yaml",
-                "--yaml-paths",
+                "--yaml-path",
                 "${workspaceFolder:ADCore}/pvi",
             ],
             "console": "integratedTerminal"
@@ -287,7 +287,7 @@
                 "${workspaceFolder:pvi}/../${input:Module}/pvi/${input:Driver}${input:FileType}",
                 "${workspaceFolder:pvi}/../${input:Module}/pvi/${input:Driver}.pvi.producer.yaml",
                 "${workspaceFolder:pvi}/tests/produce_format/input/${input:Formatter}${input:FileType}.pvi.formatter.yaml",
-                "--yaml-paths",
+                "--yaml-path",
                 "${workspaceFolder:ADCore}/pvi",
             ],
             "console": "integratedTerminal"
