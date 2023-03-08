@@ -14,6 +14,7 @@ from pvi.device import (
     SignalR,
     SignalRW,
     TableWrite,
+    TextRead,
     TextWrite,
 )
 
@@ -26,7 +27,7 @@ def device():
             Grid(),
             [
                 SignalRW("WidthUnits", "WIDTH:UNITS", ComboBox()),
-                SignalRW("Width", "WIDTH", TextWrite()),
+                SignalRW("Width", "WIDTH", TextWrite(), "WIDTH_RBV", TextRead()),
             ],
         ),
         SignalRW("Table", "TABLE", TableWrite([CheckBox(), ComboBox(), TextWrite()])),
