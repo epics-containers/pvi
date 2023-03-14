@@ -8,6 +8,7 @@ import typer
 from pvi import __version__
 from pvi._convert._source_convert import SourceConverter
 from pvi._convert._template_convert import TemplateConverter
+from pvi._convert.utils import extract_device_and_parent_class
 from pvi._format import Formatter
 from pvi._produce import Producer
 from pvi._produce.asyn import AsynParameter, AsynProducer
@@ -64,14 +65,11 @@ def schema(output: Path = typer.Argument(..., help="filename to write the schema
 def produce(
     output: Path = typer.Argument(..., help="filename to write the product to"),
     producer: Path = typer.Argument(..., help="path to the producer .pvi.yaml file"),
-    yaml_paths: Optional[List[Path]] = typer.Option(
-        None, help="Paths to directories with .pvi.producer.yaml files"
+    yaml_paths: List[Path] = typer.Option(
+        [], "--yaml-path", help="Paths to directories with .pvi.producer.yaml files"
     ),
 ):
     """Create template/csv/device/other product from producer YAML"""
-    if yaml_paths is None:
-        yaml_paths = []
-
     producer_inst = deserialize_yaml(Producer, producer)
     if output.suffix == ".template":
         producer_inst.produce_records(output)
@@ -86,23 +84,23 @@ def produce(
 
 @app.command()
 def format(
-    output: Path = typer.Argument(..., help="Directory to write output file(s) to"),
-    producer: Path = typer.Argument(..., help="path to the .pvi.producer.yaml file"),
-    formatter: Path = typer.Argument(..., help="path to the .pvi.formatter.yaml file"),
-    yaml_paths: Optional[List[Path]] = typer.Option(
-        None, help="Paths to directories with .pvi.producer.yaml files"
+    output_path: Path = typer.Argument(
+        ..., help="Directory to write output file(s) to"
+    ),
+    device_path: Path = typer.Argument(..., help="Path to the .pvi.device.yaml file"),
+    formatter_path: Path = typer.Argument(
+        ..., help="Path to the .pvi.formatter.yaml file"
+    ),
+    yaml_paths: List[Path] = typer.Option(
+        [], "--yaml-path", help="Paths to directories with .pvi.producer.yaml files"
     ),
 ):
     """Create screen product from producer and formatter YAML"""
-    if yaml_paths is None:
-        yaml_paths = []
+    device = Device.deserialize(device_path)
+    device.deserialize_parents(yaml_paths)
 
-    producer_inst: Producer = deserialize_yaml(Producer, producer)
-    producer_inst.deserialize_parents(yaml_paths)
-    device = producer_inst.produce_device()
-
-    formatter_inst: Formatter = deserialize_yaml(Formatter, formatter)
-    formatter_inst.format(device, producer_inst.prefix, output)
+    formatter_inst: Formatter = deserialize_yaml(Formatter, formatter_path)
+    formatter_inst.format(device, "$(P)$(R)", output_path)
 
 
 @convert_app.command()
@@ -110,32 +108,19 @@ def asyn(
     output: Path = typer.Argument(..., help="Directory to write output file(s) to"),
     cpp: Path = typer.Argument(..., help="Path to the .cpp file to convert"),
     h: Path = typer.Argument(..., help="Path to the .h file to convert"),
-    templates: Optional[List[Path]] = typer.Argument(
-        None, help="Paths to .template files to convert"
+    templates: List[Path] = typer.Option(
+        [], help="Paths to .template files to convert"
     ),
-    yaml_paths: Optional[List[Path]] = typer.Option(
-        None, help="Paths to directories with .pvi.producer.yaml files"
+    yaml_paths: List[Path] = typer.Option(
+        [], "--yaml-path", help="Paths to directories with .pvi.producer.yaml files"
     ),
 ):
     """Convert cpp/h/template to producer YAML and stripped cpp/h/template"""
-    if yaml_paths is None:
-        yaml_paths = []
-
     if not output.exists():
         os.mkdir(output)
 
-    drv_infos = []
-    producer = AsynProducer(
-        prefix="$(P)$(R)",
-        label=h.stem,
-        asyn_port="$(PORT)",
-        address="$(ADDR=0)",
-        timeout="$(TIMEOUT=1)",
-        parent="asynPortDriver",
-        parameters=[],
-    )
-
     # if a template is given, convert it and populate drv_infos
+    template_converter: Optional[TemplateConverter] = None
     if templates:
         template_converter = TemplateConverter(templates)
 
@@ -146,10 +131,13 @@ def asyn(
             for parameter in walk(producer.parameters)
             if isinstance(parameter, AsynParameter)
         ]
+    else:
+        producer = AsynProducer(label=h.stem)
+        drv_infos = []
 
     source_converter = SourceConverter(cpp, h, yaml_paths, drv_infos)
 
-    if templates:
+    if template_converter is not None:
         # Process and recreate template files - pass source device for param set include
         extracted_templates = template_converter.top_level_text(
             source_converter.device_class
@@ -177,19 +165,38 @@ def asyn(
     )
 
 
+@convert_app.command()
+def device(
+    output: Path = typer.Argument(..., help="Directory to write output file to"),
+    h: Path = typer.Argument(..., help="Path to the .h file to convert"),
+    templates: List[Path] = typer.Option(
+        [], "--template", help="Paths to .template files to convert"
+    ),
+):
+    """Convert template to device YAML"""
+    if not output.exists():
+        os.mkdir(output)
+
+    if templates:
+        asyn_producer = TemplateConverter(templates).convert()
+    else:
+        asyn_producer = AsynProducer(label=h.stem)
+
+    name, asyn_producer.parent = extract_device_and_parent_class(h.read_text())
+    device = asyn_producer.produce_device()
+    serialize_yaml(device, output / f"{name}.pvi.device.yaml")
+
+
 @app.command()
 def convertplaceholder(
     output: Path = typer.Argument(..., help="Directory to write output file(s) to"),
     cpp: Path = typer.Argument(..., help="Path to the .cpp file to convert"),
     h: Path = typer.Argument(..., help="Path to the .h file to convert"),
-    yaml_paths: Optional[List[Path]] = typer.Option(
-        None, help="Paths to directories with .pvi.producer.yaml files"
+    yaml_paths: List[Path] = typer.Option(
+        [], "--yaml-path", help="Paths to directories with .pvi.producer.yaml files"
     ),
 ):
     """Alter cpp and h files of unconverted drivers"""
-    if yaml_paths is None:
-        yaml_paths = []
-
     if not output.exists():
         os.mkdir(output)
 
@@ -203,22 +210,18 @@ def convertplaceholder(
 
 @app.command()
 def regroup(
-    output: Path = typer.Argument(..., help="Directory to write output file(s) to"),
-    producer_path: Path = typer.Argument(
-        ..., help="Path to the producer.yaml file to regroup"
+    device_path: Path = typer.Argument(
+        ..., help="Path to the device.yaml file to regroup"
     ),
     ui_paths: List[Path] = typer.Argument(
         ..., help="Paths to the ui files to regroup the PVs by"
     ),
 ):
-    """Regroup a producer.yaml file based on ui files that the PVs appear in"""
-    producer = deserialize_yaml(AsynProducer, producer_path)
-    producer.parameters = group_parameters(producer, ui_paths)
+    """Regroup a device.yaml file based on ui files that the PVs appear in"""
+    device = Device.deserialize(device_path)
+    device.children = group_parameters(device, ui_paths)
 
-    # Create new yaml
-    if not output.exists():
-        os.mkdir(output)
-    serialize_yaml(producer, output.joinpath(f"{producer_path.stem}.yaml"))
+    serialize_yaml(device, device_path)
 
 
 # test with: pipenv run python -m pvi

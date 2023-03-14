@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../schemas/pvi.device.schema.json
 label: label
+parent: parent
 children:
 - type: Group
   name: Parameters
@@ -16,6 +17,9 @@ children:
       pv: WIDTH
       widget:
         type: TextWrite
+      read_pv: WIDTH_RBV
+      read_widget:
+        type: TextRead
 - type: SignalRW
   name: Table
   pv: TABLE

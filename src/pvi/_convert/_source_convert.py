@@ -1,8 +1,17 @@
 import re
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Dict, List
 
+from pvi._convert.utils import (
+    extract_create_param_strs,
+    extract_define_strs,
+    extract_device_and_parent_class,
+    extract_index_declarations,
+    insert_param_set_accessors,
+    parse_create_param_str,
+    parse_definition_str,
+)
 from pvi._produce.asyn import AsynParameter, find_components
 from pvi.device import walk
 
@@ -27,90 +36,33 @@ class SourceConverter:
             # appearing in the producer.yaml
             self.parameter_infos.append("ARRAY_DATA")
 
-        self.device_class, self.parent_class = self._extract_device_and_parent_class()
-        self.define_strings = self._extract_define_strs(self.parameter_infos)
+        self.device_class, self.parent_class = extract_device_and_parent_class(
+            self.source.h
+        )
+        self.define_strings = extract_define_strs(self.source.h, self.parameter_infos)
         self.string_info_map = self._get_string_info_map(self.define_strings)
-        self.create_param_strings = self._extract_create_param_strs(
-            list(self.string_info_map)
+        self.create_param_strings = extract_create_param_strs(
+            self.source.cpp, list(self.string_info_map)
         )
         self.string_index_map = self._get_string_index_map(self.create_param_strings)
-        self.declaration_strings = self._extract_index_declarations(
-            list(self.string_index_map.values())
+        self.declaration_strings = extract_index_declarations(
+            self.source.h, list(self.string_index_map.values())
         )
-
-    def _extract_device_and_parent_class(self) -> Tuple[str, str]:
-        # e.g. extract 'NDPluginDriver' and 'asynNDArrayDriver' from
-        # class epicsShareClass NDPluginDriver : public asynNDArrayDriver, public epicsThreadRunable {  # noqa
-        class_extractor = re.compile(r"class.* (\w+) : \w+ (\w+).*")
-        match = re.search(class_extractor, self.source.h)
-        assert match, "Can't find classes"
-        classname, parent = match.groups()
-        return classname, parent
-
-    def _extract_define_strs(self, info_strings: List[str]) -> List[str]:
-        # e.g. extract: #define SimGainXString                "SIM_GAIN_X";
-        define_extractor = re.compile(r'\#define[_A-Za-z0-9 ]*"[^"]*".*')
-        definitions = re.findall(define_extractor, self.source.h)
-        # We only want to extract the defines for the given parameter infos
-        definitions = filter_strings(definitions, info_strings)
-        return definitions
-
-    def _extract_create_param_strs(self, param_strings: List[str]) -> List[str]:
-        # e.g. extract: createParam(SimGainXString, asynParamFloat64, &SimGainX);
-        create_param_extractor = re.compile(r"((?:this->)?createParam\([^\)]*\);.*)")
-        create_param_strs = re.findall(create_param_extractor, self.source.cpp)
-        # We only want to extract the createParam calls for the given parameter strings
-        create_param_strs = filter_strings(create_param_strs, param_strings)
-        return create_param_strs
-
-    def _extract_index_declarations(self, index_names: List[str]) -> List[str]:
-        # e.g. extract:     int SimGainX;
-        declaration_extractor = re.compile(r"\s*int [^;]*;")
-        declarations = re.findall(declaration_extractor, self.source.h)
-        # We only want to extract the declarations for the given index names - this also
-        # filters any generic int parameter definitions in the class and some comments
-        declarations = filter_strings(declarations, index_names)
-        return declarations
 
     def _get_string_info_map(self, define_strings: List[str]) -> Dict[str, str]:
         string_info_map = dict(
-            self._parse_definition_str(definition) for definition in define_strings
+            parse_definition_str(definition) for definition in define_strings
         )
         return string_info_map
-
-    @staticmethod
-    def _parse_definition_str(definition_str: str) -> Tuple[str, str]:
-        # e.g. from: #define SimGainXString                "SIM_GAIN_X";
-        # extract:
-        # Group1: SimGainXString
-        # Group2: SIM_GAIN_X
-        define_extractor = re.compile(r'(?:\#define) (\w+) *"([^"]*)')
-        string_info_pair = re.findall(define_extractor, definition_str)[0]
-        return string_info_pair
 
     def _get_string_index_map(self, create_param_strings: List[str]) -> Dict[str, str]:
         string_index_dict = dict(
             [
-                self._parse_create_param_str(create_param_str)
+                parse_create_param_str(create_param_str)
                 for create_param_str in create_param_strings
             ]
         )
         return string_index_dict
-
-    @staticmethod
-    def _parse_create_param_str(create_param_str: str) -> Tuple[str, str]:
-        # e.g. from: createParam(SimGainXString, asynParamFloat64, &SimGainX);
-        # extract: SimGainXString,               asynParamFloat64, &SimGainX
-        create_param_extractor = re.compile(r"(?:createParam\()([^\)]*)(?:\))")
-        # There are two signatures for createParam. 3 argument and 4 argument
-        # I think we are only ever interested in the final three arguments
-        create_param_args = (
-            re.findall(create_param_extractor, create_param_str)[0]
-            .replace(" ", "")
-            .split(",")[-3:]
-        )
-        string_index_pair = (create_param_args[0], create_param_args[2].strip("&"))
-        return string_index_pair
 
     def get_info_index_map(self) -> Dict[str, str]:
         index_string_map = dict(
@@ -155,7 +107,9 @@ class SourceConverter:
             for parameter in walk(parent_components)
             if isinstance(parameter, AsynParameter)
         ]
-        cpp_text = self._insert_param_set_accessors(cpp_text, parameters)
+
+        parameters.append("NDArrayData")  # Special case to update NDArrayData
+        cpp_text = insert_param_set_accessors(cpp_text, parameters)
 
         # Add the param set parameter to the constructor declaration
         cpp_text = cpp_text.replace(
@@ -275,16 +229,6 @@ class SourceConverter:
             ),
         )
         return h_text
-
-    @staticmethod
-    def _insert_param_set_accessors(text: str, parameters: List[str]) -> str:
-        parameters.append("NDArrayData")  # Special case to update NDArrayData
-        for parameter in parameters:
-            # Only match parameter name exactly, not others with same prefix
-            text = re.sub(
-                r"(\W)" + parameter + r"(\W)", r"\1paramSet->" + parameter + r"\2", text
-            )
-        return text
 
 
 def filter_strings(strings: List[str], filters: List[str]) -> List[str]:

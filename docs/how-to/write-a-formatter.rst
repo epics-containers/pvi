@@ -70,7 +70,7 @@ For clarity, the example below shows how the formatter.yaml can be used to set t
 layout properties. Note that these are optional as each property is defined with a
 default value:
 
-.. literalinclude:: ../../tests/produce_format/input/dls.bob.pvi.formatter.yaml
+.. literalinclude:: ../../tests/format/input/dls.bob.pvi.formatter.yaml
 
 Assign a Template File
 ----------------------

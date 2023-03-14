@@ -14,6 +14,7 @@ from pvi.device import (
     SignalR,
     SignalRW,
     TableWrite,
+    TextRead,
     TextWrite,
 )
 
@@ -26,27 +27,25 @@ def device():
             Grid(),
             [
                 SignalRW("WidthUnits", "WIDTH:UNITS", ComboBox()),
-                SignalRW("Width", "WIDTH", TextWrite()),
+                SignalRW("Width", "WIDTH", TextWrite(), "WIDTH_RBV", TextRead()),
             ],
         ),
         SignalRW("Table", "TABLE", TableWrite([CheckBox(), ComboBox(), TextWrite()])),
         SignalR("OutA", "OUTA", LED()),
     ]
-    return Device("label", components)
+    return Device("label", "parent", components)
 
 
-@pytest.fixture
-def device_serialized():
-    return YAML(typ="safe").load(
-        Path(__file__).parent / "test_device_serialization.pvi.yaml"
+DEVICE_YAML = Path(__file__).parent / "test_device_serialization.pvi.yaml"
+
+
+def test_serialize(device: Device):
+    s = device.serialize()
+    assert json.dumps(s, indent=2) == json.dumps(
+        YAML(typ="safe").load(DEVICE_YAML), indent=2
     )
 
 
-def test_serialize(device: Device, device_serialized):
-    s = device.serialize()
-    assert json.dumps(s, indent=2) == json.dumps(device_serialized, indent=2)
-
-
-def test_deserialize(device: Device, device_serialized):
-    d = Device.deserialize(device_serialized)
+def test_deserialize(device: Device):
+    d = Device.deserialize(DEVICE_YAML)
     assert d == device

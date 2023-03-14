@@ -3,9 +3,7 @@ from enum import Enum
 from pathlib import Path
 from typing import List
 
-from typing_extensions import Annotated
-
-from pvi._schema_utils import as_discriminated_union, desc
+from pvi._schema_utils import as_discriminated_union
 from pvi.device import Device
 
 
@@ -54,10 +52,6 @@ class DisplayForm(Enum):
 @as_discriminated_union
 @dataclass
 class Producer:
-    prefix: Annotated[
-        str, desc("The prefix for record names created by the template file")
-    ]
-
     def deserialize_parents(self, yaml_paths: List[Path]):
         """Deserialize yaml of parents and extract parameters"""
         raise NotImplementedError(self)

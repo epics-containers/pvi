@@ -1,5 +1,5 @@
 import csv
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, ClassVar, Iterator, List, Optional, Union
 
@@ -30,6 +30,7 @@ from pvi.device import (
     on_each_node,
     walk,
 )
+from pvi.utils import find_pvi_yaml
 
 from .base import Access, DisplayForm, Producer
 from .records import (
@@ -297,31 +298,25 @@ def find_components(yaml_name: str, yaml_paths: List[Path]) -> Tree[AsynParamete
     )
 
 
-def find_pvi_yaml(yaml_name: str, yaml_paths: List[Path]) -> Union[Path, None]:
-    """Find a yaml file in given directory"""
-    for yaml_path in yaml_paths:
-        if yaml_path.is_dir():
-            if yaml_name in [f.name for f in yaml_path.iterdir()]:
-                return yaml_path / yaml_name
-    return None
-
-
 @dataclass
 class AsynProducer(Producer):
     label: Annotated[str, desc("Screen title")]
-    asyn_port: Annotated[str, desc("The asyn port name")]
-    address: Annotated[str, desc("The asyn address")]
-    timeout: Annotated[str, desc("The timeout for the asyn port")]
+    prefix: Annotated[
+        str, desc("The prefix for record names created by the template file")
+    ] = "$(P)$(R)"
+    asyn_port: Annotated[str, desc("The asyn port name")] = "$(PORT)"
+    address: Annotated[str, desc("The asyn address")] = "$(ADDR=0)"
+    timeout: Annotated[str, desc("The timeout for the asyn port")] = "$(TIMEOUT=1)"
     parent: Annotated[
         str,
         desc(
             "The parent producer (basename of yaml file), "
             "asynPortDriver is the top of the tree"
         ),
-    ]
+    ] = "asynPortDriver"
     parameters: Annotated[
         Tree[AsynParameter], desc("The parameters to make into an IOC")
-    ]
+    ] = field(default_factory=list)
 
     def deserialize_parents(self, yaml_paths: List[Path]):
         """Deserialize yaml of parents and extract parameters"""
@@ -364,7 +359,7 @@ class AsynProducer(Producer):
     def produce_device(self) -> Device:
         """Make signals from components"""
         components = on_each_node(self.parameters, self._produce_component)
-        return Device(self.label, components)
+        return Device(self.label, self.parent, components)
 
     def _produce_component(self, parameter: AsynParameter) -> Iterator[Component]:
         # TODO: what about SignalX?

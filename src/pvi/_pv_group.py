@@ -2,8 +2,7 @@ import re
 from pathlib import Path
 from typing import Dict, List, Tuple
 
-from pvi._produce.asyn import AsynParameter, AsynProducer
-from pvi.device import Grid, Group, walk
+from pvi.device import Component, Device, Grid, Group, walk
 
 
 def find_pvs(pvs: List[str], file_path: Path) -> Tuple[List[str], List[str]]:
@@ -59,19 +58,13 @@ def sanitize_name(name: str) -> str:
     return name
 
 
-def group_parameters(
-    producer: AsynProducer, ui_paths: List[Path]
-) -> List[Group[AsynParameter]]:
-    initial_parameters: List[AsynParameter] = [
-        param for param in walk(producer.parameters) if isinstance(param, AsynParameter)
+def group_parameters(device: Device, ui_paths: List[Path]) -> List[Group[Component]]:
+    initial_parameters: List[Component] = [
+        param for param in walk(device.children) if isinstance(param, Component)
     ]
 
     # Group PVs that appear in the given ui files
-    pvs = [
-        node.name
-        for node in walk(producer.parameters)
-        if isinstance(node, AsynParameter)
-    ]
+    pvs = [node.name for node in walk(device.children) if isinstance(node, Component)]
 
     group_pv_map: Dict[str, List[str]] = {}
     for ui in ui_paths:
@@ -83,7 +76,7 @@ def group_parameters(
         print(f'Did not find group for {"|".join(pvs)}')
 
     # Create groups for parameters we found in the files
-    ui_groups: List[Group[AsynParameter]] = [
+    ui_groups: List[Group[Component]] = [
         Group(
             sanitize_name(group_name),
             Grid(labelled=True),
@@ -107,7 +100,7 @@ def group_parameters(
     if ungrouped_parameters:
         ui_groups.append(
             Group(
-                sanitize_name(producer.label + "Misc"),
+                sanitize_name(device.label + "Misc"),
                 Grid(labelled=True),
                 ungrouped_parameters,
             )

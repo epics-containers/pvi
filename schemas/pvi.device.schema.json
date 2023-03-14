@@ -12,6 +12,10 @@
           "type": "string",
           "description": "Label for screen"
         },
+        "parent": {
+          "type": "string",
+          "description": "The parent device (basename of yaml file), asynPortDriver is the top of the tree"
+        },
         "children": {
           "type": "array",
           "items": {
@@ -29,6 +33,7 @@
       },
       "required": [
         "label",
+        "parent",
         "children"
       ],
       "additionalProperties": false

@@ -29,14 +29,13 @@
             "program": "${workspaceFolder:pvi}/src/pvi",
             "args": [
                 "convert",
-                "asyn",
+                "${input:Converter}",
                 "${workspaceFolder:ADCore}/pvi",
-                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/ADSrc/asynNDArrayDriver.cpp",
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/ADSrc/asynNDArrayDriver.h",
+                "--template",
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/Db/NDArrayBase.template",
+                "--template",
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/Db/NDFile.template",
-                "--yaml-paths",
-                "${workspaceFolder:ADCore}/pvi",
             ],
             "console": "integratedTerminal"
         },
@@ -48,13 +47,11 @@
             "program": "${workspaceFolder:pvi}/src/pvi",
             "args": [
                 "convert",
-                "asyn",
+                "device",
                 "${workspaceFolder:ADCore}/pvi",
-                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/ADSrc/ADDriver.cpp",
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/ADSrc/ADDriver.h",
+                "--template",
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/Db/ADBase.template",
-                "--yaml-paths",
-                "${workspaceFolder:ADCore}/pvi",
             ],
             "console": "integratedTerminal"
         },
@@ -66,13 +63,11 @@
             "program": "${workspaceFolder:pvi}/src/pvi",
             "args": [
                 "convert",
-                "asyn",
+                "device",
                 "${workspaceFolder:ADCore}/pvi",
-                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/pluginSrc/NDPluginDriver.cpp",
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/pluginSrc/NDPluginDriver.h",
+                "--template",
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/Db/NDPluginBase.template",
-                "--yaml-paths",
-                "${workspaceFolder:ADCore}/pvi",
             ],
             "console": "integratedTerminal"
         },
@@ -84,12 +79,9 @@
             "program": "${workspaceFolder:pvi}/src/pvi",
             "args": [
                 "convert",
-                "asyn",
+                "device",
                 "${workspaceFolder:ADCore}/pvi",
-                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/pluginSrc/NDPluginFile.cpp",
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/pluginSrc/NDPluginFile.h",
-                "--yaml-paths",
-                "${workspaceFolder:ADCore}/pvi",
             ],
             "console": "integratedTerminal"
         },
@@ -101,13 +93,11 @@
             "program": "${workspaceFolder:pvi}/src/pvi",
             "args": [
                 "convert",
-                "asyn",
+                "device",
                 "${workspaceFolder:ADCore}/pvi",
-                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/pluginSrc/NDFileHDF5.cpp",
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/pluginSrc/NDFileHDF5.h",
+                "--template",
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/Db/NDFileHDF5.template",
-                "--yaml-paths",
-                "${workspaceFolder:ADCore}/pvi",
             ],
             "console": "integratedTerminal"
         },
@@ -119,13 +109,11 @@
             "program": "${workspaceFolder:pvi}/src/pvi",
             "args": [
                 "convert",
-                "asyn",
+                "device",
                 "${workspaceFolder:ADPilatus}/pvi",
-                "${workspaceFolder:pvi}/src/pvi/submodules/ADPilatus/pilatusApp/src/pilatusDetector.cpp",
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADPilatus/pilatusApp/src/pilatusDetector.h",
+                "--template",
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADPilatus/pilatusApp/Db/pilatus.template",
-                "--yaml-paths",
-                "${workspaceFolder:ADCore}/pvi",
             ],
             "console": "integratedTerminal"
         },
@@ -137,13 +125,11 @@
             "program": "${workspaceFolder:pvi}/src/pvi",
             "args": [
                 "convert",
-                "asyn",
+                "device",
                 "${workspaceFolder:ADSimDetector}/pvi",
-                "${workspaceFolder:pvi}/src/pvi/submodules/ADSimDetector/simDetectorApp/src/simDetector.cpp",
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADSimDetector/simDetectorApp/src/simDetector.h",
+                "--template",
                 "${workspaceFolder:pvi}/src/pvi/submodules/ADSimDetector/simDetectorApp/Db/simDetector.template",
-                "--yaml-paths",
-                "${workspaceFolder:ADCore}/pvi",
             ],
             "console": "integratedTerminal"
         },
@@ -169,8 +155,7 @@
             "program": "${workspaceFolder:pvi}/src/pvi",
             "args": [
                 "regroup",
-                "${workspaceFolder:ADCore}/pvi",
-                "${workspaceFolder:ADCore}/pvi/asynNDArrayDriver.pvi.producer.yaml",
+                "${workspaceFolder:ADCore}/pvi/asynNDArrayDriver.pvi.device.yaml",
                 "${workspaceFolder:ADCore}/ADApp/op/adl/ADSetup.adl",
                 "${workspaceFolder:ADCore}/ADApp/op/adl/ADReadout.adl",
                 "${workspaceFolder:ADCore}/ADApp/op/adl/ADShutter.adl",
@@ -190,8 +175,7 @@
             "program": "${workspaceFolder:pvi}/src/pvi",
             "args": [
                 "regroup",
-                "${workspaceFolder:ADCore}/pvi",
-                "${workspaceFolder:ADCore}/pvi/ADDriver.pvi.producer.yaml",
+                "${workspaceFolder:ADCore}/pvi/ADDriver.pvi.device.yaml",
                 "${workspaceFolder:ADCore}/ADApp/op/adl/ADSetup.adl",
                 "${workspaceFolder:ADCore}/ADApp/op/adl/ADReadout.adl",
                 "${workspaceFolder:ADCore}/ADApp/op/adl/ADShutter.adl",
@@ -208,8 +192,7 @@
             "program": "${workspaceFolder:pvi}/src/pvi",
             "args": [
                 "regroup",
-                "${workspaceFolder:ADSimDetector}/pvi",
-                "${workspaceFolder:ADSimDetector}/pvi/simDetector.pvi.producer.yaml",
+                "${workspaceFolder:ADSimDetector}/pvi/simDetector.pvi.device.yaml",
                 "${workspaceFolder:ADSimDetector}/simDetectorApp/op/adl/simDetector.adl",
                 "${workspaceFolder:ADSimDetector}/simDetectorApp/op/adl/simDetectorSetup.adl",
             ],
@@ -223,8 +206,7 @@
             "program": "${workspaceFolder:pvi}/src/pvi",
             "args": [
                 "regroup",
-                "${workspaceFolder:ADCore}/pvi",
-                "${workspaceFolder:ADCore}/pvi/NDPluginDriver.pvi.producer.yaml",
+                "${workspaceFolder:ADCore}/pvi/NDPluginDriver.pvi.device.yaml",
                 "${workspaceFolder:ADCore}/ADApp/op/adl/NDPluginBase.adl",
                 "${workspaceFolder:ADCore}/ADApp/op/adl/NDPluginBaseFull.adl",
             ],
@@ -238,8 +220,7 @@
             "program": "${workspaceFolder:pvi}/src/pvi",
             "args": [
                 "regroup",
-                "${workspaceFolder:ADCore}/pvi",
-                "${workspaceFolder:ADCore}/pvi/NDPluginFile.pvi.producer.yaml",
+                "${workspaceFolder:ADCore}/pvi/NDPluginFile.pvi.device.yaml",
                 "${workspaceFolder:ADCore}/ADApp/op/adl/NDFile.adl",
             ],
             "console": "integratedTerminal"
@@ -252,8 +233,7 @@
             "program": "${workspaceFolder:pvi}/src/pvi",
             "args": [
                 "regroup",
-                "${workspaceFolder:ADCore}/pvi",
-                "${workspaceFolder:ADCore}/pvi/NDFileHDF5.pvi.producer.yaml",
+                "${workspaceFolder:ADCore}/pvi/NDFileHDF5.pvi.device.yaml",
                 "${workspaceFolder:ADCore}/ADApp/op/adl/NDFileHDF5.adl",
                 "${workspaceFolder:ADCore}/ADApp/op/adl/NDFileHDF5_ChunkingFull.adl",
                 "${workspaceFolder:ADCore}/ADApp/op/adl/NDFileHDF5_ExtraDims.adl",
@@ -271,7 +251,7 @@
                 "produce",
                 "${workspaceFolder:pvi}/../${input:Module}/pvi/${input:Driver}${input:FileType}",
                 "${workspaceFolder:pvi}/../${input:Module}/pvi/${input:Driver}.pvi.producer.yaml",
-                "--yaml-paths",
+                "--yaml-path",
                 "${workspaceFolder:ADCore}/pvi",
             ],
             "console": "integratedTerminal"
@@ -285,9 +265,9 @@
             "args": [
                 "format",
                 "${workspaceFolder:pvi}/../${input:Module}/pvi/${input:Driver}${input:FileType}",
-                "${workspaceFolder:pvi}/../${input:Module}/pvi/${input:Driver}.pvi.producer.yaml",
-                "${workspaceFolder:pvi}/tests/produce_format/input/${input:Formatter}${input:FileType}.pvi.formatter.yaml",
-                "--yaml-paths",
+                "${workspaceFolder:pvi}/../${input:Module}/pvi/${input:Driver}.pvi.device.yaml",
+                "${workspaceFolder:pvi}/formatters/${input:Formatter}${input:FileType}.pvi.formatter.yaml",
+                "--yaml-path",
                 "${workspaceFolder:ADCore}/pvi",
             ],
             "console": "integratedTerminal"
@@ -299,7 +279,7 @@
             "program": "${workspaceFolder:pvi}/src/pvi",
             "args": [
                 "schema",
-                "${workspaceFolder:pvi}/schemas/pvi.producer.schema.json"
+                "${workspaceFolder:pvi}/schemas/pvi.device.schema.json"
             ],
             "console": "integratedTerminal"
         },
@@ -397,6 +377,15 @@
             ],
         },
         {
+            "id": "Converter",
+            "description": "What to convert to?",
+            "type": "pickString",
+            "options": [
+                "asyn",
+                "device",
+            ],
+        },
+        {
             "id": "plugin",
             "description": "Which plugin to alter?",
             "type": "pickString",
@@ -436,4 +425,3 @@
             ],
         },
     ]
-}
