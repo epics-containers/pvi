@@ -4,7 +4,7 @@ Drivers
 The generated header file contains the string parameters, and defines the parameters to
 make the interface. In this example we have a header file pilatusDetectorParamSet.h:
 
-.. literalinclude:: ../../tests/produce_format/output/pilatusDetectorParamSet.h
+.. literalinclude:: ../snippets/pilatusDetectorParamSet.h
     :language: cpp
 
 
@@ -18,7 +18,7 @@ Database Template File
 According to the demand and readback properties of the component, the following
 records are created:
 
-.. literalinclude:: ../../tests/produce_format/output/pilatusDetectorParameters.template
+.. literalinclude:: ../snippets/pilatusDetectorParameters.template
 
 
 The top level pilatus.template includes this file, as well as records that
