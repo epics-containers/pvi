@@ -25,7 +25,7 @@ def test_pva_table(tmp_path, helper):
         "PVATable",
         TableWrite([TextWrite(), LED(), ComboBox(["1", "A", "True"])]),
     )
-    device = Device("TableDevice", "asynPortDriver", children=[table])
+    device = Device("TableDevice", children=[table])
 
     expected_bob = HERE / "format" / "output" / "pva_table.bob"
     output_bob = tmp_path / "pva_table.bob"
@@ -43,7 +43,7 @@ def test_pva_table_panda(tmp_path, helper):
         "PANDAQSRV:SEQ1:TABLE",
         TableRead([TextRead()] * 4 + [LED()] * 6 + [TextRead()] + [LED()] * 6),
     )
-    device = Device("TableDevice", "asynPortDriver", children=[table])
+    device = Device("TableDevice", children=[table])
 
     expected_bob = HERE / "format" / "output" / "pva_table_panda.bob"
     output_bob = tmp_path / "pva_table_panda.bob"
@@ -57,7 +57,7 @@ def test_combo_box(tmp_path, helper):
     formatter = deserialize_yaml(Formatter, formatter_yaml)
 
     combo_box = SignalR("Enum", "Enum", ComboBox(["A", "B", "C"]))
-    device = Device("Device", "asynPortDriver", children=[combo_box])
+    device = Device("Device", children=[combo_box])
 
     expected_bob = HERE / "format" / "output" / "combo_box.bob"
     output_bob = tmp_path / "combo_box.bob"
