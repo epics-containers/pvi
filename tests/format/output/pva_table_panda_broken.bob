@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2023-04-25 13:16:51 by mef65357-->
 <display version="2.0.0">
   <name>Display</name>
+  <x>0</x>
+  <y>0</y>
   <width>1726</width>
   <height>234</height>
   <grid_step_x>4</grid_step_x>
@@ -35,117 +35,121 @@
     <columns>
       <column>
         <name>Column 1</name>
-        <width>100</width>
-        <editable>true</editable>
-        <options>
-          <option>3</option>
-          <option>4</option>
-        </options>
+        <editable>false</editable>
       </column>
       <column>
         <name>Column 2</name>
-        <width>100</width>
         <editable>false</editable>
       </column>
       <column>
         <name>Column 3</name>
-        <width>100</width>
         <editable>false</editable>
       </column>
       <column>
         <name>Column 4</name>
-        <width>100</width>
         <editable>false</editable>
       </column>
       <column>
         <name>Column 5</name>
-        <width>100</width>
         <editable>false</editable>
+        <options>
+          <option>false</option>
+          <option>true</option>
+        </options>
       </column>
       <column>
         <name>Column 6</name>
-        <width>100</width>
         <editable>false</editable>
+        <options>
+          <option>false</option>
+          <option>true</option>
+        </options>
       </column>
       <column>
         <name>Column 7</name>
-        <width>100</width>
         <editable>false</editable>
+        <options>
+          <option>false</option>
+          <option>true</option>
+        </options>
       </column>
       <column>
         <name>Column 8</name>
-        <width>100</width>
         <editable>false</editable>
+        <options>
+          <option>false</option>
+          <option>true</option>
+        </options>
       </column>
       <column>
         <name>Column 9</name>
-        <width>100</width>
         <editable>false</editable>
+        <options>
+          <option>false</option>
+          <option>true</option>
+        </options>
       </column>
       <column>
         <name>Column 10</name>
-        <width>100</width>
         <editable>false</editable>
+        <options>
+          <option>false</option>
+          <option>true</option>
+        </options>
       </column>
       <column>
         <name>Column 11</name>
-        <width>100</width>
         <editable>false</editable>
       </column>
       <column>
         <name>Column 12</name>
-        <width>100</width>
         <editable>false</editable>
         <options>
-          <option>true</option>
           <option>false</option>
+          <option>true</option>
         </options>
       </column>
       <column>
         <name>Column 13</name>
-        <width>100</width>
         <editable>false</editable>
         <options>
-          <option>true</option>
           <option>false</option>
+          <option>true</option>
         </options>
       </column>
       <column>
         <name>Column 14</name>
-        <width>100</width>
         <editable>false</editable>
         <options>
-          <option>true</option>
           <option>false</option>
+          <option>true</option>
         </options>
       </column>
       <column>
         <name>Column 15</name>
-        <width>100</width>
         <editable>false</editable>
         <options>
-          <option>true</option>
           <option>false</option>
+          <option>true</option>
         </options>
       </column>
       <column>
         <name>Column 16</name>
-        <width>100</width>
         <editable>false</editable>
         <options>
-          <option>true</option>
           <option>false</option>
+          <option>true</option>
         </options>
       </column>
       <column>
         <name>Column 17</name>
-        <width>100</width>
         <editable>false</editable>
         <options>
-          <option>true</option>
           <option>false</option>
+          <option>true</option>
         </options>
       </column>
     </columns>
+    <editable>false</editable>
   </widget>
 </display>
