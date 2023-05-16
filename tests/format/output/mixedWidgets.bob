@@ -89,6 +89,7 @@
       <y>48</y>
       <width>124</width>
       <height>20</height>
+      <format>6</format>
       <horizontal_alignment>1</horizontal_alignment>
     </widget>
     <widget type="label" version="2.0.0">
@@ -106,6 +107,7 @@
       <y>72</y>
       <width>124</width>
       <height>20</height>
+      <format>6</format>
       <horizontal_alignment>1</horizontal_alignment>
     </widget>
     <widget type="label" version="2.0.0">
@@ -123,6 +125,7 @@
       <y>96</y>
       <width>124</width>
       <height>20</height>
+      <format>6</format>
       <horizontal_alignment>1</horizontal_alignment>
     </widget>
     <widget type="label" version="2.0.0">
@@ -140,6 +143,7 @@
       <y>120</y>
       <width>124</width>
       <height>20</height>
+      <format>6</format>
       <horizontal_alignment>1</horizontal_alignment>
     </widget>
     <widget type="label" version="2.0.0">
@@ -157,6 +161,7 @@
       <y>144</y>
       <width>124</width>
       <height>20</height>
+      <format>6</format>
       <horizontal_alignment>1</horizontal_alignment>
     </widget>
     <widget type="label" version="2.0.0">
@@ -174,6 +179,7 @@
       <y>168</y>
       <width>124</width>
       <height>20</height>
+      <format>6</format>
       <horizontal_alignment>1</horizontal_alignment>
     </widget>
     <widget type="label" version="2.0.0">
@@ -191,6 +197,7 @@
       <y>192</y>
       <width>124</width>
       <height>20</height>
+      <format>6</format>
       <horizontal_alignment>1</horizontal_alignment>
     </widget>
     <widget type="label" version="2.0.0">
@@ -208,6 +215,7 @@
       <y>216</y>
       <width>124</width>
       <height>20</height>
+      <format>6</format>
       <horizontal_alignment>1</horizontal_alignment>
     </widget>
     <widget type="label" version="2.0.0">
@@ -225,6 +233,7 @@
       <y>240</y>
       <width>124</width>
       <height>20</height>
+      <format>6</format>
       <horizontal_alignment>1</horizontal_alignment>
     </widget>
   </widget>
@@ -243,6 +252,7 @@
     <y>328</y>
     <width>124</width>
     <height>20</height>
+    <format>6</format>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="label" version="2.0.0">
@@ -260,6 +270,7 @@
     <y>352</y>
     <width>124</width>
     <height>20</height>
+    <format>6</format>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="label" version="2.0.0">
@@ -277,6 +288,7 @@
     <y>376</y>
     <width>124</width>
     <height>20</height>
+    <format>6</format>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="label" version="2.0.0">
@@ -294,6 +306,7 @@
     <y>400</y>
     <width>124</width>
     <height>20</height>
+    <format>6</format>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="label" version="2.0.0">
@@ -311,6 +324,7 @@
     <y>424</y>
     <width>124</width>
     <height>20</height>
+    <format>6</format>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="label" version="2.0.0">
@@ -328,6 +342,7 @@
     <y>448</y>
     <width>124</width>
     <height>20</height>
+    <format>6</format>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="label" version="2.0.0">
@@ -345,6 +360,7 @@
     <y>472</y>
     <width>124</width>
     <height>20</height>
+    <format>6</format>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="label" version="2.0.0">
@@ -362,6 +378,7 @@
     <y>496</y>
     <width>124</width>
     <height>20</height>
+    <format>6</format>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="label" version="2.0.0">
@@ -379,6 +396,7 @@
     <y>520</y>
     <width>124</width>
     <height>20</height>
+    <format>6</format>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="label" version="2.0.0">
@@ -396,6 +414,7 @@
     <y>544</y>
     <width>124</width>
     <height>20</height>
+    <format>6</format>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="label" version="2.0.0">
@@ -413,6 +432,7 @@
     <y>568</y>
     <width>124</width>
     <height>20</height>
+    <format>6</format>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="label" version="2.0.0">
@@ -430,6 +450,7 @@
     <y>592</y>
     <width>124</width>
     <height>20</height>
+    <format>6</format>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="label" version="2.0.0">
@@ -447,6 +468,7 @@
     <y>616</y>
     <width>124</width>
     <height>20</height>
+    <format>6</format>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="label" version="2.0.0">
@@ -464,6 +486,7 @@
     <y>640</y>
     <width>124</width>
     <height>20</height>
+    <format>6</format>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="label" version="2.0.0">
@@ -481,6 +504,7 @@
     <y>664</y>
     <width>124</width>
     <height>20</height>
+    <format>6</format>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="group" version="2.0.0">
@@ -505,6 +529,7 @@
       <y>0</y>
       <width>124</width>
       <height>20</height>
+      <format>6</format>
       <horizontal_alignment>1</horizontal_alignment>
     </widget>
     <widget type="label" version="2.0.0">
@@ -522,6 +547,7 @@
       <y>24</y>
       <width>124</width>
       <height>20</height>
+      <format>6</format>
       <horizontal_alignment>1</horizontal_alignment>
     </widget>
     <widget type="label" version="2.0.0">
@@ -539,6 +565,7 @@
       <y>48</y>
       <width>124</width>
       <height>20</height>
+      <format>6</format>
       <horizontal_alignment>1</horizontal_alignment>
     </widget>
     <widget type="label" version="2.0.0">
@@ -556,6 +583,7 @@
       <y>72</y>
       <width>124</width>
       <height>20</height>
+      <format>6</format>
       <horizontal_alignment>1</horizontal_alignment>
     </widget>
     <widget type="label" version="2.0.0">
@@ -593,6 +621,7 @@
         <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
       </font>
       </font>
+      <format>6</format>
       <horizontal_alignment>1</horizontal_alignment>
     </widget>
     <widget type="label" version="2.0.0">
@@ -630,6 +659,7 @@
         <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
       </font>
       </font>
+      <format>6</format>
       <horizontal_alignment>1</horizontal_alignment>
     </widget>
     <widget type="label" version="2.0.0">
@@ -651,6 +681,7 @@
         <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
       </font>
       </font>
+      <format>6</format>
       <horizontal_alignment>1</horizontal_alignment>
     </widget>
   </widget>
@@ -673,6 +704,7 @@
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
       </font>
     </font>
+    <format>6</format>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="label" version="2.0.0">
@@ -694,6 +726,7 @@
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
       </font>
     </font>
+    <format>6</format>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="label" version="2.0.0">
@@ -715,6 +748,7 @@
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
       </font>
     </font>
+    <format>6</format>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="label" version="2.0.0">
@@ -736,6 +770,7 @@
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
       </font>
     </font>
+    <format>6</format>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="label" version="2.0.0">
@@ -757,6 +792,7 @@
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
       </font>
     </font>
+    <format>6</format>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="label" version="2.0.0">
@@ -778,6 +814,7 @@
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
       </font>
     </font>
+    <format>6</format>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="label" version="2.0.0">
@@ -795,6 +832,7 @@
     <y>424</y>
     <width>60</width>
     <height>20</height>
+    <format>6</format>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="textupdate" version="2.0.0">
@@ -808,6 +846,7 @@
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
       </font>
     </font>
+    <format>6</format>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="label" version="2.0.0">
@@ -825,6 +864,7 @@
     <y>448</y>
     <width>60</width>
     <height>20</height>
+    <format>6</format>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="textupdate" version="2.0.0">
@@ -838,6 +878,7 @@
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
       </font>
     </font>
+    <format>6</format>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="group" version="2.0.0">
@@ -862,6 +903,7 @@
       <y>0</y>
       <width>60</width>
       <height>20</height>
+      <format>6</format>
       <horizontal_alignment>1</horizontal_alignment>
     </widget>
     <widget type="textupdate" version="2.0.0">
@@ -875,6 +917,7 @@
         <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
       </font>
       </font>
+      <format>6</format>
       <horizontal_alignment>1</horizontal_alignment>
     </widget>
     <widget type="label" version="2.0.0">
@@ -921,6 +964,7 @@
       <y>48</y>
       <width>60</width>
       <height>20</height>
+      <format>6</format>
       <horizontal_alignment>1</horizontal_alignment>
     </widget>
     <widget type="textupdate" version="2.0.0">
@@ -934,6 +978,7 @@
         <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
       </font>
       </font>
+      <format>6</format>
       <horizontal_alignment>1</horizontal_alignment>
     </widget>
     <widget type="label" version="2.0.0">
@@ -951,6 +996,7 @@
       <y>72</y>
       <width>60</width>
       <height>20</height>
+      <format>6</format>
       <horizontal_alignment>1</horizontal_alignment>
     </widget>
     <widget type="textupdate" version="2.0.0">
@@ -964,6 +1010,7 @@
         <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
       </font>
       </font>
+      <format>6</format>
       <horizontal_alignment>1</horizontal_alignment>
     </widget>
     <widget type="label" version="2.0.0">
@@ -993,6 +1040,7 @@
         <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
       </font>
       </font>
+      <format>6</format>
       <horizontal_alignment>1</horizontal_alignment>
     </widget>
     <widget type="label" version="2.0.0">

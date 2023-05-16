@@ -49,6 +49,7 @@
     <y>78</y>
     <width>120</width>
     <height>30</height>
+    <format>6</format>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="action_button" version="3.0.0">
@@ -72,6 +73,7 @@
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
       </font>
     </font>
+    <format>6</format>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="led" version="2.0.0">
