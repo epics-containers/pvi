@@ -75,7 +75,7 @@ class DLSFormatter(Formatter):
                 template, search='"TextRead"', controlPv="pv"
             ),
             check_box_cls=PVWidgetFactory.from_template(
-                template, search='"CheckBox"', controlPv="pv"
+                template, search='"ComboBox"', controlPv="pv"
             ),
             combo_box_cls=PVWidgetFactory.from_template(
                 template, search='"ComboBox"', controlPv="pv"
