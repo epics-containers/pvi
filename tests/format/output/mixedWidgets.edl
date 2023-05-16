@@ -99,8 +99,8 @@ value {
 }
 endObjectProperties
 
-# (Choice Button)
-object activeChoiceButtonClass
+# (Menu Button)
+object activeMenuButtonClass
 beginObjectProperties
 major 4
 minor 0
@@ -109,16 +109,13 @@ x 130
 y 45
 w 125
 h 20
-fgColor index 14
+fgColor index 25
 bgColor index 3
-selectColor index 3
-inconsistentColor index 14
+inconsistentColor index 0
 topShadowColor index 1
 botShadowColor index 11
 controlPv "$(P)$(R)ResetPower"
-indicatorPv "None"
-font "arial-bold-r-14.0"
-orientation "horizontal"
+font "arial-bold-r-12.0"
 endObjectProperties
 
 # (Static Text)
@@ -140,8 +137,8 @@ value {
 }
 endObjectProperties
 
-# (Choice Button)
-object activeChoiceButtonClass
+# (Menu Button)
+object activeMenuButtonClass
 beginObjectProperties
 major 4
 minor 0
@@ -150,16 +147,13 @@ x 130
 y 70
 w 125
 h 20
-fgColor index 14
+fgColor index 25
 bgColor index 3
-selectColor index 3
-inconsistentColor index 14
+inconsistentColor index 0
 topShadowColor index 1
 botShadowColor index 11
 controlPv "$(P)$(R)ThresholdApply"
-indicatorPv "None"
-font "arial-bold-r-14.0"
-orientation "horizontal"
+font "arial-bold-r-12.0"
 endObjectProperties
 
 # (Static Text)
@@ -1904,8 +1898,8 @@ value {
 }
 endObjectProperties
 
-# (Choice Button)
-object activeChoiceButtonClass
+# (Menu Button)
+object activeMenuButtonClass
 beginObjectProperties
 major 4
 minor 0
@@ -1914,16 +1908,13 @@ x 390
 y 515
 w 60
 h 20
-fgColor index 14
+fgColor index 25
 bgColor index 3
-selectColor index 3
-inconsistentColor index 14
+inconsistentColor index 0
 topShadowColor index 1
 botShadowColor index 11
 controlPv "$(P)$(R)ThresholdAutoApply"
-indicatorPv "None"
-font "arial-bold-r-14.0"
-orientation "horizontal"
+font "arial-bold-r-12.0"
 endObjectProperties
 
 # (Byte)
