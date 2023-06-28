@@ -173,8 +173,8 @@ class RecordExtractor:
         for record_str in record_strs:
             try:
                 record_list.append(self._create_asyn_record(record_str))
-            except RecordError:
-                pass
+            except RecordError as error:
+                print(error)
         return record_list
 
     def _create_stream_record(self, record_str):
