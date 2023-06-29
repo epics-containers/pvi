@@ -4,25 +4,21 @@ from typing import List
 
 from typing_extensions import Annotated
 
+from pvi._format.adl import AdlTemplate
+from pvi._format.screen import LayoutProperties, Screen, ScreenWidgets
+from pvi._format.widget import (
+    ActionFactory,
+    GroupFactory,
+    LabelFactory,
+    PVWidgetFactory,
+    SubScreenFactory,
+    WidgetFactory,
+)
 from pvi._schema_utils import desc
 from pvi.device import Device
 
 from .base import Formatter
-from .utils import (
-    ActionFactory,
-    AdlTemplate,
-    Bounds,
-    GroupFactory,
-    GroupType,
-    LabelFactory,
-    LayoutProperties,
-    PVWidgetFactory,
-    Screen,
-    ScreenWidgets,
-    SubScreenFactory,
-    WidgetFactory,
-    with_title,
-)
+from .utils import Bounds, GroupType, with_title
 
 
 @dataclass

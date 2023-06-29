@@ -5,26 +5,22 @@ from typing import List
 from lxml import etree
 from typing_extensions import Annotated
 
+from pvi._format.bob import BobTemplate
+from pvi._format.edl import EdlTemplate
+from pvi._format.screen import LayoutProperties, Screen, ScreenWidgets
+from pvi._format.widget import (
+    ActionFactory,
+    GroupFactory,
+    LabelFactory,
+    PVWidgetFactory,
+    SubScreenFactory,
+    WidgetFactory,
+)
 from pvi._schema_utils import desc
 from pvi.device import Device
 
 from .base import Formatter
-from .utils import (
-    ActionFactory,
-    BobTemplate,
-    Bounds,
-    EdlTemplate,
-    GroupFactory,
-    GroupType,
-    LabelFactory,
-    LayoutProperties,
-    PVWidgetFactory,
-    Screen,
-    ScreenWidgets,
-    SubScreenFactory,
-    WidgetFactory,
-    with_title,
-)
+from .utils import Bounds, GroupType, with_title
 
 
 @dataclass
