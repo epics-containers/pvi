@@ -1,25 +1,26 @@
 from __future__ import annotations
 
 from copy import deepcopy
-from typing import List, Sequence, Union
+from typing import List, Optional, Sequence
 
 from lxml.etree import ElementBase, SubElement, XMLParser, parse
 
 from pvi._format.utils import Bounds
-from pvi._format.widget import WidgetFactory, WidgetTemplate
+from pvi._format.widget import UITemplate, WidgetFormatter
 from pvi.device import (
     LED,
     ComboBox,
     Group,
-    ReadWidget,
     Row,
-    TableRead,
+    TableWidgetType,
+    TableWidgetTypes,
     TableWrite,
+    WidgetType,
     WriteWidget,
 )
 
 
-class BobTemplate(WidgetTemplate[ElementBase]):
+class BobTemplate(UITemplate[ElementBase]):
     """Extract and modify elements from a template .bob file."""
 
     def __init__(self, text: str):
@@ -29,34 +30,25 @@ class BobTemplate(WidgetTemplate[ElementBase]):
         self.tree = parse(text, parser=XMLParser(remove_blank_text=True))
         self.screen = self.search("Display")
 
-    def set(self, t: ElementBase, bounds: Bounds = None, **properties) -> ElementBase:
-        """Modify template elements (widgets) with component data.
-
-        Args:
-            t: A template element.
-            bounds: The size and position of the widget.
-            **properties: The element properties (SubElements) to update.
-                In the form: {[SubElement]: [Value]}
-
-        Returns:
-            The modified element.
-        """
+    def set(
+        self,
+        template: ElementBase,
+        bounds: Optional[Bounds] = None,
+        widget: Optional[WidgetType] = None,
+        **properties,
+    ) -> ElementBase:
         if bounds:
             properties["x"] = bounds.x
             properties["y"] = bounds.y
             properties["width"] = bounds.w
             properties["height"] = bounds.h
 
-        t_copy = deepcopy(t)
-        for item, value in properties.items():
-            widget_type = t.attrib.get("type", "")
+        widget_type = template.attrib.get("type", "")
 
+        t_copy = deepcopy(template)
+        for item, value in properties.items():
             new_text = ""
-            if widget_type == "table" and item == "widget":
-                add_table_columns(t_copy, value)
-            elif widget_type == "combo" and item == "widget":
-                add_combo_box_items(t_copy, value)
-            elif widget_type == "table" and item == "pv_name":
+            if widget_type == "table" and item == "pv_name":
                 new_text = f"pva://{value}"  # Must include pva prefix
             elif item == "file":
                 new_text = f"{value}.bob"  # Must include file extension
@@ -65,6 +57,11 @@ class BobTemplate(WidgetTemplate[ElementBase]):
 
             if new_text:
                 replace_text(t_copy, item, new_text)
+
+        if widget_type == "table" and isinstance(widget, TableWidgetTypes):
+            add_table_columns(t_copy, widget)
+        elif widget_type == "combo" and isinstance(widget, ComboBox):
+            add_combo_box_items(t_copy, widget)
 
         return t_copy
 
@@ -99,7 +96,7 @@ class BobTemplate(WidgetTemplate[ElementBase]):
     def create_group(
         self,
         group_object: List[ElementBase],
-        children: List[WidgetFactory[ElementBase]],
+        children: List[WidgetFormatter[ElementBase]],
         padding: Bounds = Bounds(),
     ) -> List[ElementBase]:
         """Create an xml group object from a list of child widgets
@@ -128,7 +125,7 @@ def is_table(component: Group) -> bool:
     )
 
 
-def add_table_columns(widget_element: ElementBase, table: Union[TableRead, TableWrite]):
+def add_table_columns(widget_element: ElementBase, table: TableWidgetType):
     if not table.widgets:
         # Default empty -> get options from pv
         return
@@ -143,7 +140,7 @@ def add_table_columns(widget_element: ElementBase, table: Union[TableRead, Table
 def add_table_column(
     columns_element: ElementBase,
     name: str,
-    widget: Union[ReadWidget, WriteWidget],
+    widget: WidgetType,
 ):
     options: Sequence[str] = []
     if isinstance(widget, LED):

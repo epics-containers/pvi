@@ -62,3 +62,9 @@ def with_title(spacing, title_height: int) -> Callable[[Bounds], Bounds]:
     return Bounds(
         spacing, spacing + title_height, 2 * spacing, 2 * spacing + title_height
     ).added_to
+
+
+def indent_widget(bounds: Bounds, indentation: int) -> Bounds:
+    """Shifts the x position of a widget. Used on top level widgets to align
+    them with group indentation"""
+    return Bounds(bounds.x + indentation, bounds.y, bounds.w, bounds.h)

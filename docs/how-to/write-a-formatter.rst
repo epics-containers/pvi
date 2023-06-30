@@ -46,11 +46,11 @@ dependencies.
 Define the Screen Layout Properties
 -----------------------------------
 Each screen requires a number of layout properties that allow you to customise the size
-and placement of widgets. These are stored within a 'LayoutProperties' dataclass that can
+and placement of widgets. These are stored within a 'ScrenLayout' dataclass that can
 be imported from utils.py. Within the dataclass are the following configurable parameters:
 
-.. literalinclude:: ../../src/pvi/_format/utils.py
-    :pyobject: LayoutProperties
+.. literalinclude:: ../../src/pvi/_format/screen.py
+    :pyobject: ScreenLayout
 
 When defining these in our formatter, we have the option of deciding which properties
 should be configurable inside of the formatter.yaml. Properties defined as member
