@@ -140,9 +140,14 @@ class ArrayWrite(WriteWidget):
 @dataclass
 class TableWrite(WriteWidget):
     widgets: Annotated[
-        Sequence[Union[ReadWidget, WriteWidget]],
+        Sequence[WidgetType],
         desc("For each column, what widget should be repeated for every row"),
     ] = field(default_factory=list)
+
+
+WidgetType = Union[ReadWidget, WriteWidget]
+TableWidgetType = Union[TableRead, TableWrite]
+TableWidgetTypes = (TableRead, TableWrite)
 
 
 @as_discriminated_union
