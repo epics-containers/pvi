@@ -54,6 +54,13 @@
   <widget type="action_button" version="3.0.0">
     <name>ActionButton</name>
     <pv_name>SignalX</pv_name>
+    <actions>
+      <action type="write_pv">
+        <pv_name>$(pv_name)</pv_name>
+        <value>value</value>
+        <description>WritePV</description>
+      </action>
+    </actions>
     <text>SignalX</text>
     <x>18</x>
     <y>118</y>
