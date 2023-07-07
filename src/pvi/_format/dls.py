@@ -255,7 +255,7 @@ class DLSFormatter(Formatter):
             action_formatter_cls=ActionWidgetFormatter.from_template(
                 template,
                 search="ActionButton",
-                property_map=dict(text="label", pv_name="pv"),
+                property_map=dict(text="label", pv_name="pv", value="value"),
             ),
             sub_screen_formatter_cls=SubScreenWidgetFormatter.from_template(
                 template,
