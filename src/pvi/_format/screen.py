@@ -431,7 +431,7 @@ class ScreenFormatterFactory(Generic[T]):
                 yield self.widget_formatter_factory.action_formatter_cls(
                     indent_widget(row_bounds, group_widget_indent),
                     sc.get_label(),
-                    sc.pv,
+                    self.prefix + sc.pv,
                     sc.value,
                 )
             elif isinstance(sc, SignalR) and sc.widget:
