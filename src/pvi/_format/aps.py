@@ -49,7 +49,7 @@ class APSFormatter(Formatter):
             group_width_offset=0,
         )
         widget_formatter_factory = WidgetFormatterFactory(
-            heading_formatter_cls=LabelWidgetFormatter.from_template(
+            header_formatter_cls=LabelWidgetFormatter.from_template(
                 template,
                 search='"Heading"',
                 property_map=dict(textix="text"),

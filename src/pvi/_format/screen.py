@@ -385,15 +385,16 @@ class ScreenFormatterFactory(Generic[T]):
         component_bounds = bounds.copy()
 
         if isinstance(c, Group) and isinstance(c.layout, Row):
-            # This Group should be formatted as a table - check if headers are required
+            # This Group should be formatted as a table
             if c.layout.header is not None:
+                # Create table header
                 assert len(c.layout.header) == len(
                     c.children
                 ), "Header length does not match number of elements"
 
                 # Create column headers
                 for column_header in c.layout.header:
-                    yield self.widget_formatter_factory.heading_formatter_cls(
+                    yield self.widget_formatter_factory.header_formatter_cls(
                         indent_widget(component_bounds, group_widget_indent),
                         column_header,
                     )

@@ -59,7 +59,7 @@ class DLSFormatter(Formatter):
             group_width_offset=0,
         )
         widget_formatter_factory = WidgetFormatterFactory(
-            heading_formatter_cls=LabelWidgetFormatter.from_template(
+            header_formatter_cls=LabelWidgetFormatter.from_template(
                 template,
                 search='"Heading"',
                 property_map=dict(value="text"),
@@ -206,7 +206,7 @@ class DLSFormatter(Formatter):
         )
         # SW DOCS REF: Extract widget types from template file
         widget_formatter_factory = WidgetFormatterFactory(
-            heading_formatter_cls=LabelWidgetFormatter.from_template(
+            header_formatter_cls=LabelWidgetFormatter.from_template(
                 template,
                 search="Heading",
                 property_map=dict(text="text"),
