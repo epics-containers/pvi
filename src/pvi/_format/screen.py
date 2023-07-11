@@ -6,7 +6,7 @@ from typing import Dict, Iterator, List, Sequence, Tuple, Type, TypeVar, Union
 from typing_extensions import Annotated
 
 from pvi._format.bob import is_table
-from pvi._format.utils import Bounds, indent_widget
+from pvi._format.utils import Bounds
 from pvi._format.widget import (
     GroupFormatter,
     SubScreenWidgetFormatter,
@@ -120,10 +120,11 @@ class ScreenFormatterFactory(Generic[T]):
                 screen_widgets.extend(
                     self.create_component_widget_formatters(
                         c,
-                        column_bounds=last_column_bounds,
                         parent_bounds=screen_bounds,
+                        column_bounds=last_column_bounds,
                         next_column_bounds=next_column_bounds,
-                        group_widget_indent=self.layout.group_widget_indent,
+                        # Indent top-level widgets to align with Group widgets
+                        indent=True,
                     )
                 )
 
@@ -217,10 +218,10 @@ class ScreenFormatterFactory(Generic[T]):
             # embedding the components within a Group widget
             return self.create_component_widget_formatters(
                 Group(c.name, SubScreen(), c.children),
-                column_bounds=column_bounds,
                 parent_bounds=screen_bounds,
+                column_bounds=column_bounds,
                 next_column_bounds=next_column_bounds,
-                group_widget_indent=self.layout.group_widget_indent,
+                indent=True,
                 add_label=True,
             )
 
@@ -300,8 +301,8 @@ class ScreenFormatterFactory(Generic[T]):
             widget_factories.extend(
                 self.create_component_widget_formatters(
                     component,
-                    column_bounds=column_bounds,
                     parent_bounds=bounds,
+                    column_bounds=column_bounds,
                     next_column_bounds=next_column_bounds,
                     add_label=group.layout.labelled,
                 )
@@ -317,11 +318,11 @@ class ScreenFormatterFactory(Generic[T]):
     def create_component_widget_formatters(
         self,
         c: Union[Group[Component], Component],
-        column_bounds: Bounds,
         parent_bounds: Bounds,
+        column_bounds: Bounds,
         next_column_bounds: Bounds,
+        indent=False,
         add_label=True,
-        group_widget_indent: int = 0,
     ) -> List[WidgetFormatter[T]]:
         """Generate widgets from component data and position them in a grid format
 
@@ -333,7 +334,8 @@ class ScreenFormatterFactory(Generic[T]):
                 height limits
             add_label: Whether the widget should have an associated label.
                 Defaults to True.
-            group_widget_indent: The x offset of widgets within groups.
+            indent: Shift the resulting widgets to the group ident level
+                Used for top-level widgets that are not inside a group.
 
         Returns:
             A collection of widgets representing the component
@@ -343,21 +345,26 @@ class ScreenFormatterFactory(Generic[T]):
             added widget
 
         """
+        # Take copies so we don't modify the originals until we're done
+        tmp_column_bounds = column_bounds.copy()
+        tmp_next_column_bounds = next_column_bounds.copy()
+
+        if indent:
+            tmp_column_bounds.indent(self.layout.group_widget_indent)
+            tmp_next_column_bounds.indent(self.layout.group_widget_indent)
+
         widgets = list(
-            self.generate_component_formatters(
-                c, column_bounds, group_widget_indent, add_label
-            )
+            self.generate_component_formatters(c, tmp_column_bounds, add_label)
         )
-        if max_y(widgets) > parent_bounds.h:
-            # Add to next column
+        if max_y(widgets) <= parent_bounds.h:
+            # Current column still fits on screen
+            column_bounds.y = next_y(widgets, self.layout.spacing)
+        else:
+            # Widget makes current column too tall. Repeat in next column.
             widgets = list(
-                self.generate_component_formatters(
-                    c, next_column_bounds, group_widget_indent, add_label
-                )
+                self.generate_component_formatters(c, tmp_next_column_bounds, add_label)
             )
             next_column_bounds.y = next_y(widgets, self.layout.spacing)
-        else:
-            column_bounds.y = next_y(widgets, self.layout.spacing)
 
         return widgets
 
@@ -365,7 +372,6 @@ class ScreenFormatterFactory(Generic[T]):
         self,
         c: Union[Group[Component], Component],
         bounds: Bounds,
-        group_widget_indent: int,
         add_label=True,
     ) -> Iterator[WidgetFormatter[T]]:
         """Convert a component into its WidgetFormatter equivalents
@@ -397,8 +403,7 @@ class ScreenFormatterFactory(Generic[T]):
                 # Create column headers
                 for column_header in c.layout.header:
                     yield self.widget_formatter_factory.header_formatter_cls(
-                        indent_widget(component_bounds, group_widget_indent),
-                        column_header,
+                        component_bounds.copy(), column_header
                     )
                     component_bounds.x += component_bounds.w + self.layout.spacing
 
@@ -436,28 +441,23 @@ class ScreenFormatterFactory(Generic[T]):
             left, row_bounds = component_bounds.split_left(
                 self.layout.label_width, self.layout.spacing
             )
-            yield self.widget_formatter_factory.label_formatter_cls(
-                indent_widget(left, group_widget_indent), c.get_label()
-            )
+            yield self.widget_formatter_factory.label_formatter_cls(left, c.get_label())
         else:
             # Allow full width for widget
             row_bounds = component_bounds
 
         if isinstance(c, SignalRef):
             yield from self.generate_component_formatters(
-                self.components[c.name], self.indent_widget(row_bounds), add_label
+                self.components[c.name], row_bounds, add_label
             )
             return
 
-        yield from self.generate_row_component_formatters(
-            row_components, row_bounds, group_widget_indent
-        )
+        yield from self.generate_row_component_formatters(row_components, row_bounds)
 
     def generate_row_component_formatters(
         self,
         row_components: Sequence[Union[Group[Component], Component]],
         row_bounds: Bounds,
-        group_widget_indent: int,
     ) -> Iterator[WidgetFormatter[T]]:
 
         row_component_bounds = row_bounds.copy().split_into(
@@ -466,32 +466,28 @@ class ScreenFormatterFactory(Generic[T]):
         for rc_bounds, rc in zip(row_component_bounds, row_components):
             if isinstance(rc, SignalRW):
                 left, right = rc_bounds.split_into(2, self.layout.spacing)
-                yield from self.generate_write_widget(rc, left, group_widget_indent)
-                yield from self.generate_read_widget(rc, right, group_widget_indent)
+                yield from self.generate_write_widget(rc, left)
+                yield from self.generate_read_widget(rc, right)
             elif isinstance(rc, SignalW):
-                yield from self.generate_write_widget(
-                    rc, rc_bounds, group_widget_indent
-                )
+                yield from self.generate_write_widget(rc, rc_bounds)
             elif isinstance(rc, SignalR):
-                yield from self.generate_read_widget(rc, rc_bounds, group_widget_indent)
+                yield from self.generate_read_widget(rc, rc_bounds)
             elif isinstance(rc, SignalX):
                 yield self.widget_formatter_factory.action_formatter_cls(
-                    indent_widget(rc_bounds, group_widget_indent),
+                    rc_bounds,
                     rc.get_label(),
                     self.prefix + rc.pv,
                     rc.value,
                 )
             elif isinstance(rc, Group) and isinstance(rc.layout, SubScreen):
                 yield self.widget_formatter_factory.sub_screen_formatter_cls(
-                    indent_widget(rc_bounds, self.layout.group_widget_indent),
+                    rc_bounds,
                     f"{self.base_file_name}_{rc.name}",
                     rc,
                 )
         # TODO: Need to handle DeviceRef
 
-    def generate_read_widget(
-        self, signal: ReadSignalType, bounds: Bounds, group_widget_indent
-    ):
+    def generate_read_widget(self, signal: ReadSignalType, bounds: Bounds):
         if isinstance(signal, SignalRW):
             widget = signal.read_widget
             pv = signal.read_pv
@@ -501,19 +497,11 @@ class ScreenFormatterFactory(Generic[T]):
 
         if widget is not None:
             yield self.widget_formatter_factory.pv_widget_formatter(
-                widget, indent_widget(bounds, group_widget_indent), pv, self.prefix
+                widget, bounds, pv, self.prefix
             )
 
-    def generate_write_widget(
-        self, signal: WriteSignalType, bounds: Bounds, group_widget_indent
-    ):
+    def generate_write_widget(self, signal: WriteSignalType, bounds: Bounds):
         if signal.widget is not None:
             yield self.widget_formatter_factory.pv_widget_formatter(
-                signal.widget,
-                indent_widget(bounds, group_widget_indent),
-                signal.pv,
-                self.prefix,
+                signal.widget, bounds, signal.pv, self.prefix
             )
-
-    def indent_widget(self, bounds: Bounds):
-        return indent_widget(bounds, self.layout.group_widget_indent)

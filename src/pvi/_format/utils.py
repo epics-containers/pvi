@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import Callable, List, Tuple, TypeVar, Union
+from typing import Callable, List, Tuple, TypeVar
 
 
 @dataclass
@@ -26,7 +26,7 @@ class Bounds:
     def split_by_ratio(
         self, ratio: Tuple[float, ...], spacing: int
     ) -> Tuple[Bounds, ...]:
-        """Split horizontally by ratio of widths for each element"""
+        """Split horizontally by ratio of widths, separated by spacing"""
         splits = len(ratio) - 1
         widget_space = self.w - splits * spacing
         widget_widths = tuple(int(widget_space * r) for r in ratio)
@@ -39,7 +39,7 @@ class Bounds:
         )
 
     def split_into(self, count: int, spacing: int) -> Tuple[Bounds, ...]:
-        """Split horizontally by into count equal widths"""
+        """Split horizontally into count equal widths, separated by spacing"""
         return self.split_by_ratio((1 / count,) * count, spacing)
 
     def square(self) -> Bounds:
@@ -63,13 +63,16 @@ class Bounds:
     def tile(
         self, *, horizontal: int = 1, vertical: int = 1, spacing: int = 0
     ) -> Bounds:
-        """Tile bounds for one element to N elements with spacing"""
+        """Expand by tiling self `horizontal`/`vertical` times, plus spacing"""
         return Bounds(
             x=self.x,
             y=self.y,
             w=self.w * horizontal + spacing * (horizontal - 1),
             h=self.h * vertical + spacing * (vertical - 1),
         )
+
+    def indent(self, indentation: int) -> None:
+        self.x += indentation
 
 
 class GroupType(Enum):
@@ -92,9 +95,3 @@ def with_title(spacing, title_height: int) -> Callable[[Bounds], Bounds]:
     return Bounds(
         spacing, spacing + title_height, 2 * spacing, 2 * spacing + title_height
     ).added_to
-
-
-def indent_widget(bounds: Bounds, indentation: int) -> Bounds:
-    """Shifts the x position of a widget. Used on top level widgets to align
-    them with group indentation"""
-    return Bounds(bounds.x + indentation, bounds.y, bounds.w, bounds.h)
