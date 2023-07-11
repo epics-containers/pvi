@@ -286,6 +286,9 @@
           "$ref": "#/definitions/ComboBox"
         },
         {
+          "$ref": "#/definitions/ButtonPanel"
+        },
+        {
           "$ref": "#/definitions/TextWrite"
         },
         {
@@ -322,6 +325,23 @@
           },
           "description": "Choices to select from",
           "default": []
+        }
+      },
+      "additionalProperties": false
+    },
+    "ButtonPanel": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "ButtonPanel",
+          "default": "ButtonPanel"
+        },
+        "actions": {
+          "type": "object",
+          "default": {
+            "go": 1
+          }
         }
       },
       "additionalProperties": false

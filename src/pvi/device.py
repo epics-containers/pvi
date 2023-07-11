@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import (
     Any,
     Callable,
+    Dict,
     Generic,
     Iterator,
     List,
@@ -121,6 +122,18 @@ class ComboBox(WriteWidget):
     choices: Annotated[Sequence[str], desc("Choices to select from")] = field(
         default_factory=list
     )
+
+
+@dataclass
+class ButtonPanel(WriteWidget):
+    """One-or-more buttons that poke a PV with a value
+
+    Args:
+        actions: Dict of button label to value the button sends
+
+    """
+
+    actions: Dict[str, Any] = field(default_factory=lambda: dict(go=1))
 
 
 @dataclass
@@ -256,6 +269,11 @@ class SignalRW(Component):
     read_widget: Annotated[
         Optional[ReadWidget], desc("Widget to use for display, None means use widget")
     ] = None
+
+
+SignalTypes = (SignalR, SignalW, SignalRW)
+ReadSignalType = Union[SignalR, SignalRW]
+WriteSignalType = Union[SignalW, SignalRW]
 
 
 @dataclass
