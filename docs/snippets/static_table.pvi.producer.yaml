@@ -1,0 +1,422 @@
+# yaml-language-server: $schema=../../../schemas/pvi.producer.schema.json
+type: AsynProducer
+label: Table
+prefix: $(P)$(R)
+asyn_port: $(PORT)
+address: $(ADDR=0)
+timeout: $(TIMEOUT=1)
+parent: asynPortDriver
+parameters:
+  - type: AsynBinary
+    name: Binary
+    description: Binary
+    drv_info: BINARY
+    access: R
+    index_name: Binary
+  - type: Group
+    name: BigTable
+    layout:
+      type: Grid
+      labelled: true
+    children:
+      - type: Group
+        name: Row1
+        layout:
+          type: Row
+          header:
+            - "Binary Column"
+            - "Long Column"
+            - "Float Column"
+            - "String Column"
+        children:
+          - type: AsynBinary
+            name: Binary1
+            description: Binary 1
+            drv_info: BINARY_1
+            access: R
+            index_name: Binary1
+          - type: AsynLong
+            name: Long1
+            description: Long 1
+            drv_info: LONG_1
+            access: R
+            index_name: Long1
+          - type: AsynFloat64
+            name: Float1
+            description: Float 1
+            drv_info: FLOAT_1
+            access: R
+            index_name: Float1
+          - type: AsynWaveform
+            name: String1
+            description: String 1
+            drv_info: STRING_1
+            access: R
+            index_name: String1
+
+      - type: Group
+        name: Row2
+        layout:
+          type: Row
+        children:
+          - type: AsynBinary
+            name: Binary2
+            description: Binary 2
+            drv_info: BINARY_2
+            access: R
+            index_name: Binary2
+          - type: AsynLong
+            name: Long2
+            description: Long 2
+            drv_info: LONG_2
+            access: R
+            index_name: Long2
+          - type: AsynFloat64
+            name: Float2
+            description: Float 2
+            drv_info: FLOAT_2
+            access: R
+            index_name: Float2
+          - type: AsynWaveform
+            name: String2
+            description: String 2
+            drv_info: STRING_2
+            access: R
+            index_name: String2
+
+      - type: Group
+        name: Row3
+        layout:
+          type: Row
+        children:
+          - type: AsynBinary
+            name: Binary3
+            description: Binary 3
+            drv_info: BINARY_3
+            access: R
+            index_name: Binary3
+          - type: AsynLong
+            name: Long3
+            description: Long 3
+            drv_info: LONG_3
+            access: R
+            index_name: Long3
+          - type: AsynFloat64
+            name: Float3
+            description: Float 3
+            drv_info: FLOAT_3
+            access: R
+            index_name: Float3
+          - type: AsynWaveform
+            name: String3
+            description: String 3
+            drv_info: STRING_3
+            access: R
+            index_name: String3
+
+      - type: Group
+        name: Row4
+        layout:
+          type: Row
+        children:
+          - type: AsynBinary
+            name: Binary4
+            description: Binary 4
+            drv_info: BINARY_4
+            access: R
+            index_name: Binary4
+          - type: AsynLong
+            name: Long4
+            description: Long 4
+            drv_info: LONG_4
+            access: R
+            index_name: Long4
+          - type: AsynFloat64
+            name: Float4
+            description: Float 4
+            drv_info: FLOAT_4
+            access: R
+            index_name: Float4
+          - type: AsynWaveform
+            name: String4
+            description: String 4
+            drv_info: STRING_4
+            access: R
+            index_name: String4
+
+  - type: Group
+    name: Group1
+    layout:
+      type: Grid
+    children:
+      - type: AsynBinary
+        name: Binary
+        description: Binary
+        drv_info: BINARY
+        access: R
+        index_name: Binary
+      - type: Group
+        name: BigTable
+        layout:
+          type: Grid
+          labelled: true
+        children:
+          - type: Group
+            name: Row1
+            layout:
+              type: Row
+              header:
+                - "Binary Column"
+                - "Long Column"
+                - "Float Column"
+                - "String Column"
+            children:
+              - type: AsynBinary
+                name: Binary1
+                description: Binary 1
+                drv_info: BINARY_1
+                access: R
+                index_name: Binary1
+              - type: AsynLong
+                name: Long1
+                description: Long 1
+                drv_info: LONG_1
+                access: R
+                index_name: Long1
+              - type: AsynFloat64
+                name: Float1
+                description: Float 1
+                drv_info: FLOAT_1
+                access: R
+                index_name: Float1
+              - type: AsynWaveform
+                name: String1
+                description: String 1
+                drv_info: STRING_1
+                access: R
+                index_name: String1
+
+          - type: Group
+            name: Row2
+            layout:
+              type: Row
+            children:
+              - type: AsynBinary
+                name: Binary2
+                description: Binary 2
+                drv_info: BINARY_2
+                access: R
+                index_name: Binary2
+              - type: AsynLong
+                name: Long2
+                description: Long 2
+                drv_info: LONG_2
+                access: R
+                index_name: Long2
+              - type: AsynFloat64
+                name: Float2
+                description: Float 2
+                drv_info: FLOAT_2
+                access: R
+                index_name: Float2
+              - type: AsynWaveform
+                name: String2
+                description: String 2
+                drv_info: STRING_2
+                access: R
+                index_name: String2
+
+          - type: Group
+            name: Row3
+            layout:
+              type: Row
+            children:
+              - type: AsynBinary
+                name: Binary3
+                description: Binary 3
+                drv_info: BINARY_3
+                access: R
+                index_name: Binary3
+              - type: AsynLong
+                name: Long3
+                description: Long 3
+                drv_info: LONG_3
+                access: R
+                index_name: Long3
+              - type: AsynFloat64
+                name: Float3
+                description: Float 3
+                drv_info: FLOAT_3
+                access: R
+                index_name: Float3
+              - type: AsynWaveform
+                name: String3
+                description: String 3
+                drv_info: STRING_3
+                access: R
+                index_name: String3
+
+          - type: Group
+            name: Row4
+            layout:
+              type: Row
+            children:
+              - type: AsynBinary
+                name: Binary4
+                description: Binary 4
+                drv_info: BINARY_4
+                access: R
+                index_name: Binary4
+              - type: AsynLong
+                name: Long4
+                description: Long 4
+                drv_info: LONG_4
+                access: R
+                index_name: Long4
+              - type: AsynFloat64
+                name: Float4
+                description: Float 4
+                drv_info: FLOAT_4
+                access: R
+                index_name: Float4
+              - type: AsynWaveform
+                name: String4
+                description: String 4
+                drv_info: STRING_4
+                access: R
+                index_name: String4
+  - type: Group
+    name: Group2
+    layout:
+      type: Grid
+    children:
+      - type: Group
+        name: BigTable
+        layout:
+          type: Grid
+          labelled: true
+        children:
+          - type: Group
+            name: Row1
+            layout:
+              type: Row
+              header:
+                - "Binary Column"
+                - "Long Column"
+                - "Float Column"
+                - "String Column"
+            children:
+              - type: AsynBinary
+                name: Binary1
+                description: Binary 1
+                drv_info: BINARY_1
+                access: R
+                index_name: Binary1
+              - type: AsynLong
+                name: Long1
+                description: Long 1
+                drv_info: LONG_1
+                access: R
+                index_name: Long1
+              - type: AsynFloat64
+                name: Float1
+                description: Float 1
+                drv_info: FLOAT_1
+                access: R
+                index_name: Float1
+              - type: AsynWaveform
+                name: String1
+                description: String 1
+                drv_info: STRING_1
+                access: R
+                index_name: String1
+
+          - type: Group
+            name: Row2
+            layout:
+              type: Row
+            children:
+              - type: AsynBinary
+                name: Binary2
+                description: Binary 2
+                drv_info: BINARY_2
+                access: R
+                index_name: Binary2
+              - type: AsynLong
+                name: Long2
+                description: Long 2
+                drv_info: LONG_2
+                access: R
+                index_name: Long2
+              - type: AsynFloat64
+                name: Float2
+                description: Float 2
+                drv_info: FLOAT_2
+                access: R
+                index_name: Float2
+              - type: AsynWaveform
+                name: String2
+                description: String 2
+                drv_info: STRING_2
+                access: R
+                index_name: String2
+
+          - type: Group
+            name: Row3
+            layout:
+              type: Row
+            children:
+              - type: AsynBinary
+                name: Binary3
+                description: Binary 3
+                drv_info: BINARY_3
+                access: R
+                index_name: Binary3
+              - type: AsynLong
+                name: Long3
+                description: Long 3
+                drv_info: LONG_3
+                access: R
+                index_name: Long3
+              - type: AsynFloat64
+                name: Float3
+                description: Float 3
+                drv_info: FLOAT_3
+                access: R
+                index_name: Float3
+              - type: AsynWaveform
+                name: String3
+                description: String 3
+                drv_info: STRING_3
+                access: R
+                index_name: String3
+
+          - type: Group
+            name: Row4
+            layout:
+              type: Row
+            children:
+              - type: AsynBinary
+                name: Binary4
+                description: Binary 4
+                drv_info: BINARY_4
+                access: R
+                index_name: Binary4
+              - type: AsynLong
+                name: Long4
+                description: Long 4
+                drv_info: LONG_4
+                access: R
+                index_name: Long4
+              - type: AsynFloat64
+                name: Float4
+                description: Float 4
+                drv_info: FLOAT_4
+                access: R
+                index_name: Float4
+              - type: AsynWaveform
+                name: String4
+                description: String 4
+                drv_info: STRING_4
+                access: R
+                index_name: String4

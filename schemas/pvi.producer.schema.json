@@ -366,12 +366,10 @@
           "items": {
             "$ref": "#/definitions/ReadWidget"
           },
-          "description": "For each column, what widget should be repeated for every row"
+          "description": "For each column, what widget should be repeated for every row",
+          "default": []
         }
       },
-      "required": [
-        "widgets"
-      ],
       "additionalProperties": false
     },
     "ImageRead": {
@@ -422,6 +420,14 @@
           "type": "string",
           "const": "ComboBox",
           "default": "ComboBox"
+        },
+        "choices": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Choices to select from",
+          "default": []
         }
       },
       "additionalProperties": false
@@ -475,14 +481,19 @@
         "widgets": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/WriteWidget"
+            "anyOf": [
+              {
+                "$ref": "#/definitions/ReadWidget"
+              },
+              {
+                "$ref": "#/definitions/WriteWidget"
+              }
+            ]
           },
-          "description": "For each column, what widget should be repeated for every row"
+          "description": "For each column, what widget should be repeated for every row",
+          "default": []
         }
       },
-      "required": [
-        "widgets"
-      ],
       "additionalProperties": false
     },
     "bi_bo": {
@@ -4243,7 +4254,8 @@
           ],
           "description": "Widget to use for write record",
           "default": {
-            "type": "ComboBox"
+            "type": "ComboBox",
+            "choices": []
           }
         },
         "record_fields": {
@@ -7247,6 +7259,9 @@
         },
         {
           "$ref": "#/definitions/Grid"
+        },
+        {
+          "$ref": "#/definitions/SubScreen"
         }
       ]
     },
@@ -7294,6 +7309,22 @@
         "labelled": {
           "type": "boolean",
           "description": "If True use names of children as labels",
+          "default": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "SubScreen": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "SubScreen",
+          "default": "SubScreen"
+        },
+        "labelled": {
+          "type": "boolean",
+          "description": "Display labels for components",
           "default": true
         }
       },

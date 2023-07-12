@@ -1,0 +1,155 @@
+<display version="2.0.0">
+  <name>Display</name>
+  <x>0</x>
+  <y>0</y>
+  <width>1726</width>
+  <height>234</height>
+  <grid_step_x>4</grid_step_x>
+  <grid_step_y>4</grid_step_y>
+  <widget type="label" version="2.0.0">
+    <name>Title</name>
+    <class>TITLE</class>
+    <text>TableDevice - </text>
+    <x use_class="true">0</x>
+    <y use_class="true">0</y>
+    <width>1726</width>
+    <height>26</height>
+    <font use_class="true">
+      <font name="Header 1" family="Liberation Sans" style="BOLD" size="22.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="Text" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <transparent use_class="true">true</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="table" version="2.0.0">
+    <name>Table</name>
+    <pv_name>pva://PANDAQSRV:SEQ1:TABLE</pv_name>
+    <x>22</x>
+    <y>30</y>
+    <width>1700</width>
+    <height>200</height>
+    <columns>
+      <column>
+        <name>Column 1</name>
+        <editable>false</editable>
+      </column>
+      <column>
+        <name>Column 2</name>
+        <editable>false</editable>
+      </column>
+      <column>
+        <name>Column 3</name>
+        <editable>false</editable>
+      </column>
+      <column>
+        <name>Column 4</name>
+        <editable>false</editable>
+      </column>
+      <column>
+        <name>Column 5</name>
+        <editable>false</editable>
+        <options>
+          <option>false</option>
+          <option>true</option>
+        </options>
+      </column>
+      <column>
+        <name>Column 6</name>
+        <editable>false</editable>
+        <options>
+          <option>false</option>
+          <option>true</option>
+        </options>
+      </column>
+      <column>
+        <name>Column 7</name>
+        <editable>false</editable>
+        <options>
+          <option>false</option>
+          <option>true</option>
+        </options>
+      </column>
+      <column>
+        <name>Column 8</name>
+        <editable>false</editable>
+        <options>
+          <option>false</option>
+          <option>true</option>
+        </options>
+      </column>
+      <column>
+        <name>Column 9</name>
+        <editable>false</editable>
+        <options>
+          <option>false</option>
+          <option>true</option>
+        </options>
+      </column>
+      <column>
+        <name>Column 10</name>
+        <editable>false</editable>
+        <options>
+          <option>false</option>
+          <option>true</option>
+        </options>
+      </column>
+      <column>
+        <name>Column 11</name>
+        <editable>false</editable>
+      </column>
+      <column>
+        <name>Column 12</name>
+        <editable>false</editable>
+        <options>
+          <option>false</option>
+          <option>true</option>
+        </options>
+      </column>
+      <column>
+        <name>Column 13</name>
+        <editable>false</editable>
+        <options>
+          <option>false</option>
+          <option>true</option>
+        </options>
+      </column>
+      <column>
+        <name>Column 14</name>
+        <editable>false</editable>
+        <options>
+          <option>false</option>
+          <option>true</option>
+        </options>
+      </column>
+      <column>
+        <name>Column 15</name>
+        <editable>false</editable>
+        <options>
+          <option>false</option>
+          <option>true</option>
+        </options>
+      </column>
+      <column>
+        <name>Column 16</name>
+        <editable>false</editable>
+        <options>
+          <option>false</option>
+          <option>true</option>
+        </options>
+      </column>
+      <column>
+        <name>Column 17</name>
+        <editable>false</editable>
+        <options>
+          <option>false</option>
+          <option>true</option>
+        </options>
+      </column>
+    </columns>
+    <editable>false</editable>
+  </widget>
+</display>

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 import re
-from dataclasses import dataclass, fields
+from dataclasses import dataclass, field, fields
 from pathlib import Path
 from typing import (
     Any,
@@ -97,7 +97,7 @@ class TableRead(ReadWidget):
     widgets: Annotated[
         Sequence[ReadWidget],
         desc("For each column, what widget should be repeated for every row"),
-    ]
+    ] = field(default_factory=list)
 
 
 class ImageRead(ReadWidget):
@@ -114,8 +114,13 @@ class CheckBox(WriteWidget):
     """Checkable control of a boolean PV"""
 
 
+@dataclass
 class ComboBox(WriteWidget):
     """Selection of an enum PV"""
+
+    choices: Annotated[Sequence[str], desc("Choices to select from")] = field(
+        default_factory=list
+    )
 
 
 @dataclass
@@ -135,9 +140,14 @@ class ArrayWrite(WriteWidget):
 @dataclass
 class TableWrite(WriteWidget):
     widgets: Annotated[
-        Sequence[WriteWidget],
+        Sequence[WidgetType],
         desc("For each column, what widget should be repeated for every row"),
-    ]
+    ] = field(default_factory=list)
+
+
+WidgetType = Union[ReadWidget, WriteWidget]
+TableWidgetType = Union[TableRead, TableWrite]
+TableWidgetTypes = (TableRead, TableWrite)
 
 
 @as_discriminated_union
@@ -165,6 +175,13 @@ class Grid(Layout):
     """Children are rows in the grid"""
 
     labelled: Annotated[bool, desc("If True use names of children as labels")] = True
+
+
+@dataclass
+class SubScreen(Layout):
+    """Children are displayed on another screen opened with a button."""
+
+    labelled: Annotated[bool, desc("Display labels for components")] = True
 
 
 @dataclass
@@ -303,14 +320,15 @@ class Device:
     """Collection of Components"""
 
     label: Annotated[str, desc("Label for screen")]
-    parent: Annotated[
-        str,
-        desc(
-            "The parent device (basename of yaml file), "
-            "asynPortDriver is the top of the tree"
-        ),
-    ]
-    children: Annotated[Tree[Component], desc("Child Components")]
+    parent: Optional[
+        Annotated[
+            str,
+            desc("The parent device (basename of yaml file)"),
+        ]
+    ] = None
+    children: Annotated[Tree[Component], desc("Child Components")] = field(
+        default_factory=list
+    )
 
     def serialize(self) -> Mapping[str, Any]:
         """Serialize the Device to a dictionary."""
@@ -323,8 +341,8 @@ class Device:
 
     def deserialize_parents(self, yaml_paths: List[Path]):
         """Deserialize yaml of parents and extract parameters"""
-        if self.parent == "asynPortDriver":
-            pass
+        if self.parent is None or self.parent == "asynPortDriver":
+            return
 
         parent_parameters = find_components(self.parent, yaml_paths)
         for node in parent_parameters:
@@ -366,4 +384,10 @@ def find_components(yaml_name: str, yaml_paths: List[Path]) -> Tree[Component]:
 
     device = Device.deserialize(device_yaml)
 
-    return list(device.children) + list(find_components(device.parent, yaml_paths))
+    parent_components = (
+        list(find_components(device.parent, yaml_paths))
+        if device.parent is not None
+        else []
+    )
+
+    return list(device.children) + parent_components

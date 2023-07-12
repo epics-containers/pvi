@@ -1,0 +1,50 @@
+<display version="2.0.0">
+  <name>Display</name>
+  <x>0</x>
+  <y>0</y>
+  <width>274</width>
+  <height>54</height>
+  <grid_step_x>4</grid_step_x>
+  <grid_step_y>4</grid_step_y>
+  <widget type="label" version="2.0.0">
+    <name>Title</name>
+    <class>TITLE</class>
+    <text>Device - $(P)$(R)</text>
+    <x use_class="true">0</x>
+    <y use_class="true">0</y>
+    <width>274</width>
+    <height>26</height>
+    <font use_class="true">
+      <font name="Header 1" family="Liberation Sans" style="BOLD" size="22.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="Text" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <transparent use_class="true">true</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>Enum</text>
+    <x>22</x>
+    <y>30</y>
+    <width>120</width>
+    <height>20</height>
+  </widget>
+  <widget type="combo" version="2.0.0">
+    <name>ComboBox</name>
+    <pv_name>$(P)$(R)Enum</pv_name>
+    <x>146</x>
+    <y>30</y>
+    <width>124</width>
+    <height>20</height>
+    <items>
+      <item>A</item>
+      <item>B</item>
+      <item>C</item>
+    </items>
+    <items_from_pv>false</items_from_pv>
+  </widget>
+</display>

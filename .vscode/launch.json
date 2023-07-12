@@ -18,7 +18,8 @@
                 // The default config in setup.cfg's "[tool:pytest]" adds coverage.
                 // Cannot have coverage and debugging at the same time.
                 // https://github.com/microsoft/vscode-python/issues/693
-                "PYTEST_ADDOPTS": "--no-cov"
+                "PYTEST_ADDOPTS": "--no-cov",
+                "PYTEST_RAISE": "1",
             },
         },
         {
@@ -273,7 +274,18 @@
             "console": "integratedTerminal"
         },
         {
-            "name": "Write Schema",
+            "name": "Write Producer Schema",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "schema",
+                "${workspaceFolder:pvi}/schemas/pvi.device.schema.json"
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Write Device Schema",
             "type": "python",
             "request": "launch",
             "program": "${workspaceFolder:pvi}/src/pvi",

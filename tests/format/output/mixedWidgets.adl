@@ -1,6 +1,6 @@
 
 file {
-	name="/home/ima16823/Environments/phoebus/pvi/src/pvi/_format/aps.adl"
+	name="/scratch/development/pvi/src/pvi/_format/aps.adl"
 	version=030107
 }
 display {

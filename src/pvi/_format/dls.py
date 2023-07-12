@@ -5,25 +5,26 @@ from typing import List
 from lxml import etree
 from typing_extensions import Annotated
 
+from pvi._format.bob import BobTemplate
+from pvi._format.edl import EdlTemplate
+from pvi._format.screen import (
+    ScreenFormatterFactory,
+    ScreenLayout,
+    WidgetFormatterFactory,
+)
+from pvi._format.widget import (
+    ActionWidgetFormatter,
+    GroupFormatter,
+    LabelWidgetFormatter,
+    PVWidgetFormatter,
+    SubScreenWidgetFormatter,
+    WidgetFormatter,
+)
 from pvi._schema_utils import desc
 from pvi.device import Device
 
 from .base import Formatter
-from .utils import (
-    ActionFactory,
-    BobTemplate,
-    Bounds,
-    EdlTemplate,
-    GroupFactory,
-    GroupType,
-    LabelFactory,
-    LayoutProperties,
-    PVWidgetFactory,
-    Screen,
-    ScreenWidgets,
-    WidgetFactory,
-    with_title,
-)
+from .utils import Bounds, GroupType, with_title
 
 
 @dataclass
@@ -46,7 +47,7 @@ class DLSFormatter(Formatter):
 
     def format_edl(self, device: Device, prefix: str, path: Path):
         template = EdlTemplate((Path(__file__).parent / "dls.edl").read_text())
-        layout_properties = LayoutProperties(
+        screen_layout = ScreenLayout(
             spacing=self.spacing,
             title_height=self.title_height,
             max_height=self.max_height,
@@ -57,99 +58,142 @@ class DLSFormatter(Formatter):
             group_widget_indent=5,
             group_width_offset=0,
         )
-        screen_widgets = ScreenWidgets(
-            label_cls=LabelFactory.from_template(
-                template, search='"Label"', value="text"
+        widget_formatter_factory = WidgetFormatterFactory(
+            heading_formatter_cls=LabelWidgetFormatter.from_template(
+                template,
+                search='"Heading"',
+                property_map=dict(value="text"),
             ),
-            led_cls=PVWidgetFactory.from_template(
-                template, search='"LED"', sized=Bounds.square, controlPv="pv"
+            label_formatter_cls=LabelWidgetFormatter.from_template(
+                template,
+                search='"Label"',
+                property_map=dict(value="text"),
             ),
-            progress_bar_cls=PVWidgetFactory.from_template(
-                template, search='"ProgressBar"', indicatorPv="pv"
+            led_formatter_cls=PVWidgetFormatter.from_template(
+                template,
+                search='"LED"',
+                sized=Bounds.square,
+                property_map=dict(controlPv="pv"),
             ),
-            text_read_cls=PVWidgetFactory.from_template(
-                template, search='"TextRead"', controlPv="pv"
+            progress_bar_formatter_cls=PVWidgetFormatter.from_template(
+                template,
+                search='"ProgressBar"',
+                property_map=dict(indicatorPv="pv"),
             ),
-            check_box_cls=PVWidgetFactory.from_template(
-                template, search='"CheckBox"', controlPv="pv"
+            text_read_formatter_cls=PVWidgetFormatter.from_template(
+                template,
+                search='"TextRead"',
+                property_map=dict(controlPv="pv"),
             ),
-            combo_box_cls=PVWidgetFactory.from_template(
-                template, search='"ComboBox"', controlPv="pv"
+            check_box_formatter_cls=PVWidgetFormatter.from_template(
+                template,
+                search='"ComboBox"',
+                property_map=dict(controlPv="pv"),
             ),
-            text_write_cls=PVWidgetFactory.from_template(
-                template, search='"TextWrite"', controlPv="pv"
+            combo_box_formatter_cls=PVWidgetFormatter.from_template(
+                template,
+                search='"ComboBox"',
+                property_map=dict(controlPv="pv"),
             ),
-            action_button_cls=ActionFactory.from_template(
+            text_write_formatter_cls=PVWidgetFormatter.from_template(
+                template,
+                search='"TextWrite"',
+                property_map=dict(controlPv="pv"),
+            ),
+            # Cannot handle dynamic tables so insert a label with the PV name
+            table_formatter_cls=PVWidgetFormatter.from_template(
+                template,
+                search='"Label"',
+                property_map=dict(value="pv"),
+            ),
+            action_formatter_cls=ActionWidgetFormatter.from_template(
                 template,
                 search='"SignalX"',
-                onLabel="label",
-                offLabel="label",
-                controlPv="pv",
+                property_map=dict(onLabel="label", offLabel="label", controlPv="pv"),
+            ),
+            sub_screen_formatter_cls=SubScreenWidgetFormatter.from_template(
+                template,
+                search='"SubScreenFile"',
+                property_map=dict(displayFileName="file_name"),
             ),
         )
-        screen_title_cls = LabelFactory.from_template(
-            template, search='"Title"', value="text"
+        screen_title_cls = LabelWidgetFormatter.from_template(
+            template,
+            search='"Title"',
+            property_map=dict(value="text"),
         )
-        group_title_cls = LabelFactory.from_template(
-            template, search='"  Group  "', value="text"
+        group_title_cls = LabelWidgetFormatter.from_template(
+            template,
+            search='"  Group  "',
+            property_map=dict(value="text"),
         )
-        group_box_cls = WidgetFactory.from_template(
+        group_box_cls = WidgetFormatter.from_template(
             template, search="fillColor index 5"
         )
 
-        def make_group_box(bounds: Bounds, title: str) -> List[WidgetFactory[str]]:
+        def create_group_box_formatter(
+            bounds: Bounds, title: str
+        ) -> List[WidgetFormatter[str]]:
             x, y, w, h = bounds.x, bounds.y, bounds.w, bounds.h
             return [
                 group_box_cls(
                     Bounds(
                         x,
-                        y + layout_properties.spacing,
+                        y + screen_layout.spacing,
                         w,
-                        h - layout_properties.spacing,
+                        h - screen_layout.spacing,
                     )
                 ),
                 group_title_cls(
-                    Bounds(x, y, w, layout_properties.group_label_height),
+                    Bounds(x, y, w, screen_layout.group_label_height),
                     f"  {title}  ",
                 ),
             ]
 
-        def make_screen_title(bounds: Bounds, title: str) -> List[WidgetFactory[str]]:
+        def create_screen_title_formatter(
+            bounds: Bounds, title: str
+        ) -> List[WidgetFormatter[str]]:
             return [
                 screen_title_cls(
-                    Bounds(0, 0, bounds.w, layout_properties.title_height), title
+                    Bounds(0, 0, bounds.w, screen_layout.title_height), title
                 )
             ]
 
-        screen = Screen(
-            screen_cls=GroupFactory.from_template(
+        formatter_factory = ScreenFormatterFactory(
+            screen_formatter_cls=GroupFormatter.from_template(
                 template,
                 search=GroupType.SCREEN,
-                sized=with_title(
-                    layout_properties.spacing, layout_properties.title_height
-                ),
-                make_widgets=make_screen_title,
+                sized=with_title(screen_layout.spacing, screen_layout.title_height),
+                widget_formatter_hook=create_screen_title_formatter,
             ),
-            group_cls=GroupFactory.from_template(
+            group_formatter_cls=GroupFormatter.from_template(
                 template,
                 search=GroupType.GROUP,
                 sized=with_title(
-                    layout_properties.spacing, layout_properties.group_label_height
+                    screen_layout.spacing, screen_layout.group_label_height
                 ),
-                make_widgets=make_group_box,
+                widget_formatter_hook=create_group_box_formatter,
             ),
-            screen_widgets=screen_widgets,
+            widget_formatter_factory=widget_formatter_factory,
             prefix=prefix,
-            layout=layout_properties,
+            layout=screen_layout,
+            base_file_name=path.stem,
         )
         title = f"{device.label} - {prefix}"
-        texts = screen.screen(device.children, title).format()
-        path.write_text("".join(texts))
+
+        screen_formatter, sub_screens = formatter_factory.create_screen_formatter(
+            device.children, title
+        )
+
+        path.write_text("".join(screen_formatter.format()))
+        for sub_screen_name, sub_screen_formatter in sub_screens:
+            sub_screen_path = Path(path.parent / f"{sub_screen_name}{path.suffix}")
+            sub_screen_path.write_text("".join(sub_screen_formatter.format()))
 
     def format_bob(self, device: Device, prefix: str, path: Path):
         template = BobTemplate(str(Path(__file__).parent / "dls.bob"))
         # LP DOCS REF: Define the layout properties
-        layout_properties = LayoutProperties(
+        screen_layout = ScreenLayout(
             spacing=self.spacing,
             title_height=self.title_height,
             max_height=self.max_height,
@@ -161,81 +205,134 @@ class DLSFormatter(Formatter):
             group_width_offset=26,
         )
         # SW DOCS REF: Extract widget types from template file
-        screen_widgets = ScreenWidgets(
-            label_cls=LabelFactory.from_template(template, search="Label", text="text"),
-            led_cls=PVWidgetFactory.from_template(
-                template, search="LED", sized=Bounds.square, pv_name="pv"
+        widget_formatter_factory = WidgetFormatterFactory(
+            heading_formatter_cls=LabelWidgetFormatter.from_template(
+                template,
+                search="Heading",
+                property_map=dict(text="text"),
             ),
-            progress_bar_cls=PVWidgetFactory.from_template(
-                template, search="ProgressBar", pv_name="pv"
+            label_formatter_cls=LabelWidgetFormatter.from_template(
+                template,
+                search="Label",
+                property_map=dict(text="text"),
             ),
-            text_read_cls=PVWidgetFactory.from_template(
-                template, search="TextUpdate", pv_name="pv"
+            led_formatter_cls=PVWidgetFormatter.from_template(
+                template,
+                search="LED",
+                sized=Bounds.square,
+                property_map=dict(pv_name="pv"),
             ),
-            check_box_cls=PVWidgetFactory.from_template(
-                template, search="ChoiceButton", pv_name="pv"
+            progress_bar_formatter_cls=PVWidgetFormatter.from_template(
+                template,
+                search="ProgressBar",
+                property_map=dict(pv_name="pv"),
             ),
-            combo_box_cls=PVWidgetFactory.from_template(
-                template, search="ComboBox", pv_name="pv"
+            text_read_formatter_cls=PVWidgetFormatter.from_template(
+                template,
+                search="TextUpdate",
+                property_map=dict(pv_name="pv"),
             ),
-            text_write_cls=PVWidgetFactory.from_template(
-                template, search="TextEntry", pv_name="pv"
+            check_box_formatter_cls=PVWidgetFormatter.from_template(
+                template,
+                search="ChoiceButton",
+                property_map=dict(pv_name="pv"),
             ),
-            action_button_cls=ActionFactory.from_template(
-                template, search="ActionButton", text="label", pv_name="pv"
+            combo_box_formatter_cls=PVWidgetFormatter.from_template(
+                template,
+                search="ComboBox",
+                property_map=dict(pv_name="pv"),
+            ),
+            text_write_formatter_cls=PVWidgetFormatter.from_template(
+                template,
+                search="TextEntry",
+                property_map=dict(pv_name="pv"),
+            ),
+            table_formatter_cls=PVWidgetFormatter.from_template(
+                template,
+                search="Table",
+                property_map=dict(pv_name="pv"),
+            ),
+            action_formatter_cls=ActionWidgetFormatter.from_template(
+                template,
+                search="ActionButton",
+                property_map=dict(text="label", pv_name="pv"),
+            ),
+            sub_screen_formatter_cls=SubScreenWidgetFormatter.from_template(
+                template,
+                search="SubScreen",
+                property_map=dict(file="file_name"),
             ),
         )
         # MAKE_WIDGETS DOCS REF: Define screen and group widgets
-        screen_title_cls = LabelFactory.from_template(
-            template, search="Title", text="text"
+        screen_title_cls = LabelWidgetFormatter.from_template(
+            template,
+            search="Title",
+            property_map=dict(text="text"),
         )
-        group_object_cls = LabelFactory.from_template(
-            template, search="Group", name="text"
+        group_title_cls = LabelWidgetFormatter.from_template(
+            template,
+            search="Group",
+            property_map=dict(name="text"),
         )
 
-        def make_group_object(bounds: Bounds, title: str) -> List[WidgetFactory[str]]:
+        def create_group_object_formatter(
+            bounds: Bounds, title: str
+        ) -> List[WidgetFormatter[str]]:
             return [
-                group_object_cls(
+                group_title_cls(
                     Bounds(bounds.x, bounds.y, bounds.w, bounds.h), f"{title}"
                 )
             ]
 
-        def make_screen_title(bounds: Bounds, title: str) -> List[WidgetFactory[str]]:
+        def create_screen_title_formatter(
+            bounds: Bounds, title: str
+        ) -> List[WidgetFormatter[str]]:
             return [
                 screen_title_cls(
-                    Bounds(0, 0, bounds.w, layout_properties.title_height), title
+                    Bounds(0, 0, bounds.w, screen_layout.title_height), title
                 )
             ]
 
         # SCREEN_INI DOCS REF: Construct a screen object
-        screen = Screen(
-            screen_cls=GroupFactory.from_template(
+        formatter_factory = ScreenFormatterFactory(
+            screen_formatter_cls=GroupFormatter.from_template(
                 template,
                 search=GroupType.SCREEN,
-                sized=with_title(
-                    layout_properties.spacing, layout_properties.title_height
-                ),
-                make_widgets=make_screen_title,
+                sized=with_title(screen_layout.spacing, screen_layout.title_height),
+                widget_formatter_hook=create_screen_title_formatter,
             ),
-            group_cls=GroupFactory.from_template(
+            group_formatter_cls=GroupFormatter.from_template(
                 template,
                 search=GroupType.GROUP,
                 sized=with_title(
-                    layout_properties.spacing, layout_properties.group_label_height
+                    screen_layout.spacing, screen_layout.group_label_height
                 ),
-                make_widgets=make_group_object,
+                widget_formatter_hook=create_group_object_formatter,
             ),
-            screen_widgets=screen_widgets,
+            widget_formatter_factory=widget_formatter_factory,
             prefix=prefix,
-            layout=layout_properties,
+            layout=screen_layout,
+            base_file_name=path.stem,
         )
         # SCREEN_FORMAT DOCS REF: Format the screen
         title = f"{device.label} - {prefix}"
-        texts = screen.screen(device.children, title).format()
-        # SCREEN_WRITE DOCS REF: Generate the screen file
-        # The root:'Display' is always the first element in texts
-        ET = etree.fromstring(etree.tostring(texts[0]))
-        for element in texts[:0:-1]:
-            ET.insert(ET.index(ET.find("height")) + 1, element)
-        ET = ET.getroottree()
-        ET.write(str(path), pretty_print=True)
+
+        screen_formatter, sub_screens = formatter_factory.create_screen_formatter(
+            device.children, title
+        )
+
+        write_bob(screen_formatter, path)
+        for sub_screen_name, sub_screen_formatter in sub_screens:
+            sub_screen_path = Path(path.parent / f"{sub_screen_name}{path.suffix}")
+            write_bob(sub_screen_formatter, sub_screen_path)
+
+
+def write_bob(screen_formatter: GroupFormatter, path: Path):
+    # SCREEN_WRITE DOCS REF: Generate the screen file
+    # The root:'Display' is always the first element in texts
+    texts = screen_formatter.format()
+    ET = etree.fromstring(etree.tostring(texts[0]))
+    for element in texts[:0:-1]:
+        ET.insert(ET.index(ET.find("grid_step_y")) + 1, element)
+    ET = ET.getroottree()
+    ET.write(str(path), pretty_print=True)

@@ -1,11 +1,8 @@
-import os
-import shutil
 import subprocess
 import sys
 from pathlib import Path
 
 import pytest
-from typer.testing import CliRunner
 
 from pvi import __version__
 from pvi.__main__ import app
@@ -18,28 +15,6 @@ def test_cli_version():
     assert subprocess.check_output(cmd).decode().strip() == __version__
 
 
-def assert_output_matches(
-    expected_path: Path, cmd: str, output_path: Path, *paths: Path
-):
-    args = cmd.split() + [str(output_path)] + [str(p) for p in paths]
-    result = CliRunner().invoke(app, args)
-    if result.exception:
-        raise result.exception
-
-    if output_path.is_file():
-        output_path = output_path.parent
-        expected_path = expected_path.parent
-
-    if os.environ.get("PVI_REGENERATE_OUTPUT", None):
-        # We were asked to regenerate output, so copy output files to expected
-        for output_file in output_path.iterdir():
-            shutil.copy(output_file, expected_path / output_file.name)
-
-    for output_file in output_path.iterdir():
-        expected_child = expected_path / output_file.relative_to(output_path)
-        assert expected_child.read_text() == output_file.read_text()
-
-
 @pytest.mark.parametrize(
     "filename",
     [
@@ -48,9 +23,9 @@ def assert_output_matches(
         "pvi.formatter.schema.json",
     ],
 )
-def test_schemas(tmp_path, filename):
+def test_schemas(tmp_path, helper, filename):
     expected_path = HERE.parent / "schemas" / filename
-    assert_output_matches(expected_path, "schema", tmp_path / filename)
+    helper.assert_cli_output_matches(app, expected_path, "schema", tmp_path / filename)
 
 
 @pytest.mark.parametrize(
@@ -61,11 +36,12 @@ def test_schemas(tmp_path, filename):
         ("mixedWidgets.bob", "dls.bob.pvi.formatter.yaml"),
     ],
 )
-def test_format(tmp_path, filename, formatter):
+def test_format(tmp_path, helper, filename, formatter):
     expected_path = HERE / "format" / "output" / filename
     input_path = HERE / "format" / "input"
     formatter_path = input_path / formatter
-    assert_output_matches(
+    helper.assert_cli_output_matches(
+        app,
         expected_path,
         "format --yaml-path " + str(input_path),
         tmp_path / filename,
@@ -74,14 +50,49 @@ def test_format(tmp_path, filename, formatter):
     )
 
 
-def test_convert(tmp_path):
+def test_convert(tmp_path, helper):
     expected_path = HERE / "convert" / "output"
     input_path = HERE / "convert" / "input"
-    assert_output_matches(
+    helper.assert_cli_output_matches(
+        app,
         expected_path,
         "convert device",
         tmp_path,
         input_path / "simDetector.h",
         "--template",
         input_path / "simDetector.template",
+    )
+
+
+@pytest.mark.parametrize(
+    "input_yaml,formatter,output",
+    [
+        (
+            "static_table.pvi.device.yaml",
+            "dls.edl.pvi.formatter.yaml",
+            "static_table.edl",
+        ),
+        (
+            "static_table.pvi.device.yaml",
+            "dls.bob.pvi.formatter.yaml",
+            "static_table.bob",
+        ),
+        (
+            "static_table.pvi.device.yaml",
+            "aps.pvi.formatter.yaml",
+            "static_table.adl",
+        ),
+    ],
+)
+def test_static_table(tmp_path, helper, input_yaml, formatter, output):
+    expected_path = HERE / "format" / "output" / output
+    input_path = HERE / "format" / "input"
+    formatter_path = HERE / "../formatters/" / formatter
+    helper.assert_cli_output_matches(
+        app,
+        expected_path,
+        "format --yaml-path " + str(input_path),
+        tmp_path / output,
+        input_path / input_yaml,
+        formatter_path,
     )
