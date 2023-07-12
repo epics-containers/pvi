@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>How to Write a Site Specific Formatter &mdash; pvi 0.4+26.g1a556d5 documentation</title>
+  <title>How to Write a Site Specific Formatter &mdash; pvi 0.4+31.g262bbf1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -246,7 +246,7 @@ This is achieved using the ScreenWidgets dataclass (from utils.py). With this, w
 assign each of the widget classes to a snippet of the template using the
 WidgetFactory.from_template method:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>        <span class="n">widget_formatter_factory</span> <span class="o">=</span> <span class="n">WidgetFormatterFactory</span><span class="p">(</span>
-            <span class="n">heading_formatter_cls</span><span class="o">=</span><span class="n">LabelWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+            <span class="n">header_formatter_cls</span><span class="o">=</span><span class="n">LabelWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Heading&quot;</span><span class="p">,</span>
                 <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">),</span>
@@ -453,7 +453,7 @@ find a complete example formatter, supporting both edl and bob file formats for 
             <span class="n">group_width_offset</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">widget_formatter_factory</span> <span class="o">=</span> <span class="n">WidgetFormatterFactory</span><span class="p">(</span>
-            <span class="n">heading_formatter_cls</span><span class="o">=</span><span class="n">LabelWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+            <span class="n">header_formatter_cls</span><span class="o">=</span><span class="n">LabelWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;Heading&quot;&#39;</span><span class="p">,</span>
                 <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">),</span>
@@ -600,7 +600,7 @@ find a complete example formatter, supporting both edl and bob file formats for 
         <span class="p">)</span>
         <span class="c1"># SW DOCS REF: Extract widget types from template file</span>
         <span class="n">widget_formatter_factory</span> <span class="o">=</span> <span class="n">WidgetFormatterFactory</span><span class="p">(</span>
-            <span class="n">heading_formatter_cls</span><span class="o">=</span><span class="n">LabelWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+            <span class="n">header_formatter_cls</span><span class="o">=</span><span class="n">LabelWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Heading&quot;</span><span class="p">,</span>
                 <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">),</span>
