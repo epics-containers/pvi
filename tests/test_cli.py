@@ -19,7 +19,6 @@ def test_cli_version():
     "filename",
     [
         "pvi.device.schema.json",
-        "pvi.producer.schema.json",
         "pvi.formatter.schema.json",
     ],
 )

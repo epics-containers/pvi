@@ -201,7 +201,7 @@ class GroupFormatter(WidgetFormatter[T]):
             search: Search expression for the widget section to find
             sized: Function to pad or restrict the `Bounds` of the formatted widget
             widget_formatter_hook: Callable to format widgets for the group itself, such
-                as a heading or a box around the group components.
+                as a label or a box around the group components.
             property_map: Map of template macro string to `WidgetFormatter` property.
                 Instances of the macro will be replaced with the value of the property.
         """
@@ -256,7 +256,7 @@ class GroupFormatter(WidgetFormatter[T]):
 
 @dataclass
 class WidgetFormatterFactory(Generic[T]):
-    heading_formatter_cls: Type[LabelWidgetFormatter[T]]
+    header_formatter_cls: Type[LabelWidgetFormatter[T]]
     label_formatter_cls: Type[LabelWidgetFormatter[T]]
     led_formatter_cls: Type[PVWidgetFormatter[T]]
     progress_bar_formatter_cls: Type[PVWidgetFormatter[T]]
