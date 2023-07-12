@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>How to Write a Site Specific Formatter &mdash; pvi 0.4+8.g0022d4b documentation</title>
+  <title>How to Write a Site Specific Formatter &mdash; pvi 0.4+23.g4a32a19 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -129,7 +129,11 @@ deserialised into component objects, which are later translated into widgets:</p
 <p>To make a screen from this, we need a template file. This contains a blank representation
 of each supported widget for each of the supported file formats (bob, edl etc…). Below
 is an example of a ‘text entry’ widget for a .bob file:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    &lt;height&gt;40&lt;/height&gt;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    &lt;text&gt;SignalX&lt;/text&gt;
+    &lt;x&gt;18&lt;/x&gt;
+    &lt;y&gt;118&lt;/y&gt;
+    &lt;width&gt;120&lt;/width&gt;
+    &lt;height&gt;40&lt;/height&gt;
     &lt;tooltip&gt;$(actions)&lt;/tooltip&gt;
   &lt;/widget&gt;
   &lt;widget type=&quot;textupdate&quot; version=&quot;2.0.0&quot;&gt;
@@ -142,10 +146,6 @@ is an example of a ‘text entry’ widget for a .bob file:</p>
     &lt;font&gt;
       &lt;font name=&quot;Default Bold&quot; family=&quot;Liberation Sans&quot; style=&quot;BOLD&quot; size=&quot;14.0&quot;&gt;
       &lt;/font&gt;
-    &lt;/font&gt;
-    &lt;horizontal_alignment&gt;1&lt;/horizontal_alignment&gt;
-  &lt;/widget&gt;
-  &lt;widget type=&quot;led&quot; version=&quot;2.0.0&quot;&gt;
 </pre></div>
 </div>
 <p>By extracting and altering the template widgets with the information provided by the
@@ -172,10 +172,10 @@ dependencies.</p>
 <section id="define-the-screen-layout-properties">
 <h2>Define the Screen Layout Properties<a class="headerlink" href="#define-the-screen-layout-properties" title="Permalink to this headline"></a></h2>
 <p>Each screen requires a number of layout properties that allow you to customise the size
-and placement of widgets. These are stored within a ‘LayoutProperties’ dataclass that can
+and placement of widgets. These are stored within a ‘ScrenLayout’ dataclass that can
 be imported from utils.py. Within the dataclass are the following configurable parameters:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">LayoutProperties</span><span class="p">:</span>
+<span class="k">class</span> <span class="nc">ScreenLayout</span><span class="p">:</span>
     <span class="n">spacing</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">desc</span><span class="p">(</span><span class="s2">&quot;Spacing between widgets&quot;</span><span class="p">)]</span>
     <span class="n">title_height</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">desc</span><span class="p">(</span><span class="s2">&quot;Height of screen title bar&quot;</span><span class="p">)]</span>
     <span class="n">max_height</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">desc</span><span class="p">(</span><span class="s2">&quot;Max height of the screen&quot;</span><span class="p">)]</span>
@@ -196,7 +196,7 @@ should be configurable inside of the formatter.yaml. Properties defined as membe
 variables of the formatter class (and then referenced by the layout properties in the
 screen format function) will be available to adjust inside of the formatter.yaml.
 Anything else, should be considered as defaults for the formatter:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>        <span class="n">layout_properties</span> <span class="o">=</span> <span class="n">LayoutProperties</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>        <span class="n">screen_layout</span> <span class="o">=</span> <span class="n">ScreenLayout</span><span class="p">(</span>
             <span class="n">spacing</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">spacing</span><span class="p">,</span>
             <span class="n">title_height</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">title_height</span><span class="p">,</span>
             <span class="n">max_height</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_height</span><span class="p">,</span>
@@ -245,28 +245,62 @@ can then be used to identify what each widget should look like:</p>
 This is achieved using the ScreenWidgets dataclass (from utils.py). With this, we can
 assign each of the widget classes to a snippet of the template using the
 WidgetFactory.from_template method:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>        <span class="n">screen_widgets</span> <span class="o">=</span> <span class="n">ScreenWidgets</span><span class="p">(</span>
-            <span class="n">label_cls</span><span class="o">=</span><span class="n">LabelFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Label&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">),</span>
-            <span class="n">led_cls</span><span class="o">=</span><span class="n">PVWidgetFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
-                <span class="n">template</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span> <span class="n">sized</span><span class="o">=</span><span class="n">Bounds</span><span class="o">.</span><span class="n">square</span><span class="p">,</span> <span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>        <span class="n">widget_formatter_factory</span> <span class="o">=</span> <span class="n">WidgetFormatterFactory</span><span class="p">(</span>
+            <span class="n">heading_formatter_cls</span><span class="o">=</span><span class="n">LabelWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Heading&quot;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">),</span>
             <span class="p">),</span>
-            <span class="n">progress_bar_cls</span><span class="o">=</span><span class="n">PVWidgetFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
-                <span class="n">template</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ProgressBar&quot;</span><span class="p">,</span> <span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span>
+            <span class="n">label_formatter_cls</span><span class="o">=</span><span class="n">LabelWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Label&quot;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">),</span>
             <span class="p">),</span>
-            <span class="n">text_read_cls</span><span class="o">=</span><span class="n">PVWidgetFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
-                <span class="n">template</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="s2">&quot;TextUpdate&quot;</span><span class="p">,</span> <span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span>
+            <span class="n">led_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span>
+                <span class="n">sized</span><span class="o">=</span><span class="n">Bounds</span><span class="o">.</span><span class="n">square</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
             <span class="p">),</span>
-            <span class="n">check_box_cls</span><span class="o">=</span><span class="n">PVWidgetFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
-                <span class="n">template</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ChoiceButton&quot;</span><span class="p">,</span> <span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span>
+            <span class="n">progress_bar_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ProgressBar&quot;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
             <span class="p">),</span>
-            <span class="n">combo_box_cls</span><span class="o">=</span><span class="n">PVWidgetFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
-                <span class="n">template</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ComboBox&quot;</span><span class="p">,</span> <span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span>
+            <span class="n">text_read_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;TextUpdate&quot;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
             <span class="p">),</span>
-            <span class="n">text_write_cls</span><span class="o">=</span><span class="n">PVWidgetFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
-                <span class="n">template</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="s2">&quot;TextEntry&quot;</span><span class="p">,</span> <span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span>
+            <span class="n">check_box_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ChoiceButton&quot;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
             <span class="p">),</span>
-            <span class="n">action_button_cls</span><span class="o">=</span><span class="n">ActionFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
-                <span class="n">template</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ActionButton&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span>
+            <span class="n">combo_box_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ComboBox&quot;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
+            <span class="p">),</span>
+            <span class="n">text_write_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;TextEntry&quot;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
+            <span class="p">),</span>
+            <span class="n">table_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Table&quot;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
+            <span class="p">),</span>
+            <span class="n">action_formatter_cls</span><span class="o">=</span><span class="n">ActionWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ActionButton&quot;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
+            <span class="p">),</span>
+            <span class="n">sub_screen_formatter_cls</span><span class="o">=</span><span class="n">SubScreenWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;SubScreen&quot;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">&quot;file_name&quot;</span><span class="p">),</span>
             <span class="p">),</span>
         <span class="p">)</span>
 </pre></div>
@@ -287,24 +321,32 @@ and one to represent the group widgets.</p>
 <p>We then need to define two functions that can be used to create multiple instances of
 these widgets. In this example, we provide two arguments: The ‘bounds’, to set the
 widgets size and position, and the ‘title’ to populate the label with.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>        <span class="n">screen_title_cls</span> <span class="o">=</span> <span class="n">LabelFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
-            <span class="n">template</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Title&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;text&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>        <span class="n">screen_title_cls</span> <span class="o">=</span> <span class="n">LabelWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+            <span class="n">template</span><span class="p">,</span>
+            <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Title&quot;</span><span class="p">,</span>
+            <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">),</span>
         <span class="p">)</span>
-        <span class="n">group_object_cls</span> <span class="o">=</span> <span class="n">LabelFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
-            <span class="n">template</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Group&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;text&quot;</span>
+        <span class="n">group_title_cls</span> <span class="o">=</span> <span class="n">LabelWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+            <span class="n">template</span><span class="p">,</span>
+            <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+            <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">),</span>
         <span class="p">)</span>
 
-        <span class="k">def</span> <span class="nf">make_group_object</span><span class="p">(</span><span class="n">bounds</span><span class="p">:</span> <span class="n">Bounds</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">WidgetFactory</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+        <span class="k">def</span> <span class="nf">create_group_object_formatter</span><span class="p">(</span>
+            <span class="n">bounds</span><span class="p">:</span> <span class="n">Bounds</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span>
+        <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">WidgetFormatter</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
             <span class="k">return</span> <span class="p">[</span>
-                <span class="n">group_object_cls</span><span class="p">(</span>
+                <span class="n">group_title_cls</span><span class="p">(</span>
                     <span class="n">Bounds</span><span class="p">(</span><span class="n">bounds</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">bounds</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">bounds</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">bounds</span><span class="o">.</span><span class="n">h</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2">&quot;</span>
                 <span class="p">)</span>
             <span class="p">]</span>
 
-        <span class="k">def</span> <span class="nf">make_screen_title</span><span class="p">(</span><span class="n">bounds</span><span class="p">:</span> <span class="n">Bounds</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">WidgetFactory</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+        <span class="k">def</span> <span class="nf">create_screen_title_formatter</span><span class="p">(</span>
+            <span class="n">bounds</span><span class="p">:</span> <span class="n">Bounds</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span>
+        <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">WidgetFormatter</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
             <span class="k">return</span> <span class="p">[</span>
                 <span class="n">screen_title_cls</span><span class="p">(</span>
-                    <span class="n">Bounds</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">bounds</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">layout_properties</span><span class="o">.</span><span class="n">title_height</span><span class="p">),</span> <span class="n">title</span>
+                    <span class="n">Bounds</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">bounds</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">screen_layout</span><span class="o">.</span><span class="n">title_height</span><span class="p">),</span> <span class="n">title</span>
                 <span class="p">)</span>
             <span class="p">]</span>
 
@@ -315,26 +357,25 @@ widgets size and position, and the ‘title’ to populate the label with.</p>
 <h2>Construct a Screen Object<a class="headerlink" href="#construct-a-screen-object" title="Permalink to this headline"></a></h2>
 <p>Provided that you have defined the LayoutProperties, template, ScreenWidgets and the
 screen title and group object functions, we are now ready to define a screen object.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>        <span class="n">screen</span> <span class="o">=</span> <span class="n">Screen</span><span class="p">(</span>
-            <span class="n">screen_cls</span><span class="o">=</span><span class="n">GroupFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>        <span class="n">formatter_factory</span> <span class="o">=</span> <span class="n">ScreenFormatterFactory</span><span class="p">(</span>
+            <span class="n">screen_formatter_cls</span><span class="o">=</span><span class="n">GroupFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="n">GroupType</span><span class="o">.</span><span class="n">SCREEN</span><span class="p">,</span>
-                <span class="n">sized</span><span class="o">=</span><span class="n">with_title</span><span class="p">(</span>
-                    <span class="n">layout_properties</span><span class="o">.</span><span class="n">spacing</span><span class="p">,</span> <span class="n">layout_properties</span><span class="o">.</span><span class="n">title_height</span>
-                <span class="p">),</span>
-                <span class="n">make_widgets</span><span class="o">=</span><span class="n">make_screen_title</span><span class="p">,</span>
+                <span class="n">sized</span><span class="o">=</span><span class="n">with_title</span><span class="p">(</span><span class="n">screen_layout</span><span class="o">.</span><span class="n">spacing</span><span class="p">,</span> <span class="n">screen_layout</span><span class="o">.</span><span class="n">title_height</span><span class="p">),</span>
+                <span class="n">widget_formatter_hook</span><span class="o">=</span><span class="n">create_screen_title_formatter</span><span class="p">,</span>
             <span class="p">),</span>
-            <span class="n">group_cls</span><span class="o">=</span><span class="n">GroupFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+            <span class="n">group_formatter_cls</span><span class="o">=</span><span class="n">GroupFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="n">GroupType</span><span class="o">.</span><span class="n">GROUP</span><span class="p">,</span>
                 <span class="n">sized</span><span class="o">=</span><span class="n">with_title</span><span class="p">(</span>
-                    <span class="n">layout_properties</span><span class="o">.</span><span class="n">spacing</span><span class="p">,</span> <span class="n">layout_properties</span><span class="o">.</span><span class="n">group_label_height</span>
+                    <span class="n">screen_layout</span><span class="o">.</span><span class="n">spacing</span><span class="p">,</span> <span class="n">screen_layout</span><span class="o">.</span><span class="n">group_label_height</span>
                 <span class="p">),</span>
-                <span class="n">make_widgets</span><span class="o">=</span><span class="n">make_group_object</span><span class="p">,</span>
+                <span class="n">widget_formatter_hook</span><span class="o">=</span><span class="n">create_group_object_formatter</span><span class="p">,</span>
             <span class="p">),</span>
-            <span class="n">screen_widgets</span><span class="o">=</span><span class="n">screen_widgets</span><span class="p">,</span>
+            <span class="n">widget_formatter_factory</span><span class="o">=</span><span class="n">widget_formatter_factory</span><span class="p">,</span>
             <span class="n">prefix</span><span class="o">=</span><span class="n">prefix</span><span class="p">,</span>
-            <span class="n">layout</span><span class="o">=</span><span class="n">layout_properties</span><span class="p">,</span>
+            <span class="n">layout</span><span class="o">=</span><span class="n">screen_layout</span><span class="p">,</span>
+            <span class="n">base_file_name</span><span class="o">=</span><span class="n">path</span><span class="o">.</span><span class="n">stem</span><span class="p">,</span>
         <span class="p">)</span>
 </pre></div>
 </div>
@@ -349,7 +390,18 @@ On the output of this, we can call a (screen.)format function that populates the
 with the extracted properties from the device.yaml, and converts them into the chosen file
 format:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>        <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">device</span><span class="o">.</span><span class="n">label</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="n">texts</span> <span class="o">=</span> <span class="n">screen</span><span class="o">.</span><span class="n">screen</span><span class="p">(</span><span class="n">device</span><span class="o">.</span><span class="n">children</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">()</span>
+
+        <span class="n">screen_formatter</span><span class="p">,</span> <span class="n">sub_screens</span> <span class="o">=</span> <span class="n">formatter_factory</span><span class="o">.</span><span class="n">create_screen_formatter</span><span class="p">(</span>
+            <span class="n">device</span><span class="o">.</span><span class="n">children</span><span class="p">,</span> <span class="n">title</span>
+        <span class="p">)</span>
+
+        <span class="n">write_bob</span><span class="p">(</span><span class="n">screen_formatter</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">sub_screen_name</span><span class="p">,</span> <span class="n">sub_screen_formatter</span> <span class="ow">in</span> <span class="n">sub_screens</span><span class="p">:</span>
+            <span class="n">sub_screen_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">sub_screen_name</span><span class="si">}{</span><span class="n">path</span><span class="o">.</span><span class="n">suffix</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">write_bob</span><span class="p">(</span><span class="n">sub_screen_formatter</span><span class="p">,</span> <span class="n">sub_screen_path</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">write_bob</span><span class="p">(</span><span class="n">screen_formatter</span><span class="p">:</span> <span class="n">GroupFormatter</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">):</span>
 </pre></div>
 </div>
 </section>
@@ -358,12 +410,13 @@ format:</p>
 <p>After calling format on the screen object, you will be left with a list of strings that
 represent each widget in your chosen file format. The final step is to create a
 screen file by unpacking the list and writing each widget to the file:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>        <span class="c1"># The root:&#39;Display&#39; is always the first element in texts</span>
-        <span class="n">ET</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">texts</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">texts</span><span class="p">[:</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
-            <span class="n">ET</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;height&quot;</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">element</span><span class="p">)</span>
-        <span class="n">ET</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">getroottree</span><span class="p">()</span>
-        <span class="n">ET</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="n">pretty_print</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="c1"># The root:&#39;Display&#39; is always the first element in texts</span>
+    <span class="n">texts</span> <span class="o">=</span> <span class="n">screen_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">()</span>
+    <span class="n">ET</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">texts</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">texts</span><span class="p">[:</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="n">ET</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;grid_step_y&quot;</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">element</span><span class="p">)</span>
+    <span class="n">ET</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">getroottree</span><span class="p">()</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="n">pretty_print</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>And thats it. With this you can now create your own custom formatters. Below you can
@@ -388,7 +441,7 @@ find a complete example formatter, supporting both edl and bob file formats for 
 
     <span class="k">def</span> <span class="nf">format_edl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">Device</span><span class="p">,</span> <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">):</span>
         <span class="n">template</span> <span class="o">=</span> <span class="n">EdlTemplate</span><span class="p">((</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;dls.edl&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">())</span>
-        <span class="n">layout_properties</span> <span class="o">=</span> <span class="n">LayoutProperties</span><span class="p">(</span>
+        <span class="n">screen_layout</span> <span class="o">=</span> <span class="n">ScreenLayout</span><span class="p">(</span>
             <span class="n">spacing</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">spacing</span><span class="p">,</span>
             <span class="n">title_height</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">title_height</span><span class="p">,</span>
             <span class="n">max_height</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_height</span><span class="p">,</span>
@@ -399,99 +452,142 @@ find a complete example formatter, supporting both edl and bob file formats for 
             <span class="n">group_widget_indent</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
             <span class="n">group_width_offset</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="n">screen_widgets</span> <span class="o">=</span> <span class="n">ScreenWidgets</span><span class="p">(</span>
-            <span class="n">label_cls</span><span class="o">=</span><span class="n">LabelFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
-                <span class="n">template</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;Label&quot;&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;text&quot;</span>
+        <span class="n">widget_formatter_factory</span> <span class="o">=</span> <span class="n">WidgetFormatterFactory</span><span class="p">(</span>
+            <span class="n">heading_formatter_cls</span><span class="o">=</span><span class="n">LabelWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;Heading&quot;&#39;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">),</span>
             <span class="p">),</span>
-            <span class="n">led_cls</span><span class="o">=</span><span class="n">PVWidgetFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
-                <span class="n">template</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;LED&quot;&#39;</span><span class="p">,</span> <span class="n">sized</span><span class="o">=</span><span class="n">Bounds</span><span class="o">.</span><span class="n">square</span><span class="p">,</span> <span class="n">controlPv</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span>
+            <span class="n">label_formatter_cls</span><span class="o">=</span><span class="n">LabelWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;Label&quot;&#39;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">),</span>
             <span class="p">),</span>
-            <span class="n">progress_bar_cls</span><span class="o">=</span><span class="n">PVWidgetFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
-                <span class="n">template</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;ProgressBar&quot;&#39;</span><span class="p">,</span> <span class="n">indicatorPv</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span>
+            <span class="n">led_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;LED&quot;&#39;</span><span class="p">,</span>
+                <span class="n">sized</span><span class="o">=</span><span class="n">Bounds</span><span class="o">.</span><span class="n">square</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">controlPv</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
             <span class="p">),</span>
-            <span class="n">text_read_cls</span><span class="o">=</span><span class="n">PVWidgetFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
-                <span class="n">template</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;TextRead&quot;&#39;</span><span class="p">,</span> <span class="n">controlPv</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span>
+            <span class="n">progress_bar_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;ProgressBar&quot;&#39;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">indicatorPv</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
             <span class="p">),</span>
-            <span class="n">check_box_cls</span><span class="o">=</span><span class="n">PVWidgetFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
-                <span class="n">template</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;CheckBox&quot;&#39;</span><span class="p">,</span> <span class="n">controlPv</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span>
+            <span class="n">text_read_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;TextRead&quot;&#39;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">controlPv</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
             <span class="p">),</span>
-            <span class="n">combo_box_cls</span><span class="o">=</span><span class="n">PVWidgetFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
-                <span class="n">template</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;ComboBox&quot;&#39;</span><span class="p">,</span> <span class="n">controlPv</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span>
+            <span class="n">check_box_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;ComboBox&quot;&#39;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">controlPv</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
             <span class="p">),</span>
-            <span class="n">text_write_cls</span><span class="o">=</span><span class="n">PVWidgetFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
-                <span class="n">template</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;TextWrite&quot;&#39;</span><span class="p">,</span> <span class="n">controlPv</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span>
+            <span class="n">combo_box_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;ComboBox&quot;&#39;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">controlPv</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
             <span class="p">),</span>
-            <span class="n">action_button_cls</span><span class="o">=</span><span class="n">ActionFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+            <span class="n">text_write_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;TextWrite&quot;&#39;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">controlPv</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
+            <span class="p">),</span>
+            <span class="c1"># Cannot handle dynamic tables so insert a label with the PV name</span>
+            <span class="n">table_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;Label&quot;&#39;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
+            <span class="p">),</span>
+            <span class="n">action_formatter_cls</span><span class="o">=</span><span class="n">ActionWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;SignalX&quot;&#39;</span><span class="p">,</span>
-                <span class="n">onLabel</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">,</span>
-                <span class="n">offLabel</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">,</span>
-                <span class="n">controlPv</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">onLabel</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="n">offLabel</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="n">controlPv</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
+            <span class="p">),</span>
+            <span class="n">sub_screen_formatter_cls</span><span class="o">=</span><span class="n">SubScreenWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;SubScreenFile&quot;&#39;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">displayFileName</span><span class="o">=</span><span class="s2">&quot;file_name&quot;</span><span class="p">),</span>
             <span class="p">),</span>
         <span class="p">)</span>
-        <span class="n">screen_title_cls</span> <span class="o">=</span> <span class="n">LabelFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
-            <span class="n">template</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;Title&quot;&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;text&quot;</span>
+        <span class="n">screen_title_cls</span> <span class="o">=</span> <span class="n">LabelWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+            <span class="n">template</span><span class="p">,</span>
+            <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;Title&quot;&#39;</span><span class="p">,</span>
+            <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">),</span>
         <span class="p">)</span>
-        <span class="n">group_title_cls</span> <span class="o">=</span> <span class="n">LabelFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
-            <span class="n">template</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;  Group  &quot;&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;text&quot;</span>
+        <span class="n">group_title_cls</span> <span class="o">=</span> <span class="n">LabelWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+            <span class="n">template</span><span class="p">,</span>
+            <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;  Group  &quot;&#39;</span><span class="p">,</span>
+            <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">),</span>
         <span class="p">)</span>
-        <span class="n">group_box_cls</span> <span class="o">=</span> <span class="n">WidgetFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+        <span class="n">group_box_cls</span> <span class="o">=</span> <span class="n">WidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
             <span class="n">template</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="s2">&quot;fillColor index 5&quot;</span>
         <span class="p">)</span>
 
-        <span class="k">def</span> <span class="nf">make_group_box</span><span class="p">(</span><span class="n">bounds</span><span class="p">:</span> <span class="n">Bounds</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">WidgetFactory</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+        <span class="k">def</span> <span class="nf">create_group_box_formatter</span><span class="p">(</span>
+            <span class="n">bounds</span><span class="p">:</span> <span class="n">Bounds</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span>
+        <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">WidgetFormatter</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
             <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">bounds</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">bounds</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">bounds</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">bounds</span><span class="o">.</span><span class="n">h</span>
             <span class="k">return</span> <span class="p">[</span>
                 <span class="n">group_box_cls</span><span class="p">(</span>
                     <span class="n">Bounds</span><span class="p">(</span>
                         <span class="n">x</span><span class="p">,</span>
-                        <span class="n">y</span> <span class="o">+</span> <span class="n">layout_properties</span><span class="o">.</span><span class="n">spacing</span><span class="p">,</span>
+                        <span class="n">y</span> <span class="o">+</span> <span class="n">screen_layout</span><span class="o">.</span><span class="n">spacing</span><span class="p">,</span>
                         <span class="n">w</span><span class="p">,</span>
-                        <span class="n">h</span> <span class="o">-</span> <span class="n">layout_properties</span><span class="o">.</span><span class="n">spacing</span><span class="p">,</span>
+                        <span class="n">h</span> <span class="o">-</span> <span class="n">screen_layout</span><span class="o">.</span><span class="n">spacing</span><span class="p">,</span>
                     <span class="p">)</span>
                 <span class="p">),</span>
                 <span class="n">group_title_cls</span><span class="p">(</span>
-                    <span class="n">Bounds</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">layout_properties</span><span class="o">.</span><span class="n">group_label_height</span><span class="p">),</span>
+                    <span class="n">Bounds</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">screen_layout</span><span class="o">.</span><span class="n">group_label_height</span><span class="p">),</span>
                     <span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2">  &quot;</span><span class="p">,</span>
                 <span class="p">),</span>
             <span class="p">]</span>
 
-        <span class="k">def</span> <span class="nf">make_screen_title</span><span class="p">(</span><span class="n">bounds</span><span class="p">:</span> <span class="n">Bounds</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">WidgetFactory</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+        <span class="k">def</span> <span class="nf">create_screen_title_formatter</span><span class="p">(</span>
+            <span class="n">bounds</span><span class="p">:</span> <span class="n">Bounds</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span>
+        <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">WidgetFormatter</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
             <span class="k">return</span> <span class="p">[</span>
                 <span class="n">screen_title_cls</span><span class="p">(</span>
-                    <span class="n">Bounds</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">bounds</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">layout_properties</span><span class="o">.</span><span class="n">title_height</span><span class="p">),</span> <span class="n">title</span>
+                    <span class="n">Bounds</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">bounds</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">screen_layout</span><span class="o">.</span><span class="n">title_height</span><span class="p">),</span> <span class="n">title</span>
                 <span class="p">)</span>
             <span class="p">]</span>
 
-        <span class="n">screen</span> <span class="o">=</span> <span class="n">Screen</span><span class="p">(</span>
-            <span class="n">screen_cls</span><span class="o">=</span><span class="n">GroupFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+        <span class="n">formatter_factory</span> <span class="o">=</span> <span class="n">ScreenFormatterFactory</span><span class="p">(</span>
+            <span class="n">screen_formatter_cls</span><span class="o">=</span><span class="n">GroupFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="n">GroupType</span><span class="o">.</span><span class="n">SCREEN</span><span class="p">,</span>
-                <span class="n">sized</span><span class="o">=</span><span class="n">with_title</span><span class="p">(</span>
-                    <span class="n">layout_properties</span><span class="o">.</span><span class="n">spacing</span><span class="p">,</span> <span class="n">layout_properties</span><span class="o">.</span><span class="n">title_height</span>
-                <span class="p">),</span>
-                <span class="n">make_widgets</span><span class="o">=</span><span class="n">make_screen_title</span><span class="p">,</span>
+                <span class="n">sized</span><span class="o">=</span><span class="n">with_title</span><span class="p">(</span><span class="n">screen_layout</span><span class="o">.</span><span class="n">spacing</span><span class="p">,</span> <span class="n">screen_layout</span><span class="o">.</span><span class="n">title_height</span><span class="p">),</span>
+                <span class="n">widget_formatter_hook</span><span class="o">=</span><span class="n">create_screen_title_formatter</span><span class="p">,</span>
             <span class="p">),</span>
-            <span class="n">group_cls</span><span class="o">=</span><span class="n">GroupFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+            <span class="n">group_formatter_cls</span><span class="o">=</span><span class="n">GroupFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="n">GroupType</span><span class="o">.</span><span class="n">GROUP</span><span class="p">,</span>
                 <span class="n">sized</span><span class="o">=</span><span class="n">with_title</span><span class="p">(</span>
-                    <span class="n">layout_properties</span><span class="o">.</span><span class="n">spacing</span><span class="p">,</span> <span class="n">layout_properties</span><span class="o">.</span><span class="n">group_label_height</span>
+                    <span class="n">screen_layout</span><span class="o">.</span><span class="n">spacing</span><span class="p">,</span> <span class="n">screen_layout</span><span class="o">.</span><span class="n">group_label_height</span>
                 <span class="p">),</span>
-                <span class="n">make_widgets</span><span class="o">=</span><span class="n">make_group_box</span><span class="p">,</span>
+                <span class="n">widget_formatter_hook</span><span class="o">=</span><span class="n">create_group_box_formatter</span><span class="p">,</span>
             <span class="p">),</span>
-            <span class="n">screen_widgets</span><span class="o">=</span><span class="n">screen_widgets</span><span class="p">,</span>
+            <span class="n">widget_formatter_factory</span><span class="o">=</span><span class="n">widget_formatter_factory</span><span class="p">,</span>
             <span class="n">prefix</span><span class="o">=</span><span class="n">prefix</span><span class="p">,</span>
-            <span class="n">layout</span><span class="o">=</span><span class="n">layout_properties</span><span class="p">,</span>
+            <span class="n">layout</span><span class="o">=</span><span class="n">screen_layout</span><span class="p">,</span>
+            <span class="n">base_file_name</span><span class="o">=</span><span class="n">path</span><span class="o">.</span><span class="n">stem</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">device</span><span class="o">.</span><span class="n">label</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="n">texts</span> <span class="o">=</span> <span class="n">screen</span><span class="o">.</span><span class="n">screen</span><span class="p">(</span><span class="n">device</span><span class="o">.</span><span class="n">children</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">()</span>
-        <span class="n">path</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">texts</span><span class="p">))</span>
+
+        <span class="n">screen_formatter</span><span class="p">,</span> <span class="n">sub_screens</span> <span class="o">=</span> <span class="n">formatter_factory</span><span class="o">.</span><span class="n">create_screen_formatter</span><span class="p">(</span>
+            <span class="n">device</span><span class="o">.</span><span class="n">children</span><span class="p">,</span> <span class="n">title</span>
+        <span class="p">)</span>
+
+        <span class="n">path</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">screen_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">()))</span>
+        <span class="k">for</span> <span class="n">sub_screen_name</span><span class="p">,</span> <span class="n">sub_screen_formatter</span> <span class="ow">in</span> <span class="n">sub_screens</span><span class="p">:</span>
+            <span class="n">sub_screen_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">sub_screen_name</span><span class="si">}{</span><span class="n">path</span><span class="o">.</span><span class="n">suffix</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">sub_screen_path</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sub_screen_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">()))</span>
 
     <span class="k">def</span> <span class="nf">format_bob</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">Device</span><span class="p">,</span> <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">):</span>
         <span class="n">template</span> <span class="o">=</span> <span class="n">BobTemplate</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;dls.bob&quot;</span><span class="p">))</span>
         <span class="c1"># LP DOCS REF: Define the layout properties</span>
-        <span class="n">layout_properties</span> <span class="o">=</span> <span class="n">LayoutProperties</span><span class="p">(</span>
+        <span class="n">screen_layout</span> <span class="o">=</span> <span class="n">ScreenLayout</span><span class="p">(</span>
             <span class="n">spacing</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">spacing</span><span class="p">,</span>
             <span class="n">title_height</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">title_height</span><span class="p">,</span>
             <span class="n">max_height</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_height</span><span class="p">,</span>
@@ -503,84 +599,126 @@ find a complete example formatter, supporting both edl and bob file formats for 
             <span class="n">group_width_offset</span><span class="o">=</span><span class="mi">26</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="c1"># SW DOCS REF: Extract widget types from template file</span>
-        <span class="n">screen_widgets</span> <span class="o">=</span> <span class="n">ScreenWidgets</span><span class="p">(</span>
-            <span class="n">label_cls</span><span class="o">=</span><span class="n">LabelFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Label&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">),</span>
-            <span class="n">led_cls</span><span class="o">=</span><span class="n">PVWidgetFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
-                <span class="n">template</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span> <span class="n">sized</span><span class="o">=</span><span class="n">Bounds</span><span class="o">.</span><span class="n">square</span><span class="p">,</span> <span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span>
+        <span class="n">widget_formatter_factory</span> <span class="o">=</span> <span class="n">WidgetFormatterFactory</span><span class="p">(</span>
+            <span class="n">heading_formatter_cls</span><span class="o">=</span><span class="n">LabelWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Heading&quot;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">),</span>
             <span class="p">),</span>
-            <span class="n">progress_bar_cls</span><span class="o">=</span><span class="n">PVWidgetFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
-                <span class="n">template</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ProgressBar&quot;</span><span class="p">,</span> <span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span>
+            <span class="n">label_formatter_cls</span><span class="o">=</span><span class="n">LabelWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Label&quot;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">),</span>
             <span class="p">),</span>
-            <span class="n">text_read_cls</span><span class="o">=</span><span class="n">PVWidgetFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
-                <span class="n">template</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="s2">&quot;TextUpdate&quot;</span><span class="p">,</span> <span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span>
+            <span class="n">led_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span>
+                <span class="n">sized</span><span class="o">=</span><span class="n">Bounds</span><span class="o">.</span><span class="n">square</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
             <span class="p">),</span>
-            <span class="n">check_box_cls</span><span class="o">=</span><span class="n">PVWidgetFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
-                <span class="n">template</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ChoiceButton&quot;</span><span class="p">,</span> <span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span>
+            <span class="n">progress_bar_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ProgressBar&quot;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
             <span class="p">),</span>
-            <span class="n">combo_box_cls</span><span class="o">=</span><span class="n">PVWidgetFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
-                <span class="n">template</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ComboBox&quot;</span><span class="p">,</span> <span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span>
+            <span class="n">text_read_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;TextUpdate&quot;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
             <span class="p">),</span>
-            <span class="n">text_write_cls</span><span class="o">=</span><span class="n">PVWidgetFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
-                <span class="n">template</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="s2">&quot;TextEntry&quot;</span><span class="p">,</span> <span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span>
+            <span class="n">check_box_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ChoiceButton&quot;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
             <span class="p">),</span>
-            <span class="n">action_button_cls</span><span class="o">=</span><span class="n">ActionFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
-                <span class="n">template</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ActionButton&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span>
+            <span class="n">combo_box_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ComboBox&quot;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
+            <span class="p">),</span>
+            <span class="n">text_write_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;TextEntry&quot;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
+            <span class="p">),</span>
+            <span class="n">table_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Table&quot;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
+            <span class="p">),</span>
+            <span class="n">action_formatter_cls</span><span class="o">=</span><span class="n">ActionWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ActionButton&quot;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
+            <span class="p">),</span>
+            <span class="n">sub_screen_formatter_cls</span><span class="o">=</span><span class="n">SubScreenWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;SubScreen&quot;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">&quot;file_name&quot;</span><span class="p">),</span>
             <span class="p">),</span>
         <span class="p">)</span>
         <span class="c1"># MAKE_WIDGETS DOCS REF: Define screen and group widgets</span>
-        <span class="n">screen_title_cls</span> <span class="o">=</span> <span class="n">LabelFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
-            <span class="n">template</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Title&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;text&quot;</span>
+        <span class="n">screen_title_cls</span> <span class="o">=</span> <span class="n">LabelWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+            <span class="n">template</span><span class="p">,</span>
+            <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Title&quot;</span><span class="p">,</span>
+            <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">),</span>
         <span class="p">)</span>
-        <span class="n">group_object_cls</span> <span class="o">=</span> <span class="n">LabelFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
-            <span class="n">template</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Group&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;text&quot;</span>
+        <span class="n">group_title_cls</span> <span class="o">=</span> <span class="n">LabelWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+            <span class="n">template</span><span class="p">,</span>
+            <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+            <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">),</span>
         <span class="p">)</span>
 
-        <span class="k">def</span> <span class="nf">make_group_object</span><span class="p">(</span><span class="n">bounds</span><span class="p">:</span> <span class="n">Bounds</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">WidgetFactory</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+        <span class="k">def</span> <span class="nf">create_group_object_formatter</span><span class="p">(</span>
+            <span class="n">bounds</span><span class="p">:</span> <span class="n">Bounds</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span>
+        <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">WidgetFormatter</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
             <span class="k">return</span> <span class="p">[</span>
-                <span class="n">group_object_cls</span><span class="p">(</span>
+                <span class="n">group_title_cls</span><span class="p">(</span>
                     <span class="n">Bounds</span><span class="p">(</span><span class="n">bounds</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">bounds</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">bounds</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">bounds</span><span class="o">.</span><span class="n">h</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2">&quot;</span>
                 <span class="p">)</span>
             <span class="p">]</span>
 
-        <span class="k">def</span> <span class="nf">make_screen_title</span><span class="p">(</span><span class="n">bounds</span><span class="p">:</span> <span class="n">Bounds</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">WidgetFactory</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+        <span class="k">def</span> <span class="nf">create_screen_title_formatter</span><span class="p">(</span>
+            <span class="n">bounds</span><span class="p">:</span> <span class="n">Bounds</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span>
+        <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">WidgetFormatter</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
             <span class="k">return</span> <span class="p">[</span>
                 <span class="n">screen_title_cls</span><span class="p">(</span>
-                    <span class="n">Bounds</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">bounds</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">layout_properties</span><span class="o">.</span><span class="n">title_height</span><span class="p">),</span> <span class="n">title</span>
+                    <span class="n">Bounds</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">bounds</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">screen_layout</span><span class="o">.</span><span class="n">title_height</span><span class="p">),</span> <span class="n">title</span>
                 <span class="p">)</span>
             <span class="p">]</span>
 
         <span class="c1"># SCREEN_INI DOCS REF: Construct a screen object</span>
-        <span class="n">screen</span> <span class="o">=</span> <span class="n">Screen</span><span class="p">(</span>
-            <span class="n">screen_cls</span><span class="o">=</span><span class="n">GroupFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+        <span class="n">formatter_factory</span> <span class="o">=</span> <span class="n">ScreenFormatterFactory</span><span class="p">(</span>
+            <span class="n">screen_formatter_cls</span><span class="o">=</span><span class="n">GroupFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="n">GroupType</span><span class="o">.</span><span class="n">SCREEN</span><span class="p">,</span>
-                <span class="n">sized</span><span class="o">=</span><span class="n">with_title</span><span class="p">(</span>
-                    <span class="n">layout_properties</span><span class="o">.</span><span class="n">spacing</span><span class="p">,</span> <span class="n">layout_properties</span><span class="o">.</span><span class="n">title_height</span>
-                <span class="p">),</span>
-                <span class="n">make_widgets</span><span class="o">=</span><span class="n">make_screen_title</span><span class="p">,</span>
+                <span class="n">sized</span><span class="o">=</span><span class="n">with_title</span><span class="p">(</span><span class="n">screen_layout</span><span class="o">.</span><span class="n">spacing</span><span class="p">,</span> <span class="n">screen_layout</span><span class="o">.</span><span class="n">title_height</span><span class="p">),</span>
+                <span class="n">widget_formatter_hook</span><span class="o">=</span><span class="n">create_screen_title_formatter</span><span class="p">,</span>
             <span class="p">),</span>
-            <span class="n">group_cls</span><span class="o">=</span><span class="n">GroupFactory</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+            <span class="n">group_formatter_cls</span><span class="o">=</span><span class="n">GroupFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="n">GroupType</span><span class="o">.</span><span class="n">GROUP</span><span class="p">,</span>
                 <span class="n">sized</span><span class="o">=</span><span class="n">with_title</span><span class="p">(</span>
-                    <span class="n">layout_properties</span><span class="o">.</span><span class="n">spacing</span><span class="p">,</span> <span class="n">layout_properties</span><span class="o">.</span><span class="n">group_label_height</span>
+                    <span class="n">screen_layout</span><span class="o">.</span><span class="n">spacing</span><span class="p">,</span> <span class="n">screen_layout</span><span class="o">.</span><span class="n">group_label_height</span>
                 <span class="p">),</span>
-                <span class="n">make_widgets</span><span class="o">=</span><span class="n">make_group_object</span><span class="p">,</span>
+                <span class="n">widget_formatter_hook</span><span class="o">=</span><span class="n">create_group_object_formatter</span><span class="p">,</span>
             <span class="p">),</span>
-            <span class="n">screen_widgets</span><span class="o">=</span><span class="n">screen_widgets</span><span class="p">,</span>
+            <span class="n">widget_formatter_factory</span><span class="o">=</span><span class="n">widget_formatter_factory</span><span class="p">,</span>
             <span class="n">prefix</span><span class="o">=</span><span class="n">prefix</span><span class="p">,</span>
-            <span class="n">layout</span><span class="o">=</span><span class="n">layout_properties</span><span class="p">,</span>
+            <span class="n">layout</span><span class="o">=</span><span class="n">screen_layout</span><span class="p">,</span>
+            <span class="n">base_file_name</span><span class="o">=</span><span class="n">path</span><span class="o">.</span><span class="n">stem</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="c1"># SCREEN_FORMAT DOCS REF: Format the screen</span>
         <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">device</span><span class="o">.</span><span class="n">label</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="n">texts</span> <span class="o">=</span> <span class="n">screen</span><span class="o">.</span><span class="n">screen</span><span class="p">(</span><span class="n">device</span><span class="o">.</span><span class="n">children</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">()</span>
-        <span class="c1"># SCREEN_WRITE DOCS REF: Generate the screen file</span>
-        <span class="c1"># The root:&#39;Display&#39; is always the first element in texts</span>
-        <span class="n">ET</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">texts</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">texts</span><span class="p">[:</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
-            <span class="n">ET</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;height&quot;</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">element</span><span class="p">)</span>
-        <span class="n">ET</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">getroottree</span><span class="p">()</span>
-        <span class="n">ET</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="n">pretty_print</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">screen_formatter</span><span class="p">,</span> <span class="n">sub_screens</span> <span class="o">=</span> <span class="n">formatter_factory</span><span class="o">.</span><span class="n">create_screen_formatter</span><span class="p">(</span>
+            <span class="n">device</span><span class="o">.</span><span class="n">children</span><span class="p">,</span> <span class="n">title</span>
+        <span class="p">)</span>
+
+        <span class="n">write_bob</span><span class="p">(</span><span class="n">screen_formatter</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">sub_screen_name</span><span class="p">,</span> <span class="n">sub_screen_formatter</span> <span class="ow">in</span> <span class="n">sub_screens</span><span class="p">:</span>
+            <span class="n">sub_screen_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">sub_screen_name</span><span class="si">}{</span><span class="n">path</span><span class="o">.</span><span class="n">suffix</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">write_bob</span><span class="p">(</span><span class="n">sub_screen_formatter</span><span class="p">,</span> <span class="n">sub_screen_path</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
