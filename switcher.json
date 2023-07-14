@@ -24,6 +24,10 @@
     "url": "https://epics-containers.github.io/pvi/0.1/"
   },
   {
+    "version": "main-tmp",
+    "url": "https://epics-containers.github.io/pvi/main-tmp/"
+  },
+  {
     "version": "skeleton-update",
     "url": "https://epics-containers.github.io/pvi/skeleton-update/"
   }
