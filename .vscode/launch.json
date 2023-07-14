@@ -243,21 +243,6 @@
             "console": "integratedTerminal"
         },
         {
-            "name": "Produce",
-            "type": "python",
-            "request": "launch",
-            "justMyCode": false,
-            "program": "${workspaceFolder:pvi}/src/pvi",
-            "args": [
-                "produce",
-                "${workspaceFolder:pvi}/../${input:Module}/pvi/${input:Driver}${input:FileType}",
-                "${workspaceFolder:pvi}/../${input:Module}/pvi/${input:Driver}.pvi.producer.yaml",
-                "--yaml-path",
-                "${workspaceFolder:ADCore}/pvi",
-            ],
-            "console": "integratedTerminal"
-        },
-        {
             "name": "Format",
             "type": "python",
             "request": "launch",
@@ -270,17 +255,6 @@
                 "${workspaceFolder:pvi}/formatters/${input:Formatter}${input:FileType}.pvi.formatter.yaml",
                 "--yaml-path",
                 "${workspaceFolder:ADCore}/pvi",
-            ],
-            "console": "integratedTerminal"
-        },
-        {
-            "name": "Write Producer Schema",
-            "type": "python",
-            "request": "launch",
-            "program": "${workspaceFolder:pvi}/src/pvi",
-            "args": [
-                "schema",
-                "${workspaceFolder:pvi}/schemas/pvi.device.schema.json"
             ],
             "console": "integratedTerminal"
         },
@@ -370,10 +344,6 @@
             "description": "What file to create?",
             "type": "pickString",
             "options": [
-                "ParamSet.h",
-                "Parameters.template",
-                ".pvi.device.yaml",
-                ".csv",
                 ".adl",
                 ".edl",
                 ".bob",
@@ -393,7 +363,6 @@
             "description": "What to convert to?",
             "type": "pickString",
             "options": [
-                "asyn",
                 "device",
             ],
         },
