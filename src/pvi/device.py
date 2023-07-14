@@ -5,6 +5,7 @@ import re
 from dataclasses import dataclass, field, fields
 from pathlib import Path
 from typing import (
+    Annotated,
     Any,
     Callable,
     Dict,
@@ -20,7 +21,6 @@ from typing import (
 
 from apischema import deserialize, serialize
 from ruamel.yaml import YAML
-from typing_extensions import Annotated
 
 from pvi._schema_utils import add_type_field, as_discriminated_union, desc
 from pvi.utils import find_pvi_yaml

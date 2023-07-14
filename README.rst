@@ -10,7 +10,7 @@ later date.
 
 It allows the asyn parameter interface to be specified in a single place,
 and removes boilerplate code in the driver CPP, template files, documentation,
-and low level opis
+and low level opis.
 
 ============== ==============================================================
 PyPI           ``pip install pvi``
@@ -27,16 +27,16 @@ prototype code is written.
 
 ****
 
-.. |code_ci| image:: https://github.com/epics-containers/pvi/workflows/Code%20CI/badge.svg?branch=master
-    :target: https://github.com/epics-containers/pvi/actions?query=workflow%3A%22Code+CI%22
+.. |code_ci| image:: https://github.com/DiamondLightSource/pvi/actions/workflows/code.yml/badge.svg?branch=main
+    :target: https://github.com/DiamondLightSource/pvi/actions/workflows/code.yml
     :alt: Code CI
 
-.. |docs_ci| image:: https://github.com/epics-containers/pvi/workflows/Docs%20CI/badge.svg?branch=master
-    :target: https://github.com/epics-containers/pvi/actions?query=workflow%3A%22Docs+CI%22
+.. |docs_ci| image:: https://github.com/DiamondLightSource/pvi/actions/workflows/docs.yml/badge.svg?branch=main
+    :target: https://github.com/DiamondLightSource/pvi/actions/workflows/docs.yml
     :alt: Docs CI
 
-.. |coverage| image:: https://codecov.io/gh/epics-containers/pvi/branch/master/graph/badge.svg
-    :target: https://codecov.io/gh/epics-containers/pvi
+.. |coverage| image:: https://codecov.io/gh/DiamondLightSource/pvi/branch/main/graph/badge.svg
+    :target: https://codecov.io/gh/DiamondLightSource/pvi
     :alt: Test Coverage
 
 .. |pypi_version| image:: https://img.shields.io/pypi/v/pvi.svg

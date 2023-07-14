@@ -276,7 +276,7 @@ class WidgetFormatterFactory(Generic[T]):
         pv: str,
         prefix: str,
     ) -> PVWidgetFormatter[T]:
-        """Convert a component that reads or writes PV's into its WidgetFormatter equivalent
+        """Convert a component into its WidgetFormatter equivalent
 
         Args:
             widget: The read/write widget property of a component

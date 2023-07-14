@@ -1,8 +1,6 @@
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import ClassVar, Dict, List, Optional, Type, cast
-
-from typing_extensions import Annotated
+from typing import Annotated, ClassVar, Dict, List, Optional, Type, cast
 
 from pvi._schema_utils import as_discriminated_union, desc, rec_subclasses
 from pvi.device import (

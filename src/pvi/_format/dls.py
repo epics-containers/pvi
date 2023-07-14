@@ -1,9 +1,8 @@
 from dataclasses import dataclass
 from pathlib import Path
-from typing import List
+from typing import Annotated, List
 
 from lxml import etree
-from typing_extensions import Annotated
 
 from pvi._format.bob import BobTemplate
 from pvi._format.edl import EdlTemplate

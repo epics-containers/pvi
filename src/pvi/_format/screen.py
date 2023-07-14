@@ -1,9 +1,17 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Dict, Iterator, List, Sequence, Tuple, Type, TypeVar, Union
-
-from typing_extensions import Annotated
+from typing import (
+    Annotated,
+    Dict,
+    Iterator,
+    List,
+    Sequence,
+    Tuple,
+    Type,
+    TypeVar,
+    Union,
+)
 
 from pvi._format.bob import is_table
 from pvi._format.utils import Bounds
@@ -459,7 +467,6 @@ class ScreenFormatterFactory(Generic[T]):
         row_components: Sequence[Union[Group[Component], Component]],
         row_bounds: Bounds,
     ) -> Iterator[WidgetFormatter[T]]:
-
         row_component_bounds = row_bounds.copy().split_into(
             len(row_components), self.layout.spacing
         )
