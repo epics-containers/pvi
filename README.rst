@@ -27,16 +27,16 @@ prototype code is written.
 
 ****
 
-.. |code_ci| image:: https://github.com/DiamondLightSource/pvi/actions/workflows/code.yml/badge.svg?branch=main
-    :target: https://github.com/DiamondLightSource/pvi/actions/workflows/code.yml
+.. |code_ci| image:: https://github.com/epics-containers/pvi/actions/workflows/code.yml/badge.svg?branch=main
+    :target: https://github.com/epics-containers/pvi/actions/workflows/code.yml
     :alt: Code CI
 
-.. |docs_ci| image:: https://github.com/DiamondLightSource/pvi/actions/workflows/docs.yml/badge.svg?branch=main
-    :target: https://github.com/DiamondLightSource/pvi/actions/workflows/docs.yml
+.. |docs_ci| image:: https://github.com/epics-containers/pvi/actions/workflows/docs.yml/badge.svg?branch=main
+    :target: https://github.com/epics-containers/pvi/actions/workflows/docs.yml
     :alt: Docs CI
 
-.. |coverage| image:: https://codecov.io/gh/DiamondLightSource/pvi/branch/main/graph/badge.svg
-    :target: https://codecov.io/gh/DiamondLightSource/pvi
+.. |coverage| image:: https://codecov.io/gh/epics-containers/pvi/branch/main/graph/badge.svg
+    :target: https://codecov.io/gh/epics-containers/pvi
     :alt: Test Coverage
 
 .. |pypi_version| image:: https://img.shields.io/pypi/v/pvi.svg
