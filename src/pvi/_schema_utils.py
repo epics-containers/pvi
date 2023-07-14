@@ -1,13 +1,23 @@
 from dataclasses import field, make_dataclass
 from functools import lru_cache
-from typing import Any, Callable, List, Mapping, Optional, Pattern, Set, TypeVar, Union
+from typing import (
+    Any,
+    Callable,
+    List,
+    Literal,
+    Mapping,
+    Optional,
+    Pattern,
+    Set,
+    TypeVar,
+    Union,
+)
 
 from apischema import deserializer, order, schema, serialized, type_name
 from apischema.conversions import Conversion
 from apischema.conversions.converters import serializer
 from apischema.json_schema import JsonSchemaVersion, deserialization_schema
 from apischema.utils import identity
-from typing_extensions import Literal
 
 Cls = TypeVar("Cls", bound=type)
 

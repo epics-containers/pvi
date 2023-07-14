@@ -1,6 +1,119 @@
 [build-system]
-# To get a reproducible wheel, wheel must be pinned to the same version as in
-# dls-python3, and setuptools must produce the same dist-info. Cap setuptools
-# to the last version that didn't add License-File to METADATA
-requires = ["setuptools<57", "wheel==0.33.1"]
+requires = ["setuptools>=64", "setuptools_scm[toml]>=6.2", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "pvi"
+authors = [
+    {name = "Tom Cobb", email = "tom.cobb@diamond.ac.uk"},
+    {name = "Gary Yendell", email = "gary.yendell@diamond.ac.uk"},
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+description = "One line description of your module"
+dependencies = [
+    "apischema",
+    "lxml",
+    "ruamel.yaml",
+    "typer",
+]
+dynamic = ["version"]
+license.file = "LICENSE"
+readme = "README.rst"
+requires-python = ">=3.10"
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "mypy",
+    "flake8-isort",
+    "Flake8-pyproject",
+    "pipdeptree",
+    "pre-commit",
+    "pydata-sphinx-theme>=0.12",
+    "pytest",
+    "pytest-cov",
+    "sphinx-autobuild",
+    "sphinx-copybutton",
+    "sphinx-design",
+    "tox-direct",
+    "types-mock",
+]
+
+[tool.setuptools.package-data]
+pvi = [
+    "_format/*.adl",
+    "_format/*.edl",
+    "_format/*.bob",
+]
+
+[project.scripts]
+pvi = "pvi.__main__:main"
+
+[project.urls]
+GitHub = "https://github.com/DiamondLightSource/pvi"
+
+[tool.setuptools_scm]
+write_to = "src/pvi/_version.py"
+
+[tool.mypy]
+ignore_missing_imports = true # Ignore missing stubs in imported modules
+
+[tool.isort]
+float_to_top = true
+profile = "black"
+
+[tool.flake8]
+extend-ignore = [
+    "E203", # See https://github.com/PyCQA/pycodestyle/issues/373
+    "F811", # support typing.overload decorator
+    "F722", # allow Annotated[typ, some_func("some string")]
+]
+max-line-length = 88 # Respect black's line length (default 88),
+exclude = [".tox", "venv"]
+
+
+[tool.pytest.ini_options]
+# Run pytest with all our checkers, and don't spam us with massive tracebacks on error
+addopts = """
+    --tb=native -vv --doctest-modules --doctest-glob="*.rst"
+    """
+# https://iscinumpy.gitlab.io/post/bound-version-constraints/#watch-for-warnings
+#filterwarnings = "error"
+# Doctest python code in docs, python code in src docstrings, test functions in tests
+testpaths = "docs src tests"
+
+[tool.coverage.run]
+data_file = "/tmp/pvi.coverage"
+
+[tool.coverage.paths]
+# Tests are run from installed location, map back to the src directory
+source = ["src", "**/site-packages/"]
+
+# tox must currently be configured via an embedded ini string
+# See: https://github.com/tox-dev/tox/issues/999
+[tool.tox]
+legacy_tox_ini = """
+[tox]
+skipsdist=True
+
+[testenv:{pre-commit,mypy,pytest,docs}]
+# Don't create a virtualenv for the command, requires tox-direct plugin
+direct = True
+passenv = *
+allowlist_externals =
+    pytest
+    pre-commit
+    mypy
+    sphinx-build
+    sphinx-autobuild
+commands =
+    pytest: pytest --cov=pvi --cov-report term --cov-report xml:cov.xml {posargs}
+    mypy: mypy src tests {posargs}
+    pre-commit: pre-commit run --all-files {posargs}
+    docs: sphinx-{posargs:build -EW --keep-going} -T docs build/html
+"""

@@ -4,6 +4,12 @@
 # list see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
+import sys
+from pathlib import Path
+from subprocess import check_output
+
+import requests
+
 import pvi
 
 # -- General configuration ------------------------------------------------
@@ -16,8 +22,10 @@ release = pvi.__version__
 
 # The short X.Y version.
 if "+" in release:
-    # Not on a tag
-    version = "master"
+    # Not on a tag, use branch name
+    root = Path(__file__).absolute().parent.parent
+    git_branch = check_output("git branch --show-current".split(), cwd=root)
+    version = git_branch.decode().strip()
 else:
     version = release
 
@@ -32,6 +40,10 @@ extensions = [
     "sphinx.ext.viewcode",
     # Adds the inheritance-diagram generation directive
     "sphinx.ext.inheritance_diagram",
+    # Add a copy button to each code block
+    "sphinx_copybutton",
+    # For the card element
+    "sphinx_design",
 ]
 
 # If true, Sphinx will warn about all references where the target cannot
@@ -42,7 +54,16 @@ nitpicky = True
 # generating warnings in "nitpicky mode". Note that type should include the
 # domain name if present. Example entries would be ('py:func', 'int') or
 # ('envvar', 'LD_LIBRARY_PATH').
-nitpick_ignore = [("py:func", "int")]
+nitpick_ignore = [
+    ("py:class", "NoneType"),
+    ("py:class", "'str'"),
+    ("py:class", "'float'"),
+    ("py:class", "'int'"),
+    ("py:class", "'bool'"),
+    ("py:class", "'object'"),
+    ("py:class", "'id'"),
+    ("py:class", "typing.Literal"),
+]
 
 # Both the class’ and the __init__ method’s docstring are concatenated and
 # inserted into the main body of the autoclass directive
@@ -84,36 +105,90 @@ inheritance_graph_attrs = dict(rankdir="TB")
 
 # Common links that should be available on every page
 rst_epilog = """
-.. _Diamond Light Source:
-    http://www.diamond.ac.uk
+.. _Diamond Light Source: http://www.diamond.ac.uk
+.. _black: https://github.com/psf/black
+.. _flake8: https://flake8.pycqa.org/en/latest/
+.. _isort: https://github.com/PyCQA/isort
+.. _mypy: http://mypy-lang.org/
+.. _pre-commit: https://pre-commit.com/
 """
 
-# Ignore localhost links for period check that links in docs are valid
+# Ignore localhost links for periodic check that links in docs are valid
 linkcheck_ignore = [r"http://localhost:\d+/"]
+
+# Set copy-button to ignore python and bash prompts
+# https://sphinx-copybutton.readthedocs.io/en/latest/use.html#using-regexp-prompt-identifiers
+copybutton_prompt_text = r">>> |\.\.\. |\$ |In \[\d*\]: | {2,5}\.\.\.: | {5,8}: "
+copybutton_prompt_is_regexp = True
 
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = "sphinx_rtd_theme_github_versions"
+html_theme = "pydata_sphinx_theme"
+github_repo = project
+github_user = "DiamondLightSource"
+switcher_json = f"https://{github_user}.github.io/{github_repo}/switcher.json"
+switcher_exists = requests.get(switcher_json).ok
+if not switcher_exists:
+    print(
+        "*** Can't read version switcher, is GitHub pages enabled? \n"
+        "    Once Docs CI job has successfully run once, set the "
+        "Github pages source branch to be 'gh-pages' at:\n"
+        f"    https://github.com/{github_user}/{github_repo}/settings/pages",
+        file=sys.stderr,
+    )
 
-# Options for the sphinx rtd theme, use DLS blue
-html_theme_options = dict(style_nav_header_background="rgb(7, 43, 93)")
+# Theme options for pydata_sphinx_theme
+# We don't check switcher because there are 3 possible states for a repo:
+# 1. New project, docs are not published so there is no switcher
+# 2. Existing project with latest skeleton, switcher exists and works
+# 3. Existing project with old skeleton that makes broken switcher,
+#    switcher exists but is broken
+# Point 3 makes checking switcher difficult, because the updated skeleton
+# will fix the switcher at the end of the docs workflow, but never gets a chance
+# to complete as the docs build warns and fails.
+html_theme_options = dict(
+    logo=dict(
+        text=project,
+    ),
+    use_edit_page_button=True,
+    github_url=f"https://github.com/{github_user}/{github_repo}",
+    icon_links=[
+        dict(
+            name="PyPI",
+            url=f"https://pypi.org/project/{project}",
+            icon="fas fa-cube",
+        )
+    ],
+    switcher=dict(
+        json_url=switcher_json,
+        version_match=version,
+    ),
+    check_switcher=False,
+    navbar_end=["theme-switcher", "icon-links", "version-switcher"],
+    external_links=[
+        dict(
+            name="Release Notes",
+            url=f"https://github.com/{github_user}/{github_repo}/releases",
+        )
+    ],
+)
 
-# Add any paths that contain custom static files (such as style sheets) here,
-# relative to this directory. They are copied after the builtin static files,
-# so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ["_static"]
+# A dictionary of values to pass into the template engine’s context for all pages
+html_context = dict(
+    github_user=github_user,
+    github_repo=project,
+    github_version=version,
+    doc_path="docs",
+)
 
 # If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
 html_show_sphinx = False
 
 # If true, "(C) Copyright ..." is shown in the HTML footer. Default is True.
 html_show_copyright = False
-
-# Add some CSS classes for columns and other tweaks in a custom css file
-html_css_files = ["theme_overrides.css"]
 
 # Logo
 html_logo = "images/pvi-logo.svg"

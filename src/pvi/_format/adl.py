@@ -49,7 +49,6 @@ class AdlTemplate(UITemplate[str]):
         children: List[WidgetFormatter[str]],
         padding: Bounds = Bounds(),
     ) -> List[str]:
-
         texts: List[str] = []
 
         for c in children:

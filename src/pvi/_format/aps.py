@@ -1,8 +1,6 @@
 from dataclasses import dataclass
 from pathlib import Path
-from typing import List
-
-from typing_extensions import Annotated
+from typing import Annotated, List
 
 from pvi._format.adl import AdlTemplate
 from pvi._format.screen import (
