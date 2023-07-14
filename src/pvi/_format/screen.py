@@ -377,7 +377,7 @@ class ScreenFormatterFactory(Generic[T]):
         """Convert a component into its WidgetFormatter equivalents
 
         Args:
-            c: Component object extracted from a producer.yaml
+            c: Component object
             bounds: The size and position of the component widgets (x,y,w,h).
             add_label: Whether the component has an associated label. Defaults to True.
 
