@@ -1,0 +1,30 @@
+[
+  {
+    "version": "master",
+    "url": "https://epics-containers.github.io/pvi/master/"
+  },
+  {
+    "version": "main",
+    "url": "https://epics-containers.github.io/pvi/main/"
+  },
+  {
+    "version": "0.4",
+    "url": "https://epics-containers.github.io/pvi/0.4/"
+  },
+  {
+    "version": "0.3",
+    "url": "https://epics-containers.github.io/pvi/0.3/"
+  },
+  {
+    "version": "0.2",
+    "url": "https://epics-containers.github.io/pvi/0.2/"
+  },
+  {
+    "version": "0.1",
+    "url": "https://epics-containers.github.io/pvi/0.1/"
+  },
+  {
+    "version": "skeleton-update",
+    "url": "https://epics-containers.github.io/pvi/skeleton-update/"
+  }
+]
