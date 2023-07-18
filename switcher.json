@@ -8,23 +8,27 @@
     "url": "https://epics-containers.github.io/pvi/main/"
   },
   {
-    "version": "0.1",
-    "url": "https://epics-containers.github.io/pvi/0.1/"
-  },
-  {
-    "version": "0.2",
-    "url": "https://epics-containers.github.io/pvi/0.2/"
+    "version": "0.4",
+    "url": "https://epics-containers.github.io/pvi/0.4/"
   },
   {
     "version": "0.3",
     "url": "https://epics-containers.github.io/pvi/0.3/"
   },
   {
-    "version": "0.4",
-    "url": "https://epics-containers.github.io/pvi/0.4/"
+    "version": "0.2",
+    "url": "https://epics-containers.github.io/pvi/0.2/"
+  },
+  {
+    "version": "0.1",
+    "url": "https://epics-containers.github.io/pvi/0.1/"
   },
   {
     "version": "main-tmp",
     "url": "https://epics-containers.github.io/pvi/main-tmp/"
+  },
+  {
+    "version": "text-format",
+    "url": "https://epics-containers.github.io/pvi/text-format/"
   }
 ]
