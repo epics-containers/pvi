@@ -12,12 +12,23 @@ from pvi.device import (
     ComboBox,
     Group,
     Row,
+    TableRead,
     TableWidgetType,
-    TableWidgetTypes,
     TableWrite,
+    TextFormat,
+    TextRead,
+    TextWrite,
     WidgetType,
     WriteWidget,
 )
+
+BOB_TEXT_FORMATS = {
+    TextFormat.decimal: "1",
+    TextFormat.hexadecimal: "4",
+    TextFormat.engineer: "3",
+    TextFormat.exponential: "2",
+    TextFormat.string: "6",
+}
 
 
 class BobTemplate(UITemplate[ElementBase]):
@@ -58,10 +69,17 @@ class BobTemplate(UITemplate[ElementBase]):
             if new_text:
                 replace_text(t_copy, item, new_text)
 
-        if widget_type == "table" and isinstance(widget, TableWidgetTypes):
-            add_table_columns(t_copy, widget)
-        elif widget_type == "combo" and isinstance(widget, ComboBox):
-            add_combo_box_items(t_copy, widget)
+        # Add additional properties from widget
+        match widget_type, widget:
+            case ("combo", ComboBox() as combo_box):
+                add_combo_box_items(t_copy, combo_box)
+            case ("table", TableRead() | TableWrite() as table):
+                add_table_columns(t_copy, table)
+            case (
+                ("textentry", TextWrite(_, format))
+                | ("textupdate", TextRead(_, format))
+            ) if format is not None:
+                add_format(t_copy, BOB_TEXT_FORMATS[format])
 
         return t_copy
 
@@ -172,6 +190,11 @@ def add_combo_box_items(widget_element: ElementBase, combo_box: ComboBox):
 
 def add_editable(element: ElementBase, editable: bool):
     SubElement(element, "editable").text = "true" if editable else "false"
+
+
+def add_format(element: ElementBase, format: str):
+    if format:
+        SubElement(element, "format").text = format
 
 
 def replace_text(element: ElementBase, tag: str, text: str):
