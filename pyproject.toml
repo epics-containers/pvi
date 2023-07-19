@@ -55,7 +55,7 @@ pvi = [
 pvi = "pvi.__main__:main"
 
 [project.urls]
-GitHub = "https://github.com/DiamondLightSource/pvi"
+GitHub = "https://github.com/epics-containers/pvi"
 
 [tool.setuptools_scm]
 write_to = "src/pvi/_version.py"
