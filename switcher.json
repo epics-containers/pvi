@@ -24,6 +24,10 @@
     "url": "https://epics-containers.github.io/pvi/0.1/"
   },
   {
+    "version": "fix-links",
+    "url": "https://epics-containers.github.io/pvi/fix-links/"
+  },
+  {
     "version": "main-tmp",
     "url": "https://epics-containers.github.io/pvi/main-tmp/"
   },
