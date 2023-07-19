@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import re
 from dataclasses import dataclass, field, fields
+from enum import Enum
 from pathlib import Path
 from typing import (
     Annotated,
@@ -49,6 +50,16 @@ def to_snake_case(pascal_s: str) -> str:
     return PASCAL_CASE_REGEX.sub(lambda m: "_" + m.group().lower(), pascal_s)[1:]
 
 
+class TextFormat(Enum):
+    """Format to use for display of Text{Read,Write} widgets on a UI"""
+
+    decimal = 0
+    hexadecimal = 1
+    engineer = 2
+    exponential = 3
+    string = 4
+
+
 @as_discriminated_union
 @dataclass
 class ReadWidget:
@@ -75,6 +86,7 @@ class TextRead(ReadWidget):
     """Text view of any PV"""
 
     lines: Annotated[int, desc("Number of lines to display")] = 1
+    format: Annotated[Optional[TextFormat], desc("Display format")] = None
 
 
 @dataclass
@@ -141,6 +153,7 @@ class TextWrite(WriteWidget):
     """Text control of any PV"""
 
     lines: Annotated[int, desc("Number of lines to display")] = 1
+    format: Annotated[Optional[TextFormat], desc("Display format")] = None
 
 
 @dataclass

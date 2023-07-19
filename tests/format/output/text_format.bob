@@ -1,0 +1,188 @@
+<display version="2.0.0">
+  <name>Display</name>
+  <x>0</x>
+  <y>0</y>
+  <width>274</width>
+  <height>150</height>
+  <grid_step_x>4</grid_step_x>
+  <grid_step_y>4</grid_step_y>
+  <widget type="label" version="2.0.0">
+    <name>Title</name>
+    <class>TITLE</class>
+    <text>Text Device - $(P)</text>
+    <x use_class="true">0</x>
+    <y use_class="true">0</y>
+    <width>274</width>
+    <height>26</height>
+    <font use_class="true">
+      <font name="Header 1" family="Liberation Sans" style="BOLD" size="22.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="Text" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <transparent use_class="true">true</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>Decimal</text>
+    <x>22</x>
+    <y>30</y>
+    <width>120</width>
+    <height>20</height>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>TextEntry</name>
+    <pv_name>$(P)Decimal</pv_name>
+    <x>146</x>
+    <y>30</y>
+    <width>60</width>
+    <height>20</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <format>1</format>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>TextUpdate</name>
+    <pv_name>$(P)Decimal_RBV</pv_name>
+    <x>210</x>
+    <y>30</y>
+    <width>60</width>
+    <height>20</height>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+    <format>1</format>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>Hexadecimal</text>
+    <x>22</x>
+    <y>54</y>
+    <width>120</width>
+    <height>20</height>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>TextEntry</name>
+    <pv_name>$(P)Hexadecimal</pv_name>
+    <x>146</x>
+    <y>54</y>
+    <width>60</width>
+    <height>20</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <format>4</format>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>TextUpdate</name>
+    <pv_name>$(P)Hexadecimal_RBV</pv_name>
+    <x>210</x>
+    <y>54</y>
+    <width>60</width>
+    <height>20</height>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+    <format>4</format>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>Engineer</text>
+    <x>22</x>
+    <y>78</y>
+    <width>120</width>
+    <height>20</height>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>TextEntry</name>
+    <pv_name>$(P)Engineer</pv_name>
+    <x>146</x>
+    <y>78</y>
+    <width>60</width>
+    <height>20</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <format>3</format>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>TextUpdate</name>
+    <pv_name>$(P)Engineer_RBV</pv_name>
+    <x>210</x>
+    <y>78</y>
+    <width>60</width>
+    <height>20</height>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+    <format>3</format>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>Exponential</text>
+    <x>22</x>
+    <y>102</y>
+    <width>120</width>
+    <height>20</height>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>TextEntry</name>
+    <pv_name>$(P)Exponential</pv_name>
+    <x>146</x>
+    <y>102</y>
+    <width>60</width>
+    <height>20</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <format>2</format>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>TextUpdate</name>
+    <pv_name>$(P)Exponential_RBV</pv_name>
+    <x>210</x>
+    <y>102</y>
+    <width>60</width>
+    <height>20</height>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+    <format>2</format>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>String</text>
+    <x>22</x>
+    <y>126</y>
+    <width>120</width>
+    <height>20</height>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>TextEntry</name>
+    <pv_name>$(P)String</pv_name>
+    <x>146</x>
+    <y>126</y>
+    <width>60</width>
+    <height>20</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <format>6</format>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>TextUpdate</name>
+    <pv_name>$(P)String_RBV</pv_name>
+    <x>210</x>
+    <y>126</y>
+    <width>60</width>
+    <height>20</height>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+    <format>6</format>
+  </widget>
+</display>

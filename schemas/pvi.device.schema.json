@@ -184,9 +184,31 @@
           "type": "integer",
           "description": "Number of lines to display",
           "default": 1
+        },
+        "format": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/TextFormat"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Display format",
+          "default": null
         }
       },
       "additionalProperties": false
+    },
+    "TextFormat": {
+      "type": "integer",
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
     },
     "ArrayTrace": {
       "type": "object",
@@ -358,6 +380,18 @@
           "type": "integer",
           "description": "Number of lines to display",
           "default": 1
+        },
+        "format": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/TextFormat"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Display format",
+          "default": null
         }
       },
       "additionalProperties": false

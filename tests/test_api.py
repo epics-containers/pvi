@@ -1,5 +1,7 @@
 from pathlib import Path
 
+import pytest
+
 from pvi._format.base import Formatter
 from pvi._yaml_utils import deserialize_yaml
 from pvi.device import (
@@ -12,11 +14,45 @@ from pvi.device import (
     SignalW,
     TableRead,
     TableWrite,
+    TextFormat,
     TextRead,
     TextWrite,
 )
 
 HERE = Path(__file__).parent
+
+
+@pytest.mark.parametrize(
+    "filename,formatter",
+    [
+        ("text_format.adl", "aps.adl.pvi.formatter.yaml"),
+        ("text_format.edl", "dls.edl.pvi.formatter.yaml"),
+        ("text_format.bob", "dls.bob.pvi.formatter.yaml"),
+    ],
+)
+def test_text_format(tmp_path, helper, filename, formatter):
+    formatter_yaml = HERE / "format" / "input" / formatter
+    formatter = deserialize_yaml(Formatter, formatter_yaml)
+
+    components = []
+    for format in TextFormat:
+        components.append(
+            SignalRW(
+                format.name.title(),
+                pv=format.name.title(),
+                widget=TextWrite(format=format),
+                read_pv=f"{format.name.title()}_RBV",
+                read_widget=TextRead(format=format),
+            )
+        )
+
+    device = Device("Text Device", children=components)
+
+    expected_ui = HERE / "format" / "output" / filename
+    output_ui = tmp_path / filename
+    formatter.format(device, "$(P)", output_ui)
+
+    helper.assert_output_matches(expected_ui, output_ui)
 
 
 def test_button(tmp_path, helper):

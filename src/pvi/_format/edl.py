@@ -5,7 +5,15 @@ from typing import List, Optional
 
 from pvi._format.utils import Bounds, split_with_sep
 from pvi._format.widget import UITemplate, WidgetFormatter
-from pvi.device import WidgetType
+from pvi.device import TextFormat, TextRead, TextWrite, WidgetType
+
+EDL_TEXT_FORMATS = {
+    TextFormat.decimal: "decimal",
+    TextFormat.hexadecimal: "hex",
+    TextFormat.engineer: "engineer",
+    TextFormat.exponential: "exp",
+    TextFormat.string: "default",
+}
 
 
 class EdlTemplate(UITemplate[str]):
@@ -27,6 +35,7 @@ class EdlTemplate(UITemplate[str]):
         for item, value in properties.items():
             if item == "displayFileName":
                 value = f"0 {value}"  # These are items in an array but we only use one
+
             multiline = re.compile(r"^%s {[^}]*}$" % item, re.MULTILINE | re.DOTALL)
             if multiline.search(template):
                 pattern = multiline
@@ -37,8 +46,19 @@ class EdlTemplate(UITemplate[str]):
                 pattern = re.compile(r"^%s .*$" % item, re.MULTILINE)
                 if isinstance(value, str):
                     value = f'"{value}"'
+
             template, n = pattern.subn(f"{item} {value}", template)
             assert n == 1, f"No replacements made for {item}"
+
+        # Add additional properties from widget
+        match widget:
+            case TextWrite(_, format) | TextRead(_, format) if (
+                is_text_widget(template) and format is not None
+            ):
+                template = add_property(
+                    template, "displayMode", EDL_TEXT_FORMATS[format]
+                )
+
         return template
 
     def search(self, search: str) -> str:
@@ -60,3 +80,12 @@ class EdlTemplate(UITemplate[str]):
             texts += c.format()
 
         return group_object + texts
+
+
+def is_text_widget(text: str):
+    return text.startswith("\n# (Text")
+
+
+def add_property(text: str, property: str, value: str) -> str:
+    end = "endObjectProperties\n"
+    return text.replace(end, f'{property} "{value}"\n{end}')
