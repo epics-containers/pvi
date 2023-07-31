@@ -60,7 +60,13 @@
     <y>118</y>
     <width>120</width>
     <height>40</height>
-    <tooltip>$(actions)</tooltip>
+    <actions>
+      <action type="write_pv">
+        <pv_name>MY-DEVICE-PREFIX$(pv_name)</pv_name>
+        <value>1</value>
+        <description>WritePV</description>
+      </action>
+    </actions>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>TextUpdate</name>
