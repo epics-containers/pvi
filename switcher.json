@@ -28,6 +28,10 @@
     "url": "https://epics-containers.github.io/pvi/0.1/"
   },
   {
+    "version": "device-ref",
+    "url": "https://epics-containers.github.io/pvi/device-ref/"
+  },
+  {
     "version": "fix-links",
     "url": "https://epics-containers.github.io/pvi/fix-links/"
   },
