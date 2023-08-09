@@ -29,6 +29,7 @@ from pvi._schema_utils import desc
 from pvi.device import (
     ButtonPanel,
     Component,
+    DeviceRef,
     Generic,
     Grid,
     Group,
@@ -177,6 +178,10 @@ class ScreenFormatterFactory(Generic[T]):
 
         sub_screen_formatters: List[Tuple[str, GroupFormatter[T]]] = []
         for sub_screen_factory in sub_screen_factories:
+            if sub_screen_factory.components is None:
+                # This is a reference to an existing screen - don't create it
+                continue
+
             factory = ScreenFormatterFactory(
                 screen_formatter_cls=self.screen_formatter_cls,
                 group_formatter_cls=self.group_formatter_cls,
@@ -492,7 +497,10 @@ class ScreenFormatterFactory(Generic[T]):
                     f"{self.base_file_name}_{rc.name}",
                     rc,
                 )
-        # TODO: Need to handle DeviceRef
+            elif isinstance(rc, DeviceRef):
+                yield self.widget_formatter_factory.sub_screen_formatter_cls(
+                    rc_bounds, rc.pv
+                )
 
     def generate_read_widget(self, signal: ReadSignalType, bounds: Bounds):
         if isinstance(signal, SignalRW):

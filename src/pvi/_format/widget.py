@@ -158,7 +158,7 @@ class ActionWidgetFormatter(WidgetFormatter[T]):
 @dataclass
 class SubScreenWidgetFormatter(WidgetFormatter[T]):
     file_name: str
-    components: Group
+    components: Optional[Group] = None
 
 
 @dataclass
