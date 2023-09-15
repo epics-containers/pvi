@@ -13,7 +13,6 @@ from typing import (
     Union,
 )
 
-from pvi._format.bob import is_table
 from pvi._format.utils import Bounds
 from pvi._format.widget import (
     GroupFormatter,
@@ -97,12 +96,11 @@ class ScreenFormatterFactory(Generic[T]):
         screen_widgets: List[WidgetFormatter[T]] = []
         columns: List[Bounds] = [Bounds(**widget_dims)]
 
-        if len(components) == 1:
-            # Expand single group as only component on screen
-            # This is where the actual content of sub screens are created after being
-            # replaced by a sub screen button in the original location
-            component = components[0]
-            if isinstance(component, Group) and is_table(component):
+        match components:
+            case [Group(layout=SubScreen()) as component]:
+                # Expand single group sub screen as only component on screen
+                # This is where the actual content of sub screens are created after
+                # being replaced by a sub screen button in the original location
                 components = component.children
 
         for c in components:
@@ -229,8 +227,11 @@ class ScreenFormatterFactory(Generic[T]):
         if is_table(c):
             # Make a sub screen button at the root to display this Group instead of
             # embedding the components within a Group widget
+            c = Group(c.name, SubScreen(), c.children)
+
+        if isinstance(c.layout, SubScreen):
             return self.create_component_widget_formatters(
-                Group(c.name, SubScreen(), c.children),
+                c,
                 parent_bounds=screen_bounds,
                 column_bounds=column_bounds,
                 next_column_bounds=next_column_bounds,
@@ -290,21 +291,24 @@ class ScreenFormatterFactory(Generic[T]):
         column_bounds = Bounds(w=full_w, h=self.layout.widget_height)
         widget_factories: List[WidgetFormatter[T]] = []
 
-        assert isinstance(group.layout, Grid), "Can only do grid at the moment"
+        assert isinstance(
+            group.layout, (Grid, SubScreen)
+        ), "Can only do Grid and SubScreen at the moment"
 
         for c in group.children:
             component: Union[Group[Component], Component]
-            if isinstance(c, Group) and not isinstance(c.layout, Row):
-                if len(c.children) > 1 and is_table(c):
-                    # Make a sub screen to display this Group
-                    component = Group(c.name, SubScreen(), c.children)
-                else:
-                    raise NotImplementedError(
-                        "Only tables can be nested in a sub screen currently"
-                    )
-            else:
-                # Make single line with a component or Row of components
-                component = c
+            match c:
+                case Group(layout=Grid()):
+                    if is_table(c):
+                        # Display table on a sub screen
+                        component = Group(c.name, SubScreen(), c.children)
+                    else:
+                        raise NotImplementedError(
+                            "Cannot nest a Group(Grid()) in another Group on one screen"
+                        )
+                case _:
+                    # Make single line with a component or Row of components
+                    component = c
 
             next_column_bounds = Bounds(
                 x=next_x(widget_factories, self.layout.spacing),
@@ -501,6 +505,8 @@ class ScreenFormatterFactory(Generic[T]):
                 yield self.widget_formatter_factory.sub_screen_formatter_cls(
                     bounds=rc_bounds, file_name=rc.ui, macros=rc.macros
                 )
+            else:
+                print(f"Ignoring row component {rc}")
 
     def generate_read_widget(self, signal: ReadSignalType, bounds: Bounds):
         if isinstance(signal, SignalRW):
@@ -520,3 +526,10 @@ class ScreenFormatterFactory(Generic[T]):
             yield self.widget_formatter_factory.pv_widget_formatter(
                 signal.widget, bounds, signal.pv, self.prefix
             )
+
+
+def is_table(component: Group) -> bool:
+    return len(component.children) > 1 and all(
+        isinstance(sub_component, Group) and isinstance(sub_component.layout, Row)
+        for sub_component in component.children
+    )
