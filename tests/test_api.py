@@ -10,9 +10,12 @@ from pvi.device import (
     ComboBox,
     Device,
     DeviceRef,
+    Grid,
+    Group,
     SignalR,
     SignalRW,
     SignalW,
+    SubScreen,
     TableRead,
     TableWrite,
     TextFormat,
@@ -148,6 +151,68 @@ def test_device_ref(tmp_path, helper):
 
     expected_bob = HERE / "format" / "output" / "device_ref.bob"
     output_bob = tmp_path / "device_ref.bob"
+    formatter.format(device, "$(P)$(R)", output_bob)
+
+    helper.assert_output_matches(expected_bob, output_bob)
+
+
+def test_group_sub_screen(tmp_path, helper):
+    formatter_yaml = HERE / "format" / "input" / "dls.bob.pvi.formatter.yaml"
+    formatter = deserialize_yaml(Formatter, formatter_yaml)
+
+    # This tests every valid combination of nesting Group and SubScreen
+    signals = [
+        SignalR("A", "A", widget=TextRead()),
+        Group(
+            "Group 1",
+            layout=SubScreen(),
+            children=[
+                SignalR("Group 1 B", "GROUP1:B", widget=TextRead()),
+                Group(
+                    "Group 2",
+                    layout=Grid(),
+                    children=[
+                        SignalR("Group 2 C", "GROUP1:GROUP2:C", widget=TextRead()),
+                        SignalR("Group 2 D", "GROUP1:GROUP2:D", widget=TextRead()),
+                    ],
+                ),
+            ],
+        ),
+        Group(
+            "Group 3",
+            layout=Grid(),
+            children=[
+                SignalR("Group 3 E", "GROUP3:E", widget=TextRead()),
+                Group(
+                    "Group 4",
+                    layout=SubScreen(),
+                    children=[
+                        SignalR("Group 4 F", "GROUP3:GROUP4:F", widget=TextRead()),
+                        Group(
+                            "Group 5",
+                            layout=Grid(),
+                            children=[
+                                SignalR(
+                                    "Group 5 G",
+                                    "GROUP3:GROUP4:GROUP5:G",
+                                    widget=TextRead(),
+                                ),
+                                SignalR(
+                                    "Group 5 H",
+                                    "GROUP3:GROUP4:GROUP5:H",
+                                    widget=TextRead(),
+                                ),
+                            ],
+                        ),
+                    ],
+                ),
+            ],
+        ),
+    ]
+    device = Device("Device", children=signals)
+
+    expected_bob = HERE / "format" / "output" / "sub_screen.bob"
+    output_bob = tmp_path / "sub_screen.bob"
     formatter.format(device, "$(P)$(R)", output_bob)
 
     helper.assert_output_matches(expected_bob, output_bob)

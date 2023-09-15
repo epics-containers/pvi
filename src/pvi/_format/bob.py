@@ -10,8 +10,6 @@ from pvi._format.widget import UITemplate, WidgetFormatter
 from pvi.device import (
     LED,
     ComboBox,
-    Group,
-    Row,
     TableRead,
     TableWidgetType,
     TableWrite,
@@ -134,13 +132,6 @@ class BobTemplate(UITemplate[ElementBase]):
         for c in children:
             group_object[0].append(c.format()[0])
         return group_object
-
-
-def is_table(component: Group) -> bool:
-    return all(
-        isinstance(sub_component, Group) and isinstance(sub_component.layout, Row)
-        for sub_component in component.children
-    )
 
 
 def add_table_columns(widget_element: ElementBase, table: TableWidgetType):
