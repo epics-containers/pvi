@@ -1,7 +1,5 @@
-from __future__ import annotations
-
 from copy import deepcopy
-from typing import List, Optional, Sequence
+from typing import Dict, List, Optional, Sequence
 
 from lxml.etree import ElementBase, SubElement, XMLParser, parse
 
@@ -57,15 +55,20 @@ class BobTemplate(UITemplate[ElementBase]):
         t_copy = deepcopy(template)
         for item, value in properties.items():
             new_text = ""
-            if widget_type == "table" and item == "pv_name":
-                new_text = f"pva://{value}"  # Must include pva prefix
-            elif item == "file":
-                new_text = f"{value}.bob"  # Must include file extension
-            else:
-                new_text = str(value)
+
+            match widget_type, item, value:
+                case "table", "pv_name", pv:
+                    new_text = f"pva://{pv}"  # Must include pva prefix
+                case "action_button", "file", file_name:
+                    new_text = f"{file_name}.bob"  # Must include file extension
+                case "action_button", "macros", dict() as macros:
+                    if macros:
+                        add_button_macros(t_copy, value)
+                case _:
+                    new_text = str(value)
 
             if new_text:
-                replace_text(t_copy, item, new_text)
+                find_element(t_copy, item).text = new_text
 
         # Add additional properties from widget
         match widget_type, widget:
@@ -167,6 +170,20 @@ def add_table_column(
             SubElement(options_element, "option").text = option
 
 
+def add_button_macros(widget_element: ElementBase, macros: Dict[str, str]):
+    """Add action macros to the given element.
+
+    Args:
+        widget_element: Element to add action macros to
+        macros: Macros to add to element
+
+    """
+    action_element = find_element(widget_element, "action")
+    macros_element = SubElement(action_element, "macros")
+    for macro, value in macros.items():
+        SubElement(macros_element, macro).text = value
+
+
 def add_combo_box_items(widget_element: ElementBase, combo_box: ComboBox):
     if not combo_box.choices:
         # Default empty -> get items from pv
@@ -188,10 +205,19 @@ def add_format(element: ElementBase, format: str):
         SubElement(element, "format").text = format
 
 
-def replace_text(element: ElementBase, tag: str, text: str):
-    try:
-        # Iterate tree to find tag and replace text
-        list(element.iter(tag=tag))[0].text = text
-    except IndexError as idx:
-        name = element.find("name").text
-        raise ValueError(f"Failed to locate '{tag}' in {name}") from idx
+def find_element(root_element: ElementBase, tag: str, index: int = 0) -> ElementBase:
+    """Iterate tree to find tag and replace text.
+
+    Args:
+        root_element: Root of tree to search
+        tag: Tag to search for in tree
+        index: Match to return if multiple matches are found
+
+    """
+    match list(root_element.iter(tag=tag)):
+        case []:
+            raise ValueError(
+                f"No matches for '{tag}' in {root_element.find('name').text}"
+            )
+        case matches:
+            return matches[index]

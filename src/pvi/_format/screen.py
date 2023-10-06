@@ -497,13 +497,13 @@ class ScreenFormatterFactory(Generic[T]):
                 )
             elif isinstance(rc, Group) and isinstance(rc.layout, SubScreen):
                 yield self.widget_formatter_factory.sub_screen_formatter_cls(
-                    rc_bounds,
-                    f"{self.base_file_name}_{rc.name.replace(' ', '_')}",
-                    rc,
+                    bounds=rc_bounds,
+                    file_name=f"{self.base_file_name}_{rc.name.replace(' ', '_')}",
+                    components=rc,
                 )
             elif isinstance(rc, DeviceRef):
                 yield self.widget_formatter_factory.sub_screen_formatter_cls(
-                    rc_bounds, rc.pv
+                    bounds=rc_bounds, file_name=rc.pv, macros=rc.macros
                 )
             else:
                 print(f"Ignoring row component {rc}")

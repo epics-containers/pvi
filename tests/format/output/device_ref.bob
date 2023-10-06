@@ -40,6 +40,10 @@
         <file>combo_box.bob</file>
         <target>tab</target>
         <description>Open Display</description>
+        <macros>
+          <P>EIGER</P>
+          <R>:CAM:</R>
+        </macros>
       </action>
     </actions>
     <text>...</text>

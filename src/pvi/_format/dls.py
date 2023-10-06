@@ -259,7 +259,7 @@ class DLSFormatter(Formatter):
             sub_screen_formatter_cls=SubScreenWidgetFormatter.from_template(
                 template,
                 search="SubScreen",
-                property_map=dict(file="file_name"),
+                property_map=dict(file="file_name", macros="macros"),
             ),
         )
         # MAKE_WIDGETS DOCS REF: Define screen and group widgets

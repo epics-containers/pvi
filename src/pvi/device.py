@@ -302,6 +302,10 @@ class DeviceRef(Component):
     """Reference to another Device."""
 
     pv: Annotated[str, desc("Child device PVI PV")]
+    macros: Annotated[
+        Dict[str, str],
+        desc("Macro-value pairs"),
+    ] = field(default_factory=dict)
 
 
 class SignalRef(Component):

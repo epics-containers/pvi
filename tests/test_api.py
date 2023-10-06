@@ -146,7 +146,9 @@ def test_device_ref(tmp_path, helper):
     formatter = deserialize_yaml(Formatter, formatter_yaml)
 
     # Make a button to open an existing screen - use screen from combo box test
-    device_ref = DeviceRef("ComboBoxRef", "combo_box")
+    device_ref = DeviceRef(
+        "ComboBoxRef", "combo_box", macros=dict(P="EIGER", R=":CAM:")
+    )
     device = Device("Device", children=[device_ref])
 
     expected_bob = HERE / "format" / "output" / "device_ref.bob"

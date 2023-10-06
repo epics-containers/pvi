@@ -556,11 +556,19 @@
         "pv": {
           "type": "string",
           "description": "Child device PVI PV"
+        },
+        "macros": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Macro-value pairs"
         }
       },
       "required": [
         "name",
-        "pv"
+        "pv",
+        "macros"
       ],
       "additionalProperties": false
     },
