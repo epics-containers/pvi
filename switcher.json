@@ -36,6 +36,10 @@
     "url": "https://epics-containers.github.io/pvi/fix-links/"
   },
   {
+    "version": "giles-pydantic",
+    "url": "https://epics-containers.github.io/pvi/giles-pydantic/"
+  },
+  {
     "version": "main-tmp",
     "url": "https://epics-containers.github.io/pvi/main-tmp/"
   },
