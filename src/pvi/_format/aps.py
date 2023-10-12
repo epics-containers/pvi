@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 from pathlib import Path
 from typing import Annotated, List
 
@@ -16,7 +15,6 @@ from pvi._format.widget import (
     SubScreenWidgetFormatter,
     WidgetFormatter,
 )
-from pvi._schema_utils import desc
 from pvi.device import Device
 
 from .base import Formatter

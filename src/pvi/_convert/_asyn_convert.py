@@ -1,5 +1,4 @@
 import re
-from dataclasses import dataclass
 from typing import Optional, Type
 
 from pvi.device import Component, SignalR, SignalRW, SignalW
@@ -18,7 +17,6 @@ class RecordError(Exception):
     pass
 
 
-@dataclass
 class AsynRecord(Record):
     def __post_init__(self):
         # We don't care about records without INP or OUT or with both (error)
@@ -72,7 +70,6 @@ class AsynRecord(Record):
         )
 
 
-@dataclass
 class SettingPair(Parameter):
     read_record: AsynRecord
     write_record: AsynRecord
@@ -90,7 +87,6 @@ class SettingPair(Parameter):
         )
 
 
-@dataclass
 class Readback(Parameter):
     read_record: AsynRecord
 
@@ -102,25 +98,28 @@ class Readback(Parameter):
         else:
             name = self.read_record.name
 
-        component = asyn_cls(name)
+        # TODO what gives here - how come we don't pass arguments to the constructor?
+        # component = asyn_cls(name)
 
-        return SignalR(
-            name=component.name,
-            pv=component.get_read_record(),
-            widget=component.read_widget,
-        )
+        # return SignalR(
+        #     name=component.name,
+        #     pv=component.get_read_record(),
+        #     widget=component.read_widget,
+        #     label="",
+        # )
 
 
-@dataclass
 class Action(Parameter):
     write_record: AsynRecord
 
     def generate_component(self) -> Component:
         asyn_cls = self.write_record.asyn_component_type()
-        component = asyn_cls(self.write_record.name)
 
-        return SignalW(
-            name=component.name,
-            pv=component.get_write_record(),
-            widget=component.write_widget,
-        )
+        # TODO what gives here - how come we don't pass arguments to the constructor?
+        # component = asyn_cls(self.write_record.name)
+
+        # return SignalW(
+        #     name=component.name,
+        #     pv=component.get_write_record(),
+        #     widget=component.write_widget,
+        # )

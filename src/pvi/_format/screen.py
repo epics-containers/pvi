@@ -1,8 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, field
 from typing import (
-    Annotated,
     Dict,
     Iterator,
     List,
@@ -12,6 +10,8 @@ from typing import (
     TypeVar,
     Union,
 )
+
+from pydantic import Field
 
 from pvi._format.bob import is_table
 from pvi._format.utils import Bounds
@@ -25,7 +25,7 @@ from pvi._format.widget import (
     next_x,
     next_y,
 )
-from pvi._schema_utils import desc
+from pvi._schema_utils import BaseSettings
 from pvi.device import (
     ButtonPanel,
     Component,
@@ -48,31 +48,34 @@ from pvi.device import (
 T = TypeVar("T")
 
 
-@dataclass
-class ScreenLayout:
-    spacing: Annotated[int, desc("Spacing between widgets")]
-    title_height: Annotated[int, desc("Height of screen title bar")]
-    max_height: Annotated[int, desc("Max height of the screen")]
-    group_label_height: Annotated[int, desc("Height of the group title label")]
-    label_width: Annotated[int, desc("Width of the labels describing widgets")]
-    widget_width: Annotated[int, desc("Width of the widgets")]
-    widget_height: Annotated[int, desc("Height of the widgets (Labels use this too)")]
-    group_widget_indent: Annotated[
-        int, desc("Indentation of widgets within groups. Defaults to 0")
-    ] = 0
-    group_width_offset: Annotated[
-        int, desc("Additional border width when using group objects. Defaults to 0")
-    ] = 0
+class ScreenLayout(BaseSettings):
+    spacing: int = Field(description="Spacing between widgets")
+    title_height: int = Field(description="Height of screen title bar")
+    max_height: int = Field(description="Max height of the screen")
+    group_label_height: int = Field(description="Height of the group title label")
+    label_width: int = Field(description="Width of the labels describing widgets")
+    widget_width: int = Field(description="Width of the widgets")
+    widget_height: int = Field(
+        description="Height of the widgets (Labels use this too)"
+    )
+    group_widget_indent: int = Field(
+        0, description="Indentation of widgets within groups. Defaults to 0"
+    )
+    group_width_offset: int = Field(
+        0, description="Additional border width when using group objects. Defaults to 0"
+    )
 
 
-@dataclass
+# TODO  this was a data class does it need
 class ScreenFormatterFactory(Generic[T]):
     screen_formatter_cls: Type[GroupFormatter[T]]
     group_formatter_cls: Type[GroupFormatter[T]]
     widget_formatter_factory: WidgetFormatterFactory
     layout: ScreenLayout
     prefix: str
-    components: Dict[str, Component] = field(init=False, default_factory=dict)
+    # TODO - this had --init=False meaning it is not part of the model __init__ args
+    # what does this mean for pydantic?
+    components: Dict[str, Component] = Field({}, init=False)
     base_file_name: str = ""
 
     def create_screen_formatter(

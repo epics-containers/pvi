@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 from pathlib import Path
 from typing import Annotated, List
 
@@ -19,14 +18,12 @@ from pvi._format.widget import (
     SubScreenWidgetFormatter,
     WidgetFormatter,
 )
-from pvi._schema_utils import desc
 from pvi.device import Device
 
 from .base import Formatter
 from .utils import Bounds, GroupType, with_title
 
 
-@dataclass
 class DLSFormatter(Formatter):
     spacing: Annotated[int, desc("Spacing between widgets")] = 5
     title_height: Annotated[int, desc("Height of screen title bar")] = 25

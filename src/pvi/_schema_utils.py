@@ -16,18 +16,30 @@ from apischema.conversions import Conversion
 from apischema.conversions.converters import serializer
 from apischema.json_schema import JsonSchemaVersion, deserialization_schema
 from apischema.utils import identity
+from pydantic import BaseModel, ConfigDict
 
 Cls = TypeVar("Cls", bound=type)
+
+
+class BaseSettings(BaseModel):
+    """A Base class for setting consistent Pydantic model configuration"""
+
+    model_config = ConfigDict(
+        extra="forbid",
+    )
 
 
 # Permanently cache so we don't include deserialization subclasses defined below
 @lru_cache(maxsize=None)
 def rec_subclasses(cls: Cls) -> List[Cls]:
     """Recursive implementation of type.__subclasses__"""
-    subclasses = []
-    for sub_cls in cls.__subclasses__():
-        subclasses += [sub_cls] + rec_subclasses(sub_cls)
-    return subclasses
+    # TODO  check if this is causing infinite recursion
+    #
+    #  subclasses = []
+    # for sub_cls in cls.__subclasses__():
+    #     subclasses += [sub_cls] + rec_subclasses(sub_cls)
+    # return subclasses
+    return []
 
 
 has_type: Set[type] = set()
