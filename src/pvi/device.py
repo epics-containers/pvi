@@ -5,6 +5,7 @@ import re
 from enum import Enum
 from pathlib import Path
 from typing import (
+    Annotated,
     Any,
     Callable,
     Dict,
@@ -21,7 +22,7 @@ from typing import (
 from pydantic import Field
 from ruamel.yaml import YAML
 
-from pvi._schema_utils import BaseSettings
+from pvi._schema_utils import BaseSettings, add_type_field
 from pvi.utils import find_pvi_yaml
 
 PASCAL_CASE_REGEX = re.compile(r"(?<![A-Z])[A-Z]|[A-Z][a-z/d]|(?<=[a-z])\d")
@@ -259,7 +260,10 @@ class SignalRW(Component):
         None, description="Widget to use for control, None means don't display"
     )
     # TODO This was Optional[str] but produced JSON schema that YAML editor didn't understand
-    read_pv: str = Field("", description="PV to be used for read, empty means use pv")
+    # UPDATE trying optional again in pydantic
+    read_pv: Optional[str] = Field(
+        None, description="PV to be used for read, empty means use pv"
+    )
     read_widget: Optional[ReadWidget] = Field(
         None, description="Widget to use for display, None means use widget"
     )
@@ -291,7 +295,7 @@ T = TypeVar("T")
 S = TypeVar("S")
 
 
-# TODO add_type_field
+@add_type_field
 class Group(Generic[T], Labelled):
     """Group of child components in a Layout"""
 
@@ -331,12 +335,16 @@ class Device(BaseSettings):
     """Collection of Components"""
 
     label: str = Field(description="Label for screen")
-    # TODO this was an optial field rather than a field of type that is optional
-    # but I assumed that was wrong
-    # parent: Optional[str] = Field(
-    #     None, description="The parent device (basename of yaml file)"
-    # )
+    # TODO this was an optiol field rather than a field of type that is optional
+    # is that relavent?
+    parent: Optional[
+        Annotated[
+            str,
+            "The parent device (basename of yaml file)",
+        ]
+    ] = None
     # children: Tree[Component] = Field([], description="Child Components")
+    children: Any
 
     def serialize(self) -> Mapping[str, Any]:
         """Serialize the Device to a dictionary."""

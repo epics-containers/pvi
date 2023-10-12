@@ -249,7 +249,6 @@ class GroupFormatter(WidgetFormatter[T]):
         )
 
 
-# TODO verify that this is the correct approach
 class WidgetFormatterFactory(BaseSettings, Generic[T]):
     header_formatter_cls: Type[LabelWidgetFormatter[T]]
     label_formatter_cls: Type[LabelWidgetFormatter[T]]

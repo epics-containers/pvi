@@ -10,7 +10,6 @@ from pvi._convert._template_convert import TemplateConverter
 from pvi._convert.utils import extract_device_and_parent_class
 from pvi._format import Formatter
 from pvi._pv_group import group_parameters
-from pvi._schema_utils import make_json_schema
 from pvi._yaml_utils import deserialize_yaml, serialize_yaml
 from pvi.device import Device
 
@@ -52,7 +51,7 @@ def schema(output: Path = typer.Argument(..., help="filename to write the schema
     else:
         typer.echo(f"Don't know how to create {output.name}")
         raise typer.Exit(code=1)
-    schema = make_json_schema(cls)
+    schema = cls.model_dump_json()
     output.write_text(json.dumps(schema, indent=2))
 
 
@@ -91,7 +90,7 @@ def device(
 
     name, parent = extract_device_and_parent_class(h.read_text())
     component_group = TemplateConverter(templates).convert()
-    device = Device(name, parent, component_group)
+    device = Device(label=name, parent=parent, children=component_group)
 
     serialize_yaml(device, output / f"{name}.pvi.device.yaml")
 

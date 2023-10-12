@@ -23,7 +23,12 @@ class TemplateConverter:
 
     def convert(self) -> Tree[Component]:
         return [
-            Group(name=template.stem, layout=Grid(), children=template_components)
+            Group(
+                name=template.stem,
+                layout=Grid(labelled=True),
+                children=template_components,
+                label=f"Group {template.stem}",
+            )
             for template, template_components in zip(
                 self.templates, self._extract_components()
             )

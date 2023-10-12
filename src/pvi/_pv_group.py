@@ -78,14 +78,15 @@ def group_parameters(device: Device, ui_paths: List[Path]) -> List[Group[Compone
     # Create groups for parameters we found in the files
     ui_groups: List[Group[Component]] = [
         Group(
-            sanitize_name(group_name),
-            Grid(labelled=True),
-            [  # Note: Need to preserve order in group_pvs here
+            name=sanitize_name(group_name),
+            layout=Grid(labelled=True),
+            children=[  # Note: Need to preserve order in group_pvs here
                 param
                 for pv in group_pvs
                 for param in initial_parameters
                 if param.name == pv
             ],
+            label=group_name,
         )
         for group_name, group_pvs in group_pv_map.items()
     ]
@@ -100,9 +101,10 @@ def group_parameters(device: Device, ui_paths: List[Path]) -> List[Group[Compone
     if ungrouped_parameters:
         ui_groups.append(
             Group(
-                sanitize_name(device.label + "Misc"),
-                Grid(labelled=True),
-                ungrouped_parameters,
+                name=sanitize_name(device.label + "Misc"),
+                layout=Grid(labelled=True),
+                children=ungrouped_parameters,
+                label=device.label + " Ungrouped",
             )
         )
 

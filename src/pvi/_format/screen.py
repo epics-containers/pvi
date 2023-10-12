@@ -66,8 +66,7 @@ class ScreenLayout(BaseSettings):
     )
 
 
-# TODO  this was a data class does it need
-class ScreenFormatterFactory(Generic[T]):
+class ScreenFormatterFactory(BaseSettings, Generic[T]):
     screen_formatter_cls: Type[GroupFormatter[T]]
     group_formatter_cls: Type[GroupFormatter[T]]
     widget_formatter_factory: WidgetFormatterFactory
@@ -484,16 +483,16 @@ class ScreenFormatterFactory(Generic[T]):
                 yield from self.generate_read_widget(rc, rc_bounds)
             elif isinstance(rc, SignalX):
                 yield self.widget_formatter_factory.action_formatter_cls(
-                    rc_bounds,
-                    rc.get_label(),
-                    self.prefix + rc.pv,
-                    rc.value,
+                    bounds=rc_bounds,
+                    label=rc.get_label(),
+                    pv=self.prefix + rc.pv,
+                    value=rc.value,
                 )
             elif isinstance(rc, Group) and isinstance(rc.layout, SubScreen):
                 yield self.widget_formatter_factory.sub_screen_formatter_cls(
-                    rc_bounds,
-                    f"{self.base_file_name}_{rc.name}",
-                    rc,
+                    bounds=rc_bounds,
+                    file_name=f"{self.base_file_name}_{rc.name}",
+                    components=rc,
                 )
         # TODO: Need to handle DeviceRef
 

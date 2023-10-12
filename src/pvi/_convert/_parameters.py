@@ -127,8 +127,8 @@ class AsynFloat64(AsynParameter):
     )
     # TODO These have defaults of 1 and None for lines and format but I
     # guess mypy cant see that so we need a noqa of some sort
-    read_widget: AReadWidget = Field(TextRead())
-    write_widget: AWriteWidget = Field(TextWrite())
+    read_widget: AReadWidget = Field(TextRead())  # type: ignore
+    write_widget: AWriteWidget = Field(TextWrite())  # type: ignore
 
 
 class AsynInt32(AsynParameter):
@@ -139,8 +139,8 @@ class AsynInt32(AsynParameter):
         asyn_write="asynInt32",
         asyn_param="asynParamInt32",
     )
-    read_widget: AReadWidget = Field(TextRead())
-    write_widget: AWriteWidget = Field(TextWrite())
+    read_widget: AReadWidget = Field(TextRead())  # type: ignore
+    write_widget: AWriteWidget = Field(TextWrite())  # type: ignore
 
 
 class AsynLong(AsynInt32):
@@ -155,8 +155,8 @@ class AsynMultiBitBinary(AsynParameter):
         asyn_write="asynInt32",
         asyn_param="asynParamInt32",
     )
-    read_widget: AReadWidget = Field(TextRead())
-    write_widget: AWriteWidget = Field(ComboBox())
+    read_widget: AReadWidget = Field(TextRead())  # type: ignore
+    write_widget: AWriteWidget = Field(ComboBox())  # type: ignore
 
 
 class AsynString(AsynParameter):
@@ -167,8 +167,8 @@ class AsynString(AsynParameter):
         asyn_write="asynOctetWrite",
         asyn_param="asynParamOctet",
     )
-    read_widget: AReadWidget = Field(TextRead())
-    write_widget: AWriteWidget = Field(TextWrite())
+    read_widget: AReadWidget = Field(TextRead())  # type: ignore
+    write_widget: AWriteWidget = Field(TextWrite())  # type: ignore
 
 
 InRecordTypes = dict(
@@ -198,8 +198,8 @@ class AsynWaveform(AsynParameter):
         asyn_write="asynOctetWrite",
         asyn_param="asynParamOctet",
     )
-    read_widget: AReadWidget = Field(TextRead(lines=0, format=None))
-    write_widget: AWriteWidget = Field(TextWrite(lines=0, format=None))
+    read_widget: AReadWidget = Field(TextRead())  # type: ignore
+    write_widget: AWriteWidget = Field(TextWrite())  # type: ignore
 
 
 class AsynInt32Waveform(AsynWaveform):
@@ -213,7 +213,9 @@ class AsynInt32Waveform(AsynWaveform):
 
 
 # TODO this was dataclass before - do we need multiple inheritance?
-class AsynFloat64Waveform(AsynWaveform):
+# I had to add BaseSettings as second base class for mypy to work
+# not sure if this is good?
+class AsynFloat64Waveform(AsynWaveform, BaseSettings):
     """Asyn Waveform Parameter and records with int32 array elements"""
 
     type_strings: ClassVar[TypeStrings] = TypeStrings(
@@ -259,8 +261,6 @@ class ParameterBase:
         raise NotImplementedError(self)
 
 
-# TODO I added this into the hierarchy to allow all subclasses of Parameter
-# to be models
 class Parameter(BaseSettings, ParameterBase):
     """all things derived from parameter are models but parameter base is not"""
 
