@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 
 
@@ -6,9 +7,9 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Original Design &#8212; pvi 0.6.dev1+gba38f34 documentation</title>
+    <title>Original Design &#8212; pvi 0.6.dev2+gbae7bf4 documentation</title>
   
   
   
@@ -28,22 +29,22 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
-    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
   <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
 
-    <script src="../../_static/documentation_options.js?v=b4d1f680"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
-    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="../../_static/copybutton.js?v=30646c52"></script>
-    <script src="../../_static/design-tabs.js?v=36754332"></script>
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/design-tabs.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'developer/explanations/original-design';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.14.1';
@@ -477,7 +478,7 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section id="original-design">
-<h1>Original Design<a class="headerlink" href="#original-design" title="Link to this heading">#</a></h1>
+<h1>Original Design<a class="headerlink" href="#original-design" title="Permalink to this heading">#</a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This page was the initial plan for what PVI would do. The produce features have now
@@ -517,7 +518,7 @@ PVI -&gt; &quot;pilatus_parameters.csv&quot;
 &quot;pilatus_parameters.opi&quot; -&gt; &quot;pilatus.opi&quot; [label=&quot;linked from&quot;]
 }</p></object></div>
 <table class="table" id="id1">
-<caption><span class="caption-text">Aims of PVI</span><a class="headerlink" href="#id1" title="Link to this table">#</a></caption>
+<caption><span class="caption-text">Aims of PVI</span><a class="headerlink" href="#id1" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 20.0%" />
 <col style="width: 80.0%" />
@@ -550,7 +551,7 @@ screen according to local styles</p></td>
 </tbody>
 </table>
 <section id="how-it-works">
-<h2>How it works<a class="headerlink" href="#how-it-works" title="Link to this heading">#</a></h2>
+<h2>How it works<a class="headerlink" href="#how-it-works" title="Permalink to this heading">#</a></h2>
 <p>The YAML file contains information about each asyn parameter that will be
 exposed by the driver, it’s name, type, description, initial value, which record
 type it uses, whether it is writeable or read only, which widget should be used,
@@ -559,7 +560,7 @@ Channel and AsynParam objects. These are passed to a site specific Formatter whi
 takes the tree of intermediate objects and writes a parameter CPP file, database
 template, and site specific screens to disk.</p>
 <section id="yaml-file">
-<h3>YAML file<a class="headerlink" href="#yaml-file" title="Link to this heading">#</a></h3>
+<h3>YAML file<a class="headerlink" href="#yaml-file" title="Permalink to this heading">#</a></h3>
 <p>The YAML file is formed of a number of sections:</p>
 <table class="table">
 <colgroup>
@@ -1151,7 +1152,7 @@ detector:</p>
 </div>
 </section>
 <section id="screen-files">
-<h3>Screen files<a class="headerlink" href="#screen-files" title="Link to this heading">#</a></h3>
+<h3>Screen files<a class="headerlink" href="#screen-files" title="Permalink to this heading">#</a></h3>
 <p>The intermediate objects are a number of Channel instances. These contain basic
 types (like Combo, TextInput, TextUpdate, LED, Group) and some creation hints
 (like label, grouping, description, display_form), but no X, Y, Width,
@@ -1166,11 +1167,11 @@ blue/grey MEDM screens and green/grey EDM screens can be customized to fit
 the site style guide.</p>
 </section>
 <section id="html-documentation">
-<h3>HTML Documentation<a class="headerlink" href="#html-documentation" title="Link to this heading">#</a></h3>
+<h3>HTML Documentation<a class="headerlink" href="#html-documentation" title="Permalink to this heading">#</a></h3>
 <p>The Parameter and record sections of the existing documentation could be
 reproduced, in tabular form as a csv file that can be included in rst docs:</p>
 <table class="table" id="id2">
-<caption><span class="caption-text">Pilatus Parameters</span><a class="headerlink" href="#id2" title="Link to this table">#</a></caption>
+<caption><span class="caption-text">Pilatus Parameters</span><a class="headerlink" href="#id2" title="Permalink to this table">#</a></caption>
 <colgroup>
 <col style="width: 9.8%" />
 <col style="width: 6.5%" />
@@ -1610,11 +1611,11 @@ mbbi</p></td>
 </section>
 </section>
 <section id="questions">
-<h2>Questions<a class="headerlink" href="#questions" title="Link to this heading">#</a></h2>
+<h2>Questions<a class="headerlink" href="#questions" title="Permalink to this heading">#</a></h2>
 <p>I am fairly happy with the scheme set out above, but there are a lot of
 implementation questions. Here are the most pressing:</p>
 <section id="one-time-generation-and-checked-into-source-control-or-generated-by-makefile">
-<h3>One-time generation and checked into source control or generated by Makefile?<a class="headerlink" href="#one-time-generation-and-checked-into-source-control-or-generated-by-makefile" title="Link to this heading">#</a></h3>
+<h3>One-time generation and checked into source control or generated by Makefile?<a class="headerlink" href="#one-time-generation-and-checked-into-source-control-or-generated-by-makefile" title="Permalink to this heading">#</a></h3>
 <p>The process would probably be:</p>
 <ul class="simple">
 <li><p>If pvi cli tool available, build products as part of make</p></li>
@@ -1625,7 +1626,7 @@ implementation questions. Here are the most pressing:</p>
 components, just a path to a GenICam XML file</p>
 </section>
 <section id="which-screen-tools-to-support">
-<h3>Which screen tools to support?<a class="headerlink" href="#which-screen-tools-to-support" title="Link to this heading">#</a></h3>
+<h3>Which screen tools to support?<a class="headerlink" href="#which-screen-tools-to-support" title="Permalink to this heading">#</a></h3>
 <p>I suggest creating adl and edl files initially, following the example of
 makeAdl.py in ADGenICam, then expanding to support opi, bob and ui files
 natively. This would avoid needing screen converters installed</p>
@@ -1633,7 +1634,7 @@ natively. This would avoid needing screen converters installed</p>
 </section>
 </section>
 <section id="drivers">
-<h1>Drivers<a class="headerlink" href="#drivers" title="Link to this heading">#</a></h1>
+<h1>Drivers<a class="headerlink" href="#drivers" title="Permalink to this heading">#</a></h1>
 <p>The generated header file contains the string parameters, and defines the parameters to
 make the interface. In this example we have a header file pilatusDetectorParamSet.h:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#ifndef PilatusDetectorParamSet_H</span>
@@ -1808,7 +1809,7 @@ make the interface. In this example we have a header file pilatusDetectorParamSe
 <p>The existing pilatus.cpp is then modified to remove these parameters definitions and
 use the param set API.</p>
 <section id="database-template-file">
-<h2>Database Template File<a class="headerlink" href="#database-template-file" title="Link to this heading">#</a></h2>
+<h2>Database Template File<a class="headerlink" href="#database-template-file" title="Permalink to this heading">#</a></h2>
 <p>According to the demand and readback properties of the component, the following
 records are created:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># This file was automatically generated</span>
@@ -2398,7 +2399,7 @@ records are created:</p>
 provide logic (for things like the arrayRate and EPICSShutter in areaDetector).</p>
 </section>
 <section id="ui">
-<h2>UI<a class="headerlink" href="#ui" title="Link to this heading">#</a></h2>
+<h2>UI<a class="headerlink" href="#ui" title="Permalink to this heading">#</a></h2>
 <p>Finally, UI elements can be generated for each component for multiple graphical
 applications. For example, the following EDM screen is generated:</p>
 <a class="reference internal image-reference" href="../../_images/pilatus_edl.png"><img alt="../../_images/pilatus_edl.png" class="align-center" src="../../_images/pilatus_edl.png" style="width: 50%;" /></a>
@@ -2406,14 +2407,14 @@ applications. For example, the following EDM screen is generated:</p>
 pallette for constructing higher level, more structured screens.</p>
 </section>
 <section id="ongoing-development">
-<h2>Ongoing Development<a class="headerlink" href="#ongoing-development" title="Link to this heading">#</a></h2>
+<h2>Ongoing Development<a class="headerlink" href="#ongoing-development" title="Permalink to this heading">#</a></h2>
 <p>Once a module is working with PVI (either an existing module after the YAML is created
 from the templates using the one time generation script, or a newly written module) it
 will then be necessary to update the YAML file in future development. Here is an
 example of necessary changes to add a new parameter, with and without
 PVI:</p>
 <section id="with-pvi">
-<h3>With PVI<a class="headerlink" href="#with-pvi" title="Link to this heading">#</a></h3>
+<h3>With PVI<a class="headerlink" href="#with-pvi" title="Permalink to this heading">#</a></h3>
 <p>Update YAML file:</p>
 <div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AsynFloat64</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DelayTime</span>
@@ -2429,7 +2430,7 @@ PVI:</p>
 then be shared with other sites who can generate their own required files.</p>
 </section>
 <section id="without-pvi">
-<h3>Without PVI<a class="headerlink" href="#without-pvi" title="Link to this heading">#</a></h3>
+<h3>Without PVI<a class="headerlink" href="#without-pvi" title="Permalink to this heading">#</a></h3>
 <p>Update template:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp"># Delay time in External Trigger mode.</span>
 <span class="n">record</span><span class="p">(</span><span class="n">ao</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;$(P)$(R)DelayTime&quot;</span><span class="p">)</span>
@@ -2523,7 +2524,7 @@ and archiver tags).</p>
 </section>
 </section>
 <section id="class-hierarchy">
-<h2>Class Hierarchy<a class="headerlink" href="#class-hierarchy" title="Link to this heading">#</a></h2>
+<h2>Class Hierarchy<a class="headerlink" href="#class-hierarchy" title="Permalink to this heading">#</a></h2>
 <p>Drivers will access their parameters via a param set, either using inheritance or
 composition. The class hierarchy for param sets mirrors the drivers. Each of the ‘base’
 classes (classes not instantiated directly) has-a paramSet containing its parameters in
@@ -2544,7 +2545,7 @@ the non-virtual base classes. This means the constructors are called in the corr
 order such that when the asynPortDriver constructor the <code class="docutils literal notranslate"><span class="pre">asynParamSet</span></code>
 <code class="docutils literal notranslate"><span class="pre">parameterDefinitions</span></code> is fully populated when <code class="docutils literal notranslate"><span class="pre">createParams</span></code> is called.</p>
 <section id="change-summary">
-<h3>Change Summary<a class="headerlink" href="#change-summary" title="Link to this heading">#</a></h3>
+<h3>Change Summary<a class="headerlink" href="#change-summary" title="Permalink to this heading">#</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li><dl class="simple">
@@ -2621,7 +2622,7 @@ Child classes work with no changes</p>
 </div></blockquote>
 </section>
 <section id="caveats">
-<h3>Caveats<a class="headerlink" href="#caveats" title="Link to this heading">#</a></h3>
+<h3>Caveats<a class="headerlink" href="#caveats" title="Permalink to this heading">#</a></h3>
 <p>There are some changes that are unavoidable without inserting edge cases into the
 generation logic and making the YAML schema more complicated. Some examples are:</p>
 <blockquote>
@@ -2642,7 +2643,7 @@ value can be overridden to define drvInfo for drvUserCreate dynamic parameters.<
 </div></blockquote>
 </section>
 <section id="next-steps">
-<h3>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading">#</a></h3>
+<h3>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this heading">#</a></h3>
 <p>A script is in development to perform the generation of an initial YAML file from a
 template. The idea being that after this point, everything is generated from the YAML
 file and any changes are made there and everything regenerated. New drivers can use
@@ -2662,7 +2663,7 @@ the driver constructor. Either solution would resolve caveat 3, because all clas
 will access FIRST_DRIVER_PARAM via <code class="docutils literal notranslate"><span class="pre">paramSet-&gt;</span></code>.</p>
 </section>
 <section id="possible-further-work">
-<h3>Possible Further Work<a class="headerlink" href="#possible-further-work" title="Link to this heading">#</a></h3>
+<h3>Possible Further Work<a class="headerlink" href="#possible-further-work" title="Permalink to this heading">#</a></h3>
 <p>Adopting this framework could make it easier to make other improvements to the C++ code,
 such as:</p>
 <blockquote>
