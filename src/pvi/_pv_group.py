@@ -12,7 +12,7 @@ def find_pvs(pvs: List[str], file_path: Path) -> Tuple[List[str], List[str]]:
         file_content = f.read()
 
     pv_coordinates: Dict[int, List[str]] = {}
-    remaining_pvs = [pv for pv in pvs]
+    remaining_pvs = list(pvs)
     for pv in pvs:
         if pv not in file_content:
             continue
