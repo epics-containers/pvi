@@ -42,7 +42,7 @@
             "program": "${workspaceFolder:pvi}/src/pvi",
             "args": [
                 "convert",
-                "${input:Converter}",
+                "device",
                 "${workspaceFolder:ADCore}/pvi",
                 "${workspaceFolder:ADCore}/ADApp/ADSrc/asynNDArrayDriver.h",
                 "--template",
@@ -78,9 +78,9 @@
                 "convert",
                 "device",
                 "${workspaceFolder:ADCore}/pvi",
-                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/pluginSrc/NDPluginDriver.h",
+                "${workspaceFolder:ADCore}/ADApp/pluginSrc/NDPluginDriver.h",
                 "--template",
-                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/Db/NDPluginBase.template",
+                "${workspaceFolder:ADCore}/ADApp/Db/NDPluginBase.template",
             ],
             "console": "integratedTerminal"
         },
@@ -94,7 +94,7 @@
                 "convert",
                 "device",
                 "${workspaceFolder:ADCore}/pvi",
-                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/pluginSrc/NDPluginFile.h",
+                "${workspaceFolder:ADCore}/ADApp/pluginSrc/NDPluginFile.h",
             ],
             "console": "integratedTerminal"
         },
@@ -108,9 +108,9 @@
                 "convert",
                 "device",
                 "${workspaceFolder:ADCore}/pvi",
-                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/pluginSrc/NDFileHDF5.h",
+                "${workspaceFolder:ADCore}/ADApp/pluginSrc/NDFileHDF5.h",
                 "--template",
-                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/Db/NDFileHDF5.template",
+                "${workspaceFolder:ADCore}/ADApp/Db/NDFileHDF5.template",
             ],
             "console": "integratedTerminal"
         },
@@ -155,8 +155,8 @@
             "args": [
                 "convertplaceholder",
                 "${workspaceFolder:ADCore}",
-                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/pluginSrc/${input:plugin}.cpp",
-                "${workspaceFolder:pvi}/src/pvi/submodules/ADCore/ADApp/pluginSrc/${input:plugin}.h",
+                "${workspaceFolder:ADCore}/ADApp/pluginSrc/${input:plugin}.cpp",
+                "${workspaceFolder:ADCore}/ADApp/pluginSrc/${input:plugin}.h",
             ],
             "console": "integratedTerminal"
         },
