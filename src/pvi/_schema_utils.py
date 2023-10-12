@@ -61,7 +61,7 @@ def _make_converters(cls: Cls, classes: Callable[[Cls], List[Cls]]) -> Cls:
                 )
                 # TODO this is probalby wrong
                 yield BaseSettings(
-                    [type_field], bname=sub.__name__, ases=(with_params(sub))
+                    [type_field], bname=sub.__name__, bases=(with_params(sub))
                 )
                 # yield make_dataclass(
                 #     sub.__name__, [type_field], bases=(with_params(sub),)

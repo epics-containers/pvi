@@ -1,5 +1,5 @@
 import re
-from typing import Optional, Type
+from typing import Any, Optional, Type
 
 from pvi.device import Component, SignalR, SignalRW, SignalW
 
@@ -18,7 +18,7 @@ class RecordError(Exception):
 
 
 class AsynRecord(Record):
-    def __post_init__(self):
+    def model_post_init(self, __context: Any):
         # We don't care about records without INP or OUT or with both (error)
         if all(k in self.fields.keys() for k in ("INP", "OUT")) or not any(
             k in self.fields.keys() for k in ("INP", "OUT")
@@ -84,7 +84,7 @@ class SettingPair(Parameter):
             widget=component.write_widget,
             read_pv=component.get_read_record(),
             read_widget=component.read_widget,
-            label=f"SignalRW {component.name}",  # TODO Pydantic wants a label
+            label=f"SignalRW {component.name}",  # Pydantic wants a label
         )
 
 
@@ -99,15 +99,14 @@ class Readback(Parameter):
         else:
             name = self.read_record.name
 
-        # TODO what gives here - how come we don't pass arguments to the constructor?
-        # component = asyn_cls(name)
+        component = asyn_cls(name=name)
 
-        # return SignalR(
-        #     name=component.name,
-        #     pv=component.get_read_record(),
-        #     widget=component.read_widget,
-        #     label="",
-        # )
+        return SignalR(
+            name=component.name,
+            pv=component.get_read_record(),
+            widget=component.read_widget,
+            label=f"SignalR {component.name}",  # Pydantic wants a label
+        )
 
 
 class Action(Parameter):
@@ -116,11 +115,11 @@ class Action(Parameter):
     def generate_component(self) -> Component:
         asyn_cls = self.write_record.asyn_component_type()
 
-        # TODO what gives here - how come we don't pass arguments to the constructor?
-        # component = asyn_cls(self.write_record.name)
+        component = asyn_cls(name=self.write_record.name)
 
-        # return SignalW(
-        #     name=component.name,
-        #     pv=component.get_write_record(),
-        #     widget=component.write_widget,
-        # )
+        return SignalW(
+            name=component.name,
+            pv=component.get_write_record(),
+            widget=component.write_widget,
+            label=f"SignalW {component.name}",  # Pydantic wants a label
+        )

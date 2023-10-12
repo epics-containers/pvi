@@ -25,7 +25,6 @@ class TypeStrings(BaseSettings):
     asyn_param: str = Field(description="e.g. asynParamInt32, asynParamOctet")
 
 
-# TODO not sure how to achieve this in Pydantic - keeping Annotated for now
 AReadWidget = Annotated[Optional[ReadWidget], "Widget to use for read record"]
 AWriteWidget = Annotated[Optional[WriteWidget], "Widget to use for write record"]
 
@@ -86,9 +85,8 @@ class AsynParameter(Named):
     display_form: Optional[DisplayForm] = Field(
         None, description="Display form for numeric/array fields"
     )
-    # TODO why are these showing as undefined
-    read_widget: Optional[AReadWidget] = None  # noqa
-    write_widget: Optional[AWriteWidget] = None  # noqa
+    read_widget: Optional[AReadWidget] = None
+    write_widget: Optional[AWriteWidget] = None
 
     def get_read_record(self) -> str:
         if self.read_record:
@@ -127,9 +125,10 @@ class AsynFloat64(AsynParameter):
         asyn_write="asynFloat64",
         asyn_param="asynParamFloat64",
     )
-    # TODO Pydatic models must have all fields defined is 0, None correct?
-    read_widget: AReadWidget = Field(TextRead(lines=0, format=None))
-    write_widget: AWriteWidget = Field(TextWrite(lines=0, format=None))
+    # TODO These have defaults of 1 and None for lines and format but I
+    # guess mypy cant see that so we need a noqa of some sort
+    read_widget: AReadWidget = Field(TextRead())
+    write_widget: AWriteWidget = Field(TextWrite())
 
 
 class AsynInt32(AsynParameter):
@@ -140,8 +139,8 @@ class AsynInt32(AsynParameter):
         asyn_write="asynInt32",
         asyn_param="asynParamInt32",
     )
-    read_widget: AReadWidget = Field(TextRead(lines=0, format=None))
-    write_widget: AWriteWidget = Field(TextWrite(lines=0, format=None))
+    read_widget: AReadWidget = Field(TextRead())
+    write_widget: AWriteWidget = Field(TextWrite())
 
 
 class AsynLong(AsynInt32):
@@ -156,8 +155,8 @@ class AsynMultiBitBinary(AsynParameter):
         asyn_write="asynInt32",
         asyn_param="asynParamInt32",
     )
-    read_widget: AReadWidget = Field(TextRead(lines=0, format=None))
-    write_widget: AWriteWidget = Field(ComboBox(choices=[]))
+    read_widget: AReadWidget = Field(TextRead())
+    write_widget: AWriteWidget = Field(ComboBox())
 
 
 class AsynString(AsynParameter):
@@ -168,8 +167,8 @@ class AsynString(AsynParameter):
         asyn_write="asynOctetWrite",
         asyn_param="asynParamOctet",
     )
-    read_widget: AReadWidget = Field(TextRead(lines=0, format=None))
-    write_widget: AWriteWidget = Field(TextWrite(lines=0, format=None))
+    read_widget: AReadWidget = Field(TextRead())
+    write_widget: AWriteWidget = Field(TextWrite())
 
 
 InRecordTypes = dict(
@@ -260,11 +259,10 @@ class ParameterBase:
         raise NotImplementedError(self)
 
 
-# TODO does this work as an approach? Previously all subclasses of Parameter were
-# @dataclass so I inserted this into the hierarchy
-class Parameter(ParameterBase, BaseSettings):
-    """all things derived from parameter are models but parameter base
-    is not"""
+# TODO I added this into the hierarchy to allow all subclasses of Parameter
+# to be models
+class Parameter(BaseSettings, ParameterBase):
+    """all things derived from parameter are models but parameter base is not"""
 
 
 class ReadParameterMixin:
