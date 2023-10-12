@@ -6,14 +6,12 @@ from typing import (
     List,
     Literal,
     Mapping,
-    Optional,
-    Pattern,
     Set,
     TypeVar,
     Union,
 )
 
-from apischema import deserializer, order, schema, serialized, type_name
+from apischema import deserializer, order, serialized, type_name
 from apischema.conversions import Conversion
 from apischema.conversions.converters import serializer
 from apischema.json_schema import JsonSchemaVersion, deserialization_schema
@@ -91,10 +89,6 @@ def add_type_field(cls: Cls) -> Cls:
 
 def as_discriminated_union(cls: Cls) -> Cls:
     return _make_converters(cls, rec_subclasses)
-
-
-def desc(description: str, *, pattern: Optional[Union[str, Pattern]] = None):
-    return schema(description=description, pattern=pattern)
 
 
 def make_json_schema(cls: Cls) -> Mapping[str, Any]:
