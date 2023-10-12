@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>How to Write a Site Specific Formatter &#8212; pvi 0.6.dev2+gbae7bf4 documentation</title>
+    <title>How to Write a Site Specific Formatter &#8212; pvi 0.6.dev8+gb16df74 documentation</title>
   
   
   
@@ -488,20 +488,17 @@ can be used by the display software. Inside of the device.yaml file is a list of
 components that specify its name, a widget type and any additional properties that can be
 assigned to that widget (such as a pv name). During formatting, the device.yaml file is
 deserialised into component objects, which are later translated into widgets:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@as_discriminated_union</span>
-<span class="k">class</span> <span class="nc">Component</span><span class="p">(</span><span class="n">Labelled</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Component</span><span class="p">(</span><span class="n">Labelled</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;These make up a Device&quot;&quot;&quot;</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">SignalR</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SignalR</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Scalar value backed by a single PV&quot;&quot;&quot;</span>
 
-    <span class="n">pv</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">desc</span><span class="p">(</span><span class="s2">&quot;PV to be used for get and monitor&quot;</span><span class="p">)]</span>
-    <span class="n">widget</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span>
-        <span class="n">Optional</span><span class="p">[</span><span class="n">ReadWidget</span><span class="p">],</span>
-        <span class="n">desc</span><span class="p">(</span><span class="s2">&quot;Widget to use for display, None means don&#39;t display&quot;</span><span class="p">),</span>
-    <span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">pv</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;PV to be used for get and monitor&quot;</span><span class="p">)</span>
+    <span class="n">widget</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ReadWidget</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Widget to use for display, None means don&#39;t display&quot;</span>
+    <span class="p">)</span>
 </pre></div>
 </div>
 <p>To make a screen from this, we need a template file. This contains a blank representation
@@ -535,8 +532,7 @@ components, we can create a screen file.</p>
 ‘Formatter’ class that is defined in base.py. Inside, we need to define one mandatory
 ‘format’ function, which will be used to create our screen file:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@as_discriminated_union</span>
-<span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">Formatter</span><span class="p">:</span>
+<span class="k">class</span> <span class="nc">Formatter</span><span class="p">(</span><span class="n">BaseSettings</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">Device</span><span class="p">,</span> <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 </pre></div>
@@ -552,21 +548,22 @@ dependencies.</p>
 <p>Each screen requires a number of layout properties that allow you to customise the size
 and placement of widgets. These are stored within a ‘ScrenLayout’ dataclass that can
 be imported from utils.py. Within the dataclass are the following configurable parameters:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">ScreenLayout</span><span class="p">:</span>
-    <span class="n">spacing</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">desc</span><span class="p">(</span><span class="s2">&quot;Spacing between widgets&quot;</span><span class="p">)]</span>
-    <span class="n">title_height</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">desc</span><span class="p">(</span><span class="s2">&quot;Height of screen title bar&quot;</span><span class="p">)]</span>
-    <span class="n">max_height</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">desc</span><span class="p">(</span><span class="s2">&quot;Max height of the screen&quot;</span><span class="p">)]</span>
-    <span class="n">group_label_height</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">desc</span><span class="p">(</span><span class="s2">&quot;Height of the group title label&quot;</span><span class="p">)]</span>
-    <span class="n">label_width</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">desc</span><span class="p">(</span><span class="s2">&quot;Width of the labels describing widgets&quot;</span><span class="p">)]</span>
-    <span class="n">widget_width</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">desc</span><span class="p">(</span><span class="s2">&quot;Width of the widgets&quot;</span><span class="p">)]</span>
-    <span class="n">widget_height</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">desc</span><span class="p">(</span><span class="s2">&quot;Height of the widgets (Labels use this too)&quot;</span><span class="p">)]</span>
-    <span class="n">group_widget_indent</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span>
-        <span class="nb">int</span><span class="p">,</span> <span class="n">desc</span><span class="p">(</span><span class="s2">&quot;Indentation of widgets within groups. Defaults to 0&quot;</span><span class="p">)</span>
-    <span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">group_width_offset</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span>
-        <span class="nb">int</span><span class="p">,</span> <span class="n">desc</span><span class="p">(</span><span class="s2">&quot;Additional border width when using group objects. Defaults to 0&quot;</span><span class="p">)</span>
-    <span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ScreenLayout</span><span class="p">(</span><span class="n">BaseSettings</span><span class="p">):</span>
+    <span class="n">spacing</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Spacing between widgets&quot;</span><span class="p">)</span>
+    <span class="n">title_height</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Height of screen title bar&quot;</span><span class="p">)</span>
+    <span class="n">max_height</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Max height of the screen&quot;</span><span class="p">)</span>
+    <span class="n">group_label_height</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Height of the group title label&quot;</span><span class="p">)</span>
+    <span class="n">label_width</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Width of the labels describing widgets&quot;</span><span class="p">)</span>
+    <span class="n">widget_width</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Width of the widgets&quot;</span><span class="p">)</span>
+    <span class="n">widget_height</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Height of the widgets (Labels use this too)&quot;</span>
+    <span class="p">)</span>
+    <span class="n">group_widget_indent</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="mi">0</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Indentation of widgets within groups. Defaults to 0&quot;</span>
+    <span class="p">)</span>
+    <span class="n">group_width_offset</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="mi">0</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Additional border width when using group objects. Defaults to 0&quot;</span>
+    <span class="p">)</span>
 </pre></div>
 </div>
 <p>When defining these in our formatter, we have the option of deciding which properties
@@ -799,14 +796,13 @@ screen file by unpacking the list and writing each widget to the file:</p>
 </div>
 <p>And thats it. With this you can now create your own custom formatters. Below you can
 find a complete example formatter, supporting both edl and bob file formats for DLS:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">DLSFormatter</span><span class="p">(</span><span class="n">Formatter</span><span class="p">):</span>
-    <span class="n">spacing</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">desc</span><span class="p">(</span><span class="s2">&quot;Spacing between widgets&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">5</span>
-    <span class="n">title_height</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">desc</span><span class="p">(</span><span class="s2">&quot;Height of screen title bar&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">25</span>
-    <span class="n">max_height</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">desc</span><span class="p">(</span><span class="s2">&quot;Max height of the screen&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">900</span>
-    <span class="n">label_width</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">desc</span><span class="p">(</span><span class="s2">&quot;Width of the widget description labels&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">115</span>
-    <span class="n">widget_width</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">desc</span><span class="p">(</span><span class="s2">&quot;Width of the widgets&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">120</span>
-    <span class="n">widget_height</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">desc</span><span class="p">(</span><span class="s2">&quot;Height of the widgets&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">20</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">DLSFormatter</span><span class="p">(</span><span class="n">Formatter</span><span class="p">):</span>
+    <span class="n">spacing</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Spacing between widgets&quot;</span><span class="p">)</span>
+    <span class="n">title_height</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Height of screen title bar&quot;</span><span class="p">)</span>
+    <span class="n">max_height</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="mi">900</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Max height of the screen&quot;</span><span class="p">)</span>
+    <span class="n">label_width</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="mi">115</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Width of the widget description labels&quot;</span><span class="p">)</span>
+    <span class="n">widget_width</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Width of the widgets&quot;</span><span class="p">)</span>
+    <span class="n">widget_height</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Height of the widgets&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">Device</span><span class="p">,</span> <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.edl&quot;</span><span class="p">:</span>
