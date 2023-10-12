@@ -198,28 +198,28 @@ class Named(BaseSettings):
 class Labelled(Named):
     label: str
 
-    # def __init_subclass__(cls, **kwargs):
-    #     # Add an optional label to the end of the dataclass if not already there
-    #     has_label_field = [f for f in cls.model_fields if f == "label"]
-    #     # Hack so this doesn't fire for the Component class below, or anything
-    #     # else that doesn't add annotations. We really want this to be on terminal
-    #     # classes, but no way of knowing this in __init_subclass__
-    #     adds_annotations = bool(cls.__annotations__)
-    #     if not has_label_field and adds_annotations:
-    #         pass
-    #         # new_model = cls.model_construct(
-    #         #     label=Field(
-    #         #         "", description="Label for GUI. If empty, use name in Title Case"
-    #         #     )
-    #         # )
-    #         # new_model
+    def __init_subclass__(cls, **kwargs):
+        # Add an optional label to the end of the dataclass if not already there
+        has_label_field = [f for f in cls.model_fields if f == "label"]
+        # Hack so this doesn't fire for the Component class below, or anything
+        # else that doesn't add annotations. We really want this to be on terminal
+        # classes, but no way of knowing this in __init_subclass__
+        adds_annotations = bool(cls.__annotations__)
+        if not has_label_field and adds_annotations:
+            pass
+            cls = cls.model_construct(
+                label=Field(
+                    "", description="Label for GUI. If empty, use name in Title Case"
+                )
+            )
 
-    #         # TODO this used to look for non-labelled and did this
-    #         # TODO above is my attempted version but causes infinite recursion
-    #         # cls.__annotations__["label"]: str = Field(
-    #         #     description="Label for GUI. If empty, use name in Title Case"
-    #         # )
-    #         # datamodel(cls)
+            # TODO bleow used to look for non-labelled and did this
+            # above is my attempted version
+
+            # cls.__annotations__["label"]: str = Field(
+            #     description="Label for GUI. If empty, use name in Title Case"
+            # )
+            # dataclass(cls)
 
     def get_label(self):
         if getattr(self, "label", ""):

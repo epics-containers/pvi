@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, replace
 from typing import Callable, Dict, List, Optional, Type, TypeVar, Union
 
 from pvi._format.utils import Bounds, GroupType
+from pvi._schema_utils import BaseSettings
 from pvi.device import (
     LED,
     CheckBox,
@@ -75,8 +75,7 @@ class UITemplate(Generic[T]):
 WF = TypeVar("WF", bound="WidgetFormatter")
 
 
-@dataclass
-class WidgetFormatter(Generic[T]):
+class WidgetFormatter(BaseSettings, Generic[T]):
     bounds: Bounds
 
     def format(self) -> List[T]:
@@ -137,31 +136,26 @@ class WidgetFormatter(Generic[T]):
         )
 
 
-@dataclass
 class LabelWidgetFormatter(WidgetFormatter[T]):
     text: str
 
 
-@dataclass
 class PVWidgetFormatter(WidgetFormatter[T]):
     pv: str
     widget: Union[ReadWidget, WriteWidget]
 
 
-@dataclass
 class ActionWidgetFormatter(WidgetFormatter[T]):
     label: str
     pv: str
     value: str
 
 
-@dataclass
 class SubScreenWidgetFormatter(WidgetFormatter[T]):
     file_name: str
     components: Group
 
 
-@dataclass
 class GroupFormatter(WidgetFormatter[T]):
     bounds: Bounds
     title: str
@@ -245,7 +239,8 @@ class GroupFormatter(WidgetFormatter[T]):
 
             """
             padding = sized(self.bounds)
-            self.bounds = replace(self.bounds, w=padding.w, h=padding.h)
+            # TODO I Think this is the equivalent of replace
+            self.bounds = self.bounds.model_construct(w=padding.w, h=padding.h)
 
         return type(
             f"{cls.__name__}<{search.name}>",
@@ -254,8 +249,8 @@ class GroupFormatter(WidgetFormatter[T]):
         )
 
 
-@dataclass
-class WidgetFormatterFactory(Generic[T]):
+# TODO verify that this is the correct approach
+class WidgetFormatterFactory(BaseSettings, Generic[T]):
     header_formatter_cls: Type[LabelWidgetFormatter[T]]
     label_formatter_cls: Type[LabelWidgetFormatter[T]]
     led_formatter_cls: Type[PVWidgetFormatter[T]]
@@ -302,7 +297,7 @@ class WidgetFormatterFactory(Generic[T]):
             bounds.h *= widget.lines
 
         widget_formatter_cls = widget_formatter_classes[type(widget)]
-        return widget_formatter_cls(bounds, prefix + pv, widget)
+        return widget_formatter_cls(bounds=bounds, pv=prefix + pv, widget=widget)
 
 
 def max_x(widgets: List[WidgetFormatter[T]]) -> int:

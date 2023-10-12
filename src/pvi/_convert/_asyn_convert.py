@@ -84,6 +84,7 @@ class SettingPair(Parameter):
             widget=component.write_widget,
             read_pv=component.get_read_record(),
             read_widget=component.read_widget,
+            label=f"SignalRW {component.name}",  # TODO Pydantic wants a label
         )
 
 

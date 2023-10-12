@@ -1,4 +1,3 @@
-from dataclasses import field, make_dataclass
 from functools import lru_cache
 from typing import (
     Any,
@@ -16,7 +15,7 @@ from apischema.conversions import Conversion
 from apischema.conversions.converters import serializer
 from apischema.json_schema import JsonSchemaVersion, deserialization_schema
 from apischema.utils import identity
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 
 Cls = TypeVar("Cls", bound=type)
 
@@ -58,11 +57,15 @@ def _make_converters(cls: Cls, classes: Callable[[Cls], List[Cls]]) -> Cls:
                 type_field = (
                     "type",
                     Literal[sub.__name__],  # type: ignore
-                    field(default=sub.__name__, metadata=order(-1)),
+                    Field(sub.__name__, metadata=order(-1)),
                 )
-                yield make_dataclass(
-                    sub.__name__, [type_field], bases=(with_params(sub),)
+                # TODO this is probalby wrong
+                yield BaseSettings(
+                    [type_field], bname=sub.__name__, ases=(with_params(sub))
                 )
+                # yield make_dataclass(
+                #     sub.__name__, [type_field], bases=(with_params(sub),)
+                # )
 
         def convert(sub_inst):
             """Make instance of sub from instance of typed_sub"""

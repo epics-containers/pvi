@@ -78,13 +78,13 @@ class AsynParameter(Named):
 
     type_strings: ClassVar[TypeStrings]
     read_record: Optional[str] = Field(
-        description="The full read record, if not given then use $(name)_RBV"
+        None, description="The full read record, if not given then use $(name)_RBV"
     )
     write_record: Optional[str] = Field(
-        description="The full write record, if not given then use $(name)"
+        None, description="The full write record, if not given then use $(name)"
     )
     display_form: Optional[DisplayForm] = Field(
-        description="Display form for numeric/array fields"
+        None, description="Display form for numeric/array fields"
     )
     # TODO why are these showing as undefined
     read_widget: Optional[AReadWidget] = None  # noqa
@@ -247,7 +247,7 @@ class Record(BaseSettings):
     infos: Dict[str, str]  # Any infos to be added to the record
 
 
-class Parameter(BaseSettings):
+class ParameterBase:
     invalid = ["DESC", "DTYP", "INP", "OUT", "PINI", "VAL"]
 
     def _remove_invalid(self, fields: Dict[str, str]) -> Dict[str, str]:
@@ -258,6 +258,13 @@ class Parameter(BaseSettings):
 
     def generate_component(self) -> Component:
         raise NotImplementedError(self)
+
+
+# TODO does this work as an approach? Previously all subclasses of Parameter were
+# @dataclass so I inserted this into the hierarchy
+class Parameter(ParameterBase, BaseSettings):
+    """all things derived from parameter are models but parameter base
+    is not"""
 
 
 class ReadParameterMixin:

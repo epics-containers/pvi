@@ -1,5 +1,7 @@
 from pathlib import Path
-from typing import Annotated, List
+from typing import List
+
+from pydantic import Field
 
 from pvi._format.adl import AdlTemplate
 from pvi._format.screen import (
@@ -21,14 +23,13 @@ from .base import Formatter
 from .utils import Bounds, GroupType, with_title
 
 
-@dataclass
 class APSFormatter(Formatter):
-    spacing: Annotated[int, desc("Spacing between widgets")] = 5
-    title_height: Annotated[int, desc("Height of screen title bar")] = 25
-    max_height: Annotated[int, desc("Max height of the screen")] = 900
-    label_width: Annotated[int, desc("Width of the widget description labels")] = 205
-    widget_width: Annotated[int, desc("Width of the widgets")] = 100
-    widget_height: Annotated[int, desc("Height of the widgets")] = 20
+    spacing: int = Field(5, description="Spacing between widgets")
+    title_height: int = Field(25, description="Height of screen title bar")
+    max_height: int = Field(900, description="Max height of the screen")
+    label_width: int = Field(205, description="Width of the widget description labels")
+    widget_width: int = Field(100, description="Width of the widgets")
+    widget_height: int = Field(20, description="Height of the widgets")
 
     def format(self, device: Device, prefix: str, path: Path):
         assert path.suffix == ".adl", "Can only write adl files"

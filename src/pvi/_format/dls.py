@@ -1,7 +1,8 @@
 from pathlib import Path
-from typing import Annotated, List
+from typing import List
 
 from lxml import etree
+from pydantic import Field
 
 from pvi._format.bob import BobTemplate
 from pvi._format.edl import EdlTemplate
@@ -25,12 +26,12 @@ from .utils import Bounds, GroupType, with_title
 
 
 class DLSFormatter(Formatter):
-    spacing: Annotated[int, desc("Spacing between widgets")] = 5
-    title_height: Annotated[int, desc("Height of screen title bar")] = 25
-    max_height: Annotated[int, desc("Max height of the screen")] = 900
-    label_width: Annotated[int, desc("Width of the widget description labels")] = 115
-    widget_width: Annotated[int, desc("Width of the widgets")] = 120
-    widget_height: Annotated[int, desc("Height of the widgets")] = 20
+    spacing: int = Field(5, description="Spacing between widgets")
+    title_height: int = Field(25, description="Height of screen title bar")
+    max_height: int = Field(900, description="Max height of the screen")
+    label_width: int = Field(115, description="Width of the widget description labels")
+    widget_width: int = Field(120, description="Width of the widgets")
+    widget_height: int = Field(20, description="Height of the widgets")
 
     def format(self, device: Device, prefix: str, path: Path):
         if path.suffix == ".edl":
