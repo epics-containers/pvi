@@ -12,17 +12,12 @@ from typing import (
 # from apischema.conversions.converters import serializer
 # from apischema.json_schema import JsonSchemaVersion, deserialization_schema
 # from apischema.utils import identity
-from pydantic import BaseModel, ConfigDict
+from pydantic.fields import FieldInfo
 
+from pvi.bases import BaseSettings
+
+# A type variable with an upper bound of type
 Cls = TypeVar("Cls", bound=type)
-
-
-class BaseSettings(BaseModel):
-    """A Base class for setting consistent Pydantic model configuration"""
-
-    model_config = ConfigDict(
-        extra="forbid",
-    )
 
 
 # Permanently cache so we don't include deserialization subclasses defined below
@@ -50,6 +45,7 @@ def _make_converters(cls: Cls, classes: Callable[[Cls], List[Cls]]) -> Cls:
         def typed_subs():
             for sub in classes(cls):
                 # Make typed_sub derived from sub with additional type entry
+                type_field = FieldInfo
                 type_field = (
                     "type",
                     # Literal[sub.__name__],  # type: ignore

@@ -22,7 +22,7 @@ from typing import (
 from pydantic import Field
 from ruamel.yaml import YAML
 
-from pvi._schema_utils import BaseSettings, add_type_field
+from pvi.bases import BaseSettings, add_type
 from pvi.utils import find_pvi_yaml
 
 PASCAL_CASE_REGEX = re.compile(r"(?<![A-Z])[A-Z]|[A-Z][a-z/d]|(?<=[a-z])\d")
@@ -154,8 +154,8 @@ class TableWrite(WriteWidget):
     )
 
 
-WidgetType = Union[ReadWidget, WriteWidget]
-TableWidgetType = Union[TableRead, TableWrite]
+WidgetType = Annotated[Union[ReadWidget, WriteWidget], Field(discriminator="type")]
+TableWidgetType = Annotated[Union[TableRead, TableWrite], Field(discriminator="type")]
 TableWidgetTypes = (TableRead, TableWrite)
 
 
@@ -207,20 +207,9 @@ class Labelled(Named):
         # classes, but no way of knowing this in __init_subclass__
         adds_annotations = bool(cls.__annotations__)
         if not has_label_field and adds_annotations:
-            pass
-            cls = cls.model_construct(
-                label=Field(
-                    "", description="Label for GUI. If empty, use name in Title Case"
-                )
+            cls.__annotations__["label"]: str = Field(
+                description="Label for GUI. If empty, use name in Title Case"
             )
-
-            # TODO bleow used to look for non-labelled and did this
-            # above is my attempted version
-
-            # cls.__annotations__["label"]: str = Field(
-            #     description="Label for GUI. If empty, use name in Title Case"
-            # )
-            # dataclass(cls)
 
     def get_label(self):
         if getattr(self, "label", ""):
@@ -270,8 +259,8 @@ class SignalRW(Component):
 
 
 SignalTypes = (SignalR, SignalW, SignalRW)
-ReadSignalType = Union[SignalR, SignalRW]
-WriteSignalType = Union[SignalW, SignalRW]
+ReadSignalType = Annotated[Union[SignalR, SignalRW], Field(discriminator="type")]
+WriteSignalType = Annotated[Union[SignalW, SignalRW], Field(discriminator="type")]
 
 
 class SignalX(Component):
@@ -295,13 +284,16 @@ T = TypeVar("T")
 S = TypeVar("S")
 
 
-@add_type_field
+@add_type
 class Group(Generic[T], Labelled):
     """Group of child components in a Layout"""
 
     layout: Layout = Field(description="How to layout children on screen")
     children: Tree[T] = Field(description="Child Components")
 
+
+# TODO not sure how to handle this one
+# GroupUnion = Annotated[Union[T, Group[T]], Field(discriminator="type")]
 
 Tree = Sequence[Union[T, Group[T]]]
 
