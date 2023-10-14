@@ -32,6 +32,10 @@
     "url": "https://epics-containers.github.io/pvi/device-ref/"
   },
   {
+    "version": "experiments",
+    "url": "https://epics-containers.github.io/pvi/experiments/"
+  },
+  {
     "version": "fix-links",
     "url": "https://epics-containers.github.io/pvi/fix-links/"
   },
