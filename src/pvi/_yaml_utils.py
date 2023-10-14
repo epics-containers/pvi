@@ -15,10 +15,11 @@ def add_line_before_type(s: str) -> str:
 
 
 def serialize_yaml(obj: BaseModel, path: Path):
-    serialized = obj.model_dump_json(
-        exclude_none=True, exclude_unset=True, exclude_defaults=True
+    serialized = obj.model_dump(
+        exclude_none=True, exclude_unset=True, exclude_defaults=False
     )
     # TODO: add modeline
+    # the slice removes surrounding single quotes
     YAML().dump(serialized, path, transform=add_line_before_type)
 
 

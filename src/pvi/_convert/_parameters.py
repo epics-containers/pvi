@@ -4,6 +4,7 @@ from typing import Annotated, ClassVar, Dict, List, Optional, Type, cast
 from pydantic import Field
 
 from pvi._schema_utils import BaseSettings, rec_subclasses
+from pvi.bases import BaseSettingsSansType
 from pvi.device import (
     LED,
     CheckBox,
@@ -241,7 +242,7 @@ def get_waveform_parameter(dtyp: str):
     assert False, f"Waveform type for DTYP {dtyp} not found in {WaveformRecordTypes}"
 
 
-class Record(BaseSettings):
+class Record(BaseSettingsSansType):
     name: str  # The name of the record e.g. $(P)$(M)Status
     type: str  # The record type string e.g. ao, stringin
     fields: Dict[str, str]  # The record fields

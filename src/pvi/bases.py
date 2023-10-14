@@ -1,18 +1,12 @@
 from __future__ import annotations
 
-from functools import lru_cache
-from typing import List, Literal, Type
+from typing import Literal
 
-from pydantic import BaseModel, ConfigDict
-
-# def rec_subclasses(cls: Cls) -> List[Cls]:
-#     """Recursive implementation of type.__subclasses__"""
-#     subclasses = []
-#     for sub_cls in cls.__subclasses__():
-#         subclasses += [sub_cls] + rec_subclasses(sub_cls)
-#     return subclasses
+from pydantic import BaseModel, ConfigDict, Field
 
 
+# upating a pydantiv model seems problematic
+# https://github.com/pydantic/pydantic/discussions/3139
 class BaseSettings(BaseModel):
     """A Base class for consistent model settings"""
 
@@ -20,25 +14,19 @@ class BaseSettings(BaseModel):
         extra="forbid",
     )
 
-
-# Permanently cache so we don't include deserialization subclasses defined below
-@lru_cache(maxsize=None)
-def get_all_subclasses(cls: Type) -> List[Type]:
-    all_subclasses = []
-
-    for subclass in cls.__subclasses__():
-        all_subclasses.append(subclass)
-        all_subclasses.extend(get_all_subclasses(subclass))
-
-    return all_subclasses
+    @classmethod
+    def __init_subclass__(subclass, **kwargs):
+        value = Literal[subclass.__name__]  # type: ignore
+        subclass.__annotations__["type"] = value
+        subclass.type = Field(
+            value, description="The type of this entity", required=True
+        )
+        super().__init_subclass__(**kwargs)
 
 
-def add_type(cls: Type) -> Type:
-    def __init_subclass__(cls: Type):
-        value = Literal[cls.__name__]  # type: ignore
-        cls.__annotations__["type"] = value
-        cls.type = cls.__name__
-        cls.super().__init_subclass__()
+class BaseSettingsSansType(BaseModel):
+    """A Base class for consistent model settings"""
 
-    setattr(cls, "__init_subclass__", __init_subclass__)
-    return cls
+    model_config = ConfigDict(
+        extra="forbid",
+    )

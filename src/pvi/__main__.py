@@ -1,9 +1,10 @@
 import json
 import os
 from pathlib import Path
-from typing import List, Optional, Type
+from typing import List, Optional
 
 import typer
+from pydantic import BaseModel
 
 from pvi import __version__
 from pvi._convert._template_convert import TemplateConverter
@@ -40,7 +41,7 @@ def main(
 @app.command()
 def schema(output: Path = typer.Argument(..., help="filename to write the schema to")):
     """Write the JSON schema for the pvi interface"""
-    cls: Type
+    cls: BaseModel
     assert output.name.endswith(
         ".schema.json"
     ), f"Expected '{output.name}' to end with '.schema.json'"
@@ -51,7 +52,7 @@ def schema(output: Path = typer.Argument(..., help="filename to write the schema
     else:
         typer.echo(f"Don't know how to create {output.name}")
         raise typer.Exit(code=1)
-    schema = cls.model_dump_json()
+    schema = cls.model_json_schema()
     output.write_text(json.dumps(schema, indent=2))
 
 

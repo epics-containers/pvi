@@ -21,8 +21,9 @@ from typing import (
 
 from pydantic import Field
 from ruamel.yaml import YAML
+from typing_extensions import Literal
 
-from pvi.bases import BaseSettings, add_type
+from pvi.bases import BaseSettings
 from pvi.utils import find_pvi_yaml
 
 PASCAL_CASE_REGEX = re.compile(r"(?<![A-Z])[A-Z]|[A-Z][a-z/d]|(?<=[a-z])\d")
@@ -59,7 +60,6 @@ class TextFormat(Enum):
     string = 4
 
 
-# @as_discriminated_union
 class ReadWidget(BaseSettings):
     """Widget that displays a scalar PV"""
 
@@ -109,7 +109,6 @@ class ImageRead(ReadWidget):
     """2D Image view of an NTNDArray"""
 
 
-# @as_discriminated_union
 class WriteWidget(BaseSettings):
     """Widget that controls a PV"""
 
@@ -159,7 +158,6 @@ TableWidgetType = Annotated[Union[TableRead, TableWrite], Field(discriminator="t
 TableWidgetTypes = (TableRead, TableWrite)
 
 
-# as_discriminated_union
 class Layout(BaseSettings):
     """Widget displaying child Components"""
 
@@ -218,7 +216,6 @@ class Labelled(Named):
             return to_title_case(self.name)
 
 
-# as_discriminated_union
 class Component(Labelled):
     """These make up a Device"""
 
@@ -234,6 +231,8 @@ class SignalR(Component):
 
 class SignalW(Component):
     """Write only value backed by a single PV"""
+
+    type: Literal["SignalW"] = "SignalW"
 
     pv: str = Field(description="PV to be used for put")
     widget: Optional[WriteWidget] = Field(
@@ -284,7 +283,10 @@ T = TypeVar("T")
 S = TypeVar("S")
 
 
-@add_type
+# TODO in all other generics cases I have the BaseModel derived class first
+# but here we get the following if we swap the types in Group
+# TypeError: <class 'pvi.device.Group'> cannot be parametrized because it
+# does not inherit from typing.Generic
 class Group(Generic[T], Labelled):
     """Group of child components in a Layout"""
 
@@ -292,10 +294,10 @@ class Group(Generic[T], Labelled):
     children: Tree[T] = Field(description="Child Components")
 
 
-# TODO not sure how to handle this one
-# GroupUnion = Annotated[Union[T, Group[T]], Field(discriminator="type")]
-
-Tree = Sequence[Union[T, Group[T]]]
+GroupUnion = Annotated[Union[T, Group[T]], Field(discriminator="type")]
+# TODO TODO we are getting infinite recursion on schem on the command
+# pvi schema pvi.device.schema.json
+Tree = Sequence[GroupUnion]
 
 
 def on_each_node(tree: Tree[T], func: Callable[[T], Iterator[S]]) -> Tree[S]:
@@ -327,16 +329,14 @@ class Device(BaseSettings):
     """Collection of Components"""
 
     label: str = Field(description="Label for screen")
-    # TODO this was an optiol field rather than a field of type that is optional
-    # is that relavent?
+
     parent: Optional[
         Annotated[
             str,
             "The parent device (basename of yaml file)",
         ]
     ] = None
-    # children: Tree[Component] = Field([], description="Child Components")
-    children: Any
+    children: Tree[Component] = Field([], description="Child Components")
 
     def serialize(self) -> Mapping[str, Any]:
         """Serialize the Device to a dictionary."""
