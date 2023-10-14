@@ -14,7 +14,7 @@ from typing import (
 # from apischema.utils import identity
 from pydantic.fields import FieldInfo
 
-from pvi.bases import BaseSettings
+from pvi.bases import BaseTyped
 
 # A type variable with an upper bound of type
 Cls = TypeVar("Cls", bound=type)
@@ -52,7 +52,7 @@ def _make_converters(cls: Cls, classes: Callable[[Cls], List[Cls]]) -> Cls:
                     # Field(sub.__name__, metadata=order(-1)),
                 )
                 # TODO this is probalby wrong
-                yield BaseSettings(
+                yield BaseTyped(
                     [type_field], bname=sub.__name__, bases=(with_params(sub))
                 )
 
