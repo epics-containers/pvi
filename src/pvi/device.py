@@ -288,10 +288,12 @@ S = TypeVar("S", bound=BaseTyped)
 # TypeError: <class 'pvi.device.Group'> cannot be parametrized because it
 # does not inherit from typing.Generic
 # class Group(Generic[T], Labelled):
-# TODO TODO trying without labels
-# THIS WORKS - CAN NOW GENERATE SCHEMA - NEED TO REWORK HOW LABELLING IS
-# DONE ON GROUP
-class Group(BaseTyped, Generic[T]):
+# TODO TODO THIS definition is the cause of a infinte recursion when
+# pydantic tries to make a schema of Device.
+# TODO TODO Removing Lablled stops the recursion and schema can be made
+# class Group(Generic[T], Labelled): Using Component instead has the same
+# infinte recursion.
+class Group(Generic[T], Component):
     """Group of child components in a Layout"""
 
     layout: Layout = Field(description="How to layout children on screen")
@@ -299,8 +301,6 @@ class Group(BaseTyped, Generic[T]):
 
 
 GroupUnion = Annotated[Union[T, Group[T]], Field(discriminator="type")]
-# TODO TODO we are getting infinite recursion on schem on the command
-# pvi schema pvi.device.schema.json
 Tree = Sequence[GroupUnion]
 
 
