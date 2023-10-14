@@ -319,7 +319,7 @@ def on_each_node(tree: Tree[T], func: Callable[[T], Iterator[S]]) -> Tree[S]:
     return out
 
 
-def walk(tree: Tree[T]) -> Iterator[Union[T:BaseModel, Group[T]]]:
+def walk(tree: Tree[T]) -> Iterator[Union[T, Group[T]]]:
     """Depth first traversal of tree"""
     for t in tree:
         yield t
