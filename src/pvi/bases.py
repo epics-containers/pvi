@@ -10,6 +10,8 @@ from pydantic import BaseModel, ConfigDict, Field
 class BaseSettings(BaseModel):
     """A Base class for consistent model settings"""
 
+    type: Literal["BaseSettings"] = "BaseSettings"
+
     model_config = ConfigDict(
         extra="forbid",
     )
@@ -19,7 +21,7 @@ class BaseSettings(BaseModel):
         value = Literal[subclass.__name__]  # type: ignore
         subclass.__annotations__["type"] = value
         subclass.type = Field(
-            value, description="The type of this entity", required=True
+            value, description="The dscrimintating type of this entity", required=True
         )
         super().__init_subclass__(**kwargs)
 

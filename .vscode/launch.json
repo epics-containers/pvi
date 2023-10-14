@@ -24,6 +24,19 @@
         },
         {
             // for debugging loading the pvi module during pydantic adoption
+            "name": "pvi device schema",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "schema",
+                "/tmp/pvi.device.schema.json"
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            // for debugging loading the pvi module during pydantic adoption
             "name": "pvi help",
             "type": "python",
             "request": "launch",

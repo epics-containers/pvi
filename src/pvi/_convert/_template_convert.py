@@ -21,7 +21,7 @@ class TemplateConverter:
         self.templates = templates
         self._text = [t.read_text() for t in self.templates]
 
-    def convert(self) -> Tree[Component]:
+    def convert(self) -> Tree:
         return [
             Group(
                 name=template.stem,

@@ -26,6 +26,8 @@ from typing_extensions import Literal
 from pvi.bases import BaseSettings
 from pvi.utils import find_pvi_yaml
 
+BaseSettingsDummy = object
+
 PASCAL_CASE_REGEX = re.compile(r"(?<![A-Z])[A-Z]|[A-Z][a-z/d]|(?<=[a-z])\d")
 
 
@@ -279,8 +281,8 @@ class SignalRef(Component):
     """Reference to another Signal with the same name in this Device."""
 
 
-T = TypeVar("T")
-S = TypeVar("S")
+T = TypeVar("T", bound=BaseSettings)
+S = TypeVar("S", bound=BaseSettings)
 
 
 # TODO in all other generics cases I have the BaseModel derived class first
@@ -291,10 +293,10 @@ class Group(Generic[T], Labelled):
     """Group of child components in a Layout"""
 
     layout: Layout = Field(description="How to layout children on screen")
-    children: Tree[T] = Field(description="Child Components")
+    children: SignalR = Field(description="Child Components")
 
 
-GroupUnion = Annotated[Union[T, Group[T]], Field(discriminator="type")]
+GroupUnion = Annotated[Union[Group[T], T], Field(discriminator="type")]
 # TODO TODO we are getting infinite recursion on schem on the command
 # pvi schema pvi.device.schema.json
 Tree = Sequence[GroupUnion]
@@ -317,7 +319,7 @@ def on_each_node(tree: Tree[T], func: Callable[[T], Iterator[S]]) -> Tree[S]:
     return out
 
 
-def walk(tree: Tree[T]) -> Iterator[Union[T, Group[T]]]:
+def walk(tree: Tree[T]) -> Iterator[Union[T:BaseModel, Group[T]]]:
     """Depth first traversal of tree"""
     for t in tree:
         yield t
@@ -336,7 +338,7 @@ class Device(BaseSettings):
             "The parent device (basename of yaml file)",
         ]
     ] = None
-    children: Tree[Component] = Field([], description="Child Components")
+    children: Tree = Field([], description="Child Components")
 
     def serialize(self) -> Mapping[str, Any]:
         """Serialize the Device to a dictionary."""

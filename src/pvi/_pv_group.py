@@ -58,7 +58,7 @@ def sanitize_name(name: str) -> str:
     return name
 
 
-def group_parameters(device: Device, ui_paths: List[Path]) -> List[Group[Component]]:
+def group_parameters(device: Device, ui_paths: List[Path]) -> List[Group]:
     initial_parameters: List[Component] = [
         param for param in walk(device.children) if isinstance(param, Component)
     ]

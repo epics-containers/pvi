@@ -53,6 +53,7 @@ def schema(output: Path = typer.Argument(..., help="filename to write the schema
         typer.echo(f"Don't know how to create {output.name}")
         raise typer.Exit(code=1)
     schema = cls.model_json_schema()
+    # output.write_text(str(schema))
     output.write_text(json.dumps(schema, indent=2))
 
 
