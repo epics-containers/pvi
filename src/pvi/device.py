@@ -279,8 +279,8 @@ class SignalRef(Component):
     """Reference to another Signal with the same name in this Device."""
 
 
-T = TypeVar("T")
-S = TypeVar("S")
+T = TypeVar("T", bound=BaseSettings)
+S = TypeVar("S", bound=BaseSettings)
 
 
 # TODO in all other generics cases I have the BaseModel derived class first
