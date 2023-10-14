@@ -25,7 +25,7 @@ from pvi._format.widget import (
     next_x,
     next_y,
 )
-from pvi._schema_utils import BaseSettings
+from pvi._schema_utils import BaseTyped
 from pvi.device import (
     ButtonPanel,
     Component,
@@ -48,7 +48,7 @@ from pvi.device import (
 T = TypeVar("T")
 
 
-class ScreenLayout(BaseSettings):
+class ScreenLayout(BaseTyped):
     spacing: int = Field(description="Spacing between widgets")
     title_height: int = Field(description="Height of screen title bar")
     max_height: int = Field(description="Max height of the screen")
@@ -66,7 +66,7 @@ class ScreenLayout(BaseSettings):
     )
 
 
-class ScreenFormatterFactory(BaseSettings, Generic[T]):
+class ScreenFormatterFactory(BaseTyped, Generic[T]):
     screen_formatter_cls: Type[GroupFormatter[T]]
     group_formatter_cls: Type[GroupFormatter[T]]
     widget_formatter_factory: WidgetFormatterFactory

@@ -3,8 +3,8 @@ from typing import Annotated, ClassVar, Dict, List, Optional, Type, cast
 
 from pydantic import Field
 
-from pvi._schema_utils import BaseSettings, rec_subclasses
-from pvi.bases import BaseSettingsSansType
+from pvi._schema_utils import BaseTyped, rec_subclasses
+from pvi.bases import BaseSettings
 from pvi.device import (
     LED,
     CheckBox,
@@ -18,7 +18,7 @@ from pvi.device import (
 )
 
 
-class TypeStrings(BaseSettings):
+class TypeStrings(BaseTyped):
     """The type strings for record dtypes and parameter names"""
 
     asyn_read: str = Field(description="e.g. asynInt32, asynOctetRead")
@@ -216,7 +216,7 @@ class AsynInt32Waveform(AsynWaveform):
 # TODO this was dataclass before - do we need multiple inheritance?
 # I had to add BaseSettings as second base class for mypy to work
 # not sure if this is good?
-class AsynFloat64Waveform(AsynWaveform, BaseSettings):
+class AsynFloat64Waveform(AsynWaveform, BaseTyped):
     """Asyn Waveform Parameter and records with int32 array elements"""
 
     type_strings: ClassVar[TypeStrings] = TypeStrings(
@@ -242,7 +242,7 @@ def get_waveform_parameter(dtyp: str):
     assert False, f"Waveform type for DTYP {dtyp} not found in {WaveformRecordTypes}"
 
 
-class Record(BaseSettingsSansType):
+class Record(BaseSettings):
     name: str  # The name of the record e.g. $(P)$(M)Status
     type: str  # The record type string e.g. ao, stringin
     fields: Dict[str, str]  # The record fields
@@ -262,7 +262,7 @@ class ParameterBase:
         raise NotImplementedError(self)
 
 
-class Parameter(BaseSettings, ParameterBase):
+class Parameter(BaseTyped, ParameterBase):
     """all things derived from parameter are models but parameter base is not"""
 
 

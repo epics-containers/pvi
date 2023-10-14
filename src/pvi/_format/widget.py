@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Callable, Dict, List, Optional, Type, TypeVar, Union
 
 from pvi._format.utils import Bounds, GroupType
-from pvi._schema_utils import BaseSettings
+from pvi._schema_utils import BaseTyped
 from pvi.device import (
     LED,
     CheckBox,
@@ -75,7 +75,7 @@ class UITemplate(Generic[T]):
 WF = TypeVar("WF", bound="WidgetFormatter")
 
 
-class WidgetFormatter(BaseSettings, Generic[T]):
+class WidgetFormatter(BaseTyped, Generic[T]):
     bounds: Bounds
 
     def format(self) -> List[T]:
@@ -249,7 +249,7 @@ class GroupFormatter(WidgetFormatter[T]):
         )
 
 
-class WidgetFormatterFactory(BaseSettings, Generic[T]):
+class WidgetFormatterFactory(BaseTyped, Generic[T]):
     header_formatter_cls: Type[LabelWidgetFormatter[T]]
     label_formatter_cls: Type[LabelWidgetFormatter[T]]
     led_formatter_cls: Type[PVWidgetFormatter[T]]

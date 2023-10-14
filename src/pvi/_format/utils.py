@@ -3,10 +3,10 @@ from __future__ import annotations
 from enum import Enum
 from typing import Callable, List, Tuple, TypeVar
 
-from pvi._schema_utils import BaseSettings
+from pvi._schema_utils import BaseTyped
 
 
-class Bounds(BaseSettings):
+class Bounds(BaseTyped):
     x: int = 0
     y: int = 0
     w: int = 0

@@ -5,16 +5,21 @@ from typing import Literal
 from pydantic import BaseModel, ConfigDict, Field
 
 
-# upating a pydantiv model seems problematic
-# https://github.com/pydantic/pydantic/discussions/3139
 class BaseSettings(BaseModel):
     """A Base class for consistent model settings"""
 
-    type: Literal["BaseSettings"] = "BaseSettings"
-
     model_config = ConfigDict(
-        extra="forbid",
+        extra="allow",
     )
+
+
+# upating a pydantiv model seems problematic
+# (However I dont think we need to do this as adding type before pydantic looks in)
+# https://github.com/pydantic/pydantic/discussions/3139
+class BaseTyped(BaseSettings):
+    """A Base class for consistent model settings"""
+
+    type: Literal["BaseSettings"] = "BaseSettings"
 
     @classmethod
     def __init_subclass__(subclass, **kwargs):
@@ -24,11 +29,3 @@ class BaseSettings(BaseModel):
             value, description="The dscrimintating type of this entity", required=True
         )
         super().__init_subclass__(**kwargs)
-
-
-class BaseSettingsSansType(BaseModel):
-    """A Base class for consistent model settings"""
-
-    model_config = ConfigDict(
-        extra="forbid",
-    )

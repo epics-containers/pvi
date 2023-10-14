@@ -23,10 +23,8 @@ from pydantic import Field
 from ruamel.yaml import YAML
 from typing_extensions import Literal
 
-from pvi.bases import BaseSettings
+from pvi.bases import BaseTyped
 from pvi.utils import find_pvi_yaml
-
-BaseSettingsDummy = object
 
 PASCAL_CASE_REGEX = re.compile(r"(?<![A-Z])[A-Z]|[A-Z][a-z/d]|(?<=[a-z])\d")
 
@@ -62,7 +60,7 @@ class TextFormat(Enum):
     string = 4
 
 
-class ReadWidget(BaseSettings):
+class ReadWidget(BaseTyped):
     """Widget that displays a scalar PV"""
 
 
@@ -111,7 +109,7 @@ class ImageRead(ReadWidget):
     """2D Image view of an NTNDArray"""
 
 
-class WriteWidget(BaseSettings):
+class WriteWidget(BaseTyped):
     """Widget that controls a PV"""
 
 
@@ -160,7 +158,7 @@ TableWidgetType = Annotated[Union[TableRead, TableWrite], Field(discriminator="t
 TableWidgetTypes = (TableRead, TableWrite)
 
 
-class Layout(BaseSettings):
+class Layout(BaseTyped):
     """Widget displaying child Components"""
 
 
@@ -189,7 +187,7 @@ class SubScreen(Layout):
     labelled: bool = Field(True, description="Display labels for components")
 
 
-class Named(BaseSettings):
+class Named(BaseTyped):
     name: str = Field(
         description="PascalCase name to uniquely identify",
         pattern=r"([A-Z][a-z0-9]*)*$",
@@ -281,22 +279,26 @@ class SignalRef(Component):
     """Reference to another Signal with the same name in this Device."""
 
 
-T = TypeVar("T", bound=BaseSettings)
-S = TypeVar("S", bound=BaseSettings)
+T = TypeVar("T", bound=BaseTyped)
+S = TypeVar("S", bound=BaseTyped)
 
 
 # TODO in all other generics cases I have the BaseModel derived class first
 # but here we get the following if we swap the types in Group
 # TypeError: <class 'pvi.device.Group'> cannot be parametrized because it
 # does not inherit from typing.Generic
-class Group(Generic[T], Labelled):
+# class Group(Generic[T], Labelled):
+# TODO TODO trying without labels
+# THIS WORKS - CAN NOW GENERATE SCHEMA - NEED TO REWORK HOW LABELLING IS
+# DONE ON GROUP
+class Group(BaseTyped, Generic[T]):
     """Group of child components in a Layout"""
 
     layout: Layout = Field(description="How to layout children on screen")
-    children: SignalR = Field(description="Child Components")
+    children: Tree[T] = Field(description="Child Components")
 
 
-GroupUnion = Annotated[Union[Group[T], T], Field(discriminator="type")]
+GroupUnion = Annotated[Union[T, Group[T]], Field(discriminator="type")]
 # TODO TODO we are getting infinite recursion on schem on the command
 # pvi schema pvi.device.schema.json
 Tree = Sequence[GroupUnion]
@@ -327,7 +329,7 @@ def walk(tree: Tree[T]) -> Iterator[Union[T, Group[T]]]:
             yield from walk(t.children)
 
 
-class Device(BaseSettings):
+class Device(BaseTyped):
     """Collection of Components"""
 
     label: str = Field(description="Label for screen")
@@ -338,7 +340,7 @@ class Device(BaseSettings):
             "The parent device (basename of yaml file)",
         ]
     ] = None
-    children: Tree = Field([], description="Child Components")
+    children: Tree[Component] = Field([], description="Child Components")
 
     def serialize(self) -> Mapping[str, Any]:
         """Serialize the Device to a dictionary."""
