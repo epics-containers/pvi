@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>How to Write a Site Specific Formatter &#8212; pvi 0.6.dev3+g6b619b5 documentation</title>
+    <title>How to Write a Site Specific Formatter &#8212; pvi 0.6.dev4+g42b1f18 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
   <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
 
-    <script src="../../_static/documentation_options.js?v=5f63b15e"></script>
+    <script src="../../_static/documentation_options.js?v=b76e6180"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -538,6 +538,24 @@ components, we can create a screen file.</p>
 <span class="k">class</span> <span class="nc">Formatter</span><span class="p">:</span>
     <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">Device</span><span class="p">,</span> <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">format_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">uis</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Format an index of buttons to open the given UIs.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            label: Label for title of generated index UI</span>
+<span class="sd">            uis: Map of button label to UI to open</span>
+<span class="sd">            path: Output path of generated UI</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">Device</span><span class="p">(</span>
+                <span class="n">label</span><span class="p">,</span>
+                <span class="n">children</span><span class="o">=</span><span class="p">[</span><span class="n">DeviceRef</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">ui</span><span class="o">.</span><span class="n">stem</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">ui</span> <span class="ow">in</span> <span class="n">uis</span><span class="o">.</span><span class="n">items</span><span class="p">()],</span>
+            <span class="p">),</span>
+            <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;Index&quot;</span><span class="p">,</span>
+            <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span>
+        <span class="p">)</span>
 </pre></div>
 </div>
 <p>The format function takes in a device: a list of components obtained from our
