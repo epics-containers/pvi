@@ -413,9 +413,16 @@ class ScreenFormatterFactory(Generic[T]):
             # This Group should be formatted as a table
             if c.layout.header is not None:
                 # Create table header
-                assert len(c.layout.header) == len(
-                    c.children
-                ), "Header length does not match number of elements"
+                if len(c.layout.header) != len(c.children):
+                    if not (
+                        # we expect the header to have an extra label column
+                        add_label
+                        and (len(c.layout.header) == len(c.children) + 1)
+                    ):
+                        raise RuntimeError(
+                            f"Header length {len(c.layout.header)} does not match "
+                            f"number of elements {len(c.children)}"
+                        )
 
                 # Create column headers
                 for column_header in c.layout.header:
@@ -428,7 +435,6 @@ class ScreenFormatterFactory(Generic[T]):
                 component_bounds.x = bounds.x
                 component_bounds.y += self.layout.widget_height + self.layout.spacing
 
-            add_label = False  # Don't add a row label
             row_components = c.children  # Create a widget for each row of Group
             # Allow given component width for each column, plus spacing
             component_bounds = component_bounds.tile(
