@@ -138,24 +138,11 @@ byte {
 	}
 	sbit=0
 }
-text {
-	object {
-		x=4
-		y=54
-		width=150
-		height=20
-	}
-	"basic attribute" {
-		clr=14
-	}
-	textix="Big Table"
-	align="horiz. right"
-}
 "related display" {
 	object {
-		x="158.adl"
+		x="4.adl"
 		y="54.adl"
-		width="254.adl"
+		width="408.adl"
 		height="20.adl"
 	}
 	display[0] {

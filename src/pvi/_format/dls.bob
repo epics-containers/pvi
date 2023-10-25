@@ -52,13 +52,13 @@
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="action_button" version="3.0.0">
-    <name>ActionButton</name>
+    <name>WritePV</name>
     <pv_name>SignalX</pv_name>
     <actions>
       <action type="write_pv">
         <pv_name>$(pv_name)</pv_name>
         <value>value</value>
-        <description>WritePV</description>
+        <description>$(name)</description>
       </action>
     </actions>
     <text>SignalX</text>
@@ -174,7 +174,7 @@
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="action_button" version="3.0.0">
-    <name>SubScreen</name>
+    <name>OpenDisplay</name>
     <actions>
       <action type="open_display">
         <file>SubScreenFile</file>
@@ -182,7 +182,7 @@
         <description>Open Display</description>
       </action>
     </actions>
-    <text>...</text>
+    <text>SubScreen</text>
     <x>20</x>
     <y>412</y>
     <width>120</width>

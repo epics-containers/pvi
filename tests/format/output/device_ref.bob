@@ -34,7 +34,7 @@
     <height>20</height>
   </widget>
   <widget type="action_button" version="3.0.0">
-    <name>SubScreen</name>
+    <name>OpenDisplay</name>
     <actions>
       <action type="open_display">
         <file>combo_box.bob</file>
