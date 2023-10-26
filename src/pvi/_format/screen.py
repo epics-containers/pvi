@@ -27,6 +27,7 @@ from pvi._format.widget import (
 from pvi._schema_utils import desc
 from pvi.device import (
     ButtonPanel,
+    ComboBox,
     Component,
     DeviceRef,
     Generic,
@@ -393,7 +394,7 @@ class ScreenFormatterFactory(Generic[T]):
     ) -> Iterator[WidgetFormatter[T]]:
         """Convert a component into its WidgetFormatter equivalents
 
-        Args:
+        Args :
             c: Component object
             bounds: The size and position of the component widgets (x,y,w,h).
             add_label: Whether the component has an associated label. Defaults to True.
@@ -443,7 +444,9 @@ class ScreenFormatterFactory(Generic[T]):
             row_components = [
                 SignalX(label, c.pv, value) for label, value in c.widget.actions.items()
             ]
+
             if isinstance(c, SignalRW):
+                assert c.read_pv
                 row_components += [SignalR(c.label, c.read_pv, c.read_widget)]
         else:
             row_components = [c]  # Create one widget for row
@@ -481,9 +484,12 @@ class ScreenFormatterFactory(Generic[T]):
         )
         for rc_bounds, rc in zip(row_component_bounds, row_components):
             if isinstance(rc, SignalRW):
-                left, right = rc_bounds.split_into(2, self.layout.spacing)
-                yield from self.generate_write_widget(rc, left)
-                yield from self.generate_read_widget(rc, right)
+                if isinstance(rc.widget, ComboBox) or not rc.read_widget:
+                    yield from self.generate_write_widget(rc, rc_bounds)
+                else:
+                    left, right = rc_bounds.split_into(2, self.layout.spacing)
+                    yield from self.generate_write_widget(rc, left)
+                    yield from self.generate_read_widget(rc, right)
             elif isinstance(rc, SignalW):
                 yield from self.generate_write_widget(rc, rc_bounds)
             elif isinstance(rc, SignalR):
@@ -519,6 +525,8 @@ class ScreenFormatterFactory(Generic[T]):
         else:
             widget = signal.widget
             pv = signal.pv
+
+        assert pv
 
         if widget is not None:
             yield self.widget_formatter_factory.pv_widget_formatter(

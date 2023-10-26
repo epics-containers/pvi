@@ -2076,7 +2076,7 @@ minor 0
 release 0
 x 390
 y 590
-w 60
+w 125
 h 20
 fgColor index 25
 bgColor index 3
@@ -2085,25 +2085,6 @@ topShadowColor index 1
 botShadowColor index 11
 controlPv "$(P)$(R)GapFill"
 font "arial-bold-r-12.0"
-endObjectProperties
-
-# (Textupdate)
-object TextupdateClass
-beginObjectProperties
-major 10
-minor 0
-release 0
-x 455
-y 590
-w 60
-h 20
-controlPv "$(P)$(R)GapFill_RBV"
-fgColor index 16
-fgAlarm
-bgColor index 10
-fill
-font "arial-bold-r-12.0"
-fontAlign "center"
 endObjectProperties
 
 # (Static Text)

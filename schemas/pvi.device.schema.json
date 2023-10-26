@@ -492,8 +492,12 @@
               "type": "null"
             }
           ],
-          "description": "Widget to use for display, None means use widget",
-          "default": null
+          "description": "Widget to use for display, default TextRead",
+          "default": {
+            "type": "TextRead",
+            "lines": 1,
+            "format": null
+          }
         }
       },
       "required": [
