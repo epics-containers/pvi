@@ -979,21 +979,8 @@
       <pv_name>$(P)$(R)GapFill</pv_name>
       <x>124</x>
       <y>96</y>
-      <width>60</width>
+      <width>124</width>
       <height>20</height>
-    </widget>
-    <widget type="textupdate" version="2.0.0">
-      <name>TextUpdate</name>
-      <pv_name>$(P)$(R)GapFill_RBV</pv_name>
-      <x>188</x>
-      <y>96</y>
-      <width>60</width>
-      <height>20</height>
-      <font>
-        <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
-      </font>
-      </font>
-      <horizontal_alignment>1</horizontal_alignment>
     </widget>
     <widget type="label" version="2.0.0">
       <name>Label</name>

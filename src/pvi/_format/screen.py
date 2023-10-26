@@ -27,6 +27,7 @@ from pvi._format.widget import (
 from pvi._schema_utils import desc
 from pvi.device import (
     ButtonPanel,
+    ComboBox,
     Component,
     DeviceRef,
     Generic,
@@ -41,6 +42,7 @@ from pvi.device import (
     SignalX,
     SubScreen,
     TableWidgetTypes,
+    TextRead,
     Tree,
     WriteSignalType,
 )
@@ -443,6 +445,7 @@ class ScreenFormatterFactory(Generic[T]):
             row_components = [
                 SignalX(label, c.pv, value) for label, value in c.widget.actions.items()
             ]
+
             if isinstance(c, SignalRW):
                 row_components += [SignalR(c.label, c.read_pv, c.read_widget)]
         else:
@@ -481,9 +484,12 @@ class ScreenFormatterFactory(Generic[T]):
         )
         for rc_bounds, rc in zip(row_component_bounds, row_components):
             if isinstance(rc, SignalRW):
-                left, right = rc_bounds.split_into(2, self.layout.spacing)
-                yield from self.generate_write_widget(rc, left)
-                yield from self.generate_read_widget(rc, right)
+                if isinstance(rc.widget, ComboBox):
+                    yield from self.generate_write_widget(rc, rc_bounds)
+                else:
+                    left, right = rc_bounds.split_into(2, self.layout.spacing)
+                    yield from self.generate_write_widget(rc, left)
+                    yield from self.generate_read_widget(rc, right)
             elif isinstance(rc, SignalW):
                 yield from self.generate_write_widget(rc, rc_bounds)
             elif isinstance(rc, SignalR):

@@ -1636,28 +1636,13 @@ menu {
 	object {
 		x=880
 		y=160
-		width=50
+		width=105
 		height=20
 	}
 	control {
 		chan="$(P)$(R)GapFill"
 		clr=14
 		bclr=51
-	}
-}
-"text update" {
-	object {
-		x=935
-		y=160
-		width=50
-		height=20
-	}
-	monitor {
-		chan="$(P)$(R)GapFill_RBV"
-		clr=54
-		bclr=4
-	}
-	limits {
 	}
 }
 text {

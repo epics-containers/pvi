@@ -280,8 +280,14 @@ class SignalRW(Component):
     # This was Optional[str] but produced JSON schema that YAML editor didn't understand
     read_pv: Annotated[str, desc("PV to be used for read, empty means use pv")] = ""
     read_widget: Annotated[
-        Optional[ReadWidget], desc("Widget to use for display, None means use widget")
-    ] = None
+        Optional[ReadWidget], desc(
+            "Widget to use for display, default TextRead"
+        )
+    ] = TextRead()
+
+    def __post_init__(self):
+        if self.read_pv == "":
+            self.read_pv = f"{self.pv}.RBV"
 
 
 SignalTypes = (SignalR, SignalW, SignalRW)
