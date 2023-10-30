@@ -373,6 +373,9 @@ class Device:
     @classmethod
     def deserialize(cls, serialized: Path) -> Device:
         """Deserialize the Device from a YAML file"""
+        if not serialized.is_file():
+            raise FileNotFoundError(serialized)
+
         return deserialize(cls, YAML(typ="safe").load(serialized))
 
     def deserialize_parents(self, yaml_paths: List[Path]):
