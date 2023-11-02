@@ -282,18 +282,15 @@ class SignalRW(Component):
         Optional[str], desc("PV to be used for read, empty means use pv")
     ] = None
     read_widget: Annotated[
-        Optional[ReadWidget], desc(
-            "Widget to use for display, default TextRead."
-        )
+        Optional[ReadWidget], desc("Widget to use for display, default TextRead.")
     ] = None
 
     def __post_init__(self):
         if self.read_widget is None:
             self.read_widget = TextRead()
 
-        if (
-            isinstance(self.widget, TextWrite) and
-            isinstance(self.read_widget, TextRead)
+        if isinstance(self.widget, TextWrite) and isinstance(
+            self.read_widget, TextRead
         ):
             self.read_widget.format = self.widget.format
 

@@ -479,9 +479,12 @@
           "default": null
         },
         "read_pv": {
-          "type": "string",
+          "type": [
+            "string",
+            "null"
+          ],
           "description": "PV to be used for read, empty means use pv",
-          "default": ""
+          "default": null
         },
         "read_widget": {
           "anyOf": [
@@ -492,12 +495,8 @@
               "type": "null"
             }
           ],
-          "description": "Widget to use for display, default TextRead",
-          "default": {
-            "type": "TextRead",
-            "lines": 1,
-            "format": null
-          }
+          "description": "Widget to use for display, default TextRead.",
+          "default": null
         }
       },
       "required": [

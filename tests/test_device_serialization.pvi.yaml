@@ -12,13 +12,17 @@ children:
         pv: WIDTH:UNITS
         widget:
           type: ComboBox
-        read_pv: WIDTH:UNITS.RBV
+        read_pv: WIDTH:UNITS
+        read_widget:
+          type: TextRead
       - type: SignalRW
         name: Width
         pv: WIDTH
         widget:
           type: TextWrite
         read_pv: WIDTH_RBV
+        read_widget:
+          type: TextRead
   - type: SignalRW
     name: Table
     pv: TABLE
@@ -28,7 +32,9 @@ children:
         - type: CheckBox
         - type: ComboBox
         - type: TextWrite
-    read_pv: TABLE.RBV
+    read_pv: TABLE
+    read_widget:
+      type: TextRead
   - type: SignalR
     name: OutA
     pv: OUTA
