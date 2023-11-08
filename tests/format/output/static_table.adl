@@ -140,10 +140,10 @@ byte {
 }
 "related display" {
 	object {
-		x="4.adl"
-		y="54.adl"
-		width="408.adl"
-		height="20.adl"
+		x=4
+		y=54
+		width=408
+		height=20
 	}
 	display[0] {
 		name="static_table_BigTable.adl"
