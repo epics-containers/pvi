@@ -60,7 +60,9 @@ class BobTemplate(UITemplate[ElementBase]):
                 case "table", "pv_name", pv:
                     new_text = f"pva://{pv}"  # Must include pva prefix
                 case "action_button", "file", file_name:
-                    new_text = f"{file_name}.bob"  # Must include file extension
+                    new_text = file_name
+                    if not new_text.endswith(".bob"):
+                        new_text += ".bob"  # Must include file extension
                 case "action_button", "macros", dict() as macros:
                     if macros:
                         add_button_macros(t_copy, value)
