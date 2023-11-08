@@ -2,7 +2,8 @@ from pathlib import Path
 
 import pytest
 
-from pvi._format.base import Formatter
+from pvi._format.base import Formatter, IndexEntry
+from pvi._format.dls import DLSFormatter
 from pvi._yaml_utils import deserialize_yaml
 from pvi.device import (
     LED,
@@ -216,5 +217,22 @@ def test_group_sub_screen(tmp_path, helper):
     expected_bob = HERE / "format" / "output" / "sub_screen.bob"
     output_bob = tmp_path / "sub_screen.bob"
     formatter.format(device, "$(P)$(R)", output_bob)
+
+    helper.assert_output_matches(expected_bob, output_bob)
+
+
+def test_index(tmp_path, helper):
+    expected_bob = HERE / "format" / "output" / "index.bob"
+    output_bob = tmp_path / "index.bob"
+
+    DLSFormatter().format_index(
+        "Index",
+        [
+            IndexEntry("Button", "button.bob", {"P": "BUTTON"}),
+            IndexEntry("ComboBox", "combo_box.bob", {"P": "COMBOBOX"}),
+            IndexEntry("Table", "pva_table.bob", {"P": "TABLE"}),
+        ],
+        output_bob,
+    )
 
     helper.assert_output_matches(expected_bob, output_bob)
