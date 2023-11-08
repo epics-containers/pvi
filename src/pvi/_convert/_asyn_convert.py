@@ -102,7 +102,7 @@ class Readback(Parameter):
         else:
             name = self.read_record.name
 
-        component = asyn_cls(name)
+        component = asyn_cls(name=name, read_record=self.read_record.name)
 
         return SignalR(
             name=component.name,

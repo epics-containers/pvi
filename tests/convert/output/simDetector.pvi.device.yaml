@@ -8,6 +8,12 @@ children:
     type: Grid
   children:
 
+  - type: SignalR
+    name: Read
+    pv: Read
+    widget:
+      type: TextRead
+
   - type: SignalRW
     name: GainX
     pv: GainX

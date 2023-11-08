@@ -609,3 +609,12 @@ record(ai, "$(P)$(R)YSine2Phase_RBV")
    field(SCAN, "I/O Intr")
 }
 
+# Read record for convert tests
+record(ai, "$(P)$(R)Read")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))READ")
+   field(PREC, "2")
+   info(autosaveFields, "VAL")
+}
