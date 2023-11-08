@@ -9,6 +9,7 @@ from pvi import __version__
 from pvi._convert._template_convert import TemplateConverter
 from pvi._convert.utils import extract_device_and_parent_class
 from pvi._format import Formatter
+from pvi._format.template import format_template
 from pvi._pv_group import group_parameters
 from pvi._schema_utils import make_json_schema
 from pvi._yaml_utils import deserialize_yaml, serialize_yaml
@@ -75,6 +76,17 @@ def format(
 
     formatter_inst: Formatter = deserialize_yaml(Formatter, formatter_path)
     formatter_inst.format(device, "$(P)$(R)", output_path)
+
+
+@app.command()
+def generate_template(
+    device_path: Path = typer.Argument(..., help="Path to the .pvi.device.yaml file"),
+    prefix: str = typer.Argument(..., help="PV Prefix in generated template"),
+    output_path: Path = typer.Argument(..., help="Output file to generate"),
+):
+    """Create template with info tags for device signals"""
+    device = Device.deserialize(device_path)
+    format_template(device, prefix, output_path)
 
 
 @convert_app.command()

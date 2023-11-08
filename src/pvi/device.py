@@ -351,6 +351,16 @@ def walk(tree: Tree[T]) -> Iterator[Union[T, Group[T]]]:
             yield from walk(t.children)
 
 
+def signal_access_mode(signal: SignalR | SignalW | SignalRW):
+    match signal:
+        case SignalR():
+            return "r"
+        case SignalW():
+            return "w"
+        case SignalRW():
+            return "rw"
+
+
 @dataclass
 class Device:
     """Collection of Components"""
