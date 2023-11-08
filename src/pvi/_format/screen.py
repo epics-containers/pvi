@@ -481,9 +481,12 @@ class ScreenFormatterFactory(Generic[T]):
         )
         for rc_bounds, rc in zip(row_component_bounds, row_components):
             if isinstance(rc, SignalRW):
-                left, right = rc_bounds.split_into(2, self.layout.spacing)
-                yield from self.generate_write_widget(rc, left)
-                yield from self.generate_read_widget(rc, right)
+                if rc.read_widget:
+                    left, right = rc_bounds.split_into(2, self.layout.spacing)
+                    yield from self.generate_write_widget(rc, left)
+                    yield from self.generate_read_widget(rc, right)
+                else:
+                    yield from self.generate_write_widget(rc, rc_bounds)
             elif isinstance(rc, SignalW):
                 yield from self.generate_write_widget(rc, rc_bounds)
             elif isinstance(rc, SignalR):
@@ -515,7 +518,7 @@ class ScreenFormatterFactory(Generic[T]):
     def generate_read_widget(self, signal: ReadSignalType, bounds: Bounds):
         if isinstance(signal, SignalRW):
             widget = signal.read_widget
-            pv = signal.read_pv
+            pv = signal.read_pv or signal.pv
         else:
             widget = signal.widget
             pv = signal.pv

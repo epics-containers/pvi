@@ -1418,7 +1418,7 @@ rectangle {
 		x=665
 		y=30
 		width=325
-		height=180
+		height=205
 	}
 	"basic attribute" {
 		clr=14
@@ -1670,13 +1670,54 @@ text {
 	"basic attribute" {
 		clr=14
 	}
+	textix="Gap Fill No Read PV"
+	align="horiz. right"
+}
+menu {
+	object {
+		x=880
+		y=185
+		width=50
+		height=20
+	}
+	control {
+		chan="$(P)$(R)GapFillNoReadPV"
+		clr=14
+		bclr=51
+	}
+}
+"text update" {
+	object {
+		x=935
+		y=185
+		width=50
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)GapFillNoReadPV"
+		clr=54
+		bclr=4
+	}
+	limits {
+	}
+}
+text {
+	object {
+		x=670
+		y=210
+		width=205
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
 	textix="Progress Bar Test"
 	align="horiz. right"
 }
 bar {
 	object {
 		x=880
-		y=185
+		y=210
 		width=105
 		height=20
 	}

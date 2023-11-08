@@ -329,6 +329,14 @@ children:
     read_widget:
       type: TextRead
 
+  - type: SignalRW
+    name: GapFillNoReadPV
+    pv: GapFillNoReadPV
+    widget:
+      type: ComboBox
+    read_widget:
+      type: TextRead
+
   - type: SignalR
     name: ProgressBarTest
     pv: ProgressBarTest_RBV
