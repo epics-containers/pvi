@@ -52,6 +52,10 @@
     "url": "https://epics-containers.github.io/pvi/main-tmp/"
   },
   {
+    "version": "ophyd",
+    "url": "https://epics-containers.github.io/pvi/ophyd/"
+  },
+  {
     "version": "text-format",
     "url": "https://epics-containers.github.io/pvi/text-format/"
   }
