@@ -236,7 +236,7 @@ class ScreenFormatterFactory(Generic[T]):
                 column_bounds=column_bounds,
                 next_column_bounds=next_column_bounds,
                 indent=True,
-                add_label=True,
+                add_label=False,
             )
 
         group_formatter = self.create_group_formatter(
@@ -498,12 +498,16 @@ class ScreenFormatterFactory(Generic[T]):
             elif isinstance(rc, Group) and isinstance(rc.layout, SubScreen):
                 yield self.widget_formatter_factory.sub_screen_formatter_cls(
                     bounds=rc_bounds,
+                    label=rc.get_label(),
                     file_name=f"{self.base_file_name}_{rc.name.replace(' ', '_')}",
                     components=rc,
                 )
             elif isinstance(rc, DeviceRef):
                 yield self.widget_formatter_factory.sub_screen_formatter_cls(
-                    bounds=rc_bounds, file_name=rc.ui, macros=rc.macros
+                    bounds=rc_bounds,
+                    label=rc.get_label(),
+                    file_name=rc.ui,
+                    macros=rc.macros,
                 )
             else:
                 print(f"Ignoring row component {rc}")

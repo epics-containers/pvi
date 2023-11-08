@@ -46,16 +46,8 @@
     </font>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
-  <widget type="label" version="2.0.0">
-    <name>Label</name>
-    <text>Group 1</text>
-    <x>22</x>
-    <y>54</y>
-    <width>120</width>
-    <height>20</height>
-  </widget>
   <widget type="action_button" version="3.0.0">
-    <name>SubScreen</name>
+    <name>OpenDisplay</name>
     <actions>
       <action type="open_display">
         <file>sub_screen_Group_1.bob</file>
@@ -63,10 +55,10 @@
         <description>Open Display</description>
       </action>
     </actions>
-    <text>...</text>
-    <x>146</x>
+    <text>Group 1</text>
+    <x>22</x>
     <y>54</y>
-    <width>124</width>
+    <width>248</width>
     <height>20</height>
     <tooltip>$(actions)</tooltip>
   </widget>
@@ -107,7 +99,7 @@
       <height>20</height>
     </widget>
     <widget type="action_button" version="3.0.0">
-      <name>SubScreen</name>
+      <name>OpenDisplay</name>
       <actions>
         <action type="open_display">
           <file>sub_screen_Group_4.bob</file>
@@ -115,7 +107,7 @@
           <description>Open Display</description>
         </action>
       </actions>
-      <text>...</text>
+      <text>Group 4</text>
       <x>124</x>
       <y>24</y>
       <width>124</width>

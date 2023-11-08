@@ -41,16 +41,8 @@
     <width>20</width>
     <height>20</height>
   </widget>
-  <widget type="label" version="2.0.0">
-    <name>Label</name>
-    <text>Big Table</text>
-    <x>22</x>
-    <y>54</y>
-    <width>120</width>
-    <height>20</height>
-  </widget>
   <widget type="action_button" version="3.0.0">
-    <name>SubScreen</name>
+    <name>OpenDisplay</name>
     <actions>
       <action type="open_display">
         <file>static_table_BigTable.bob</file>
@@ -58,10 +50,10 @@
         <description>Open Display</description>
       </action>
     </actions>
-    <text>...</text>
-    <x>146</x>
+    <text>Big Table</text>
+    <x>22</x>
     <y>54</y>
-    <width>124</width>
+    <width>248</width>
     <height>20</height>
     <tooltip>$(actions)</tooltip>
   </widget>

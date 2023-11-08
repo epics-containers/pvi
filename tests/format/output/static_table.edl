@@ -81,34 +81,15 @@ lineWidth 2
 numBits 1
 endObjectProperties
 
-# (Static Text)
-object activeXTextClass
-beginObjectProperties
-major 4
-minor 1
-release 1
-x 10
-y 55
-w 115
-h 20
-font "arial-bold-r-10.0"
-fgColor index 14
-bgColor index 3
-useDisplayBg
-value {
-  "Big Table"
-}
-endObjectProperties
-
 # (Extended Related Display)
 object ExtendedRelatedDisplayClass
 beginObjectProperties
 major 4
 minor 0
 release 0
-x 130
+x 10
 y 55
-w 125
+w 245
 h 20
 fgColor index 25
 bgColor index 3

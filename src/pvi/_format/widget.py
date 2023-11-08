@@ -157,6 +157,7 @@ class ActionWidgetFormatter(WidgetFormatter[T]):
 
 @dataclass
 class SubScreenWidgetFormatter(WidgetFormatter[T]):
+    label: str
     file_name: str
     components: Optional[Group] = None
     macros: Dict[str, str] = field(default_factory=dict)
