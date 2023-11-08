@@ -48,6 +48,10 @@
     "url": "https://epics-containers.github.io/pvi/fix-links/"
   },
   {
+    "version": "fix-project-scripts",
+    "url": "https://epics-containers.github.io/pvi/fix-project-scripts/"
+  },
+  {
     "version": "fix_rbv_and_writewidgets",
     "url": "https://epics-containers.github.io/pvi/fix_rbv_and_writewidgets/"
   },
