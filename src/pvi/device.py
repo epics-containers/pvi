@@ -302,6 +302,11 @@ class DeviceRef(Component):
     """Reference to another Device."""
 
     pv: Annotated[str, desc("Child device PVI PV")]
+    ui: Annotated[str, desc("UI file to open for referenced Device")]
+    macros: Annotated[
+        Dict[str, str],
+        desc("Macro-value pairs for UI file"),
+    ] = field(default_factory=dict)
 
 
 class SignalRef(Component):

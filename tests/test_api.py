@@ -9,6 +9,7 @@ from pvi.device import (
     ButtonPanel,
     ComboBox,
     Device,
+    DeviceRef,
     SignalR,
     SignalRW,
     SignalW,
@@ -132,6 +133,23 @@ def test_combo_box(tmp_path, helper):
 
     expected_bob = HERE / "format" / "output" / "combo_box.bob"
     output_bob = tmp_path / "combo_box.bob"
+    formatter.format(device, "$(P)$(R)", output_bob)
+
+    helper.assert_output_matches(expected_bob, output_bob)
+
+
+def test_device_ref(tmp_path, helper):
+    formatter_yaml = HERE / "format" / "input" / "dls.bob.pvi.formatter.yaml"
+    formatter = deserialize_yaml(Formatter, formatter_yaml)
+
+    # Make a button to open an existing screen - use screen from combo box test
+    device_ref = DeviceRef(
+        "ComboBox", pv="COMBOBOX", ui="combo_box", macros=dict(P="EIGER", R=":CAM:")
+    )
+    device = Device("Device", children=[device_ref])
+
+    expected_bob = HERE / "format" / "output" / "device_ref.bob"
+    output_bob = tmp_path / "device_ref.bob"
     formatter.format(device, "$(P)$(R)", output_bob)
 
     helper.assert_output_matches(expected_bob, output_bob)
