@@ -4,6 +4,7 @@ import pytest
 
 from pvi._format.base import Formatter, IndexEntry
 from pvi._format.dls import DLSFormatter
+from pvi._format.template import format_template
 from pvi._yaml_utils import deserialize_yaml
 from pvi.device import (
     LED,
@@ -236,3 +237,16 @@ def test_index(tmp_path, helper):
     )
 
     helper.assert_output_matches(expected_bob, output_bob)
+
+
+def test_pvi_template(tmp_path, helper):
+    read = SignalR("Read", "Read")
+    write = SignalW("Write", "Write")
+    read_write = SignalRW("ReadWrite", "ReadWrite")
+    device = Device("Template Device", children=[read, write, read_write])
+
+    expected_bob = HERE / "format" / "output" / "pvi.template"
+    output_template = tmp_path / "pvi.template"
+    format_template(device, "$(P)$(R)", output_template)
+
+    helper.assert_output_matches(expected_bob, output_template)

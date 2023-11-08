@@ -1,0 +1,16 @@
+
+### PV Interface for {{ device }} ###
+{% for record in records %}
+record("*", "{{ prefix }}{{ record.name }}") {
+    info(Q:group, {
+        "{{ prefix }}PVI": {
+            "pvi.{{ record.name }}.{{ record.access }}": {
+                "+channel": "NAME",
+                "+type": "plain",
+            }
+        }
+    })
+}
+{% endfor %}
+### End of PV Interface for {{ device }} ###
+
