@@ -2,16 +2,21 @@ from pathlib import Path
 
 import pytest
 
-from pvi._format.base import Formatter
+from pvi._format.base import Formatter, IndexEntry
+from pvi._format.dls import DLSFormatter
 from pvi._yaml_utils import deserialize_yaml
 from pvi.device import (
     LED,
     ButtonPanel,
     ComboBox,
     Device,
+    DeviceRef,
+    Grid,
+    Group,
     SignalR,
     SignalRW,
     SignalW,
+    SubScreen,
     TableRead,
     TableWrite,
     TextFormat,
@@ -133,5 +138,101 @@ def test_combo_box(tmp_path, helper):
     expected_bob = HERE / "format" / "output" / "combo_box.bob"
     output_bob = tmp_path / "combo_box.bob"
     formatter.format(device, "$(P)$(R)", output_bob)
+
+    helper.assert_output_matches(expected_bob, output_bob)
+
+
+def test_device_ref(tmp_path, helper):
+    formatter_yaml = HERE / "format" / "input" / "dls.bob.pvi.formatter.yaml"
+    formatter = deserialize_yaml(Formatter, formatter_yaml)
+
+    # Make a button to open an existing screen - use screen from combo box test
+    device_ref = DeviceRef(
+        "ComboBox", pv="COMBOBOX", ui="combo_box", macros=dict(P="EIGER", R=":CAM:")
+    )
+    device = Device("Device", children=[device_ref])
+
+    expected_bob = HERE / "format" / "output" / "device_ref.bob"
+    output_bob = tmp_path / "device_ref.bob"
+    formatter.format(device, "$(P)$(R)", output_bob)
+
+    helper.assert_output_matches(expected_bob, output_bob)
+
+
+def test_group_sub_screen(tmp_path, helper):
+    formatter_yaml = HERE / "format" / "input" / "dls.bob.pvi.formatter.yaml"
+    formatter = deserialize_yaml(Formatter, formatter_yaml)
+
+    # This tests every valid combination of nesting Group and SubScreen
+    signals = [
+        SignalR("A", "A", widget=TextRead()),
+        Group(
+            "Group 1",
+            layout=SubScreen(),
+            children=[
+                SignalR("Group 1 B", "GROUP1:B", widget=TextRead()),
+                Group(
+                    "Group 2",
+                    layout=Grid(),
+                    children=[
+                        SignalR("Group 2 C", "GROUP1:GROUP2:C", widget=TextRead()),
+                        SignalR("Group 2 D", "GROUP1:GROUP2:D", widget=TextRead()),
+                    ],
+                ),
+            ],
+        ),
+        Group(
+            "Group 3",
+            layout=Grid(),
+            children=[
+                SignalR("Group 3 E", "GROUP3:E", widget=TextRead()),
+                Group(
+                    "Group 4",
+                    layout=SubScreen(),
+                    children=[
+                        SignalR("Group 4 F", "GROUP3:GROUP4:F", widget=TextRead()),
+                        Group(
+                            "Group 5",
+                            layout=Grid(),
+                            children=[
+                                SignalR(
+                                    "Group 5 G",
+                                    "GROUP3:GROUP4:GROUP5:G",
+                                    widget=TextRead(),
+                                ),
+                                SignalR(
+                                    "Group 5 H",
+                                    "GROUP3:GROUP4:GROUP5:H",
+                                    widget=TextRead(),
+                                ),
+                            ],
+                        ),
+                    ],
+                ),
+            ],
+        ),
+    ]
+    device = Device("Device", children=signals)
+
+    expected_bob = HERE / "format" / "output" / "sub_screen.bob"
+    output_bob = tmp_path / "sub_screen.bob"
+    formatter.format(device, "$(P)$(R)", output_bob)
+
+    helper.assert_output_matches(expected_bob, output_bob)
+
+
+def test_index(tmp_path, helper):
+    expected_bob = HERE / "format" / "output" / "index.bob"
+    output_bob = tmp_path / "index.bob"
+
+    DLSFormatter().format_index(
+        "Index",
+        [
+            IndexEntry("Button", "button.bob", {"P": "BUTTON"}),
+            IndexEntry("ComboBox", "combo_box.bob", {"P": "COMBOBOX"}),
+            IndexEntry("Table", "pva_table.bob", {"P": "TABLE"}),
+        ],
+        output_bob,
+    )
 
     helper.assert_output_matches(expected_bob, output_bob)

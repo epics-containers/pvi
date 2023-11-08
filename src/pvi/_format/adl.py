@@ -37,8 +37,9 @@ class AdlTemplate(UITemplate[str]):
             properties["height"] = bounds.h
 
         for item, value in properties.items():
-            if template.startswith('"related display"'):
-                value = f"{value}.adl"  # Must include file extension
+            if template.startswith('"related display"') and item == "name":
+                if not value.endswith(".adl"):
+                    value = f"{value}.adl"  # Must include file extension
 
             # Only need single line
             pattern = re.compile(r"^(\s*%s)=.*$" % item, re.MULTILINE)

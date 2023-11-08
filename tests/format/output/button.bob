@@ -64,13 +64,13 @@
     <height>20</height>
   </widget>
   <widget type="action_button" version="3.0.0">
-    <name>ActionButton</name>
+    <name>WritePV</name>
     <pv_name>$(P)Acquire</pv_name>
     <actions>
       <action type="write_pv">
         <pv_name>$(pv_name)</pv_name>
         <value>1</value>
-        <description>WritePV</description>
+        <description>$(name)</description>
       </action>
     </actions>
     <text>Start</text>
@@ -81,13 +81,13 @@
     <tooltip>$(actions)</tooltip>
   </widget>
   <widget type="action_button" version="3.0.0">
-    <name>ActionButton</name>
+    <name>WritePV</name>
     <pv_name>$(P)Acquire</pv_name>
     <actions>
       <action type="write_pv">
         <pv_name>$(pv_name)</pv_name>
         <value>0</value>
-        <description>WritePV</description>
+        <description>$(name)</description>
       </action>
     </actions>
     <text>Stop</text>
@@ -106,13 +106,13 @@
     <height>20</height>
   </widget>
   <widget type="action_button" version="3.0.0">
-    <name>ActionButton</name>
+    <name>WritePV</name>
     <pv_name>$(P)Acquire</pv_name>
     <actions>
       <action type="write_pv">
         <pv_name>$(pv_name)</pv_name>
         <value>1</value>
-        <description>WritePV</description>
+        <description>$(name)</description>
       </action>
     </actions>
     <text>Start</text>
@@ -123,13 +123,13 @@
     <tooltip>$(actions)</tooltip>
   </widget>
   <widget type="action_button" version="3.0.0">
-    <name>ActionButton</name>
+    <name>WritePV</name>
     <pv_name>$(P)Acquire</pv_name>
     <actions>
       <action type="write_pv">
         <pv_name>$(pv_name)</pv_name>
         <value>0</value>
-        <description>WritePV</description>
+        <description>$(name)</description>
       </action>
     </actions>
     <text>Stop</text>

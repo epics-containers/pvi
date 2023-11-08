@@ -1,0 +1,109 @@
+<display version="2.0.0">
+  <name>Display</name>
+  <x>0</x>
+  <y>0</y>
+  <width>273</width>
+  <height>105</height>
+  <grid_step_x>4</grid_step_x>
+  <grid_step_y>4</grid_step_y>
+  <widget type="label" version="2.0.0">
+    <name>Title</name>
+    <class>TITLE</class>
+    <text>Index - Index</text>
+    <x use_class="true">0</x>
+    <y use_class="true">0</y>
+    <width>273</width>
+    <height>25</height>
+    <font use_class="true">
+      <font name="Header 1" family="Liberation Sans" style="BOLD" size="22.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="Text" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <transparent use_class="true">true</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>Button</text>
+    <x>23</x>
+    <y>30</y>
+    <width>115</width>
+    <height>20</height>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>OpenDisplay</name>
+    <actions>
+      <action type="open_display">
+        <file>button.bob</file>
+        <target>tab</target>
+        <description>Open Display</description>
+        <macros>
+          <P>BUTTON</P>
+        </macros>
+      </action>
+    </actions>
+    <text>Button</text>
+    <x>143</x>
+    <y>30</y>
+    <width>125</width>
+    <height>20</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>Combo Box</text>
+    <x>23</x>
+    <y>55</y>
+    <width>115</width>
+    <height>20</height>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>OpenDisplay</name>
+    <actions>
+      <action type="open_display">
+        <file>combo_box.bob</file>
+        <target>tab</target>
+        <description>Open Display</description>
+        <macros>
+          <P>COMBOBOX</P>
+        </macros>
+      </action>
+    </actions>
+    <text>Combo Box</text>
+    <x>143</x>
+    <y>55</y>
+    <width>125</width>
+    <height>20</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>Table</text>
+    <x>23</x>
+    <y>80</y>
+    <width>115</width>
+    <height>20</height>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>OpenDisplay</name>
+    <actions>
+      <action type="open_display">
+        <file>pva_table.bob</file>
+        <target>tab</target>
+        <description>Open Display</description>
+        <macros>
+          <P>TABLE</P>
+        </macros>
+      </action>
+    </actions>
+    <text>Table</text>
+    <x>143</x>
+    <y>80</y>
+    <width>125</width>
+    <height>20</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+</display>

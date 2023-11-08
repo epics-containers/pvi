@@ -556,11 +556,24 @@
         "pv": {
           "type": "string",
           "description": "Child device PVI PV"
+        },
+        "ui": {
+          "type": "string",
+          "description": "UI file to open for referenced Device"
+        },
+        "macros": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Macro-value pairs for UI file"
         }
       },
       "required": [
         "name",
-        "pv"
+        "pv",
+        "ui",
+        "macros"
       ],
       "additionalProperties": false
     },

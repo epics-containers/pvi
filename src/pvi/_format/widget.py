@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, replace
+from dataclasses import dataclass, field, replace
 from typing import Callable, Dict, List, Optional, Type, TypeVar, Union
 
 from pvi._format.utils import Bounds, GroupType
@@ -157,8 +157,10 @@ class ActionWidgetFormatter(WidgetFormatter[T]):
 
 @dataclass
 class SubScreenWidgetFormatter(WidgetFormatter[T]):
+    label: str
     file_name: str
-    components: Group
+    components: Optional[Group] = None
+    macros: Dict[str, str] = field(default_factory=dict)
 
 
 @dataclass

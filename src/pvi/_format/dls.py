@@ -253,13 +253,13 @@ class DLSFormatter(Formatter):
             ),
             action_formatter_cls=ActionWidgetFormatter.from_template(
                 template,
-                search="ActionButton",
+                search="WritePV",
                 property_map=dict(text="label", pv_name="pv", value="value"),
             ),
             sub_screen_formatter_cls=SubScreenWidgetFormatter.from_template(
                 template,
-                search="SubScreen",
-                property_map=dict(file="file_name"),
+                search="OpenDisplay",
+                property_map=dict(file="file_name", text="label", macros="macros"),
             ),
         )
         # MAKE_WIDGETS DOCS REF: Define screen and group widgets

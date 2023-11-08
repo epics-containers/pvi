@@ -302,6 +302,11 @@ class DeviceRef(Component):
     """Reference to another Device."""
 
     pv: Annotated[str, desc("Child device PVI PV")]
+    ui: Annotated[str, desc("UI file to open for referenced Device")]
+    macros: Annotated[
+        Dict[str, str],
+        desc("Macro-value pairs for UI file"),
+    ] = field(default_factory=dict)
 
 
 class SignalRef(Component):
@@ -368,6 +373,9 @@ class Device:
     @classmethod
     def deserialize(cls, serialized: Path) -> Device:
         """Deserialize the Device from a YAML file"""
+        if not serialized.is_file():
+            raise FileNotFoundError(serialized)
+
         return deserialize(cls, YAML(typ="safe").load(serialized))
 
     def deserialize_parents(self, yaml_paths: List[Path]):
