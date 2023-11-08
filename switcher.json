@@ -40,6 +40,10 @@
     "url": "https://epics-containers.github.io/pvi/experiments/"
   },
   {
+    "version": "fix-launch",
+    "url": "https://epics-containers.github.io/pvi/fix-launch/"
+  },
+  {
     "version": "fix-links",
     "url": "https://epics-containers.github.io/pvi/fix-links/"
   },
