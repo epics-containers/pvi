@@ -53,7 +53,7 @@ pvi = [
 ]
 
 [project.scripts]
-pvi = "pvi.__main__:main"
+pvi = "pvi.__main__:app"
 
 [project.urls]
 GitHub = "https://github.com/epics-containers/pvi"
