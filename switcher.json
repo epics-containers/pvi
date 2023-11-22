@@ -40,6 +40,10 @@
     "url": "https://epics-containers.github.io/pvi/allow_labels_on_tables/"
   },
   {
+    "version": "docs-python-version",
+    "url": "https://epics-containers.github.io/pvi/docs-python-version/"
+  },
+  {
     "version": "experiments",
     "url": "https://epics-containers.github.io/pvi/experiments/"
   },
