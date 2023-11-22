@@ -28,9 +28,9 @@
   <widget type="label" version="2.0.0">
     <name>Heading</name>
     <text>Binary Column</text>
-    <x>22</x>
+    <x>146</x>
     <y>30</y>
-    <width>248</width>
+    <width>217</width>
     <height>20</height>
     <font>
       <font family="Liberation Sans" style="BOLD" size="16.0">
@@ -50,9 +50,9 @@
   <widget type="label" version="2.0.0">
     <name>Heading</name>
     <text>Long Column</text>
-    <x>274</x>
+    <x>367</x>
     <y>30</y>
-    <width>248</width>
+    <width>217</width>
     <height>20</height>
     <font>
       <font family="Liberation Sans" style="BOLD" size="16.0">
@@ -72,9 +72,9 @@
   <widget type="label" version="2.0.0">
     <name>Heading</name>
     <text>Float Column</text>
-    <x>526</x>
+    <x>588</x>
     <y>30</y>
-    <width>248</width>
+    <width>217</width>
     <height>20</height>
     <font>
       <font family="Liberation Sans" style="BOLD" size="16.0">
@@ -94,9 +94,9 @@
   <widget type="label" version="2.0.0">
     <name>Heading</name>
     <text>String Column</text>
-    <x>778</x>
+    <x>809</x>
     <y>30</y>
-    <width>248</width>
+    <width>217</width>
     <height>20</height>
     <font>
       <font family="Liberation Sans" style="BOLD" size="16.0">
@@ -113,10 +113,18 @@
     <transparent>false</transparent>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>Row 1</text>
+    <x>22</x>
+    <y>54</y>
+    <width>120</width>
+    <height>20</height>
+  </widget>
   <widget type="led" version="2.0.0">
     <name>LED</name>
     <pv_name>$(P)$(R)BINARY_1</pv_name>
-    <x>136</x>
+    <x>244</x>
     <y>54</y>
     <width>20</width>
     <height>20</height>
@@ -124,9 +132,9 @@
   <widget type="textupdate" version="2.0.0">
     <name>TextUpdate</name>
     <pv_name>$(P)$(R)LONG_1</pv_name>
-    <x>274</x>
+    <x>367</x>
     <y>54</y>
-    <width>248</width>
+    <width>217</width>
     <height>20</height>
     <font>
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -137,9 +145,9 @@
   <widget type="textupdate" version="2.0.0">
     <name>TextUpdate</name>
     <pv_name>$(P)$(R)FLOAT_1</pv_name>
-    <x>526</x>
+    <x>588</x>
     <y>54</y>
-    <width>248</width>
+    <width>217</width>
     <height>20</height>
     <font>
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -150,9 +158,9 @@
   <widget type="textupdate" version="2.0.0">
     <name>TextUpdate</name>
     <pv_name>$(P)$(R)STRING_1</pv_name>
-    <x>778</x>
+    <x>809</x>
     <y>54</y>
-    <width>248</width>
+    <width>217</width>
     <height>20</height>
     <font>
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -160,10 +168,18 @@
     </font>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>Row 2</text>
+    <x>22</x>
+    <y>78</y>
+    <width>120</width>
+    <height>20</height>
+  </widget>
   <widget type="led" version="2.0.0">
     <name>LED</name>
     <pv_name>$(P)$(R)BINARY_2</pv_name>
-    <x>136</x>
+    <x>244</x>
     <y>78</y>
     <width>20</width>
     <height>20</height>
@@ -171,9 +187,9 @@
   <widget type="textupdate" version="2.0.0">
     <name>TextUpdate</name>
     <pv_name>$(P)$(R)LONG_2</pv_name>
-    <x>274</x>
+    <x>367</x>
     <y>78</y>
-    <width>248</width>
+    <width>217</width>
     <height>20</height>
     <font>
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -184,9 +200,9 @@
   <widget type="textupdate" version="2.0.0">
     <name>TextUpdate</name>
     <pv_name>$(P)$(R)FLOAT_2</pv_name>
-    <x>526</x>
+    <x>588</x>
     <y>78</y>
-    <width>248</width>
+    <width>217</width>
     <height>20</height>
     <font>
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -197,9 +213,9 @@
   <widget type="textupdate" version="2.0.0">
     <name>TextUpdate</name>
     <pv_name>$(P)$(R)STRING_2</pv_name>
-    <x>778</x>
+    <x>809</x>
     <y>78</y>
-    <width>248</width>
+    <width>217</width>
     <height>20</height>
     <font>
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -207,10 +223,18 @@
     </font>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>Row 3</text>
+    <x>22</x>
+    <y>102</y>
+    <width>120</width>
+    <height>20</height>
+  </widget>
   <widget type="led" version="2.0.0">
     <name>LED</name>
     <pv_name>$(P)$(R)BINARY_3</pv_name>
-    <x>136</x>
+    <x>244</x>
     <y>102</y>
     <width>20</width>
     <height>20</height>
@@ -218,9 +242,9 @@
   <widget type="textupdate" version="2.0.0">
     <name>TextUpdate</name>
     <pv_name>$(P)$(R)LONG_3</pv_name>
-    <x>274</x>
+    <x>367</x>
     <y>102</y>
-    <width>248</width>
+    <width>217</width>
     <height>20</height>
     <font>
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -231,9 +255,9 @@
   <widget type="textupdate" version="2.0.0">
     <name>TextUpdate</name>
     <pv_name>$(P)$(R)FLOAT_3</pv_name>
-    <x>526</x>
+    <x>588</x>
     <y>102</y>
-    <width>248</width>
+    <width>217</width>
     <height>20</height>
     <font>
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -244,9 +268,9 @@
   <widget type="textupdate" version="2.0.0">
     <name>TextUpdate</name>
     <pv_name>$(P)$(R)STRING_3</pv_name>
-    <x>778</x>
+    <x>809</x>
     <y>102</y>
-    <width>248</width>
+    <width>217</width>
     <height>20</height>
     <font>
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -254,10 +278,18 @@
     </font>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>Row 4</text>
+    <x>22</x>
+    <y>126</y>
+    <width>120</width>
+    <height>20</height>
+  </widget>
   <widget type="led" version="2.0.0">
     <name>LED</name>
     <pv_name>$(P)$(R)BINARY_4</pv_name>
-    <x>136</x>
+    <x>244</x>
     <y>126</y>
     <width>20</width>
     <height>20</height>
@@ -265,9 +297,9 @@
   <widget type="textupdate" version="2.0.0">
     <name>TextUpdate</name>
     <pv_name>$(P)$(R)LONG_4</pv_name>
-    <x>274</x>
+    <x>367</x>
     <y>126</y>
-    <width>248</width>
+    <width>217</width>
     <height>20</height>
     <font>
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -278,9 +310,9 @@
   <widget type="textupdate" version="2.0.0">
     <name>TextUpdate</name>
     <pv_name>$(P)$(R)FLOAT_4</pv_name>
-    <x>526</x>
+    <x>588</x>
     <y>126</y>
-    <width>248</width>
+    <width>217</width>
     <height>20</height>
     <font>
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -291,9 +323,9 @@
   <widget type="textupdate" version="2.0.0">
     <name>TextUpdate</name>
     <pv_name>$(P)$(R)STRING_4</pv_name>
-    <x>778</x>
+    <x>809</x>
     <y>126</y>
-    <width>248</width>
+    <width>217</width>
     <height>20</height>
     <font>
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
