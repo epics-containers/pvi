@@ -389,7 +389,7 @@ class ScreenFormatterFactory(Generic[T]):
         self,
         c: Union[Group[Component], Component],
         bounds: Bounds,
-        add_label=True,
+        add_label=False,
     ) -> Iterator[WidgetFormatter[T]]:
         """Convert a component into its WidgetFormatter equivalents
 
@@ -417,6 +417,19 @@ class ScreenFormatterFactory(Generic[T]):
                     c.children
                 ), "Header length does not match number of elements"
 
+                if add_label:
+                    # Scale the headers by the width with the label then
+                    # indent them
+                    original_width = len(c.layout.header) * (
+                        component_bounds.w + self.layout.spacing
+                    )
+                    label_width = self.layout.label_width + self.layout.spacing
+
+                    scaling_factor = (original_width - label_width) / original_width
+                    component_bounds.w = int(component_bounds.w * scaling_factor)
+
+                    component_bounds.indent(label_width)
+
                 # Create column headers
                 for column_header in c.layout.header:
                     yield self.widget_formatter_factory.header_formatter_cls(
@@ -424,11 +437,10 @@ class ScreenFormatterFactory(Generic[T]):
                     )
                     component_bounds.x += component_bounds.w + self.layout.spacing
 
-                # Reset x and shift down y
-                component_bounds.x = bounds.x
+                # Reset x and w and shift down y
+                component_bounds = bounds.copy()
                 component_bounds.y += self.layout.widget_height + self.layout.spacing
 
-            add_label = False  # Don't add a row label
             row_components = c.children  # Create a widget for each row of Group
             # Allow given component width for each column, plus spacing
             component_bounds = component_bounds.tile(
@@ -465,7 +477,7 @@ class ScreenFormatterFactory(Generic[T]):
 
         if isinstance(c, SignalRef):
             yield from self.generate_component_formatters(
-                self.components[c.name], row_bounds, add_label
+                self.components[c.name], row_bounds, add_label=add_label
             )
             return
 

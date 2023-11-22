@@ -50,9 +50,9 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 10
+x 130
 y 30
-w 245
+w 215
 h 20
 font "arial-bold-r-12.0"
 fontAlign "center"
@@ -69,9 +69,9 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 260
+x 350
 y 30
-w 245
+w 215
 h 20
 font "arial-bold-r-12.0"
 fontAlign "center"
@@ -88,9 +88,9 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 510
+x 570
 y 30
-w 245
+w 215
 h 20
 font "arial-bold-r-12.0"
 fontAlign "center"
@@ -107,9 +107,9 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 760
+x 790
 y 30
-w 245
+w 215
 h 20
 font "arial-bold-r-12.0"
 fontAlign "center"
@@ -120,13 +120,32 @@ value {
 }
 endObjectProperties
 
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 10
+y 55
+w 115
+h 20
+font "arial-bold-r-10.0"
+fgColor index 14
+bgColor index 3
+useDisplayBg
+value {
+  "Row 1"
+}
+endObjectProperties
+
 # (Byte)
 object ByteClass
 beginObjectProperties
 major 4
 minor 0
 release 0
-x 122
+x 227
 y 55
 w 20
 h 20
@@ -144,9 +163,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 260
+x 350
 y 55
-w 245
+w 215
 h 20
 controlPv "$(P)$(R)LONG_1"
 fgColor index 16
@@ -163,9 +182,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 510
+x 570
 y 55
-w 245
+w 215
 h 20
 controlPv "$(P)$(R)FLOAT_1"
 fgColor index 16
@@ -182,9 +201,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 760
+x 790
 y 55
-w 245
+w 215
 h 20
 controlPv "$(P)$(R)STRING_1"
 fgColor index 16
@@ -195,13 +214,32 @@ font "arial-bold-r-12.0"
 fontAlign "center"
 endObjectProperties
 
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 10
+y 80
+w 115
+h 20
+font "arial-bold-r-10.0"
+fgColor index 14
+bgColor index 3
+useDisplayBg
+value {
+  "Row 2"
+}
+endObjectProperties
+
 # (Byte)
 object ByteClass
 beginObjectProperties
 major 4
 minor 0
 release 0
-x 122
+x 227
 y 80
 w 20
 h 20
@@ -219,9 +257,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 260
+x 350
 y 80
-w 245
+w 215
 h 20
 controlPv "$(P)$(R)LONG_2"
 fgColor index 16
@@ -238,9 +276,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 510
+x 570
 y 80
-w 245
+w 215
 h 20
 controlPv "$(P)$(R)FLOAT_2"
 fgColor index 16
@@ -257,9 +295,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 760
+x 790
 y 80
-w 245
+w 215
 h 20
 controlPv "$(P)$(R)STRING_2"
 fgColor index 16
@@ -270,13 +308,32 @@ font "arial-bold-r-12.0"
 fontAlign "center"
 endObjectProperties
 
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 10
+y 105
+w 115
+h 20
+font "arial-bold-r-10.0"
+fgColor index 14
+bgColor index 3
+useDisplayBg
+value {
+  "Row 3"
+}
+endObjectProperties
+
 # (Byte)
 object ByteClass
 beginObjectProperties
 major 4
 minor 0
 release 0
-x 122
+x 227
 y 105
 w 20
 h 20
@@ -294,9 +351,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 260
+x 350
 y 105
-w 245
+w 215
 h 20
 controlPv "$(P)$(R)LONG_3"
 fgColor index 16
@@ -313,9 +370,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 510
+x 570
 y 105
-w 245
+w 215
 h 20
 controlPv "$(P)$(R)FLOAT_3"
 fgColor index 16
@@ -332,9 +389,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 760
+x 790
 y 105
-w 245
+w 215
 h 20
 controlPv "$(P)$(R)STRING_3"
 fgColor index 16
@@ -345,13 +402,32 @@ font "arial-bold-r-12.0"
 fontAlign "center"
 endObjectProperties
 
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 10
+y 130
+w 115
+h 20
+font "arial-bold-r-10.0"
+fgColor index 14
+bgColor index 3
+useDisplayBg
+value {
+  "Row 4"
+}
+endObjectProperties
+
 # (Byte)
 object ByteClass
 beginObjectProperties
 major 4
 minor 0
 release 0
-x 122
+x 227
 y 130
 w 20
 h 20
@@ -369,9 +445,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 260
+x 350
 y 130
-w 245
+w 215
 h 20
 controlPv "$(P)$(R)LONG_4"
 fgColor index 16
@@ -388,9 +464,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 510
+x 570
 y 130
-w 245
+w 215
 h 20
 controlPv "$(P)$(R)FLOAT_4"
 fgColor index 16
@@ -407,9 +483,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 760
+x 790
 y 130
-w 245
+w 215
 h 20
 controlPv "$(P)$(R)STRING_4"
 fgColor index 16
