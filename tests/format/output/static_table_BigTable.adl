@@ -7,7 +7,7 @@ display {
 	object {
 		x=0
 		y=0
-		width=1652
+		width=1650
 		height=150
 	}
 	clr=14
@@ -91,7 +91,7 @@ rectangle {
 	object {
 		x=0
 		y=0
-		width=1652
+		width=1650
 		height=26
 	}
 	"basic attribute" {
@@ -102,7 +102,7 @@ text {
 	object {
 		x=0
 		y=0
-		width=1652
+		width=1650
 		height=26
 	}
 	"basic attribute" {
@@ -113,9 +113,9 @@ text {
 }
 text {
 	object {
-		x=4
+		x=158
 		y=30
-		width=408
+		width=369
 		height=20
 	}
 	"basic attribute" {
@@ -126,9 +126,9 @@ text {
 }
 text {
 	object {
-		x=416
+		x=531
 		y=30
-		width=408
+		width=369
 		height=20
 	}
 	"basic attribute" {
@@ -139,9 +139,9 @@ text {
 }
 text {
 	object {
-		x=828
+		x=904
 		y=30
-		width=408
+		width=369
 		height=20
 	}
 	"basic attribute" {
@@ -152,9 +152,9 @@ text {
 }
 text {
 	object {
-		x=1240
+		x=1277
 		y=30
-		width=408
+		width=369
 		height=20
 	}
 	"basic attribute" {
@@ -163,9 +163,22 @@ text {
 	textix="String Column"
 	align="horiz. centered"
 }
+text {
+	object {
+		x=4
+		y=54
+		width=150
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Row 1"
+	align="horiz. right"
+}
 byte {
 	object {
-		x=198
+		x=332
 		y=54
 		width=20
 		height=20
@@ -179,9 +192,9 @@ byte {
 }
 "text update" {
 	object {
-		x=416
+		x=531
 		y=54
-		width=408
+		width=369
 		height=20
 	}
 	monitor {
@@ -194,9 +207,9 @@ byte {
 }
 "text update" {
 	object {
-		x=828
+		x=904
 		y=54
-		width=408
+		width=369
 		height=20
 	}
 	monitor {
@@ -209,9 +222,9 @@ byte {
 }
 "text update" {
 	object {
-		x=1240
+		x=1277
 		y=54
-		width=408
+		width=369
 		height=20
 	}
 	monitor {
@@ -222,9 +235,22 @@ byte {
 	limits {
 	}
 }
+text {
+	object {
+		x=4
+		y=78
+		width=150
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Row 2"
+	align="horiz. right"
+}
 byte {
 	object {
-		x=198
+		x=332
 		y=78
 		width=20
 		height=20
@@ -238,9 +264,9 @@ byte {
 }
 "text update" {
 	object {
-		x=416
+		x=531
 		y=78
-		width=408
+		width=369
 		height=20
 	}
 	monitor {
@@ -253,9 +279,9 @@ byte {
 }
 "text update" {
 	object {
-		x=828
+		x=904
 		y=78
-		width=408
+		width=369
 		height=20
 	}
 	monitor {
@@ -268,9 +294,9 @@ byte {
 }
 "text update" {
 	object {
-		x=1240
+		x=1277
 		y=78
-		width=408
+		width=369
 		height=20
 	}
 	monitor {
@@ -281,9 +307,22 @@ byte {
 	limits {
 	}
 }
+text {
+	object {
+		x=4
+		y=102
+		width=150
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Row 3"
+	align="horiz. right"
+}
 byte {
 	object {
-		x=198
+		x=332
 		y=102
 		width=20
 		height=20
@@ -297,9 +336,9 @@ byte {
 }
 "text update" {
 	object {
-		x=416
+		x=531
 		y=102
-		width=408
+		width=369
 		height=20
 	}
 	monitor {
@@ -312,9 +351,9 @@ byte {
 }
 "text update" {
 	object {
-		x=828
+		x=904
 		y=102
-		width=408
+		width=369
 		height=20
 	}
 	monitor {
@@ -327,9 +366,9 @@ byte {
 }
 "text update" {
 	object {
-		x=1240
+		x=1277
 		y=102
-		width=408
+		width=369
 		height=20
 	}
 	monitor {
@@ -340,9 +379,22 @@ byte {
 	limits {
 	}
 }
+text {
+	object {
+		x=4
+		y=126
+		width=150
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Row 4"
+	align="horiz. right"
+}
 byte {
 	object {
-		x=198
+		x=332
 		y=126
 		width=20
 		height=20
@@ -356,9 +408,9 @@ byte {
 }
 "text update" {
 	object {
-		x=416
+		x=531
 		y=126
-		width=408
+		width=369
 		height=20
 	}
 	monitor {
@@ -371,9 +423,9 @@ byte {
 }
 "text update" {
 	object {
-		x=828
+		x=904
 		y=126
-		width=408
+		width=369
 		height=20
 	}
 	monitor {
@@ -386,9 +438,9 @@ byte {
 }
 "text update" {
 	object {
-		x=1240
+		x=1277
 		y=126
-		width=408
+		width=369
 		height=20
 	}
 	monitor {

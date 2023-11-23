@@ -417,18 +417,30 @@ class ScreenFormatterFactory(Generic[T]):
                     c.children
                 ), "Header length does not match number of elements"
 
+                header_bounds = component_bounds.copy()
+                if add_label:
+                    # Scale the headers by the width with the label then
+                    # indent them
+                    original_width = len(c.layout.header) * (
+                        header_bounds.w + self.layout.spacing
+                    )
+                    label_width = self.layout.label_width + self.layout.spacing
+
+                    scaling_factor = (original_width - label_width) / original_width
+                    header_bounds.w = int(header_bounds.w * scaling_factor)
+
+                    header_bounds.indent(label_width)
+
                 # Create column headers
                 for column_header in c.layout.header:
                     yield self.widget_formatter_factory.header_formatter_cls(
-                        component_bounds.copy(), column_header
+                        header_bounds.copy(), column_header
                     )
-                    component_bounds.x += component_bounds.w + self.layout.spacing
+                    header_bounds.x += header_bounds.w + self.layout.spacing
 
-                # Reset x and shift down y
-                component_bounds.x = bounds.x
+                # Shift down y
                 component_bounds.y += self.layout.widget_height + self.layout.spacing
 
-            add_label = False  # Don't add a row label
             row_components = c.children  # Create a widget for each row of Group
             # Allow given component width for each column, plus spacing
             component_bounds = component_bounds.tile(
