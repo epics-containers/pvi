@@ -8,36 +8,32 @@
     "url": "https://epics-containers.github.io/pvi/main/"
   },
   {
-    "version": "0.6.1",
-    "url": "https://epics-containers.github.io/pvi/0.6.1/"
-  },
-  {
-    "version": "0.6",
-    "url": "https://epics-containers.github.io/pvi/0.6/"
-  },
-  {
-    "version": "0.5",
-    "url": "https://epics-containers.github.io/pvi/0.5/"
-  },
-  {
-    "version": "0.4",
-    "url": "https://epics-containers.github.io/pvi/0.4/"
-  },
-  {
-    "version": "0.3",
-    "url": "https://epics-containers.github.io/pvi/0.3/"
+    "version": "0.1",
+    "url": "https://epics-containers.github.io/pvi/0.1/"
   },
   {
     "version": "0.2",
     "url": "https://epics-containers.github.io/pvi/0.2/"
   },
   {
-    "version": "0.1",
-    "url": "https://epics-containers.github.io/pvi/0.1/"
+    "version": "0.3",
+    "url": "https://epics-containers.github.io/pvi/0.3/"
   },
   {
-    "version": "allow_labels_on_tables",
-    "url": "https://epics-containers.github.io/pvi/allow_labels_on_tables/"
+    "version": "0.4",
+    "url": "https://epics-containers.github.io/pvi/0.4/"
+  },
+  {
+    "version": "0.5",
+    "url": "https://epics-containers.github.io/pvi/0.5/"
+  },
+  {
+    "version": "0.6",
+    "url": "https://epics-containers.github.io/pvi/0.6/"
+  },
+  {
+    "version": "0.6.1",
+    "url": "https://epics-containers.github.io/pvi/0.6.1/"
   },
   {
     "version": "docs-python-version",
