@@ -2,13 +2,13 @@
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-content_root="../../" >
 
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>How to Write a Site Specific Formatter &#8212; pvi 0.6.2.dev2+g3e0640a documentation</title>
+    <title>How to Write a Site Specific Formatter &#8212; pvi 0.6.2.dev3+ge0c13bc documentation</title>
   
   
   
@@ -18,12 +18,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
   
-  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -34,11 +34,11 @@
     <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
-  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
 
-    <script src="../../_static/documentation_options.js?v=b7b3f0ba"></script>
+    <script src="../../_static/documentation_options.js?v=b9ab450f"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -46,7 +46,7 @@
     <script src="../../_static/design-tabs.js?v=36754332"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'developer/how-to/write-a-formatter';</script>
     <script>
-        DOCUMENTATION_OPTIONS.theme_version = '0.14.3';
+        DOCUMENTATION_OPTIONS.theme_version = '0.14.4';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://epics-containers.github.io/pvi/switcher.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'main';
         DOCUMENTATION_OPTIONS.show_version_warning_banner = false;
@@ -119,6 +119,7 @@
   <div class="col-lg-3 navbar-header-items__start">
     
       <div class="navbar-item">
+
   
 
 <a class="navbar-brand logo" href="../../index.html">
@@ -146,7 +147,8 @@
     
     <div class="me-auto navbar-header-items__center">
       
-        <div class="navbar-item"><nav class="navbar-nav">
+        <div class="navbar-item">
+<nav class="navbar-nav">
   <p class="sidebar-header-items__title"
      role="heading"
      aria-level="1"
@@ -185,6 +187,7 @@
       
         <div class="navbar-item navbar-persistent--container">
           
+
  <script>
  document.write(`
    <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -198,6 +201,7 @@
       
       
         <div class="navbar-item">
+
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -266,6 +270,7 @@ document.write(`
   
   
     <div class="navbar-persistent--mobile">
+
  <script>
  document.write(`
    <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -299,7 +304,8 @@ document.write(`
     
       <div class="sidebar-header-items__center">
         
-          <div class="navbar-item"><nav class="navbar-nav">
+          <div class="navbar-item">
+<nav class="navbar-nav">
   <p class="sidebar-header-items__title"
      role="heading"
      aria-level="1"
@@ -338,6 +344,7 @@ document.write(`
       <div class="sidebar-header-items__end">
         
           <div class="navbar-item">
+
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -405,7 +412,8 @@ document.write(`
   </div>
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
-        <div class="sidebar-primary-item"><nav class="bd-docs-nav bd-links"
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
@@ -671,58 +679,58 @@ WidgetFactory.from_template method:</p>
             <span class="n">header_formatter_cls</span><span class="o">=</span><span class="n">LabelWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Heading&quot;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">),</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">label_formatter_cls</span><span class="o">=</span><span class="n">LabelWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Label&quot;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">),</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">led_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span>
                 <span class="n">sized</span><span class="o">=</span><span class="n">Bounds</span><span class="o">.</span><span class="n">square</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">progress_bar_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ProgressBar&quot;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">text_read_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;TextUpdate&quot;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">check_box_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ChoiceButton&quot;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">combo_box_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ComboBox&quot;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">text_write_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;TextEntry&quot;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">table_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Table&quot;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">action_formatter_cls</span><span class="o">=</span><span class="n">ActionWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;WritePV&quot;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">),</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">sub_screen_formatter_cls</span><span class="o">=</span><span class="n">SubScreenWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;OpenDisplay&quot;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">&quot;file_name&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="n">macros</span><span class="o">=</span><span class="s2">&quot;macros&quot;</span><span class="p">),</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;file&quot;</span><span class="p">:</span> <span class="s2">&quot;file_name&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="s2">&quot;macros&quot;</span><span class="p">:</span> <span class="s2">&quot;macros&quot;</span><span class="p">},</span>
             <span class="p">),</span>
         <span class="p">)</span>
 </pre></div>
@@ -746,12 +754,12 @@ widgets size and position, and the ‘title’ to populate the label with.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>        <span class="n">screen_title_cls</span> <span class="o">=</span> <span class="n">LabelWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
             <span class="n">template</span><span class="p">,</span>
             <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Title&quot;</span><span class="p">,</span>
-            <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">),</span>
+            <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">},</span>
         <span class="p">)</span>
         <span class="n">group_title_cls</span> <span class="o">=</span> <span class="n">LabelWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
             <span class="n">template</span><span class="p">,</span>
             <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Group&quot;</span><span class="p">,</span>
-            <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">),</span>
+            <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">},</span>
         <span class="p">)</span>
 
         <span class="k">def</span> <span class="nf">create_group_object_formatter</span><span class="p">(</span>
@@ -878,70 +886,74 @@ find a complete example formatter, supporting both edl and bob file formats for 
             <span class="n">header_formatter_cls</span><span class="o">=</span><span class="n">LabelWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;Heading&quot;&#39;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">),</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">label_formatter_cls</span><span class="o">=</span><span class="n">LabelWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;Label&quot;&#39;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">),</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">led_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;LED&quot;&#39;</span><span class="p">,</span>
                 <span class="n">sized</span><span class="o">=</span><span class="n">Bounds</span><span class="o">.</span><span class="n">square</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">controlPv</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;controlPv&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">progress_bar_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;ProgressBar&quot;&#39;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">indicatorPv</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;indicatorPv&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">text_read_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;TextRead&quot;&#39;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">controlPv</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;controlPv&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">check_box_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;ComboBox&quot;&#39;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">controlPv</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;controlPv&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">combo_box_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;ComboBox&quot;&#39;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">controlPv</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;controlPv&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">text_write_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;TextWrite&quot;&#39;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">controlPv</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;controlPv&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="c1"># Cannot handle dynamic tables so insert a label with the PV name</span>
             <span class="n">table_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;Label&quot;&#39;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">action_formatter_cls</span><span class="o">=</span><span class="n">ActionWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;SignalX&quot;&#39;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">onLabel</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="n">offLabel</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="n">controlPv</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span>
+                    <span class="s2">&quot;onLabel&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;offLabel&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;controlPv&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">,</span>
+                <span class="p">},</span>
             <span class="p">),</span>
             <span class="n">sub_screen_formatter_cls</span><span class="o">=</span><span class="n">SubScreenWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;SubScreenFile&quot;&#39;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">displayFileName</span><span class="o">=</span><span class="s2">&quot;file_name&quot;</span><span class="p">),</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;displayFileName&quot;</span><span class="p">:</span> <span class="s2">&quot;file_name&quot;</span><span class="p">},</span>
             <span class="p">),</span>
         <span class="p">)</span>
         <span class="n">screen_title_cls</span> <span class="o">=</span> <span class="n">LabelWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
             <span class="n">template</span><span class="p">,</span>
             <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;Title&quot;&#39;</span><span class="p">,</span>
-            <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">),</span>
+            <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">},</span>
         <span class="p">)</span>
         <span class="n">group_title_cls</span> <span class="o">=</span> <span class="n">LabelWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
             <span class="n">template</span><span class="p">,</span>
             <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;  Group  &quot;&#39;</span><span class="p">,</span>
-            <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">),</span>
+            <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">},</span>
         <span class="p">)</span>
         <span class="n">group_box_cls</span> <span class="o">=</span> <span class="n">WidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
             <span class="n">template</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="s2">&quot;fillColor index 5&quot;</span>
@@ -1025,70 +1037,70 @@ find a complete example formatter, supporting both edl and bob file formats for 
             <span class="n">header_formatter_cls</span><span class="o">=</span><span class="n">LabelWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Heading&quot;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">),</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">label_formatter_cls</span><span class="o">=</span><span class="n">LabelWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Label&quot;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">),</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">led_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span>
                 <span class="n">sized</span><span class="o">=</span><span class="n">Bounds</span><span class="o">.</span><span class="n">square</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">progress_bar_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ProgressBar&quot;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">text_read_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;TextUpdate&quot;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">check_box_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ChoiceButton&quot;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">combo_box_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ComboBox&quot;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">text_write_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;TextEntry&quot;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">table_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Table&quot;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">),</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">action_formatter_cls</span><span class="o">=</span><span class="n">ActionWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;WritePV&quot;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="n">pv_name</span><span class="o">=</span><span class="s2">&quot;pv&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">),</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">sub_screen_formatter_cls</span><span class="o">=</span><span class="n">SubScreenWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;OpenDisplay&quot;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">&quot;file_name&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="n">macros</span><span class="o">=</span><span class="s2">&quot;macros&quot;</span><span class="p">),</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;file&quot;</span><span class="p">:</span> <span class="s2">&quot;file_name&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="s2">&quot;macros&quot;</span><span class="p">:</span> <span class="s2">&quot;macros&quot;</span><span class="p">},</span>
             <span class="p">),</span>
         <span class="p">)</span>
         <span class="c1"># MAKE_WIDGETS DOCS REF: Define screen and group widgets</span>
         <span class="n">screen_title_cls</span> <span class="o">=</span> <span class="n">LabelWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
             <span class="n">template</span><span class="p">,</span>
             <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Title&quot;</span><span class="p">,</span>
-            <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">),</span>
+            <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">},</span>
         <span class="p">)</span>
         <span class="n">group_title_cls</span> <span class="o">=</span> <span class="n">LabelWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
             <span class="n">template</span><span class="p">,</span>
             <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Group&quot;</span><span class="p">,</span>
-            <span class="n">property_map</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">),</span>
+            <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">},</span>
         <span class="p">)</span>
 
         <span class="k">def</span> <span class="nf">create_group_object_formatter</span><span class="p">(</span>
@@ -1154,7 +1166,7 @@ find a complete example formatter, supporting both edl and bob file formats for 
               
               
                 <footer class="prev-next-footer">
-                  <!-- Previous / next buttons -->
+                  
 <div class="prev-next-area">
     <a class="left-prev"
        href="test-container.html"
@@ -1184,6 +1196,7 @@ find a complete example formatter, supporting both edl and bob file formats for 
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
   <div class="sidebar-secondary-item">
+
   <div class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> On this page
   </div>
@@ -1201,6 +1214,7 @@ find a complete example formatter, supporting both edl and bob file formats for 
   </nav></div>
 
   <div class="sidebar-secondary-item">
+
   
   <div class="tocsection editthispage">
     <a href="https://github.com/epics-containers/pvi/edit/main/docs/developer/how-to/write-a-formatter.rst">
@@ -1216,6 +1230,7 @@ find a complete example formatter, supporting both edl and bob file formats for 
 </div>
 
   <div class="sidebar-secondary-item">
+
   <div class="tocsection sourcelink">
     <a href="../../_sources/developer/how-to/write-a-formatter.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
@@ -1236,8 +1251,8 @@ find a complete example formatter, supporting both edl and bob file formats for 
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
-<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
+  <script src="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -1246,8 +1261,9 @@ find a complete example formatter, supporting both edl and bob file formats for 
   
     <div class="footer-items__end">
       
-        <div class="footer-item"><p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.14.3.
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.14.4.
 </p></div>
       
     </div>
