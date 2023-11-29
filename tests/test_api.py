@@ -75,12 +75,12 @@ def test_button(tmp_path, helper):
     acquire = SignalW(
         "Acquire",
         pv="Acquire",
-        widget=ButtonPanel(actions=dict(Start=1, Stop=0)),
+        widget=ButtonPanel(actions={"Start": 1, "Stop": 0}),
     )
     acquire_w_rbv = SignalRW(
         "AcquireWithRBV",
         pv="Acquire",
-        widget=ButtonPanel(actions=dict(Start=1, Stop=0)),
+        widget=ButtonPanel(actions={"Start": 1, "Stop": 0}),
         read_pv="Acquire_RBV",
         read_widget=LED(),
     )
@@ -149,7 +149,7 @@ def test_device_ref(tmp_path, helper):
 
     # Make a button to open an existing screen - use screen from combo box test
     device_ref = DeviceRef(
-        "ComboBox", pv="COMBOBOX", ui="combo_box", macros=dict(P="EIGER", R=":CAM:")
+        "ComboBox", pv="COMBOBOX", ui="combo_box", macros={"P": "EIGER", "R": ":CAM:"}
     )
     device = Device("Device", children=[device_ref])
 

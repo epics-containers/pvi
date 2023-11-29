@@ -92,7 +92,7 @@ class ScreenFormatterFactory(Generic[T]):
             self.layout.label_width + self.layout.widget_width + 2 * self.layout.spacing
         )
         screen_bounds = Bounds(h=self.layout.max_height)
-        widget_dims = dict(w=full_w, h=self.layout.widget_height)
+        widget_dims = {"w": full_w, "h": self.layout.widget_height}
         screen_widgets: List[WidgetFormatter[T]] = []
         columns: List[Bounds] = [Bounds(**widget_dims)]
 
