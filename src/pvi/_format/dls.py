@@ -31,8 +31,8 @@ class DLSFormatter(Formatter):
     spacing: int = Field(5, description="Spacing between widgets")
     title_height: int = Field(25, description="Height of screen title bar")
     max_height: int = Field(900, description="Max height of the screen")
-    label_width: int = Field(115, description="Width of the widget description labels")
-    widget_width: int = Field(120, description="Width of the widgets")
+    label_width: int = Field(150, description="Width of the widget description labels")
+    widget_width: int = Field(200, description="Width of the widgets")
     widget_height: int = Field(20, description="Height of the widgets")
 
     def format(self, device: Device, prefix: str, path: Path):
