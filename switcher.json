@@ -36,10 +36,6 @@
     "url": "https://epics-containers.github.io/pvi/0.1/"
   },
   {
-    "version": "allow_labels_on_tables",
-    "url": "https://epics-containers.github.io/pvi/allow_labels_on_tables/"
-  },
-  {
     "version": "docs-python-version",
     "url": "https://epics-containers.github.io/pvi/docs-python-version/"
   },
@@ -70,6 +66,10 @@
   {
     "version": "ophyd",
     "url": "https://epics-containers.github.io/pvi/ophyd/"
+  },
+  {
+    "version": "skeleton-update",
+    "url": "https://epics-containers.github.io/pvi/skeleton-update/"
   },
   {
     "version": "text-format",
