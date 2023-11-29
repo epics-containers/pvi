@@ -41,17 +41,12 @@
       <height>20</height>
     </widget>
     <widget type="choice" version="2.0.0">
-      <name>ChoiceButton</name>
+      <name>ToggleButton</name>
       <pv_name>$(P)$(R)ResetPower</pv_name>
       <x>124</x>
       <y>0</y>
       <width>124</width>
       <height>20</height>
-      <items>
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-      </items>
     </widget>
     <widget type="label" version="2.0.0">
       <name>Label</name>
@@ -62,17 +57,12 @@
       <height>20</height>
     </widget>
     <widget type="choice" version="2.0.0">
-      <name>ChoiceButton</name>
+      <name>ToggleButton</name>
       <pv_name>$(P)$(R)ThresholdApply</pv_name>
       <x>124</x>
       <y>24</y>
       <width>124</width>
       <height>20</height>
-      <items>
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-      </items>
     </widget>
     <widget type="label" version="2.0.0">
       <name>Label</name>
@@ -886,17 +876,12 @@
       <height>20</height>
     </widget>
     <widget type="choice" version="2.0.0">
-      <name>ChoiceButton</name>
+      <name>ToggleButton</name>
       <pv_name>$(P)$(R)ThresholdAutoApply</pv_name>
       <x>124</x>
       <y>24</y>
       <width>60</width>
       <height>20</height>
-      <items>
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-      </items>
     </widget>
     <widget type="led" version="2.0.0">
       <name>LED</name>

@@ -117,7 +117,7 @@
     },
     "CheckBox": {
       "additionalProperties": false,
-      "description": "Checkable control of a boolean PV",
+      "description": "Checkable control of a boolean PV.\n\nThis is compact replacement for a `ToggleButton` to be used in rows and tables.",
       "properties": {
         "type": {
           "const": "CheckBox",
@@ -504,6 +504,9 @@
             },
             {
               "$ref": "#/$defs/TextWrite"
+            },
+            {
+              "$ref": "#/$defs/ToggleButton"
             }
           ],
           "title": "Write Widget"
@@ -636,6 +639,9 @@
             },
             {
               "$ref": "#/$defs/TextWrite"
+            },
+            {
+              "$ref": "#/$defs/ToggleButton"
             }
           ],
           "title": "Write Widget"
@@ -882,6 +888,19 @@
         }
       },
       "title": "TextWrite",
+      "type": "object"
+    },
+    "ToggleButton": {
+      "additionalProperties": false,
+      "description": "A pair of buttons to select between two mutually exclusive states.",
+      "properties": {
+        "type": {
+          "const": "ToggleButton",
+          "default": "ToggleButton",
+          "title": "Type"
+        }
+      },
+      "title": "ToggleButton",
       "type": "object"
     }
   },

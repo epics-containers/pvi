@@ -34,7 +34,7 @@ release 0
 x 5
 y 50
 w 130
-h 220
+h 245
 lineColor index 14
 fill
 fillColor index 5
@@ -96,7 +96,7 @@ selectColor index 3
 inconsistentColor index 14
 topShadowColor index 1
 botShadowColor index 11
-controlPv "CheckBox"
+controlPv "ToggleButton"
 indicatorPv "None"
 font "arial-bold-r-14.0"
 orientation "horizontal"
@@ -315,5 +315,27 @@ displayFileName {
   0 "SubScreenFile"
 }
 icon
+endObjectProperties
+
+# (Choice Button)
+object activeChoiceButtonClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 10
+y 270
+w 120
+h 17
+fgColor index 14
+bgColor index 3
+selectColor index 3
+inconsistentColor index 14
+topShadowColor index 1
+botShadowColor index 11
+controlPv "CheckBox"
+indicatorPv "None"
+font "arial-bold-r-14.0"
+orientation "horizontal"
 endObjectProperties
 

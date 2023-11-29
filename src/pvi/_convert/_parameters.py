@@ -8,7 +8,6 @@ from pydantic import BaseModel, Field
 from pvi._schema_utils import rec_subclasses
 from pvi.device import (
     LED,
-    CheckBox,
     ComboBox,
     ComponentUnion,
     Named,
@@ -16,6 +15,7 @@ from pvi.device import (
     TextFormat,
     TextRead,
     TextWrite,
+    ToggleButton,
     WriteWidgetUnion,
 )
 
@@ -109,7 +109,7 @@ class AsynBinary(AsynParameter):
         asyn_param="asynParamInt32",
     )
     read_widget: ReadWidgetUnion = Field(LED())
-    write_widget: WriteWidgetUnion = Field(CheckBox())
+    write_widget: WriteWidgetUnion = Field(ToggleButton())
 
 
 class AsynBusy(AsynBinary):
