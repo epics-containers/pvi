@@ -61,70 +61,74 @@ class DLSFormatter(Formatter):
             header_formatter_cls=LabelWidgetFormatter.from_template(
                 template,
                 search='"Heading"',
-                property_map=dict(value="text"),
+                property_map={"value": "text"},
             ),
             label_formatter_cls=LabelWidgetFormatter.from_template(
                 template,
                 search='"Label"',
-                property_map=dict(value="text"),
+                property_map={"value": "text"},
             ),
             led_formatter_cls=PVWidgetFormatter.from_template(
                 template,
                 search='"LED"',
                 sized=Bounds.square,
-                property_map=dict(controlPv="pv"),
+                property_map={"controlPv": "pv"},
             ),
             progress_bar_formatter_cls=PVWidgetFormatter.from_template(
                 template,
                 search='"ProgressBar"',
-                property_map=dict(indicatorPv="pv"),
+                property_map={"indicatorPv": "pv"},
             ),
             text_read_formatter_cls=PVWidgetFormatter.from_template(
                 template,
                 search='"TextRead"',
-                property_map=dict(controlPv="pv"),
+                property_map={"controlPv": "pv"},
             ),
             check_box_formatter_cls=PVWidgetFormatter.from_template(
                 template,
                 search='"ComboBox"',
-                property_map=dict(controlPv="pv"),
+                property_map={"controlPv": "pv"},
             ),
             combo_box_formatter_cls=PVWidgetFormatter.from_template(
                 template,
                 search='"ComboBox"',
-                property_map=dict(controlPv="pv"),
+                property_map={"controlPv": "pv"},
             ),
             text_write_formatter_cls=PVWidgetFormatter.from_template(
                 template,
                 search='"TextWrite"',
-                property_map=dict(controlPv="pv"),
+                property_map={"controlPv": "pv"},
             ),
             # Cannot handle dynamic tables so insert a label with the PV name
             table_formatter_cls=PVWidgetFormatter.from_template(
                 template,
                 search='"Label"',
-                property_map=dict(value="pv"),
+                property_map={"value": "pv"},
             ),
             action_formatter_cls=ActionWidgetFormatter.from_template(
                 template,
                 search='"SignalX"',
-                property_map=dict(onLabel="label", offLabel="label", controlPv="pv"),
+                property_map={
+                    "onLabel": "label",
+                    "offLabel": "label",
+                    "controlPv": "pv",
+                },
             ),
             sub_screen_formatter_cls=SubScreenWidgetFormatter.from_template(
                 template,
                 search='"SubScreenFile"',
-                property_map=dict(displayFileName="file_name"),
+                property_map={"displayFileName": "file_name"},
             ),
         )
         screen_title_cls = LabelWidgetFormatter.from_template(
             template,
             search='"Title"',
-            property_map=dict(value="text"),
+            property_map={"value": "text"},
         )
         group_title_cls = LabelWidgetFormatter.from_template(
             template,
             search='"  Group  "',
-            property_map=dict(value="text"),
+            property_map={"value": "text"},
         )
         group_box_cls = WidgetFormatter.from_template(
             template, search="fillColor index 5"
@@ -208,70 +212,70 @@ class DLSFormatter(Formatter):
             header_formatter_cls=LabelWidgetFormatter.from_template(
                 template,
                 search="Heading",
-                property_map=dict(text="text"),
+                property_map={"text": "text"},
             ),
             label_formatter_cls=LabelWidgetFormatter.from_template(
                 template,
                 search="Label",
-                property_map=dict(text="text"),
+                property_map={"text": "text"},
             ),
             led_formatter_cls=PVWidgetFormatter.from_template(
                 template,
                 search="LED",
                 sized=Bounds.square,
-                property_map=dict(pv_name="pv"),
+                property_map={"pv_name": "pv"},
             ),
             progress_bar_formatter_cls=PVWidgetFormatter.from_template(
                 template,
                 search="ProgressBar",
-                property_map=dict(pv_name="pv"),
+                property_map={"pv_name": "pv"},
             ),
             text_read_formatter_cls=PVWidgetFormatter.from_template(
                 template,
                 search="TextUpdate",
-                property_map=dict(pv_name="pv"),
+                property_map={"pv_name": "pv"},
             ),
             check_box_formatter_cls=PVWidgetFormatter.from_template(
                 template,
                 search="ChoiceButton",
-                property_map=dict(pv_name="pv"),
+                property_map={"pv_name": "pv"},
             ),
             combo_box_formatter_cls=PVWidgetFormatter.from_template(
                 template,
                 search="ComboBox",
-                property_map=dict(pv_name="pv"),
+                property_map={"pv_name": "pv"},
             ),
             text_write_formatter_cls=PVWidgetFormatter.from_template(
                 template,
                 search="TextEntry",
-                property_map=dict(pv_name="pv"),
+                property_map={"pv_name": "pv"},
             ),
             table_formatter_cls=PVWidgetFormatter.from_template(
                 template,
                 search="Table",
-                property_map=dict(pv_name="pv"),
+                property_map={"pv_name": "pv"},
             ),
             action_formatter_cls=ActionWidgetFormatter.from_template(
                 template,
                 search="WritePV",
-                property_map=dict(text="label", pv_name="pv", value="value"),
+                property_map={"text": "label", "pv_name": "pv", "value": "value"},
             ),
             sub_screen_formatter_cls=SubScreenWidgetFormatter.from_template(
                 template,
                 search="OpenDisplay",
-                property_map=dict(file="file_name", text="label", macros="macros"),
+                property_map={"file": "file_name", "text": "label", "macros": "macros"},
             ),
         )
         # MAKE_WIDGETS DOCS REF: Define screen and group widgets
         screen_title_cls = LabelWidgetFormatter.from_template(
             template,
             search="Title",
-            property_map=dict(text="text"),
+            property_map={"text": "text"},
         )
         group_title_cls = LabelWidgetFormatter.from_template(
             template,
             search="Group",
-            property_map=dict(name="text"),
+            property_map={"name": "text"},
         )
 
         def create_group_object_formatter(

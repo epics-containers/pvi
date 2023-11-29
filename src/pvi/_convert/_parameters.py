@@ -177,23 +177,23 @@ class AsynString(AsynParameter):
     write_widget: AWriteWidget = field(default_factory=TextWrite)
 
 
-InRecordTypes = dict(
-    ai=AsynFloat64,
-    bi=AsynBinary,
-    longin=AsynLong,
-    mbbi=AsynMultiBitBinary,
-    stringin=AsynString,
-)
+InRecordTypes = {
+    "ai": AsynFloat64,
+    "bi": AsynBinary,
+    "longin": AsynLong,
+    "mbbi": AsynMultiBitBinary,
+    "stringin": AsynString,
+}
 
 
-OutRecordTypes = dict(
-    ao=AsynFloat64,
-    bo=AsynBinary,
-    busy=AsynBusy,
-    longout=AsynLong,
-    mbbo=AsynMultiBitBinary,
-    stringout=AsynString,
-)
+OutRecordTypes = {
+    "ao": AsynFloat64,
+    "bo": AsynBinary,
+    "busy": AsynBusy,
+    "longout": AsynLong,
+    "mbbo": AsynMultiBitBinary,
+    "stringout": AsynString,
+}
 
 
 @dataclass

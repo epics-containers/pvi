@@ -145,7 +145,7 @@ class ButtonPanel(WriteWidget):
 
     """
 
-    actions: Dict[str, Any] = field(default_factory=lambda: dict(go=1))
+    actions: Dict[str, Any] = field(default_factory=lambda: {"go": 1})
 
 
 @dataclass

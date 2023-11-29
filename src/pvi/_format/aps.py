@@ -50,59 +50,59 @@ class APSFormatter(Formatter):
             header_formatter_cls=LabelWidgetFormatter.from_template(
                 template,
                 search='"Heading"',
-                property_map=dict(textix="text"),
+                property_map={"textix": "text"},
             ),
             label_formatter_cls=LabelWidgetFormatter.from_template(
                 template,
                 search='"Label"',
-                property_map=dict(textix="text"),
+                property_map={"textix": "text"},
             ),
             led_formatter_cls=PVWidgetFormatter.from_template(
                 template,
                 search='"LED"',
                 sized=Bounds.square,
-                property_map=dict(chan="pv"),
+                property_map={"chan": "pv"},
             ),
             progress_bar_formatter_cls=PVWidgetFormatter.from_template(
                 template,
                 search='"ProgressBar"',
-                property_map=dict(chan="pv"),
+                property_map={"chan": "pv"},
             ),
             text_read_formatter_cls=PVWidgetFormatter.from_template(
                 template,
                 search='"TextRead"',
-                property_map=dict(chan="pv"),
+                property_map={"chan": "pv"},
             ),
             check_box_formatter_cls=PVWidgetFormatter.from_template(
                 template,
                 search='"CheckBox"',
-                property_map=dict(chan="pv"),
+                property_map={"chan": "pv"},
             ),
             combo_box_formatter_cls=PVWidgetFormatter.from_template(
                 template,
                 search='"ComboBox"',
-                property_map=dict(chan="pv"),
+                property_map={"chan": "pv"},
             ),
             text_write_formatter_cls=PVWidgetFormatter.from_template(
                 template,
                 search='"TextWrite"',
-                property_map=dict(chan="pv"),
+                property_map={"chan": "pv"},
             ),
             # Cannot handle dynamic tables so insert a label with the PV name
             table_formatter_cls=PVWidgetFormatter.from_template(
                 template,
                 search='"Label"',
-                property_map=dict(textix="pv"),
+                property_map={"textix": "pv"},
             ),
             action_formatter_cls=ActionWidgetFormatter.from_template(
                 template,
                 search='"SignalX"',
-                property_map=dict(label="label", chan="pv"),
+                property_map={"label": "label", "chan": "pv"},
             ),
             sub_screen_formatter_cls=SubScreenWidgetFormatter.from_template(
                 template,
                 search='"SubScreenFile"',
-                property_map=dict(name="file_name"),
+                property_map={"name": "file_name"},
             ),
         )
 
@@ -112,12 +112,12 @@ class APSFormatter(Formatter):
         screen_title_formatter = LabelWidgetFormatter.from_template(
             template,
             search='"Title"',
-            property_map=dict(textix="text"),
+            property_map={"textix": "text"},
         )
         group_title_formatter = LabelWidgetFormatter.from_template(
             template,
             search='"Group"',
-            property_map=dict(textix="text"),
+            property_map={"textix": "text"},
         )
         group_box_formatter = WidgetFormatter.from_template(
             template, search='fill="outline"'
