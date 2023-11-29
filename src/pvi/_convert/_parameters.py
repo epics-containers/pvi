@@ -11,6 +11,7 @@ from pvi.device import (
     ComponentUnion,
     Named,
     ReadWidgetUnion,
+    TextFormat,
     TextRead,
     TextWrite,
     WriteWidgetUnion,
@@ -192,8 +193,8 @@ class AsynWaveform(AsynParameter):
         asyn_write="asynOctetWrite",
         asyn_param="asynParamOctet",
     )
-    read_widget: ReadWidgetUnion = Field(TextRead())
-    write_widget: WriteWidgetUnion = Field(TextWrite())
+    read_widget: ReadWidgetUnion = Field(TextRead(format=TextFormat.string))
+    write_widget: WriteWidgetUnion = Field(TextWrite(format=TextFormat.string))
 
 
 class AsynInt32Waveform(AsynWaveform):
@@ -204,16 +205,20 @@ class AsynInt32Waveform(AsynWaveform):
         asyn_write="asynInt32ArrayOut",
         asyn_param="asynParamInt32",
     )
+    read_widget: ReadWidgetUnion = Field(TextRead())
+    write_widget: WriteWidgetUnion = Field(TextWrite())
 
 
 class AsynFloat64Waveform(AsynWaveform):
-    """Asyn Waveform Parameter and records with int32 array elements"""
+    """Asyn Waveform Parameter and records with float64 array elements"""
 
     type_strings: ClassVar[TypeStrings] = TypeStrings(
         asyn_read="asynFloat64ArrayIn",
         asyn_write="asynFloat64ArrayOut",
         asyn_param="asynParamFloat64",
     )
+    read_widget: ReadWidgetUnion = Field(TextRead())
+    write_widget: WriteWidgetUnion = Field(TextWrite())
 
 
 WaveformRecordTypes = [AsynWaveform] + cast(
