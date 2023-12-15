@@ -72,6 +72,10 @@
     "url": "https://epics-containers.github.io/pvi/ophyd/"
   },
   {
+    "version": "pypi-trusted",
+    "url": "https://epics-containers.github.io/pvi/pypi-trusted/"
+  },
+  {
     "version": "skeleton-update",
     "url": "https://epics-containers.github.io/pvi/skeleton-update/"
   },
