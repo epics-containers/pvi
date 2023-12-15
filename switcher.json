@@ -76,6 +76,10 @@
     "url": "https://epics-containers.github.io/pvi/ophyd/"
   },
   {
+    "version": "pydantic",
+    "url": "https://epics-containers.github.io/pvi/pydantic/"
+  },
+  {
     "version": "pypi-trusted",
     "url": "https://epics-containers.github.io/pvi/pypi-trusted/"
   },
