@@ -2,7 +2,7 @@ import re
 from pathlib import Path
 from typing import List, Tuple
 
-from pvi.device import Component, Grid, Group, Tree
+from pvi.device import ComponentUnion, Grid, Group, Tree
 
 from ._asyn_convert import (
     Action,
@@ -21,15 +21,19 @@ class TemplateConverter:
         self.templates = templates
         self._text = [t.read_text() for t in self.templates]
 
-    def convert(self) -> Tree[Component]:
+    def convert(self) -> Tree:
         return [
-            Group(name=template.stem, layout=Grid(), children=template_components)
+            Group(
+                name=template.stem,
+                layout=Grid(labelled=True),
+                children=template_components,
+            )
             for template, template_components in zip(
                 self.templates, self._extract_components()
             )
         ]
 
-    def _extract_components(self) -> List[List[Component]]:
+    def _extract_components(self) -> List[List[ComponentUnion]]:
         components = []
         for text in self._text:
             record_extractor = RecordExtractor(text)

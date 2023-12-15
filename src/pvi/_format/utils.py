@@ -1,26 +1,26 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
 from enum import Enum
 from typing import Callable, List, Tuple, TypeVar
 
+from pydantic import BaseModel
 
-@dataclass
-class Bounds:
+
+class Bounds(BaseModel):
     x: int = 0
     y: int = 0
     w: int = 0
     h: int = 0
 
-    def copy(self) -> Bounds:
-        return Bounds(self.x, self.y, self.w, self.h)
+    def clone(self) -> Bounds:
+        return Bounds(x=self.x, y=self.y, w=self.w, h=self.h)
 
     def split_left(self, width: int, spacing: int) -> Tuple[Bounds, Bounds]:
         """Split horizontally by width of first element"""
         to_split = width + spacing
         assert to_split < self.w, f"Can't split off {to_split} from {self.w}"
-        left = Bounds(self.x, self.y, width, self.h)
-        right = Bounds(self.x + to_split, self.y, self.w - to_split, self.h)
+        left = Bounds(x=self.x, y=self.y, w=width, h=self.h)
+        right = Bounds(x=self.x + to_split, y=self.y, w=self.w - to_split, h=self.h)
         return left, right
 
     def split_by_ratio(
@@ -35,7 +35,8 @@ class Bounds:
         )
 
         return tuple(
-            Bounds(x, self.y, w, self.h) for x, w in zip(widget_xs, widget_widths)
+            Bounds(x=x, y=self.y, w=w, h=self.h)
+            for x, w in zip(widget_xs, widget_widths)
         )
 
     def split_into(self, count: int, spacing: int) -> Tuple[Bounds, ...]:
@@ -93,5 +94,5 @@ def split_with_sep(text: str, sep: str, maxsplit: int = -1) -> List[str]:
 
 def with_title(spacing, title_height: int) -> Callable[[Bounds], Bounds]:
     return Bounds(
-        spacing, spacing + title_height, 2 * spacing, 2 * spacing + title_height
+        x=spacing, y=spacing + title_height, w=2 * spacing, h=2 * spacing + title_height
     ).added_to

@@ -1,25 +1,73 @@
-from dataclasses import dataclass
 from pathlib import Path
-from typing import Annotated, Dict, List
+from typing import Any, Literal, Union
 
-from pvi._schema_utils import as_discriminated_union, desc
+from pydantic import Field, TypeAdapter
+
+from pvi._yaml_utils import YamlValidatorMixin
+from pvi.bases import BaseTyped
 from pvi.device import Device, DeviceRef
 
 
-@dataclass
-class IndexEntry:
-    label: Annotated[str, desc("Button label")]
-    file_name: Annotated[str, desc("File name of UI file")]
-    macros: Annotated[Dict[str, str], desc("Macros to launch UI with")]
+class IndexEntry(BaseTyped):
+    """A structure defining an index button to launch a UI with some macros."""
+
+    type: Literal["IndexEntry"] = "IndexEntry"
+
+    label: str = Field("Button label")
+    ui: str = Field("File name of UI to open with button")
+    macros: dict[str, str] = Field("Macros to launch UI with")
 
 
-@as_discriminated_union
-@dataclass
-class Formatter:
+class Formatter(BaseTyped, YamlValidatorMixin):
+    """Base UI formatter."""
+
+    @classmethod
+    def type_adapter(cls) -> TypeAdapter:
+        """Create TypeAdapter of all child classes"""
+        return TypeAdapter(Union[tuple(cls.__subclasses__())])  # type: ignore
+
+    @classmethod
+    def from_dict(cls, serialized: dict) -> "Formatter":
+        """Instantiate a Formatter child class from a dictionary.
+
+        Args:
+            serialized: Dictionary of class instance
+
+        """
+        return cls.type_adapter().validate_python(serialized)
+
+    @classmethod
+    def deserialize(cls, yaml: Path) -> "Formatter":
+        """Instantiate a Formatter child class from YAML.
+
+        Args:
+            yaml: Path of YAML file
+
+        """
+        serialized = cls.validate_yaml(yaml)
+        return cls.from_dict(serialized)
+
+    @classmethod
+    def create_schema(cls) -> dict[str, Any]:
+        """Create a schema of Formatter child classes.
+
+        Formatter itself is not included, as it should not be instanstiated directly.
+
+        """
+        return cls.type_adapter().json_schema()
+
     def format(self, device: Device, prefix: str, path: Path):
+        """To be implemented by child classes to define how to format specific UIs.
+
+        Args:
+            device: Device to populate UI from
+            prefix: PV prefix for widgets
+            path: Output file path to write UI to
+
+        """
         raise NotImplementedError(self)
 
-    def format_index(self, label: str, index_entries: List[IndexEntry], path: Path):
+    def format_index(self, label: str, index_entries: list[IndexEntry], path: Path):
         """Format an index of buttons to open the given UIs.
 
         Args:
@@ -30,12 +78,12 @@ class Formatter:
         """
         self.format(
             Device(
-                label,
+                label=label,
                 children=[
                     DeviceRef(
-                        index.label,
+                        name=index.label,
                         pv=index.label.upper(),
-                        ui=index.file_name,
+                        ui=index.ui,
                         macros=index.macros,
                     )
                     for index in index_entries

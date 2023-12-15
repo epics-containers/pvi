@@ -1,32 +1,28 @@
-from dataclasses import dataclass, field
 from enum import Enum
-from typing import Annotated, ClassVar, Dict, List, Optional, Type, cast
+from typing import ClassVar, Dict, List, Optional, Type, cast
 
-from pvi._schema_utils import as_discriminated_union, desc, rec_subclasses
+from pydantic import BaseModel, Field
+
+from pvi._schema_utils import rec_subclasses
 from pvi.device import (
     LED,
     CheckBox,
     ComboBox,
-    Component,
+    ComponentUnion,
     Named,
-    ReadWidget,
+    ReadWidgetUnion,
     TextRead,
     TextWrite,
-    WriteWidget,
+    WriteWidgetUnion,
 )
 
 
-@dataclass
-class TypeStrings:
+class TypeStrings(BaseModel):
     """The type strings for record dtypes and parameter names"""
 
-    asyn_read: Annotated[str, desc("e.g. asynInt32, asynOctetRead")]
-    asyn_write: Annotated[str, desc("e.g. asynInt32, asynOctetWrite")]
-    asyn_param: Annotated[str, desc("e.g. asynParamInt32, asynParamOctet")]
-
-
-AReadWidget = Annotated[Optional[ReadWidget], desc("Widget to use for read record")]
-AWriteWidget = Annotated[Optional[WriteWidget], desc("Widget to use for write record")]
+    asyn_read: str = Field(description="e.g. asynInt32, asynOctetRead")
+    asyn_write: str = Field(description="e.g. asynInt32, asynOctetWrite")
+    asyn_param: str = Field(description="e.g. asynParamInt32, asynParamOctet")
 
 
 class Access(Enum):
@@ -71,23 +67,22 @@ class DisplayForm(Enum):
     ENGINEERING = "Engineering"
 
 
-@as_discriminated_union
-@dataclass
 class AsynParameter(Named):
     """Base class for all Asyn Parameters to inherit from"""
 
     type_strings: ClassVar[TypeStrings]
-    read_record: Annotated[
-        Optional[str], desc("The full read record, if not given then use $(name)_RBV")
-    ] = None
-    write_record: Annotated[
-        Optional[str], desc("The full write record, if not given then use $(name)")
-    ] = None
-    display_form: Annotated[
-        Optional[DisplayForm], desc("Display form for numeric/array fields")
-    ] = None
-    read_widget: AReadWidget = None
-    write_widget: AWriteWidget = None
+    read_record: Optional[str] = Field(
+        default=None,
+        description="The full read record, if not given then use $(name)_RBV",
+    )
+    write_record: Optional[str] = Field(
+        default=None, description="The full write record, if not given then use $(name)"
+    )
+    display_form: Optional[DisplayForm] = Field(
+        default=None, description="Display form for numeric/array fields"
+    )
+    read_widget: Optional[ReadWidgetUnion] = None
+    write_widget: Optional[WriteWidgetUnion] = None
 
     def get_read_record(self) -> str:
         if self.read_record:
@@ -102,7 +97,6 @@ class AsynParameter(Named):
             return self.name
 
 
-@dataclass
 class AsynBinary(AsynParameter):
     """Asyn Binary Parameter and records"""
 
@@ -111,16 +105,14 @@ class AsynBinary(AsynParameter):
         asyn_write="asynInt32",
         asyn_param="asynParamInt32",
     )
-    read_widget: AReadWidget = field(default_factory=LED)
-    write_widget: AWriteWidget = field(default_factory=CheckBox)
+    read_widget: ReadWidgetUnion = Field(LED())
+    write_widget: WriteWidgetUnion = Field(CheckBox())
 
 
-@dataclass
 class AsynBusy(AsynBinary):
     """Asyn Busy Parameter and records"""
 
 
-@dataclass
 class AsynFloat64(AsynParameter):
     """Asyn Float64 Parameter and records"""
 
@@ -129,11 +121,10 @@ class AsynFloat64(AsynParameter):
         asyn_write="asynFloat64",
         asyn_param="asynParamFloat64",
     )
-    read_widget: AReadWidget = field(default_factory=TextRead)
-    write_widget: AWriteWidget = field(default_factory=TextWrite)
+    read_widget: ReadWidgetUnion = Field(default=TextRead())
+    write_widget: WriteWidgetUnion = Field(default=TextWrite())
 
 
-@dataclass
 class AsynInt32(AsynParameter):
     """Asyn Int32 Parameter and records"""
 
@@ -142,16 +133,14 @@ class AsynInt32(AsynParameter):
         asyn_write="asynInt32",
         asyn_param="asynParamInt32",
     )
-    read_widget: AReadWidget = field(default_factory=TextRead)
-    write_widget: AWriteWidget = field(default_factory=TextWrite)
+    read_widget: ReadWidgetUnion = Field(default=TextRead())
+    write_widget: WriteWidgetUnion = Field(default=TextWrite())
 
 
-@dataclass
 class AsynLong(AsynInt32):
     """Asyn Long Parameter and records"""
 
 
-@dataclass
 class AsynMultiBitBinary(AsynParameter):
     """Asyn MultiBitBinary Parameter and records"""
 
@@ -160,11 +149,10 @@ class AsynMultiBitBinary(AsynParameter):
         asyn_write="asynInt32",
         asyn_param="asynParamInt32",
     )
-    read_widget: AReadWidget = field(default_factory=TextRead)
-    write_widget: AWriteWidget = field(default_factory=ComboBox)
+    read_widget: ReadWidgetUnion = Field(TextRead())
+    write_widget: WriteWidgetUnion = Field(ComboBox())
 
 
-@dataclass
 class AsynString(AsynParameter):
     """Asyn String Parameter and records"""
 
@@ -173,8 +161,8 @@ class AsynString(AsynParameter):
         asyn_write="asynOctetWrite",
         asyn_param="asynParamOctet",
     )
-    read_widget: AReadWidget = field(default_factory=TextRead)
-    write_widget: AWriteWidget = field(default_factory=TextWrite)
+    read_widget: ReadWidgetUnion = Field(TextRead())
+    write_widget: WriteWidgetUnion = Field(TextWrite())
 
 
 InRecordTypes = {
@@ -196,7 +184,6 @@ OutRecordTypes = {
 }
 
 
-@dataclass
 class AsynWaveform(AsynParameter):
     """Asyn Waveform Parameter and records"""
 
@@ -205,11 +192,10 @@ class AsynWaveform(AsynParameter):
         asyn_write="asynOctetWrite",
         asyn_param="asynParamOctet",
     )
-    read_widget: AReadWidget = field(default_factory=TextRead)
-    write_widget: AWriteWidget = field(default_factory=TextWrite)
+    read_widget: ReadWidgetUnion = Field(TextRead())
+    write_widget: WriteWidgetUnion = Field(TextWrite())
 
 
-@dataclass
 class AsynInt32Waveform(AsynWaveform):
     """Asyn Waveform Parameter and records with int32 array elements"""
 
@@ -220,7 +206,6 @@ class AsynInt32Waveform(AsynWaveform):
     )
 
 
-@dataclass
 class AsynFloat64Waveform(AsynWaveform):
     """Asyn Waveform Parameter and records with int32 array elements"""
 
@@ -247,16 +232,17 @@ def get_waveform_parameter(dtyp: str):
     assert False, f"Waveform type for DTYP {dtyp} not found in {WaveformRecordTypes}"
 
 
-@dataclass
-class Record:
+class Record(BaseModel):
     name: str  # The name of the record e.g. $(P)$(M)Status
     type: str  # The record type string e.g. ao, stringin
     fields: Dict[str, str]  # The record fields
     infos: Dict[str, str]  # Any infos to be added to the record
 
 
-class Parameter:
-    invalid = ["DESC", "DTYP", "INP", "OUT", "PINI", "VAL"]
+class Parameter(BaseModel):
+    """Base class representing an Asyn parameter"""
+
+    invalid: list[str] = ["DESC", "DTYP", "INP", "OUT", "PINI", "VAL"]
 
     def _remove_invalid(self, fields: Dict[str, str]) -> Dict[str, str]:
         valid_fields = {
@@ -264,7 +250,7 @@ class Parameter:
         }
         return valid_fields
 
-    def generate_component(self) -> Component:
+    def generate_component(self) -> ComponentUnion:
         raise NotImplementedError(self)
 
 

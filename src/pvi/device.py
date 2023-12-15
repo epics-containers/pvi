@@ -2,28 +2,24 @@ from __future__ import annotations
 
 import json
 import re
-from dataclasses import dataclass, field, fields
 from enum import Enum
 from pathlib import Path
 from typing import (
     Annotated,
     Any,
-    Callable,
     Dict,
-    Generic,
     Iterator,
-    List,
-    Mapping,
     Optional,
     Sequence,
     TypeVar,
     Union,
 )
 
-from apischema import deserialize, serialize
-from ruamel.yaml import YAML
+from pydantic import BaseModel, Field
+from typing_extensions import Literal
 
-from pvi._schema_utils import add_type_field, as_discriminated_union, desc
+from pvi._yaml_utils import YamlValidatorMixin, dump_yaml, type_first
+from pvi.bases import BaseSettings, BaseTyped
 from pvi.utils import find_pvi_yaml
 
 PASCAL_CASE_REGEX = re.compile(r"(?<![A-Z])[A-Z]|[A-Z][a-z/d]|(?<=[a-z])\d")
@@ -60,83 +56,97 @@ class TextFormat(Enum):
     string = 4
 
 
-@as_discriminated_union
-@dataclass
-class ReadWidget:
+class ReadWidget(BaseSettings):
     """Widget that displays a scalar PV"""
+
+    type: str
 
 
 class LED(ReadWidget):
     """LED display of a boolean PV"""
 
+    type: Literal["LED"] = "LED"
 
-@dataclass
+
 class BitField(ReadWidget):
     """LED and label for each bit of an int PV"""
 
-    labels: Annotated[Sequence[str], desc("Label for each bit")]
+    type: Literal["BitField"] = "BitField"
+
+    labels: Sequence[str] = Field(description="Label for each bit")
 
 
 class ProgressBar(ReadWidget):
     """Progress bar from lower to upper limit of a float PV"""
 
+    type: Literal["ProgressBar"] = "ProgressBar"
 
-@dataclass
+
 class TextRead(ReadWidget):
     """Text view of any PV"""
 
-    lines: Annotated[int, desc("Number of lines to display")] = 1
-    format: Annotated[Optional[TextFormat], desc("Display format")] = None
+    type: Literal["TextRead"] = "TextRead"
+
+    lines: Optional[int] = Field(default=None, description="Number of lines to display")
+    format: Optional[TextFormat] = Field(default=None, description="Display format")
+
+    def get_lines(self):
+        return self.lines or 1
 
 
-@dataclass
 class ArrayTrace(ReadWidget):
     """Trace of the array in a plot view"""
 
-    axis: Annotated[
-        str,
-        desc(
+    type: Literal["ArrayTrace"] = "ArrayTrace"
+
+    axis: str = Field(
+        description=(
             "Traces with same axis name will appear on same axis, "
             "plotted against 'x' trace if it exists, or indexes if not. "
             "Only one traces with axis='x' allowed."
         ),
-    ]
+    )
 
 
-@dataclass
 class TableRead(ReadWidget):
     """Tabular view of an NTTable"""
 
-    widgets: Annotated[
-        Sequence[ReadWidget],
-        desc("For each column, what widget should be repeated for every row"),
-    ] = field(default_factory=list)
+    type: Literal["TableRead"] = "TableRead"
+
+    widgets: Sequence[ReadWidget] = Field(
+        [], description="For each column, what widget should be repeated for every row"
+    )
 
 
 class ImageRead(ReadWidget):
     """2D Image view of an NTNDArray"""
 
+    type: Literal["ImageRead"] = "ImageRead"
 
-@as_discriminated_union
-@dataclass
-class WriteWidget:
+
+class WriteWidget(BaseSettings):
     """Widget that controls a PV"""
+
+    type: str
 
 
 class CheckBox(WriteWidget):
     """Checkable control of a boolean PV"""
 
+    type: Literal["CheckBox"] = "CheckBox"
 
-@dataclass
+
 class ComboBox(WriteWidget):
     """Selection of an enum PV"""
 
-    choices: Annotated[Sequence[str], desc("Choices to select from")] = field(
-        default_factory=list
-    )
+    type: Literal["ComboBox"] = "ComboBox"
+
+    choices: Sequence[str] = Field(default=None, description="Choices to select from")
+
+    def get_choices(self) -> list:
+        return [] if self.choices is None else list(self.choices)
 
 
-@dataclass
 class ButtonPanel(WriteWidget):
     """One-or-more buttons that poke a PV with a value
 
@@ -145,205 +155,205 @@ class ButtonPanel(WriteWidget):
 
     """
 
-    actions: Dict[str, Any] = field(default_factory=lambda: {"go": 1})
+    type: Literal["ButtonPanel"] = "ButtonPanel"
+
+    actions: Dict[str, str] = Field(default={"go": "1"}, description="PV poker buttons")
 
 
-@dataclass
 class TextWrite(WriteWidget):
     """Text control of any PV"""
 
-    lines: Annotated[int, desc("Number of lines to display")] = 1
-    format: Annotated[Optional[TextFormat], desc("Display format")] = None
+    type: Literal["TextWrite"] = "TextWrite"
+
+    lines: Optional[int] = Field(default=None, description="Number of lines to display")
+    format: Optional[TextFormat] = Field(default=None, description="Display format")
+
+    def get_lines(self):
+        return self.lines or 1
 
 
-@dataclass
 class ArrayWrite(WriteWidget):
     """Control of an array PV"""
 
-    widget: Annotated[WriteWidget, desc("What widget should be used for each item")]
+    type: Literal["ArrayWrite"] = "ArrayWrite"
+
+    widget: WriteWidget = Field(description="What widget should be used for each item")
 
 
-@dataclass
 class TableWrite(WriteWidget):
-    widgets: Annotated[
-        Sequence[WidgetType],
-        desc("For each column, what widget should be repeated for every row"),
-    ] = field(default_factory=list)
+    type: Literal["TableWrite"] = "TableWrite"
+
+    widgets: Sequence[ReadWidgetUnion | WriteWidgetUnion] = Field(
+        [], description="For each column, what widget should be repeated for every row"
+    )
 
 
-WidgetType = Union[ReadWidget, WriteWidget]
-TableWidgetType = Union[TableRead, TableWrite]
+WidgetType = Annotated[Union[ReadWidget, WriteWidget], Field(discriminator="type")]
+TableWidgetType = Annotated[Union[TableRead, TableWrite], Field(discriminator="type")]
 TableWidgetTypes = (TableRead, TableWrite)
 
 
-@as_discriminated_union
-@dataclass
-class Layout:
+ReadWidgetUnion = Annotated[
+    ArrayTrace | BitField | ImageRead | LED | ProgressBar | TableRead | TextRead,
+    Field(discriminator="type"),
+]
+WriteWidgetUnion = Annotated[
+    ArrayWrite | ButtonPanel | CheckBox | ComboBox | TableWrite | TextWrite,
+    Field(discriminator="type"),
+]
+
+
+class Layout(BaseModel):
     """Widget displaying child Components"""
 
 
 class Plot(Layout):
     """Children are traces of the plot"""
 
+    type: Literal["Plot"] = "Plot"
 
-@dataclass
+
 class Row(Layout):
     """Children are columns in the row"""
 
-    header: Annotated[
-        Optional[Sequence[str]],
-        desc("Labels for the items in the row, None means use previous row header"),
-    ] = None
+    type: Literal["Row"] = "Row"
+
+    header: Optional[Sequence[str]] = Field(
+        None,
+        description="Labels for the items in the row",
+    )
 
 
-@dataclass
 class Grid(Layout):
     """Children are rows in the grid"""
 
-    labelled: Annotated[bool, desc("If True use names of children as labels")] = True
+    type: Literal["Grid"] = "Grid"
+
+    labelled: bool = Field(True, description="If True use names of children as labels")
 
 
-@dataclass
 class SubScreen(Layout):
     """Children are displayed on another screen opened with a button."""
 
-    labelled: Annotated[bool, desc("Display labels for components")] = True
+    type: Literal["SubScreen"] = "SubScreen"
+
+    labelled: bool = Field(default=True, description="Display labels for components")
 
 
-@dataclass
-class Named:
-    name: Annotated[
-        str, desc("PascalCase name to uniquely identify", pattern=r"([A-Z][a-z0-9]*)*$")
-    ]
+LayoutUnion = Annotated[
+    Plot | Row | Grid | SubScreen,
+    Field(discriminator="type"),
+]
 
 
-class Labelled(Named):
-    label: str
-
-    def __init_subclass__(cls, **kwargs):
-        # Add an optional label to the end of the dataclass if not already there
-        has_label_field = [f for f in fields(cls) if f.name == "label"]
-        # Hack so this doesn't fire for the Component class below, or anything
-        # else that doesn't add annotations. We really want this to be on terminal
-        # classes, but no way of knowing this in __init_subclass__
-        adds_annotations = bool(cls.__annotations__)
-        if not has_label_field and adds_annotations:
-            cls.__annotations__["label"] = Annotated[
-                str, desc("Label for GUI. If empty, use name in Title Case")
-            ]
-            cls.label = ""
-            dataclass(cls)
-
-    def get_label(self):
-        if getattr(self, "label", ""):
-            return self.label
-        else:
-            return to_title_case(self.name)
+class Named(BaseSettings):
+    name: str = Field(
+        description="PascalCase name to uniquely identify",
+        pattern=r"([A-Z][a-z0-9]*)*$",
+    )
 
 
-@as_discriminated_union
-class Component(Labelled):
+class Component(Named):
     """These make up a Device"""
 
+    label: Optional[str] = None
 
-@dataclass
+    def get_label(self):
+        return self.label or to_title_case(self.name)
+
+
 class SignalR(Component):
     """Scalar value backed by a single PV"""
 
-    pv: Annotated[str, desc("PV to be used for get and monitor")]
-    widget: Annotated[
-        Optional[ReadWidget],
-        desc("Widget to use for display, None means don't display"),
-    ] = None
+    type: Literal["SignalR"] = "SignalR"
+
+    pv: str = Field(description="PV to be used for get and monitor")
+    widget: Optional[ReadWidgetUnion] = Field(
+        None, description="Widget to use for display, None means don't display"
+    )
 
 
-@dataclass
 class SignalW(Component):
     """Write only value backed by a single PV"""
 
-    pv: Annotated[str, desc("PV to be used for put")]
-    widget: Annotated[
-        Optional[WriteWidget],
-        desc("Widget to use for control, None means don't display"),
-    ] = None
+    type: Literal["SignalW"] = "SignalW"
+
+    pv: str = Field(description="PV to be used for put")
+    widget: Optional[WriteWidgetUnion] = Field(
+        None, description="Widget to use for control, None means don't display"
+    )
 
 
-@dataclass
 class SignalRW(Component):
     """Read/write value backed by one or two PVs"""
 
-    pv: Annotated[str, desc("PV to be used for put")]
-    widget: Annotated[
-        Optional[WriteWidget],
-        desc("Widget to use for control, None means don't display"),
-    ] = None
-    # This was Optional[str] but produced JSON schema that YAML editor didn't understand
-    read_pv: Annotated[str, desc("PV to be used for read, empty means use pv")] = ""
-    read_widget: Annotated[
-        Optional[ReadWidget], desc("Widget to use for display, None means use widget")
-    ] = None
+    type: Literal["SignalRW"] = "SignalRW"
+
+    pv: str = Field(description="PV to be used for put")
+    widget: Optional[WriteWidgetUnion] = Field(
+        None, description="Widget to use for control, None means don't display"
+    )
+    read_pv: Optional[str] = Field(
+        None, description="PV to be used for read, empty means use pv"
+    )
+    read_widget: Optional[ReadWidgetUnion] = Field(
+        None, description="Widget to use for display, None means use widget"
+    )
 
 
 SignalTypes = (SignalR, SignalW, SignalRW)
-ReadSignalType = Union[SignalR, SignalRW]
-WriteSignalType = Union[SignalW, SignalRW]
+ReadSignalType = Annotated[Union[SignalR, SignalRW], Field(discriminator="type")]
+WriteSignalType = Annotated[Union[SignalW, SignalRW], Field(discriminator="type")]
 
 
-@dataclass
 class SignalX(Component):
     """Executable that puts a fixed value to a PV."""
 
-    pv: Annotated[str, desc("PV to be used for call")]
-    value: Annotated[Any, desc("Value to write. None means zero")] = None
+    type: Literal["SignalX"] = "SignalX"
+
+    pv: str = Field(description="PV to be used for call")
+    value: str = Field(None, description="Value to write. None means zero")
 
 
-@dataclass
 class DeviceRef(Component):
     """Reference to another Device."""
 
-    pv: Annotated[str, desc("Child device PVI PV")]
-    ui: Annotated[str, desc("UI file to open for referenced Device")]
-    macros: Annotated[
-        Dict[str, str],
-        desc("Macro-value pairs for UI file"),
-    ] = field(default_factory=dict)
+    type: Literal["DeviceRef"] = "DeviceRef"
+
+    pv: str = Field(description="Child device PVI PV")
+    ui: str = Field(description="UI file to open for referenced Device")
+    macros: Dict[str, str] = Field(
+        default={}, description="Macro-value pairs for UI file"
+    )
 
 
 class SignalRef(Component):
     """Reference to another Signal with the same name in this Device."""
 
-
-T = TypeVar("T")
-S = TypeVar("S")
+    type: Literal["SignalRef"] = "SignalRef"
 
 
-@add_type_field
-@dataclass
-class Group(Generic[T], Labelled):
+T = TypeVar("T", bound=BaseTyped)
+S = TypeVar("S", bound=BaseTyped)
+
+
+class Group(Component):
     """Group of child components in a Layout"""
 
-    layout: Annotated[Layout, desc("How to layout children on screen")]
-    children: Annotated[Tree[T], desc("Child Components")]
+    type: Literal["Group"] = "Group"
+
+    layout: LayoutUnion = Field(description="How to layout children on screen")
+    children: Tree = Field(description="Child Components")
 
 
-Tree = Sequence[Union[T, Group[T]]]
+ComponentUnion = Annotated[
+    Group | SignalR | SignalW | SignalRW | SignalX | SignalRef | DeviceRef,
+    Field(discriminator="type"),
+]
+Tree = Sequence[ComponentUnion]
 
 
-def on_each_node(tree: Tree[T], func: Callable[[T], Iterator[S]]) -> Tree[S]:
-    """Visit each node of the tree of type typ, calling func on each leaf"""
-    out: List[Union[S, Group[S]]] = []
-    for t in tree:
-        if isinstance(t, Group):
-            group: Group[S] = Group(
-                name=t.name, layout=t.layout, children=on_each_node(t.children, func)
-            )
-            out.append(group)
-        else:
-            out += list(func(t))
-    return out
-
-
-def walk(tree: Tree[T]) -> Iterator[Union[T, Group[T]]]:
+def walk(tree: Tree) -> Iterator[ComponentUnion]:
     """Depth first traversal of tree"""
     for t in tree:
         yield t
@@ -361,35 +371,51 @@ def signal_access_mode(signal: SignalR | SignalW | SignalRW):
             return "rw"
 
 
-@dataclass
-class Device:
+class Device(BaseTyped, YamlValidatorMixin):
     """Collection of Components"""
 
-    label: Annotated[str, desc("Label for screen")]
+    type: Literal["Device"] = "Device"
+
+    label: str = Field(description="Label for screen")
     parent: Optional[
         Annotated[
             str,
-            desc("The parent device (basename of yaml file)"),
+            "The parent device (basename of yaml file)",
         ]
     ] = None
-    children: Annotated[Tree[Component], desc("Child Components")] = field(
-        default_factory=list
-    )
+    children: Tree = Field([], description="Child Components")
 
-    def serialize(self) -> Mapping[str, Any]:
-        """Serialize the Device to a dictionary."""
-        return serialize(self, exclude_none=True, exclude_defaults=True)
+    def to_dict(self) -> dict[str, Any]:
+        """Serialize a Device instance to a dictionary."""
+        return type_first(self.model_dump(exclude_none=True))
+
+    def serialize(self, yaml: Path):
+        """Serialize a Device instance to YAML.
+
+        Args:
+            yaml: Path of YAML file
+
+        """
+        dump_yaml(self.to_dict(), yaml)
 
     @classmethod
-    def deserialize(cls, serialized: Path) -> Device:
-        """Deserialize the Device from a YAML file"""
-        if not serialized.is_file():
-            raise FileNotFoundError(serialized)
+    def deserialize(cls, yaml: Path) -> Device:
+        """Instantiate a Device instance from YAML.
 
-        return deserialize(cls, YAML(typ="safe").load(serialized))
+        Args:
+            serialized: Dictionary of class instance
 
-    def deserialize_parents(self, yaml_paths: List[Path]):
-        """Deserialize yaml of parents and extract parameters"""
+        """
+        serialized = cls.validate_yaml(yaml)
+        return cls(**serialized)
+
+    def deserialize_parents(self, yaml_paths: list[Path]):
+        """Populate Device with Components from Device yaml of parent classes.
+
+        Args:
+            yaml_paths: Paths of parent class Device YAMLs
+
+        """
         if self.parent is None or self.parent == "asynPortDriver":
             return
 
@@ -415,12 +441,14 @@ class Device:
                 self.children = list(self.children) + [node]
 
     def generate_param_tree(self) -> str:
-        param_tree = ", ".join(json.dumps(serialize(group)) for group in self.children)
+        param_tree = ", ".join(
+            json.dumps((group.model_dump_json())) for group in self.children
+        )
         # Encode again to quote the string as a value and escape double quotes within
         return json.dumps('{"parameters":[' + param_tree + "]}")
 
 
-def find_components(yaml_name: str, yaml_paths: List[Path]) -> Tree[Component]:
+def find_components(yaml_name: str, yaml_paths: list[Path]) -> Tree:
     if yaml_name == "asynPortDriver":
         return []  # asynPortDriver is the most base class and has no parameters
 

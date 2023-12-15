@@ -79,8 +79,8 @@ class BobTemplate(UITemplate[ElementBase]):
             case ("table", TableRead() | TableWrite() as table):
                 add_table_columns(t_copy, table)
             case (
-                ("textentry", TextWrite(_, format))
-                | ("textupdate", TextRead(_, format))
+                ("textentry", TextWrite(format=format))
+                | ("textupdate", TextRead(format=format))
             ) if format is not None:
                 add_format(t_copy, BOB_TEXT_FORMATS[format])
 
@@ -160,7 +160,7 @@ def add_table_column(
     if isinstance(widget, LED):
         options = ["false", "true"]
     elif isinstance(widget, ComboBox):
-        options = widget.choices
+        options = widget.get_choices()
 
     column_element = SubElement(columns_element, "column")
     SubElement(column_element, "name").text = name
@@ -187,12 +187,12 @@ def add_button_macros(widget_element: ElementBase, macros: Dict[str, str]):
 
 
 def add_combo_box_items(widget_element: ElementBase, combo_box: ComboBox):
-    if not combo_box.choices:
+    if not combo_box.get_choices():
         # Default empty -> get items from pv
         return
 
     items_element = SubElement(widget_element, "items")
-    for item in combo_box.choices:
+    for item in combo_box.get_choices():
         SubElement(items_element, "item").text = item
 
     SubElement(widget_element, "items_from_pv").text = "false"

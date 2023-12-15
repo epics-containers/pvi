@@ -30,7 +30,7 @@
             "program": "${workspaceFolder:pvi}/src/pvi",
             "args": [
                 "convert",
-                "${input:Converter}",
+                "device",
                 "${workspaceFolder:ADCore}/pvi",
                 "${workspaceFolder:ADCore}/ADApp/ADSrc/asynNDArrayDriver.h",
                 "--template",
@@ -262,10 +262,23 @@
             "name": "Write Device Schema",
             "type": "python",
             "request": "launch",
+            "justMyCode": false,
             "program": "${workspaceFolder:pvi}/src/pvi",
             "args": [
                 "schema",
                 "${workspaceFolder:pvi}/schemas/pvi.device.schema.json"
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Write Formatter Schema",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder:pvi}/src/pvi",
+            "args": [
+                "schema",
+                "${workspaceFolder:pvi}/schemas/pvi.formatter.schema.json"
             ],
             "console": "integratedTerminal"
         },

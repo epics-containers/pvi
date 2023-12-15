@@ -1,14 +1,14 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, field, replace
-from typing import Callable, Dict, List, Optional, Type, TypeVar, Union
+from typing import Callable, Dict, Generic, List, Optional, Type, TypeVar, Union
+
+from pydantic import BaseModel, Field, create_model
 
 from pvi._format.utils import Bounds, GroupType
 from pvi.device import (
     LED,
     CheckBox,
     ComboBox,
-    Generic,
     Group,
     ProgressBar,
     ReadWidget,
@@ -75,8 +75,7 @@ class UITemplate(Generic[T]):
 WF = TypeVar("WF", bound="WidgetFormatter")
 
 
-@dataclass
-class WidgetFormatter(Generic[T]):
+class WidgetFormatter(BaseModel, Generic[T]):
     bounds: Bounds
 
     def format(self) -> List[T]:
@@ -88,7 +87,7 @@ class WidgetFormatter(Generic[T]):
         cls: Type[WF],
         template: UITemplate[T],
         search,
-        sized: Callable[[Bounds], Bounds] = Bounds.copy,
+        sized: Callable[[Bounds], Bounds] = Bounds.clone,
         widget_formatter_hook: Optional[
             Callable[[Bounds, str], List[WidgetFormatter[T]]]
         ] = None,
@@ -130,40 +129,38 @@ class WidgetFormatter(Generic[T]):
                 )
             ]
 
-        return type(
+        return create_model(
             f"""{cls.__name__}<{search.strip('"')}>""",
-            (cls,),
-            {"format": format},
+            __base__=cls,
+            format=format,
         )
 
 
-@dataclass
 class LabelWidgetFormatter(WidgetFormatter[T]):
     text: str
 
 
-@dataclass
 class PVWidgetFormatter(WidgetFormatter[T]):
     pv: str
     widget: Union[ReadWidget, WriteWidget]
 
 
-@dataclass
 class ActionWidgetFormatter(WidgetFormatter[T]):
     label: str
     pv: str
     value: str
 
 
-@dataclass
 class SubScreenWidgetFormatter(WidgetFormatter[T]):
     label: str
     file_name: str
     components: Optional[Group] = None
-    macros: Dict[str, str] = field(default_factory=dict)
+    macros: Dict[str, str] = Field(default={})
 
 
-@dataclass
+GWF = TypeVar("GWF", bound="GroupFormatter")
+
+
 class GroupFormatter(WidgetFormatter[T]):
     bounds: Bounds
     title: str
@@ -173,24 +170,24 @@ class GroupFormatter(WidgetFormatter[T]):
         """Instances should be created using `from_template`, which defines `format`"""
         raise NotImplementedError(self)
 
-    def __post_init__(self):
-        """Call post init hooks defined in dynamically created child classes"""
-        self._post_init()
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.resize()
 
-    def _post_init(self):
+    def resize(self):
         pass
 
     @classmethod
     def from_template(
-        cls: Type[GroupFormatter[T]],
+        cls: Type[GWF],
         template: UITemplate[T],
         search: GroupType,
-        sized: Callable[[Bounds], Bounds] = Bounds.copy,
+        sized: Callable[[Bounds], Bounds] = Bounds.clone,
         widget_formatter_hook: Optional[
             Callable[[Bounds, str], List[WidgetFormatter[T]]]
         ] = None,
         property_map: Optional[Dict[str, str]] = None,
-    ) -> Type[GroupFormatter[T]]:
+    ) -> Type[GWF]:
         """Create a WidgetFormatter class from the given template
 
         Create a `format` method that searches the template for the `search` section and
@@ -240,24 +237,27 @@ class GroupFormatter(WidgetFormatter[T]):
                 texts += template.create_group(made_widgets, self.children, padding)
             return texts
 
-        def _post_init(self):
-            """Add padding around component widgets
+        def resize(self):
+            """Resize based on widget template.
 
-            Called in __post_init__ by parent class.
+            Called in __init__ by parent class.
 
             """
             padding = sized(self.bounds)
-            self.bounds = replace(self.bounds, w=padding.w, h=padding.h)
+            self.bounds = Bounds(
+                x=self.bounds.x, y=self.bounds.y, w=padding.w, h=padding.h
+            )
+            pass
 
-        return type(
+        return create_model(
             f"{cls.__name__}<{search.name}>",
-            (cls,),
-            {"format": format, "_post_init": _post_init},
+            __base__=cls,
+            format=format,
+            resize=resize,
         )
 
 
-@dataclass
-class WidgetFormatterFactory(Generic[T]):
+class WidgetFormatterFactory(BaseModel, Generic[T]):
     header_formatter_cls: Type[LabelWidgetFormatter[T]]
     label_formatter_cls: Type[LabelWidgetFormatter[T]]
     led_formatter_cls: Type[PVWidgetFormatter[T]]
@@ -301,10 +301,10 @@ class WidgetFormatterFactory(Generic[T]):
             TableWrite: self.table_formatter_cls,
         }
         if isinstance(widget, (TextRead, TextWrite)):
-            bounds.h *= widget.lines
+            bounds.h *= widget.get_lines()
 
         widget_formatter_cls = widget_formatter_classes[type(widget)]
-        return widget_formatter_cls(bounds, prefix + pv, widget)
+        return widget_formatter_cls(bounds=bounds, pv=prefix + pv, widget=widget)
 
 
 def max_x(widgets: List[WidgetFormatter[T]]) -> int:
