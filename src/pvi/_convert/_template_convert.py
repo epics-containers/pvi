@@ -2,7 +2,7 @@ import re
 from pathlib import Path
 from typing import List, Tuple
 
-from pvi.device import ComponentUnion, Grid, Group, Tree
+from pvi.device import ComponentUnion, Grid, Group, Tree, enforce_pascal_case
 
 from ._asyn_convert import (
     Action,
@@ -24,7 +24,7 @@ class TemplateConverter:
     def convert(self) -> Tree:
         return [
             Group(
-                name=template.stem,
+                name=enforce_pascal_case(template.stem),
                 layout=Grid(labelled=True),
                 children=template_components,
             )

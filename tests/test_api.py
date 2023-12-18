@@ -119,7 +119,7 @@ def test_pva_table_panda(tmp_path, helper):
     formatter = Formatter.deserialize(formatter_yaml)
 
     table = SignalR(
-        name="PandA ",
+        name="PandA",
         pv="PANDAQSRV:SEQ1:TABLE",
         widget=TableRead(
             widgets=[TextRead()] * 4 + [LED()] * 6 + [TextRead()] + [LED()] * 6
@@ -178,47 +178,47 @@ def test_group_sub_screen(tmp_path, helper):
     signals = [
         SignalR(name="A", pv="A", widget=TextRead()),
         Group(
-            name="Group 1",
+            name="Group1",
             layout=SubScreen(),
             children=[
-                SignalR(name="Group 1 B", pv="GROUP1:B", widget=TextRead()),
+                SignalR(name="Group1B", pv="GROUP1:B", widget=TextRead()),
                 Group(
-                    name="Group 2",
+                    name="Group2",
                     layout=Grid(),
                     children=[
                         SignalR(
-                            name="Group 2 C", pv="GROUP1:GROUP2:C", widget=TextRead()
+                            name="Group2C", pv="GROUP1:GROUP2:C", widget=TextRead()
                         ),
                         SignalR(
-                            name="Group 2 D", pv="GROUP1:GROUP2:D", widget=TextRead()
+                            name="Group2D", pv="GROUP1:GROUP2:D", widget=TextRead()
                         ),
                     ],
                 ),
             ],
         ),
         Group(
-            name="Group 3",
+            name="Group3",
             layout=Grid(),
             children=[
-                SignalR(name="Group 3 E", pv="GROUP3:E", widget=TextRead()),
+                SignalR(name="Group3E", pv="GROUP3:E", widget=TextRead()),
                 Group(
-                    name="Group 4",
+                    name="Group4",
                     layout=SubScreen(),
                     children=[
                         SignalR(
-                            name="Group 4 F", pv="GROUP3:GROUP4:F", widget=TextRead()
+                            name="Group4F", pv="GROUP3:GROUP4:F", widget=TextRead()
                         ),
                         Group(
-                            name="Group 5",
+                            name="Group5",
                             layout=Grid(),
                             children=[
                                 SignalR(
-                                    name="Group 5 G",
+                                    name="Group5G",
                                     pv="GROUP3:GROUP4:GROUP5:G",
                                     widget=TextRead(),
                                 ),
                                 SignalR(
-                                    name="Group 5 H",
+                                    name="Group5H",
                                     pv="GROUP3:GROUP4:GROUP5:H",
                                     widget=TextRead(),
                                 ),

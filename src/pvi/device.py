@@ -23,6 +23,7 @@ from pvi.bases import BaseSettings, BaseTyped
 from pvi.utils import find_pvi_yaml
 
 PASCAL_CASE_REGEX = re.compile(r"(?<![A-Z])[A-Z]|[A-Z][a-z/d]|(?<=[a-z])\d")
+NON_PASCAL_CHARS_RE = re.compile(r"[^A-Za-z0-9]")
 
 
 def to_title_case(pascal_s: str) -> str:
@@ -44,6 +45,19 @@ def to_snake_case(pascal_s: str) -> str:
         snake_case converted name. E.g. pascal_case_field_name
     """
     return PASCAL_CASE_REGEX.sub(lambda m: "_" + m.group().lower(), pascal_s)[1:]
+
+
+def enforce_pascal_case(s: str) -> str:
+    """Enforce a pascal case string, removing any invalid characters.
+
+    Args:
+        s: String to convert
+
+    Returns: PascalCase string
+
+    """
+    s = NON_PASCAL_CHARS_RE.sub(lambda _: "", s)
+    return s[0].upper() + s[1:]
 
 
 class TextFormat(Enum):
@@ -249,7 +263,7 @@ LayoutUnion = Annotated[
 class Named(BaseSettings):
     name: str = Field(
         description="PascalCase name to uniquely identify",
-        pattern=r"([A-Z][a-z0-9]*)*$",
+        pattern=r"^([A-Z][a-z0-9]*)*$",
     )
 
 

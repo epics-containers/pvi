@@ -4,7 +4,7 @@ parent: ADDriver
 children:
 
 - type: Group
-  name: simDetector
+  name: SimDetector
   layout:
     type: Grid
     labelled: true

@@ -134,7 +134,7 @@
       "properties": {
         "name": {
           "description": "PascalCase name to uniquely identify",
-          "pattern": "([A-Z][a-z0-9]*)*$",
+          "pattern": "^([A-Z][a-z0-9]*)*$",
           "title": "Name",
           "type": "string"
         },
@@ -207,7 +207,7 @@
       "properties": {
         "name": {
           "description": "PascalCase name to uniquely identify",
-          "pattern": "([A-Z][a-z0-9]*)*$",
+          "pattern": "^([A-Z][a-z0-9]*)*$",
           "title": "Name",
           "type": "string"
         },
@@ -385,7 +385,7 @@
       "properties": {
         "name": {
           "description": "PascalCase name to uniquely identify",
-          "pattern": "([A-Z][a-z0-9]*)*$",
+          "pattern": "^([A-Z][a-z0-9]*)*$",
           "title": "Name",
           "type": "string"
         },
@@ -472,7 +472,7 @@
       "properties": {
         "name": {
           "description": "PascalCase name to uniquely identify",
-          "pattern": "([A-Z][a-z0-9]*)*$",
+          "pattern": "^([A-Z][a-z0-9]*)*$",
           "title": "Name",
           "type": "string"
         },
@@ -615,7 +615,7 @@
       "properties": {
         "name": {
           "description": "PascalCase name to uniquely identify",
-          "pattern": "([A-Z][a-z0-9]*)*$",
+          "pattern": "^([A-Z][a-z0-9]*)*$",
           "title": "Name",
           "type": "string"
         },
@@ -649,7 +649,7 @@
       "properties": {
         "name": {
           "description": "PascalCase name to uniquely identify",
-          "pattern": "([A-Z][a-z0-9]*)*$",
+          "pattern": "^([A-Z][a-z0-9]*)*$",
           "title": "Name",
           "type": "string"
         },
@@ -732,7 +732,7 @@
       "properties": {
         "name": {
           "description": "PascalCase name to uniquely identify",
-          "pattern": "([A-Z][a-z0-9]*)*$",
+          "pattern": "^([A-Z][a-z0-9]*)*$",
           "title": "Name",
           "type": "string"
         },
