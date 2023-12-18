@@ -72,6 +72,10 @@
     "url": "https://epics-containers.github.io/pvi/main-tmp/"
   },
   {
+    "version": "name-schema-errors",
+    "url": "https://epics-containers.github.io/pvi/name-schema-errors/"
+  },
+  {
     "version": "ophyd",
     "url": "https://epics-containers.github.io/pvi/ophyd/"
   },
