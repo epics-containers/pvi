@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>How to Write a Site Specific Formatter &#8212; pvi 0.6.2.dev4+gf21d4fd documentation</title>
+    <title>How to Write a Site Specific Formatter &#8212; pvi 0.6.2.dev4+gdf8c406 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
   <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
 
-    <script src="../../_static/documentation_options.js?v=baa2b895"></script>
+    <script src="../../_static/documentation_options.js?v=2a427dd5"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -584,8 +584,7 @@ components, we can create a screen file.</p>
 <p>To start, we will need to create our own formatter class. These inherit from an abstract
 ‘Formatter’ class that is defined in base.py. Inside, we need to define one mandatory
 ‘format’ function, which will be used to create our screen file:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@as_discriminated_union</span>
-<span class="k">class</span> <span class="nc">Formatter</span><span class="p">(</span><span class="n">BaseTyped</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Formatter</span><span class="p">(</span><span class="n">BaseTyped</span><span class="p">,</span> <span class="n">YamlValidatorMixin</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Base UI formatter.&quot;&quot;&quot;</span>
 
     <span class="nd">@classmethod</span>
@@ -594,7 +593,7 @@ components, we can create a screen file.</p>
         <span class="k">return</span> <span class="n">TypeAdapter</span><span class="p">(</span><span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">__subclasses__</span><span class="p">())])</span>  <span class="c1"># type: ignore</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">serialized</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Type</span><span class="p">[</span><span class="s2">&quot;Formatter&quot;</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">serialized</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Formatter&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Instantiate a Formatter child class from a dictionary.</span>
 
 <span class="sd">        Args:</span>
@@ -604,14 +603,14 @@ components, we can create a screen file.</p>
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">type_adapter</span><span class="p">()</span><span class="o">.</span><span class="n">validate_python</span><span class="p">(</span><span class="n">serialized</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">deserialize</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">yaml</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Type</span><span class="p">[</span><span class="s2">&quot;Formatter&quot;</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">deserialize</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">yaml</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Formatter&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Instantiate a Formatter child class from YAML.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            yaml: Path of YAML file</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">serialized</span> <span class="o">=</span> <span class="n">validate_yaml</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">yaml</span><span class="p">)</span>
+        <span class="n">serialized</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">validate_yaml</span><span class="p">(</span><span class="n">yaml</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">serialized</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
