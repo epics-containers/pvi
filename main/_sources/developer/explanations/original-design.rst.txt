@@ -180,7 +180,7 @@ natively. This would avoid needing screen converters installed
 
 
 Drivers
-=======
+========
 
 The generated header file contains the string parameters, and defines the parameters to
 make the interface. In this example we have a header file pilatusDetectorParamSet.h:
