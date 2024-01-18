@@ -1,8 +1,8 @@
-from dataclasses import dataclass
 from pathlib import Path
-from typing import Annotated, List
+from typing import List, Literal
 
 from lxml import etree
+from pydantic import Field
 
 from pvi._format.bob import BobTemplate
 from pvi._format.edl import EdlTemplate
@@ -19,21 +19,21 @@ from pvi._format.widget import (
     SubScreenWidgetFormatter,
     WidgetFormatter,
 )
-from pvi._schema_utils import desc
 from pvi.device import Device
 
 from .base import Formatter
 from .utils import Bounds, GroupType, with_title
 
 
-@dataclass
 class DLSFormatter(Formatter):
-    spacing: Annotated[int, desc("Spacing between widgets")] = 5
-    title_height: Annotated[int, desc("Height of screen title bar")] = 25
-    max_height: Annotated[int, desc("Max height of the screen")] = 900
-    label_width: Annotated[int, desc("Width of the widget description labels")] = 115
-    widget_width: Annotated[int, desc("Width of the widgets")] = 120
-    widget_height: Annotated[int, desc("Height of the widgets")] = 20
+    type: Literal["DLSFormatter"] = "DLSFormatter"
+
+    spacing: int = Field(5, description="Spacing between widgets")
+    title_height: int = Field(25, description="Height of screen title bar")
+    max_height: int = Field(900, description="Max height of the screen")
+    label_width: int = Field(115, description="Width of the widget description labels")
+    widget_width: int = Field(120, description="Width of the widgets")
+    widget_height: int = Field(20, description="Height of the widgets")
 
     def format(self, device: Device, prefix: str, path: Path):
         if path.suffix == ".edl":
@@ -140,16 +140,16 @@ class DLSFormatter(Formatter):
             x, y, w, h = bounds.x, bounds.y, bounds.w, bounds.h
             return [
                 group_box_cls(
-                    Bounds(
-                        x,
-                        y + screen_layout.spacing,
-                        w,
-                        h - screen_layout.spacing,
+                    bounds=Bounds(
+                        x=x,
+                        y=y + screen_layout.spacing,
+                        w=w,
+                        h=h - screen_layout.spacing,
                     )
                 ),
                 group_title_cls(
-                    Bounds(x, y, w, screen_layout.group_label_height),
-                    f"  {title}  ",
+                    bounds=Bounds(x=x, y=y, w=w, h=screen_layout.group_label_height),
+                    text=f"  {title}  ",
                 ),
             ]
 
@@ -158,11 +158,12 @@ class DLSFormatter(Formatter):
         ) -> List[WidgetFormatter[str]]:
             return [
                 screen_title_cls(
-                    Bounds(0, 0, bounds.w, screen_layout.title_height), title
+                    bounds=Bounds(x=0, y=0, w=bounds.w, h=screen_layout.title_height),
+                    text=title,
                 )
             ]
 
-        formatter_factory = ScreenFormatterFactory(
+        formatter_factory: ScreenFormatterFactory = ScreenFormatterFactory(
             screen_formatter_cls=GroupFormatter.from_template(
                 template,
                 search=GroupType.SCREEN,
@@ -283,7 +284,8 @@ class DLSFormatter(Formatter):
         ) -> List[WidgetFormatter[str]]:
             return [
                 group_title_cls(
-                    Bounds(bounds.x, bounds.y, bounds.w, bounds.h), f"{title}"
+                    bounds=Bounds(x=bounds.x, y=bounds.y, w=bounds.w, h=bounds.h),
+                    text=f"{title}",
                 )
             ]
 
@@ -292,12 +294,13 @@ class DLSFormatter(Formatter):
         ) -> List[WidgetFormatter[str]]:
             return [
                 screen_title_cls(
-                    Bounds(0, 0, bounds.w, screen_layout.title_height), title
+                    bounds=Bounds(x=0, y=0, w=bounds.w, h=screen_layout.title_height),
+                    text=title,
                 )
             ]
 
         # SCREEN_INI DOCS REF: Construct a screen object
-        formatter_factory = ScreenFormatterFactory(
+        formatter_factory: ScreenFormatterFactory = ScreenFormatterFactory(
             screen_formatter_cls=GroupFormatter.from_template(
                 template,
                 search=GroupType.SCREEN,

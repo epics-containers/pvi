@@ -1,7 +1,7 @@
 import json
 import os
 from pathlib import Path
-from typing import List, Optional, Type
+from typing import List, Optional
 
 import typer
 
@@ -11,8 +11,6 @@ from pvi._convert.utils import extract_device_and_parent_class
 from pvi._format import Formatter
 from pvi._format.template import format_template
 from pvi._pv_group import group_parameters
-from pvi._schema_utils import make_json_schema
-from pvi._yaml_utils import deserialize_yaml, serialize_yaml
 from pvi.device import Device
 
 app = typer.Typer()
@@ -42,18 +40,18 @@ def main(
 @app.command()
 def schema(output: Path = typer.Argument(..., help="filename to write the schema to")):
     """Write the JSON schema for the pvi interface"""
-    cls: Type
     assert output.name.endswith(
         ".schema.json"
     ), f"Expected '{output.name}' to end with '.schema.json'"
+
     if output.name == "pvi.device.schema.json":
-        cls = Device
+        schema = Device.model_json_schema()
     elif output.name == "pvi.formatter.schema.json":
-        cls = Formatter
+        schema = Formatter.create_schema()
     else:
         typer.echo(f"Don't know how to create {output.name}")
         raise typer.Exit(code=1)
-    schema = make_json_schema(cls)
+
     output.write_text(json.dumps(schema, indent=2))
 
 
@@ -74,8 +72,8 @@ def format(
     device = Device.deserialize(device_path)
     device.deserialize_parents(yaml_paths)
 
-    formatter_inst: Formatter = deserialize_yaml(Formatter, formatter_path)
-    formatter_inst.format(device, "$(P)$(R)", output_path)
+    formatter = Formatter.deserialize(formatter_path)
+    formatter.format(device, "$(P)$(R)", output_path)
 
 
 @app.command()
@@ -103,9 +101,9 @@ def device(
 
     name, parent = extract_device_and_parent_class(h.read_text())
     component_group = TemplateConverter(templates).convert()
-    device = Device(name, parent, component_group)
+    device = Device(label=name, parent=parent, children=component_group)
 
-    serialize_yaml(device, output / f"{name}.pvi.device.yaml")
+    device.serialize(output / f"{name}.pvi.device.yaml")
 
 
 @app.command()
@@ -121,7 +119,7 @@ def regroup(
     device = Device.deserialize(device_path)
     device.children = group_parameters(device, ui_paths)
 
-    serialize_yaml(device, device_path)
+    device.serialize(device_path)
 
 
 # test with: pipenv run python -m pvi

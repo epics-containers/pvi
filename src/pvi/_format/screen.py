@@ -1,9 +1,8 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, field
 from typing import (
-    Annotated,
     Dict,
+    Generic,
     Iterator,
     List,
     Sequence,
@@ -12,6 +11,8 @@ from typing import (
     TypeVar,
     Union,
 )
+
+from pydantic import BaseModel, Field
 
 from pvi._format.utils import Bounds
 from pvi._format.widget import (
@@ -24,12 +25,11 @@ from pvi._format.widget import (
     next_x,
     next_y,
 )
-from pvi._schema_utils import desc
 from pvi.device import (
     ButtonPanel,
     Component,
+    ComponentUnion,
     DeviceRef,
-    Generic,
     Grid,
     Group,
     ReadSignalType,
@@ -48,35 +48,35 @@ from pvi.device import (
 T = TypeVar("T")
 
 
-@dataclass
-class ScreenLayout:
-    spacing: Annotated[int, desc("Spacing between widgets")]
-    title_height: Annotated[int, desc("Height of screen title bar")]
-    max_height: Annotated[int, desc("Max height of the screen")]
-    group_label_height: Annotated[int, desc("Height of the group title label")]
-    label_width: Annotated[int, desc("Width of the labels describing widgets")]
-    widget_width: Annotated[int, desc("Width of the widgets")]
-    widget_height: Annotated[int, desc("Height of the widgets (Labels use this too)")]
-    group_widget_indent: Annotated[
-        int, desc("Indentation of widgets within groups. Defaults to 0")
-    ] = 0
-    group_width_offset: Annotated[
-        int, desc("Additional border width when using group objects. Defaults to 0")
-    ] = 0
+class ScreenLayout(BaseModel):
+    spacing: int = Field(description="Spacing between widgets")
+    title_height: int = Field(description="Height of screen title bar")
+    max_height: int = Field(description="Max height of the screen")
+    group_label_height: int = Field(description="Height of the group title label")
+    label_width: int = Field(description="Width of the labels describing widgets")
+    widget_width: int = Field(description="Width of the widgets")
+    widget_height: int = Field(
+        description="Height of the widgets (Labels use this too)"
+    )
+    group_widget_indent: int = Field(
+        0, description="Indentation of widgets within groups. Defaults to 0"
+    )
+    group_width_offset: int = Field(
+        0, description="Additional border width when using group objects. Defaults to 0"
+    )
 
 
-@dataclass
-class ScreenFormatterFactory(Generic[T]):
-    screen_formatter_cls: Type[GroupFormatter[T]]
-    group_formatter_cls: Type[GroupFormatter[T]]
+class ScreenFormatterFactory(BaseModel, Generic[T]):
+    screen_formatter_cls: Type[GroupFormatter]
+    group_formatter_cls: Type[GroupFormatter]
     widget_formatter_factory: WidgetFormatterFactory
     layout: ScreenLayout
     prefix: str
-    components: Dict[str, Component] = field(init=False, default_factory=dict)
+    components: Dict[str, ComponentUnion] = Field(default={}, init_var=False)
     base_file_name: str = ""
 
     def create_screen_formatter(
-        self, components: Tree[Component], title: str
+        self, components: Tree, title: str
     ) -> Tuple[GroupFormatter[T], List[Tuple[str, GroupFormatter[T]]]]:
         """Create an instance of `screen_cls` populated with widgets of `components`
 
@@ -143,7 +143,9 @@ class ScreenFormatterFactory(Generic[T]):
         screen_bounds.w = max_x(screen_widgets)
         screen_bounds.h = max_y(screen_widgets)
         return (
-            self.screen_formatter_cls(screen_bounds, title, screen_widgets),
+            self.screen_formatter_cls(
+                bounds=screen_bounds, title=title, children=screen_widgets
+            ),
             sub_screens,
         )
 
@@ -180,7 +182,7 @@ class ScreenFormatterFactory(Generic[T]):
                 # This is a reference to an existing screen - don't create it
                 continue
 
-            factory = ScreenFormatterFactory(
+            factory: ScreenFormatterFactory = ScreenFormatterFactory(
                 screen_formatter_cls=self.screen_formatter_cls,
                 group_formatter_cls=self.group_formatter_cls,
                 widget_formatter_factory=self.widget_formatter_factory,
@@ -199,7 +201,7 @@ class ScreenFormatterFactory(Generic[T]):
 
     def create_group_formatters(
         self,
-        c: Group[Component],
+        c: Group,
         screen_bounds: Bounds,
         column_bounds: Bounds,
         next_column_bounds: Bounds,
@@ -227,11 +229,11 @@ class ScreenFormatterFactory(Generic[T]):
         if is_table(c):
             # Make a sub screen button at the root to display this Group instead of
             # embedding the components within a Group widget
-            c = Group(c.name, SubScreen(), c.children)
+            c = Group(name=c.name, layout=SubScreen(), children=c.children)
 
         if isinstance(c.layout, SubScreen):
             return self.create_component_widget_formatters(
-                c,
+                Group(name=c.name, layout=SubScreen(), children=c.children),
                 parent_bounds=screen_bounds,
                 column_bounds=column_bounds,
                 next_column_bounds=next_column_bounds,
@@ -240,7 +242,7 @@ class ScreenFormatterFactory(Generic[T]):
             )
 
         group_formatter = self.create_group_formatter(
-            c, bounds=Bounds(column_bounds.x, column_bounds.y, h=screen_bounds.h)
+            c, bounds=Bounds(x=column_bounds.x, y=column_bounds.y, h=screen_bounds.h)
         )
 
         if group_formatter.bounds.h + group_formatter.bounds.y <= screen_bounds.h:
@@ -258,7 +260,7 @@ class ScreenFormatterFactory(Generic[T]):
             group_formatter = self.create_group_formatter(
                 c,
                 bounds=Bounds(
-                    next_column_bounds.x, next_column_bounds.y, h=screen_bounds.h
+                    x=next_column_bounds.x, y=next_column_bounds.y, h=screen_bounds.h
                 ),
             )
             group_formatter.bounds.w += self.layout.group_width_offset
@@ -271,9 +273,7 @@ class ScreenFormatterFactory(Generic[T]):
 
         return [group_formatter]
 
-    def create_group_formatter(
-        self, group: Group[Component], bounds: Bounds
-    ) -> GroupFormatter[T]:
+    def create_group_formatter(self, group: Group, bounds: Bounds) -> GroupFormatter[T]:
         """Convert components within groups into widgets and lay them out within a
         group object.
 
@@ -296,12 +296,14 @@ class ScreenFormatterFactory(Generic[T]):
         ), "Can only do Grid and SubScreen at the moment"
 
         for c in group.children:
-            component: Union[Group[Component], Component]
+            component: Union[Group, Component]
             match c:
                 case Group(layout=Grid()):
                     if is_table(c):
                         # Display table on a sub screen
-                        component = Group(c.name, SubScreen(), c.children)
+                        component = Group(
+                            name=c.name, layout=SubScreen(), children=c.children
+                        )
                     else:
                         raise NotImplementedError(
                             "Cannot nest a Group(Grid()) in another Group on one screen"
@@ -330,11 +332,13 @@ class ScreenFormatterFactory(Generic[T]):
 
         bounds.h = max_y(widget_factories)
         bounds.w = max_x(widget_factories)
-        return self.group_formatter_cls(bounds, group.get_label(), widget_factories)
+        return self.group_formatter_cls(
+            bounds=bounds, title=group.get_label(), children=widget_factories
+        )
 
     def create_component_widget_formatters(
         self,
-        c: Union[Group[Component], Component],
+        c: ComponentUnion,
         parent_bounds: Bounds,
         column_bounds: Bounds,
         next_column_bounds: Bounds,
@@ -363,8 +367,8 @@ class ScreenFormatterFactory(Generic[T]):
 
         """
         # Take copies so we don't modify the originals until we're done
-        tmp_column_bounds = column_bounds.copy()
-        tmp_next_column_bounds = next_column_bounds.copy()
+        tmp_column_bounds = column_bounds.clone()
+        tmp_next_column_bounds = next_column_bounds.clone()
 
         if indent:
             tmp_column_bounds.indent(self.layout.group_widget_indent)
@@ -387,7 +391,7 @@ class ScreenFormatterFactory(Generic[T]):
 
     def generate_component_formatters(
         self,
-        c: Union[Group[Component], Component],
+        c: ComponentUnion,
         bounds: Bounds,
         add_label=True,
     ) -> Iterator[WidgetFormatter[T]]:
@@ -407,7 +411,7 @@ class ScreenFormatterFactory(Generic[T]):
             self.components[c.name] = c
 
         # Take a copy to modify in this scope
-        component_bounds = bounds.copy()
+        component_bounds = bounds.clone()
 
         if isinstance(c, Group) and isinstance(c.layout, Row):
             # This Group should be formatted as a table
@@ -417,7 +421,7 @@ class ScreenFormatterFactory(Generic[T]):
                     c.children
                 ), "Header length does not match number of elements"
 
-                header_bounds = component_bounds.copy()
+                header_bounds = component_bounds.clone()
                 if add_label:
                     # Scale the headers by the width with the label then
                     # indent them
@@ -434,7 +438,7 @@ class ScreenFormatterFactory(Generic[T]):
                 # Create column headers
                 for column_header in c.layout.header:
                     yield self.widget_formatter_factory.header_formatter_cls(
-                        header_bounds.copy(), column_header
+                        bounds=header_bounds.clone(), text=column_header
                     )
                     header_bounds.x += header_bounds.w + self.layout.spacing
 
@@ -453,10 +457,16 @@ class ScreenFormatterFactory(Generic[T]):
         ):
             # Convert W of Signal(R)W into SignalX for each button
             row_components = [
-                SignalX(label, c.pv, value) for label, value in c.widget.actions.items()
+                SignalX(name=label, pv=c.pv, value=value)
+                for label, value in c.widget.actions.items()
             ]
             if isinstance(c, SignalRW):
-                row_components += [SignalR(c.label, c.read_pv, c.read_widget)]
+                row_components += [
+                    # TODO: Improve optional read_pv with property?
+                    SignalR(
+                        name=c.get_label(), pv=c.read_pv or c.pv, widget=c.read_widget
+                    )
+                ]
         else:
             row_components = [c]  # Create one widget for row
 
@@ -470,7 +480,9 @@ class ScreenFormatterFactory(Generic[T]):
             left, row_bounds = component_bounds.split_left(
                 self.layout.label_width, self.layout.spacing
             )
-            yield self.widget_formatter_factory.label_formatter_cls(left, c.get_label())
+            yield self.widget_formatter_factory.label_formatter_cls(
+                bounds=left, text=c.get_label()
+            )
         else:
             # Allow full width for widget
             row_bounds = component_bounds
@@ -485,10 +497,10 @@ class ScreenFormatterFactory(Generic[T]):
 
     def generate_row_component_formatters(
         self,
-        row_components: Sequence[Union[Group[Component], Component]],
+        row_components: Sequence[Union[Group, Component]],
         row_bounds: Bounds,
     ) -> Iterator[WidgetFormatter[T]]:
-        row_component_bounds = row_bounds.copy().split_into(
+        row_component_bounds = row_bounds.clone().split_into(
             len(row_components), self.layout.spacing
         )
         for rc_bounds, rc in zip(row_component_bounds, row_components):
@@ -505,10 +517,10 @@ class ScreenFormatterFactory(Generic[T]):
                 yield from self.generate_read_widget(rc, rc_bounds)
             elif isinstance(rc, SignalX):
                 yield self.widget_formatter_factory.action_formatter_cls(
-                    rc_bounds,
-                    rc.get_label(),
-                    self.prefix + rc.pv,
-                    rc.value,
+                    bounds=rc_bounds,
+                    label=rc.get_label(),
+                    pv=self.prefix + rc.pv,
+                    value=rc.value,
                 )
             elif isinstance(rc, Group) and isinstance(rc.layout, SubScreen):
                 yield self.widget_formatter_factory.sub_screen_formatter_cls(

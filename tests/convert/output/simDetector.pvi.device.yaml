@@ -1,3 +1,4 @@
+type: Device
 label: simDetector
 parent: ADDriver
 children:
@@ -6,6 +7,7 @@ children:
   name: simDetector
   layout:
     type: Grid
+    labelled: true
   children:
 
   - type: SignalR

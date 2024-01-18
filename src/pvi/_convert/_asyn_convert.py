@@ -1,8 +1,7 @@
 import re
-from dataclasses import dataclass
-from typing import Optional, Type
+from typing import Any, Optional, Type
 
-from pvi.device import Component, SignalR, SignalRW, SignalW
+from pvi.device import SignalR, SignalRW, SignalW
 
 from ._parameters import (
     AsynParameter,
@@ -18,9 +17,8 @@ class RecordError(Exception):
     pass
 
 
-@dataclass
 class AsynRecord(Record):
-    def __post_init__(self):
+    def model_post_init(self, __context: Any):
         # We don't care about records without INP or OUT or with both (error)
         if all(k in self.fields.keys() for k in ("INP", "OUT")) or not any(
             k in self.fields.keys() for k in ("INP", "OUT")
@@ -28,7 +26,7 @@ class AsynRecord(Record):
             raise RecordError("Record has no input or output field or both")
 
         asyn_field = self.fields.get("INP", self.fields.get("OUT"))
-        if "@asyn(" not in asyn_field:
+        if asyn_field is None or "@asyn(" not in asyn_field:
             # Is it Asyn, because if it's not we don't care about it
             raise RecordError("Record has no @asyn field")
 
@@ -72,7 +70,6 @@ class AsynRecord(Record):
         )
 
 
-@dataclass
 class SettingPair(Parameter):
     read_record: AsynRecord
     write_record: AsynRecord
@@ -90,7 +87,6 @@ class SettingPair(Parameter):
         )
 
 
-@dataclass
 class Readback(Parameter):
     read_record: AsynRecord
 
@@ -111,13 +107,13 @@ class Readback(Parameter):
         )
 
 
-@dataclass
 class Action(Parameter):
     write_record: AsynRecord
 
-    def generate_component(self) -> Component:
+    def generate_component(self) -> SignalW:
         asyn_cls = self.write_record.asyn_component_type()
-        component = asyn_cls(self.write_record.name)
+
+        component = asyn_cls(name=self.write_record.name)
 
         return SignalW(
             name=component.name,

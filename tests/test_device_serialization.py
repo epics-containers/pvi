@@ -1,8 +1,8 @@
 import json
+import os
 from pathlib import Path
 
 import pytest
-from ruamel.yaml import YAML
 
 from pvi.device import (
     LED,
@@ -23,27 +23,40 @@ from pvi.device import (
 def device():
     components = [
         Group(
-            "Parameters",
-            Grid(),
-            [
-                SignalRW("WidthUnits", "WIDTH:UNITS", ComboBox()),
-                SignalRW("Width", "WIDTH", TextWrite(), "WIDTH_RBV", TextRead()),
+            name="Parameters",
+            layout=Grid(),
+            children=[
+                SignalRW(name="WidthUnits", pv="WIDTH:UNITS", widget=ComboBox()),
+                SignalRW(
+                    name="Width",
+                    pv="WIDTH",
+                    widget=TextWrite(),
+                    read_pv="WIDTH_RBV",
+                    read_widget=TextRead(),
+                ),
             ],
         ),
-        SignalRW("Table", "TABLE", TableWrite([CheckBox(), ComboBox(), TextWrite()])),
-        SignalR("OutA", "OUTA", LED()),
+        SignalRW(
+            name="Table",
+            pv="TABLE",
+            widget=TableWrite(widgets=[CheckBox(), ComboBox(), TextWrite()]),
+        ),
+        SignalR(name="OutA", pv="OUTA", widget=LED()),
     ]
-    return Device("label", "parent", components)
+    return Device(label="label", parent="parent", children=components)
 
 
-DEVICE_YAML = Path(__file__).parent / "test_device_serialization.pvi.yaml"
+DEVICE_YAML = Path(__file__).parent / "test.pvi.device.yaml"
 
 
 def test_serialize(device: Device):
-    s = device.serialize()
-    assert json.dumps(s, indent=2) == json.dumps(
-        YAML(typ="safe").load(DEVICE_YAML), indent=2
-    )
+    if os.environ.get("PVI_REGENERATE_OUTPUT", None):
+        device.serialize(DEVICE_YAML)
+
+    s = device.to_dict()
+    d = Device.validate_yaml(DEVICE_YAML)
+
+    assert json.dumps(s, indent=2) == json.dumps(d, indent=2)
 
 
 def test_deserialize(device: Device):

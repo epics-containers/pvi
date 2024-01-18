@@ -1,6 +1,7 @@
-from dataclasses import dataclass
 from pathlib import Path
-from typing import Annotated, List
+from typing import List, Literal
+
+from pydantic import Field
 
 from pvi._format.adl import AdlTemplate
 from pvi._format.screen import (
@@ -16,21 +17,21 @@ from pvi._format.widget import (
     SubScreenWidgetFormatter,
     WidgetFormatter,
 )
-from pvi._schema_utils import desc
 from pvi.device import Device
 
 from .base import Formatter
 from .utils import Bounds, GroupType, with_title
 
 
-@dataclass
 class APSFormatter(Formatter):
-    spacing: Annotated[int, desc("Spacing between widgets")] = 5
-    title_height: Annotated[int, desc("Height of screen title bar")] = 25
-    max_height: Annotated[int, desc("Max height of the screen")] = 900
-    label_width: Annotated[int, desc("Width of the widget description labels")] = 205
-    widget_width: Annotated[int, desc("Width of the widgets")] = 100
-    widget_height: Annotated[int, desc("Height of the widgets")] = 20
+    type: Literal["APSFormatter"] = "APSFormatter"
+
+    spacing: int = Field(5, description="Spacing between widgets")
+    title_height: int = Field(25, description="Height of screen title bar")
+    max_height: int = Field(900, description="Max height of the screen")
+    label_width: int = Field(205, description="Width of the widget description labels")
+    widget_width: int = Field(100, description="Width of the widgets")
+    widget_height: int = Field(20, description="Height of the widgets")
 
     def format(self, device: Device, prefix: str, path: Path):
         assert path.suffix == ".adl", "Can only write adl files"
@@ -127,27 +128,27 @@ class APSFormatter(Formatter):
             bounds: Bounds, title: str
         ) -> List[WidgetFormatter[str]]:
             title_bounds = Bounds(
-                bounds.x + layout.spacing,
-                bounds.y + layout.spacing,
-                bounds.w - 2 * layout.spacing,
-                layout.group_label_height - layout.spacing,
+                x=bounds.x + layout.spacing,
+                y=bounds.y + layout.spacing,
+                w=bounds.w - 2 * layout.spacing,
+                h=layout.group_label_height - layout.spacing,
             )
             return [
-                group_box_formatter(bounds),
-                label_background_formatter(title_bounds),
-                group_title_formatter(title_bounds, title),
+                group_box_formatter(bounds=bounds),
+                label_background_formatter(bounds=title_bounds),
+                group_title_formatter(bounds=title_bounds, text=title),
             ]
 
         def create_screen_widget_formatters(
             bounds: Bounds, title: str
         ) -> List[WidgetFormatter[str]]:
-            title_bounds = Bounds(0, 0, bounds.w, layout.title_height)
+            title_bounds = Bounds(x=0, y=0, w=bounds.w, h=layout.title_height)
             return [
-                label_background_formatter(title_bounds),
-                screen_title_formatter(title_bounds, title),
+                label_background_formatter(bounds=title_bounds),
+                screen_title_formatter(bounds=title_bounds, text=title),
             ]
 
-        formatter_factory = ScreenFormatterFactory(
+        formatter_factory: ScreenFormatterFactory = ScreenFormatterFactory(
             screen_formatter_cls=GroupFormatter.from_template(
                 template,
                 search=GroupType.SCREEN,

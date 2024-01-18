@@ -16,7 +16,7 @@ classifiers = [
 ]
 description = "One line description of your module"
 dependencies = [
-    "apischema",
+    "pydantic",
     "lxml",
     "ruamel.yaml",
     "typer",
@@ -69,7 +69,7 @@ addopts = """
     --tb=native -vv --doctest-modules --doctest-glob="*.rst"
     """
 # https://iscinumpy.gitlab.io/post/bound-version-constraints/#watch-for-warnings
-#filterwarnings = "error"
+filterwarnings = ["error", "ignore::pytest_cov.plugin.CovDisabledWarning"]
 # Doctest python code in docs, python code in src docstrings, test functions in tests
 testpaths = "docs src tests"
 
@@ -103,6 +103,7 @@ commands =
     pre-commit: pre-commit run --all-files {posargs}
     docs: sphinx-{posargs:build -EW --keep-going} -T docs build/html
 """
+
 
 [tool.ruff]
 src = ["src", "tests"]

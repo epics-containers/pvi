@@ -2,7 +2,7 @@ import re
 from pathlib import Path
 from typing import Dict, List, Tuple
 
-from pvi.device import Component, Device, Grid, Group, walk
+from pvi.device import Component, ComponentUnion, Device, Grid, Group, walk
 
 
 def find_pvs(pvs: List[str], file_path: Path) -> Tuple[List[str], List[str]]:
@@ -58,8 +58,8 @@ def sanitize_name(name: str) -> str:
     return name
 
 
-def group_parameters(device: Device, ui_paths: List[Path]) -> List[Group[Component]]:
-    initial_parameters: List[Component] = [
+def group_parameters(device: Device, ui_paths: List[Path]) -> List[Group]:
+    initial_parameters: List[ComponentUnion] = [
         param for param in walk(device.children) if isinstance(param, Component)
     ]
 
@@ -76,16 +76,17 @@ def group_parameters(device: Device, ui_paths: List[Path]) -> List[Group[Compone
         print(f'Did not find group for {"|".join(pvs)}')
 
     # Create groups for parameters we found in the files
-    ui_groups: List[Group[Component]] = [
+    ui_groups: List[Group] = [
         Group(
-            sanitize_name(group_name),
-            Grid(labelled=True),
-            [  # Note: Need to preserve order in group_pvs here
+            name=sanitize_name(group_name),
+            layout=Grid(labelled=True),
+            children=[  # Note: Need to preserve order in group_pvs here
                 param
                 for pv in group_pvs
                 for param in initial_parameters
                 if param.name == pv
             ],
+            label=group_name,
         )
         for group_name, group_pvs in group_pv_map.items()
     ]
@@ -100,9 +101,10 @@ def group_parameters(device: Device, ui_paths: List[Path]) -> List[Group[Compone
     if ungrouped_parameters:
         ui_groups.append(
             Group(
-                sanitize_name(device.label + "Misc"),
-                Grid(labelled=True),
-                ungrouped_parameters,
+                name=sanitize_name(device.label + "Misc"),
+                layout=Grid(labelled=True),
+                children=ungrouped_parameters,
+                label=device.label + " Ungrouped",
             )
         )
 

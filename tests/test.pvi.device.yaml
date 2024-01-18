@@ -1,0 +1,45 @@
+type: Device
+label: label
+parent: parent
+children:
+
+- type: Group
+  name: Parameters
+  layout:
+    type: Grid
+    labelled: true
+  children:
+
+  - type: SignalRW
+    name: WidthUnits
+    pv: WIDTH:UNITS
+    widget:
+      type: ComboBox
+
+  - type: SignalRW
+    name: Width
+    pv: WIDTH
+    widget:
+      type: TextWrite
+    read_pv: WIDTH_RBV
+    read_widget:
+      type: TextRead
+
+- type: SignalRW
+  name: Table
+  pv: TABLE
+  widget:
+    type: TableWrite
+    widgets:
+
+    - type: CheckBox
+
+    - type: ComboBox
+
+    - type: TextWrite
+
+- type: SignalR
+  name: OutA
+  pv: OUTA
+  widget:
+    type: LED

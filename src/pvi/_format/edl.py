@@ -52,7 +52,7 @@ class EdlTemplate(UITemplate[str]):
 
         # Add additional properties from widget
         match widget:
-            case TextWrite(_, format) | TextRead(_, format) if (
+            case TextWrite(format=format) | TextRead(format=format) if (
                 is_text_widget(template) and format is not None
             ):
                 template = add_property(
