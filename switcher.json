@@ -48,10 +48,6 @@
     "url": "https://epics-containers.github.io/pvi/0.1/"
   },
   {
-    "version": "docs-python-version",
-    "url": "https://epics-containers.github.io/pvi/docs-python-version/"
-  },
-  {
     "version": "experiments",
     "url": "https://epics-containers.github.io/pvi/experiments/"
   },
@@ -70,6 +66,10 @@
   {
     "version": "giles-pydantic",
     "url": "https://epics-containers.github.io/pvi/giles-pydantic/"
+  },
+  {
+    "version": "index-label-fix",
+    "url": "https://epics-containers.github.io/pvi/index-label-fix/"
   },
   {
     "version": "main-tmp",
