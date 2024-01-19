@@ -8,48 +8,48 @@
     "url": "https://epics-containers.github.io/pvi/main/"
   },
   {
-    "version": "0.7.1",
-    "url": "https://epics-containers.github.io/pvi/0.7.1/"
-  },
-  {
-    "version": "0.7",
-    "url": "https://epics-containers.github.io/pvi/0.7/"
-  },
-  {
-    "version": "0.6.2b2",
-    "url": "https://epics-containers.github.io/pvi/0.6.2b2/"
-  },
-  {
-    "version": "0.6.2b1",
-    "url": "https://epics-containers.github.io/pvi/0.6.2b1/"
-  },
-  {
-    "version": "0.6.1",
-    "url": "https://epics-containers.github.io/pvi/0.6.1/"
-  },
-  {
-    "version": "0.6",
-    "url": "https://epics-containers.github.io/pvi/0.6/"
-  },
-  {
-    "version": "0.5",
-    "url": "https://epics-containers.github.io/pvi/0.5/"
-  },
-  {
-    "version": "0.4",
-    "url": "https://epics-containers.github.io/pvi/0.4/"
-  },
-  {
-    "version": "0.3",
-    "url": "https://epics-containers.github.io/pvi/0.3/"
+    "version": "0.1",
+    "url": "https://epics-containers.github.io/pvi/0.1/"
   },
   {
     "version": "0.2",
     "url": "https://epics-containers.github.io/pvi/0.2/"
   },
   {
-    "version": "0.1",
-    "url": "https://epics-containers.github.io/pvi/0.1/"
+    "version": "0.3",
+    "url": "https://epics-containers.github.io/pvi/0.3/"
+  },
+  {
+    "version": "0.4",
+    "url": "https://epics-containers.github.io/pvi/0.4/"
+  },
+  {
+    "version": "0.5",
+    "url": "https://epics-containers.github.io/pvi/0.5/"
+  },
+  {
+    "version": "0.6",
+    "url": "https://epics-containers.github.io/pvi/0.6/"
+  },
+  {
+    "version": "0.6.1",
+    "url": "https://epics-containers.github.io/pvi/0.6.1/"
+  },
+  {
+    "version": "0.6.2b1",
+    "url": "https://epics-containers.github.io/pvi/0.6.2b1/"
+  },
+  {
+    "version": "0.6.2b2",
+    "url": "https://epics-containers.github.io/pvi/0.6.2b2/"
+  },
+  {
+    "version": "0.7",
+    "url": "https://epics-containers.github.io/pvi/0.7/"
+  },
+  {
+    "version": "0.7.1",
+    "url": "https://epics-containers.github.io/pvi/0.7.1/"
   },
   {
     "version": "experiments",
@@ -70,10 +70,6 @@
   {
     "version": "giles-pydantic",
     "url": "https://epics-containers.github.io/pvi/giles-pydantic/"
-  },
-  {
-    "version": "index-label-fix",
-    "url": "https://epics-containers.github.io/pvi/index-label-fix/"
   },
   {
     "version": "main-tmp",
