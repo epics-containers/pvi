@@ -5,7 +5,7 @@ from pydantic import Field, TypeAdapter
 
 from pvi._yaml_utils import YamlValidatorMixin
 from pvi.bases import BaseTyped
-from pvi.device import Device, DeviceRef
+from pvi.device import Device, DeviceRef, enforce_pascal_case
 
 
 class IndexEntry(BaseTyped):
@@ -13,7 +13,9 @@ class IndexEntry(BaseTyped):
 
     type: Literal["IndexEntry"] = "IndexEntry"
 
-    label: str = Field("Button label")
+    label: str = Field(
+        "Button label. This will be converted to PascalCase if it is not already."
+    )
     ui: str = Field("File name of UI to open with button")
     macros: dict[str, str] = Field("Macros to launch UI with")
 
@@ -81,7 +83,7 @@ class Formatter(BaseTyped, YamlValidatorMixin):
                 label=label,
                 children=[
                     DeviceRef(
-                        name=index.label,
+                        name=enforce_pascal_case(index.label),
                         pv=index.label.upper(),
                         ui=index.ui,
                         macros=index.macros,
