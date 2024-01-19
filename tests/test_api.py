@@ -247,7 +247,9 @@ def test_index(tmp_path, helper):
         [
             IndexEntry(label="Button", ui="button.bob", macros={"P": "BUTTON"}),
             IndexEntry(label="ComboBox", ui="combo_box.bob", macros={"P": "COMBOBOX"}),
-            IndexEntry(label="Table", ui="pva_table.bob", macros={"P": "TABLE"}),
+            # Check that lower case name is OK and will be capitalized to avoid
+            # PascalCase validation error
+            IndexEntry(label="table", ui="pva_table.bob", macros={"P": "TABLE"}),
         ],
         output_bob,
     )
