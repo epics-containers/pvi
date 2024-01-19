@@ -5,7 +5,7 @@ minor 0
 release 1
 x 0
 y 0
-w 525
+w 755
 h 700
 font "arial-bold-r-12.0"
 ctlFont "arial-bold-r-12.0"
@@ -33,7 +33,7 @@ minor 1
 release 1
 x 0
 y 0
-w 525
+w 755
 h 25
 font "arial-bold-r-16.0"
 fontAlign "center"
@@ -52,7 +52,7 @@ minor 0
 release 0
 x 5
 y 35
-w 255
+w 370
 h 285
 lineColor index 14
 fill
@@ -67,7 +67,7 @@ minor 1
 release 1
 x 5
 y 30
-w 255
+w 370
 h 10
 font "arial-medium-r-12.0"
 fontAlign "center"
@@ -88,7 +88,7 @@ minor 1
 release 1
 x 10
 y 45
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -105,9 +105,9 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 130
+x 165
 y 45
-w 125
+w 205
 h 20
 fgColor index 25
 bgColor index 3
@@ -126,7 +126,7 @@ minor 1
 release 1
 x 10
 y 70
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -143,9 +143,9 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 130
+x 165
 y 70
-w 125
+w 205
 h 20
 fgColor index 25
 bgColor index 3
@@ -164,7 +164,7 @@ minor 1
 release 1
 x 10
 y 95
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -181,9 +181,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 130
+x 165
 y 95
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)ImageFileTmot"
 fgColor index 25
@@ -202,7 +202,7 @@ minor 1
 release 1
 x 10
 y 120
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -219,9 +219,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 130
+x 165
 y 120
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)Wavelength"
 fgColor index 25
@@ -240,7 +240,7 @@ minor 1
 release 1
 x 10
 y 145
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -257,9 +257,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 130
+x 165
 y 145
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)EnergyLow"
 fgColor index 25
@@ -278,7 +278,7 @@ minor 1
 release 1
 x 10
 y 170
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -295,9 +295,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 130
+x 165
 y 170
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)EnergyHigh"
 fgColor index 25
@@ -316,7 +316,7 @@ minor 1
 release 1
 x 10
 y 195
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -333,9 +333,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 130
+x 165
 y 195
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)DetDist"
 fgColor index 25
@@ -354,7 +354,7 @@ minor 1
 release 1
 x 10
 y 220
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -371,9 +371,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 130
+x 165
 y 220
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)DetVOffset"
 fgColor index 25
@@ -392,7 +392,7 @@ minor 1
 release 1
 x 10
 y 245
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -409,9 +409,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 130
+x 165
 y 245
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)BeamX"
 fgColor index 25
@@ -430,7 +430,7 @@ minor 1
 release 1
 x 10
 y 270
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -447,9 +447,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 130
+x 165
 y 270
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)BeamY"
 fgColor index 25
@@ -468,7 +468,7 @@ minor 1
 release 1
 x 10
 y 295
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -485,9 +485,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 130
+x 165
 y 295
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)Flux"
 fgColor index 25
@@ -506,7 +506,7 @@ minor 1
 release 1
 x 10
 y 325
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -523,9 +523,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 130
+x 165
 y 325
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)FilterTransm"
 fgColor index 25
@@ -544,7 +544,7 @@ minor 1
 release 1
 x 10
 y 350
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -561,9 +561,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 130
+x 165
 y 350
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)StartAngle"
 fgColor index 25
@@ -582,7 +582,7 @@ minor 1
 release 1
 x 10
 y 375
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -599,9 +599,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 130
+x 165
 y 375
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)AngleIncr"
 fgColor index 25
@@ -620,7 +620,7 @@ minor 1
 release 1
 x 10
 y 400
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -637,9 +637,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 130
+x 165
 y 400
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)Det2theta"
 fgColor index 25
@@ -658,7 +658,7 @@ minor 1
 release 1
 x 10
 y 425
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -675,9 +675,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 130
+x 165
 y 425
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)Polarization"
 fgColor index 25
@@ -696,7 +696,7 @@ minor 1
 release 1
 x 10
 y 450
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -713,9 +713,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 130
+x 165
 y 450
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)Alpha"
 fgColor index 25
@@ -734,7 +734,7 @@ minor 1
 release 1
 x 10
 y 475
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -751,9 +751,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 130
+x 165
 y 475
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)Kappa"
 fgColor index 25
@@ -772,7 +772,7 @@ minor 1
 release 1
 x 10
 y 500
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -789,9 +789,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 130
+x 165
 y 500
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)Phi"
 fgColor index 25
@@ -810,7 +810,7 @@ minor 1
 release 1
 x 10
 y 525
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -827,9 +827,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 130
+x 165
 y 525
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)PhiIncr"
 fgColor index 25
@@ -848,7 +848,7 @@ minor 1
 release 1
 x 10
 y 550
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -865,9 +865,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 130
+x 165
 y 550
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)Chi"
 fgColor index 25
@@ -886,7 +886,7 @@ minor 1
 release 1
 x 10
 y 575
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -903,9 +903,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 130
+x 165
 y 575
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)ChiIncr"
 fgColor index 25
@@ -924,7 +924,7 @@ minor 1
 release 1
 x 10
 y 600
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -941,9 +941,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 130
+x 165
 y 600
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)Omega"
 fgColor index 25
@@ -962,7 +962,7 @@ minor 1
 release 1
 x 10
 y 625
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -979,9 +979,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 130
+x 165
 y 625
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)OmegaIncr"
 fgColor index 25
@@ -1000,7 +1000,7 @@ minor 1
 release 1
 x 10
 y 650
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -1017,9 +1017,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 130
+x 165
 y 650
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)OscillAxis"
 fgColor index 25
@@ -1038,7 +1038,7 @@ minor 1
 release 1
 x 10
 y 675
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -1055,9 +1055,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 130
+x 165
 y 675
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)NumOscill"
 fgColor index 25
@@ -1074,9 +1074,9 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 265
+x 380
 y 35
-w 255
+w 370
 h 235
 lineColor index 14
 fill
@@ -1089,9 +1089,9 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 265
+x 380
 y 30
-w 255
+w 370
 h 10
 font "arial-medium-r-12.0"
 fontAlign "center"
@@ -1110,9 +1110,9 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 270
+x 385
 y 45
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -1129,9 +1129,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 390
+x 540
 y 45
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)BadPixelFile"
 fgColor index 25
@@ -1148,9 +1148,9 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 270
+x 385
 y 70
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -1167,9 +1167,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 390
+x 540
 y 70
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)FlatFieldFile"
 fgColor index 25
@@ -1186,9 +1186,9 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 270
+x 385
 y 95
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -1205,9 +1205,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 390
+x 540
 y 95
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)CbfTemplateFile"
 fgColor index 25
@@ -1224,9 +1224,9 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 270
+x 385
 y 120
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -1243,9 +1243,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 390
+x 540
 y 120
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)HeaderString"
 fgColor index 25
@@ -1262,9 +1262,9 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 270
+x 385
 y 145
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -1281,7 +1281,7 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 442
+x 632
 y 145
 w 20
 h 20
@@ -1299,9 +1299,9 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 270
+x 385
 y 170
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -1318,9 +1318,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 390
+x 540
 y 170
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)NumBadPixels"
 fgColor index 16
@@ -1337,9 +1337,9 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 270
+x 385
 y 195
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -1356,7 +1356,7 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 442
+x 632
 y 195
 w 20
 h 20
@@ -1374,9 +1374,9 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 270
+x 385
 y 220
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -1393,9 +1393,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 390
+x 540
 y 220
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)PixelCutOff_RBV"
 fgColor index 16
@@ -1412,9 +1412,9 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 270
+x 385
 y 245
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -1431,9 +1431,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 390
+x 540
 y 245
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)Temp0_RBV"
 fgColor index 16
@@ -1450,9 +1450,9 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 270
+x 385
 y 275
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -1469,9 +1469,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 390
+x 540
 y 275
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)Temp1_RBV"
 fgColor index 16
@@ -1488,9 +1488,9 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 270
+x 385
 y 300
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -1507,9 +1507,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 390
+x 540
 y 300
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)Temp2_RBV"
 fgColor index 16
@@ -1526,9 +1526,9 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 270
+x 385
 y 325
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -1545,9 +1545,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 390
+x 540
 y 325
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)Humid0_RBV"
 fgColor index 16
@@ -1564,9 +1564,9 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 270
+x 385
 y 350
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -1583,9 +1583,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 390
+x 540
 y 350
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)Humid1_RBV"
 fgColor index 16
@@ -1602,9 +1602,9 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 270
+x 385
 y 375
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -1621,9 +1621,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 390
+x 540
 y 375
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)Humid2_RBV"
 fgColor index 16
@@ -1640,9 +1640,9 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 270
+x 385
 y 400
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -1659,9 +1659,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 390
+x 540
 y 400
-w 125
+w 205
 h 20
 controlPv "$(P)$(R)TVXVersion_RBV"
 fgColor index 16
@@ -1678,9 +1678,9 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 270
+x 385
 y 425
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -1697,9 +1697,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 390
+x 540
 y 425
-w 60
+w 100
 h 20
 controlPv "$(P)$(R)ResetPowerTime"
 fgColor index 25
@@ -1716,9 +1716,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 455
+x 645
 y 425
-w 60
+w 100
 h 20
 controlPv "$(P)$(R)ResetPowerTime_RBV"
 fgColor index 16
@@ -1735,9 +1735,9 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 270
+x 385
 y 450
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -1754,9 +1754,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 390
+x 540
 y 450
-w 60
+w 100
 h 20
 controlPv "$(P)$(R)DelayTime"
 fgColor index 25
@@ -1773,9 +1773,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 455
+x 645
 y 450
-w 60
+w 100
 h 20
 controlPv "$(P)$(R)DelayTime_RBV"
 fgColor index 16
@@ -1792,9 +1792,9 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 265
+x 380
 y 480
-w 255
+w 370
 h 185
 lineColor index 14
 fill
@@ -1807,9 +1807,9 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 265
+x 380
 y 475
-w 255
+w 370
 h 10
 font "arial-medium-r-12.0"
 fontAlign "center"
@@ -1828,9 +1828,9 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 270
+x 385
 y 490
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -1847,9 +1847,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 390
+x 540
 y 490
-w 60
+w 100
 h 20
 controlPv "$(P)$(R)ThresholdEnergy"
 fgColor index 25
@@ -1866,9 +1866,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 455
+x 645
 y 490
-w 60
+w 100
 h 20
 controlPv "$(P)$(R)ThresholdEnergy_RBV"
 fgColor index 16
@@ -1885,9 +1885,9 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 270
+x 385
 y 515
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -1904,9 +1904,9 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 390
+x 540
 y 515
-w 60
+w 100
 h 20
 fgColor index 25
 bgColor index 3
@@ -1923,7 +1923,7 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 475
+x 685
 y 515
 w 20
 h 20
@@ -1941,9 +1941,9 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 270
+x 385
 y 540
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -1960,9 +1960,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 390
+x 540
 y 540
-w 60
+w 100
 h 20
 controlPv "$(P)$(R)Energy"
 fgColor index 25
@@ -1979,9 +1979,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 455
+x 645
 y 540
-w 60
+w 100
 h 20
 controlPv "$(P)$(R)Energy_RBV"
 fgColor index 16
@@ -1998,9 +1998,9 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 270
+x 385
 y 565
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -2017,9 +2017,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 390
+x 540
 y 565
-w 60
+w 100
 h 20
 controlPv "$(P)$(R)MinFlatField"
 fgColor index 25
@@ -2036,9 +2036,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 455
+x 645
 y 565
-w 60
+w 100
 h 20
 controlPv "$(P)$(R)MinFlatField_RBV"
 fgColor index 16
@@ -2055,9 +2055,9 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 270
+x 385
 y 590
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -2074,9 +2074,9 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 390
+x 540
 y 590
-w 60
+w 100
 h 20
 fgColor index 25
 bgColor index 3
@@ -2093,9 +2093,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 455
+x 645
 y 590
-w 60
+w 100
 h 20
 controlPv "$(P)$(R)GapFill_RBV"
 fgColor index 16
@@ -2112,9 +2112,9 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 270
+x 385
 y 615
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -2131,9 +2131,9 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 390
+x 540
 y 615
-w 60
+w 100
 h 20
 fgColor index 25
 bgColor index 3
@@ -2150,9 +2150,9 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 455
+x 645
 y 615
-w 60
+w 100
 h 20
 controlPv "$(P)$(R)GapFillNoReadPV"
 fgColor index 16
@@ -2169,9 +2169,9 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 270
+x 385
 y 640
-w 115
+w 150
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -2188,9 +2188,9 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 390
+x 540
 y 640
-w 125
+w 205
 h 20
 indicatorColor index 16
 fgColor index 14
