@@ -50,7 +50,7 @@
     <name>OpenDisplay</name>
     <actions>
       <action type="open_display">
-        <file>sub_screen_Group_1.bob</file>
+        <file>sub_screen_Group1.bob</file>
         <target>tab</target>
         <description>Open Display</description>
       </action>
@@ -71,7 +71,7 @@
     <transparent>true</transparent>
     <widget type="label" version="2.0.0">
       <name>Label</name>
-      <text>Group 3  E</text>
+      <text>Group 3 E</text>
       <x>0</x>
       <y>0</y>
       <width>120</width>
@@ -102,7 +102,7 @@
       <name>OpenDisplay</name>
       <actions>
         <action type="open_display">
-          <file>sub_screen_Group_4.bob</file>
+          <file>sub_screen_Group4.bob</file>
           <target>tab</target>
           <description>Open Display</description>
         </action>

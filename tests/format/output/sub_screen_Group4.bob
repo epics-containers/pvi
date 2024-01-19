@@ -9,7 +9,7 @@
   <widget type="label" version="2.0.0">
     <name>Title</name>
     <class>TITLE</class>
-    <text>Group 4</text>
+    <text>Group4</text>
     <x use_class="true">0</x>
     <y use_class="true">0</y>
     <width>290</width>
@@ -27,7 +27,7 @@
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label</name>
-    <text>Group 4  F</text>
+    <text>Group 4 F</text>
     <x>22</x>
     <y>30</y>
     <width>120</width>
@@ -55,7 +55,7 @@
     <transparent>true</transparent>
     <widget type="label" version="2.0.0">
       <name>Label</name>
-      <text>Group 5  G</text>
+      <text>Group 5 G</text>
       <x>0</x>
       <y>0</y>
       <width>120</width>
@@ -76,7 +76,7 @@
     </widget>
     <widget type="label" version="2.0.0">
       <name>Label</name>
-      <text>Group 5  H</text>
+      <text>Group 5 H</text>
       <x>0</x>
       <y>24</y>
       <width>120</width>

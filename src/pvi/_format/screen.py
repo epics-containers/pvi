@@ -457,15 +457,13 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
         ):
             # Convert W of Signal(R)W into SignalX for each button
             row_components = [
-                SignalX(name=label, pv=c.pv, value=value)
-                for label, value in c.widget.actions.items()
+                SignalX(name=action, pv=c.pv, value=value)
+                for action, value in c.widget.actions.items()
             ]
             if isinstance(c, SignalRW):
                 row_components += [
                     # TODO: Improve optional read_pv with property?
-                    SignalR(
-                        name=c.get_label(), pv=c.read_pv or c.pv, widget=c.read_widget
-                    )
+                    SignalR(name=c.name, pv=c.read_pv or c.pv, widget=c.read_widget)
                 ]
         else:
             row_components = [c]  # Create one widget for row
