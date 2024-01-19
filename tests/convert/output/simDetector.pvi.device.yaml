@@ -16,6 +16,19 @@ children:
     widget:
       type: TextRead
 
+  - type: SignalR
+    name: XMLErrorMsg
+    pv: XMLErrorMsg_RBV
+    widget:
+      type: TextRead
+      format: 4
+
+  - type: SignalR
+    name: Dimensions
+    pv: Dimensions_RBV
+    widget:
+      type: TextRead
+
   - type: SignalRW
     name: GainX
     pv: GainX

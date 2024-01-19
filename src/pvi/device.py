@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 import re
-from enum import Enum
+from enum import IntEnum
 from pathlib import Path
 from typing import (
     Annotated,
@@ -15,7 +15,7 @@ from typing import (
     Union,
 )
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 from typing_extensions import Literal
 
 from pvi._yaml_utils import YamlValidatorMixin, dump_yaml, type_first
@@ -60,7 +60,7 @@ def enforce_pascal_case(s: str) -> str:
     return s[0].upper() + s[1:]
 
 
-class TextFormat(Enum):
+class TextFormat(IntEnum):
     """Format to use for display of Text{Read,Write} widgets on a UI"""
 
     decimal = 0
@@ -100,6 +100,7 @@ class TextRead(ReadWidget):
     """Text view of any PV"""
 
     type: Literal["TextRead"] = "TextRead"
+    model_config = ConfigDict(use_enum_values=True)  # Use Enum value when dumping
 
     lines: Optional[int] = Field(default=None, description="Number of lines to display")
     format: Optional[TextFormat] = Field(default=None, description="Display format")
@@ -178,6 +179,7 @@ class TextWrite(WriteWidget):
     """Text control of any PV"""
 
     type: Literal["TextWrite"] = "TextWrite"
+    model_config = ConfigDict(use_enum_values=True)  # Use Enum value when dumping
 
     lines: Optional[int] = Field(default=None, description="Number of lines to display")
     format: Optional[TextFormat] = Field(default=None, description="Display format")
