@@ -96,7 +96,7 @@
     "url": "https://epics-containers.github.io/pvi/text-format/"
   },
   {
-    "version": "waveform-convert-fix",
-    "url": "https://epics-containers.github.io/pvi/waveform-convert-fix/"
+    "version": "toggle-widget",
+    "url": "https://epics-containers.github.io/pvi/toggle-widget/"
   }
 ]
