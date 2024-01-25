@@ -72,6 +72,10 @@
     "url": "https://epics-containers.github.io/pvi/giles-pydantic/"
   },
   {
+    "version": "implement_missing_widgets",
+    "url": "https://epics-containers.github.io/pvi/implement_missing_widgets/"
+  },
+  {
     "version": "main-tmp",
     "url": "https://epics-containers.github.io/pvi/main-tmp/"
   },
