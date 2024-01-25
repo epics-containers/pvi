@@ -54,7 +54,9 @@ class AdlTemplate(UITemplate[str]):
             case TextWrite(format=format) | TextRead(format=format) if (
                 is_text_widget(template) and format is not None
             ):
-                template = add_property(template, "format", ADL_TEXT_FORMATS[format])
+                template = add_property(
+                    template, "format", ADL_TEXT_FORMATS[TextFormat(format)]
+                )
 
         return template
 

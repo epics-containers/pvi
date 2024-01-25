@@ -1418,7 +1418,7 @@ rectangle {
 		x=665
 		y=30
 		width=325
-		height=205
+		height=280
 	}
 	"basic attribute" {
 		clr=14
@@ -1713,4 +1713,82 @@ bar {
 	}
 	limits {
 	}
+}
+text {
+	object {
+		x=670
+		y=235
+		width=205
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Byte Monitor Test"
+	align="horiz. right"
+}
+text {
+	object {
+		x=880
+		y=235
+		width=105
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="$(P)$(R)ByteMonitor_RBV"
+	align="horiz. right"
+}
+text {
+	object {
+		x=670
+		y=260
+		width=205
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Array Trace Test"
+	align="horiz. right"
+}
+text {
+	object {
+		x=880
+		y=260
+		width=105
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="$(P)$(R)ArrayTrace_RBV"
+	align="horiz. right"
+}
+text {
+	object {
+		x=670
+		y=285
+		width=205
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Image Read Test"
+	align="horiz. right"
+}
+text {
+	object {
+		x=880
+		y=285
+		width=105
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="$(P)$(R)ImageRead_RBV"
+	align="horiz. right"
 }

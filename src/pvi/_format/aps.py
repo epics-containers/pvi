@@ -103,6 +103,26 @@ class APSFormatter(Formatter):
                 search='"SubScreenFile"',
                 property_map={"name": "file_name"},
             ),
+            bitfield_formatter_cls=PVWidgetFormatter.from_template(
+                template,
+                search='"Label"',
+                property_map={"textix": "pv"},
+            ),
+            array_trace_formatter_cls=PVWidgetFormatter.from_template(
+                template,
+                search='"Label"',
+                property_map={"textix": "pv"},
+            ),
+            image_read_formatter_cls=PVWidgetFormatter.from_template(
+                template,
+                search='"Label"',
+                property_map={"textix": "pv"},
+            ),
+            button_panel_formatter_cls=PVWidgetFormatter.from_template(
+                template,
+                search='"Label"',
+                property_map={"textix": "pv"},
+            ),
         )
 
         label_background_formatter = WidgetFormatter.from_template(

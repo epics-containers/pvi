@@ -56,7 +56,7 @@ class EdlTemplate(UITemplate[str]):
                 is_text_widget(template) and format is not None
             ):
                 template = add_property(
-                    template, "displayMode", EDL_TEXT_FORMATS[format]
+                    template, "displayMode", EDL_TEXT_FORMATS[TextFormat(format)]
                 )
 
         return template

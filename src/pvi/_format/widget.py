@@ -7,9 +7,13 @@ from pydantic import BaseModel, Field, create_model
 from pvi._format.utils import Bounds, GroupType
 from pvi.device import (
     LED,
+    ArrayTrace,
+    BitField,
+    ButtonPanel,
     CheckBox,
     ComboBox,
     Group,
+    ImageRead,
     ProgressBar,
     TableRead,
     TableWrite,
@@ -260,14 +264,17 @@ class WidgetFormatterFactory(BaseModel, Generic[T]):
     label_formatter_cls: Type[LabelWidgetFormatter[T]]
     led_formatter_cls: Type[PVWidgetFormatter[T]]
     progress_bar_formatter_cls: Type[PVWidgetFormatter[T]]
-    # TODO: add bitfield, progress_bar, plot, image
     text_read_formatter_cls: Type[PVWidgetFormatter[T]]
     check_box_formatter_cls: Type[PVWidgetFormatter[T]]
     combo_box_formatter_cls: Type[PVWidgetFormatter[T]]
     text_write_formatter_cls: Type[PVWidgetFormatter[T]]
-    table_formatter_cls: Type[PVWidgetFormatter]
+    table_formatter_cls: Type[PVWidgetFormatter[T]]
     action_formatter_cls: Type[ActionWidgetFormatter[T]]
     sub_screen_formatter_cls: Type[SubScreenWidgetFormatter[T]]
+    bitfield_formatter_cls: Type[PVWidgetFormatter[T]]
+    array_trace_formatter_cls: Type[PVWidgetFormatter[T]]
+    button_panel_formatter_cls: Type[PVWidgetFormatter[T]]
+    image_read_formatter_cls: Type[PVWidgetFormatter[T]]
 
     def pv_widget_formatter(
         self,
@@ -296,6 +303,10 @@ class WidgetFormatterFactory(BaseModel, Generic[T]):
             ComboBox: self.combo_box_formatter_cls,
             TextWrite: self.text_write_formatter_cls,
             TableWrite: self.table_formatter_cls,
+            BitField: self.bitfield_formatter_cls,
+            ArrayTrace: self.array_trace_formatter_cls,
+            ButtonPanel: self.button_panel_formatter_cls,
+            ImageRead: self.image_read_formatter_cls,
         }
         if isinstance(widget, (TextRead, TextWrite)):
             bounds.h *= widget.get_lines()

@@ -1,7 +1,7 @@
 <display version="2.0.0">
   <name>Display</name>
   <x>0</x>
-  <y>0</y>
+  <y use_class="true">0</y>
   <width>1726</width>
   <height>234</height>
   <grid_step_x>4</grid_step_x>
@@ -32,6 +32,13 @@
     <y>30</y>
     <width>1700</width>
     <height>200</height>
+    <columns>
+      <column>
+        <name>Column 1</name>
+        <width>100</width>
+        <editable>true</editable>
+      </column>
+    </columns>
     <columns>
       <column>
         <name>Column 1</name>

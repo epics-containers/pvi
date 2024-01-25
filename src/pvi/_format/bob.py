@@ -7,6 +7,7 @@ from pvi._format.utils import Bounds
 from pvi._format.widget import UITemplate, WidgetFormatter
 from pvi.device import (
     LED,
+    BitField,
     ComboBox,
     TableRead,
     TableWrite,
@@ -49,6 +50,10 @@ class BobTemplate(UITemplate[ElementBase]):
             properties["width"] = bounds.w
             properties["height"] = bounds.h
 
+            if isinstance(widget, BitField):
+                properties["width"] = widget.number_of_bits * 20
+                properties.pop("height")
+
         widget_type = template.attrib.get("type", "")
 
         t_copy = deepcopy(template)
@@ -81,7 +86,9 @@ class BobTemplate(UITemplate[ElementBase]):
                 "textupdate",
                 TextRead(format=format),
             ) if format is not None:
-                add_format(t_copy, BOB_TEXT_FORMATS[format])
+                add_format(t_copy, BOB_TEXT_FORMATS[TextFormat(format)])
+            case ("byte_monitor", BitField() as bit_field):
+                add_byte_number_of_bits(t_copy, bit_field.number_of_bits)
 
         return t_copy
 
@@ -206,6 +213,10 @@ def add_format(element: ElementBase, format: str):
         SubElement(element, "format").text = format
 
 
+def add_byte_number_of_bits(element: ElementBase, number_of_bits: int):
+    SubElement(element, "numBits").text = str(number_of_bits)
+
+
 def find_element(root_element: ElementBase, tag: str, index: int = 0) -> ElementBase:
     """Iterate tree to find tag and replace text.
 
@@ -213,7 +224,6 @@ def find_element(root_element: ElementBase, tag: str, index: int = 0) -> Element
         root_element: Root of tree to search
         tag: Tag to search for in tree
         index: Match to return if multiple matches are found
-
     """
     match list(root_element.iter(tag=tag)):
         case []:
