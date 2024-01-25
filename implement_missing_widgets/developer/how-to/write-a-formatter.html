@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>How to Write a Site Specific Formatter &#8212; pvi 0.7.2.dev5+g0af2153 documentation</title>
+    <title>How to Write a Site Specific Formatter &#8212; pvi 0.7.2.dev6+ga2223af documentation</title>
   
   
   
@@ -38,7 +38,7 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../_static/documentation_options.js?v=27164d69"></script>
+    <script src="../../_static/documentation_options.js?v=260eae4d"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -527,13 +527,13 @@ deserialised into component objects, which are later translated into widgets:</p
 <p>To make a screen from this, we need a template file. This contains a blank representation
 of each supported widget for each of the supported file formats (bob, edl etc…). Below
 is an example of a ‘text entry’ widget for a .bob file:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    &lt;actions&gt;
-      &lt;action type=&quot;write_pv&quot;&gt;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>      &lt;action type=&quot;write_pv&quot;&gt;
         &lt;pv_name&gt;$(pv_name)&lt;/pv_name&gt;
         &lt;value&gt;value&lt;/value&gt;
         &lt;description&gt;$(name)&lt;/description&gt;
       &lt;/action&gt;
     &lt;/actions&gt;
+    &lt;pv_name&gt;SignalX&lt;/pv_name&gt;
     &lt;text&gt;SignalX&lt;/text&gt;
     &lt;x&gt;18&lt;/x&gt;
     &lt;y&gt;118&lt;/y&gt;
@@ -733,6 +733,26 @@ WidgetFactory.from_template method:</p>
             <span class="n">progress_bar_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ProgressBar&quot;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
+            <span class="p">),</span>
+            <span class="n">bitfield_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;BitField&quot;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
+            <span class="p">),</span>
+            <span class="n">button_panel_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ButtonPanel&quot;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
+            <span class="p">),</span>
+            <span class="n">plot_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Plot&quot;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
+            <span class="p">),</span>
+            <span class="n">image_read_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ImageRead&quot;</span><span class="p">,</span>
                 <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">text_read_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
@@ -1095,6 +1115,26 @@ find a complete example formatter, supporting both edl and bob file formats for 
             <span class="n">progress_bar_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ProgressBar&quot;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
+            <span class="p">),</span>
+            <span class="n">bitfield_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;BitField&quot;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
+            <span class="p">),</span>
+            <span class="n">button_panel_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ButtonPanel&quot;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
+            <span class="p">),</span>
+            <span class="n">plot_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Plot&quot;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
+            <span class="p">),</span>
+            <span class="n">image_read_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ImageRead&quot;</span><span class="p">,</span>
                 <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">text_read_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
