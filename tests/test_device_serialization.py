@@ -13,6 +13,7 @@ from pvi.device import (
     Group,
     SignalR,
     SignalRW,
+    SignalW,
     TableWrite,
     TextRead,
     TextWrite,
@@ -26,22 +27,26 @@ def device():
             name="Parameters",
             layout=Grid(),
             children=[
-                SignalRW(name="WidthUnits", pv="WIDTH:UNITS", widget=ComboBox()),
+                SignalW(
+                    name="WidthUnits",
+                    write_pv="WIDTH:UNITS",
+                    write_widget=ComboBox(),
+                ),
                 SignalRW(
                     name="Width",
-                    pv="WIDTH",
-                    widget=TextWrite(),
+                    write_pv="WIDTH",
+                    write_widget=TextWrite(),
                     read_pv="WIDTH_RBV",
                     read_widget=TextRead(),
                 ),
             ],
         ),
-        SignalRW(
+        SignalW(
             name="Table",
-            pv="TABLE",
-            widget=TableWrite(widgets=[CheckBox(), ComboBox(), TextWrite()]),
+            write_pv="TABLE",
+            write_widget=TableWrite(widgets=[CheckBox(), ComboBox(), TextWrite()]),
         ),
-        SignalR(name="OutA", pv="OUTA", widget=LED()),
+        SignalR(name="OutA", read_pv="OUTA", read_widget=LED()),
     ]
     return Device(label="label", parent="parent", children=components)
 
@@ -53,7 +58,7 @@ def test_serialize(device: Device):
     if os.environ.get("PVI_REGENERATE_OUTPUT", None):
         device.serialize(DEVICE_YAML)
 
-    s = device.to_dict()
+    s = device._to_dict()
     d = Device.validate_yaml(DEVICE_YAML)
 
     assert json.dumps(s, indent=2) == json.dumps(d, indent=2)

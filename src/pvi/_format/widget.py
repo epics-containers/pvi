@@ -303,6 +303,7 @@ class WidgetFormatterFactory(BaseModel, Generic[T]):
         if isinstance(widget, (TextRead, TextWrite)):
             bounds.h *= widget.get_lines()
 
+        # TODO: ?
         widget_formatter_cls = widget_formatter_classes[type(widget)]
         return widget_formatter_cls(bounds=bounds, pv=prefix + pv, widget=widget)
 

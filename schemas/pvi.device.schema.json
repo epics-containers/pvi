@@ -150,11 +150,6 @@
           "default": null,
           "title": "Label"
         },
-        "type": {
-          "const": "DeviceRef",
-          "default": "DeviceRef",
-          "title": "Type"
-        },
         "pv": {
           "description": "Child device PVI PV",
           "title": "Pv",
@@ -173,6 +168,11 @@
           "description": "Macro-value pairs for UI file",
           "title": "Macros",
           "type": "object"
+        },
+        "type": {
+          "const": "DeviceRef",
+          "default": "DeviceRef",
+          "title": "Type"
         }
       },
       "required": [
@@ -223,13 +223,18 @@
           "default": null,
           "title": "Label"
         },
-        "type": {
-          "const": "Group",
-          "default": "Group",
-          "title": "Type"
-        },
         "layout": {
-          "anyOf": [
+          "description": "How to layout children on screen",
+          "discriminator": {
+            "mapping": {
+              "Grid": "#/$defs/Grid",
+              "Plot": "#/$defs/Plot",
+              "Row": "#/$defs/Row",
+              "SubScreen": "#/$defs/SubScreen"
+            },
+            "propertyName": "type"
+          },
+          "oneOf": [
             {
               "$ref": "#/$defs/Plot"
             },
@@ -243,13 +248,12 @@
               "$ref": "#/$defs/SubScreen"
             }
           ],
-          "description": "How to layout children on screen",
           "title": "Layout"
         },
         "children": {
           "description": "Child Components",
           "items": {
-            "anyOf": [
+            "oneOf": [
               {
                 "$ref": "#/$defs/Group"
               },
@@ -275,6 +279,11 @@
           },
           "title": "Children",
           "type": "array"
+        },
+        "type": {
+          "const": "Group",
+          "default": "Group",
+          "title": "Type"
         }
       },
       "required": [
@@ -381,7 +390,7 @@
     },
     "SignalR": {
       "additionalProperties": false,
-      "description": "Scalar value backed by a single PV",
+      "description": "Read-only `Signal` backed by a single PV.",
       "properties": {
         "name": {
           "description": "PascalCase name to uniquely identify",
@@ -401,74 +410,66 @@
           "default": null,
           "title": "Label"
         },
+        "read_pv": {
+          "description": "PV to be used for reading",
+          "title": "Read Pv",
+          "type": "string"
+        },
+        "read_widget": {
+          "description": "Widget to use for display",
+          "discriminator": {
+            "mapping": {
+              "ArrayTrace": "#/$defs/ArrayTrace",
+              "BitField": "#/$defs/BitField",
+              "ImageRead": "#/$defs/ImageRead",
+              "LED": "#/$defs/LED",
+              "ProgressBar": "#/$defs/ProgressBar",
+              "TableRead": "#/$defs/TableRead",
+              "TextRead": "#/$defs/TextRead"
+            },
+            "propertyName": "type"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ArrayTrace"
+            },
+            {
+              "$ref": "#/$defs/BitField"
+            },
+            {
+              "$ref": "#/$defs/ImageRead"
+            },
+            {
+              "$ref": "#/$defs/LED"
+            },
+            {
+              "$ref": "#/$defs/ProgressBar"
+            },
+            {
+              "$ref": "#/$defs/TableRead"
+            },
+            {
+              "$ref": "#/$defs/TextRead"
+            }
+          ],
+          "title": "Read Widget"
+        },
         "type": {
           "const": "SignalR",
           "default": "SignalR",
           "title": "Type"
-        },
-        "pv": {
-          "description": "PV to be used for get and monitor",
-          "title": "Pv",
-          "type": "string"
-        },
-        "widget": {
-          "anyOf": [
-            {
-              "discriminator": {
-                "mapping": {
-                  "ArrayTrace": "#/$defs/ArrayTrace",
-                  "BitField": "#/$defs/BitField",
-                  "ImageRead": "#/$defs/ImageRead",
-                  "LED": "#/$defs/LED",
-                  "ProgressBar": "#/$defs/ProgressBar",
-                  "TableRead": "#/$defs/TableRead",
-                  "TextRead": "#/$defs/TextRead"
-                },
-                "propertyName": "type"
-              },
-              "oneOf": [
-                {
-                  "$ref": "#/$defs/ArrayTrace"
-                },
-                {
-                  "$ref": "#/$defs/BitField"
-                },
-                {
-                  "$ref": "#/$defs/ImageRead"
-                },
-                {
-                  "$ref": "#/$defs/LED"
-                },
-                {
-                  "$ref": "#/$defs/ProgressBar"
-                },
-                {
-                  "$ref": "#/$defs/TableRead"
-                },
-                {
-                  "$ref": "#/$defs/TextRead"
-                }
-              ]
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "description": "Widget to use for display, None means don't display",
-          "title": "Widget"
         }
       },
       "required": [
         "name",
-        "pv"
+        "read_pv"
       ],
       "title": "SignalR",
       "type": "object"
     },
     "SignalRW": {
       "additionalProperties": false,
-      "description": "Read/write value backed by one or two PVs",
+      "description": "Read/write `Signal` backed by a write PV and a readback PV.",
       "properties": {
         "name": {
           "description": "PascalCase name to uniquely identify",
@@ -488,123 +489,100 @@
           "default": null,
           "title": "Label"
         },
+        "write_pv": {
+          "description": "PV to be used for writing",
+          "title": "Write Pv",
+          "type": "string"
+        },
+        "write_widget": {
+          "description": "Widget to use for control",
+          "discriminator": {
+            "mapping": {
+              "ArrayWrite": "#/$defs/ArrayWrite",
+              "ButtonPanel": "#/$defs/ButtonPanel",
+              "CheckBox": "#/$defs/CheckBox",
+              "ComboBox": "#/$defs/ComboBox",
+              "TableWrite": "#/$defs/TableWrite",
+              "TextWrite": "#/$defs/TextWrite"
+            },
+            "propertyName": "type"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ArrayWrite"
+            },
+            {
+              "$ref": "#/$defs/ButtonPanel"
+            },
+            {
+              "$ref": "#/$defs/CheckBox"
+            },
+            {
+              "$ref": "#/$defs/ComboBox"
+            },
+            {
+              "$ref": "#/$defs/TableWrite"
+            },
+            {
+              "$ref": "#/$defs/TextWrite"
+            }
+          ],
+          "title": "Write Widget"
+        },
+        "read_pv": {
+          "description": "PV to be used for reading",
+          "title": "Read Pv",
+          "type": "string"
+        },
+        "read_widget": {
+          "description": "Widget to use for display",
+          "discriminator": {
+            "mapping": {
+              "ArrayTrace": "#/$defs/ArrayTrace",
+              "BitField": "#/$defs/BitField",
+              "ImageRead": "#/$defs/ImageRead",
+              "LED": "#/$defs/LED",
+              "ProgressBar": "#/$defs/ProgressBar",
+              "TableRead": "#/$defs/TableRead",
+              "TextRead": "#/$defs/TextRead"
+            },
+            "propertyName": "type"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ArrayTrace"
+            },
+            {
+              "$ref": "#/$defs/BitField"
+            },
+            {
+              "$ref": "#/$defs/ImageRead"
+            },
+            {
+              "$ref": "#/$defs/LED"
+            },
+            {
+              "$ref": "#/$defs/ProgressBar"
+            },
+            {
+              "$ref": "#/$defs/TableRead"
+            },
+            {
+              "$ref": "#/$defs/TextRead"
+            }
+          ],
+          "title": "Read Widget"
+        },
         "type": {
           "const": "SignalRW",
           "default": "SignalRW",
           "title": "Type"
-        },
-        "pv": {
-          "description": "PV to be used for put",
-          "title": "Pv",
-          "type": "string"
-        },
-        "widget": {
-          "anyOf": [
-            {
-              "discriminator": {
-                "mapping": {
-                  "ArrayWrite": "#/$defs/ArrayWrite",
-                  "ButtonPanel": "#/$defs/ButtonPanel",
-                  "CheckBox": "#/$defs/CheckBox",
-                  "ComboBox": "#/$defs/ComboBox",
-                  "TableWrite": "#/$defs/TableWrite",
-                  "TextWrite": "#/$defs/TextWrite"
-                },
-                "propertyName": "type"
-              },
-              "oneOf": [
-                {
-                  "$ref": "#/$defs/ArrayWrite"
-                },
-                {
-                  "$ref": "#/$defs/ButtonPanel"
-                },
-                {
-                  "$ref": "#/$defs/CheckBox"
-                },
-                {
-                  "$ref": "#/$defs/ComboBox"
-                },
-                {
-                  "$ref": "#/$defs/TableWrite"
-                },
-                {
-                  "$ref": "#/$defs/TextWrite"
-                }
-              ]
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "description": "Widget to use for control, None means don't display",
-          "title": "Widget"
-        },
-        "read_pv": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "description": "PV to be used for read, empty means use pv",
-          "title": "Read Pv"
-        },
-        "read_widget": {
-          "anyOf": [
-            {
-              "discriminator": {
-                "mapping": {
-                  "ArrayTrace": "#/$defs/ArrayTrace",
-                  "BitField": "#/$defs/BitField",
-                  "ImageRead": "#/$defs/ImageRead",
-                  "LED": "#/$defs/LED",
-                  "ProgressBar": "#/$defs/ProgressBar",
-                  "TableRead": "#/$defs/TableRead",
-                  "TextRead": "#/$defs/TextRead"
-                },
-                "propertyName": "type"
-              },
-              "oneOf": [
-                {
-                  "$ref": "#/$defs/ArrayTrace"
-                },
-                {
-                  "$ref": "#/$defs/BitField"
-                },
-                {
-                  "$ref": "#/$defs/ImageRead"
-                },
-                {
-                  "$ref": "#/$defs/LED"
-                },
-                {
-                  "$ref": "#/$defs/ProgressBar"
-                },
-                {
-                  "$ref": "#/$defs/TableRead"
-                },
-                {
-                  "$ref": "#/$defs/TextRead"
-                }
-              ]
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "description": "Widget to use for display, None means use widget",
-          "title": "Read Widget"
         }
       },
       "required": [
         "name",
-        "pv"
+        "write_pv",
+        "read_pv"
       ],
       "title": "SignalRW",
       "type": "object"
@@ -645,7 +623,7 @@
     },
     "SignalW": {
       "additionalProperties": false,
-      "description": "Write only value backed by a single PV",
+      "description": "Write-only `Signal` backed by a single PV.",
       "properties": {
         "name": {
           "description": "PascalCase name to uniquely identify",
@@ -665,70 +643,62 @@
           "default": null,
           "title": "Label"
         },
+        "write_pv": {
+          "description": "PV to be used for writing",
+          "title": "Write Pv",
+          "type": "string"
+        },
+        "write_widget": {
+          "description": "Widget to use for control",
+          "discriminator": {
+            "mapping": {
+              "ArrayWrite": "#/$defs/ArrayWrite",
+              "ButtonPanel": "#/$defs/ButtonPanel",
+              "CheckBox": "#/$defs/CheckBox",
+              "ComboBox": "#/$defs/ComboBox",
+              "TableWrite": "#/$defs/TableWrite",
+              "TextWrite": "#/$defs/TextWrite"
+            },
+            "propertyName": "type"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ArrayWrite"
+            },
+            {
+              "$ref": "#/$defs/ButtonPanel"
+            },
+            {
+              "$ref": "#/$defs/CheckBox"
+            },
+            {
+              "$ref": "#/$defs/ComboBox"
+            },
+            {
+              "$ref": "#/$defs/TableWrite"
+            },
+            {
+              "$ref": "#/$defs/TextWrite"
+            }
+          ],
+          "title": "Write Widget"
+        },
         "type": {
           "const": "SignalW",
           "default": "SignalW",
           "title": "Type"
-        },
-        "pv": {
-          "description": "PV to be used for put",
-          "title": "Pv",
-          "type": "string"
-        },
-        "widget": {
-          "anyOf": [
-            {
-              "discriminator": {
-                "mapping": {
-                  "ArrayWrite": "#/$defs/ArrayWrite",
-                  "ButtonPanel": "#/$defs/ButtonPanel",
-                  "CheckBox": "#/$defs/CheckBox",
-                  "ComboBox": "#/$defs/ComboBox",
-                  "TableWrite": "#/$defs/TableWrite",
-                  "TextWrite": "#/$defs/TextWrite"
-                },
-                "propertyName": "type"
-              },
-              "oneOf": [
-                {
-                  "$ref": "#/$defs/ArrayWrite"
-                },
-                {
-                  "$ref": "#/$defs/ButtonPanel"
-                },
-                {
-                  "$ref": "#/$defs/CheckBox"
-                },
-                {
-                  "$ref": "#/$defs/ComboBox"
-                },
-                {
-                  "$ref": "#/$defs/TableWrite"
-                },
-                {
-                  "$ref": "#/$defs/TextWrite"
-                }
-              ]
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "description": "Widget to use for control, None means don't display",
-          "title": "Widget"
         }
       },
       "required": [
         "name",
-        "pv"
+        "write_pv"
       ],
       "title": "SignalW",
       "type": "object"
     },
     "SignalX": {
       "additionalProperties": false,
-      "description": "Executable that puts a fixed value to a PV.",
+      "description": "`SignalW` that can be triggered to write a fixed value to a PV.",
       "properties": {
         "name": {
           "description": "PascalCase name to uniquely identify",
@@ -748,26 +718,34 @@
           "default": null,
           "title": "Label"
         },
-        "type": {
-          "const": "SignalX",
-          "default": "SignalX",
-          "title": "Type"
-        },
-        "pv": {
-          "description": "PV to be used for call",
-          "title": "Pv",
+        "write_pv": {
+          "description": "PV to be used for writing",
+          "title": "Write Pv",
           "type": "string"
+        },
+        "write_widget": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/ButtonPanel"
+            }
+          ],
+          "description": "Widget to use for actions"
         },
         "value": {
           "default": null,
           "description": "Value to write. None means zero",
           "title": "Value",
           "type": "string"
+        },
+        "type": {
+          "const": "SignalX",
+          "default": "SignalX",
+          "title": "Type"
         }
       },
       "required": [
         "name",
-        "pv"
+        "write_pv"
       ],
       "title": "SignalX",
       "type": "object"
@@ -980,11 +958,6 @@
   "additionalProperties": false,
   "description": "Collection of Components",
   "properties": {
-    "type": {
-      "const": "Device",
-      "default": "Device",
-      "title": "Type"
-    },
     "label": {
       "description": "Label for screen",
       "title": "Label",
@@ -1006,18 +979,6 @@
       "default": [],
       "description": "Child Components",
       "items": {
-        "discriminator": {
-          "mapping": {
-            "DeviceRef": "#/$defs/DeviceRef",
-            "Group": "#/$defs/Group",
-            "SignalR": "#/$defs/SignalR",
-            "SignalRW": "#/$defs/SignalRW",
-            "SignalRef": "#/$defs/SignalRef",
-            "SignalW": "#/$defs/SignalW",
-            "SignalX": "#/$defs/SignalX"
-          },
-          "propertyName": "type"
-        },
         "oneOf": [
           {
             "$ref": "#/$defs/Group"
@@ -1044,6 +1005,11 @@
       },
       "title": "Children",
       "type": "array"
+    },
+    "type": {
+      "const": "Device",
+      "default": "Device",
+      "title": "Type"
     }
   },
   "required": [

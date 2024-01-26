@@ -7,19 +7,18 @@ from pathlib import Path
 from typing import (
     Annotated,
     Any,
+    ClassVar,
     Dict,
     Iterator,
     Optional,
     Sequence,
-    TypeVar,
-    Union,
 )
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Discriminator, Field, Tag
 from typing_extensions import Literal
 
 from pvi._yaml_utils import YamlValidatorMixin, dump_yaml, type_first
-from pvi.bases import BaseSettings, BaseTyped
+from pvi.bases import BaseSettings, TypedModel
 from pvi.utils import find_pvi_yaml
 
 PASCAL_CASE_REGEX = re.compile(r"(?<![A-Z])[A-Z]|[A-Z][a-z/d]|(?<=[a-z])\d")
@@ -262,7 +261,7 @@ LayoutUnion = Annotated[
 ]
 
 
-class Named(BaseSettings):
+class Named(TypedModel):
     name: str = Field(
         description="PascalCase name to uniquely identify",
         pattern=r"^([A-Z][a-z0-9]*)*$",
@@ -278,63 +277,55 @@ class Component(Named):
         return self.label or to_title_case(self.name)
 
 
-class SignalR(Component):
-    """Scalar value backed by a single PV"""
+class Signal(Component):
+    """Base signal type representing one or two PVs of a `Device`."""
 
-    type: Literal["SignalR"] = "SignalR"
+    _access_mode: ClassVar[str]
 
-    pv: str = Field(description="PV to be used for get and monitor")
-    widget: Optional[ReadWidgetUnion] = Field(
-        None, description="Widget to use for display, None means don't display"
+    @property
+    def access_mode(cls) -> str:
+        return cls._access_mode
+
+
+class SignalR(Signal):
+    """Read-only `Signal` backed by a single PV."""
+
+    _access_mode = "r"
+
+    read_pv: str = Field(description="PV to be used for reading")
+    read_widget: ReadWidgetUnion = Field(
+        default_factory=TextRead, description="Widget to use for display"
     )
 
 
-class SignalW(Component):
-    """Write only value backed by a single PV"""
+class SignalW(Signal):
+    """Write-only `Signal` backed by a single PV."""
 
-    type: Literal["SignalW"] = "SignalW"
+    _access_mode = "w"
 
-    pv: str = Field(description="PV to be used for put")
-    widget: Optional[WriteWidgetUnion] = Field(
-        None, description="Widget to use for control, None means don't display"
+    write_pv: str = Field(description="PV to be used for writing")
+    write_widget: WriteWidgetUnion = Field(
+        default_factory=TextWrite, description="Widget to use for control"
     )
 
 
-class SignalRW(Component):
-    """Read/write value backed by one or two PVs"""
+class SignalRW(SignalR, SignalW):
+    """Read/write `Signal` backed by a write PV and a readback PV."""
 
-    type: Literal["SignalRW"] = "SignalRW"
-
-    pv: str = Field(description="PV to be used for put")
-    widget: Optional[WriteWidgetUnion] = Field(
-        None, description="Widget to use for control, None means don't display"
-    )
-    read_pv: Optional[str] = Field(
-        None, description="PV to be used for read, empty means use pv"
-    )
-    read_widget: Optional[ReadWidgetUnion] = Field(
-        None, description="Widget to use for display, None means use widget"
-    )
+    _access_mode = "rw"
 
 
-SignalTypes = (SignalR, SignalW, SignalRW)
-ReadSignalType = Annotated[Union[SignalR, SignalRW], Field(discriminator="type")]
-WriteSignalType = Annotated[Union[SignalW, SignalRW], Field(discriminator="type")]
+class SignalX(SignalW):
+    """`SignalW` that can be triggered to write a fixed value to a PV."""
 
-
-class SignalX(Component):
-    """Executable that puts a fixed value to a PV."""
-
-    type: Literal["SignalX"] = "SignalX"
-
-    pv: str = Field(description="PV to be used for call")
     value: str = Field(None, description="Value to write. None means zero")
+    write_widget: ButtonPanel = Field(
+        default_factory=ButtonPanel, description="Widget to use for actions"
+    )
 
 
 class DeviceRef(Component):
     """Reference to another Device."""
-
-    type: Literal["DeviceRef"] = "DeviceRef"
 
     pv: str = Field(description="Child device PVI PV")
     ui: str = Field(description="UI file to open for referenced Device")
@@ -346,25 +337,23 @@ class DeviceRef(Component):
 class SignalRef(Component):
     """Reference to another Signal with the same name in this Device."""
 
-    type: Literal["SignalRef"] = "SignalRef"
-
-
-T = TypeVar("T", bound=BaseTyped)
-S = TypeVar("S", bound=BaseTyped)
-
 
 class Group(Component):
     """Group of child components in a Layout"""
-
-    type: Literal["Group"] = "Group"
 
     layout: LayoutUnion = Field(description="How to layout children on screen")
     children: Tree = Field(description="Child Components")
 
 
 ComponentUnion = Annotated[
-    Group | SignalR | SignalW | SignalRW | SignalX | SignalRef | DeviceRef,
-    Field(discriminator="type"),
+    Annotated[Group, Tag("Group")]
+    | Annotated[SignalR, Tag("SignalR")]
+    | Annotated[SignalW, Tag("SignalW")]
+    | Annotated[SignalRW, Tag("SignalRW")]
+    | Annotated[SignalX, Tag("SignalX")]
+    | Annotated[SignalRef, Tag("SignalRef")]
+    | Annotated[DeviceRef, Tag("DeviceRef")],
+    Field(discriminator=Discriminator(TypedModel.get_type_name)),
 ]
 Tree = Sequence[ComponentUnion]
 
@@ -377,20 +366,8 @@ def walk(tree: Tree) -> Iterator[ComponentUnion]:
             yield from walk(t.children)
 
 
-def signal_access_mode(signal: SignalR | SignalW | SignalRW):
-    match signal:
-        case SignalR():
-            return "r"
-        case SignalW():
-            return "w"
-        case SignalRW():
-            return "rw"
-
-
-class Device(BaseTyped, YamlValidatorMixin):
+class Device(TypedModel, YamlValidatorMixin):
     """Collection of Components"""
-
-    type: Literal["Device"] = "Device"
 
     label: str = Field(description="Label for screen")
     parent: Optional[
@@ -401,18 +378,30 @@ class Device(BaseTyped, YamlValidatorMixin):
     ] = None
     children: Tree = Field([], description="Child Components")
 
-    def to_dict(self) -> dict[str, Any]:
-        """Serialize a Device instance to a dictionary."""
-        return type_first(self.model_dump(exclude_none=True))
+    def _to_dict(self) -> dict[str, Any]:
+        """Serialize a `Device` instance to a `dict`.
+
+        The returned dictionary does not include a type field for the `Device` itself
+        because the discriminator is specified by the file suffix, `pvi.device.yaml`.
+
+        In real use only `Device.serialize` will be called, which calls this method.
+        This method exists as an intermediary to enable testing of the serialization
+        logic separately from writing/reading a file.
+
+        """
+        d = type_first(self.model_dump(exclude_none=True))
+        d.pop("type")
+        return d
 
     def serialize(self, yaml: Path):
-        """Serialize a Device instance to YAML.
+        """Serialize a `Device` instance to YAML.
 
         Args:
             yaml: Path of YAML file
 
         """
-        dump_yaml(self.to_dict(), yaml)
+        d = self._to_dict()
+        dump_yaml(d, yaml)
 
     @classmethod
     def deserialize(cls, yaml: Path) -> Device:
