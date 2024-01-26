@@ -5,7 +5,7 @@ from typing import List, Optional
 
 from pvi._format.utils import Bounds, split_with_sep
 from pvi._format.widget import UITemplate, WidgetFormatter
-from pvi.device import TextFormat, TextRead, TextWrite, WidgetType
+from pvi.device import TextFormat, TextRead, TextWrite, WidgetUnion
 
 EDL_TEXT_FORMATS = {
     TextFormat.decimal: "decimal",
@@ -26,7 +26,7 @@ class EdlTemplate(UITemplate[str]):
         self,
         template: str,
         bounds: Optional[Bounds] = None,
-        widget: Optional[WidgetType] = None,
+        widget: Optional[WidgetUnion] = None,
         **properties,
     ) -> str:
         if bounds:

@@ -1,15 +1,14 @@
 from __future__ import annotations
 
-from typing import Any, ClassVar, Literal
+from typing import Annotated, Any, ClassVar, Literal
 
-from pydantic import BaseModel, ConfigDict, computed_field
+from pydantic import BaseModel, ConfigDict, Tag, computed_field
 from pydantic.fields import FieldInfo
 
 
 class BaseSettings(BaseModel):
     """A Base class for consistent model settings."""
 
-    # Do not allow extra fields during validation
     model_config = ConfigDict(extra="forbid")
 
 
@@ -97,3 +96,6 @@ class TypedModel(BaseSettings):
             TypedModel.rebuild_child_models()
 
         return super().model_json_schema(**kwargs)
+
+    def tag(cls):
+        return Annotated[cls, Tag(cls.__name__)]

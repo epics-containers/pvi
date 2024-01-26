@@ -1,5 +1,3 @@
-# yaml-language-server: $schema=../schemas/pvi.device.schema.json
-
 label: label
 parent: parent
 children:

@@ -102,7 +102,7 @@ def test_pva_table(tmp_path, helper):
         name="PVATable",
         write_pv="PVATable",
         write_widget=TableWrite(
-            widgets=[TextWrite(), LED(), ComboBox(choices=["1", "A", "True"])]
+            widgets=[TextWrite(), ComboBox(choices=["1", "A", "True"])]
         ),
     )
     device = Device(label="TableDevice", children=[table])

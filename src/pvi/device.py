@@ -18,7 +18,7 @@ from pydantic import BaseModel, ConfigDict, Discriminator, Field, Tag
 from typing_extensions import Literal
 
 from pvi._yaml_utils import YamlValidatorMixin, dump_yaml, type_first
-from pvi.bases import BaseSettings, TypedModel
+from pvi.bases import TypedModel
 from pvi.utils import find_pvi_yaml
 
 PASCAL_CASE_REGEX = re.compile(r"(?<![A-Z])[A-Z]|[A-Z][a-z/d]|(?<=[a-z])\d")
@@ -69,22 +69,24 @@ class TextFormat(IntEnum):
     string = 4
 
 
-class ReadWidget(BaseSettings):
-    """Widget that displays a scalar PV"""
+class AccessModeMixin(BaseModel):
+    _access_mode: ClassVar[str]
 
-    type: str
+    @property
+    def access_mode(cls) -> str:
+        return cls._access_mode
+
+
+class ReadWidget(TypedModel, AccessModeMixin):
+    _access_mode = "r"
 
 
 class LED(ReadWidget):
     """LED display of a boolean PV"""
 
-    type: Literal["LED"] = "LED"
-
 
 class BitField(ReadWidget):
     """LED and label for each bit of an int PV"""
-
-    type: Literal["BitField"] = "BitField"
 
     labels: Sequence[str] = Field(description="Label for each bit")
 
@@ -92,13 +94,10 @@ class BitField(ReadWidget):
 class ProgressBar(ReadWidget):
     """Progress bar from lower to upper limit of a float PV"""
 
-    type: Literal["ProgressBar"] = "ProgressBar"
-
 
 class TextRead(ReadWidget):
     """Text view of any PV"""
 
-    type: Literal["TextRead"] = "TextRead"
     model_config = ConfigDict(use_enum_values=True)  # Use Enum value when dumping
 
     lines: Optional[int] = Field(default=None, description="Number of lines to display")
@@ -111,8 +110,6 @@ class TextRead(ReadWidget):
 class ArrayTrace(ReadWidget):
     """Trace of the array in a plot view"""
 
-    type: Literal["ArrayTrace"] = "ArrayTrace"
-
     axis: str = Field(
         description=(
             "Traces with same axis name will appear on same axis, "
@@ -122,38 +119,22 @@ class ArrayTrace(ReadWidget):
     )
 
 
-class TableRead(ReadWidget):
-    """Tabular view of an NTTable"""
-
-    type: Literal["TableRead"] = "TableRead"
-
-    widgets: Sequence[ReadWidget] = Field(
-        [], description="For each column, what widget should be repeated for every row"
-    )
-
-
 class ImageRead(ReadWidget):
     """2D Image view of an NTNDArray"""
 
-    type: Literal["ImageRead"] = "ImageRead"
 
-
-class WriteWidget(BaseSettings):
+class WriteWidget(TypedModel, AccessModeMixin):
     """Widget that controls a PV"""
 
-    type: str
+    _access_mode = "w"
 
 
 class CheckBox(WriteWidget):
     """Checkable control of a boolean PV"""
 
-    type: Literal["CheckBox"] = "CheckBox"
-
 
 class ComboBox(WriteWidget):
     """Selection of an enum PV"""
-
-    type: Literal["ComboBox"] = "ComboBox"
 
     choices: Sequence[str] = Field(default=None, description="Choices to select from")
 
@@ -169,15 +150,12 @@ class ButtonPanel(WriteWidget):
 
     """
 
-    type: Literal["ButtonPanel"] = "ButtonPanel"
-
     actions: Dict[str, str] = Field(default={"go": "1"}, description="PV poker buttons")
 
 
 class TextWrite(WriteWidget):
     """Text control of any PV"""
 
-    type: Literal["TextWrite"] = "TextWrite"
     model_config = ConfigDict(use_enum_values=True)  # Use Enum value when dumping
 
     lines: Optional[int] = Field(default=None, description="Number of lines to display")
@@ -187,35 +165,56 @@ class TextWrite(WriteWidget):
         return self.lines or 1
 
 
+# Subset of widgets that can displayed together in one row
+_RowWriteUnion = ButtonPanel | CheckBox | ComboBox | TextWrite
+_RowReadUnion = BitField | LED | ProgressBar | TextRead
+
+
 class ArrayWrite(WriteWidget):
     """Control of an array PV"""
 
-    type: Literal["ArrayWrite"] = "ArrayWrite"
+    widget: _RowWriteUnion = Field(
+        description="What widget should be used for each item"
+    )
 
-    widget: WriteWidget = Field(description="What widget should be used for each item")
 
+class TableRead(ReadWidget):
+    """A read-only tabular view of an NTTable."""
 
-class TableWrite(WriteWidget):
-    type: Literal["TableWrite"] = "TableWrite"
-
-    widgets: Sequence[ReadWidgetUnion | WriteWidgetUnion] = Field(
+    widgets: Sequence[_RowReadUnion] = Field(
         [], description="For each column, what widget should be repeated for every row"
     )
 
 
-WidgetType = Annotated[Union[ReadWidget, WriteWidget], Field(discriminator="type")]
-TableWidgetType = Annotated[Union[TableRead, TableWrite], Field(discriminator="type")]
-TableWidgetTypes = (TableRead, TableWrite)
+class TableWrite(WriteWidget):
+    """A writeable tabular view of an NTTable."""
+
+    widgets: Sequence[_RowWriteUnion] = Field(
+        [], description="For each column, what widget should be repeated for every row"
+    )
 
 
 ReadWidgetUnion = Annotated[
-    ArrayTrace | BitField | ImageRead | LED | ProgressBar | TableRead | TextRead,
-    Field(discriminator="type"),
+    Annotated[ArrayTrace, Tag("ArrayTrace")]
+    | Annotated[BitField, Tag("BitField")]
+    | Annotated[ImageRead, Tag("ImageRead")]
+    | Annotated[LED, Tag("LED")]
+    | Annotated[ProgressBar, Tag("ProgressBar")]
+    | Annotated[TableRead, Tag("TableRead")]
+    | Annotated[TextRead, Tag("TextRead")],
+    Field(discriminator=Discriminator(TypedModel.get_type_name)),
 ]
 WriteWidgetUnion = Annotated[
-    ArrayWrite | ButtonPanel | CheckBox | ComboBox | TableWrite | TextWrite,
-    Field(discriminator="type"),
+    Annotated[ArrayWrite, Tag("ArrayWrite")]
+    | Annotated[ButtonPanel, Tag("ButtonPanel")]
+    | Annotated[CheckBox, Tag("CheckBox")]
+    | Annotated[ComboBox, Tag("ComboBox")]
+    | Annotated[TableWrite, Tag("TableWrite")]
+    | Annotated[TextWrite, Tag("TextWrite")],
+    Field(discriminator=Discriminator(TypedModel.get_type_name)),
 ]
+
+WidgetUnion = ReadWidgetUnion | WriteWidgetUnion
 
 
 class Layout(BaseModel):
@@ -277,14 +276,8 @@ class Component(Named):
         return self.label or to_title_case(self.name)
 
 
-class Signal(Component):
+class Signal(Component, AccessModeMixin):
     """Base signal type representing one or two PVs of a `Device`."""
-
-    _access_mode: ClassVar[str]
-
-    @property
-    def access_mode(cls) -> str:
-        return cls._access_mode
 
 
 class SignalR(Signal):
@@ -390,7 +383,7 @@ class Device(TypedModel, YamlValidatorMixin):
 
         """
         d = type_first(self.model_dump(exclude_none=True))
-        d.pop("type")
+        d.pop("type", None)
         return d
 
     def serialize(self, yaml: Path):

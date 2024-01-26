@@ -4,15 +4,15 @@
       "additionalProperties": false,
       "description": "Trace of the array in a plot view",
       "properties": {
-        "type": {
-          "const": "ArrayTrace",
-          "default": "ArrayTrace",
-          "title": "Type"
-        },
         "axis": {
           "description": "Traces with same axis name will appear on same axis, plotted against 'x' trace if it exists, or indexes if not. Only one traces with axis='x' allowed.",
           "title": "Axis",
           "type": "string"
+        },
+        "type": {
+          "const": "ArrayTrace",
+          "default": "ArrayTrace",
+          "title": "Type"
         }
       },
       "required": [
@@ -25,18 +25,28 @@
       "additionalProperties": false,
       "description": "Control of an array PV",
       "properties": {
+        "widget": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ButtonPanel"
+            },
+            {
+              "$ref": "#/$defs/CheckBox"
+            },
+            {
+              "$ref": "#/$defs/ComboBox"
+            },
+            {
+              "$ref": "#/$defs/TextWrite"
+            }
+          ],
+          "description": "What widget should be used for each item",
+          "title": "Widget"
+        },
         "type": {
           "const": "ArrayWrite",
           "default": "ArrayWrite",
           "title": "Type"
-        },
-        "widget": {
-          "allOf": [
-            {
-              "$ref": "#/$defs/WriteWidget"
-            }
-          ],
-          "description": "What widget should be used for each item"
         }
       },
       "required": [
@@ -49,11 +59,6 @@
       "additionalProperties": false,
       "description": "LED and label for each bit of an int PV",
       "properties": {
-        "type": {
-          "const": "BitField",
-          "default": "BitField",
-          "title": "Type"
-        },
         "labels": {
           "description": "Label for each bit",
           "items": {
@@ -61,6 +66,11 @@
           },
           "title": "Labels",
           "type": "array"
+        },
+        "type": {
+          "const": "BitField",
+          "default": "BitField",
+          "title": "Type"
         }
       },
       "required": [
@@ -73,11 +83,6 @@
       "additionalProperties": false,
       "description": "One-or-more buttons that poke a PV with a value\n\nArgs:\n    actions: Dict of button label to value the button sends",
       "properties": {
-        "type": {
-          "const": "ButtonPanel",
-          "default": "ButtonPanel",
-          "title": "Type"
-        },
         "actions": {
           "additionalProperties": {
             "type": "string"
@@ -88,6 +93,11 @@
           "description": "PV poker buttons",
           "title": "Actions",
           "type": "object"
+        },
+        "type": {
+          "const": "ButtonPanel",
+          "default": "ButtonPanel",
+          "title": "Type"
         }
       },
       "title": "ButtonPanel",
@@ -110,11 +120,6 @@
       "additionalProperties": false,
       "description": "Selection of an enum PV",
       "properties": {
-        "type": {
-          "const": "ComboBox",
-          "default": "ComboBox",
-          "title": "Type"
-        },
         "choices": {
           "default": null,
           "description": "Choices to select from",
@@ -123,6 +128,11 @@
           },
           "title": "Choices",
           "type": "array"
+        },
+        "type": {
+          "const": "ComboBox",
+          "default": "ComboBox",
+          "title": "Type"
         }
       },
       "title": "ComboBox",
@@ -345,21 +355,6 @@
       "title": "ProgressBar",
       "type": "object"
     },
-    "ReadWidget": {
-      "additionalProperties": false,
-      "description": "Widget that displays a scalar PV",
-      "properties": {
-        "type": {
-          "title": "Type",
-          "type": "string"
-        }
-      },
-      "required": [
-        "type"
-      ],
-      "title": "ReadWidget",
-      "type": "object"
-    },
     "Row": {
       "description": "Children are columns in the row",
       "properties": {
@@ -417,18 +412,6 @@
         },
         "read_widget": {
           "description": "Widget to use for display",
-          "discriminator": {
-            "mapping": {
-              "ArrayTrace": "#/$defs/ArrayTrace",
-              "BitField": "#/$defs/BitField",
-              "ImageRead": "#/$defs/ImageRead",
-              "LED": "#/$defs/LED",
-              "ProgressBar": "#/$defs/ProgressBar",
-              "TableRead": "#/$defs/TableRead",
-              "TextRead": "#/$defs/TextRead"
-            },
-            "propertyName": "type"
-          },
           "oneOf": [
             {
               "$ref": "#/$defs/ArrayTrace"
@@ -496,17 +479,6 @@
         },
         "write_widget": {
           "description": "Widget to use for control",
-          "discriminator": {
-            "mapping": {
-              "ArrayWrite": "#/$defs/ArrayWrite",
-              "ButtonPanel": "#/$defs/ButtonPanel",
-              "CheckBox": "#/$defs/CheckBox",
-              "ComboBox": "#/$defs/ComboBox",
-              "TableWrite": "#/$defs/TableWrite",
-              "TextWrite": "#/$defs/TextWrite"
-            },
-            "propertyName": "type"
-          },
           "oneOf": [
             {
               "$ref": "#/$defs/ArrayWrite"
@@ -536,18 +508,6 @@
         },
         "read_widget": {
           "description": "Widget to use for display",
-          "discriminator": {
-            "mapping": {
-              "ArrayTrace": "#/$defs/ArrayTrace",
-              "BitField": "#/$defs/BitField",
-              "ImageRead": "#/$defs/ImageRead",
-              "LED": "#/$defs/LED",
-              "ProgressBar": "#/$defs/ProgressBar",
-              "TableRead": "#/$defs/TableRead",
-              "TextRead": "#/$defs/TextRead"
-            },
-            "propertyName": "type"
-          },
           "oneOf": [
             {
               "$ref": "#/$defs/ArrayTrace"
@@ -650,17 +610,6 @@
         },
         "write_widget": {
           "description": "Widget to use for control",
-          "discriminator": {
-            "mapping": {
-              "ArrayWrite": "#/$defs/ArrayWrite",
-              "ButtonPanel": "#/$defs/ButtonPanel",
-              "CheckBox": "#/$defs/CheckBox",
-              "ComboBox": "#/$defs/ComboBox",
-              "TableWrite": "#/$defs/TableWrite",
-              "TextWrite": "#/$defs/TextWrite"
-            },
-            "propertyName": "type"
-          },
           "oneOf": [
             {
               "$ref": "#/$defs/ArrayWrite"
@@ -770,47 +719,15 @@
     },
     "TableRead": {
       "additionalProperties": false,
-      "description": "Tabular view of an NTTable",
+      "description": "A read-only tabular view of an NTTable.",
       "properties": {
-        "type": {
-          "const": "TableRead",
-          "default": "TableRead",
-          "title": "Type"
-        },
-        "widgets": {
-          "default": [],
-          "description": "For each column, what widget should be repeated for every row",
-          "items": {
-            "$ref": "#/$defs/ReadWidget"
-          },
-          "title": "Widgets",
-          "type": "array"
-        }
-      },
-      "title": "TableRead",
-      "type": "object"
-    },
-    "TableWrite": {
-      "additionalProperties": false,
-      "properties": {
-        "type": {
-          "const": "TableWrite",
-          "default": "TableWrite",
-          "title": "Type"
-        },
         "widgets": {
           "default": [],
           "description": "For each column, what widget should be repeated for every row",
           "items": {
             "anyOf": [
               {
-                "$ref": "#/$defs/ArrayTrace"
-              },
-              {
                 "$ref": "#/$defs/BitField"
-              },
-              {
-                "$ref": "#/$defs/ImageRead"
               },
               {
                 "$ref": "#/$defs/LED"
@@ -819,14 +736,31 @@
                 "$ref": "#/$defs/ProgressBar"
               },
               {
-                "$ref": "#/$defs/TableRead"
-              },
-              {
                 "$ref": "#/$defs/TextRead"
-              },
-              {
-                "$ref": "#/$defs/ArrayWrite"
-              },
+              }
+            ]
+          },
+          "title": "Widgets",
+          "type": "array"
+        },
+        "type": {
+          "const": "TableRead",
+          "default": "TableRead",
+          "title": "Type"
+        }
+      },
+      "title": "TableRead",
+      "type": "object"
+    },
+    "TableWrite": {
+      "additionalProperties": false,
+      "description": "A writeable tabular view of an NTTable.",
+      "properties": {
+        "widgets": {
+          "default": [],
+          "description": "For each column, what widget should be repeated for every row",
+          "items": {
+            "anyOf": [
               {
                 "$ref": "#/$defs/ButtonPanel"
               },
@@ -837,15 +771,17 @@
                 "$ref": "#/$defs/ComboBox"
               },
               {
-                "$ref": "#/$defs/TableWrite"
-              },
-              {
                 "$ref": "#/$defs/TextWrite"
               }
             ]
           },
           "title": "Widgets",
           "type": "array"
+        },
+        "type": {
+          "const": "TableWrite",
+          "default": "TableWrite",
+          "title": "Type"
         }
       },
       "title": "TableWrite",
@@ -867,11 +803,6 @@
       "additionalProperties": false,
       "description": "Text view of any PV",
       "properties": {
-        "type": {
-          "const": "TextRead",
-          "default": "TextRead",
-          "title": "Type"
-        },
         "lines": {
           "anyOf": [
             {
@@ -896,6 +827,11 @@
           ],
           "default": null,
           "description": "Display format"
+        },
+        "type": {
+          "const": "TextRead",
+          "default": "TextRead",
+          "title": "Type"
         }
       },
       "title": "TextRead",
@@ -905,11 +841,6 @@
       "additionalProperties": false,
       "description": "Text control of any PV",
       "properties": {
-        "type": {
-          "const": "TextWrite",
-          "default": "TextWrite",
-          "title": "Type"
-        },
         "lines": {
           "anyOf": [
             {
@@ -934,24 +865,14 @@
           ],
           "default": null,
           "description": "Display format"
+        },
+        "type": {
+          "const": "TextWrite",
+          "default": "TextWrite",
+          "title": "Type"
         }
       },
       "title": "TextWrite",
-      "type": "object"
-    },
-    "WriteWidget": {
-      "additionalProperties": false,
-      "description": "Widget that controls a PV",
-      "properties": {
-        "type": {
-          "title": "Type",
-          "type": "string"
-        }
-      },
-      "required": [
-        "type"
-      ],
-      "title": "WriteWidget",
       "type": "object"
     }
   },

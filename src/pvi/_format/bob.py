@@ -9,12 +9,11 @@ from pvi.device import (
     LED,
     ComboBox,
     TableRead,
-    TableWidgetType,
     TableWrite,
     TextFormat,
     TextRead,
     TextWrite,
-    WidgetType,
+    WidgetUnion,
     WriteWidget,
 )
 
@@ -41,7 +40,7 @@ class BobTemplate(UITemplate[ElementBase]):
         self,
         template: ElementBase,
         bounds: Optional[Bounds] = None,
-        widget: Optional[WidgetType] = None,
+        widget: Optional[WidgetUnion] = None,
         **properties,
     ) -> ElementBase:
         if bounds:
@@ -139,7 +138,7 @@ class BobTemplate(UITemplate[ElementBase]):
         return group_object
 
 
-def add_table_columns(widget_element: ElementBase, table: TableWidgetType):
+def add_table_columns(widget_element: ElementBase, table: TableRead | TableWrite):
     if not table.widgets:
         # Default empty -> get options from pv
         return
@@ -148,13 +147,13 @@ def add_table_columns(widget_element: ElementBase, table: TableWidgetType):
     for column, widget in enumerate(table.widgets):
         add_table_column(columns_element, f"Column {column + 1}", widget)
 
-    add_editable(widget_element, editable=isinstance(table, TableWrite))
+    add_editable(widget_element, editable=table.access_mode == "w")
 
 
 def add_table_column(
     columns_element: ElementBase,
     name: str,
-    widget: WidgetType,
+    widget: WidgetUnion,
 ):
     options: Sequence[str] = []
     if isinstance(widget, LED):
