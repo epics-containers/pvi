@@ -2,7 +2,7 @@
   <name>Display</name>
   <x>0</x>
   <y>0</y>
-  <width>326</width>
+  <width>226</width>
   <height>234</height>
   <grid_step_x>4</grid_step_x>
   <grid_step_y>4</grid_step_y>
@@ -12,7 +12,7 @@
     <text>TableDevice - $(P)$(R)</text>
     <x use_class="true">0</x>
     <y use_class="true">0</y>
-    <width>326</width>
+    <width>226</width>
     <height>26</height>
     <font use_class="true">
       <font name="Header 1" family="Liberation Sans" style="BOLD" size="22.0">
@@ -30,7 +30,7 @@
     <pv_name>pva://$(P)$(R)PVATable</pv_name>
     <x>22</x>
     <y>30</y>
-    <width>300</width>
+    <width>200</width>
     <height>200</height>
     <columns>
       <column>
@@ -39,14 +39,6 @@
       </column>
       <column>
         <name>Column 2</name>
-        <editable>false</editable>
-        <options>
-          <option>false</option>
-          <option>true</option>
-        </options>
-      </column>
-      <column>
-        <name>Column 3</name>
         <editable>true</editable>
         <options>
           <option>1</option>

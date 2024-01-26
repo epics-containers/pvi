@@ -2121,7 +2121,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  "Gap Fill No Read PV"
+  "Gap Fill Write"
 }
 endObjectProperties
 
@@ -2133,34 +2133,15 @@ minor 0
 release 0
 x 540
 y 615
-w 100
+w 205
 h 20
 fgColor index 25
 bgColor index 3
 inconsistentColor index 0
 topShadowColor index 1
 botShadowColor index 11
-controlPv "$(P)$(R)GapFillNoReadPV"
+controlPv "$(P)$(R)GapFillWrite"
 font "arial-bold-r-12.0"
-endObjectProperties
-
-# (Textupdate)
-object TextupdateClass
-beginObjectProperties
-major 10
-minor 0
-release 0
-x 645
-y 615
-w 100
-h 20
-controlPv "$(P)$(R)GapFillNoReadPV"
-fgColor index 16
-fgAlarm
-bgColor index 10
-fill
-font "arial-bold-r-12.0"
-fontAlign "center"
 endObjectProperties
 
 # (Static Text)

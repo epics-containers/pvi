@@ -83,8 +83,8 @@ class SettingPair(Parameter):
 
         return SignalRW(
             name=component.name,
-            pv=component.get_write_record(),
-            widget=component.write_widget,
+            write_pv=component.get_write_record(),
+            write_widget=component.write_widget,
             read_pv=component.get_read_record(),
             read_widget=component.read_widget,
         )
@@ -107,8 +107,8 @@ class Readback(Parameter):
 
         return SignalR(
             name=component.name,
-            pv=component.get_read_record(),
-            widget=component.read_widget,
+            read_pv=component.get_read_record(),
+            read_widget=component.read_widget,
         )
 
 
@@ -125,6 +125,6 @@ class Action(Parameter):
 
         return SignalW(
             name=component.name,
-            pv=component.get_write_record(),
-            widget=component.write_widget,
+            write_pv=component.get_write_record(),
+            write_widget=component.write_widget,
         )

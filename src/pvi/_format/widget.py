@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Callable, Dict, Generic, List, Optional, Type, TypeVar, Union
+from typing import Callable, Dict, Generic, List, Optional, Type, TypeVar
 
 from pydantic import BaseModel, Field, create_model
 
@@ -11,13 +11,11 @@ from pvi.device import (
     ComboBox,
     Group,
     ProgressBar,
-    ReadWidget,
     TableRead,
     TableWrite,
     TextRead,
     TextWrite,
-    WidgetType,
-    WriteWidget,
+    WidgetUnion,
 )
 
 T = TypeVar("T")
@@ -43,7 +41,7 @@ class UITemplate(Generic[T]):
         self,
         template: T,
         bounds: Optional[Bounds] = None,
-        widget: Optional[WidgetType] = None,
+        widget: Optional[WidgetUnion] = None,
         **properties,
     ) -> T:
         """Modify template elements with component data
@@ -142,7 +140,7 @@ class LabelWidgetFormatter(WidgetFormatter[T]):
 
 class PVWidgetFormatter(WidgetFormatter[T]):
     pv: str
-    widget: Union[ReadWidget, WriteWidget]
+    widget: WidgetUnion
 
 
 class ActionWidgetFormatter(WidgetFormatter[T]):
@@ -273,7 +271,7 @@ class WidgetFormatterFactory(BaseModel, Generic[T]):
 
     def pv_widget_formatter(
         self,
-        widget: WidgetType,
+        widget: WidgetUnion,
         bounds: Bounds,
         pv: str,
         prefix: str,

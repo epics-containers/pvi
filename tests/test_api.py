@@ -44,8 +44,8 @@ def test_text_format(tmp_path, helper, filename, formatter):
         components.append(
             SignalRW(
                 name=format.name.title(),
-                pv=format.name.title(),
-                widget=TextWrite(format=format),
+                write_pv=format.name.title(),
+                write_widget=TextWrite(format=format),
                 read_pv=f"{format.name.title()}_RBV",
                 read_widget=TextRead(format=format),
             )
@@ -66,20 +66,20 @@ def test_button(tmp_path, helper):
 
     acquire_time = SignalRW(
         name="AcquireTime",
-        pv="AcquireTime",
-        widget=TextWrite(),
+        write_pv="AcquireTime",
+        write_widget=TextWrite(),
         read_pv="AcquireTime_RBV",
         read_widget=TextRead(),
     )
     acquire = SignalW(
         name="Acquire",
-        pv="Acquire",
-        widget=ButtonPanel(actions={"Start": "1", "Stop": "0"}),
+        write_pv="Acquire",
+        write_widget=ButtonPanel(actions={"Start": "1", "Stop": "0"}),
     )
     acquire_w_rbv = SignalRW(
         name="AcquireWithRBV",
-        pv="Acquire",
-        widget=ButtonPanel(actions={"Start": "1", "Stop": "0"}),
+        write_pv="Acquire",
+        write_widget=ButtonPanel(actions={"Start": "1", "Stop": "0"}),
         read_pv="Acquire_RBV",
         read_widget=LED(),
     )
@@ -100,9 +100,9 @@ def test_pva_table(tmp_path, helper):
 
     table = SignalRW(
         name="PVATable",
-        pv="PVATable",
-        widget=TableWrite(
-            widgets=[TextWrite(), LED(), ComboBox(choices=["1", "A", "True"])]
+        write_pv="PVATable",
+        write_widget=TableWrite(
+            widgets=[TextWrite(), ComboBox(choices=["1", "A", "True"])]
         ),
     )
     device = Device(label="TableDevice", children=[table])
@@ -120,8 +120,8 @@ def test_pva_table_panda(tmp_path, helper):
 
     table = SignalR(
         name="PandA",
-        pv="PANDAQSRV:SEQ1:TABLE",
-        widget=TableRead(
+        read_pv="PANDAQSRV:SEQ1:TABLE",
+        read_widget=TableRead(
             widgets=[TextRead()] * 4 + [LED()] * 6 + [TextRead()] + [LED()] * 6
         ),
     )
@@ -139,7 +139,10 @@ def test_combo_box(tmp_path, helper):
     formatter = Formatter.deserialize(formatter_yaml)
 
     combo_box = SignalRW(
-        name="Enum", pv="Enum", widget=ComboBox(choices=["A", "B", "C"])
+        name="Enum",
+        write_pv="Enum",
+        write_widget=ComboBox(choices=["A", "B", "C"]),
+        read_pv="Enum_RBV",
     )
     device = Device(label="Device", children=[combo_box])
 
@@ -176,21 +179,25 @@ def test_group_sub_screen(tmp_path, helper):
 
     # This tests every valid combination of nesting Group and SubScreen
     signals = [
-        SignalR(name="A", pv="A", widget=TextRead()),
+        SignalR(name="A", read_pv="A", read_widget=TextRead()),
         Group(
             name="Group1",
             layout=SubScreen(),
             children=[
-                SignalR(name="Group1B", pv="GROUP1:B", widget=TextRead()),
+                SignalR(name="Group1B", read_pv="GROUP1:B", read_widget=TextRead()),
                 Group(
                     name="Group2",
                     layout=Grid(),
                     children=[
                         SignalR(
-                            name="Group2C", pv="GROUP1:GROUP2:C", widget=TextRead()
+                            name="Group2C",
+                            read_pv="GROUP1:GROUP2:C",
+                            read_widget=TextRead(),
                         ),
                         SignalR(
-                            name="Group2D", pv="GROUP1:GROUP2:D", widget=TextRead()
+                            name="Group2D",
+                            read_pv="GROUP1:GROUP2:D",
+                            read_widget=TextRead(),
                         ),
                     ],
                 ),
@@ -200,13 +207,15 @@ def test_group_sub_screen(tmp_path, helper):
             name="Group3",
             layout=Grid(),
             children=[
-                SignalR(name="Group3E", pv="GROUP3:E", widget=TextRead()),
+                SignalR(name="Group3E", read_pv="GROUP3:E", read_widget=TextRead()),
                 Group(
                     name="Group4",
                     layout=SubScreen(),
                     children=[
                         SignalR(
-                            name="Group4F", pv="GROUP3:GROUP4:F", widget=TextRead()
+                            name="Group4F",
+                            read_pv="GROUP3:GROUP4:F",
+                            read_widget=TextRead(),
                         ),
                         Group(
                             name="Group5",
@@ -214,13 +223,13 @@ def test_group_sub_screen(tmp_path, helper):
                             children=[
                                 SignalR(
                                     name="Group5G",
-                                    pv="GROUP3:GROUP4:GROUP5:G",
-                                    widget=TextRead(),
+                                    read_pv="GROUP3:GROUP4:GROUP5:G",
+                                    read_widget=TextRead(),
                                 ),
                                 SignalR(
                                     name="Group5H",
-                                    pv="GROUP3:GROUP4:GROUP5:H",
-                                    widget=TextRead(),
+                                    read_pv="GROUP3:GROUP4:GROUP5:H",
+                                    read_widget=TextRead(),
                                 ),
                             ],
                         ),
@@ -258,9 +267,11 @@ def test_index(tmp_path, helper):
 
 
 def test_pvi_template(tmp_path, helper):
-    read = SignalR(name="Read", pv="Read")
-    write = SignalW(name="Write", pv="Write")
-    read_write = SignalRW(name="ReadWrite", pv="ReadWrite")
+    read = SignalR(name="Read", read_pv="Read")
+    write = SignalW(name="Write", write_pv="Write")
+    read_write = SignalRW(
+        name="ReadWrite", write_pv="ReadWrite", read_pv="ReadWrite_RBV"
+    )
     device = Device(label="Template Device", children=[read, write, read_write])
 
     expected_bob = HERE / "format" / "output" / "pvi.template"

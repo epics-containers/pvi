@@ -3,11 +3,6 @@
     "APSFormatter": {
       "additionalProperties": false,
       "properties": {
-        "type": {
-          "const": "APSFormatter",
-          "default": "APSFormatter",
-          "title": "Type"
-        },
         "spacing": {
           "default": 5,
           "description": "Spacing between widgets",
@@ -43,6 +38,11 @@
           "description": "Height of the widgets",
           "title": "Widget Height",
           "type": "integer"
+        },
+        "type": {
+          "const": "APSFormatter",
+          "default": "APSFormatter",
+          "title": "Type"
         }
       },
       "title": "APSFormatter",
@@ -51,11 +51,6 @@
     "DLSFormatter": {
       "additionalProperties": false,
       "properties": {
-        "type": {
-          "const": "DLSFormatter",
-          "default": "DLSFormatter",
-          "title": "Type"
-        },
         "spacing": {
           "default": 5,
           "description": "Spacing between widgets",
@@ -91,13 +86,18 @@
           "description": "Height of the widgets",
           "title": "Widget Height",
           "type": "integer"
+        },
+        "type": {
+          "const": "DLSFormatter",
+          "default": "DLSFormatter",
+          "title": "Type"
         }
       },
       "title": "DLSFormatter",
       "type": "object"
     }
   },
-  "anyOf": [
+  "oneOf": [
     {
       "$ref": "#/$defs/APSFormatter"
     },

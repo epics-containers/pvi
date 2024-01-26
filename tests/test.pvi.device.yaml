@@ -1,4 +1,3 @@
-type: Device
 label: label
 parent: parent
 children:
@@ -10,25 +9,25 @@ children:
     labelled: true
   children:
 
-  - type: SignalRW
+  - type: SignalW
     name: WidthUnits
-    pv: WIDTH:UNITS
-    widget:
+    write_pv: WIDTH:UNITS
+    write_widget:
       type: ComboBox
 
   - type: SignalRW
     name: Width
-    pv: WIDTH
-    widget:
+    write_pv: WIDTH
+    write_widget:
       type: TextWrite
     read_pv: WIDTH_RBV
     read_widget:
       type: TextRead
 
-- type: SignalRW
+- type: SignalW
   name: Table
-  pv: TABLE
-  widget:
+  write_pv: TABLE
+  write_widget:
     type: TableWrite
     widgets:
 
@@ -40,6 +39,6 @@ children:
 
 - type: SignalR
   name: OutA
-  pv: OUTA
-  widget:
+  read_pv: OUTA
+  read_widget:
     type: LED

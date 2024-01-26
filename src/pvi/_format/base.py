@@ -1,17 +1,15 @@
 from pathlib import Path
-from typing import Any, Literal, Union
+from typing import Any, Union
 
 from pydantic import Field, TypeAdapter
 
 from pvi._yaml_utils import YamlValidatorMixin
-from pvi.bases import BaseTyped
 from pvi.device import Device, DeviceRef, enforce_pascal_case
+from pvi.typed_model import TypedModel, as_tagged_union
 
 
-class IndexEntry(BaseTyped):
+class IndexEntry(TypedModel):
     """A structure defining an index button to launch a UI with some macros."""
-
-    type: Literal["IndexEntry"] = "IndexEntry"
 
     label: str = Field(
         "Button label. This will be converted to PascalCase if it is not already."
@@ -20,13 +18,15 @@ class IndexEntry(BaseTyped):
     macros: dict[str, str] = Field("Macros to launch UI with")
 
 
-class Formatter(BaseTyped, YamlValidatorMixin):
+class Formatter(TypedModel, YamlValidatorMixin):
     """Base UI formatter."""
 
     @classmethod
     def type_adapter(cls) -> TypeAdapter:
         """Create TypeAdapter of all child classes"""
-        return TypeAdapter(Union[tuple(cls.__subclasses__())])  # type: ignore
+        return TypeAdapter(
+            as_tagged_union(Union[tuple(cls.__subclasses__())])  # type: ignore
+        )
 
     @classmethod
     def from_dict(cls, serialized: dict) -> "Formatter":
@@ -56,6 +56,7 @@ class Formatter(BaseTyped, YamlValidatorMixin):
         Formatter itself is not included, as it should not be instanstiated directly.
 
         """
+        cls._rebuild_child_models()
         return cls.type_adapter().json_schema()
 
     def format(self, device: Device, prefix: str, path: Path):
