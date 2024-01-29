@@ -52,6 +52,10 @@
     "url": "https://epics-containers.github.io/pvi/0.1/"
   },
   {
+    "version": "convert-name-handling",
+    "url": "https://epics-containers.github.io/pvi/convert-name-handling/"
+  },
+  {
     "version": "experiments",
     "url": "https://epics-containers.github.io/pvi/experiments/"
   },
