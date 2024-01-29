@@ -5,9 +5,9 @@ from typing import List, Tuple
 def extract_device_and_parent_class(header_text: str) -> Tuple[str, str]:
     # e.g. extract 'NDPluginDriver' and 'asynNDArrayDriver' from
     # class epicsShareClass NDPluginDriver : public asynNDArrayDriver, public epicsThreadRunable {  # noqa
-    class_extractor = re.compile(r"class.* (\w+) : \w+ (\w+).*")
+    class_extractor = re.compile(r"class.*\s+(\w+)\s+:\s+\w+\s+(\w+).*")
     match = re.search(class_extractor, header_text)
-    assert match, "Can't find classes"
+    assert match, "Can't find device class and parent class in header file"
     classname, parent = match.groups()
     return classname, parent
 
