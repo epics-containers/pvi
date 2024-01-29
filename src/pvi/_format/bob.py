@@ -78,9 +78,9 @@ class BobTemplate(UITemplate[ElementBase]):
                 add_combo_box_items(t_copy, combo_box)
             case ("table", TableRead() | TableWrite() as table):
                 add_table_columns(t_copy, table)
-            case (
-                ("textentry", TextWrite(format=format))
-                | ("textupdate", TextRead(format=format))
+            case ("textentry", TextWrite(format=format)) | (
+                "textupdate",
+                TextRead(format=format),
             ) if format is not None:
                 add_format(t_copy, BOB_TEXT_FORMATS[format])
 
