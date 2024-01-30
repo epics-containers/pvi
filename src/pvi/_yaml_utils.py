@@ -8,13 +8,11 @@ T = TypeVar("T")
 
 
 @overload
-def type_first(tree: dict) -> dict:
-    ...
+def type_first(tree: dict) -> dict: ...
 
 
 @overload
-def type_first(tree: list) -> list:
-    ...
+def type_first(tree: list) -> list: ...
 
 
 def type_first(tree: dict | list) -> dict | list:

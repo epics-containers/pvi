@@ -1,7 +1,7 @@
 import re
 from typing import Any, Optional, Type
 
-from pvi.device import SignalR, SignalRW, SignalW
+from pvi.device import SignalR, SignalRW, SignalW, enforce_pascal_case
 
 from ._parameters import (
     AsynParameter,
@@ -37,7 +37,7 @@ class AsynRecord(Record):
     def get_parameter_name(self) -> Optional[str]:
         # e.g. from: field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1))FILE_PATH")
         # extract: FILE_PATH
-        parameter_name_extractor = r"(?:@asyn\()(?:(?:\$\([^\)]*\)[,]*)*)(?:\))(\S+)"
+        parameter_name_extractor = r"@asyn\(.*\)(\S+)"
         parameter_name = None
         for k, v in self.fields.items():
             if k == "INP" or k == "OUT":
@@ -76,7 +76,10 @@ class SettingPair(Parameter):
 
     def generate_component(self) -> SignalRW:
         asyn_cls = self.write_record.asyn_component_type()
-        component = asyn_cls(name=self.write_record.name)
+        component = asyn_cls(
+            name=enforce_pascal_case(self.write_record.name),
+            write_record=self.write_record.name,
+        )
 
         return SignalRW(
             name=component.name,
@@ -98,7 +101,9 @@ class Readback(Parameter):
         else:
             name = self.read_record.name
 
-        component = asyn_cls(name=name, read_record=self.read_record.name)
+        component = asyn_cls(
+            name=enforce_pascal_case(name), read_record=self.read_record.name
+        )
 
         return SignalR(
             name=component.name,
@@ -113,7 +118,10 @@ class Action(Parameter):
     def generate_component(self) -> SignalW:
         asyn_cls = self.write_record.asyn_component_type()
 
-        component = asyn_cls(name=self.write_record.name)
+        component = asyn_cls(
+            name=enforce_pascal_case(self.write_record.name),
+            write_record=self.write_record.name,
+        )
 
         return SignalW(
             name=component.name,
