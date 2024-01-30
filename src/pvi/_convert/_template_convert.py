@@ -118,6 +118,13 @@ class RecordExtractor:
 
     def _create_asyn_record(self, record_str: str) -> AsynRecord:
         record_type, record_name, record_fields = self._parse_record(record_str)
+
+        if record_type == "motor":
+            newline = "\n"
+            raise RecordError(
+                f"Record `{record_str.split(newline)[0]}` is type motor - ignoring"
+            )
+
         fields = dict(self._extract_fields(record_fields))
         info = dict(self._extract_infos(record_fields))
         record = AsynRecord(
