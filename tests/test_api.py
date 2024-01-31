@@ -44,18 +44,18 @@ def test_text_format(tmp_path, helper, filename, formatter):
         components.append(
             SignalRW(
                 name=format.name.title(),
-                pv=format.name.title(),
+                pv=f"$(P){format.name.title()}",
                 widget=TextWrite(format=format),
-                read_pv=f"{format.name.title()}_RBV",
+                read_pv=f"$(P){format.name.title()}_RBV",
                 read_widget=TextRead(format=format),
             )
         )
 
-    device = Device(label="Text Device", children=components)
+    device = Device(label="Text Device - $(P)", children=components)
 
     expected_ui = HERE / "format" / "output" / filename
     output_ui = tmp_path / filename
-    formatter.format(device, "$(P)", output_ui)
+    formatter.format(device, output_ui)
 
     helper.assert_output_matches(expected_ui, output_ui)
 
@@ -66,30 +66,30 @@ def test_button(tmp_path, helper):
 
     acquire_time = SignalRW(
         name="AcquireTime",
-        pv="AcquireTime",
+        pv="$(P)AcquireTime",
         widget=TextWrite(),
-        read_pv="AcquireTime_RBV",
+        read_pv="$(P)AcquireTime_RBV",
         read_widget=TextRead(),
     )
     acquire = SignalW(
         name="Acquire",
-        pv="Acquire",
+        pv="$(P)Acquire",
         widget=ButtonPanel(actions={"Start": "1", "Stop": "0"}),
     )
     acquire_w_rbv = SignalRW(
         name="AcquireWithRBV",
-        pv="Acquire",
+        pv="$(P)Acquire",
         widget=ButtonPanel(actions={"Start": "1", "Stop": "0"}),
-        read_pv="Acquire_RBV",
+        read_pv="$(P)Acquire_RBV",
         read_widget=LED(),
     )
     device = Device(
-        label="Simple Device", children=[acquire_time, acquire, acquire_w_rbv]
+        label="Simple Device - $(P)", children=[acquire_time, acquire, acquire_w_rbv]
     )
 
     expected_bob = HERE / "format" / "output" / "button.bob"
     output_bob = tmp_path / "button.bob"
-    formatter.format(device, "$(P)", output_bob)
+    formatter.format(device, output_bob)
 
     helper.assert_output_matches(expected_bob, output_bob)
 
@@ -100,16 +100,16 @@ def test_pva_table(tmp_path, helper):
 
     table = SignalRW(
         name="PVATable",
-        pv="PVATable",
+        pv="$(P)$(R)PVATable",
         widget=TableWrite(
             widgets=[TextWrite(), LED(), ComboBox(choices=["1", "A", "True"])]
         ),
     )
-    device = Device(label="TableDevice", children=[table])
+    device = Device(label="TableDevice - $(P)$(R)", children=[table])
 
     expected_bob = HERE / "format" / "output" / "pva_table.bob"
     output_bob = tmp_path / "pva_table.bob"
-    formatter.format(device, "$(P)$(R)", output_bob)
+    formatter.format(device, output_bob)
 
     helper.assert_output_matches(expected_bob, output_bob)
 
@@ -129,7 +129,7 @@ def test_pva_table_panda(tmp_path, helper):
 
     expected_bob = HERE / "format" / "output" / "pva_table_panda.bob"
     output_bob = tmp_path / "pva_table_panda.bob"
-    formatter.format(device, "", output_bob)
+    formatter.format(device, output_bob)
 
     helper.assert_output_matches(expected_bob, output_bob)
 
@@ -139,13 +139,13 @@ def test_combo_box(tmp_path, helper):
     formatter = Formatter.deserialize(formatter_yaml)
 
     combo_box = SignalRW(
-        name="Enum", pv="Enum", widget=ComboBox(choices=["A", "B", "C"])
+        name="Enum", pv="$(P)$(R)Enum", widget=ComboBox(choices=["A", "B", "C"])
     )
-    device = Device(label="Device", children=[combo_box])
+    device = Device(label="Device - $(P)$(R)", children=[combo_box])
 
     expected_bob = HERE / "format" / "output" / "combo_box.bob"
     output_bob = tmp_path / "combo_box.bob"
-    formatter.format(device, "$(P)$(R)", output_bob)
+    formatter.format(device, output_bob)
 
     helper.assert_output_matches(expected_bob, output_bob)
 
@@ -157,15 +157,15 @@ def test_device_ref(tmp_path, helper):
     # Make a button to open an existing screen - use screen from combo box test
     device_ref = DeviceRef(
         name="ComboBox",
-        pv="COMBOBOX",
+        pv="$(P)$(R)COMBOBOX",
         ui="combo_box",
         macros={"P": "EIGER", "R": ":CAM:"},
     )
-    device = Device(label="Device", children=[device_ref])
+    device = Device(label="Device - $(P)$(R)", children=[device_ref])
 
     expected_bob = HERE / "format" / "output" / "device_ref.bob"
     output_bob = tmp_path / "device_ref.bob"
-    formatter.format(device, "$(P)$(R)", output_bob)
+    formatter.format(device, output_bob)
 
     helper.assert_output_matches(expected_bob, output_bob)
 
@@ -233,7 +233,7 @@ def test_group_sub_screen(tmp_path, helper):
 
     expected_bob = HERE / "format" / "output" / "sub_screen.bob"
     output_bob = tmp_path / "sub_screen.bob"
-    formatter.format(device, "$(P)$(R)", output_bob)
+    formatter.format(device, output_bob)
 
     helper.assert_output_matches(expected_bob, output_bob)
 
@@ -258,9 +258,11 @@ def test_index(tmp_path, helper):
 
 
 def test_pvi_template(tmp_path, helper):
-    read = SignalR(name="Read", pv="Read")
-    write = SignalW(name="Write", pv="Write")
-    read_write = SignalRW(name="ReadWrite", pv="ReadWrite")
+    # TODO: it would be nice to be able to globally set a signal prefix instead of
+    # having to include $(P)$(R) every time
+    read = SignalR(name="Read", pv="$(P)$(R)Read")
+    write = SignalW(name="Write", pv="$(P)$(R)Write")
+    read_write = SignalRW(name="ReadWrite", pv="$(P)$(R)ReadWrite")
     device = Device(label="Template Device", children=[read, write, read_write])
 
     expected_bob = HERE / "format" / "output" / "pvi.template"

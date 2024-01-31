@@ -33,7 +33,7 @@ class APSFormatter(Formatter):
     widget_width: int = Field(100, description="Width of the widgets")
     widget_height: int = Field(20, description="Height of the widgets")
 
-    def format(self, device: Device, prefix: str, path: Path):
+    def format(self, device: Device, path: Path):
         assert path.suffix == ".adl", "Can only write adl files"
         template = AdlTemplate((Path(__file__).parent / "aps.adl").read_text())
         layout = ScreenLayout(
@@ -162,11 +162,10 @@ class APSFormatter(Formatter):
                 widget_formatter_hook=create_group_widget_formatters,
             ),
             widget_formatter_factory=widget_formatter_factory,
-            prefix=prefix,
             layout=layout,
             base_file_name=path.stem,
         )
-        title = f"{device.label} - {prefix}"
+        title = f"{device.label}"
 
         screen_formatter, sub_screens = formatter_factory.create_screen_formatter(
             device.children, title

@@ -1,9 +1,9 @@
 # yaml-language-server: $schema=../../../schemas/pvi.device.schema.json
-label: StaticTable
+label: StaticTable - $(P)$(R)
 children:
   - type: SignalR
     name: Binary
-    pv: BINARYA
+    pv: $(P)$(R)BINARYA
     widget:
       type: LED
 
@@ -25,22 +25,22 @@ children:
         children:
           - type: SignalR
             name: Binary1
-            pv: BINARY_1
+            pv: $(P)$(R)BINARY_1
             widget:
               type: LED
           - type: SignalR
             name: Long1
-            pv: LONG_1
+            pv: $(P)$(R)LONG_1
             widget:
               type: TextRead
           - type: SignalR
             name: Float1
-            pv: FLOAT_1
+            pv: $(P)$(R)FLOAT_1
             widget:
               type: TextRead
           - type: SignalR
             name: String1
-            pv: STRING_1
+            pv: $(P)$(R)STRING_1
             widget:
               type: TextRead
 
@@ -51,22 +51,22 @@ children:
         children:
           - type: SignalR
             name: Binary2
-            pv: BINARY_2
+            pv: $(P)$(R)BINARY_2
             widget:
               type: LED
           - type: SignalR
             name: Long2
-            pv: LONG_2
+            pv: $(P)$(R)LONG_2
             widget:
               type: TextRead
           - type: SignalR
             name: Float2
-            pv: FLOAT_2
+            pv: $(P)$(R)FLOAT_2
             widget:
               type: TextRead
           - type: SignalR
             name: String2
-            pv: STRING_2
+            pv: $(P)$(R)STRING_2
             widget:
               type: TextRead
 
@@ -77,22 +77,22 @@ children:
         children:
           - type: SignalR
             name: Binary3
-            pv: BINARY_3
+            pv: $(P)$(R)BINARY_3
             widget:
               type: LED
           - type: SignalR
             name: Long3
-            pv: LONG_3
+            pv: $(P)$(R)LONG_3
             widget:
               type: TextRead
           - type: SignalR
             name: Float3
-            pv: FLOAT_3
+            pv: $(P)$(R)FLOAT_3
             widget:
               type: TextRead
           - type: SignalR
             name: String3
-            pv: STRING_3
+            pv: $(P)$(R)STRING_3
             widget:
               type: TextRead
 
@@ -103,21 +103,21 @@ children:
         children:
           - type: SignalR
             name: Binary4
-            pv: BINARY_4
+            pv: $(P)$(R)BINARY_4
             widget:
               type: LED
           - type: SignalR
             name: Long4
-            pv: LONG_4
+            pv: $(P)$(R)LONG_4
             widget:
               type: TextRead
           - type: SignalR
             name: Float4
-            pv: FLOAT_4
+            pv: $(P)$(R)FLOAT_4
             widget:
               type: TextRead
           - type: SignalR
             name: String4
-            pv: STRING_4
+            pv: $(P)$(R)STRING_4
             widget:
               type: TextRead

@@ -73,18 +73,18 @@ def format(
     device.deserialize_parents(yaml_paths)
 
     formatter = Formatter.deserialize(formatter_path)
-    formatter.format(device, "$(P)$(R)", output_path)
+    formatter.format(device, output_path)
 
 
 @app.command()
 def generate_template(
     device_path: Path = typer.Argument(..., help="Path to the .pvi.device.yaml file"),
-    prefix: str = typer.Argument(..., help="PV Prefix in generated template"),
+    pv_prefix: str = typer.Argument(..., help="Prefix of PVI PV"),
     output_path: Path = typer.Argument(..., help="Output file to generate"),
 ):
     """Create template with info tags for device signals"""
     device = Device.deserialize(device_path)
-    format_template(device, prefix, output_path)
+    format_template(device, pv_prefix, output_path)
 
 
 @convert_app.command()

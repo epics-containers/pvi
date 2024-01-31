@@ -1,4 +1,4 @@
-label: Mixed Widgets
+label: Mixed Widgets - $(P)$(R)
 parent: asynPortDriver
 children:
 
@@ -10,157 +10,157 @@ children:
 
   - type: SignalW
     name: ResetPower
-    pv: ResetPower
+    pv: $(P)$(R)ResetPower
     widget:
       type: CheckBox
 
   - type: SignalW
     name: ThresholdApply
-    pv: ThresholdApply
+    pv: $(P)$(R)ThresholdApply
     widget:
       type: CheckBox
 
   - type: SignalW
     name: ImageFileTmot
-    pv: ImageFileTmot
+    pv: $(P)$(R)ImageFileTmot
     widget:
       type: TextWrite
 
   - type: SignalW
     name: Wavelength
-    pv: Wavelength
+    pv: $(P)$(R)Wavelength
     widget:
       type: TextWrite
 
   - type: SignalW
     name: EnergyLow
-    pv: EnergyLow
+    pv: $(P)$(R)EnergyLow
     widget:
       type: TextWrite
 
   - type: SignalW
     name: EnergyHigh
-    pv: EnergyHigh
+    pv: $(P)$(R)EnergyHigh
     widget:
       type: TextWrite
 
   - type: SignalW
     name: DetDist
-    pv: DetDist
+    pv: $(P)$(R)DetDist
     widget:
       type: TextWrite
 
   - type: SignalW
     name: DetVOffset
-    pv: DetVOffset
+    pv: $(P)$(R)DetVOffset
     widget:
       type: TextWrite
 
   - type: SignalW
     name: BeamX
-    pv: BeamX
+    pv: $(P)$(R)BeamX
     widget:
       type: TextWrite
 
   - type: SignalW
     name: BeamY
-    pv: BeamY
+    pv: $(P)$(R)BeamY
     widget:
       type: TextWrite
 
   - type: SignalW
     name: Flux
-    pv: Flux
+    pv: $(P)$(R)Flux
     widget:
       type: TextWrite
 
 - type: SignalW
   name: FilterTransm
-  pv: FilterTransm
+  pv: $(P)$(R)FilterTransm
   widget:
     type: TextWrite
 
 - type: SignalW
   name: StartAngle
-  pv: StartAngle
+  pv: $(P)$(R)StartAngle
   widget:
     type: TextWrite
 
 - type: SignalW
   name: AngleIncr
-  pv: AngleIncr
+  pv: $(P)$(R)AngleIncr
   widget:
     type: TextWrite
 
 - type: SignalW
   name: Det2theta
-  pv: Det2theta
+  pv: $(P)$(R)Det2theta
   widget:
     type: TextWrite
 
 - type: SignalW
   name: Polarization
-  pv: Polarization
+  pv: $(P)$(R)Polarization
   widget:
     type: TextWrite
 
 - type: SignalW
   name: Alpha
-  pv: Alpha
+  pv: $(P)$(R)Alpha
   widget:
     type: TextWrite
 
 - type: SignalW
   name: Kappa
-  pv: Kappa
+  pv: $(P)$(R)Kappa
   widget:
     type: TextWrite
 
 - type: SignalW
   name: Phi
-  pv: Phi
+  pv: $(P)$(R)Phi
   widget:
     type: TextWrite
 
 - type: SignalW
   name: PhiIncr
-  pv: PhiIncr
+  pv: $(P)$(R)PhiIncr
   widget:
     type: TextWrite
 
 - type: SignalW
   name: Chi
-  pv: Chi
+  pv: $(P)$(R)Chi
   widget:
     type: TextWrite
 
 - type: SignalW
   name: ChiIncr
-  pv: ChiIncr
+  pv: $(P)$(R)ChiIncr
   widget:
     type: TextWrite
 
 - type: SignalW
   name: Omega
-  pv: Omega
+  pv: $(P)$(R)Omega
   widget:
     type: TextWrite
 
 - type: SignalW
   name: OmegaIncr
-  pv: OmegaIncr
+  pv: $(P)$(R)OmegaIncr
   widget:
     type: TextWrite
 
 - type: SignalW
   name: OscillAxis
-  pv: OscillAxis
+  pv: $(P)$(R)OscillAxis
   widget:
     type: TextWrite
 
 - type: SignalW
   name: NumOscill
-  pv: NumOscill
+  pv: $(P)$(R)NumOscill
   widget:
     type: TextWrite
 
@@ -172,109 +172,109 @@ children:
 
   - type: SignalW
     name: BadPixelFile
-    pv: BadPixelFile
+    pv: $(P)$(R)BadPixelFile
     widget:
       type: TextWrite
 
   - type: SignalW
     name: FlatFieldFile
-    pv: FlatFieldFile
+    pv: $(P)$(R)FlatFieldFile
     widget:
       type: TextWrite
 
   - type: SignalW
     name: CbfTemplateFile
-    pv: CbfTemplateFile
+    pv: $(P)$(R)CbfTemplateFile
     widget:
       type: TextWrite
 
   - type: SignalW
     name: HeaderString
-    pv: HeaderString
+    pv: $(P)$(R)HeaderString
     widget:
       type: TextWrite
 
   - type: SignalR
     name: Armed
-    pv: Armed
+    pv: $(P)$(R)Armed
     widget:
       type: LED
 
   - type: SignalR
     name: NumBadPixels
-    pv: NumBadPixels
+    pv: $(P)$(R)NumBadPixels
     widget:
       type: TextRead
 
   - type: SignalR
     name: FlatFieldValid
-    pv: FlatFieldValid
+    pv: $(P)$(R)FlatFieldValid
     widget:
       type: LED
 
   - type: SignalR
     name: PixelCutOff
-    pv: PixelCutOff_RBV
+    pv: $(P)$(R)PixelCutOff_RBV
     widget:
       type: TextRead
 
   - type: SignalR
     name: Temp0
-    pv: Temp0_RBV
+    pv: $(P)$(R)Temp0_RBV
     widget:
       type: TextRead
 
 - type: SignalR
   name: Temp1
-  pv: Temp1_RBV
+  pv: $(P)$(R)Temp1_RBV
   widget:
     type: TextRead
 
 - type: SignalR
   name: Temp2
-  pv: Temp2_RBV
+  pv: $(P)$(R)Temp2_RBV
   widget:
     type: TextRead
 
 - type: SignalR
   name: Humid0
-  pv: Humid0_RBV
+  pv: $(P)$(R)Humid0_RBV
   widget:
     type: TextRead
 
 - type: SignalR
   name: Humid1
-  pv: Humid1_RBV
+  pv: $(P)$(R)Humid1_RBV
   widget:
     type: TextRead
 
 - type: SignalR
   name: Humid2
-  pv: Humid2_RBV
+  pv: $(P)$(R)Humid2_RBV
   widget:
     type: TextRead
 
 - type: SignalR
   name: TVXVersion
-  pv: TVXVersion_RBV
+  pv: $(P)$(R)TVXVersion_RBV
   widget:
     type: TextRead
 
 - type: SignalRW
   name: ResetPowerTime
-  pv: ResetPowerTime
+  pv: $(P)$(R)ResetPowerTime
   widget:
     type: TextWrite
-  read_pv: ResetPowerTime_RBV
+  read_pv: $(P)$(R)ResetPowerTime_RBV
   read_widget:
     type: TextRead
 
 - type: SignalRW
   name: DelayTime
-  pv: DelayTime
+  pv: $(P)$(R)DelayTime
   widget:
     type: TextWrite
-  read_pv: DelayTime_RBV
+  read_pv: $(P)$(R)DelayTime_RBV
   read_widget:
     type: TextRead
 
@@ -286,52 +286,52 @@ children:
 
   - type: SignalRW
     name: ThresholdEnergy
-    pv: ThresholdEnergy
+    pv: $(P)$(R)ThresholdEnergy
     widget:
       type: TextWrite
-    read_pv: ThresholdEnergy_RBV
+    read_pv: $(P)$(R)ThresholdEnergy_RBV
     read_widget:
       type: TextRead
 
   - type: SignalRW
     name: ThresholdAutoApply
-    pv: ThresholdAutoApply
+    pv: $(P)$(R)ThresholdAutoApply
     widget:
       type: CheckBox
-    read_pv: ThresholdAutoApply_RBV
+    read_pv: $(P)$(R)ThresholdAutoApply_RBV
     read_widget:
       type: LED
 
   - type: SignalRW
     name: Energy
-    pv: Energy
+    pv: $(P)$(R)Energy
     widget:
       type: TextWrite
-    read_pv: Energy_RBV
+    read_pv: $(P)$(R)Energy_RBV
     read_widget:
       type: TextRead
 
   - type: SignalRW
     name: MinFlatField
-    pv: MinFlatField
+    pv: $(P)$(R)MinFlatField
     widget:
       type: TextWrite
-    read_pv: MinFlatField_RBV
+    read_pv: $(P)$(R)MinFlatField_RBV
     read_widget:
       type: TextRead
 
   - type: SignalRW
     name: GapFill
-    pv: GapFill
+    pv: $(P)$(R)GapFill
     widget:
       type: ComboBox
-    read_pv: GapFill_RBV
+    read_pv: $(P)$(R)GapFill_RBV
     read_widget:
       type: TextRead
 
   - type: SignalRW
     name: GapFillNoReadPV
-    pv: GapFillNoReadPV
+    pv: $(P)$(R)GapFillNoReadPV
     widget:
       type: ComboBox
     read_widget:
@@ -339,6 +339,6 @@ children:
 
   - type: SignalR
     name: ProgressBarTest
-    pv: ProgressBarTest_RBV
+    pv: $(P)$(R)ProgressBarTest_RBV
     widget:
       type: ProgressBar
