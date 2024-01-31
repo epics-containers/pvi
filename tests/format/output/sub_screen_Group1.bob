@@ -35,7 +35,7 @@
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>TextUpdate</name>
-    <pv_name>$(P)$(R)GROUP1:B</pv_name>
+    <pv_name>$(P)GROUP1:B</pv_name>
     <x>146</x>
     <y>30</y>
     <width>124</width>
@@ -63,7 +63,7 @@
     </widget>
     <widget type="textupdate" version="2.0.0">
       <name>TextUpdate</name>
-      <pv_name>$(P)$(R)GROUP1:GROUP2:C</pv_name>
+      <pv_name>$(P)GROUP1:GROUP2:C</pv_name>
       <x>124</x>
       <y>0</y>
       <width>124</width>
@@ -84,7 +84,7 @@
     </widget>
     <widget type="textupdate" version="2.0.0">
       <name>TextUpdate</name>
-      <pv_name>$(P)$(R)GROUP1:GROUP2:D</pv_name>
+      <pv_name>$(P)GROUP1:GROUP2:D</pv_name>
       <x>124</x>
       <y>24</y>
       <width>124</width>

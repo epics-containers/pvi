@@ -33,16 +33,16 @@ class DLSFormatter(Formatter):
     widget_width: int = Field(200, description="Width of the widgets")
     widget_height: int = Field(20, description="Height of the widgets")
 
-    def format(self, device: Device, prefix: str, path: Path):
+    def format(self, device: Device, path: Path):
         if path.suffix == ".edl":
             f = self.format_edl
         elif path.suffix == ".bob":
             f = self.format_bob
         else:
             raise ValueError("Can only write .edl or .bob files")
-        f(device, prefix, path)
+        f(device, path)
 
-    def format_edl(self, device: Device, prefix: str, path: Path):
+    def format_edl(self, device: Device, path: Path):
         template = EdlTemplate((Path(__file__).parent / "dls.edl").read_text())
         screen_layout = ScreenLayout(
             spacing=self.spacing,
@@ -177,11 +177,10 @@ class DLSFormatter(Formatter):
                 widget_formatter_hook=create_group_box_formatter,
             ),
             widget_formatter_factory=widget_formatter_factory,
-            prefix=prefix,
             layout=screen_layout,
             base_file_name=path.stem,
         )
-        title = f"{device.label} - {prefix}"
+        title = f"{device.label}"
 
         screen_formatter, sub_screens = formatter_factory.create_screen_formatter(
             device.children, title
@@ -192,7 +191,7 @@ class DLSFormatter(Formatter):
             sub_screen_path = Path(path.parent / f"{sub_screen_name}{path.suffix}")
             sub_screen_path.write_text("".join(sub_screen_formatter.format()))
 
-    def format_bob(self, device: Device, prefix: str, path: Path):
+    def format_bob(self, device: Device, path: Path):
         template = BobTemplate(str(Path(__file__).parent / "dls.bob"))
         # LP DOCS REF: Define the layout properties
         screen_layout = ScreenLayout(
@@ -314,12 +313,11 @@ class DLSFormatter(Formatter):
                 widget_formatter_hook=create_group_object_formatter,
             ),
             widget_formatter_factory=widget_formatter_factory,
-            prefix=prefix,
             layout=screen_layout,
             base_file_name=path.stem,
         )
         # SCREEN_FORMAT DOCS REF: Format the screen
-        title = f"{device.label} - {prefix}"
+        title = f"{device.label}"
 
         screen_formatter, sub_screens = formatter_factory.create_screen_formatter(
             device.children, title

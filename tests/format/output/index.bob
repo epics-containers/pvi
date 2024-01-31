@@ -9,7 +9,7 @@
   <widget type="label" version="2.0.0">
     <name>Title</name>
     <class>TITLE</class>
-    <text>Index - Index</text>
+    <text>Index</text>
     <x use_class="true">0</x>
     <y use_class="true">0</y>
     <width>388</width>
@@ -41,7 +41,7 @@
         <target>tab</target>
         <description>Open Display</description>
         <macros>
-          <P>BUTTON</P>
+          <P>TEST:</P>
         </macros>
       </action>
     </actions>
@@ -68,7 +68,7 @@
         <target>tab</target>
         <description>Open Display</description>
         <macros>
-          <P>COMBOBOX</P>
+          <P>TEST:</P>
         </macros>
       </action>
     </actions>
@@ -95,7 +95,7 @@
         <target>tab</target>
         <description>Open Display</description>
         <macros>
-          <P>TABLE</P>
+          <P>TEST:</P>
         </macros>
       </action>
     </actions>

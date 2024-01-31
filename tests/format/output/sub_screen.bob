@@ -9,7 +9,7 @@
   <widget type="label" version="2.0.0">
     <name>Title</name>
     <class>TITLE</class>
-    <text>Device - $(P)$(R)</text>
+    <text>Device</text>
     <x use_class="true">0</x>
     <y use_class="true">0</y>
     <width>290</width>
@@ -35,7 +35,7 @@
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>TextUpdate</name>
-    <pv_name>$(P)$(R)A</pv_name>
+    <pv_name>$(P)A</pv_name>
     <x>146</x>
     <y>30</y>
     <width>124</width>
@@ -79,7 +79,7 @@
     </widget>
     <widget type="textupdate" version="2.0.0">
       <name>TextUpdate</name>
-      <pv_name>$(P)$(R)GROUP3:E</pv_name>
+      <pv_name>$(P)GROUP3:E</pv_name>
       <x>124</x>
       <y>0</y>
       <width>124</width>

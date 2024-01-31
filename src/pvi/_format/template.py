@@ -12,18 +12,19 @@ PVI_TEMPLATE = Path(__file__).parent / "pvi.template.jinja"
 @dataclass
 class PviRecord:
     name: str
+    pv: str
     access: str
 
 
-def format_template(device: Device, prefix: str, output: Path):
+def format_template(device: Device, pv_prefix: str, output: Path):
     records: List[PviRecord] = []
     for node in walk(device.children):
         match node:
             case SignalW(write_pv=pv) | SignalR(read_pv=pv) as signal:
-                records.append(PviRecord(pv, signal.access_mode))
+                records.append(PviRecord(signal.name, pv, signal.access_mode))
 
     with output.open("w") as expanded, open(PVI_TEMPLATE, "r") as template:
         template_txt = Template(template.read()).render(
-            records=records, prefix=prefix, device=device.label
+            device=device.label, pv_prefix=pv_prefix, records=records
         )
         expanded.write(template_txt)

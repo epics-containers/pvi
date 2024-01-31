@@ -9,7 +9,7 @@
   <widget type="label" version="2.0.0">
     <name>Title</name>
     <class>TITLE</class>
-    <text>Device - $(P)$(R)</text>
+    <text>Device - $(P)</text>
     <x use_class="true">0</x>
     <y use_class="true">0</y>
     <width>274</width>
@@ -35,7 +35,7 @@
   </widget>
   <widget type="combo" version="2.0.0">
     <name>ComboBox</name>
-    <pv_name>$(P)$(R)Enum</pv_name>
+    <pv_name>$(P)Enum</pv_name>
     <x>146</x>
     <y>30</y>
     <width>60</width>
@@ -49,7 +49,7 @@
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>TextUpdate</name>
-    <pv_name>$(P)$(R)Enum_RBV</pv_name>
+    <pv_name>$(P)Enum_RBV</pv_name>
     <x>210</x>
     <y>30</y>
     <width>60</width>

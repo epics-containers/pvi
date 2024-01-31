@@ -11,26 +11,26 @@ children:
 
   - type: SignalR
     name: Read
-    read_pv: Read
+    read_pv: $(P)$(R)Read
     read_widget:
       type: TextRead
 
   - type: SignalR
     name: XMLErrorMsg
-    read_pv: XMLErrorMsg_RBV
+    read_pv: $(P)$(R)XMLErrorMsg_RBV
     read_widget:
       type: TextRead
       format: 4
 
   - type: SignalR
     name: Dimensions
-    read_pv: Dimensions_RBV
+    read_pv: $(P)$(R)Dimensions_RBV
     read_widget:
       type: TextRead
 
   - type: SignalRW
     name: GainX
-    write_pv: GainX
+    write_pv: $(P)$(R)GainX
     write_widget:
       type: TextWrite
     read_pv: GainX_RBV
@@ -39,7 +39,7 @@ children:
 
   - type: SignalRW
     name: GainY
-    write_pv: GainY
+    write_pv: $(P)$(R)GainY
     write_widget:
       type: TextWrite
     read_pv: GainY_RBV
@@ -48,7 +48,7 @@ children:
 
   - type: SignalRW
     name: GainRed
-    write_pv: GainRed
+    write_pv: $(P)$(R)GainRed
     write_widget:
       type: TextWrite
     read_pv: GainRed_RBV
@@ -57,7 +57,7 @@ children:
 
   - type: SignalRW
     name: GainGreen
-    write_pv: GainGreen
+    write_pv: $(P)$(R)GainGreen
     write_widget:
       type: TextWrite
     read_pv: GainGreen_RBV
@@ -66,7 +66,7 @@ children:
 
   - type: SignalRW
     name: GainBlue
-    write_pv: GainBlue
+    write_pv: $(P)$(R)GainBlue
     write_widget:
       type: TextWrite
     read_pv: GainBlue_RBV
@@ -75,7 +75,7 @@ children:
 
   - type: SignalRW
     name: Reset
-    write_pv: Reset
+    write_pv: $(P)$(R)Reset
     write_widget:
       type: TextWrite
     read_pv: Reset_RBV
@@ -84,7 +84,7 @@ children:
 
   - type: SignalRW
     name: Offset
-    write_pv: Offset
+    write_pv: $(P)$(R)Offset
     write_widget:
       type: TextWrite
     read_pv: Offset_RBV
@@ -93,7 +93,7 @@ children:
 
   - type: SignalRW
     name: Noise
-    write_pv: Noise
+    write_pv: $(P)$(R)Noise
     write_widget:
       type: TextWrite
     read_pv: Noise_RBV
@@ -102,7 +102,7 @@ children:
 
   - type: SignalRW
     name: SimMode
-    write_pv: SimMode
+    write_pv: $(P)$(R)SimMode
     write_widget:
       type: ComboBox
     read_pv: SimMode_RBV
@@ -111,7 +111,7 @@ children:
 
   - type: SignalRW
     name: PeakStartX
-    write_pv: PeakStartX
+    write_pv: $(P)$(R)PeakStartX
     write_widget:
       type: TextWrite
     read_pv: PeakStartX_RBV
@@ -120,7 +120,7 @@ children:
 
   - type: SignalRW
     name: PeakStartY
-    write_pv: PeakStartY
+    write_pv: $(P)$(R)PeakStartY
     write_widget:
       type: TextWrite
     read_pv: PeakStartY_RBV
@@ -129,7 +129,7 @@ children:
 
   - type: SignalRW
     name: PeakNumX
-    write_pv: PeakNumX
+    write_pv: $(P)$(R)PeakNumX
     write_widget:
       type: TextWrite
     read_pv: PeakNumX_RBV
@@ -138,7 +138,7 @@ children:
 
   - type: SignalRW
     name: PeakNumY
-    write_pv: PeakNumY
+    write_pv: $(P)$(R)PeakNumY
     write_widget:
       type: TextWrite
     read_pv: PeakNumY_RBV
@@ -147,7 +147,7 @@ children:
 
   - type: SignalRW
     name: PeakStepX
-    write_pv: PeakStepX
+    write_pv: $(P)$(R)PeakStepX
     write_widget:
       type: TextWrite
     read_pv: PeakStepX_RBV
@@ -156,7 +156,7 @@ children:
 
   - type: SignalRW
     name: PeakStepY
-    write_pv: PeakStepY
+    write_pv: $(P)$(R)PeakStepY
     write_widget:
       type: TextWrite
     read_pv: PeakStepY_RBV
@@ -165,7 +165,7 @@ children:
 
   - type: SignalRW
     name: PeakWidthX
-    write_pv: PeakWidthX
+    write_pv: $(P)$(R)PeakWidthX
     write_widget:
       type: TextWrite
     read_pv: PeakWidthX_RBV
@@ -174,7 +174,7 @@ children:
 
   - type: SignalRW
     name: PeakWidthY
-    write_pv: PeakWidthY
+    write_pv: $(P)$(R)PeakWidthY
     write_widget:
       type: TextWrite
     read_pv: PeakWidthY_RBV
@@ -183,7 +183,7 @@ children:
 
   - type: SignalRW
     name: PeakVariation
-    write_pv: PeakVariation
+    write_pv: $(P)$(R)PeakVariation
     write_widget:
       type: TextWrite
     read_pv: PeakVariation_RBV
@@ -192,7 +192,7 @@ children:
 
   - type: SignalRW
     name: XSineOperation
-    write_pv: XSineOperation
+    write_pv: $(P)$(R)XSineOperation
     write_widget:
       type: ComboBox
     read_pv: XSineOperation_RBV
@@ -201,7 +201,7 @@ children:
 
   - type: SignalRW
     name: XSine1Amplitude
-    write_pv: XSine1Amplitude
+    write_pv: $(P)$(R)XSine1Amplitude
     write_widget:
       type: TextWrite
     read_pv: XSine1Amplitude_RBV
@@ -210,7 +210,7 @@ children:
 
   - type: SignalRW
     name: XSine1Frequency
-    write_pv: XSine1Frequency
+    write_pv: $(P)$(R)XSine1Frequency
     write_widget:
       type: TextWrite
     read_pv: XSine1Frequency_RBV
@@ -219,7 +219,7 @@ children:
 
   - type: SignalRW
     name: XSine1Phase
-    write_pv: XSine1Phase
+    write_pv: $(P)$(R)XSine1Phase
     write_widget:
       type: TextWrite
     read_pv: XSine1Phase_RBV
@@ -228,7 +228,7 @@ children:
 
   - type: SignalRW
     name: XSine2Amplitude
-    write_pv: XSine2Amplitude
+    write_pv: $(P)$(R)XSine2Amplitude
     write_widget:
       type: TextWrite
     read_pv: XSine2Amplitude_RBV
@@ -237,7 +237,7 @@ children:
 
   - type: SignalRW
     name: XSine2Frequency
-    write_pv: XSine2Frequency
+    write_pv: $(P)$(R)XSine2Frequency
     write_widget:
       type: TextWrite
     read_pv: XSine2Frequency_RBV
@@ -246,7 +246,7 @@ children:
 
   - type: SignalRW
     name: XSine2Phase
-    write_pv: XSine2Phase
+    write_pv: $(P)$(R)XSine2Phase
     write_widget:
       type: TextWrite
     read_pv: XSine2Phase_RBV
@@ -255,7 +255,7 @@ children:
 
   - type: SignalRW
     name: YSineOperation
-    write_pv: YSineOperation
+    write_pv: $(P)$(R)YSineOperation
     write_widget:
       type: ComboBox
     read_pv: YSineOperation_RBV
@@ -264,7 +264,7 @@ children:
 
   - type: SignalRW
     name: YSine1Amplitude
-    write_pv: YSine1Amplitude
+    write_pv: $(P)$(R)YSine1Amplitude
     write_widget:
       type: TextWrite
     read_pv: YSine1Amplitude_RBV
@@ -273,7 +273,7 @@ children:
 
   - type: SignalRW
     name: YSine1Frequency
-    write_pv: YSine1Frequency
+    write_pv: $(P)$(R)YSine1Frequency
     write_widget:
       type: TextWrite
     read_pv: YSine1Frequency_RBV
@@ -282,7 +282,7 @@ children:
 
   - type: SignalRW
     name: YSine1Phase
-    write_pv: YSine1Phase
+    write_pv: $(P)$(R)YSine1Phase
     write_widget:
       type: TextWrite
     read_pv: YSine1Phase_RBV
@@ -291,7 +291,7 @@ children:
 
   - type: SignalRW
     name: YSine2Amplitude
-    write_pv: YSine2Amplitude
+    write_pv: $(P)$(R)YSine2Amplitude
     write_widget:
       type: TextWrite
     read_pv: YSine2Amplitude_RBV
@@ -300,7 +300,7 @@ children:
 
   - type: SignalRW
     name: YSine2Frequency
-    write_pv: YSine2Frequency
+    write_pv: $(P)$(R)YSine2Frequency
     write_widget:
       type: TextWrite
     read_pv: YSine2Frequency_RBV
@@ -309,7 +309,7 @@ children:
 
   - type: SignalRW
     name: YSine2Phase
-    write_pv: YSine2Phase
+    write_pv: $(P)$(R)YSine2Phase
     write_widget:
       type: TextWrite
     read_pv: YSine2Phase_RBV

@@ -44,18 +44,18 @@ def test_text_format(tmp_path, helper, filename, formatter):
         components.append(
             SignalRW(
                 name=format.name.title(),
-                write_pv=format.name.title(),
+                write_pv=f"$(P){format.name.title()}",
                 write_widget=TextWrite(format=format),
-                read_pv=f"{format.name.title()}_RBV",
+                read_pv=f"$(P){format.name.title()}_RBV",
                 read_widget=TextRead(format=format),
             )
         )
 
-    device = Device(label="Text Device", children=components)
+    device = Device(label="Text Device - $(P)", children=components)
 
     expected_ui = HERE / "format" / "output" / filename
     output_ui = tmp_path / filename
-    formatter.format(device, "$(P)", output_ui)
+    formatter.format(device, output_ui)
 
     helper.assert_output_matches(expected_ui, output_ui)
 
@@ -66,30 +66,30 @@ def test_button(tmp_path, helper):
 
     acquire_time = SignalRW(
         name="AcquireTime",
-        write_pv="AcquireTime",
+        write_pv="$(P)AcquireTime",
         write_widget=TextWrite(),
-        read_pv="AcquireTime_RBV",
+        read_pv="$(P)AcquireTime_RBV",
         read_widget=TextRead(),
     )
     acquire = SignalW(
         name="Acquire",
-        write_pv="Acquire",
+        write_pv="$(P)Acquire",
         write_widget=ButtonPanel(actions={"Start": "1", "Stop": "0"}),
     )
     acquire_w_rbv = SignalRW(
         name="AcquireWithRBV",
-        write_pv="Acquire",
+        write_pv="$(P)Acquire",
         write_widget=ButtonPanel(actions={"Start": "1", "Stop": "0"}),
-        read_pv="Acquire_RBV",
+        read_pv="$(P)Acquire_RBV",
         read_widget=LED(),
     )
     device = Device(
-        label="Simple Device", children=[acquire_time, acquire, acquire_w_rbv]
+        label="Simple Device - $(P)", children=[acquire_time, acquire, acquire_w_rbv]
     )
 
     expected_bob = HERE / "format" / "output" / "button.bob"
     output_bob = tmp_path / "button.bob"
-    formatter.format(device, "$(P)", output_bob)
+    formatter.format(device, output_bob)
 
     helper.assert_output_matches(expected_bob, output_bob)
 
@@ -100,16 +100,16 @@ def test_pva_table(tmp_path, helper):
 
     table = SignalRW(
         name="PVATable",
-        write_pv="PVATable",
+        write_pv="$(P)PVATable",
         write_widget=TableWrite(
             widgets=[TextWrite(), ComboBox(choices=["1", "A", "True"])]
         ),
     )
-    device = Device(label="TableDevice", children=[table])
+    device = Device(label="TableDevice - $(P)", children=[table])
 
     expected_bob = HERE / "format" / "output" / "pva_table.bob"
     output_bob = tmp_path / "pva_table.bob"
-    formatter.format(device, "$(P)$(R)", output_bob)
+    formatter.format(device, output_bob)
 
     helper.assert_output_matches(expected_bob, output_bob)
 
@@ -129,7 +129,7 @@ def test_pva_table_panda(tmp_path, helper):
 
     expected_bob = HERE / "format" / "output" / "pva_table_panda.bob"
     output_bob = tmp_path / "pva_table_panda.bob"
-    formatter.format(device, "", output_bob)
+    formatter.format(device, output_bob)
 
     helper.assert_output_matches(expected_bob, output_bob)
 
@@ -140,15 +140,15 @@ def test_combo_box(tmp_path, helper):
 
     combo_box = SignalRW(
         name="Enum",
-        write_pv="Enum",
+        write_pv="$(P)Enum",
         write_widget=ComboBox(choices=["A", "B", "C"]),
-        read_pv="Enum_RBV",
+        read_pv="$(P)Enum_RBV",
     )
-    device = Device(label="Device", children=[combo_box])
+    device = Device(label="Device - $(P)", children=[combo_box])
 
     expected_bob = HERE / "format" / "output" / "combo_box.bob"
     output_bob = tmp_path / "combo_box.bob"
-    formatter.format(device, "$(P)$(R)", output_bob)
+    formatter.format(device, output_bob)
 
     helper.assert_output_matches(expected_bob, output_bob)
 
@@ -162,13 +162,13 @@ def test_device_ref(tmp_path, helper):
         name="ComboBox",
         pv="COMBOBOX",
         ui="combo_box",
-        macros={"P": "EIGER", "R": ":CAM:"},
+        macros={"P": "TEST:"},
     )
-    device = Device(label="Device", children=[device_ref])
+    device = Device(label="Device - $(P)", children=[device_ref])
 
     expected_bob = HERE / "format" / "output" / "device_ref.bob"
     output_bob = tmp_path / "device_ref.bob"
-    formatter.format(device, "$(P)$(R)", output_bob)
+    formatter.format(device, output_bob)
 
     helper.assert_output_matches(expected_bob, output_bob)
 
@@ -179,24 +179,24 @@ def test_group_sub_screen(tmp_path, helper):
 
     # This tests every valid combination of nesting Group and SubScreen
     signals = [
-        SignalR(name="A", read_pv="A", read_widget=TextRead()),
+        SignalR(name="A", read_pv="$(P)A", read_widget=TextRead()),
         Group(
             name="Group1",
             layout=SubScreen(),
             children=[
-                SignalR(name="Group1B", read_pv="GROUP1:B", read_widget=TextRead()),
+                SignalR(name="Group1B", read_pv="$(P)GROUP1:B", read_widget=TextRead()),
                 Group(
                     name="Group2",
                     layout=Grid(),
                     children=[
                         SignalR(
                             name="Group2C",
-                            read_pv="GROUP1:GROUP2:C",
+                            read_pv="$(P)GROUP1:GROUP2:C",
                             read_widget=TextRead(),
                         ),
                         SignalR(
                             name="Group2D",
-                            read_pv="GROUP1:GROUP2:D",
+                            read_pv="$(P)GROUP1:GROUP2:D",
                             read_widget=TextRead(),
                         ),
                     ],
@@ -207,14 +207,14 @@ def test_group_sub_screen(tmp_path, helper):
             name="Group3",
             layout=Grid(),
             children=[
-                SignalR(name="Group3E", read_pv="GROUP3:E", read_widget=TextRead()),
+                SignalR(name="Group3E", read_pv="$(P)GROUP3:E", read_widget=TextRead()),
                 Group(
                     name="Group4",
                     layout=SubScreen(),
                     children=[
                         SignalR(
                             name="Group4F",
-                            read_pv="GROUP3:GROUP4:F",
+                            read_pv="$(P)GROUP3:GROUP4:F",
                             read_widget=TextRead(),
                         ),
                         Group(
@@ -223,12 +223,12 @@ def test_group_sub_screen(tmp_path, helper):
                             children=[
                                 SignalR(
                                     name="Group5G",
-                                    read_pv="GROUP3:GROUP4:GROUP5:G",
+                                    read_pv="$(P)GROUP3:GROUP4:GROUP5:G",
                                     read_widget=TextRead(),
                                 ),
                                 SignalR(
                                     name="Group5H",
-                                    read_pv="GROUP3:GROUP4:GROUP5:H",
+                                    read_pv="$(P)GROUP3:GROUP4:GROUP5:H",
                                     read_widget=TextRead(),
                                 ),
                             ],
@@ -242,7 +242,7 @@ def test_group_sub_screen(tmp_path, helper):
 
     expected_bob = HERE / "format" / "output" / "sub_screen.bob"
     output_bob = tmp_path / "sub_screen.bob"
-    formatter.format(device, "$(P)$(R)", output_bob)
+    formatter.format(device, output_bob)
 
     helper.assert_output_matches(expected_bob, output_bob)
 
@@ -254,11 +254,11 @@ def test_index(tmp_path, helper):
     DLSFormatter().format_index(
         "Index",
         [
-            IndexEntry(label="Button", ui="button.bob", macros={"P": "BUTTON"}),
-            IndexEntry(label="ComboBox", ui="combo_box.bob", macros={"P": "COMBOBOX"}),
+            IndexEntry(label="Button", ui="button.bob", macros={"P": "TEST:"}),
+            IndexEntry(label="ComboBox", ui="combo_box.bob", macros={"P": "TEST:"}),
             # Check that lower case name is OK and will be capitalized to avoid
             # PascalCase validation error
-            IndexEntry(label="table", ui="pva_table.bob", macros={"P": "TABLE"}),
+            IndexEntry(label="table", ui="pva_table.bob", macros={"P": "TEST:"}),
         ],
         output_bob,
     )
@@ -267,15 +267,15 @@ def test_index(tmp_path, helper):
 
 
 def test_pvi_template(tmp_path, helper):
-    read = SignalR(name="Read", read_pv="Read")
-    write = SignalW(name="Write", write_pv="Write")
+    read = SignalR(name="Read", read_pv="$(P)Read")
+    write = SignalW(name="Write", write_pv="$(P)Write")
     read_write = SignalRW(
-        name="ReadWrite", write_pv="ReadWrite", read_pv="ReadWrite_RBV"
+        name="ReadWrite", write_pv="$(P)ReadWrite", read_pv="$(P)ReadWrite_RBV"
     )
     device = Device(label="Template Device", children=[read, write, read_write])
 
     expected_bob = HERE / "format" / "output" / "pvi.template"
     output_template = tmp_path / "pvi.template"
-    format_template(device, "$(P)$(R)", output_template)
+    format_template(device, "$(P)", output_template)
 
     helper.assert_output_matches(expected_bob, output_template)

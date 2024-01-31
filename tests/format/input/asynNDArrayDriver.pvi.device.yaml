@@ -1,202 +1,209 @@
-label: NDArrayBase
+type: Device
+label: asynNDArrayDriver - $(P)$(R)
 parent: asynPortDriver
 children:
 
 - type: Group
-  name: ComponentGroupOne
+  name: NDArrayBase
   layout:
     type: Grid
+    labelled: true
   children:
 
   - type: SignalW
     name: WaitForPlugins
-    pv: WaitForPlugins
+    pv: $(P)$(R)WaitForPlugins
     widget:
       type: CheckBox
 
   - type: SignalW
     name: EmptyFreeList
-    pv: EmptyFreeList
+    pv: $(P)$(R)EmptyFreeList
     widget:
       type: CheckBox
 
   - type: SignalW
     name: NDAttributesMacros
-    pv: NDAttributesMacros
+    pv: $(P)$(R)NDAttributesMacros
     widget:
       type: TextWrite
+      format: 4
 
   - type: SignalW
     name: NDAttributesFile
-    pv: NDAttributesFile
+    pv: $(P)$(R)NDAttributesFile
     widget:
       type: TextWrite
+      format: 4
 
   - type: SignalR
     name: ADCoreVersion
-    pv: ADCoreVersion_RBV
+    pv: $(P)$(R)ADCoreVersion_RBV
     widget:
       type: TextRead
 
   - type: SignalR
     name: DriverVersion
-    pv: DriverVersion_RBV
+    pv: $(P)$(R)DriverVersion_RBV
     widget:
       type: TextRead
 
   - type: SignalR
     name: PortName
-    pv: PortName_RBV
+    pv: $(P)$(R)PortName_RBV
     widget:
       type: TextRead
 
   - type: SignalR
     name: Manufacturer
-    pv: Manufacturer_RBV
+    pv: $(P)$(R)Manufacturer_RBV
     widget:
       type: TextRead
 
   - type: SignalR
     name: Model
-    pv: Model_RBV
+    pv: $(P)$(R)Model_RBV
     widget:
       type: TextRead
 
   - type: SignalR
     name: SerialNumber
-    pv: SerialNumber_RBV
+    pv: $(P)$(R)SerialNumber_RBV
     widget:
       type: TextRead
 
   - type: SignalR
     name: SDKVersion
-    pv: SDKVersion_RBV
+    pv: $(P)$(R)SDKVersion_RBV
     widget:
       type: TextRead
 
   - type: SignalR
     name: FirmwareVersion
-    pv: FirmwareVersion_RBV
+    pv: $(P)$(R)FirmwareVersion_RBV
     widget:
       type: TextRead
 
   - type: SignalR
     name: AcquireBusyCB
-    pv: AcquireBusyCB
+    pv: $(P)$(R)AcquireBusyCB
     widget:
       type: LED
 
   - type: SignalR
     name: BayerPattern
-    pv: BayerPattern_RBV
+    pv: $(P)$(R)BayerPattern_RBV
     widget:
       type: TextRead
 
   - type: SignalR
     name: ArraySizeX
-    pv: ArraySizeX_RBV
+    pv: $(P)$(R)ArraySizeX_RBV
     widget:
       type: TextRead
 
   - type: SignalR
     name: ArraySizeY
-    pv: ArraySizeY_RBV
+    pv: $(P)$(R)ArraySizeY_RBV
     widget:
       type: TextRead
 
   - type: SignalR
     name: ArraySizeZ
-    pv: ArraySizeZ_RBV
+    pv: $(P)$(R)ArraySizeZ_RBV
     widget:
       type: TextRead
 
   - type: SignalR
     name: ArraySize
-    pv: ArraySize_RBV
+    pv: $(P)$(R)ArraySize_RBV
     widget:
       type: TextRead
 
   - type: SignalR
     name: Codec
-    pv: Codec_RBV
+    pv: $(P)$(R)Codec_RBV
     widget:
       type: TextRead
 
   - type: SignalR
     name: CompressedSize
-    pv: CompressedSize_RBV
+    pv: $(P)$(R)CompressedSize_RBV
     widget:
       type: TextRead
 
   - type: SignalR
     name: UniqueId
-    pv: UniqueId_RBV
+    pv: $(P)$(R)UniqueId_RBV
     widget:
       type: TextRead
 
   - type: SignalR
     name: TimeStamp
-    pv: TimeStamp_RBV
+    pv: $(P)$(R)TimeStamp_RBV
     widget:
       type: TextRead
 
   - type: SignalR
     name: EpicsTSSec
-    pv: EpicsTSSec_RBV
+    pv: $(P)$(R)EpicsTSSec_RBV
     widget:
       type: TextRead
 
   - type: SignalR
     name: EpicsTSNsec
-    pv: EpicsTSNsec_RBV
+    pv: $(P)$(R)EpicsTSNsec_RBV
     widget:
       type: TextRead
 
   - type: SignalR
     name: NDAttributesStatus
-    pv: NDAttributesStatus
+    pv: $(P)$(R)NDAttributesStatus
     widget:
       type: TextRead
 
   - type: SignalR
     name: PoolMaxMem
-    pv: PoolMaxMem
+    pv: $(P)$(R)PoolMaxMem
     widget:
       type: TextRead
 
   - type: SignalR
     name: PoolUsedMem
-    pv: PoolUsedMem
+    pv: $(P)$(R)PoolUsedMem
     widget:
       type: TextRead
 
   - type: SignalR
     name: PoolAllocBuffers
-    pv: PoolAllocBuffers
+    pv: $(P)$(R)PoolAllocBuffers
     widget:
       type: TextRead
 
   - type: SignalR
     name: PoolFreeBuffers
-    pv: PoolFreeBuffers
+    pv: $(P)$(R)PoolFreeBuffers
     widget:
       type: TextRead
 
   - type: SignalR
     name: NumQueuedArrays
-    pv: NumQueuedArrays
+    pv: $(P)$(R)NumQueuedArrays
     widget:
       type: TextRead
 
   - type: SignalRW
     name: Acquire
-    pv: Acquire
+    pv: $(P)$(R)Acquire
     widget:
       type: CheckBox
+    read_pv: Acquire_RBV
+    read_widget:
+      type: LED
 
   - type: SignalRW
     name: NDimensions
-    pv: NDimensions
+    pv: $(P)$(R)NDimensions
     widget:
       type: TextWrite
     read_pv: NDimensions_RBV
@@ -205,7 +212,7 @@ children:
 
   - type: SignalRW
     name: Dimensions
-    pv: Dimensions
+    pv: $(P)$(R)Dimensions
     widget:
       type: TextWrite
     read_pv: Dimensions_RBV
@@ -214,7 +221,7 @@ children:
 
   - type: SignalRW
     name: DataType
-    pv: DataType
+    pv: $(P)$(R)DataType
     widget:
       type: ComboBox
     read_pv: DataType_RBV
@@ -223,7 +230,7 @@ children:
 
   - type: SignalRW
     name: ColorMode
-    pv: ColorMode
+    pv: $(P)$(R)ColorMode
     widget:
       type: ComboBox
     read_pv: ColorMode_RBV
@@ -232,7 +239,7 @@ children:
 
   - type: SignalRW
     name: ArrayCounter
-    pv: ArrayCounter
+    pv: $(P)$(R)ArrayCounter
     widget:
       type: TextWrite
     read_pv: ArrayCounter_RBV
@@ -241,55 +248,72 @@ children:
 
   - type: SignalRW
     name: ArrayCallbacks
-    pv: ArrayCallbacks
+    pv: $(P)$(R)ArrayCallbacks
     widget:
       type: CheckBox
     read_pv: ArrayCallbacks_RBV
     read_widget:
       type: LED
 
+- type: Group
+  name: NDFile
+  layout:
+    type: Grid
+    labelled: true
+  children:
+
+  - type: SignalW
+    name: FreeCapture
+    pv: $(P)$(R)FreeCapture
+    widget:
+      type: CheckBox
+
   - type: SignalR
     name: FilePathExists
-    pv: FilePathExists_RBV
+    pv: $(P)$(R)FilePathExists_RBV
     widget:
       type: LED
 
   - type: SignalR
     name: FullFileName
-    pv: FullFileName_RBV
+    pv: $(P)$(R)FullFileName_RBV
     widget:
       type: TextRead
+      format: 4
 
   - type: SignalR
     name: NumCaptured
-    pv: NumCaptured_RBV
+    pv: $(P)$(R)NumCaptured_RBV
     widget:
       type: TextRead
 
   - type: SignalR
     name: WriteStatus
-    pv: WriteStatus
+    pv: $(P)$(R)WriteStatus
     widget:
       type: LED
 
   - type: SignalR
     name: WriteMessage
-    pv: WriteMessage
+    pv: $(P)$(R)WriteMessage
     widget:
       type: TextRead
+      format: 4
 
   - type: SignalRW
     name: FilePath
-    pv: FilePath
+    pv: $(P)$(R)FilePath
     widget:
       type: TextWrite
+      format: 4
     read_pv: FilePath_RBV
     read_widget:
       type: TextRead
+      format: 4
 
   - type: SignalRW
     name: CreateDirectory
-    pv: CreateDirectory
+    pv: $(P)$(R)CreateDirectory
     widget:
       type: TextWrite
     read_pv: CreateDirectory_RBV
@@ -298,22 +322,27 @@ children:
 
   - type: SignalRW
     name: FileName
-    pv: FileName
+    pv: $(P)$(R)FileName
     widget:
       type: TextWrite
+      format: 4
     read_pv: FileName_RBV
+    read_widget:
+      type: TextRead
+      format: 4
+
+  - type: SignalRW
+    name: FileNumber
+    pv: $(P)$(R)FileNumber
+    widget:
+      type: TextWrite
+    read_pv: FileNumber_RBV
     read_widget:
       type: TextRead
 
   - type: SignalRW
-    name: FileNumber
-    pv: FileNumber
-    widget:
-      type: TextWrite
-
-  - type: SignalRW
     name: AutoIncrement
-    pv: AutoIncrement
+    pv: $(P)$(R)AutoIncrement
     widget:
       type: CheckBox
     read_pv: AutoIncrement_RBV
@@ -322,16 +351,18 @@ children:
 
   - type: SignalRW
     name: FileTemplate
-    pv: FileTemplate
+    pv: $(P)$(R)FileTemplate
     widget:
       type: TextWrite
+      format: 4
     read_pv: FileTemplate_RBV
     read_widget:
       type: TextRead
+      format: 4
 
   - type: SignalRW
     name: AutoSave
-    pv: AutoSave
+    pv: $(P)$(R)AutoSave
     widget:
       type: CheckBox
     read_pv: AutoSave_RBV
@@ -340,7 +371,7 @@ children:
 
   - type: SignalRW
     name: WriteFile
-    pv: WriteFile
+    pv: $(P)$(R)WriteFile
     widget:
       type: CheckBox
     read_pv: WriteFile_RBV
@@ -349,7 +380,7 @@ children:
 
   - type: SignalRW
     name: ReadFile
-    pv: ReadFile
+    pv: $(P)$(R)ReadFile
     widget:
       type: CheckBox
     read_pv: ReadFile_RBV
@@ -358,7 +389,7 @@ children:
 
   - type: SignalRW
     name: FileFormat
-    pv: FileFormat
+    pv: $(P)$(R)FileFormat
     widget:
       type: ComboBox
     read_pv: FileFormat_RBV
@@ -367,7 +398,7 @@ children:
 
   - type: SignalRW
     name: FileWriteMode
-    pv: FileWriteMode
+    pv: $(P)$(R)FileWriteMode
     widget:
       type: ComboBox
     read_pv: FileWriteMode_RBV
@@ -376,7 +407,7 @@ children:
 
   - type: SignalRW
     name: Capture
-    pv: Capture
+    pv: $(P)$(R)Capture
     widget:
       type: CheckBox
     read_pv: Capture_RBV
@@ -385,7 +416,7 @@ children:
 
   - type: SignalRW
     name: NumCapture
-    pv: NumCapture
+    pv: $(P)$(R)NumCapture
     widget:
       type: TextWrite
     read_pv: NumCapture_RBV
@@ -394,7 +425,7 @@ children:
 
   - type: SignalRW
     name: DeleteDriverFile
-    pv: DeleteDriverFile
+    pv: $(P)$(R)DeleteDriverFile
     widget:
       type: CheckBox
     read_pv: DeleteDriverFile_RBV
@@ -403,7 +434,7 @@ children:
 
   - type: SignalRW
     name: LazyOpen
-    pv: LazyOpen
+    pv: $(P)$(R)LazyOpen
     widget:
       type: CheckBox
     read_pv: LazyOpen_RBV
@@ -412,7 +443,7 @@ children:
 
   - type: SignalRW
     name: TempSuffix
-    pv: TempSuffix
+    pv: $(P)$(R)TempSuffix
     widget:
       type: TextWrite
     read_pv: TempSuffix_RBV

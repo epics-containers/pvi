@@ -1,9 +1,9 @@
 
 ### PV Interface for {{ device }} ###
 {% for record in records %}
-record("*", "{{ prefix }}{{ record.name }}") {
+record("*", "{{ record.pv }}") {
     info(Q:group, {
-        "{{ prefix }}PVI": {
+        "{{ pv_prefix }}PVI": {
             "pvi.{{ record.name }}.{{ record.access }}": {
                 "+channel": "NAME",
                 "+type": "plain",

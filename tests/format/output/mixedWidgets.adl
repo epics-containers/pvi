@@ -1670,7 +1670,7 @@ text {
 	"basic attribute" {
 		clr=14
 	}
-	textix="Gap Fill Write"
+	textix="Gap Fill No Read PV"
 	align="horiz. right"
 }
 menu {
@@ -1681,7 +1681,7 @@ menu {
 		height=20
 	}
 	control {
-		chan="$(P)$(R)GapFillWrite"
+		chan="$(P)$(R)GapFillNoReadPV"
 		clr=14
 		bclr=51
 	}

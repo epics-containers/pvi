@@ -1,9 +1,9 @@
 
 ### PV Interface for Template Device ###
 
-record("*", "$(P)$(R)Read") {
+record("*", "$(P)Read") {
     info(Q:group, {
-        "$(P)$(R)PVI": {
+        "$(P)PVI": {
             "pvi.Read.r": {
                 "+channel": "NAME",
                 "+type": "plain",
@@ -12,9 +12,9 @@ record("*", "$(P)$(R)Read") {
     })
 }
 
-record("*", "$(P)$(R)Write") {
+record("*", "$(P)Write") {
     info(Q:group, {
-        "$(P)$(R)PVI": {
+        "$(P)PVI": {
             "pvi.Write.w": {
                 "+channel": "NAME",
                 "+type": "plain",
@@ -23,9 +23,9 @@ record("*", "$(P)$(R)Write") {
     })
 }
 
-record("*", "$(P)$(R)ReadWrite") {
+record("*", "$(P)ReadWrite") {
     info(Q:group, {
-        "$(P)$(R)PVI": {
+        "$(P)PVI": {
             "pvi.ReadWrite.rw": {
                 "+channel": "NAME",
                 "+type": "plain",
