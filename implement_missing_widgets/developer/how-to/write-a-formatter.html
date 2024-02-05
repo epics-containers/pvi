@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>How to Write a Site Specific Formatter &#8212; pvi 0.7.2.dev8+gce92f86 documentation</title>
+    <title>How to Write a Site Specific Formatter &#8212; pvi 0.7.2.dev9+gdb3971a documentation</title>
   
   
   
@@ -38,7 +38,7 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../_static/documentation_options.js?v=7299a5ac"></script>
+    <script src="../../_static/documentation_options.js?v=42b855eb"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -745,10 +745,10 @@ WidgetFactory.from_template method:</p>
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ButtonPanel&quot;</span><span class="p">,</span>
                 <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
             <span class="p">),</span>
-            <span class="n">plot_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+            <span class="n">array_trace_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
-                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Plot&quot;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ArrayTrace&quot;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;y_pv&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">image_read_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
@@ -762,7 +762,7 @@ WidgetFactory.from_template method:</p>
             <span class="p">),</span>
             <span class="n">check_box_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
-                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;CheckBox&quot;</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ChoiceButton&quot;</span><span class="p">,</span>
                 <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">combo_box_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
@@ -1127,10 +1127,10 @@ find a complete example formatter, supporting both edl and bob file formats for 
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ButtonPanel&quot;</span><span class="p">,</span>
                 <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
             <span class="p">),</span>
-            <span class="n">plot_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+            <span class="n">array_trace_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
-                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Plot&quot;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ArrayTrace&quot;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;y_pv&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">image_read_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
@@ -1144,7 +1144,7 @@ find a complete example formatter, supporting both edl and bob file formats for 
             <span class="p">),</span>
             <span class="n">check_box_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
-                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;CheckBox&quot;</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ChoiceButton&quot;</span><span class="p">,</span>
                 <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">combo_box_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
