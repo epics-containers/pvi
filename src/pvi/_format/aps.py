@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import List, Literal
+from typing import List
 
 from pydantic import Field
 
@@ -24,7 +24,6 @@ from .utils import Bounds, GroupType, with_title
 
 
 class APSFormatter(Formatter):
-    type: Literal["APSFormatter"] = "APSFormatter"
 
     spacing: int = Field(5, description="Spacing between widgets")
     title_height: int = Field(25, description="Height of screen title bar")

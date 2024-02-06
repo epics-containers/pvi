@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import List, Literal
+from typing import List
 
 from lxml import etree
 from pydantic import Field
@@ -26,7 +26,6 @@ from .utils import Bounds, GroupType, with_title
 
 
 class DLSFormatter(Formatter):
-    type: Literal["DLSFormatter"] = "DLSFormatter"
 
     spacing: int = Field(5, description="Spacing between widgets")
     title_height: int = Field(25, description="Height of screen title bar")

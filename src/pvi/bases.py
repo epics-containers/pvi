@@ -6,19 +6,7 @@ from pydantic import BaseModel, ConfigDict, Tag, computed_field
 from pydantic.fields import FieldInfo
 
 
-class BaseSettings(BaseModel):
-    """A Base class for consistent model settings."""
-
-    model_config = ConfigDict(extra="forbid")
-
-
-class BaseTyped(BaseSettings):
-    """A Base class for tagged unions discriminated by a `type` field."""
-
-    type: str
-
-
-class TypedModel(BaseSettings):
+class TypedModel(BaseModel):
     """A Base class for members of tagged unions discriminated by the class name.
 
     This class defines some hooks called by pydantic during validation and schema
@@ -29,6 +17,9 @@ class TypedModel(BaseSettings):
     `Tag`.
 
     """
+
+    # Do not allow extra fields during validation
+    model_config = ConfigDict(extra="forbid")
 
     # Whether child models have been rebuilt with type field inserted
     models_typed: ClassVar[bool] = False
