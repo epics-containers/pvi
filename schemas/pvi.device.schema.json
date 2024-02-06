@@ -194,18 +194,19 @@
       "type": "object"
     },
     "Grid": {
+      "additionalProperties": false,
       "description": "Children are rows in the grid",
       "properties": {
-        "type": {
-          "const": "Grid",
-          "default": "Grid",
-          "title": "Type"
-        },
         "labelled": {
           "default": true,
           "description": "If True use names of children as labels",
           "title": "Labelled",
           "type": "boolean"
+        },
+        "type": {
+          "const": "Grid",
+          "default": "Grid",
+          "title": "Type"
         }
       },
       "title": "Grid",
@@ -235,15 +236,6 @@
         },
         "layout": {
           "description": "How to layout children on screen",
-          "discriminator": {
-            "mapping": {
-              "Grid": "#/$defs/Grid",
-              "Plot": "#/$defs/Plot",
-              "Row": "#/$defs/Row",
-              "SubScreen": "#/$defs/SubScreen"
-            },
-            "propertyName": "type"
-          },
           "oneOf": [
             {
               "$ref": "#/$defs/Plot"
@@ -331,6 +323,7 @@
       "type": "object"
     },
     "Plot": {
+      "additionalProperties": false,
       "description": "Children are traces of the plot",
       "properties": {
         "type": {
@@ -356,13 +349,9 @@
       "type": "object"
     },
     "Row": {
+      "additionalProperties": false,
       "description": "Children are columns in the row",
       "properties": {
-        "type": {
-          "const": "Row",
-          "default": "Row",
-          "title": "Type"
-        },
         "header": {
           "anyOf": [
             {
@@ -378,6 +367,11 @@
           "default": null,
           "description": "Labels for the items in the row",
           "title": "Header"
+        },
+        "type": {
+          "const": "Row",
+          "default": "Row",
+          "title": "Type"
         }
       },
       "title": "Row",
@@ -700,18 +694,19 @@
       "type": "object"
     },
     "SubScreen": {
+      "additionalProperties": false,
       "description": "Children are displayed on another screen opened with a button.",
       "properties": {
-        "type": {
-          "const": "SubScreen",
-          "default": "SubScreen",
-          "title": "Type"
-        },
         "labelled": {
           "default": true,
           "description": "Display labels for components",
           "title": "Labelled",
           "type": "boolean"
+        },
+        "type": {
+          "const": "SubScreen",
+          "default": "SubScreen",
+          "title": "Type"
         }
       },
       "title": "SubScreen",

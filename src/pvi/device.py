@@ -15,7 +15,6 @@ from typing import (
 )
 
 from pydantic import BaseModel, ConfigDict, Discriminator, Field, Tag
-from typing_extensions import Literal
 
 from pvi._yaml_utils import YamlValidatorMixin, dump_yaml, type_first
 from pvi.bases import TypedModel
@@ -217,20 +216,16 @@ WriteWidgetUnion = Annotated[
 WidgetUnion = ReadWidgetUnion | WriteWidgetUnion
 
 
-class Layout(BaseModel):
+class Layout(TypedModel):
     """Widget displaying child Components"""
 
 
 class Plot(Layout):
     """Children are traces of the plot"""
 
-    type: Literal["Plot"] = "Plot"
-
 
 class Row(Layout):
     """Children are columns in the row"""
-
-    type: Literal["Row"] = "Row"
 
     header: Optional[Sequence[str]] = Field(
         None,
@@ -241,22 +236,21 @@ class Row(Layout):
 class Grid(Layout):
     """Children are rows in the grid"""
 
-    type: Literal["Grid"] = "Grid"
-
     labelled: bool = Field(True, description="If True use names of children as labels")
 
 
 class SubScreen(Layout):
     """Children are displayed on another screen opened with a button."""
 
-    type: Literal["SubScreen"] = "SubScreen"
-
     labelled: bool = Field(default=True, description="Display labels for components")
 
 
 LayoutUnion = Annotated[
-    Plot | Row | Grid | SubScreen,
-    Field(discriminator="type"),
+    Annotated[Plot, Tag("Plot")]
+    | Annotated[Row, Tag("Row")]
+    | Annotated[Grid, Tag("Grid")]
+    | Annotated[SubScreen, Tag("SubScreen")],
+    Field(discriminator=Discriminator(TypedModel.get_type_name)),
 ]
 
 
