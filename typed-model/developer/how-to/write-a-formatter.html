@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>How to Write a Site Specific Formatter &#8212; pvi 0.7.3.dev5+gd6ba1bc documentation</title>
+    <title>How to Write a Site Specific Formatter &#8212; pvi 0.7.3.dev6+g5cbc084 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../_static/documentation_options.js?v=6bba68f8"></script>
+    <script src="../../_static/documentation_options.js?v=d7200040"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -562,10 +562,8 @@ components, we can create a screen file.</p>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create TypeAdapter of all child classes&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">TypeAdapter</span><span class="p">(</span>
             <span class="n">Annotated</span><span class="p">[</span>
-                <span class="n">Union</span><span class="p">[</span>
-                    <span class="nb">tuple</span><span class="p">(</span><span class="n">Annotated</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="n">Tag</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">__subclasses__</span><span class="p">())</span>  <span class="c1"># type: ignore</span>
-                <span class="p">],</span>
-                <span class="n">Field</span><span class="p">(</span><span class="n">discriminator</span><span class="o">=</span><span class="n">Discriminator</span><span class="p">(</span><span class="n">TypedModel</span><span class="o">.</span><span class="n">get_type_name</span><span class="p">)),</span>
+                <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">__subclasses__</span><span class="p">())],</span>  <span class="c1"># type: ignore</span>
+                <span class="n">TypedModel</span><span class="o">.</span><span class="n">discriminator</span><span class="p">,</span>
             <span class="p">]</span>
         <span class="p">)</span>
 
@@ -597,7 +595,6 @@ components, we can create a screen file.</p>
 <span class="sd">        Formatter itself is not included, as it should not be instanstiated directly.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">cls</span><span class="o">.</span><span class="n">_rebuild_child_models</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">type_adapter</span><span class="p">()</span><span class="o">.</span><span class="n">json_schema</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">Device</span><span class="p">,</span> <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">):</span>
