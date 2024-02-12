@@ -26,7 +26,40 @@ record("*", "$(P)Write") {
 record("*", "$(P)ReadWrite") {
     info(Q:group, {
         "$(P)PVI": {
-            "pvi.ReadWrite.rw": {
+            "pvi.ReadWrite.w": {
+                "+channel": "NAME",
+                "+type": "plain",
+            }
+        }
+    })
+}
+
+record("*", "$(P)ReadWrite_RBV") {
+    info(Q:group, {
+        "$(P)PVI": {
+            "pvi.ReadWrite.r": {
+                "+channel": "NAME",
+                "+type": "plain",
+            }
+        }
+    })
+}
+
+record("*", "$(P)ReadWriteSingle") {
+    info(Q:group, {
+        "$(P)PVI": {
+            "pvi.ReadWriteSingle.rw": {
+                "+channel": "NAME",
+                "+type": "plain",
+            }
+        }
+    })
+}
+
+record("*", "$(P)Execute") {
+    info(Q:group, {
+        "$(P)PVI": {
+            "pvi.Execute.x": {
                 "+channel": "NAME",
                 "+type": "plain",
             }
