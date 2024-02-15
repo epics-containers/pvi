@@ -114,9 +114,5 @@
   {
     "version": "toggle-widget",
     "url": "https://epics-containers.github.io/pvi/toggle-widget/"
-  },
-  {
-    "version": "typed-model",
-    "url": "https://epics-containers.github.io/pvi/typed-model/"
   }
 ]
