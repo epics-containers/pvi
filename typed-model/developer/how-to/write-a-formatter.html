@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>How to Write a Site Specific Formatter &#8212; pvi 0.7.3.dev7+geb1a00a documentation</title>
+    <title>How to Write a Site Specific Formatter &#8212; pvi 0.7.3.dev1+ga2c52eb documentation</title>
   
   
   
@@ -38,7 +38,7 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../_static/documentation_options.js?v=58f59148"></script>
+    <script src="../../_static/documentation_options.js?v=97495d38"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -519,7 +519,7 @@ deserialised into component objects, which are later translated into widgets:</p
     <span class="n">_access_mode</span> <span class="o">=</span> <span class="s2">&quot;r&quot;</span>
 
     <span class="n">read_pv</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;PV to use for readback&quot;</span><span class="p">)</span>
-    <span class="n">read_widget</span><span class="p">:</span> <span class="n">ReadWidgetUnion</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+    <span class="n">read_widget</span><span class="p">:</span> <span class="n">ReadWidgetUnion</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
         <span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Widget to use for display. `TextRead` will be used if unset.&quot;</span>
     <span class="p">)</span>
 
@@ -568,14 +568,7 @@ components, we can create a screen file.</p>
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">type_adapter</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TypeAdapter</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create TypeAdapter of all child classes&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">TypeAdapter</span><span class="p">(</span>
-            <span class="n">Annotated</span><span class="p">[</span>
-                <span class="n">Union</span><span class="p">[</span>
-                    <span class="nb">tuple</span><span class="p">(</span><span class="n">Annotated</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="n">Tag</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">__subclasses__</span><span class="p">())</span>  <span class="c1"># type: ignore</span>
-                <span class="p">],</span>
-                <span class="n">Field</span><span class="p">(</span><span class="n">discriminator</span><span class="o">=</span><span class="n">Discriminator</span><span class="p">(</span><span class="n">TypedModel</span><span class="o">.</span><span class="n">get_type_name</span><span class="p">)),</span>
-            <span class="p">]</span>
-        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">TypeAdapter</span><span class="p">(</span><span class="n">TypedModel</span><span class="o">.</span><span class="n">make_tagged_union</span><span class="p">(</span><span class="o">*</span><span class="bp">cls</span><span class="o">.</span><span class="n">__subclasses__</span><span class="p">()))</span>
 
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">serialized</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Formatter&quot;</span><span class="p">:</span>
