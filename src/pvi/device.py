@@ -5,21 +5,26 @@ import re
 from enum import IntEnum
 from pathlib import Path
 from typing import (
+    TYPE_CHECKING,
     Annotated,
     Any,
+    ClassVar,
     Dict,
     Iterator,
     Optional,
     Sequence,
-    TypeVar,
-    Union,
 )
 
-from pydantic import BaseModel, ConfigDict, Field
-from typing_extensions import Literal
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    field_validator,
+    model_validator,
+)
 
 from pvi._yaml_utils import YamlValidatorMixin, dump_yaml, type_first
-from pvi.bases import BaseSettings, BaseTyped
+from pvi.typed_model import TypedModel, as_tagged_union
 from pvi.utils import find_pvi_yaml
 
 PASCAL_CASE_REGEX = re.compile(r"(?<![A-Z])[A-Z]|[A-Z][a-z/d]|(?<=[a-z])\d")
@@ -70,22 +75,24 @@ class TextFormat(IntEnum):
     string = 4
 
 
-class ReadWidget(BaseSettings):
-    """Widget that displays a scalar PV"""
+class AccessModeMixin(BaseModel):
+    _access_mode: ClassVar[str]
 
-    type: str
+    @property
+    def access_mode(self) -> str:
+        return self._access_mode
+
+
+class ReadWidget(TypedModel, AccessModeMixin):
+    _access_mode = "r"
 
 
 class LED(ReadWidget):
     """LED display of a boolean PV"""
 
-    type: Literal["LED"] = "LED"
-
 
 class BitField(ReadWidget):
     """LED and label for each bit of an int PV"""
-
-    type: Literal["BitField"] = "BitField"
 
     labels: Sequence[str] = Field(description="Label for each bit")
 
@@ -93,13 +100,10 @@ class BitField(ReadWidget):
 class ProgressBar(ReadWidget):
     """Progress bar from lower to upper limit of a float PV"""
 
-    type: Literal["ProgressBar"] = "ProgressBar"
-
 
 class TextRead(ReadWidget):
     """Text view of any PV"""
 
-    type: Literal["TextRead"] = "TextRead"
     model_config = ConfigDict(use_enum_values=True)  # Use Enum value when dumping
 
     lines: Optional[int] = Field(default=None, description="Number of lines to display")
@@ -112,8 +116,6 @@ class TextRead(ReadWidget):
 class ArrayTrace(ReadWidget):
     """Trace of the array in a plot view"""
 
-    type: Literal["ArrayTrace"] = "ArrayTrace"
-
     axis: str = Field(
         description=(
             "Traces with same axis name will appear on same axis, "
@@ -123,38 +125,22 @@ class ArrayTrace(ReadWidget):
     )
 
 
-class TableRead(ReadWidget):
-    """Tabular view of an NTTable"""
-
-    type: Literal["TableRead"] = "TableRead"
-
-    widgets: Sequence[ReadWidget] = Field(
-        [], description="For each column, what widget should be repeated for every row"
-    )
-
-
 class ImageRead(ReadWidget):
     """2D Image view of an NTNDArray"""
 
-    type: Literal["ImageRead"] = "ImageRead"
 
-
-class WriteWidget(BaseSettings):
+class WriteWidget(TypedModel, AccessModeMixin):
     """Widget that controls a PV"""
 
-    type: str
+    _access_mode = "w"
 
 
 class CheckBox(WriteWidget):
     """Checkable control of a boolean PV"""
 
-    type: Literal["CheckBox"] = "CheckBox"
-
 
 class ComboBox(WriteWidget):
     """Selection of an enum PV"""
-
-    type: Literal["ComboBox"] = "ComboBox"
 
     choices: Sequence[str] = Field(default=None, description="Choices to select from")
 
@@ -170,15 +156,12 @@ class ButtonPanel(WriteWidget):
 
     """
 
-    type: Literal["ButtonPanel"] = "ButtonPanel"
-
     actions: Dict[str, str] = Field(default={"go": "1"}, description="PV poker buttons")
 
 
 class TextWrite(WriteWidget):
     """Text control of any PV"""
 
-    type: Literal["TextWrite"] = "TextWrite"
     model_config = ConfigDict(use_enum_values=True)  # Use Enum value when dumping
 
     lines: Optional[int] = Field(default=None, description="Number of lines to display")
@@ -188,51 +171,49 @@ class TextWrite(WriteWidget):
         return self.lines or 1
 
 
+# Subset of widgets that can displayed together in one row
+_RowWriteUnion = ButtonPanel | CheckBox | ComboBox | TextWrite
+_RowReadUnion = BitField | LED | ProgressBar | TextRead
+
+if not TYPE_CHECKING:
+    _RowWriteUnion = as_tagged_union(_RowWriteUnion)
+    _RowReadUnion = as_tagged_union(_RowReadUnion)
+
+
 class ArrayWrite(WriteWidget):
     """Control of an array PV"""
 
-    type: Literal["ArrayWrite"] = "ArrayWrite"
+    widget: _RowWriteUnion = Field(
+        description="What widget should be used for each item"
+    )
 
-    widget: WriteWidget = Field(description="What widget should be used for each item")
 
+class TableRead(ReadWidget):
+    """A read-only tabular view of an NTTable."""
 
-class TableWrite(WriteWidget):
-    type: Literal["TableWrite"] = "TableWrite"
-
-    widgets: Sequence[ReadWidgetUnion | WriteWidgetUnion] = Field(
+    widgets: Sequence[_RowReadUnion] = Field(
         [], description="For each column, what widget should be repeated for every row"
     )
 
 
-WidgetType = Annotated[Union[ReadWidget, WriteWidget], Field(discriminator="type")]
-TableWidgetType = Annotated[Union[TableRead, TableWrite], Field(discriminator="type")]
-TableWidgetTypes = (TableRead, TableWrite)
+class TableWrite(WriteWidget):
+    """A writeable tabular view of an NTTable."""
+
+    widgets: Sequence[_RowWriteUnion] = Field(
+        [], description="For each column, what widget should be repeated for every row"
+    )
 
 
-ReadWidgetUnion = Annotated[
-    ArrayTrace | BitField | ImageRead | LED | ProgressBar | TableRead | TextRead,
-    Field(discriminator="type"),
-]
-WriteWidgetUnion = Annotated[
-    ArrayWrite | ButtonPanel | CheckBox | ComboBox | TableWrite | TextWrite,
-    Field(discriminator="type"),
-]
-
-
-class Layout(BaseModel):
+class Layout(TypedModel):
     """Widget displaying child Components"""
 
 
 class Plot(Layout):
     """Children are traces of the plot"""
 
-    type: Literal["Plot"] = "Plot"
-
 
 class Row(Layout):
     """Children are columns in the row"""
-
-    type: Literal["Row"] = "Row"
 
     header: Optional[Sequence[str]] = Field(
         None,
@@ -243,26 +224,35 @@ class Row(Layout):
 class Grid(Layout):
     """Children are rows in the grid"""
 
-    type: Literal["Grid"] = "Grid"
-
     labelled: bool = Field(True, description="If True use names of children as labels")
 
 
 class SubScreen(Layout):
     """Children are displayed on another screen opened with a button."""
 
-    type: Literal["SubScreen"] = "SubScreen"
-
     labelled: bool = Field(default=True, description="Display labels for components")
 
 
-LayoutUnion = Annotated[
-    Plot | Row | Grid | SubScreen,
-    Field(discriminator="type"),
-]
+LayoutUnion = Plot | Row | Grid | SubScreen
+
+ReadWidgetUnion = (
+    ArrayTrace | BitField | ImageRead | LED | ProgressBar | TableRead | TextRead
+)
+
+WriteWidgetUnion = (
+    ArrayWrite | ButtonPanel | CheckBox | ComboBox | TableWrite | TextWrite
+)
+
+if not TYPE_CHECKING:
+    LayoutUnion = as_tagged_union(LayoutUnion)
+    ReadWidgetUnion = as_tagged_union(ReadWidgetUnion)
+    WriteWidgetUnion = as_tagged_union(WriteWidgetUnion)
 
 
-class Named(BaseSettings):
+WidgetUnion = ReadWidgetUnion | WriteWidgetUnion
+
+
+class Named(TypedModel):
     name: str = Field(
         description="PascalCase name to uniquely identify",
         pattern=r"^([A-Z][a-z0-9]*)*$",
@@ -278,63 +268,93 @@ class Component(Named):
         return self.label or to_title_case(self.name)
 
 
-class SignalR(Component):
-    """Scalar value backed by a single PV"""
+class Signal(Component, AccessModeMixin):
+    """Base signal type representing one or two PVs of a `Device`."""
 
-    type: Literal["SignalR"] = "SignalR"
 
-    pv: str = Field(description="PV to be used for get and monitor")
-    widget: Optional[ReadWidgetUnion] = Field(
-        None, description="Widget to use for display, None means don't display"
+class SignalR(Signal):
+    """Read-only `Signal` backed by a single PV."""
+
+    _access_mode = "r"
+
+    read_pv: str = Field(description="PV to use for readback")
+    read_widget: ReadWidgetUnion = Field(
+        None, description="Widget to use for display. `TextRead` will be used if unset."
+    )
+
+    @field_validator("read_widget")
+    @classmethod
+    def _validate_read_widget(cls, read_widget: Any):
+        if read_widget is None:
+            return TextRead()
+
+        return read_widget
+
+
+class SignalW(Signal):
+    """Write-only `Signal` backed by a single PV."""
+
+    _access_mode = "w"
+
+    write_pv: str = Field(description="PV to use for demand")
+    write_widget: WriteWidgetUnion = Field(
+        default_factory=TextWrite, description="Widget to use for control"
     )
 
 
-class SignalW(Component):
-    """Write only value backed by a single PV"""
+class SignalRW(SignalR, SignalW):
+    """Read/write `Signal` backed by a demand PV and a readback PV.
 
-    type: Literal["SignalW"] = "SignalW"
+    One PV can be used as both a demand and a readback by leaving `read_pv` unset. In
+    this case no readback widget will be displayed unless `read_widget` is set.
 
-    pv: str = Field(description="PV to be used for put")
-    widget: Optional[WriteWidgetUnion] = Field(
-        None, description="Widget to use for control, None means don't display"
+    If `read_pv` is set and `read_widget` is not, a `TextRead` widget will be used.
+    """
+
+    _access_mode = "rw"
+
+    # Make optional and replace with `write_pv` during validation if not given
+    read_pv: str = Field(
+        "", description="PV to use for readback. If empty, `write_pv` will be used."
+    )
+    # Override description
+    read_widget: ReadWidgetUnion = Field(
+        None,
+        description=(
+            "Widget to use for readback display. "
+            "A `TextRead` will be used if unset and `read_pv` is given, "
+            "else no readback widget will be displayed."
+        ),
     )
 
+    # Flag to show this is a single PV SignalRW and the `read_pv` has been dynamically
+    # set to `write_pv`. This ensures that `_validate_model` is idempotent.
+    _single_pv_rw: bool = False
 
-class SignalRW(Component):
-    """Read/write value backed by one or two PVs"""
+    @model_validator(mode="after")
+    def _validate_model(self) -> "SignalRW":
+        if self.read_pv and not self._single_pv_rw and self.read_widget is None:
+            # Update default read widget if given a read PV
+            self.read_widget = TextRead()
+        elif not self.read_pv:
+            # No read widget, but update to use write PV for read in PVI definition
+            self.read_pv = self.write_pv
+            self._single_pv_rw = True
 
-    type: Literal["SignalRW"] = "SignalRW"
-
-    pv: str = Field(description="PV to be used for put")
-    widget: Optional[WriteWidgetUnion] = Field(
-        None, description="Widget to use for control, None means don't display"
-    )
-    read_pv: Optional[str] = Field(
-        None, description="PV to be used for read, empty means use pv"
-    )
-    read_widget: Optional[ReadWidgetUnion] = Field(
-        None, description="Widget to use for display, None means use widget"
-    )
-
-
-SignalTypes = (SignalR, SignalW, SignalRW)
-ReadSignalType = Annotated[Union[SignalR, SignalRW], Field(discriminator="type")]
-WriteSignalType = Annotated[Union[SignalW, SignalRW], Field(discriminator="type")]
+        return self
 
 
-class SignalX(Component):
-    """Executable that puts a fixed value to a PV."""
+class SignalX(SignalW):
+    """`SignalW` that can be triggered to write a fixed value to a PV."""
 
-    type: Literal["SignalX"] = "SignalX"
-
-    pv: str = Field(description="PV to be used for call")
     value: str = Field(None, description="Value to write. None means zero")
+    write_widget: ButtonPanel = Field(
+        default_factory=ButtonPanel, description="Widget to use for actions"
+    )
 
 
 class DeviceRef(Component):
     """Reference to another Device."""
-
-    type: Literal["DeviceRef"] = "DeviceRef"
 
     pv: str = Field(description="Child device PVI PV")
     ui: str = Field(description="UI file to open for referenced Device")
@@ -346,26 +366,19 @@ class DeviceRef(Component):
 class SignalRef(Component):
     """Reference to another Signal with the same name in this Device."""
 
-    type: Literal["SignalRef"] = "SignalRef"
-
-
-T = TypeVar("T", bound=BaseTyped)
-S = TypeVar("S", bound=BaseTyped)
-
 
 class Group(Component):
     """Group of child components in a Layout"""
-
-    type: Literal["Group"] = "Group"
 
     layout: LayoutUnion = Field(description="How to layout children on screen")
     children: Tree = Field(description="Child Components")
 
 
-ComponentUnion = Annotated[
-    Group | SignalR | SignalW | SignalRW | SignalX | SignalRef | DeviceRef,
-    Field(discriminator="type"),
-]
+ComponentUnion = Group | SignalR | SignalW | SignalRW | SignalX | SignalRef | DeviceRef
+
+if not TYPE_CHECKING:
+    ComponentUnion = as_tagged_union(ComponentUnion)
+
 Tree = Sequence[ComponentUnion]
 
 
@@ -377,20 +390,8 @@ def walk(tree: Tree) -> Iterator[ComponentUnion]:
             yield from walk(t.children)
 
 
-def signal_access_mode(signal: SignalR | SignalW | SignalRW):
-    match signal:
-        case SignalR():
-            return "r"
-        case SignalW():
-            return "w"
-        case SignalRW():
-            return "rw"
-
-
-class Device(BaseTyped, YamlValidatorMixin):
+class Device(TypedModel, YamlValidatorMixin):
     """Collection of Components"""
-
-    type: Literal["Device"] = "Device"
 
     label: str = Field(description="Label for screen")
     parent: Optional[
@@ -401,18 +402,30 @@ class Device(BaseTyped, YamlValidatorMixin):
     ] = None
     children: Tree = Field([], description="Child Components")
 
-    def to_dict(self) -> dict[str, Any]:
-        """Serialize a Device instance to a dictionary."""
-        return type_first(self.model_dump(exclude_none=True))
+    def _to_dict(self) -> dict[str, Any]:
+        """Serialize a `Device` instance to a `dict`.
+
+        The returned dictionary does not include a type field for the `Device` itself
+        because the discriminator is specified by the file suffix, `pvi.device.yaml`.
+
+        In real use only `Device.serialize` will be called, which calls this method.
+        This method exists as an intermediary to enable testing of the serialization
+        logic separately from writing/reading a file.
+
+        """
+        d = type_first(self.model_dump(exclude_none=True))
+        d.pop("type", None)
+        return d
 
     def serialize(self, yaml: Path):
-        """Serialize a Device instance to YAML.
+        """Serialize a `Device` instance to YAML.
 
         Args:
             yaml: Path of YAML file
 
         """
-        dump_yaml(self.to_dict(), yaml)
+        d = self._to_dict()
+        dump_yaml(d, yaml)
 
     @classmethod
     def deserialize(cls, yaml: Path) -> Device:

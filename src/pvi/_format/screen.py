@@ -32,7 +32,6 @@ from pvi.device import (
     DeviceRef,
     Grid,
     Group,
-    ReadSignalType,
     Row,
     SignalR,
     SignalRef,
@@ -40,9 +39,9 @@ from pvi.device import (
     SignalW,
     SignalX,
     SubScreen,
-    TableWidgetTypes,
+    TableRead,
+    TableWrite,
     Tree,
-    WriteSignalType,
 )
 
 T = TypeVar("T")
@@ -450,28 +449,27 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
             component_bounds = component_bounds.tile(
                 horizontal=len(c.children), spacing=self.layout.spacing
             )
-        elif (
-            isinstance(c, (SignalW, SignalRW))
-            and hasattr(c, "widget")
-            and isinstance(c.widget, ButtonPanel)
-        ):
-            # Convert W of Signal(R)W into SignalX for each button
+        elif isinstance(c, SignalW) and isinstance(c.write_widget, ButtonPanel):
+            # Convert SignalW into a SignalX with a fixed value for each action
             row_components = [
-                SignalX(name=action, pv=c.pv, value=value)
-                for action, value in c.widget.actions.items()
+                SignalX(name=action, write_pv=c.write_pv, value=value)
+                for action, value in c.write_widget.actions.items()
             ]
+            # If this is a SignalRW, recreate the readback with a SignalR
             if isinstance(c, SignalRW):
                 row_components += [
-                    # TODO: Improve optional read_pv with property?
-                    SignalR(name=c.name, pv=c.read_pv or c.pv, widget=c.read_widget)
+                    SignalR(name=c.name, read_pv=c.read_pv, read_widget=c.read_widget)
                 ]
         else:
             row_components = [c]  # Create one widget for row
 
-            if hasattr(c, "widget") and isinstance(c.widget, TableWidgetTypes):
-                add_label = False  # Do not add row labels for Tables
-                component_bounds.w = 100 * len(c.widget.widgets)
-                component_bounds.h *= 10  # TODO: How do we know the number of rows?
+            match c:
+                case SignalR(read_widget=TableRead(widgets=widgets)) | SignalW(
+                    write_widget=TableWrite(widgets=widgets)
+                ):
+                    add_label = False  # Do not add row labels for Tables
+                    component_bounds.w = 100 * len(widgets)
+                    component_bounds.h *= 10  # TODO: How do we know the number of rows?
 
         if add_label:
             # Insert label and reduce width for widget
@@ -502,7 +500,17 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
             len(row_components), self.layout.spacing
         )
         for rc_bounds, rc in zip(row_component_bounds, row_components):
-            if isinstance(rc, SignalRW):
+            # It is important to check for SignalX/SignalRW first, as they will also
+            # match SignalR/SignalW
+
+            if isinstance(rc, SignalX):
+                yield self.widget_formatter_factory.action_formatter_cls(
+                    bounds=rc_bounds,
+                    label=rc.get_label(),
+                    pv=self.prefix + rc.write_pv,
+                    value=rc.value,
+                )
+            elif isinstance(rc, SignalRW):
                 if rc.read_widget:
                     left, right = rc_bounds.split_into(2, self.layout.spacing)
                     yield from self.generate_write_widget(rc, left)
@@ -513,13 +521,6 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
                 yield from self.generate_write_widget(rc, rc_bounds)
             elif isinstance(rc, SignalR):
                 yield from self.generate_read_widget(rc, rc_bounds)
-            elif isinstance(rc, SignalX):
-                yield self.widget_formatter_factory.action_formatter_cls(
-                    bounds=rc_bounds,
-                    label=rc.get_label(),
-                    pv=self.prefix + rc.pv,
-                    value=rc.value,
-                )
             elif isinstance(rc, Group) and isinstance(rc.layout, SubScreen):
                 yield self.widget_formatter_factory.sub_screen_formatter_cls(
                     bounds=rc_bounds,
@@ -537,24 +538,16 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
             else:
                 print(f"Ignoring row component {rc}")
 
-    def generate_read_widget(self, signal: ReadSignalType, bounds: Bounds):
-        if isinstance(signal, SignalRW):
-            widget = signal.read_widget
-            pv = signal.read_pv or signal.pv
-        else:
-            widget = signal.widget
-            pv = signal.pv
-
-        if widget is not None:
+    def generate_read_widget(self, signal: SignalR, bounds: Bounds):
+        if signal.read_widget is not None:
             yield self.widget_formatter_factory.pv_widget_formatter(
-                widget, bounds, pv, self.prefix
+                signal.read_widget, bounds, signal.read_pv, self.prefix
             )
 
-    def generate_write_widget(self, signal: WriteSignalType, bounds: Bounds):
-        if signal.widget is not None:
-            yield self.widget_formatter_factory.pv_widget_formatter(
-                signal.widget, bounds, signal.pv, self.prefix
-            )
+    def generate_write_widget(self, signal: SignalW, bounds: Bounds):
+        yield self.widget_formatter_factory.pv_widget_formatter(
+            signal.write_widget, bounds, signal.write_pv, self.prefix
+        )
 
 
 def is_table(component: Group) -> bool:

@@ -82,8 +82,8 @@ class AsynParameter(Named):
     display_form: Optional[DisplayForm] = Field(
         default=None, description="Display form for numeric/array fields"
     )
-    read_widget: Optional[ReadWidgetUnion] = None
-    write_widget: Optional[WriteWidgetUnion] = None
+    read_widget: ReadWidgetUnion = Field(default=TextRead())
+    write_widget: WriteWidgetUnion = Field(default=TextWrite())
 
     def get_read_record(self) -> str:
         if self.read_record:

@@ -1670,35 +1670,20 @@ text {
 	"basic attribute" {
 		clr=14
 	}
-	textix="Gap Fill No Read PV"
+	textix="Gap Fill Write"
 	align="horiz. right"
 }
 menu {
 	object {
 		x=880
 		y=185
-		width=50
+		width=105
 		height=20
 	}
 	control {
-		chan="$(P)$(R)GapFillNoReadPV"
+		chan="$(P)$(R)GapFillWrite"
 		clr=14
 		bclr=51
-	}
-}
-"text update" {
-	object {
-		x=935
-		y=185
-		width=50
-		height=20
-	}
-	monitor {
-		chan="$(P)$(R)GapFillNoReadPV"
-		clr=54
-		bclr=4
-	}
-	limits {
 	}
 }
 text {

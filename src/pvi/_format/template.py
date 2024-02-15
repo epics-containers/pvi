@@ -4,7 +4,7 @@ from typing import List
 
 from jinja2 import Template
 
-from pvi.device import Device, SignalR, SignalRW, SignalW, signal_access_mode, walk
+from pvi.device import Device, SignalR, SignalW, walk
 
 PVI_TEMPLATE = Path(__file__).parent / "pvi.template.jinja"
 
@@ -19,8 +19,8 @@ def format_template(device: Device, prefix: str, output: Path):
     records: List[PviRecord] = []
     for node in walk(device.children):
         match node:
-            case SignalR() | SignalW() | SignalRW() as signal:
-                records.append(PviRecord(signal.pv, signal_access_mode(signal)))
+            case SignalW(write_pv=pv) | SignalR(read_pv=pv) as signal:
+                records.append(PviRecord(pv, signal.access_mode))
 
     with output.open("w") as expanded, open(PVI_TEMPLATE, "r") as template:
         template_txt = Template(template.read()).render(
