@@ -96,6 +96,10 @@
     "url": "https://epics-containers.github.io/pvi/pv-macros/"
   },
   {
+    "version": "pvi-template",
+    "url": "https://epics-containers.github.io/pvi/pvi-template/"
+  },
+  {
     "version": "pypi-trusted",
     "url": "https://epics-containers.github.io/pvi/pypi-trusted/"
   },
