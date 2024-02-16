@@ -92,10 +92,6 @@
     "url": "https://epics-containers.github.io/pvi/ophyd/"
   },
   {
-    "version": "pv-macros",
-    "url": "https://epics-containers.github.io/pvi/pv-macros/"
-  },
-  {
     "version": "pvi-template",
     "url": "https://epics-containers.github.io/pvi/pvi-template/"
   },
