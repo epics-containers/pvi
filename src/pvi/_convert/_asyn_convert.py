@@ -115,6 +115,14 @@ class AsynBinary(AsynParameter):
     read_widget: ReadWidgetUnion = Field(LED())
     write_widget: WriteWidgetUnion = Field(ToggleButton())
 
+    def model_post_init(self, __context: Any) -> None:
+        if self.write_record is not None:
+            if not all(f in self.write_record.fields for f in ("ZNAM", "ONAM")):
+                print(
+                    f"WARNING: ZNAM/ONAM not set for {self.write_record.pv}. "
+                    "Button labels will be blank."
+                )
+
 
 class AsynBusy(AsynBinary):
     """Asyn Busy Parameter and records"""
