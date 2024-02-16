@@ -997,7 +997,7 @@
     </widget>
     <widget type="label" version="2.0.0">
       <name>Label</name>
-      <text>Gap Fill Write</text>
+      <text>Gap Fill No Read PV</text>
       <x>0</x>
       <y>120</y>
       <width>120</width>
@@ -1005,7 +1005,7 @@
     </widget>
     <widget type="combo" version="2.0.0">
       <name>ComboBox</name>
-      <pv_name>$(P)$(R)GapFillWrite</pv_name>
+      <pv_name>$(P)$(R)GapFillNoReadPV</pv_name>
       <x>124</x>
       <y>120</y>
       <width>124</width>

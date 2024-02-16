@@ -1,4 +1,6 @@
+import re
 from enum import Enum
+from functools import cached_property
 from typing import ClassVar, Dict, List, Optional, Type, cast
 
 from pydantic import BaseModel, Field
@@ -237,11 +239,19 @@ def get_waveform_parameter(dtyp: str):
     assert False, f"Waveform type for DTYP {dtyp} not found in {WaveformRecordTypes}"
 
 
+MACRO_RE = re.compile(r"\$\(.*\)")
+
+
 class Record(BaseModel):
-    name: str  # The name of the record e.g. $(P)$(M)Status
+    pv: str  # The pv of the record e.g. $(P)$(M)Status
     type: str  # The record type string e.g. ao, stringin
     fields: Dict[str, str]  # The record fields
     infos: Dict[str, str]  # Any infos to be added to the record
+
+    @cached_property
+    def name(self) -> str:
+        """Return pv with macros removed to use as label on UIs."""
+        return re.sub(MACRO_RE, "", self.pv)
 
 
 class Parameter(BaseModel):

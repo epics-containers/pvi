@@ -9,7 +9,7 @@
   <widget type="label" version="2.0.0">
     <name>Title</name>
     <class>TITLE</class>
-    <text>TableDevice - $(P)$(R)</text>
+    <text>TableDevice - $(P)</text>
     <x use_class="true">0</x>
     <y use_class="true">0</y>
     <width>226</width>
@@ -27,7 +27,7 @@
   </widget>
   <widget type="table" version="2.0.0">
     <name>Table</name>
-    <pv_name>pva://$(P)$(R)PVATable</pv_name>
+    <pv_name>pva://$(P)PVATable</pv_name>
     <x>22</x>
     <y>30</y>
     <width>200</width>

@@ -59,12 +59,11 @@ class Formatter(TypedModel, YamlValidatorMixin):
         cls._rebuild_child_models()
         return cls.type_adapter().json_schema()
 
-    def format(self, device: Device, prefix: str, path: Path):
+    def format(self, device: Device, path: Path):
         """To be implemented by child classes to define how to format specific UIs.
 
         Args:
             device: Device to populate UI from
-            prefix: PV prefix for widgets
             path: Output file path to write UI to
 
         """
@@ -92,6 +91,5 @@ class Formatter(TypedModel, YamlValidatorMixin):
                     for index in index_entries
                 ],
             ),
-            prefix="Index",
             path=path,
         )

@@ -78,7 +78,7 @@ class RecordExtractor:
         # }
         # extract:
         # Group 1 - record type: waveform
-        # Group 2 - record name exc. prefix: FilePath
+        # Group 2 - record name : $(P)$(R)FilePath
         # Group 3 - all fields:
         #    #field(PINI, "YES")
         #    field(DTYP, "asynOctetWrite")
@@ -86,12 +86,9 @@ class RecordExtractor:
         #    field(FTVL, "CHAR")
         #    field(NELM, "256")
         #    info(autosaveFields, "VAL")
-        #
-        record_parser = re.compile(
-            r'(?:record\()([^,]*)(?:[^"]*)(?:")'
-            r'(?:(?:\$\([a-zA-Z0-9]\))*)([^"]*)'
-            r'(?:")(?:[^{]*)(?:{)([^}]*)(?:})'
-        )
+
+        # https://regex101.com/r/MZz1oa
+        record_parser = re.compile(r'record\((\w+),\s*"([^"]+)"\)\s*{([^}]*)}')
         return re.findall(record_parser, record_str)[0]
 
     def _extract_fields(self, fields_str: str) -> List[Tuple[str, str]]:
@@ -127,9 +124,7 @@ class RecordExtractor:
 
         fields = dict(self._extract_fields(record_fields))
         info = dict(self._extract_infos(record_fields))
-        record = AsynRecord(
-            name=record_name, type=record_type, fields=fields, infos=info
-        )
+        record = AsynRecord(pv=record_name, type=record_type, fields=fields, infos=info)
         return record
 
     def get_asyn_records(self) -> List[AsynRecord]:

@@ -9,7 +9,7 @@
   <widget type="label" version="2.0.0">
     <name>Title</name>
     <class>TITLE</class>
-    <text>Device - $(P)$(R)</text>
+    <text>Device - $(P)</text>
     <x use_class="true">0</x>
     <y use_class="true">0</y>
     <width>274</width>
@@ -41,8 +41,7 @@
         <target>tab</target>
         <description>Open Display</description>
         <macros>
-          <P>EIGER</P>
-          <R>:CAM:</R>
+          <P>TEST:</P>
         </macros>
       </action>
     </actions>

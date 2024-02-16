@@ -274,7 +274,6 @@ class WidgetFormatterFactory(BaseModel, Generic[T]):
         widget: WidgetUnion,
         bounds: Bounds,
         pv: str,
-        prefix: str,
     ) -> PVWidgetFormatter[T]:
         """Convert a component into its WidgetFormatter equivalent
 
@@ -302,7 +301,7 @@ class WidgetFormatterFactory(BaseModel, Generic[T]):
             bounds.h *= widget.get_lines()
 
         widget_formatter_cls = widget_formatter_classes[type(widget)]
-        return widget_formatter_cls(bounds=bounds, pv=prefix + pv, widget=widget)
+        return widget_formatter_cls(bounds=bounds, pv=pv, widget=widget)
 
 
 def max_x(widgets: List[WidgetFormatter[T]]) -> int:

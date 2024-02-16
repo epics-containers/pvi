@@ -70,7 +70,6 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
     group_formatter_cls: Type[GroupFormatter]
     widget_formatter_factory: WidgetFormatterFactory
     layout: ScreenLayout
-    prefix: str
     components: Dict[str, ComponentUnion] = Field(default={}, init_var=False)
     base_file_name: str = ""
 
@@ -185,7 +184,6 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
                 screen_formatter_cls=self.screen_formatter_cls,
                 group_formatter_cls=self.group_formatter_cls,
                 widget_formatter_factory=self.widget_formatter_factory,
-                prefix=self.prefix,
                 layout=self.layout,
             )
             screen_formatter, sub_screen_formatter = factory.create_screen_formatter(
@@ -507,7 +505,7 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
                 yield self.widget_formatter_factory.action_formatter_cls(
                     bounds=rc_bounds,
                     label=rc.get_label(),
-                    pv=self.prefix + rc.write_pv,
+                    pv=rc.write_pv,
                     value=rc.value,
                 )
             elif isinstance(rc, SignalRW):
@@ -541,12 +539,12 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
     def generate_read_widget(self, signal: SignalR, bounds: Bounds):
         if signal.read_widget is not None:
             yield self.widget_formatter_factory.pv_widget_formatter(
-                signal.read_widget, bounds, signal.read_pv, self.prefix
+                signal.read_widget, bounds, signal.read_pv
             )
 
     def generate_write_widget(self, signal: SignalW, bounds: Bounds):
         yield self.widget_formatter_factory.pv_widget_formatter(
-            signal.write_widget, bounds, signal.write_pv, self.prefix
+            signal.write_widget, bounds, signal.write_pv
         )
 
 

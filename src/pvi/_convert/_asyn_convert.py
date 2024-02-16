@@ -61,12 +61,12 @@ class AsynRecord(Record):
                 return record_types[self.type]
         except KeyError as e:
             raise KeyError(
-                f"{self.name} asyn type {self.type}({self.fields}) not found in"
+                f"{self.pv} asyn type {self.type}({self.fields}) not found in"
                 f"{list(record_types)}"
             ) from e
 
         raise ValueError(
-            f"Could not determine asyn type for {self.name} fields {self.fields}"
+            f"Could not determine asyn type for {self.pv} fields {self.fields}"
         )
 
 
@@ -78,7 +78,7 @@ class SettingPair(Parameter):
         asyn_cls = self.write_record.asyn_component_type()
         component = asyn_cls(
             name=enforce_pascal_case(self.write_record.name),
-            write_record=self.write_record.name,
+            write_record=self.write_record.pv,
         )
 
         return SignalRW(
@@ -96,13 +96,12 @@ class Readback(Parameter):
     def generate_component(self) -> SignalR:
         asyn_cls = self.read_record.asyn_component_type()
 
-        if self.read_record.name.endswith("_RBV"):
-            name = self.read_record.name[: -len("_RBV")]
-        else:
-            name = self.read_record.name
+        name = self.read_record.name
+        if name.endswith("_RBV"):
+            name = name[: -len("_RBV")]
 
         component = asyn_cls(
-            name=enforce_pascal_case(name), read_record=self.read_record.name
+            name=enforce_pascal_case(name), read_record=self.read_record.pv
         )
 
         return SignalR(
@@ -120,7 +119,7 @@ class Action(Parameter):
 
         component = asyn_cls(
             name=enforce_pascal_case(self.write_record.name),
-            write_record=self.write_record.name,
+            write_record=self.write_record.pv,
         )
 
         return SignalW(
