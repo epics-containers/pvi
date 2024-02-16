@@ -1,16 +1,22 @@
 import re
-from typing import Any, Optional, Type
+from typing import Any, ClassVar, List, Optional, Type, cast
 
-from pvi.device import SignalR, SignalRW, SignalW, enforce_pascal_case
+from pydantic import Field
 
-from ._parameters import (
-    AsynParameter,
-    InRecordTypes,
-    OutRecordTypes,
-    Parameter,
-    Record,
-    get_waveform_parameter,
+from pvi._schema_utils import rec_subclasses
+from pvi.device import (
+    LED,
+    ComboBox,
+    Named,
+    ReadWidgetUnion,
+    TextFormat,
+    TextRead,
+    TextWrite,
+    ToggleButton,
+    WriteWidgetUnion,
 )
+
+from ._parameters import Record, TypeStrings
 
 
 class RecordError(Exception):
@@ -47,7 +53,7 @@ class AsynRecord(Record):
                         parameter_name = match.group(1)
         return parameter_name
 
-    def asyn_component_type(self) -> Type[AsynParameter]:
+    def asyn_component_type(self) -> Type["AsynParameter"]:
         # For waveform records the data type is defined by DTYP
         if self.type == "waveform":
             return get_waveform_parameter(self.fields["DTYP"])
@@ -70,61 +76,168 @@ class AsynRecord(Record):
         )
 
 
-class SettingPair(Parameter):
-    read_record: AsynRecord
-    write_record: AsynRecord
+class AsynParameter(Named):
+    """Base class for all Asyn Parameters to inherit from"""
 
-    def generate_component(self) -> SignalRW:
-        asyn_cls = self.write_record.asyn_component_type()
-        component = asyn_cls(
-            name=enforce_pascal_case(self.write_record.name),
-            write_record=self.write_record.pv,
-            read_record=self.read_record.pv,
-        )
+    type_strings: ClassVar[TypeStrings]
+    read_record: AsynRecord | None = Field(
+        default=None,
+        description="A read AsynRecord, if not given then use $(name)_RBV as read PV",
+    )
+    write_record: AsynRecord | None = Field(
+        default=None,
+        description="A write AsynRecord, if not given then use $(name) as write PV",
+    )
+    read_widget: ReadWidgetUnion = Field(default=TextRead())
+    write_widget: WriteWidgetUnion = Field(default=TextWrite())
 
-        return SignalRW(
-            name=component.name,
-            write_pv=component.get_write_record(),
-            write_widget=component.write_widget,
-            read_pv=component.get_read_record(),
-            read_widget=component.read_widget,
-        )
+    def get_read_pv(self) -> str:
+        if self.read_record:
+            return self.read_record.pv
+        else:
+            return self.name + "_RBV"
 
-
-class Readback(Parameter):
-    read_record: AsynRecord
-
-    def generate_component(self) -> SignalR:
-        asyn_cls = self.read_record.asyn_component_type()
-
-        name = self.read_record.name
-        if name.endswith("_RBV"):
-            name = name[: -len("_RBV")]
-
-        component = asyn_cls(
-            name=enforce_pascal_case(name), read_record=self.read_record.pv
-        )
-
-        return SignalR(
-            name=component.name,
-            read_pv=component.get_read_record(),
-            read_widget=component.read_widget,
-        )
+    def get_write_pv(self) -> str:
+        if self.write_record:
+            return self.write_record.pv
+        else:
+            return self.name
 
 
-class Action(Parameter):
-    write_record: AsynRecord
+class AsynBinary(AsynParameter):
+    """Asyn Binary Parameter and records"""
 
-    def generate_component(self) -> SignalW:
-        asyn_cls = self.write_record.asyn_component_type()
+    type_strings = TypeStrings(
+        asyn_read="asynInt32",
+        asyn_write="asynInt32",
+        asyn_param="asynParamInt32",
+    )
+    read_widget: ReadWidgetUnion = Field(LED())
+    write_widget: WriteWidgetUnion = Field(ToggleButton())
 
-        component = asyn_cls(
-            name=enforce_pascal_case(self.write_record.name),
-            write_record=self.write_record.pv,
-        )
 
-        return SignalW(
-            name=component.name,
-            write_pv=component.get_write_record(),
-            write_widget=component.write_widget,
-        )
+class AsynBusy(AsynBinary):
+    """Asyn Busy Parameter and records"""
+
+
+class AsynFloat64(AsynParameter):
+    """Asyn Float64 Parameter and records"""
+
+    type_strings: ClassVar[TypeStrings] = TypeStrings(
+        asyn_read="asynFloat64",
+        asyn_write="asynFloat64",
+        asyn_param="asynParamFloat64",
+    )
+    read_widget: ReadWidgetUnion = Field(default=TextRead())
+    write_widget: WriteWidgetUnion = Field(default=TextWrite())
+
+
+class AsynInt32(AsynParameter):
+    """Asyn Int32 Parameter and records"""
+
+    type_strings: ClassVar[TypeStrings] = TypeStrings(
+        asyn_read="asynInt32",
+        asyn_write="asynInt32",
+        asyn_param="asynParamInt32",
+    )
+    read_widget: ReadWidgetUnion = Field(default=TextRead())
+    write_widget: WriteWidgetUnion = Field(default=TextWrite())
+
+
+class AsynLong(AsynInt32):
+    """Asyn Long Parameter and records"""
+
+
+class AsynMultiBitBinary(AsynParameter):
+    """Asyn MultiBitBinary Parameter and records"""
+
+    type_strings: ClassVar[TypeStrings] = TypeStrings(
+        asyn_read="asynInt32",
+        asyn_write="asynInt32",
+        asyn_param="asynParamInt32",
+    )
+    read_widget: ReadWidgetUnion = Field(TextRead())
+    write_widget: WriteWidgetUnion = Field(ComboBox())
+
+
+class AsynString(AsynParameter):
+    """Asyn String Parameter and records"""
+
+    type_strings: ClassVar[TypeStrings] = TypeStrings(
+        asyn_read="asynOctetRead",
+        asyn_write="asynOctetWrite",
+        asyn_param="asynParamOctet",
+    )
+    read_widget: ReadWidgetUnion = Field(TextRead())
+    write_widget: WriteWidgetUnion = Field(TextWrite())
+
+
+InRecordTypes = {
+    "ai": AsynFloat64,
+    "bi": AsynBinary,
+    "longin": AsynLong,
+    "mbbi": AsynMultiBitBinary,
+    "stringin": AsynString,
+}
+
+
+OutRecordTypes = {
+    "ao": AsynFloat64,
+    "bo": AsynBinary,
+    "busy": AsynBusy,
+    "longout": AsynLong,
+    "mbbo": AsynMultiBitBinary,
+    "stringout": AsynString,
+}
+
+
+class AsynWaveform(AsynParameter):
+    """Asyn Waveform Parameter and records"""
+
+    type_strings: ClassVar[TypeStrings] = TypeStrings(
+        asyn_read="asynOctetRead",
+        asyn_write="asynOctetWrite",
+        asyn_param="asynParamOctet",
+    )
+    read_widget: ReadWidgetUnion = Field(TextRead(format=TextFormat.string))
+    write_widget: WriteWidgetUnion = Field(TextWrite(format=TextFormat.string))
+
+
+class AsynInt32Waveform(AsynWaveform):
+    """Asyn Waveform Parameter and records with int32 array elements"""
+
+    type_strings: ClassVar[TypeStrings] = TypeStrings(
+        asyn_read="asynInt32ArrayIn",
+        asyn_write="asynInt32ArrayOut",
+        asyn_param="asynParamInt32",
+    )
+    read_widget: ReadWidgetUnion = Field(TextRead())
+    write_widget: WriteWidgetUnion = Field(TextWrite())
+
+
+class AsynFloat64Waveform(AsynWaveform):
+    """Asyn Waveform Parameter and records with float64 array elements"""
+
+    type_strings: ClassVar[TypeStrings] = TypeStrings(
+        asyn_read="asynFloat64ArrayIn",
+        asyn_write="asynFloat64ArrayOut",
+        asyn_param="asynParamFloat64",
+    )
+    read_widget: ReadWidgetUnion = Field(TextRead())
+    write_widget: WriteWidgetUnion = Field(TextWrite())
+
+
+WaveformRecordTypes = [AsynWaveform] + cast(
+    List[Type[AsynWaveform]], rec_subclasses(AsynWaveform)
+)
+
+
+def get_waveform_parameter(dtyp: str):
+    for waveform_cls in WaveformRecordTypes:
+        if dtyp in (
+            waveform_cls.type_strings.asyn_read,
+            waveform_cls.type_strings.asyn_write,
+        ):
+            return waveform_cls
+
+    assert False, f"Waveform type for DTYP {dtyp} not found in {WaveformRecordTypes}"

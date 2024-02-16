@@ -2,16 +2,22 @@ import re
 from pathlib import Path
 from typing import List, Tuple
 
-from pvi.device import ComponentUnion, Grid, Group, Tree, enforce_pascal_case
+from pvi.device import (
+    ComponentUnion,
+    Grid,
+    Group,
+    SignalR,
+    SignalRW,
+    SignalW,
+    Tree,
+    enforce_pascal_case,
+)
 
 from ._asyn_convert import (
-    Action,
     AsynRecord,
-    Parameter,
-    Readback,
     RecordError,
-    SettingPair,
 )
+from ._parameters import Parameter
 
 OVERRIDE_DESC = "# Overriding value in auto-generated template"
 
@@ -167,6 +173,66 @@ class RecordRoleSorter:
             read_records, write_records
         )
         return parameters
+
+
+class SettingPair(Parameter):
+    read_record: AsynRecord
+    write_record: AsynRecord
+
+    def generate_component(self) -> SignalRW:
+        asyn_cls = self.write_record.asyn_component_type()
+        component = asyn_cls(
+            name=enforce_pascal_case(self.write_record.name),
+            write_record=self.write_record,
+            read_record=self.read_record,
+        )
+
+        return SignalRW(
+            name=component.name,
+            write_pv=component.get_write_pv(),
+            write_widget=component.write_widget,
+            read_pv=component.get_read_pv(),
+            read_widget=component.read_widget,
+        )
+
+
+class Readback(Parameter):
+    read_record: AsynRecord
+
+    def generate_component(self) -> SignalR:
+        asyn_cls = self.read_record.asyn_component_type()
+
+        name = self.read_record.name
+        if name.endswith("_RBV"):
+            name = name[: -len("_RBV")]
+
+        component = asyn_cls(
+            name=enforce_pascal_case(name), read_record=self.read_record
+        )
+
+        return SignalR(
+            name=component.name,
+            read_pv=component.get_read_pv(),
+            read_widget=component.read_widget,
+        )
+
+
+class Action(Parameter):
+    write_record: AsynRecord
+
+    def generate_component(self) -> SignalW:
+        asyn_cls = self.write_record.asyn_component_type()
+
+        component = asyn_cls(
+            name=enforce_pascal_case(self.write_record.name),
+            write_record=self.write_record,
+        )
+
+        return SignalW(
+            name=component.name,
+            write_pv=component.get_write_pv(),
+            write_widget=component.write_widget,
+        )
 
 
 class ParameterRoleMatcher:
