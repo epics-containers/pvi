@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>How to Write a Site Specific Formatter &#8212; pvi 0.7.3.dev2+g7b1e26c documentation</title>
+    <title>How to Write a Site Specific Formatter &#8212; pvi 0.7.3.dev4+gc39a18a documentation</title>
   
   
   
@@ -38,7 +38,7 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../_static/documentation_options.js?v=183fb386"></script>
+    <script src="../../_static/documentation_options.js?v=14fc8f67"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -603,12 +603,11 @@ components, we can create a screen file.</p>
         <span class="bp">cls</span><span class="o">.</span><span class="n">_rebuild_child_models</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">type_adapter</span><span class="p">()</span><span class="o">.</span><span class="n">json_schema</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">Device</span><span class="p">,</span> <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">Device</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;To be implemented by child classes to define how to format specific UIs.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            device: Device to populate UI from</span>
-<span class="sd">            prefix: PV prefix for widgets</span>
 <span class="sd">            path: Output file path to write UI to</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -636,7 +635,6 @@ components, we can create a screen file.</p>
                     <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">index_entries</span>
                 <span class="p">],</span>
             <span class="p">),</span>
-            <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;Index&quot;</span><span class="p">,</span>
             <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span>
         <span class="p">)</span>
 </pre></div>
@@ -854,7 +852,6 @@ screen title and group object functions, we are now ready to define a screen obj
                 <span class="n">widget_formatter_hook</span><span class="o">=</span><span class="n">create_group_object_formatter</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="n">widget_formatter_factory</span><span class="o">=</span><span class="n">widget_formatter_factory</span><span class="p">,</span>
-            <span class="n">prefix</span><span class="o">=</span><span class="n">prefix</span><span class="p">,</span>
             <span class="n">layout</span><span class="o">=</span><span class="n">screen_layout</span><span class="p">,</span>
             <span class="n">base_file_name</span><span class="o">=</span><span class="n">path</span><span class="o">.</span><span class="n">stem</span><span class="p">,</span>
         <span class="p">)</span>
@@ -870,7 +867,7 @@ calculates the size and position of these widgets to generate a uniform screen l
 On the output of this, we can call a (screen.)format function that populates these widgets
 with the extracted properties from the device.yaml, and converts them into the chosen file
 format:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>        <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">device</span><span class="o">.</span><span class="n">label</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>        <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">device</span><span class="o">.</span><span class="n">label</span><span class="si">}</span><span class="s2">&quot;</span>
 
         <span class="n">screen_formatter</span><span class="p">,</span> <span class="n">sub_screens</span> <span class="o">=</span> <span class="n">formatter_factory</span><span class="o">.</span><span class="n">create_screen_formatter</span><span class="p">(</span>
             <span class="n">device</span><span class="o">.</span><span class="n">children</span><span class="p">,</span> <span class="n">title</span>
@@ -910,16 +907,16 @@ find a complete example formatter, supporting both edl and bob file formats for 
     <span class="n">widget_width</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Width of the widgets&quot;</span><span class="p">)</span>
     <span class="n">widget_height</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Height of the widgets&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">Device</span><span class="p">,</span> <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">Device</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.edl&quot;</span><span class="p">:</span>
             <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">format_edl</span>
         <span class="k">elif</span> <span class="n">path</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.bob&quot;</span><span class="p">:</span>
             <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">format_bob</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Can only write .edl or .bob files&quot;</span><span class="p">)</span>
-        <span class="n">f</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+        <span class="n">f</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">format_edl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">Device</span><span class="p">,</span> <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">format_edl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">Device</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">):</span>
         <span class="n">template</span> <span class="o">=</span> <span class="n">EdlTemplate</span><span class="p">((</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;dls.edl&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">())</span>
         <span class="n">screen_layout</span> <span class="o">=</span> <span class="n">ScreenLayout</span><span class="p">(</span>
             <span class="n">spacing</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">spacing</span><span class="p">,</span>
@@ -1054,11 +1051,10 @@ find a complete example formatter, supporting both edl and bob file formats for 
                 <span class="n">widget_formatter_hook</span><span class="o">=</span><span class="n">create_group_box_formatter</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="n">widget_formatter_factory</span><span class="o">=</span><span class="n">widget_formatter_factory</span><span class="p">,</span>
-            <span class="n">prefix</span><span class="o">=</span><span class="n">prefix</span><span class="p">,</span>
             <span class="n">layout</span><span class="o">=</span><span class="n">screen_layout</span><span class="p">,</span>
             <span class="n">base_file_name</span><span class="o">=</span><span class="n">path</span><span class="o">.</span><span class="n">stem</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">device</span><span class="o">.</span><span class="n">label</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">device</span><span class="o">.</span><span class="n">label</span><span class="si">}</span><span class="s2">&quot;</span>
 
         <span class="n">screen_formatter</span><span class="p">,</span> <span class="n">sub_screens</span> <span class="o">=</span> <span class="n">formatter_factory</span><span class="o">.</span><span class="n">create_screen_formatter</span><span class="p">(</span>
             <span class="n">device</span><span class="o">.</span><span class="n">children</span><span class="p">,</span> <span class="n">title</span>
@@ -1069,7 +1065,7 @@ find a complete example formatter, supporting both edl and bob file formats for 
             <span class="n">sub_screen_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">sub_screen_name</span><span class="si">}{</span><span class="n">path</span><span class="o">.</span><span class="n">suffix</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">sub_screen_path</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sub_screen_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">()))</span>
 
-    <span class="k">def</span> <span class="nf">format_bob</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">Device</span><span class="p">,</span> <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">format_bob</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">Device</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">):</span>
         <span class="n">template</span> <span class="o">=</span> <span class="n">BobTemplate</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;dls.bob&quot;</span><span class="p">))</span>
         <span class="c1"># LP DOCS REF: Define the layout properties</span>
         <span class="n">screen_layout</span> <span class="o">=</span> <span class="n">ScreenLayout</span><span class="p">(</span>
@@ -1191,12 +1187,11 @@ find a complete example formatter, supporting both edl and bob file formats for 
                 <span class="n">widget_formatter_hook</span><span class="o">=</span><span class="n">create_group_object_formatter</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="n">widget_formatter_factory</span><span class="o">=</span><span class="n">widget_formatter_factory</span><span class="p">,</span>
-            <span class="n">prefix</span><span class="o">=</span><span class="n">prefix</span><span class="p">,</span>
             <span class="n">layout</span><span class="o">=</span><span class="n">screen_layout</span><span class="p">,</span>
             <span class="n">base_file_name</span><span class="o">=</span><span class="n">path</span><span class="o">.</span><span class="n">stem</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="c1"># SCREEN_FORMAT DOCS REF: Format the screen</span>
-        <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">device</span><span class="o">.</span><span class="n">label</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">device</span><span class="o">.</span><span class="n">label</span><span class="si">}</span><span class="s2">&quot;</span>
 
         <span class="n">screen_formatter</span><span class="p">,</span> <span class="n">sub_screens</span> <span class="o">=</span> <span class="n">formatter_factory</span><span class="o">.</span><span class="n">create_screen_formatter</span><span class="p">(</span>
             <span class="n">device</span><span class="o">.</span><span class="n">children</span><span class="p">,</span> <span class="n">title</span>
