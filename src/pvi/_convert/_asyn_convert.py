@@ -79,6 +79,7 @@ class SettingPair(Parameter):
         component = asyn_cls(
             name=enforce_pascal_case(self.write_record.name),
             write_record=self.write_record.pv,
+            read_record=self.read_record.pv,
         )
 
         return SignalRW(

@@ -33,7 +33,7 @@ children:
     write_pv: $(P)$(R)GainX
     write_widget:
       type: TextWrite
-    read_pv: GainX_RBV
+    read_pv: $(P)$(R)GainX_RBV
     read_widget:
       type: TextRead
 
@@ -42,7 +42,7 @@ children:
     write_pv: $(P)$(R)GainY
     write_widget:
       type: TextWrite
-    read_pv: GainY_RBV
+    read_pv: $(P)$(R)GainY_RBV
     read_widget:
       type: TextRead
 
@@ -51,7 +51,7 @@ children:
     write_pv: $(P)$(R)GainRed
     write_widget:
       type: TextWrite
-    read_pv: GainRed_RBV
+    read_pv: $(P)$(R)GainRed_RBV
     read_widget:
       type: TextRead
 
@@ -60,7 +60,7 @@ children:
     write_pv: $(P)$(R)GainGreen
     write_widget:
       type: TextWrite
-    read_pv: GainGreen_RBV
+    read_pv: $(P)$(R)GainGreen_RBV
     read_widget:
       type: TextRead
 
@@ -69,7 +69,7 @@ children:
     write_pv: $(P)$(R)GainBlue
     write_widget:
       type: TextWrite
-    read_pv: GainBlue_RBV
+    read_pv: $(P)$(R)GainBlue_RBV
     read_widget:
       type: TextRead
 
@@ -78,7 +78,7 @@ children:
     write_pv: $(P)$(R)Reset
     write_widget:
       type: TextWrite
-    read_pv: Reset_RBV
+    read_pv: $(P)$(R)Reset_RBV
     read_widget:
       type: TextRead
 
@@ -87,7 +87,7 @@ children:
     write_pv: $(P)$(R)Offset
     write_widget:
       type: TextWrite
-    read_pv: Offset_RBV
+    read_pv: $(P)$(R)Offset_RBV
     read_widget:
       type: TextRead
 
@@ -96,7 +96,7 @@ children:
     write_pv: $(P)$(R)Noise
     write_widget:
       type: TextWrite
-    read_pv: Noise_RBV
+    read_pv: $(P)$(R)Noise_RBV
     read_widget:
       type: TextRead
 
@@ -105,7 +105,7 @@ children:
     write_pv: $(P)$(R)SimMode
     write_widget:
       type: ComboBox
-    read_pv: SimMode_RBV
+    read_pv: $(P)$(R)SimMode_RBV
     read_widget:
       type: TextRead
 
@@ -114,7 +114,7 @@ children:
     write_pv: $(P)$(R)PeakStartX
     write_widget:
       type: TextWrite
-    read_pv: PeakStartX_RBV
+    read_pv: $(P)$(R)PeakStartX_RBV
     read_widget:
       type: TextRead
 
@@ -123,7 +123,7 @@ children:
     write_pv: $(P)$(R)PeakStartY
     write_widget:
       type: TextWrite
-    read_pv: PeakStartY_RBV
+    read_pv: $(P)$(R)PeakStartY_RBV
     read_widget:
       type: TextRead
 
@@ -132,7 +132,7 @@ children:
     write_pv: $(P)$(R)PeakNumX
     write_widget:
       type: TextWrite
-    read_pv: PeakNumX_RBV
+    read_pv: $(P)$(R)PeakNumX_RBV
     read_widget:
       type: TextRead
 
@@ -141,7 +141,7 @@ children:
     write_pv: $(P)$(R)PeakNumY
     write_widget:
       type: TextWrite
-    read_pv: PeakNumY_RBV
+    read_pv: $(P)$(R)PeakNumY_RBV
     read_widget:
       type: TextRead
 
@@ -150,7 +150,7 @@ children:
     write_pv: $(P)$(R)PeakStepX
     write_widget:
       type: TextWrite
-    read_pv: PeakStepX_RBV
+    read_pv: $(P)$(R)PeakStepX_RBV
     read_widget:
       type: TextRead
 
@@ -159,7 +159,7 @@ children:
     write_pv: $(P)$(R)PeakStepY
     write_widget:
       type: TextWrite
-    read_pv: PeakStepY_RBV
+    read_pv: $(P)$(R)PeakStepY_RBV
     read_widget:
       type: TextRead
 
@@ -168,7 +168,7 @@ children:
     write_pv: $(P)$(R)PeakWidthX
     write_widget:
       type: TextWrite
-    read_pv: PeakWidthX_RBV
+    read_pv: $(P)$(R)PeakWidthX_RBV
     read_widget:
       type: TextRead
 
@@ -177,7 +177,7 @@ children:
     write_pv: $(P)$(R)PeakWidthY
     write_widget:
       type: TextWrite
-    read_pv: PeakWidthY_RBV
+    read_pv: $(P)$(R)PeakWidthY_RBV
     read_widget:
       type: TextRead
 
@@ -186,7 +186,7 @@ children:
     write_pv: $(P)$(R)PeakVariation
     write_widget:
       type: TextWrite
-    read_pv: PeakVariation_RBV
+    read_pv: $(P)$(R)PeakVariation_RBV
     read_widget:
       type: TextRead
 
@@ -195,7 +195,7 @@ children:
     write_pv: $(P)$(R)XSineOperation
     write_widget:
       type: ComboBox
-    read_pv: XSineOperation_RBV
+    read_pv: $(P)$(R)XSineOperation_RBV
     read_widget:
       type: TextRead
 
@@ -204,7 +204,7 @@ children:
     write_pv: $(P)$(R)XSine1Amplitude
     write_widget:
       type: TextWrite
-    read_pv: XSine1Amplitude_RBV
+    read_pv: $(P)$(R)XSine1Amplitude_RBV
     read_widget:
       type: TextRead
 
@@ -213,7 +213,7 @@ children:
     write_pv: $(P)$(R)XSine1Frequency
     write_widget:
       type: TextWrite
-    read_pv: XSine1Frequency_RBV
+    read_pv: $(P)$(R)XSine1Frequency_RBV
     read_widget:
       type: TextRead
 
@@ -222,7 +222,7 @@ children:
     write_pv: $(P)$(R)XSine1Phase
     write_widget:
       type: TextWrite
-    read_pv: XSine1Phase_RBV
+    read_pv: $(P)$(R)XSine1Phase_RBV
     read_widget:
       type: TextRead
 
@@ -231,7 +231,7 @@ children:
     write_pv: $(P)$(R)XSine2Amplitude
     write_widget:
       type: TextWrite
-    read_pv: XSine2Amplitude_RBV
+    read_pv: $(P)$(R)XSine2Amplitude_RBV
     read_widget:
       type: TextRead
 
@@ -240,7 +240,7 @@ children:
     write_pv: $(P)$(R)XSine2Frequency
     write_widget:
       type: TextWrite
-    read_pv: XSine2Frequency_RBV
+    read_pv: $(P)$(R)XSine2Frequency_RBV
     read_widget:
       type: TextRead
 
@@ -249,7 +249,7 @@ children:
     write_pv: $(P)$(R)XSine2Phase
     write_widget:
       type: TextWrite
-    read_pv: XSine2Phase_RBV
+    read_pv: $(P)$(R)XSine2Phase_RBV
     read_widget:
       type: TextRead
 
@@ -258,7 +258,7 @@ children:
     write_pv: $(P)$(R)YSineOperation
     write_widget:
       type: ComboBox
-    read_pv: YSineOperation_RBV
+    read_pv: $(P)$(R)YSineOperation_RBV
     read_widget:
       type: TextRead
 
@@ -267,7 +267,7 @@ children:
     write_pv: $(P)$(R)YSine1Amplitude
     write_widget:
       type: TextWrite
-    read_pv: YSine1Amplitude_RBV
+    read_pv: $(P)$(R)YSine1Amplitude_RBV
     read_widget:
       type: TextRead
 
@@ -276,7 +276,7 @@ children:
     write_pv: $(P)$(R)YSine1Frequency
     write_widget:
       type: TextWrite
-    read_pv: YSine1Frequency_RBV
+    read_pv: $(P)$(R)YSine1Frequency_RBV
     read_widget:
       type: TextRead
 
@@ -285,7 +285,7 @@ children:
     write_pv: $(P)$(R)YSine1Phase
     write_widget:
       type: TextWrite
-    read_pv: YSine1Phase_RBV
+    read_pv: $(P)$(R)YSine1Phase_RBV
     read_widget:
       type: TextRead
 
@@ -294,7 +294,7 @@ children:
     write_pv: $(P)$(R)YSine2Amplitude
     write_widget:
       type: TextWrite
-    read_pv: YSine2Amplitude_RBV
+    read_pv: $(P)$(R)YSine2Amplitude_RBV
     read_widget:
       type: TextRead
 
@@ -303,7 +303,7 @@ children:
     write_pv: $(P)$(R)YSine2Frequency
     write_widget:
       type: TextWrite
-    read_pv: YSine2Frequency_RBV
+    read_pv: $(P)$(R)YSine2Frequency_RBV
     read_widget:
       type: TextRead
 
@@ -312,6 +312,6 @@ children:
     write_pv: $(P)$(R)YSine2Phase
     write_widget:
       type: TextWrite
-    read_pv: YSine2Phase_RBV
+    read_pv: $(P)$(R)YSine2Phase_RBV
     read_widget:
       type: TextRead
