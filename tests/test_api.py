@@ -16,6 +16,7 @@ from pvi.device import (
     SignalR,
     SignalRW,
     SignalW,
+    SignalX,
     SubScreen,
     TableRead,
     TableWrite,
@@ -272,7 +273,12 @@ def test_pvi_template(tmp_path, helper):
     read_write = SignalRW(
         name="ReadWrite", write_pv="$(P)ReadWrite", read_pv="$(P)ReadWrite_RBV"
     )
-    device = Device(label="Template Device", children=[read, write, read_write])
+    read_write_single = SignalRW(name="ReadWriteSingle", write_pv="$(P)ReadWriteSingle")
+    execute = SignalX(name="Execute", write_pv="$(P)Execute")
+    device = Device(
+        label="Template Device",
+        children=[read, write, read_write, read_write_single, execute],
+    )
 
     expected_bob = HERE / "format" / "output" / "pvi.template"
     output_template = tmp_path / "pvi.template"
