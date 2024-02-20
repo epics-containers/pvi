@@ -100,7 +100,7 @@
             "type": "string"
           },
           "default": {
-            "go": "1"
+            "Go": "1"
           },
           "description": "PV poker buttons",
           "title": "Actions",

@@ -159,7 +159,7 @@ class ButtonPanel(WriteWidget):
 
     """
 
-    actions: Dict[str, str] = Field(default={"go": "1"}, description="PV poker buttons")
+    actions: Dict[str, str] = Field(default={"Go": "1"}, description="PV poker buttons")
 
 
 class TextWrite(WriteWidget):
