@@ -92,6 +92,10 @@
     "url": "https://epics-containers.github.io/pvi/ophyd/"
   },
   {
+    "version": "pv-macros",
+    "url": "https://epics-containers.github.io/pvi/pv-macros/"
+  },
+  {
     "version": "pypi-trusted",
     "url": "https://epics-containers.github.io/pvi/pypi-trusted/"
   },
