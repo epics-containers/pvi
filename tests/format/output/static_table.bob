@@ -1,7 +1,7 @@
 <display version="2.0.0">
   <name>Display</name>
   <x>0</x>
-  <y>0</y>
+  <y use_class="true">0</y>
   <width>274</width>
   <height>78</height>
   <grid_step_x>4</grid_step_x>

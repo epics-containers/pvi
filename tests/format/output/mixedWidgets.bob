@@ -1,9 +1,9 @@
 <display version="2.0.0">
   <name>Display</name>
   <x>0</x>
-  <y>0</y>
+  <y use_class="true">0</y>
   <width>576</width>
-  <height>688</height>
+  <height>746</height>
   <grid_step_x>4</grid_step_x>
   <grid_step_y>4</grid_step_y>
   <widget type="label" version="2.0.0">
@@ -845,7 +845,7 @@
     <x>290</x>
     <y>472</y>
     <width>282</width>
-    <height>198</height>
+    <height>270</height>
     <transparent>true</transparent>
     <widget type="label" version="2.0.0">
       <name>Label</name>
@@ -1024,6 +1024,72 @@
       <pv_name>$(P)$(R)ProgressBarTest_RBV</pv_name>
       <x>124</x>
       <y>144</y>
+      <width>124</width>
+      <height>20</height>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label</name>
+      <text>Byte Monitor Test</text>
+      <x>0</x>
+      <y>168</y>
+      <width>120</width>
+      <height>20</height>
+    </widget>
+    <widget type="byte_monitor" version="2.0.0">
+      <name>BitField</name>
+      <pv_name>$(P)$(R)ByteMonitor_RBV</pv_name>
+      <x>124</x>
+      <y>168</y>
+      <width>160</width>
+      <numBits>8</numBits>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label</name>
+      <text>Array Trace Test</text>
+      <x>0</x>
+      <y>192</y>
+      <width>120</width>
+      <height>20</height>
+    </widget>
+    <widget type="xyplot" version="3.0.0">
+      <name>ArrayTrace</name>
+      <x>124</x>
+      <y>192</y>
+      <width>124</width>
+      <height>20</height>
+      <traces>
+        <trace>
+          <name>$(traces[0].y_pv)</name>
+          <x_pv/>
+          <y_pv>$(P)$(R)ArrayTrace_RBV</y_pv>
+          <err_pv/>
+          <axis>0</axis>
+          <trace_type>1</trace_type>
+          <color>
+            <color red="0" green="0" blue="255">
+          </color>
+          </color>
+          <line_width>1</line_width>
+          <line_style>0</line_style>
+          <point_type>0</point_type>
+          <point_size>10</point_size>
+          <visible>true</visible>
+        </trace>
+      </traces>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label</name>
+      <text>Image Read Test</text>
+      <x>0</x>
+      <y>216</y>
+      <width>120</width>
+      <height>20</height>
+    </widget>
+    <widget type="image" version="2.0.0">
+      <name>ImageRead</name>
+      <pv_name>$(P)$(R)ImageRead_RBV</pv_name>
+      <x>124</x>
+      <y>216</y>
       <width>124</width>
       <height>20</height>
     </widget>

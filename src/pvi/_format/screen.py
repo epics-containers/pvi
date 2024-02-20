@@ -454,7 +454,7 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
                 for action, value in c.write_widget.actions.items()
             ]
             # If this is a SignalRW, recreate the readback with a SignalR
-            if isinstance(c, SignalRW):
+            if isinstance(c, SignalRW) and c.read_widget is not None:
                 row_components += [
                     SignalR(name=c.name, read_pv=c.read_pv, read_widget=c.read_widget)
                 ]

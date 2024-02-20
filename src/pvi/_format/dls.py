@@ -117,6 +117,26 @@ class DLSFormatter(Formatter):
                 search='"SubScreenFile"',
                 property_map={"displayFileName": "file_name"},
             ),
+            bitfield_formatter_cls=PVWidgetFormatter.from_template(
+                template,
+                search='"LED"',
+                property_map={"controlPv": "pv"},
+            ),
+            button_panel_formatter_cls=PVWidgetFormatter.from_template(
+                template,
+                search='"Label"',
+                property_map={"value": "pv"},
+            ),
+            array_trace_formatter_cls=PVWidgetFormatter.from_template(
+                template,
+                search='"Label"',
+                property_map={"value": "pv"},
+            ),
+            image_read_formatter_cls=PVWidgetFormatter.from_template(
+                template,
+                search='"Label"',
+                property_map={"value": "pv"},
+            ),
         )
         screen_title_cls = LabelWidgetFormatter.from_template(
             template,
@@ -226,6 +246,26 @@ class DLSFormatter(Formatter):
             progress_bar_formatter_cls=PVWidgetFormatter.from_template(
                 template,
                 search="ProgressBar",
+                property_map={"pv_name": "pv"},
+            ),
+            bitfield_formatter_cls=PVWidgetFormatter.from_template(
+                template,
+                search="BitField",
+                property_map={"pv_name": "pv"},
+            ),
+            button_panel_formatter_cls=PVWidgetFormatter.from_template(
+                template,
+                search="ButtonPanel",
+                property_map={"pv_name": "pv"},
+            ),
+            array_trace_formatter_cls=PVWidgetFormatter.from_template(
+                template,
+                search="ArrayTrace",
+                property_map={"y_pv": "pv"},
+            ),
+            image_read_formatter_cls=PVWidgetFormatter.from_template(
+                template,
+                search="ImageRead",
                 property_map={"pv_name": "pv"},
             ),
             text_read_formatter_cls=PVWidgetFormatter.from_template(

@@ -60,12 +60,27 @@
       "description": "LED and label for each bit of an int PV",
       "properties": {
         "labels": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
           "description": "Label for each bit",
-          "items": {
-            "type": "string"
-          },
-          "title": "Labels",
-          "type": "array"
+          "title": "Labels"
+        },
+        "number_of_bits": {
+          "default": 8,
+          "description": "Number of bits to display",
+          "exclusiveMinimum": 0,
+          "title": "Number Of Bits",
+          "type": "integer"
         },
         "type": {
           "const": "BitField",
@@ -73,9 +88,6 @@
           "title": "Type"
         }
       },
-      "required": [
-        "labels"
-      ],
       "title": "BitField",
       "type": "object"
     },
@@ -88,7 +100,7 @@
             "type": "string"
           },
           "default": {
-            "go": "1"
+            "Go": "1"
           },
           "description": "PV poker buttons",
           "title": "Actions",

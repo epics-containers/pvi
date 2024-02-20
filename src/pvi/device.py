@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 import re
-from enum import IntEnum
+from enum import Enum
 from pathlib import Path
 from typing import (
     TYPE_CHECKING,
@@ -65,7 +65,7 @@ def enforce_pascal_case(s: str) -> str:
     return s[0].upper() + s[1:]
 
 
-class TextFormat(IntEnum):
+class TextFormat(Enum):
     """Format to use for display of Text{Read,Write} widgets on a UI"""
 
     decimal = 0
@@ -94,7 +94,10 @@ class LED(ReadWidget):
 class BitField(ReadWidget):
     """LED and label for each bit of an int PV"""
 
-    labels: Sequence[str] = Field(description="Label for each bit")
+    labels: Sequence[str] | None = Field(default=None, description="Label for each bit")
+    number_of_bits: int = Field(
+        default=8, description="Number of bits to display", gt=0
+    )
 
 
 class ProgressBar(ReadWidget):
@@ -156,7 +159,7 @@ class ButtonPanel(WriteWidget):
 
     """
 
-    actions: Dict[str, str] = Field(default={"go": "1"}, description="PV poker buttons")
+    actions: Dict[str, str] = Field(default={"Go": "1"}, description="PV poker buttons")
 
 
 class TextWrite(WriteWidget):

@@ -341,3 +341,22 @@ children:
     read_pv: $(P)$(R)ProgressBarTest_RBV
     read_widget:
       type: ProgressBar
+
+  - type: SignalR
+    name: ByteMonitorTest
+    read_pv: $(P)$(R)ByteMonitor_RBV
+    read_widget:
+      type: BitField
+
+  - type: SignalR
+    name: ArrayTraceTest
+    read_pv: $(P)$(R)ArrayTrace_RBV
+    read_widget:
+      type: ArrayTrace
+      axis: "x"
+
+  - type: SignalR
+    name: ImageReadTest
+    read_pv: $(P)$(R)ImageRead_RBV
+    read_widget:
+      type: ImageRead
