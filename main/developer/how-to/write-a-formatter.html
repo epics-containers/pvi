@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>How to Write a Site Specific Formatter &#8212; pvi 0.7.3.dev13+ge1d5556 documentation</title>
+    <title>How to Write a Site Specific Formatter &#8212; pvi 0.7.3.dev17+g0702019 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../_static/documentation_options.js?v=da246cf7"></script>
+    <script src="../../_static/documentation_options.js?v=e285a47f"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -774,6 +774,11 @@ WidgetFactory.from_template method:</p>
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ChoiceButton&quot;</span><span class="p">,</span>
                 <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
             <span class="p">),</span>
+            <span class="n">toggle_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ToggleButton&quot;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
+            <span class="p">),</span>
             <span class="n">combo_box_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ComboBox&quot;</span><span class="p">,</span>
@@ -981,6 +986,11 @@ find a complete example formatter, supporting both edl and bob file formats for 
                 <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;ComboBox&quot;&#39;</span><span class="p">,</span>
                 <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;controlPv&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
             <span class="p">),</span>
+            <span class="n">toggle_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;ToggleButton&quot;&#39;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;controlPv&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
+            <span class="p">),</span>
             <span class="n">combo_box_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s1">&#39;&quot;ComboBox&quot;&#39;</span><span class="p">,</span>
@@ -1170,6 +1180,11 @@ find a complete example formatter, supporting both edl and bob file formats for 
             <span class="n">check_box_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ChoiceButton&quot;</span><span class="p">,</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
+            <span class="p">),</span>
+            <span class="n">toggle_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ToggleButton&quot;</span><span class="p">,</span>
                 <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">combo_box_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
