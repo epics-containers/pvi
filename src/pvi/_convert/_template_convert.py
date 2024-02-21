@@ -94,8 +94,11 @@ class RecordExtractor:
         #    info(autosaveFields, "VAL")
 
         # https://regex101.com/r/MZz1oa
-        record_parser = re.compile(r'record\((\w+),\s*"([^"]+)"\)\s*{([^}]*)}')
-        return re.findall(record_parser, record_str)[0]
+        record_parser = re.compile(r'record\((\w+),\s*"?([^"]+)"?\)\s*{([^}]*)}')
+        matches = re.findall(record_parser, record_str)
+        if len(matches) != 1:
+            raise RecordError(f"Parse failed on record: {record_str}")
+        return matches[0]
 
     def _extract_fields(self, fields_str: str) -> List[Tuple[str, str]]:
         # extract two groups from a field e.g.
