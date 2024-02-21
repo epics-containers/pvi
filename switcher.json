@@ -96,6 +96,10 @@
     "url": "https://epics-containers.github.io/pvi/pv-macros/"
   },
   {
+    "version": "pv-macros2",
+    "url": "https://epics-containers.github.io/pvi/pv-macros2/"
+  },
+  {
     "version": "pypi-trusted",
     "url": "https://epics-containers.github.io/pvi/pypi-trusted/"
   },
@@ -110,9 +114,5 @@
   {
     "version": "text-format",
     "url": "https://epics-containers.github.io/pvi/text-format/"
-  },
-  {
-    "version": "toggle-widget",
-    "url": "https://epics-containers.github.io/pvi/toggle-widget/"
   }
 ]
