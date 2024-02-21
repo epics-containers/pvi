@@ -13,13 +13,13 @@ children:
     name: ResetPower
     write_pv: $(P)$(R)ResetPower
     write_widget:
-      type: CheckBox
+      type: ToggleButton
 
   - type: SignalW
     name: ThresholdApply
     write_pv: $(P)$(R)ThresholdApply
     write_widget:
-      type: CheckBox
+      type: ToggleButton
 
   - type: SignalW
     name: ImageFileTmot
@@ -298,7 +298,7 @@ children:
     name: ThresholdAutoApply
     write_pv: $(P)$(R)ThresholdAutoApply
     write_widget:
-      type: CheckBox
+      type: ToggleButton
     read_pv: $(P)$(R)ThresholdAutoApply_RBV
     read_widget:
       type: LED

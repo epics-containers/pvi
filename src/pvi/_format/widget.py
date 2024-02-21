@@ -19,6 +19,7 @@ from pvi.device import (
     TableWrite,
     TextRead,
     TextWrite,
+    ToggleButton,
     WidgetUnion,
 )
 
@@ -266,6 +267,7 @@ class WidgetFormatterFactory(BaseModel, Generic[T]):
     progress_bar_formatter_cls: Type[PVWidgetFormatter[T]]
     text_read_formatter_cls: Type[PVWidgetFormatter[T]]
     check_box_formatter_cls: Type[PVWidgetFormatter[T]]
+    toggle_formatter_cls: Type[PVWidgetFormatter[T]]
     combo_box_formatter_cls: Type[PVWidgetFormatter[T]]
     text_write_formatter_cls: Type[PVWidgetFormatter[T]]
     table_formatter_cls: Type[PVWidgetFormatter[T]]
@@ -300,6 +302,7 @@ class WidgetFormatterFactory(BaseModel, Generic[T]):
             TextRead: self.text_read_formatter_cls,
             TableRead: self.table_formatter_cls,
             CheckBox: self.check_box_formatter_cls,
+            ToggleButton: self.toggle_formatter_cls,
             ComboBox: self.combo_box_formatter_cls,
             TextWrite: self.text_write_formatter_cls,
             TableWrite: self.table_formatter_cls,

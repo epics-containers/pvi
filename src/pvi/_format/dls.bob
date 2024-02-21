@@ -90,17 +90,12 @@
     <height>30</height>
   </widget>
   <widget type="choice" version="2.0.0">
-    <name>ChoiceButton</name>
-    <pv_name>CheckBox</pv_name>
+    <name>ToggleButton</name>
+    <pv_name>ToggleButton</pv_name>
     <x>18</x>
     <y>207</y>
     <width>120</width>
     <height>31</height>
-    <items>
-      <item>0</item>
-      <item>1</item>
-      <item>2</item>
-    </items>
   </widget>
   <widget type="combo" version="2.0.0">
     <name>ComboBox</name>
@@ -120,11 +115,12 @@
   </widget>
   <widget type="checkbox" version="2.0.0">
     <name>CheckBox</name>
-    <label>CheckBox</label>
-    <x>24</x>
-    <y>296</y>
-    <width>110</width>
-    <height>30</height>
+    <label></label>
+    <x>64</x>
+    <y>300</y>
+    <width>18</width>
+    <height>18</height>
+    <auto_size>true</auto_size>
   </widget>
   <widget type="label" version="2.0.0">
     <name>GroupLabel</name>

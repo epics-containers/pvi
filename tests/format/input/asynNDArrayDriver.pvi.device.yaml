@@ -14,13 +14,13 @@ children:
     name: WaitForPlugins
     pv: $(P)$(R)WaitForPlugins
     widget:
-      type: CheckBox
+      type: ToggleButton
 
   - type: SignalW
     name: EmptyFreeList
     pv: $(P)$(R)EmptyFreeList
     widget:
-      type: CheckBox
+      type: ToggleButton
 
   - type: SignalW
     name: NDAttributesMacros
@@ -196,7 +196,7 @@ children:
     name: Acquire
     pv: $(P)$(R)Acquire
     widget:
-      type: CheckBox
+      type: ToggleButton
     read_pv: Acquire_RBV
     read_widget:
       type: LED
@@ -250,7 +250,7 @@ children:
     name: ArrayCallbacks
     pv: $(P)$(R)ArrayCallbacks
     widget:
-      type: CheckBox
+      type: ToggleButton
     read_pv: ArrayCallbacks_RBV
     read_widget:
       type: LED
@@ -344,7 +344,7 @@ children:
     name: AutoIncrement
     pv: $(P)$(R)AutoIncrement
     widget:
-      type: CheckBox
+      type: ToggleButton
     read_pv: AutoIncrement_RBV
     read_widget:
       type: LED
@@ -364,7 +364,7 @@ children:
     name: AutoSave
     pv: $(P)$(R)AutoSave
     widget:
-      type: CheckBox
+      type: ToggleButton
     read_pv: AutoSave_RBV
     read_widget:
       type: LED
@@ -373,7 +373,7 @@ children:
     name: WriteFile
     pv: $(P)$(R)WriteFile
     widget:
-      type: CheckBox
+      type: ToggleButton
     read_pv: WriteFile_RBV
     read_widget:
       type: LED
@@ -382,7 +382,7 @@ children:
     name: ReadFile
     pv: $(P)$(R)ReadFile
     widget:
-      type: CheckBox
+      type: ToggleButton
     read_pv: ReadFile_RBV
     read_widget:
       type: LED
@@ -409,7 +409,7 @@ children:
     name: Capture
     pv: $(P)$(R)Capture
     widget:
-      type: CheckBox
+      type: ToggleButton
     read_pv: Capture_RBV
     read_widget:
       type: LED
@@ -427,7 +427,7 @@ children:
     name: DeleteDriverFile
     pv: $(P)$(R)DeleteDriverFile
     widget:
-      type: CheckBox
+      type: ToggleButton
     read_pv: DeleteDriverFile_RBV
     read_widget:
       type: LED
@@ -436,7 +436,7 @@ children:
     name: LazyOpen
     pv: $(P)$(R)LazyOpen
     widget:
-      type: CheckBox
+      type: ToggleButton
     read_pv: LazyOpen_RBV
     read_widget:
       type: LED

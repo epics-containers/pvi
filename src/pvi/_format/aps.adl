@@ -216,7 +216,7 @@ byte {
 		height=19
 	}
 	control {
-		chan="CheckBox"
+		chan="ToggleButton"
 		clr=14
 		bclr=51
 	}
@@ -275,4 +275,18 @@ text {
 	}
 	clr=14
 	bclr=4
+}
+"choice button" {
+	object {
+		x=165
+		y=340
+		width=140
+		height=19
+	}
+	control {
+		chan="CheckBox"
+		clr=14
+		bclr=51
+	}
+	stacking="column"
 }

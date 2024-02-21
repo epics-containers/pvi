@@ -87,6 +87,11 @@ class DLSFormatter(Formatter):
                 search='"ComboBox"',
                 property_map={"controlPv": "pv"},
             ),
+            toggle_formatter_cls=PVWidgetFormatter.from_template(
+                template,
+                search='"ToggleButton"',
+                property_map={"controlPv": "pv"},
+            ),
             combo_box_formatter_cls=PVWidgetFormatter.from_template(
                 template,
                 search='"ComboBox"',
@@ -276,6 +281,11 @@ class DLSFormatter(Formatter):
             check_box_formatter_cls=PVWidgetFormatter.from_template(
                 template,
                 search="ChoiceButton",
+                property_map={"pv_name": "pv"},
+            ),
+            toggle_formatter_cls=PVWidgetFormatter.from_template(
+                template,
+                search="ToggleButton",
                 property_map={"pv_name": "pv"},
             ),
             combo_box_formatter_cls=PVWidgetFormatter.from_template(

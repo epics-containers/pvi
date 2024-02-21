@@ -77,6 +77,11 @@ class APSFormatter(Formatter):
                 search='"CheckBox"',
                 property_map={"chan": "pv"},
             ),
+            toggle_formatter_cls=PVWidgetFormatter.from_template(
+                template,
+                search='"ToggleButton"',
+                property_map={"chan": "pv"},
+            ),
             combo_box_formatter_cls=PVWidgetFormatter.from_template(
                 template,
                 search='"ComboBox"',

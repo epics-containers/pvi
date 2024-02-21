@@ -139,7 +139,15 @@ class WriteWidget(TypedModel, AccessModeMixin):
 
 
 class CheckBox(WriteWidget):
-    """Checkable control of a boolean PV"""
+    """Checkable control of a boolean PV.
+
+    This is compact replacement for a `ToggleButton` to be used in rows and tables.
+
+    """
+
+
+class ToggleButton(WriteWidget):
+    """A pair of buttons to select between two mutually exclusive states."""
 
 
 class ComboBox(WriteWidget):
@@ -243,7 +251,13 @@ ReadWidgetUnion = (
 )
 
 WriteWidgetUnion = (
-    ArrayWrite | ButtonPanel | CheckBox | ComboBox | TableWrite | TextWrite
+    ArrayWrite
+    | ButtonPanel
+    | CheckBox
+    | ComboBox
+    | TableWrite
+    | TextWrite
+    | ToggleButton
 )
 
 if not TYPE_CHECKING:

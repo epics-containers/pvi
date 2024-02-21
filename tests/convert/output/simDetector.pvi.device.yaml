@@ -9,6 +9,12 @@ children:
     labelled: true
   children:
 
+  - type: SignalW
+    name: ResetPower
+    write_pv: $(P)$(R)ResetPower
+    write_widget:
+      type: ToggleButton
+
   - type: SignalR
     name: Read
     read_pv: $(P)$(R)Read

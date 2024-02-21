@@ -637,3 +637,10 @@ record(waveform, "$(P)$(R)Dimensions_RBV")
     field(FLNK, "$(P)$(R)Dim0SA_RBV")
     field(SCAN, "I/O Intr")
 }
+record(bo, "$(P)$(R)ResetPower")
+{
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))RESET_POWER")
+    field(ZNAM, "Done")
+    field(ONAM, "Reset")
+}
