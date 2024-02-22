@@ -2,7 +2,15 @@ import re
 from pathlib import Path
 from typing import Dict, List, Tuple
 
-from pvi.device import Component, ComponentUnion, Device, Grid, Group, walk
+from pvi.device import (
+    ComponentUnion,
+    Device,
+    Grid,
+    Group,
+    Tree,
+    enforce_pascal_case,
+    walk,
+)
 
 
 def find_pvs(pvs: List[str], file_path: Path) -> Tuple[List[str], List[str]]:
@@ -51,59 +59,48 @@ def find_pvs(pvs: List[str], file_path: Path) -> Tuple[List[str], List[str]]:
     return grouped_pvs, remaining_pvs
 
 
-def sanitize_name(name: str) -> str:
-    name = name.replace(" ", "")
-    name = name.replace("-", "")
-    name = name.replace("_", "")
-    return name
+def group_by_ui(device: Device, ui_paths: List[Path]) -> Tree:
+    signals: List[ComponentUnion] = list(walk(device.children))
 
-
-def group_parameters(device: Device, ui_paths: List[Path]) -> List[Group]:
-    initial_parameters: List[ComponentUnion] = [
-        param for param in walk(device.children) if isinstance(param, Component)
-    ]
-
-    # Group PVs that appear in the given ui files
-    pvs = [node.name for node in walk(device.children) if isinstance(node, Component)]
+    # PVs without macros to search for in UI
+    pv_names = [s.name for s in signals]
 
     group_pv_map: Dict[str, List[str]] = {}
     for ui in ui_paths:
-        ui_pvs, pvs = find_pvs(pvs, ui)
+        ui_pvs, pv_names = find_pvs(pv_names, ui)
         if ui_pvs:
             group_pv_map[ui.stem] = ui_pvs
 
-    if pvs:
-        print(f'Did not find group for {"|".join(pvs)}')
+    if pv_names:
+        print(f"Did not find group for {' | '.join(pv_names)}")
 
     # Create groups for parameters we found in the files
     ui_groups: List[Group] = [
         Group(
-            name=sanitize_name(group_name),
+            name=enforce_pascal_case(group_name),
             layout=Grid(labelled=True),
             children=[  # Note: Need to preserve order in group_pvs here
-                param
-                for pv in group_pvs
-                for param in initial_parameters
-                if param.name == pv
+                signal
+                for pv_name in group_pvs
+                for signal in signals
+                if signal.name == pv_name
             ],
-            label=group_name,
+            label=group_name if enforce_pascal_case(group_name) != group_name else None,
         )
         for group_name, group_pvs in group_pv_map.items()
     ]
 
     # Separate any parameters we failed to find a group for
-    grouped_parameters = [param for group in ui_groups for param in group.children]
-    ungrouped_parameters = [
-        param for param in initial_parameters if param not in grouped_parameters
-    ]
+    grouped_pvs = [pv_name for group in ui_groups for pv_name in group.children]
+    ungrouped_pvs = [pv_name for pv_name in signals if pv_name not in grouped_pvs]
 
-    # Replace with grouped parameters and any ungrouped parameters on the end
-    if ungrouped_parameters:
+    # Add any ungrouped parameters on the end
+    if ungrouped_pvs:
         ui_groups.append(
             Group(
-                name=sanitize_name(device.label + "Misc"),
+                name=enforce_pascal_case(device.label) + "Misc",
                 layout=Grid(labelled=True),
-                children=ungrouped_parameters,
+                children=ungrouped_pvs,
                 label=device.label + " Ungrouped",
             )
         )

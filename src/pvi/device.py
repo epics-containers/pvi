@@ -55,12 +55,21 @@ def to_snake_case(pascal_s: str) -> str:
 def enforce_pascal_case(s: str) -> str:
     """Enforce a pascal case string, removing any invalid characters.
 
+    String will be returned unchanged if it is already valid PascalCase.
+
     Args:
         s: String to convert
 
     Returns: PascalCase string
 
     """
+    if PASCAL_CASE_REGEX.fullmatch(s) is not None:
+        # Already valid
+        return s
+
+    # Do minimal conversion to PascalCase:
+    # - Remove any invalid characters
+    # - Make first character upper case
     s = NON_PASCAL_CHARS_RE.sub(lambda _: "", s)
     return s[0].upper() + s[1:]
 
@@ -402,9 +411,10 @@ Tree = Sequence[ComponentUnion]
 def walk(tree: Tree) -> Iterator[ComponentUnion]:
     """Depth first traversal of tree"""
     for t in tree:
-        yield t
         if isinstance(t, Group):
             yield from walk(t.children)
+        else:
+            yield t
 
 
 class Device(TypedModel, YamlValidatorMixin):
