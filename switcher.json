@@ -60,6 +60,10 @@
     "url": "https://epics-containers.github.io/pvi/0.1/"
   },
   {
+    "version": "convert-dev",
+    "url": "https://epics-containers.github.io/pvi/convert-dev/"
+  },
+  {
     "version": "experiments",
     "url": "https://epics-containers.github.io/pvi/experiments/"
   },
@@ -94,10 +98,6 @@
   {
     "version": "pv-macros",
     "url": "https://epics-containers.github.io/pvi/pv-macros/"
-  },
-  {
-    "version": "pv-macros2",
-    "url": "https://epics-containers.github.io/pvi/pv-macros2/"
   },
   {
     "version": "pypi-trusted",
