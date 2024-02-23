@@ -27,7 +27,7 @@
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label</name>
-    <text>Button</text>
+    <text>Button - $(P)</text>
     <x>23</x>
     <y>30</y>
     <width>150</width>
@@ -45,7 +45,7 @@
         </macros>
       </action>
     </actions>
-    <text>Button</text>
+    <text>TEST:</text>
     <x>178</x>
     <y>30</y>
     <width>205</width>
@@ -54,7 +54,7 @@
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label</name>
-    <text>Combo Box</text>
+    <text>ComboBox</text>
     <x>23</x>
     <y>55</y>
     <width>150</width>
@@ -72,7 +72,7 @@
         </macros>
       </action>
     </actions>
-    <text>Combo Box</text>
+    <text>TEST:</text>
     <x>178</x>
     <y>55</y>
     <width>205</width>
@@ -81,7 +81,7 @@
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label</name>
-    <text>Table</text>
+    <text>table</text>
     <x>23</x>
     <y>80</y>
     <width>150</width>
@@ -99,7 +99,7 @@
         </macros>
       </action>
     </actions>
-    <text>Table</text>
+    <text>TEST:</text>
     <x>178</x>
     <y>80</y>
     <width>205</width>
