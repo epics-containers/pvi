@@ -255,7 +255,7 @@ def test_index(tmp_path, helper):
     DLSFormatter().format_index(
         "Index",
         [
-            IndexEntry(label="Button", ui="button.bob", macros={"P": "TEST:"}),
+            IndexEntry(label="Button - $(P)", ui="button.bob", macros={"P": "TEST:"}),
             IndexEntry(label="ComboBox", ui="combo_box.bob", macros={"P": "TEST:"}),
             # Check that lower case name is OK and will be capitalized to avoid
             # PascalCase validation error

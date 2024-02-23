@@ -84,6 +84,7 @@ class Formatter(TypedModel, YamlValidatorMixin):
                 children=[
                     DeviceRef(
                         name=enforce_pascal_case(index.label),
+                        label=index.label,
                         pv=index.label.upper(),
                         ui=index.ui,
                         macros=index.macros,
