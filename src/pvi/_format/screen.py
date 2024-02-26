@@ -529,7 +529,7 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
             elif isinstance(rc, DeviceRef):
                 yield self.widget_formatter_factory.sub_screen_formatter_cls(
                     bounds=rc_bounds,
-                    label=rc.get_label(),
+                    label=" ".join(rc.macros.values()),
                     file_name=rc.ui,
                     macros=rc.macros,
                 )

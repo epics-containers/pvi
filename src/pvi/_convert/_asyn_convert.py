@@ -29,7 +29,7 @@ class AsynRecord(Record):
         if all(k in self.fields.keys() for k in ("INP", "OUT")) or not any(
             k in self.fields.keys() for k in ("INP", "OUT")
         ):
-            raise RecordError("Record has no input or output field or both")
+            raise RecordError(f"Record {self.pv} has no input or output field or both")
 
         asyn_field = self.fields.get("INP", self.fields.get("OUT"))
         if asyn_field is None or "@asyn(" not in asyn_field:

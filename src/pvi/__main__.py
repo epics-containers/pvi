@@ -10,7 +10,7 @@ from pvi._convert._template_convert import TemplateConverter
 from pvi._convert.utils import extract_device_and_parent_class
 from pvi._format import Formatter
 from pvi._format.template import format_template
-from pvi._pv_group import group_parameters
+from pvi._pv_group import group_by_ui
 from pvi.device import Device
 
 app = typer.Typer()
@@ -117,7 +117,7 @@ def regroup(
 ):
     """Regroup a device.yaml file based on ui files that the PVs appear in"""
     device = Device.deserialize(device_path)
-    device.children = group_parameters(device, ui_paths)
+    device.children = group_by_ui(device, ui_paths)
 
     device.serialize(device_path)
 
