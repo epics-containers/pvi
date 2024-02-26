@@ -88,6 +88,10 @@
     "url": "https://epics-containers.github.io/pvi/giles-pydantic/"
   },
   {
+    "version": "ibek-dev",
+    "url": "https://epics-containers.github.io/pvi/ibek-dev/"
+  },
+  {
     "version": "main-tmp",
     "url": "https://epics-containers.github.io/pvi/main-tmp/"
   },
