@@ -122,5 +122,9 @@
   {
     "version": "text-format",
     "url": "https://epics-containers.github.io/pvi/text-format/"
+  },
+  {
+    "version": "validation-error",
+    "url": "https://epics-containers.github.io/pvi/validation-error/"
   }
 ]
