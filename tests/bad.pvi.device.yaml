@@ -1,0 +1,9 @@
+label: label
+parent: parent
+children:
+
+- type: SignalR
+  name: OutA
+  red_pv: OUTA
+  read_widget:
+    type: LED

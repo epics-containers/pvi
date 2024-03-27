@@ -55,6 +55,7 @@ def device():
 
 
 DEVICE_YAML = Path(__file__).parent / "test.pvi.device.yaml"
+BAD_DEVICE_YAML = Path(__file__).parent / "bad.pvi.device.yaml"
 
 
 def test_serialize(device: Device):
@@ -70,6 +71,12 @@ def test_serialize(device: Device):
 def test_deserialize(device: Device):
     d = Device.deserialize(DEVICE_YAML)
     assert d == device
+
+
+def test_deserialize_raises(tmp_path):
+    # Check that an exception is raised with the YAML file path included
+    with pytest.raises(ValidationError, match=str(BAD_DEVICE_YAML)):
+        Device.deserialize(BAD_DEVICE_YAML)
 
 
 def test_validate_fails():
