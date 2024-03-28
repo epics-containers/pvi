@@ -308,10 +308,12 @@ class SignalR(Signal):
 
     read_pv: str = Field(description="PV to use for readback")
     read_widget: ReadWidgetUnion = Field(
-        None, description="Widget to use for display. `TextRead` will be used if unset."
+        None,
+        description="Widget to use for display. `TextRead` will be used if unset.",
+        validate_default=True,
     )
 
-    @field_validator("read_widget")
+    @field_validator("read_widget", mode="before")
     @classmethod
     def _validate_read_widget(cls, read_widget: Any):
         if read_widget is None:

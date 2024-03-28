@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../../schemas/pvi.device.schema.json
+
+label: label
+children:
+
+- type: SignalR
+  name: Read
+  read_pv: Read
+
+- type: SignalW
+  name: Write
+  write_pv: Write
+
+- type: SignalRW
+  name: ReadWriteSingle
+  write_pv: ReadWriteSingle
+
+- type: SignalRW
+  name: ReadWrite
+  write_pv: ReadWrite
+  read_pv: ReadWrite_RBV
+
+- type: SignalX
+  name: Execute
+  write_pv: Execute

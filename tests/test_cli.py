@@ -49,6 +49,20 @@ def test_format(tmp_path, helper, filename, formatter):
     )
 
 
+def test_signal_default_widgets(tmp_path, helper):
+    expected_path = HERE / "format" / "output" / "signal_default_widgets.bob"
+    input_path = HERE / "format" / "input"
+    formatter_path = input_path / "dls.bob.pvi.formatter.yaml"
+    helper.assert_cli_output_matches(
+        app,
+        expected_path,
+        "format --yaml-path " + str(input_path),
+        tmp_path / "signal_default_widgets.bob",
+        HERE / "format" / "input" / "signal_default_widgets.pvi.device.yaml",
+        formatter_path,
+    )
+
+
 def test_convert(tmp_path, helper):
     expected_path = HERE / "convert" / "output"
     input_path = HERE / "convert" / "input"
