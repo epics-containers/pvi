@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import pytest
+from pydantic import ValidationError
 
 from pvi._format.base import Formatter, IndexEntry
 from pvi._format.dls import DLSFormatter
@@ -93,6 +94,11 @@ def test_button(tmp_path, helper):
     formatter.format(device, output_bob)
 
     helper.assert_output_matches(expected_bob, output_bob)
+
+
+def test_button_raises(tmp_path, helper):
+    with pytest.raises(ValidationError, match="String should match pattern"):
+        ButtonPanel(actions={"start": "1", "Stop": "0"})
 
 
 def test_pva_table(tmp_path, helper):

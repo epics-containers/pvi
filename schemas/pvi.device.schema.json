@@ -96,13 +96,15 @@
       "description": "One-or-more buttons that poke a PV with a value\n\nArgs:\n    actions: Dict of button label to value the button sends",
       "properties": {
         "actions": {
-          "additionalProperties": {
-            "type": "string"
-          },
           "default": {
             "Go": "1"
           },
           "description": "PV poker buttons",
+          "patternProperties": {
+            "^([A-Z][a-z0-9]*)*$": {
+              "type": "string"
+            }
+          },
           "title": "Actions",
           "type": "object"
         },

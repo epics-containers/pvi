@@ -75,6 +75,9 @@ def enforce_pascal_case(s: str) -> str:
     return s[0].upper() + s[1:]
 
 
+PascalStr = Annotated[str, Field(pattern="^([A-Z][a-z0-9]*)*$")]
+
+
 class TextFormat(Enum):
     """Format to use for display of Text{Read,Write} widgets on a UI"""
 
@@ -177,7 +180,9 @@ class ButtonPanel(WriteWidget):
 
     """
 
-    actions: Dict[str, str] = Field(default={"Go": "1"}, description="PV poker buttons")
+    actions: Dict[PascalStr, str] = Field(
+        default={"Go": "1"}, description="PV poker buttons"
+    )
 
 
 class TextWrite(WriteWidget):
@@ -280,10 +285,7 @@ WidgetUnion = ReadWidgetUnion | WriteWidgetUnion
 
 
 class Named(TypedModel):
-    name: str = Field(
-        description="PascalCase name to uniquely identify",
-        pattern=r"^([A-Z][a-z0-9]*)*$",
-    )
+    name: PascalStr = Field(description="PascalCase name to uniquely identify")
 
 
 class Component(Named):
