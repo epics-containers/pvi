@@ -116,6 +116,10 @@
     "url": "https://epics-containers.github.io/pvi/sad-ruff-cache/"
   },
   {
+    "version": "signalr-default-widget",
+    "url": "https://epics-containers.github.io/pvi/signalr-default-widget/"
+  },
+  {
     "version": "skeleton-update",
     "url": "https://epics-containers.github.io/pvi/skeleton-update/"
   },
