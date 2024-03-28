@@ -8,10 +8,6 @@
     "url": "https://epics-containers.github.io/pvi/main/"
   },
   {
-    "version": "test-tag",
-    "url": "https://epics-containers.github.io/pvi/test-tag/"
-  },
-  {
     "version": "0.8.0b0",
     "url": "https://epics-containers.github.io/pvi/0.8.0b0/"
   },
@@ -122,6 +118,10 @@
   {
     "version": "skeleton-update",
     "url": "https://epics-containers.github.io/pvi/skeleton-update/"
+  },
+  {
+    "version": "test-tag",
+    "url": "https://epics-containers.github.io/pvi/test-tag/"
   },
   {
     "version": "text-format",
