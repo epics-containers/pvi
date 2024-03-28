@@ -291,7 +291,10 @@ class Named(TypedModel):
 class Component(Named):
     """These make up a Device"""
 
-    label: Optional[str] = None
+    label: Annotated[str | None, Field(description="Label for component")] = None
+    description: Annotated[
+        str | None, Field(description="Description for label tooltip")
+    ] = None
 
     def get_label(self):
         return self.label or to_title_case(self.name)

@@ -32,6 +32,7 @@
     <y>30</y>
     <width>120</width>
     <height>20</height>
+    <tooltip>A read-only signal</tooltip>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>TextUpdate</name>
@@ -53,6 +54,7 @@
     <y>54</y>
     <width>120</width>
     <height>20</height>
+    <tooltip>$(text)</tooltip>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>TextEntry</name>
@@ -70,6 +72,7 @@
     <y>78</y>
     <width>120</width>
     <height>20</height>
+    <tooltip>$(text)</tooltip>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>TextEntry</name>
@@ -87,6 +90,7 @@
     <y>102</y>
     <width>120</width>
     <height>20</height>
+    <tooltip>$(text)</tooltip>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>TextEntry</name>
@@ -117,6 +121,7 @@
     <y>126</y>
     <width>120</width>
     <height>20</height>
+    <tooltip>$(text)</tooltip>
   </widget>
   <widget type="action_button" version="3.0.0">
     <name>WritePV</name>

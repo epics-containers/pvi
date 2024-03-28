@@ -240,7 +240,7 @@ class DLSFormatter(Formatter):
             label_formatter_cls=LabelWidgetFormatter.from_template(
                 template,
                 search="Label",
-                property_map={"text": "text"},
+                property_map={"text": "text", "tooltip": "description"},
             ),
             led_formatter_cls=PVWidgetFormatter.from_template(
                 template,

@@ -475,7 +475,7 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
                 self.layout.label_width, self.layout.spacing
             )
             yield self.widget_formatter_factory.label_formatter_cls(
-                bounds=left, text=c.get_label()
+                bounds=left, text=c.get_label(), description=c.description or ""
             )
         else:
             # Allow full width for widget

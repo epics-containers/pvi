@@ -5,6 +5,7 @@ children:
 
 - type: SignalR
   name: Read
+  description: A read-only signal
   read_pv: Read
 
 - type: SignalW

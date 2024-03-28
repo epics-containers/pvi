@@ -141,6 +141,7 @@ class WidgetFormatter(BaseModel, Generic[T]):
 
 class LabelWidgetFormatter(WidgetFormatter[T]):
     text: str
+    description: str = ""
 
 
 class PVWidgetFormatter(WidgetFormatter[T]):
