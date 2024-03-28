@@ -4,7 +4,7 @@ from typing import List
 from lxml import etree
 from pydantic import Field
 
-from pvi._format.bob import BobTemplate
+from pvi._format.bob import BobTemplate, find_element
 from pvi._format.edl import EdlTemplate
 from pvi._format.screen import (
     ScreenFormatterFactory,
@@ -387,4 +387,5 @@ def write_bob(screen_formatter: GroupFormatter, path: Path):
     for element in texts[:0:-1]:
         ET.insert(ET.index(ET.find("grid_step_y")) + 1, element)
     ET = ET.getroottree()
+    find_element(ET, "name").text = screen_formatter.title
     ET.write(str(path), pretty_print=True)
