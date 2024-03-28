@@ -19,6 +19,7 @@ from pydantic import (
     BaseModel,
     ConfigDict,
     Field,
+    ValidationError,
     field_validator,
     model_validator,
 )
@@ -463,7 +464,11 @@ class Device(TypedModel, YamlValidatorMixin):
 
         """
         serialized = cls.validate_yaml(yaml)
-        return cls(**serialized)
+        try:
+            return cls(**serialized)
+        except ValidationError:
+            print(f"\nFailed to validate `{yaml}` as Device:\n")
+            raise
 
     def deserialize_parents(self, yaml_paths: list[Path]):
         """Populate Device with Components from Device yaml of parent classes.
