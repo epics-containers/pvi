@@ -26,7 +26,7 @@ children:
     read_pv: $(P)$(R)XMLErrorMsg_RBV
     read_widget:
       type: TextRead
-      format: 4
+      format: string
 
   - type: SignalR
     name: Dimensions
