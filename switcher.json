@@ -68,10 +68,6 @@
     "url": "https://epics-containers.github.io/pvi/0.1/"
   },
   {
-    "version": "button-panel-validation",
-    "url": "https://epics-containers.github.io/pvi/button-panel-validation/"
-  },
-  {
     "version": "convert-dev",
     "url": "https://epics-containers.github.io/pvi/convert-dev/"
   },
