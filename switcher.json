@@ -68,10 +68,6 @@
     "url": "https://epics-containers.github.io/pvi/0.1/"
   },
   {
-    "version": "changelog",
-    "url": "https://epics-containers.github.io/pvi/changelog/"
-  },
-  {
     "version": "convert-dev",
     "url": "https://epics-containers.github.io/pvi/convert-dev/"
   },
@@ -130,5 +126,9 @@
   {
     "version": "text-format",
     "url": "https://epics-containers.github.io/pvi/text-format/"
+  },
+  {
+    "version": "text-format-strings",
+    "url": "https://epics-containers.github.io/pvi/text-format-strings/"
   }
 ]
