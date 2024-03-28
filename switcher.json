@@ -116,8 +116,8 @@
     "url": "https://epics-containers.github.io/pvi/sad-ruff-cache/"
   },
   {
-    "version": "signalr-default-widget",
-    "url": "https://epics-containers.github.io/pvi/signalr-default-widget/"
+    "version": "screen-label",
+    "url": "https://epics-containers.github.io/pvi/screen-label/"
   },
   {
     "version": "skeleton-update",
