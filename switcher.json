@@ -8,6 +8,10 @@
     "url": "https://epics-containers.github.io/pvi/main/"
   },
   {
+    "version": "0.9.0",
+    "url": "https://epics-containers.github.io/pvi/0.9.0/"
+  },
+  {
     "version": "0.8.1",
     "url": "https://epics-containers.github.io/pvi/0.8.1/"
   },
@@ -102,10 +106,6 @@
   {
     "version": "name-validation",
     "url": "https://epics-containers.github.io/pvi/name-validation/"
-  },
-  {
-    "version": "nested-subscreens",
-    "url": "https://epics-containers.github.io/pvi/nested-subscreens/"
   },
   {
     "version": "ophyd",
