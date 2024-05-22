@@ -76,10 +76,6 @@
     "url": "https://epics-containers.github.io/pvi/convert-dev/"
   },
   {
-    "version": "description-tooltips",
-    "url": "https://epics-containers.github.io/pvi/description-tooltips/"
-  },
-  {
     "version": "experiments",
     "url": "https://epics-containers.github.io/pvi/experiments/"
   },

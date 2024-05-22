@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>How to Write a Site Specific Formatter &#8212; pvi 0.8.2.dev3+g59c9390e documentation</title>
+    <title>How to Write a Site Specific Formatter &#8212; pvi 0.8.2.dev6+ge585fc0f documentation</title>
   
   
   
@@ -38,7 +38,7 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../_static/documentation_options.js?v=8a1c08db"></script>
+    <script src="../../_static/documentation_options.js?v=d3252961"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -507,7 +507,10 @@ deserialised into component objects, which are later translated into widgets:</p
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Component</span><span class="p">(</span><span class="n">Named</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;These make up a Device&quot;&quot;&quot;</span>
 
-    <span class="n">label</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">label</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Label for component&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">description</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span>
+        <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Description for label tooltip&quot;</span><span class="p">)</span>
+    <span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">get_label</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="ow">or</span> <span class="n">to_title_case</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
@@ -537,7 +540,8 @@ deserialised into component objects, which are later translated into widgets:</p
 <p>To make a screen from this, we need a template file. This contains a blank representation
 of each supported widget for each of the supported file formats (bob, edl etc…). Below
 is an example of a ‘text entry’ widget for a .bob file:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    &lt;actions&gt;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    &lt;pv_name&gt;SignalX&lt;/pv_name&gt;
+    &lt;actions&gt;
       &lt;action type=&quot;write_pv&quot;&gt;
         &lt;pv_name&gt;$(pv_name)&lt;/pv_name&gt;
         &lt;value&gt;value&lt;/value&gt;
@@ -549,11 +553,10 @@ is an example of a ‘text entry’ widget for a .bob file:</p>
     &lt;y&gt;118&lt;/y&gt;
     &lt;width&gt;120&lt;/width&gt;
     &lt;height&gt;40&lt;/height&gt;
-    &lt;tooltip&gt;$(actions)&lt;/tooltip&gt;
+    &lt;tooltip&gt;$(tooltip)&lt;/tooltip&gt;
   &lt;/widget&gt;
   &lt;widget type=&quot;textupdate&quot; version=&quot;2.0.0&quot;&gt;
     &lt;name&gt;TextUpdate&lt;/name&gt;
-    &lt;pv_name&gt;TextRead&lt;/pv_name&gt;
 </pre></div>
 </div>
 <p>By extracting and altering the template widgets with the information provided by the
@@ -734,7 +737,7 @@ WidgetFactory.from_template method:</p>
             <span class="n">label_formatter_cls</span><span class="o">=</span><span class="n">LabelWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Label&quot;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">},</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;tooltip&quot;</span><span class="p">:</span> <span class="s2">&quot;description&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">led_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
@@ -800,7 +803,12 @@ WidgetFactory.from_template method:</p>
             <span class="n">action_formatter_cls</span><span class="o">=</span><span class="n">ActionWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;WritePV&quot;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span><span class="p">},</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span>
+                    <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;tooltip&quot;</span><span class="p">:</span> <span class="s2">&quot;tooltip&quot;</span><span class="p">,</span>
+                <span class="p">},</span>
             <span class="p">),</span>
             <span class="n">sub_screen_formatter_cls</span><span class="o">=</span><span class="n">SubScreenWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
@@ -1143,7 +1151,7 @@ find a complete example formatter, supporting both edl and bob file formats for 
             <span class="n">label_formatter_cls</span><span class="o">=</span><span class="n">LabelWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Label&quot;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">},</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;tooltip&quot;</span><span class="p">:</span> <span class="s2">&quot;description&quot;</span><span class="p">},</span>
             <span class="p">),</span>
             <span class="n">led_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
@@ -1209,7 +1217,12 @@ find a complete example formatter, supporting both edl and bob file formats for 
             <span class="n">action_formatter_cls</span><span class="o">=</span><span class="n">ActionWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
                 <span class="n">search</span><span class="o">=</span><span class="s2">&quot;WritePV&quot;</span><span class="p">,</span>
-                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span><span class="p">},</span>
+                <span class="n">property_map</span><span class="o">=</span><span class="p">{</span>
+                    <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;tooltip&quot;</span><span class="p">:</span> <span class="s2">&quot;tooltip&quot;</span><span class="p">,</span>
+                <span class="p">},</span>
             <span class="p">),</span>
             <span class="n">sub_screen_formatter_cls</span><span class="o">=</span><span class="n">SubScreenWidgetFormatter</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
                 <span class="n">template</span><span class="p">,</span>
