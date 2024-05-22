@@ -83,7 +83,8 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
             title: The title of the screen
 
         Returns:
-            A constructed screen object and a list of zero or more sub screen objects
+            A `ScreenFormatter` plus a list of (file name, `ScreenFormatter`) for any
+            nested `SubScreen`s in components
 
         """
         full_w = (
@@ -150,17 +151,27 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
     def create_sub_screen_formatters(
         self, screen_widgets: List[WidgetFormatter[T]]
     ) -> List[Tuple[str, GroupFormatter[T]]]:
-        """Create and return Screens from SubScreenFactorys in screen widgets
+        """Create and return `ScreenFormatter`s for any `SubScreenWidgetFormatters`
+
+        When the root screen formatter is created it will format a button that opens a
+        screen when a `SubScreen` widget is found, with a `SubScreenWidgetFormatter`.
+        Here we search through the components of the screen for these formatters and
+        create `ScreenFormatters`s that will format the screens that those buttons will
+        open.
+
+        This will recursively call `create_screen_formatter` and
+        `create_sub_screen_formatters` until no further `SubScreenWidgetFormatters` are
+        found.
 
         Args:
-            screen_widgets: List of WidgetFormatters containing 0-or-more
-            SubScreenFactorys to be found and
+            screen_widgets: List of `WidgetFormatters` containing 0-or-more
+            `SubScreenFactory`s to be found
 
         Returns:
-            List of (file name, Screen) created from found SubScreenFactorys
+            List of (file name, `ScreenFormatter`) created from `SubScreenFactory`s
 
         """
-        sub_screen_factories = [
+        sub_screen_widget_formatters = [
             # At the root
             widget_factory
             for widget_factory in screen_widgets
@@ -175,8 +186,8 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
         ]
 
         sub_screen_formatters: List[Tuple[str, GroupFormatter[T]]] = []
-        for sub_screen_factory in sub_screen_factories:
-            if sub_screen_factory.components is None:
+        for sub_screen_widget_formatter in sub_screen_widget_formatters:
+            if sub_screen_widget_formatter.components is None:
                 # This is a reference to an existing screen - don't create it
                 continue
 
@@ -185,14 +196,16 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
                 group_formatter_cls=self.group_formatter_cls,
                 widget_formatter_factory=self.widget_formatter_factory,
                 layout=self.layout,
+                base_file_name=f"{sub_screen_widget_formatter.file_name}",
             )
-            screen_formatter, sub_screen_formatter = factory.create_screen_formatter(
-                [sub_screen_factory.components], sub_screen_factory.components.name
+            screen_formatter, _sub_screen_formatters = factory.create_screen_formatter(
+                [sub_screen_widget_formatter.components],
+                sub_screen_widget_formatter.components.name,
             )
-            assert not sub_screen_formatter, "Only one level of sub screens allowed"
             sub_screen_formatters.append(
-                (sub_screen_factory.file_name, screen_formatter)
+                (sub_screen_widget_formatter.file_name, screen_formatter)
             )
+            sub_screen_formatters.extend(_sub_screen_formatters)
 
         return sub_screen_formatters
 
