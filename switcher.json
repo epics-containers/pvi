@@ -108,6 +108,10 @@
     "url": "https://epics-containers.github.io/pvi/name-validation/"
   },
   {
+    "version": "nested-subscreens",
+    "url": "https://epics-containers.github.io/pvi/nested-subscreens/"
+  },
+  {
     "version": "ophyd",
     "url": "https://epics-containers.github.io/pvi/ophyd/"
   },
