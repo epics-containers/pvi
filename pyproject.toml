@@ -16,7 +16,7 @@ classifiers = [
 ]
 description = "One line description of your module"
 dependencies = [
-    "pydantic",
+    "pydantic>=2.7",
     "lxml",
     "ruamel.yaml",
     "typer",

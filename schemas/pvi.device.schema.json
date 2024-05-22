@@ -12,7 +12,11 @@
         "type": {
           "const": "ArrayTrace",
           "default": "ArrayTrace",
-          "title": "Type"
+          "enum": [
+            "ArrayTrace"
+          ],
+          "title": "Type",
+          "type": "string"
         }
       },
       "required": [
@@ -46,7 +50,11 @@
         "type": {
           "const": "ArrayWrite",
           "default": "ArrayWrite",
-          "title": "Type"
+          "enum": [
+            "ArrayWrite"
+          ],
+          "title": "Type",
+          "type": "string"
         }
       },
       "required": [
@@ -85,7 +93,11 @@
         "type": {
           "const": "BitField",
           "default": "BitField",
-          "title": "Type"
+          "enum": [
+            "BitField"
+          ],
+          "title": "Type",
+          "type": "string"
         }
       },
       "title": "BitField",
@@ -111,7 +123,11 @@
         "type": {
           "const": "ButtonPanel",
           "default": "ButtonPanel",
-          "title": "Type"
+          "enum": [
+            "ButtonPanel"
+          ],
+          "title": "Type",
+          "type": "string"
         }
       },
       "title": "ButtonPanel",
@@ -124,7 +140,11 @@
         "type": {
           "const": "CheckBox",
           "default": "CheckBox",
-          "title": "Type"
+          "enum": [
+            "CheckBox"
+          ],
+          "title": "Type",
+          "type": "string"
         }
       },
       "title": "CheckBox",
@@ -146,7 +166,11 @@
         "type": {
           "const": "ComboBox",
           "default": "ComboBox",
-          "title": "Type"
+          "enum": [
+            "ComboBox"
+          ],
+          "title": "Type",
+          "type": "string"
         }
       },
       "title": "ComboBox",
@@ -196,7 +220,11 @@
         "type": {
           "const": "DeviceRef",
           "default": "DeviceRef",
-          "title": "Type"
+          "enum": [
+            "DeviceRef"
+          ],
+          "title": "Type",
+          "type": "string"
         }
       },
       "required": [
@@ -220,7 +248,11 @@
         "type": {
           "const": "Grid",
           "default": "Grid",
-          "title": "Type"
+          "enum": [
+            "Grid"
+          ],
+          "title": "Type",
+          "type": "string"
         }
       },
       "title": "Grid",
@@ -299,7 +331,11 @@
         "type": {
           "const": "Group",
           "default": "Group",
-          "title": "Type"
+          "enum": [
+            "Group"
+          ],
+          "title": "Type",
+          "type": "string"
         }
       },
       "required": [
@@ -317,7 +353,11 @@
         "type": {
           "const": "ImageRead",
           "default": "ImageRead",
-          "title": "Type"
+          "enum": [
+            "ImageRead"
+          ],
+          "title": "Type",
+          "type": "string"
         }
       },
       "title": "ImageRead",
@@ -330,7 +370,11 @@
         "type": {
           "const": "LED",
           "default": "LED",
-          "title": "Type"
+          "enum": [
+            "LED"
+          ],
+          "title": "Type",
+          "type": "string"
         }
       },
       "title": "LED",
@@ -343,7 +387,11 @@
         "type": {
           "const": "Plot",
           "default": "Plot",
-          "title": "Type"
+          "enum": [
+            "Plot"
+          ],
+          "title": "Type",
+          "type": "string"
         }
       },
       "title": "Plot",
@@ -356,7 +404,11 @@
         "type": {
           "const": "ProgressBar",
           "default": "ProgressBar",
-          "title": "Type"
+          "enum": [
+            "ProgressBar"
+          ],
+          "title": "Type",
+          "type": "string"
         }
       },
       "title": "ProgressBar",
@@ -385,7 +437,11 @@
         "type": {
           "const": "Row",
           "default": "Row",
-          "title": "Type"
+          "enum": [
+            "Row"
+          ],
+          "title": "Type",
+          "type": "string"
         }
       },
       "title": "Row",
@@ -449,7 +505,11 @@
         "type": {
           "const": "SignalR",
           "default": "SignalR",
-          "title": "Type"
+          "enum": [
+            "SignalR"
+          ],
+          "title": "Type",
+          "type": "string"
         }
       },
       "required": [
@@ -550,7 +610,11 @@
         "type": {
           "const": "SignalRW",
           "default": "SignalRW",
-          "title": "Type"
+          "enum": [
+            "SignalRW"
+          ],
+          "title": "Type",
+          "type": "string"
         }
       },
       "required": [
@@ -585,7 +649,11 @@
         "type": {
           "const": "SignalRef",
           "default": "SignalRef",
-          "title": "Type"
+          "enum": [
+            "SignalRef"
+          ],
+          "title": "Type",
+          "type": "string"
         }
       },
       "required": [
@@ -651,7 +719,11 @@
         "type": {
           "const": "SignalW",
           "default": "SignalW",
-          "title": "Type"
+          "enum": [
+            "SignalW"
+          ],
+          "title": "Type",
+          "type": "string"
         }
       },
       "required": [
@@ -705,7 +777,11 @@
         "type": {
           "const": "SignalX",
           "default": "SignalX",
-          "title": "Type"
+          "enum": [
+            "SignalX"
+          ],
+          "title": "Type",
+          "type": "string"
         }
       },
       "required": [
@@ -728,7 +804,11 @@
         "type": {
           "const": "SubScreen",
           "default": "SubScreen",
-          "title": "Type"
+          "enum": [
+            "SubScreen"
+          ],
+          "title": "Type",
+          "type": "string"
         }
       },
       "title": "SubScreen",
@@ -763,7 +843,11 @@
         "type": {
           "const": "TableRead",
           "default": "TableRead",
-          "title": "Type"
+          "enum": [
+            "TableRead"
+          ],
+          "title": "Type",
+          "type": "string"
         }
       },
       "title": "TableRead",
@@ -798,7 +882,11 @@
         "type": {
           "const": "TableWrite",
           "default": "TableWrite",
-          "title": "Type"
+          "enum": [
+            "TableWrite"
+          ],
+          "title": "Type",
+          "type": "string"
         }
       },
       "title": "TableWrite",
@@ -848,7 +936,11 @@
         "type": {
           "const": "TextRead",
           "default": "TextRead",
-          "title": "Type"
+          "enum": [
+            "TextRead"
+          ],
+          "title": "Type",
+          "type": "string"
         }
       },
       "title": "TextRead",
@@ -886,7 +978,11 @@
         "type": {
           "const": "TextWrite",
           "default": "TextWrite",
-          "title": "Type"
+          "enum": [
+            "TextWrite"
+          ],
+          "title": "Type",
+          "type": "string"
         }
       },
       "title": "TextWrite",
@@ -899,7 +995,11 @@
         "type": {
           "const": "ToggleButton",
           "default": "ToggleButton",
-          "title": "Type"
+          "enum": [
+            "ToggleButton"
+          ],
+          "title": "Type",
+          "type": "string"
         }
       },
       "title": "ToggleButton",
@@ -960,7 +1060,11 @@
     "type": {
       "const": "Device",
       "default": "Device",
-      "title": "Type"
+      "enum": [
+        "Device"
+      ],
+      "title": "Type",
+      "type": "string"
     }
   },
   "required": [
