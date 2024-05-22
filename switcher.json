@@ -120,6 +120,10 @@
     "url": "https://epics-containers.github.io/pvi/pv-macros/"
   },
   {
+    "version": "pydantic-2.7",
+    "url": "https://epics-containers.github.io/pvi/pydantic-2.7/"
+  },
+  {
     "version": "pypi-trusted",
     "url": "https://epics-containers.github.io/pvi/pypi-trusted/"
   },
