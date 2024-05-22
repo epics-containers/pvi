@@ -154,6 +154,10 @@ class ActionWidgetFormatter(WidgetFormatter[T]):
     pv: str
     value: str
 
+    @property
+    def tooltip(self) -> str:
+        return f"{self.pv} = {self.value}"
+
 
 class SubScreenWidgetFormatter(WidgetFormatter[T]):
     label: str

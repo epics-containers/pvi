@@ -67,7 +67,7 @@
     <y>118</y>
     <width>120</width>
     <height>40</height>
-    <tooltip>$(actions)</tooltip>
+    <tooltip>$(tooltip)</tooltip>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>TextUpdate</name>
