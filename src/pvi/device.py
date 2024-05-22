@@ -81,11 +81,11 @@ PascalStr = Annotated[str, Field(pattern="^([A-Z][a-z0-9]*)*$")]
 class TextFormat(Enum):
     """Format to use for display of Text{Read,Write} widgets on a UI"""
 
-    decimal = 0
-    hexadecimal = 1
-    engineer = 2
-    exponential = 3
-    string = 4
+    decimal = "decimal"
+    hexadecimal = "hexadecimal"
+    engineer = "engineer"
+    exponential = "exponential"
+    string = "string"
 
 
 class AccessModeMixin(BaseModel):

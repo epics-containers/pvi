@@ -993,14 +993,14 @@
     "TextFormat": {
       "description": "Format to use for display of Text{Read,Write} widgets on a UI",
       "enum": [
-        0,
-        1,
-        2,
-        3,
-        4
+        "decimal",
+        "hexadecimal",
+        "engineer",
+        "exponential",
+        "string"
       ],
       "title": "TextFormat",
-      "type": "integer"
+      "type": "string"
     },
     "TextRead": {
       "additionalProperties": false,
