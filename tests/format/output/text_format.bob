@@ -32,6 +32,7 @@
     <y>30</y>
     <width>120</width>
     <height>20</height>
+    <tooltip>$(text)</tooltip>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>TextEntry</name>
@@ -64,6 +65,7 @@
     <y>54</y>
     <width>120</width>
     <height>20</height>
+    <tooltip>$(text)</tooltip>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>TextEntry</name>
@@ -96,6 +98,7 @@
     <y>78</y>
     <width>120</width>
     <height>20</height>
+    <tooltip>$(text)</tooltip>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>TextEntry</name>
@@ -128,6 +131,7 @@
     <y>102</y>
     <width>120</width>
     <height>20</height>
+    <tooltip>$(text)</tooltip>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>TextEntry</name>
@@ -160,6 +164,7 @@
     <y>126</y>
     <width>120</width>
     <height>20</height>
+    <tooltip>$(text)</tooltip>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>TextEntry</name>

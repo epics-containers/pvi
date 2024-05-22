@@ -240,7 +240,7 @@ class DLSFormatter(Formatter):
             label_formatter_cls=LabelWidgetFormatter.from_template(
                 template,
                 search="Label",
-                property_map={"text": "text"},
+                property_map={"text": "text", "tooltip": "description"},
             ),
             led_formatter_cls=PVWidgetFormatter.from_template(
                 template,
@@ -306,7 +306,12 @@ class DLSFormatter(Formatter):
             action_formatter_cls=ActionWidgetFormatter.from_template(
                 template,
                 search="WritePV",
-                property_map={"text": "label", "pv_name": "pv", "value": "value"},
+                property_map={
+                    "text": "label",
+                    "pv_name": "pv",
+                    "value": "value",
+                    "tooltip": "tooltip",
+                },
             ),
             sub_screen_formatter_cls=SubScreenWidgetFormatter.from_template(
                 template,

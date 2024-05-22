@@ -196,7 +196,21 @@
             }
           ],
           "default": null,
+          "description": "Label for component",
           "title": "Label"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Description for label tooltip",
+          "title": "Description"
         },
         "pv": {
           "description": "Child device PVI PV",
@@ -278,7 +292,21 @@
             }
           ],
           "default": null,
+          "description": "Label for component",
           "title": "Label"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Description for label tooltip",
+          "title": "Description"
         },
         "layout": {
           "description": "How to layout children on screen",
@@ -467,7 +495,21 @@
             }
           ],
           "default": null,
+          "description": "Label for component",
           "title": "Label"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Description for label tooltip",
+          "title": "Description"
         },
         "read_pv": {
           "description": "PV to use for readback",
@@ -539,7 +581,21 @@
             }
           ],
           "default": null,
+          "description": "Label for component",
           "title": "Label"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Description for label tooltip",
+          "title": "Description"
         },
         "write_pv": {
           "description": "PV to use for demand",
@@ -644,7 +700,21 @@
             }
           ],
           "default": null,
+          "description": "Label for component",
           "title": "Label"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Description for label tooltip",
+          "title": "Description"
         },
         "type": {
           "const": "SignalRef",
@@ -682,7 +752,21 @@
             }
           ],
           "default": null,
+          "description": "Label for component",
           "title": "Label"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Description for label tooltip",
+          "title": "Description"
         },
         "write_pv": {
           "description": "PV to use for demand",
@@ -753,7 +837,21 @@
             }
           ],
           "default": null,
+          "description": "Label for component",
           "title": "Label"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Description for label tooltip",
+          "title": "Description"
         },
         "write_pv": {
           "description": "PV to use for demand",

@@ -41,6 +41,7 @@
     <y>58</y>
     <width>120</width>
     <height>30</height>
+    <tooltip>$(text)</tooltip>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>TextEntry</name>
@@ -66,7 +67,7 @@
     <y>118</y>
     <width>120</width>
     <height>40</height>
-    <tooltip>$(actions)</tooltip>
+    <tooltip>$(tooltip)</tooltip>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>TextUpdate</name>

@@ -141,6 +141,7 @@ class WidgetFormatter(BaseModel, Generic[T]):
 
 class LabelWidgetFormatter(WidgetFormatter[T]):
     text: str
+    description: str = ""
 
 
 class PVWidgetFormatter(WidgetFormatter[T]):
@@ -152,6 +153,10 @@ class ActionWidgetFormatter(WidgetFormatter[T]):
     label: str
     pv: str
     value: str
+
+    @property
+    def tooltip(self) -> str:
+        return f"{self.pv} = {self.value}"
 
 
 class SubScreenWidgetFormatter(WidgetFormatter[T]):
