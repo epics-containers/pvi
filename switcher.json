@@ -138,9 +138,5 @@
   {
     "version": "text-format",
     "url": "https://epics-containers.github.io/pvi/text-format/"
-  },
-  {
-    "version": "text-format-strings",
-    "url": "https://epics-containers.github.io/pvi/text-format-strings/"
   }
 ]
