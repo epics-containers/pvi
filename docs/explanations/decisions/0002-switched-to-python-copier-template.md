@@ -16,7 +16,7 @@ We have switched to using the template.
 
 ## Consequences
 
-This module will use a fixed set of tools as developed in `python-copier-template`
+This module will use a fixed set of tools as developed in ``python-copier-template``
 and can pull from this template to update the packaging to the latest techniques.
 
 As such, the developer environment may have changed, the following could be
