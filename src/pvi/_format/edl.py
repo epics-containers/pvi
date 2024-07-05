@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import re
-from typing import List, Optional
 
 from pvi._format.utils import Bounds, split_with_sep
 from pvi._format.widget import UITemplate, WidgetFormatter
@@ -25,8 +24,8 @@ class EdlTemplate(UITemplate[str]):
     def set(
         self,
         template: str,
-        bounds: Optional[Bounds] = None,
-        widget: Optional[WidgetUnion] = None,
+        bounds: Bounds | None = None,
+        widget: WidgetUnion | None = None,
         **properties,
     ) -> str:
         if bounds:
@@ -36,14 +35,14 @@ class EdlTemplate(UITemplate[str]):
             if item == "displayFileName":
                 value = f"0 {value}"  # These are items in an array but we only use one
 
-            multiline = re.compile(r"^%s {[^}]*}$" % item, re.MULTILINE | re.DOTALL)
+            multiline = re.compile(rf"^{item} {{[^}}]*}}$", re.MULTILINE | re.DOTALL)
             if multiline.search(template):
                 pattern = multiline
                 lines = str(value).splitlines()
                 value = "\n".join(["{"] + [f'  "{x}"' for x in lines] + ["}"])
             else:
                 # Single line
-                pattern = re.compile(r"^%s .*$" % item, re.MULTILINE)
+                pattern = re.compile(rf"^{item} .*$", re.MULTILINE)
                 if isinstance(value, str):
                     value = f'"{value}"'
 
@@ -68,11 +67,13 @@ class EdlTemplate(UITemplate[str]):
 
     def create_group(
         self,
-        group_object: List[str],
-        children: List[WidgetFormatter[str]],
-        padding: Bounds = Bounds(),
-    ) -> List[str]:
-        texts: List[str] = []
+        group_object: list[str],
+        children: list[WidgetFormatter[str]],
+        padding: Bounds | None = None,
+    ) -> list[str]:
+        padding = padding or Bounds()
+
+        texts: list[str] = []
 
         for c in children:
             c.bounds.x += padding.x

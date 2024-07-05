@@ -6,7 +6,7 @@
     "configurations": [
         {
             "name": "Debug Unit Test",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
             "justMyCode": false,
             "program": "${file}",
@@ -15,10 +15,7 @@
             ],
             "console": "integratedTerminal",
             "env": {
-                // The default config in pyproject.toml's "[tool.pytest.ini_options]" adds coverage.
-                // Cannot have coverage and debugging at the same time.
-                // https://github.com/microsoft/vscode-python/issues/693
-                "PYTEST_ADDOPTS": "--no-cov",
+                // Enable break on exception when debugging tests (see: tests/conftest.py)
                 "PYTEST_RAISE": "1",
             },
         },
@@ -31,7 +28,7 @@
             "args": [
                 "convert",
                 "device",
-                "${workspaceFolder:ADCore}/pvi",
+                "/epics/pvi-defs/",
                 "${workspaceFolder:ADCore}/ADApp/ADSrc/asynNDArrayDriver.h",
                 "--template",
                 "${workspaceFolder:ADCore}/ADApp/Db/NDArrayBase.template",
@@ -49,7 +46,7 @@
             "args": [
                 "convert",
                 "device",
-                "${workspaceFolder:ADCore}/pvi",
+                "/epics/pvi-defs/",
                 "${workspaceFolder:ADCore}/ADApp/ADSrc/ADDriver.h",
                 "--template",
                 "${workspaceFolder:ADCore}/ADApp/Db/ADBase.template",
@@ -65,7 +62,7 @@
             "args": [
                 "convert",
                 "device",
-                "${workspaceFolder:ADCore}/pvi",
+                "/epics/pvi-defs/",
                 "${workspaceFolder:ADCore}/ADApp/pluginSrc/NDPluginDriver.h",
                 "--template",
                 "${workspaceFolder:ADCore}/ADApp/Db/NDPluginBase.template",
@@ -127,7 +124,7 @@
             "args": [
                 "convert",
                 "device",
-                "${workspaceFolder:ADSimDetector}/pvi",
+                "/epics/pvi-defs/",
                 "${workspaceFolder:ADSimDetector}/simDetectorApp/src/simDetector.h",
                 "--template",
                 "${workspaceFolder:ADSimDetector}/simDetectorApp/Db/simDetector.template",
@@ -156,7 +153,7 @@
             "program": "${workspaceFolder:pvi}/src/pvi",
             "args": [
                 "regroup",
-                "${workspaceFolder:ADCore}/pvi/asynNDArrayDriver.pvi.device.yaml",
+                "/epics/pvi-defs/asynNDArrayDriver.pvi.device.yaml",
                 "${workspaceFolder:ADCore}/ADApp/op/adl/ADSetup.adl",
                 "${workspaceFolder:ADCore}/ADApp/op/adl/ADReadout.adl",
                 "${workspaceFolder:ADCore}/ADApp/op/adl/ADShutter.adl",
@@ -176,7 +173,7 @@
             "program": "${workspaceFolder:pvi}/src/pvi",
             "args": [
                 "regroup",
-                "${workspaceFolder:ADCore}/pvi/ADDriver.pvi.device.yaml",
+                "/epics/pvi-defs/ADDriver.pvi.device.yaml",
                 "${workspaceFolder:ADCore}/ADApp/op/adl/ADSetup.adl",
                 "${workspaceFolder:ADCore}/ADApp/op/adl/ADReadout.adl",
                 "${workspaceFolder:ADCore}/ADApp/op/adl/ADShutter.adl",
@@ -193,7 +190,7 @@
             "program": "${workspaceFolder:pvi}/src/pvi",
             "args": [
                 "regroup",
-                "${workspaceFolder:ADSimDetector}/pvi/simDetector.pvi.device.yaml",
+                "/epics/pvi-defs/simDetector.pvi.device.yaml",
                 "${workspaceFolder:ADSimDetector}/simDetectorApp/op/adl/simDetector.adl",
                 "${workspaceFolder:ADSimDetector}/simDetectorApp/op/adl/simDetectorSetup.adl",
             ],
@@ -207,7 +204,7 @@
             "program": "${workspaceFolder:pvi}/src/pvi",
             "args": [
                 "regroup",
-                "${workspaceFolder:ADCore}/pvi/NDPluginDriver.pvi.device.yaml",
+                "/epics/pvi-defs/NDPluginDriver.pvi.device.yaml",
                 "${workspaceFolder:ADCore}/ADApp/op/adl/NDPluginBase.adl",
                 "${workspaceFolder:ADCore}/ADApp/op/adl/NDPluginBaseFull.adl",
             ],
@@ -419,3 +416,4 @@
             ],
         },
     ]
+}

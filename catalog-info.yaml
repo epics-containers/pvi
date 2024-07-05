@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: pvi
+  title: pvi
+  description: EPICS PV Interface described in YAML
+spec:
+  type: documentation
+  lifecycle: experimental
+  owner: mef65357

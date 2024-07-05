@@ -121,6 +121,6 @@ def as_tagged_union(union):
     union_members = get_args(union)
 
     return Annotated[
-        Union[tuple(cls._tag() for cls in union_members)],
+        Union[tuple(cls._tag() for cls in union_members)],  # noqa
         TypedModel._discriminator(),
     ]

@@ -1,5 +1,4 @@
 from pathlib import Path
-from typing import List
 
 from lxml import etree
 from pydantic import Field
@@ -159,7 +158,7 @@ class DLSFormatter(Formatter):
 
         def create_group_box_formatter(
             bounds: Bounds, title: str
-        ) -> List[WidgetFormatter[str]]:
+        ) -> list[WidgetFormatter[str]]:
             x, y, w, h = bounds.x, bounds.y, bounds.w, bounds.h
             return [
                 group_box_cls(
@@ -178,7 +177,7 @@ class DLSFormatter(Formatter):
 
         def create_screen_title_formatter(
             bounds: Bounds, title: str
-        ) -> List[WidgetFormatter[str]]:
+        ) -> list[WidgetFormatter[str]]:
             return [
                 screen_title_cls(
                     bounds=Bounds(x=0, y=0, w=bounds.w, h=screen_layout.title_height),
@@ -333,7 +332,7 @@ class DLSFormatter(Formatter):
 
         def create_group_object_formatter(
             bounds: Bounds, title: str
-        ) -> List[WidgetFormatter[str]]:
+        ) -> list[WidgetFormatter[str]]:
             return [
                 group_title_cls(
                     bounds=Bounds(x=bounds.x, y=bounds.y, w=bounds.w, h=bounds.h),
@@ -343,7 +342,7 @@ class DLSFormatter(Formatter):
 
         def create_screen_title_formatter(
             bounds: Bounds, title: str
-        ) -> List[WidgetFormatter[str]]:
+        ) -> list[WidgetFormatter[str]]:
             return [
                 screen_title_cls(
                     bounds=Bounds(x=0, y=0, w=bounds.w, h=screen_layout.title_height),

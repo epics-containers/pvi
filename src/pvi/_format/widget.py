@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing import Callable, Dict, Generic, List, Optional, Type, TypeVar
+from collections.abc import Callable
+from typing import Generic, TypeVar
 
 from pydantic import BaseModel, Field, create_model
 
@@ -45,8 +46,8 @@ class UITemplate(Generic[T]):
     def set(
         self,
         template: T,
-        bounds: Optional[Bounds] = None,
-        widget: Optional[WidgetUnion] = None,
+        bounds: Bounds | None = None,
+        widget: WidgetUnion | None = None,
         **properties,
     ) -> T:
         """Modify template elements with component data
@@ -67,10 +68,10 @@ class UITemplate(Generic[T]):
 
     def create_group(
         self,
-        group_object: List[T],
-        children: List[WidgetFormatter[T]],
-        padding: Bounds = Bounds(),
-    ) -> List[T]:
+        group_object: list[T],
+        children: list[WidgetFormatter[T]],
+        padding: Bounds,
+    ) -> list[T]:
         """Create a group widget with its children embedded and appropriately padded"""
         raise NotImplementedError(self)
 
@@ -81,21 +82,20 @@ WF = TypeVar("WF", bound="WidgetFormatter")
 class WidgetFormatter(BaseModel, Generic[T]):
     bounds: Bounds
 
-    def format(self) -> List[T]:
+    def format(self) -> list[T]:
         """Instances should be created using `from_template`, which defines `format`"""
         raise NotImplementedError(self)
 
     @classmethod
     def from_template(
-        cls: Type[WF],
+        cls: type[WF],
         template: UITemplate[T],
         search,
         sized: Callable[[Bounds], Bounds] = Bounds.clone,
-        widget_formatter_hook: Optional[
-            Callable[[Bounds, str], List[WidgetFormatter[T]]]
-        ] = None,
-        property_map: Optional[Dict[str, str]] = None,
-    ) -> Type[WF]:
+        widget_formatter_hook: Callable[[Bounds, str], list[WidgetFormatter[T]]]
+        | None = None,
+        property_map: dict[str, str] | None = None,
+    ) -> type[WF]:
         """Create a WidgetFormatter class from the given template
 
         Create a `format` method that searches the template for the `search` section and
@@ -114,7 +114,7 @@ class WidgetFormatter(BaseModel, Generic[T]):
                 Instances of the macro will be replaced with the value of the property.
         """
 
-        def format(self: WidgetFormatter[T]) -> List[T]:
+        def format(self: WidgetFormatter[T]) -> list[T]:
             properties = {}
             if property_map is not None:
                 for placeholder, widget_property in property_map.items():
@@ -162,8 +162,8 @@ class ActionWidgetFormatter(WidgetFormatter[T]):
 class SubScreenWidgetFormatter(WidgetFormatter[T]):
     label: str
     file_name: str
-    components: Optional[Group] = None
-    macros: Dict[str, str] = Field(default={})
+    components: Group | None = None
+    macros: dict[str, str] = Field(default={})
 
 
 GWF = TypeVar("GWF", bound="GroupFormatter")
@@ -172,9 +172,9 @@ GWF = TypeVar("GWF", bound="GroupFormatter")
 class GroupFormatter(WidgetFormatter[T]):
     bounds: Bounds
     title: str
-    children: List[WidgetFormatter[T]]
+    children: list[WidgetFormatter[T]]
 
-    def format(self) -> List[T]:
+    def format(self) -> list[T]:
         """Instances should be created using `from_template`, which defines `format`"""
         raise NotImplementedError(self)
 
@@ -187,15 +187,14 @@ class GroupFormatter(WidgetFormatter[T]):
 
     @classmethod
     def from_template(
-        cls: Type[GWF],
+        cls: type[GWF],
         template: UITemplate[T],
         search: GroupType,
         sized: Callable[[Bounds], Bounds] = Bounds.clone,
-        widget_formatter_hook: Optional[
-            Callable[[Bounds, str], List[WidgetFormatter[T]]]
-        ] = None,
-        property_map: Optional[Dict[str, str]] = None,
-    ) -> Type[GWF]:
+        widget_formatter_hook: Callable[[Bounds, str], list[WidgetFormatter[T]]]
+        | None = None,
+        property_map: dict[str, str] | None = None,
+    ) -> type[GWF]:
         """Create a WidgetFormatter class from the given template
 
         Create a `format` method that searches the template for the `search` section and
@@ -213,10 +212,10 @@ class GroupFormatter(WidgetFormatter[T]):
                 Instances of the macro will be replaced with the value of the property.
         """
 
-        def format(self: GroupFormatter[T]) -> List[T]:
+        def format(self: GroupFormatter[T]) -> list[T]:
             padding = sized(self.bounds)
-            texts: List[T] = []
-            made_widgets: List[T] = []
+            texts: list[T] = []
+            made_widgets: list[T] = []
 
             if search == GroupType.SCREEN:
                 properties = {}
@@ -266,22 +265,22 @@ class GroupFormatter(WidgetFormatter[T]):
 
 
 class WidgetFormatterFactory(BaseModel, Generic[T]):
-    header_formatter_cls: Type[LabelWidgetFormatter[T]]
-    label_formatter_cls: Type[LabelWidgetFormatter[T]]
-    led_formatter_cls: Type[PVWidgetFormatter[T]]
-    progress_bar_formatter_cls: Type[PVWidgetFormatter[T]]
-    text_read_formatter_cls: Type[PVWidgetFormatter[T]]
-    check_box_formatter_cls: Type[PVWidgetFormatter[T]]
-    toggle_formatter_cls: Type[PVWidgetFormatter[T]]
-    combo_box_formatter_cls: Type[PVWidgetFormatter[T]]
-    text_write_formatter_cls: Type[PVWidgetFormatter[T]]
-    table_formatter_cls: Type[PVWidgetFormatter[T]]
-    action_formatter_cls: Type[ActionWidgetFormatter[T]]
-    sub_screen_formatter_cls: Type[SubScreenWidgetFormatter[T]]
-    bitfield_formatter_cls: Type[PVWidgetFormatter[T]]
-    array_trace_formatter_cls: Type[PVWidgetFormatter[T]]
-    button_panel_formatter_cls: Type[PVWidgetFormatter[T]]
-    image_read_formatter_cls: Type[PVWidgetFormatter[T]]
+    header_formatter_cls: type[LabelWidgetFormatter[T]]
+    label_formatter_cls: type[LabelWidgetFormatter[T]]
+    led_formatter_cls: type[PVWidgetFormatter[T]]
+    progress_bar_formatter_cls: type[PVWidgetFormatter[T]]
+    text_read_formatter_cls: type[PVWidgetFormatter[T]]
+    check_box_formatter_cls: type[PVWidgetFormatter[T]]
+    toggle_formatter_cls: type[PVWidgetFormatter[T]]
+    combo_box_formatter_cls: type[PVWidgetFormatter[T]]
+    text_write_formatter_cls: type[PVWidgetFormatter[T]]
+    table_formatter_cls: type[PVWidgetFormatter[T]]
+    action_formatter_cls: type[ActionWidgetFormatter[T]]
+    sub_screen_formatter_cls: type[SubScreenWidgetFormatter[T]]
+    bitfield_formatter_cls: type[PVWidgetFormatter[T]]
+    array_trace_formatter_cls: type[PVWidgetFormatter[T]]
+    button_panel_formatter_cls: type[PVWidgetFormatter[T]]
+    image_read_formatter_cls: type[PVWidgetFormatter[T]]
 
     def pv_widget_formatter(
         self,
@@ -300,7 +299,7 @@ class WidgetFormatterFactory(BaseModel, Generic[T]):
             A WidgetFormatter representing the component
         """
 
-        widget_formatter_classes: Dict[type, Type[PVWidgetFormatter[T]]] = {
+        widget_formatter_classes: dict[type, type[PVWidgetFormatter[T]]] = {
             # Currently supported formatters of ReadWidget/WriteWidget Components
             LED: self.led_formatter_cls,
             ProgressBar: self.progress_bar_formatter_cls,
@@ -316,14 +315,14 @@ class WidgetFormatterFactory(BaseModel, Generic[T]):
             ButtonPanel: self.button_panel_formatter_cls,
             ImageRead: self.image_read_formatter_cls,
         }
-        if isinstance(widget, (TextRead, TextWrite)):
+        if isinstance(widget, TextRead | TextWrite):
             bounds.h *= widget.get_lines()
 
         widget_formatter_cls = widget_formatter_classes[type(widget)]
         return widget_formatter_cls(bounds=bounds, pv=pv, widget=widget)
 
 
-def max_x(widgets: List[WidgetFormatter[T]]) -> int:
+def max_x(widgets: list[WidgetFormatter[T]]) -> int:
     """Given multiple widgets, calulate the maximum x position that they occupy"""
     if widgets:
         return max(w.bounds.x + w.bounds.w for w in widgets)
@@ -331,7 +330,7 @@ def max_x(widgets: List[WidgetFormatter[T]]) -> int:
         return 0
 
 
-def max_y(widgets: List[WidgetFormatter[T]]) -> int:
+def max_y(widgets: list[WidgetFormatter[T]]) -> int:
     """Given multiple widgets, calulate the maximum y position that they occupy"""
     if widgets:
         return max(w.bounds.y + w.bounds.h for w in widgets)
@@ -339,7 +338,7 @@ def max_y(widgets: List[WidgetFormatter[T]]) -> int:
         return 0
 
 
-def next_x(widgets: List[WidgetFormatter[T]], spacing: int = 0) -> int:
+def next_x(widgets: list[WidgetFormatter[T]], spacing: int = 0) -> int:
     """Given multiple widgets, calulate the next feasible location for an
     additional widget in the x axis"""
     if widgets:
@@ -348,7 +347,7 @@ def next_x(widgets: List[WidgetFormatter[T]], spacing: int = 0) -> int:
         return 0
 
 
-def next_y(widgets: List[WidgetFormatter[T]], spacing: int = 0) -> int:
+def next_y(widgets: list[WidgetFormatter[T]], spacing: int = 0) -> int:
     """Given multiple widgets, calulate the next feasible location for an
     additional widget in the y axis"""
     if widgets:

@@ -1,8 +1,7 @@
 import re
-from typing import List, Tuple
 
 
-def extract_device_and_parent_class(header_text: str) -> Tuple[str, str]:
+def extract_device_and_parent_class(header_text: str) -> tuple[str, str]:
     # e.g. extract 'NDPluginDriver' and 'asynNDArrayDriver' from
     # class epicsShareClass NDPluginDriver : public asynNDArrayDriver, public epicsThreadRunable {  # noqa
     class_extractor = re.compile(r"class.*\s+(\w+)\s+:\s+\w+\s+(\w+).*")
@@ -12,7 +11,7 @@ def extract_device_and_parent_class(header_text: str) -> Tuple[str, str]:
     return classname, parent
 
 
-def extract_define_strs(header_text, info_strings: List[str]) -> List[str]:
+def extract_define_strs(header_text, info_strings: list[str]) -> list[str]:
     # e.g. extract: #define SimGainXString                "SIM_GAIN_X";
     define_extractor = re.compile(r'\#define[_A-Za-z0-9 ]*"[^"]*".*')
     definitions = re.findall(define_extractor, header_text)
@@ -21,7 +20,7 @@ def extract_define_strs(header_text, info_strings: List[str]) -> List[str]:
     return definitions
 
 
-def extract_create_param_strs(source_text, param_strings: List[str]) -> List[str]:
+def extract_create_param_strs(source_text, param_strings: list[str]) -> list[str]:
     # e.g. extract: createParam(SimGainXString, asynParamFloat64, &SimGainX);
     create_param_extractor = re.compile(r"((?:this->)?createParam\([^\)]*\);.*)")
     create_param_strs = re.findall(create_param_extractor, source_text)
@@ -30,7 +29,7 @@ def extract_create_param_strs(source_text, param_strings: List[str]) -> List[str
     return create_param_strs
 
 
-def extract_index_declarations(header_text, index_names: List[str]) -> List[str]:
+def extract_index_declarations(header_text, index_names: list[str]) -> list[str]:
     # e.g. extract:     int SimGainX;
     declaration_extractor = re.compile(r"\s*int [^;]*;")
     declarations = re.findall(declaration_extractor, header_text)
@@ -40,7 +39,7 @@ def extract_index_declarations(header_text, index_names: List[str]) -> List[str]
     return declarations
 
 
-def parse_definition_str(definition_str: str) -> Tuple[str, str]:
+def parse_definition_str(definition_str: str) -> tuple[str, str]:
     # e.g. from: #define SimGainXString                "SIM_GAIN_X";
     # extract:
     # Group1: SimGainXString
@@ -50,7 +49,7 @@ def parse_definition_str(definition_str: str) -> Tuple[str, str]:
     return string_info_pair
 
 
-def parse_create_param_str(create_param_str: str) -> Tuple[str, str]:
+def parse_create_param_str(create_param_str: str) -> tuple[str, str]:
     # e.g. from: createParam(SimGainXString, asynParamFloat64, &SimGainX);
     # extract: SimGainXString,               asynParamFloat64, &SimGainX
     create_param_extractor = re.compile(r"(?:createParam\()([^\)]*)(?:\))")
@@ -65,7 +64,7 @@ def parse_create_param_str(create_param_str: str) -> Tuple[str, str]:
     return string_index_pair
 
 
-def insert_param_set_accessors(source_text: str, parameters: List[str]) -> str:
+def insert_param_set_accessors(source_text: str, parameters: list[str]) -> str:
     for parameter in parameters:
         # Only match parameter name exactly, not others with same prefix
         source_text = re.sub(
@@ -76,7 +75,7 @@ def insert_param_set_accessors(source_text: str, parameters: List[str]) -> str:
     return source_text
 
 
-def filter_strings(strings: List[str], filters: List[str]) -> List[str]:
+def filter_strings(strings: list[str], filters: list[str]) -> list[str]:
     return [
         string for string in strings if any(filter_ in string for filter_ in filters)
     ]

@@ -1,5 +1,5 @@
+from collections.abc import Sequence
 from copy import deepcopy
-from typing import Dict, List, Optional, Sequence
 
 from lxml.etree import ElementBase, SubElement, XMLParser, parse
 
@@ -40,8 +40,8 @@ class BobTemplate(UITemplate[ElementBase]):
     def set(
         self,
         template: ElementBase,
-        bounds: Optional[Bounds] = None,
-        widget: Optional[WidgetUnion] = None,
+        bounds: Bounds | None = None,
+        widget: WidgetUnion | None = None,
         **properties,
     ) -> ElementBase:
         if bounds:
@@ -82,9 +82,12 @@ class BobTemplate(UITemplate[ElementBase]):
                 add_combo_box_items(t_copy, combo_box)
             case ("table", TableRead() | TableWrite() as table):
                 add_table_columns(t_copy, table)
-            case ("textentry", TextWrite(format=format)) | (
-                "textupdate",
-                TextRead(format=format),
+            case (
+                ("textentry", TextWrite(format=format))
+                | (
+                    "textupdate",
+                    TextRead(format=format),
+                )
             ) if format is not None:
                 add_format(t_copy, BOB_TEXT_FORMATS[TextFormat(format)])
             case ("byte_monitor", BitField() as bit_field):
@@ -122,10 +125,10 @@ class BobTemplate(UITemplate[ElementBase]):
 
     def create_group(
         self,
-        group_object: List[ElementBase],
-        children: List[WidgetFormatter[ElementBase]],
-        padding: Bounds = Bounds(),
-    ) -> List[ElementBase]:
+        group_object: list[ElementBase],
+        children: list[WidgetFormatter[ElementBase]],
+        padding: Bounds | None = None,
+    ) -> list[ElementBase]:
         """Create an xml group object from a list of child widgets
 
         Args:
@@ -137,6 +140,8 @@ class BobTemplate(UITemplate[ElementBase]):
         Returns:
             An xml group with children attached as subelements
         """
+        padding = padding or Bounds()
+
         assert (
             len(group_object) == 1
         ), f"Size of group_object is {len(group_object)}, should be 1"
@@ -178,7 +183,7 @@ def add_table_column(
             SubElement(options_element, "option").text = option
 
 
-def add_button_macros(widget_element: ElementBase, macros: Dict[str, str]):
+def add_button_macros(widget_element: ElementBase, macros: dict[str, str]):
     """Add action macros to the given element.
 
     Args:

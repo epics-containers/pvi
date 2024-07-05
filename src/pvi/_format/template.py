@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from pathlib import Path
-from typing import List
 
 from jinja2 import Template
 
@@ -24,7 +23,7 @@ class PviRecord:
 
 
 def format_template(device: Device, pv_prefix: str, output: Path):
-    records: List[PviRecord] = []
+    records: list[PviRecord] = []
     for node in walk(device.children):
         match node:
             case SignalRW(read_pv=r, write_pv=w) as signal if r == w:
@@ -39,7 +38,7 @@ def format_template(device: Device, pv_prefix: str, output: Path):
             case SignalR() as signal:
                 records.append(PviRecord(signal.name, signal.read_pv, "r"))
 
-    with output.open("w") as expanded, open(PVI_TEMPLATE, "r") as template:
+    with output.open("w") as expanded, open(PVI_TEMPLATE) as template:
         template_txt = Template(template.read()).render(
             device=device.label, pv_prefix=pv_prefix, records=records
         )

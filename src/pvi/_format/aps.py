@@ -1,5 +1,4 @@
 from pathlib import Path
-from typing import List
 
 from pydantic import Field
 
@@ -149,7 +148,7 @@ class APSFormatter(Formatter):
 
         def create_group_widget_formatters(
             bounds: Bounds, title: str
-        ) -> List[WidgetFormatter[str]]:
+        ) -> list[WidgetFormatter[str]]:
             title_bounds = Bounds(
                 x=bounds.x + layout.spacing,
                 y=bounds.y + layout.spacing,
@@ -164,7 +163,7 @@ class APSFormatter(Formatter):
 
         def create_screen_widget_formatters(
             bounds: Bounds, title: str
-        ) -> List[WidgetFormatter[str]]:
+        ) -> list[WidgetFormatter[str]]:
             title_bounds = Bounds(x=0, y=0, w=bounds.w, h=layout.title_height)
             return [
                 label_background_formatter(bounds=title_bounds),

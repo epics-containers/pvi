@@ -1,6 +1,5 @@
 import re
 from pathlib import Path
-from typing import List, Tuple
 
 from pvi.device import (
     ComponentUnion,
@@ -23,7 +22,7 @@ OVERRIDE_DESC = "# Overriding value in auto-generated template"
 
 
 class TemplateConverter:
-    def __init__(self, templates: List[Path]):
+    def __init__(self, templates: list[Path]):
         self.templates = templates
         self._text = [t.read_text() for t in self.templates]
 
@@ -35,11 +34,11 @@ class TemplateConverter:
                 children=template_components,
             )
             for template, template_components in zip(
-                self.templates, self._extract_components()
+                self.templates, self._extract_components(), strict=True
             )
         ]
 
-    def _extract_components(self) -> List[List[ComponentUnion]]:
+    def _extract_components(self) -> list[list[ComponentUnion]]:
         components = []
         for text in self._text:
             record_extractor = RecordExtractor(text)
@@ -70,7 +69,7 @@ class RecordExtractor:
         record_extractor = re.compile(r"\s*^[^#\n]*record\([^{]*{[^}]*}", re.MULTILINE)
         return re.findall(record_extractor, self._text)
 
-    def _parse_record(self, record_str: str) -> Tuple:
+    def _parse_record(self, record_str: str) -> tuple:
         # extract three groups from a record definition e.g.
         # from:
         # record(waveform, "$(P)$(R)FilePath")
@@ -100,7 +99,7 @@ class RecordExtractor:
             raise RecordError(f"Parse failed on record: {record_str}")
         return matches[0]
 
-    def _extract_fields(self, fields_str: str) -> List[Tuple[str, str]]:
+    def _extract_fields(self, fields_str: str) -> list[tuple[str, str]]:
         # extract two groups from a field e.g.
         # from: field(PINI, "YES")
         # extract:
@@ -111,7 +110,7 @@ class RecordExtractor:
         )
         return re.findall(field_extractor, fields_str)
 
-    def _extract_infos(self, fields_str: str) -> List[Tuple[str, str]]:
+    def _extract_infos(self, fields_str: str) -> list[tuple[str, str]]:
         # extract two groups from an info tag e.g.
         # from: info(autosaveFields, "VAL")
         # extract:
@@ -136,7 +135,7 @@ class RecordExtractor:
         record = AsynRecord(pv=record_name, type=record_type, fields=fields, infos=info)
         return record
 
-    def get_asyn_records(self) -> List[AsynRecord]:
+    def get_asyn_records(self) -> list[AsynRecord]:
         record_strs = self._extract_record_strs()
         record_list = []
         for record_str in record_strs:
@@ -149,10 +148,10 @@ class RecordExtractor:
 
 class RecordRoleSorter:
     @staticmethod
-    def sort_records(records: List[AsynRecord]) -> List[Parameter]:
+    def sort_records(records: list[AsynRecord]) -> list[Parameter]:
         def _sort_inputs_outputs(
-            records: List[AsynRecord],
-        ) -> Tuple[List[AsynRecord], List[AsynRecord]]:
+            records: list[AsynRecord],
+        ) -> tuple[list[AsynRecord], list[AsynRecord]]:
             inp_records = [r for r in records if "INP" in r.fields]
             write_records = [r for r in records if "OUT" in r.fields]
 
@@ -169,7 +168,7 @@ class RecordRoleSorter:
             return read_records, write_records
 
         read_records, write_records = _sort_inputs_outputs(records)
-        parameters: List[Parameter] = []
+        parameters: list[Parameter] = []
         parameters += ParameterRoleMatcher.get_actions(read_records, write_records)
         parameters += ParameterRoleMatcher.get_readbacks(read_records, write_records)
         parameters += ParameterRoleMatcher.get_setting_pairs(
@@ -241,8 +240,8 @@ class Action(Parameter):
 class ParameterRoleMatcher:
     @staticmethod
     def get_actions(
-        read_records: List[AsynRecord], write_records: List[AsynRecord]
-    ) -> List[Action]:
+        read_records: list[AsynRecord], write_records: list[AsynRecord]
+    ) -> list[Action]:
         actions = [
             Action(write_record=w)
             for w in write_records
@@ -253,8 +252,8 @@ class ParameterRoleMatcher:
 
     @staticmethod
     def get_readbacks(
-        read_records: List[AsynRecord], write_records: List[AsynRecord]
-    ) -> List[Readback]:
+        read_records: list[AsynRecord], write_records: list[AsynRecord]
+    ) -> list[Readback]:
         readbacks = [
             Readback(read_record=r)
             for r in read_records
@@ -265,8 +264,8 @@ class ParameterRoleMatcher:
 
     @staticmethod
     def get_setting_pairs(
-        read_records: List[AsynRecord], write_records: List[AsynRecord]
-    ) -> List[SettingPair]:
+        read_records: list[AsynRecord], write_records: list[AsynRecord]
+    ) -> list[SettingPair]:
         setting_pairs = [
             SettingPair(read_record=r, write_record=w)
             for r in read_records
