@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import re
+from collections.abc import Iterator, Sequence
 from enum import Enum
 from pathlib import Path
 from typing import (
@@ -9,10 +10,6 @@ from typing import (
     Annotated,
     Any,
     ClassVar,
-    Dict,
-    Iterator,
-    Optional,
-    Sequence,
 )
 
 from pydantic import (
@@ -122,8 +119,8 @@ class TextRead(ReadWidget):
 
     model_config = ConfigDict(use_enum_values=True)  # Use Enum value when dumping
 
-    lines: Optional[int] = Field(default=None, description="Number of lines to display")
-    format: Optional[TextFormat] = Field(default=None, description="Display format")
+    lines: int | None = Field(default=None, description="Number of lines to display")
+    format: TextFormat | None = Field(default=None, description="Display format")
 
     def get_lines(self):
         return self.lines or 1
@@ -180,7 +177,7 @@ class ButtonPanel(WriteWidget):
 
     """
 
-    actions: Dict[PascalStr, str] = Field(
+    actions: dict[PascalStr, str] = Field(
         default={"Go": "1"}, description="PV poker buttons"
     )
 
@@ -190,8 +187,8 @@ class TextWrite(WriteWidget):
 
     model_config = ConfigDict(use_enum_values=True)  # Use Enum value when dumping
 
-    lines: Optional[int] = Field(default=None, description="Number of lines to display")
-    format: Optional[TextFormat] = Field(default=None, description="Display format")
+    lines: int | None = Field(default=None, description="Number of lines to display")
+    format: TextFormat | None = Field(default=None, description="Display format")
 
     def get_lines(self):
         return self.lines or 1
@@ -241,7 +238,7 @@ class Plot(Layout):
 class Row(Layout):
     """Children are columns in the row"""
 
-    header: Optional[Sequence[str]] = Field(
+    header: Sequence[str] | None = Field(
         None,
         description="Labels for the items in the row",
     )
@@ -366,7 +363,7 @@ class SignalRW(SignalR, SignalW):
     _single_pv_rw: bool = False
 
     @model_validator(mode="after")
-    def _validate_model(self) -> "SignalRW":
+    def _validate_model(self) -> SignalRW:
         if self.read_pv and not self._single_pv_rw and self.read_widget is None:
             # Update default read widget if given a read PV
             self.read_widget = TextRead()
@@ -392,7 +389,7 @@ class DeviceRef(Component):
 
     pv: str = Field(description="Child device PVI PV")
     ui: str = Field(description="UI file to open for referenced Device")
-    macros: Dict[str, str] = Field(
+    macros: dict[str, str] = Field(
         default={}, description="Macro-value pairs for UI file"
     )
 
@@ -429,12 +426,7 @@ class Device(TypedModel, YamlValidatorMixin):
     """Collection of Components"""
 
     label: str = Field(description="Label for screen")
-    parent: Optional[
-        Annotated[
-            str,
-            "The parent device (basename of yaml file)",
-        ]
-    ] = None
+    parent: Annotated[str, "The parent device (basename of yaml file)"] | None = None
     children: Tree = Field([], description="Child Components")
 
     def _to_dict(self) -> dict[str, Any]:
@@ -510,7 +502,7 @@ class Device(TypedModel, YamlValidatorMixin):
 
     def generate_param_tree(self) -> str:
         param_tree = ", ".join(
-            json.dumps((group.model_dump_json())) for group in self.children
+            json.dumps(group.model_dump_json()) for group in self.children
         )
         # Encode again to quote the string as a value and escape double quotes within
         return json.dumps('{"parameters":[' + param_tree + "]}")
@@ -525,7 +517,7 @@ def find_components(yaml_name: str, yaml_paths: list[Path]) -> Tree:
     device_yaml = find_pvi_yaml(device_name, yaml_paths)
 
     if device_yaml is None:
-        raise IOError(f"Cannot find {device_name} in {yaml_paths}")
+        raise OSError(f"Cannot find {device_name} in {yaml_paths}")
 
     device = Device.deserialize(device_yaml)
 

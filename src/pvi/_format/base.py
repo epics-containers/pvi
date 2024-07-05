@@ -25,7 +25,7 @@ class Formatter(TypedModel, YamlValidatorMixin):
     def type_adapter(cls) -> TypeAdapter:
         """Create TypeAdapter of all child classes"""
         return TypeAdapter(
-            as_tagged_union(Union[tuple(cls.__subclasses__())])  # type: ignore
+            as_tagged_union(Union[tuple(cls.__subclasses__())])  # noqa
         )
 
     @classmethod

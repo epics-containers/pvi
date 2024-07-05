@@ -1,7 +1,8 @@
 from __future__ import annotations
 
+from collections.abc import Callable
 from enum import Enum
-from typing import Callable, List, Tuple, TypeVar
+from typing import TypeVar
 
 from pydantic import BaseModel
 
@@ -15,7 +16,7 @@ class Bounds(BaseModel):
     def clone(self) -> Bounds:
         return Bounds(x=self.x, y=self.y, w=self.w, h=self.h)
 
-    def split_left(self, width: int, spacing: int) -> Tuple[Bounds, Bounds]:
+    def split_left(self, width: int, spacing: int) -> tuple[Bounds, Bounds]:
         """Split horizontally by width of first element"""
         to_split = width + spacing
         assert to_split < self.w, f"Can't split off {to_split} from {self.w}"
@@ -24,8 +25,8 @@ class Bounds(BaseModel):
         return left, right
 
     def split_by_ratio(
-        self, ratio: Tuple[float, ...], spacing: int
-    ) -> Tuple[Bounds, ...]:
+        self, ratio: tuple[float, ...], spacing: int
+    ) -> tuple[Bounds, ...]:
         """Split horizontally by ratio of widths, separated by spacing"""
         splits = len(ratio) - 1
         widget_space = self.w - splits * spacing
@@ -36,10 +37,10 @@ class Bounds(BaseModel):
 
         return tuple(
             Bounds(x=x, y=self.y, w=w, h=self.h)
-            for x, w in zip(widget_xs, widget_widths)
+            for x, w in zip(widget_xs, widget_widths, strict=True)
         )
 
-    def split_into(self, count: int, spacing: int) -> Tuple[Bounds, ...]:
+    def split_into(self, count: int, spacing: int) -> tuple[Bounds, ...]:
         """Split horizontally into count equal widths, separated by spacing"""
         return self.split_by_ratio((1 / count,) * count, spacing)
 
@@ -84,11 +85,11 @@ class GroupType(Enum):
 T = TypeVar("T")
 
 
-def concat(items: List[List[T]]) -> List[T]:
+def concat(items: list[list[T]]) -> list[T]:
     return [x for seq in items for x in seq]
 
 
-def split_with_sep(text: str, sep: str, maxsplit: int = -1) -> List[str]:
+def split_with_sep(text: str, sep: str, maxsplit: int = -1) -> list[str]:
     return [t + sep for t in text.split(sep, maxsplit=maxsplit)]
 
 

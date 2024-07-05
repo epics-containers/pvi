@@ -1,6 +1,5 @@
 import re
 from pathlib import Path
-from typing import Dict, List, Tuple
 
 from pvi.device import (
     ComponentUnion,
@@ -13,13 +12,13 @@ from pvi.device import (
 )
 
 
-def find_pvs(pvs: List[str], file_path: Path) -> Tuple[List[str], List[str]]:
+def find_pvs(pvs: list[str], file_path: Path) -> tuple[list[str], list[str]]:
     """Search for the PVs in the file and return lists of found and not found pvs"""
 
-    with open(file_path, "r") as f:
+    with open(file_path) as f:
         file_content = f.read()
 
-    pv_coordinates: Dict[int, List[str]] = {}
+    pv_coordinates: dict[int, list[str]] = {}
     remaining_pvs = list(pvs)
     for pv in pvs:
         if pv not in file_content:
@@ -59,13 +58,13 @@ def find_pvs(pvs: List[str], file_path: Path) -> Tuple[List[str], List[str]]:
     return grouped_pvs, remaining_pvs
 
 
-def group_by_ui(device: Device, ui_paths: List[Path]) -> Tree:
-    signals: List[ComponentUnion] = list(walk(device.children))
+def group_by_ui(device: Device, ui_paths: list[Path]) -> Tree:
+    signals: list[ComponentUnion] = list(walk(device.children))
 
     # PVs without macros to search for in UI
     pv_names = [s.name for s in signals]
 
-    group_pv_map: Dict[str, List[str]] = {}
+    group_pv_map: dict[str, list[str]] = {}
     for ui in ui_paths:
         ui_pvs, pv_names = find_pvs(pv_names, ui)
         if ui_pvs:
@@ -75,7 +74,7 @@ def group_by_ui(device: Device, ui_paths: List[Path]) -> Tree:
         print(f"Did not find group for {' | '.join(pv_names)}")
 
     # Create groups for parameters we found in the files
-    ui_groups: List[Group] = [
+    ui_groups: list[Group] = [
         Group(
             name=enforce_pascal_case(group_name),
             layout=Grid(labelled=True),

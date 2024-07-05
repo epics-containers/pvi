@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import re
-from typing import List, Optional
 
 from pvi._format.utils import Bounds, split_with_sep
 from pvi._format.widget import UITemplate, WidgetFormatter
@@ -26,8 +25,8 @@ class AdlTemplate(UITemplate[str]):
     def set(
         self,
         template: str,
-        bounds: Optional[Bounds] = None,
-        widget: Optional[WidgetUnion] = None,
+        bounds: Bounds | None = None,
+        widget: WidgetUnion | None = None,
         **properties,
     ) -> str:
         if bounds:
@@ -42,7 +41,7 @@ class AdlTemplate(UITemplate[str]):
                     value = f"{value}.adl"  # Must include file extension
 
             # Only need single line
-            pattern = re.compile(r"^(\s*%s)=.*$" % item, re.MULTILINE)
+            pattern = re.compile(rf"^(\s*{item})=.*$", re.MULTILINE)
             if isinstance(value, str):
                 value = f'"{value}"'
 
@@ -67,11 +66,13 @@ class AdlTemplate(UITemplate[str]):
 
     def create_group(
         self,
-        group_object: List[str],
-        children: List[WidgetFormatter[str]],
-        padding: Bounds = Bounds(),
-    ) -> List[str]:
-        texts: List[str] = []
+        group_object: list[str],
+        children: list[WidgetFormatter[str]],
+        padding: Bounds | None = None,
+    ) -> list[str]:
+        padding = padding or Bounds()
+
+        texts: list[str] = []
 
         for c in children:
             c.bounds.x += padding.x

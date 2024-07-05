@@ -1,5 +1,5 @@
 import re
-from typing import Any, ClassVar, List, Optional, Type, cast
+from typing import Any, ClassVar, cast
 
 from pydantic import Field
 
@@ -40,7 +40,7 @@ class AsynRecord(Record):
         if "DESC" not in self.fields.keys():
             self.fields["DESC"] = self.name
 
-    def get_parameter_name(self) -> Optional[str]:
+    def get_parameter_name(self) -> str | None:
         # e.g. from: field(INP,  "@asyn($(PORT),$(ADDR=0),$(TIMEOUT=1))FILE_PATH")
         # extract: FILE_PATH
         parameter_name_extractor = r"@asyn\(.*\)(\S+)"
@@ -53,7 +53,7 @@ class AsynRecord(Record):
                         parameter_name = match.group(1)
         return parameter_name
 
-    def asyn_component_type(self) -> Type["AsynParameter"]:
+    def asyn_component_type(self) -> type["AsynParameter"]:
         # For waveform records the data type is defined by DTYP
         if self.type == "waveform":
             return get_waveform_parameter(self.fields["DTYP"])
@@ -236,7 +236,7 @@ class AsynFloat64Waveform(AsynWaveform):
 
 
 WaveformRecordTypes = [AsynWaveform] + cast(
-    List[Type[AsynWaveform]], rec_subclasses(AsynWaveform)
+    list[type[AsynWaveform]], rec_subclasses(AsynWaveform)
 )
 
 
@@ -248,4 +248,6 @@ def get_waveform_parameter(dtyp: str):
         ):
             return waveform_cls
 
-    assert False, f"Waveform type for DTYP {dtyp} not found in {WaveformRecordTypes}"
+    raise AssertionError(
+        f"Waveform type for DTYP {dtyp} not found in {WaveformRecordTypes}"
+    )

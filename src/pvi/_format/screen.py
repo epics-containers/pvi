@@ -1,15 +1,9 @@
 from __future__ import annotations
 
+from collections.abc import Iterator, Sequence
 from typing import (
-    Dict,
     Generic,
-    Iterator,
-    List,
-    Sequence,
-    Tuple,
-    Type,
     TypeVar,
-    Union,
 )
 
 from pydantic import BaseModel, Field
@@ -66,16 +60,16 @@ class ScreenLayout(BaseModel):
 
 
 class ScreenFormatterFactory(BaseModel, Generic[T]):
-    screen_formatter_cls: Type[GroupFormatter]
-    group_formatter_cls: Type[GroupFormatter]
+    screen_formatter_cls: type[GroupFormatter]
+    group_formatter_cls: type[GroupFormatter]
     widget_formatter_factory: WidgetFormatterFactory
     layout: ScreenLayout
-    components: Dict[str, ComponentUnion] = Field(default={}, init_var=False)
+    components: dict[str, ComponentUnion] = Field(default={}, init_var=False)
     base_file_name: str = ""
 
     def create_screen_formatter(
         self, components: Tree, title: str
-    ) -> Tuple[GroupFormatter[T], List[Tuple[str, GroupFormatter[T]]]]:
+    ) -> tuple[GroupFormatter[T], list[tuple[str, GroupFormatter[T]]]]:
         """Create an instance of `screen_cls` populated with widgets of `components`
 
         Args:
@@ -92,8 +86,8 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
         )
         screen_bounds = Bounds(h=self.layout.max_height)
         widget_dims = {"w": full_w, "h": self.layout.widget_height}
-        screen_widgets: List[WidgetFormatter[T]] = []
-        columns: List[Bounds] = [Bounds(**widget_dims)]
+        screen_widgets: list[WidgetFormatter[T]] = []
+        columns: list[Bounds] = [Bounds(**widget_dims)]
 
         match components:
             case [Group(layout=SubScreen()) as component]:
@@ -149,8 +143,8 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
         )
 
     def create_sub_screen_formatters(
-        self, screen_widgets: List[WidgetFormatter[T]]
-    ) -> List[Tuple[str, GroupFormatter[T]]]:
+        self, screen_widgets: list[WidgetFormatter[T]]
+    ) -> list[tuple[str, GroupFormatter[T]]]:
         """Create and return `ScreenFormatter`s for any `SubScreenWidgetFormatters`
 
         When the root screen formatter is created it will format a button that opens a
@@ -185,7 +179,7 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
             if isinstance(group_widget_factory, SubScreenWidgetFormatter)
         ]
 
-        sub_screen_formatters: List[Tuple[str, GroupFormatter[T]]] = []
+        sub_screen_formatters: list[tuple[str, GroupFormatter[T]]] = []
         for sub_screen_widget_formatter in sub_screen_widget_formatters:
             if sub_screen_widget_formatter.components is None:
                 # This is a reference to an existing screen - don't create it
@@ -215,7 +209,7 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
         screen_bounds: Bounds,
         column_bounds: Bounds,
         next_column_bounds: Bounds,
-    ) -> List[WidgetFormatter[T]]:
+    ) -> list[WidgetFormatter[T]]:
         """Create widget formatters for a Group
 
         This could either be a list of widget formatters, or a single group formatter,
@@ -299,14 +293,14 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
             self.layout.label_width + self.layout.widget_width + 2 * self.layout.spacing
         )
         column_bounds = Bounds(w=full_w, h=self.layout.widget_height)
-        widget_factories: List[WidgetFormatter[T]] = []
+        widget_factories: list[WidgetFormatter[T]] = []
 
         assert isinstance(
-            group.layout, (Grid, SubScreen)
+            group.layout, Grid | SubScreen
         ), "Can only do Grid and SubScreen at the moment"
 
         for c in group.children:
-            component: Union[Group, Component]
+            component: Group | Component
             match c:
                 case Group(layout=Grid()):
                     if is_table(c):
@@ -354,7 +348,7 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
         next_column_bounds: Bounds,
         indent=False,
         add_label=True,
-    ) -> List[WidgetFormatter[T]]:
+    ) -> list[WidgetFormatter[T]]:
         """Generate widgets from component data and position them in a grid format
 
         Args:
@@ -417,7 +411,7 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
         """
 
         # Widgets are allowed to expand bounds
-        if not isinstance(c, (SignalRef, Group)):
+        if not isinstance(c, SignalRef | Group):
             self.components[c.name] = c
 
         # Take a copy to modify in this scope
@@ -475,8 +469,9 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
             row_components = [c]  # Create one widget for row
 
             match c:
-                case SignalR(read_widget=TableRead(widgets=widgets)) | SignalW(
-                    write_widget=TableWrite(widgets=widgets)
+                case (
+                    SignalR(read_widget=TableRead(widgets=widgets))
+                    | SignalW(write_widget=TableWrite(widgets=widgets))
                 ):
                     add_label = False  # Do not add row labels for Tables
                     component_bounds.w = 100 * len(widgets)
@@ -504,13 +499,13 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
 
     def generate_row_component_formatters(
         self,
-        row_components: Sequence[Union[Group, Component]],
+        row_components: Sequence[Group | Component],
         row_bounds: Bounds,
     ) -> Iterator[WidgetFormatter[T]]:
         row_component_bounds = row_bounds.clone().split_into(
             len(row_components), self.layout.spacing
         )
-        for rc_bounds, rc in zip(row_component_bounds, row_components):
+        for rc_bounds, rc in zip(row_component_bounds, row_components, strict=True):
             # It is important to check for SignalX/SignalRW first, as they will also
             # match SignalR/SignalW
 

@@ -1,7 +1,6 @@
 import re
 from enum import Enum
 from functools import cached_property
-from typing import Dict, Optional
 
 from pydantic import BaseModel, Field
 
@@ -64,8 +63,8 @@ MACRO_RE = re.compile(r"\$\(.*\)")
 class Record(BaseModel):
     pv: str  # The pv of the record e.g. $(P)$(M)Status
     type: str  # The record type string e.g. ao, stringin
-    fields: Dict[str, str]  # The record fields
-    infos: Dict[str, str]  # Any infos to be added to the record
+    fields: dict[str, str]  # The record fields
+    infos: dict[str, str]  # Any infos to be added to the record
 
     @cached_property
     def name(self) -> str:
@@ -78,7 +77,7 @@ class Parameter(BaseModel):
 
     invalid: list[str] = ["DESC", "DTYP", "INP", "OUT", "PINI", "VAL"]
 
-    def _remove_invalid(self, fields: Dict[str, str]) -> Dict[str, str]:
+    def _remove_invalid(self, fields: dict[str, str]) -> dict[str, str]:
         valid_fields = {
             key: value for (key, value) in fields.items() if key not in self.invalid
         }
@@ -89,5 +88,5 @@ class Parameter(BaseModel):
 
 
 class ReadParameterMixin:
-    def _get_read_record(self) -> Optional[str]:
+    def _get_read_record(self) -> str | None:
         raise NotImplementedError(self)

@@ -1,7 +1,7 @@
 import json
 import os
 from pathlib import Path
-from typing import List, Optional
+from typing import Annotated, Optional
 
 import typer
 
@@ -26,19 +26,25 @@ def version_callback(value: bool):
 
 @app.callback()
 def main(
-    version: Optional[bool] = typer.Option(
+    # TODO: typer does not support `<type> | None` yet
+    # https://github.com/tiangolo/typer/issues/533
+    version: Optional[bool] = typer.Option(  # noqa
         None,
         "--version",
         callback=version_callback,
         is_eager=True,
         help="Print the version and exit",
-    )
+    ),
 ):
     """PVI builder interface"""
 
 
 @app.command()
-def schema(output: Path = typer.Argument(..., help="filename to write the schema to")):
+def schema(
+    output: Annotated[
+        Path, typer.Argument(..., help="filename to write the schema to")
+    ],
+):
     """Write the JSON schema for the pvi interface"""
     assert output.name.endswith(
         ".schema.json"
@@ -57,18 +63,25 @@ def schema(output: Path = typer.Argument(..., help="filename to write the schema
 
 @app.command()
 def format(
-    output_path: Path = typer.Argument(
-        ..., help="Directory to write output file(s) to"
-    ),
-    device_path: Path = typer.Argument(..., help="Path to the .pvi.device.yaml file"),
-    formatter_path: Path = typer.Argument(
-        ..., help="Path to the .pvi.formatter.yaml file"
-    ),
-    yaml_paths: List[Path] = typer.Option(
-        [], "--yaml-path", help="Paths to directories with .pvi.device.yaml files"
-    ),
+    output_path: Annotated[
+        Path, typer.Argument(..., help="Directory to write output file(s) to")
+    ],
+    device_path: Annotated[
+        Path, typer.Argument(..., help="Path to the .pvi.device.yaml file")
+    ],
+    formatter_path: Annotated[
+        Path, typer.Argument(..., help="Path to the .pvi.formatter.yaml file")
+    ],
+    yaml_paths: Annotated[
+        Optional[list[Path]],  # noqa
+        typer.Option(
+            ..., "--yaml-path", help="Paths to directories with .pvi.device.yaml files"
+        ),
+    ] = None,
 ):
     """Create screen product from device and formatter YAML"""
+    yaml_paths = yaml_paths or []
+
     device = Device.deserialize(device_path)
     device.deserialize_parents(yaml_paths)
 
@@ -78,9 +91,11 @@ def format(
 
 @app.command()
 def generate_template(
-    device_path: Path = typer.Argument(..., help="Path to the .pvi.device.yaml file"),
-    pv_prefix: str = typer.Argument(..., help="Prefix of PVI PV"),
-    output_path: Path = typer.Argument(..., help="Output file to generate"),
+    device_path: Annotated[
+        Path, typer.Argument(..., help="Path to the .pvi.device.yaml file")
+    ],
+    pv_prefix: Annotated[str, typer.Argument(..., help="Prefix of PVI PV")],
+    output_path: Annotated[Path, typer.Argument(..., help="Output file to generate")],
 ):
     """Create template with info tags for device signals"""
     device = Device.deserialize(device_path)
@@ -89,13 +104,18 @@ def generate_template(
 
 @convert_app.command()
 def device(
-    output: Path = typer.Argument(..., help="Directory to write output file to"),
-    h: Path = typer.Argument(..., help="Path to the .h file to convert"),
-    templates: List[Path] = typer.Option(
-        [], "--template", help="Paths to .template files to convert"
-    ),
+    output: Annotated[
+        Path, typer.Argument(..., help="Directory to write output file to")
+    ],
+    h: Annotated[Path, typer.Argument(..., help="Path to the .h file to convert")],
+    templates: Annotated[
+        Optional[list[Path]],  # noqa
+        typer.Option(..., "--template", help="Paths to .template files to convert"),
+    ] = None,
 ):
     """Convert template to device YAML"""
+    templates = templates or []
+
     if not output.exists():
         os.mkdir(output)
 
@@ -108,12 +128,13 @@ def device(
 
 @app.command()
 def regroup(
-    device_path: Path = typer.Argument(
-        ..., help="Path to the device.yaml file to regroup"
-    ),
-    ui_paths: List[Path] = typer.Argument(
-        ..., help="Paths to the ui files to regroup the PVs by"
-    ),
+    device_path: Annotated[
+        Path, typer.Argument(..., help="Path to the device.yaml file to regroup")
+    ],
+    ui_paths: Annotated[
+        list[Path],
+        typer.Argument(..., help="Paths to the ui files to regroup the PVs by"),
+    ],
 ):
     """Regroup a device.yaml file based on ui files that the PVs appear in"""
     device = Device.deserialize(device_path)

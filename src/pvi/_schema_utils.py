@@ -1,13 +1,13 @@
-from functools import lru_cache
-from typing import List, TypeVar
+from functools import cache
+from typing import TypeVar
 
 # A type variable with an upper bound of type
 Cls = TypeVar("Cls", bound=type)
 
 
 # Permanently cache so we don't include deserialization subclasses defined below
-@lru_cache(maxsize=None)
-def rec_subclasses(cls: Cls) -> List[Cls]:
+@cache
+def rec_subclasses(cls: Cls) -> list[Cls]:
     """Recursive implementation of type.__subclasses__"""
 
     subclasses = []

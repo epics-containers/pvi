@@ -1,6 +1,6 @@
 import re
 from pathlib import Path
-from typing import Type, TypeVar, overload
+from typing import TypeVar, overload
 
 from ruamel.yaml import YAML
 
@@ -33,11 +33,11 @@ def type_first(tree: dict | list) -> dict | list:
     # Walk down tree
     if isinstance(tree, dict):
         for key, branch in tree.items():
-            if isinstance(branch, (list, dict)):
+            if isinstance(branch, list | dict):
                 tree[key] = type_first(branch)
     elif isinstance(tree, list):
         for idx, branch in enumerate(tree):
-            if isinstance(branch, (list, dict)):
+            if isinstance(branch, list | dict):
                 tree[idx] = type_first(branch)
 
     return tree
@@ -69,7 +69,7 @@ class YamlValidatorMixin:
     """
 
     @classmethod
-    def validate_yaml(cls: Type, yaml: Path) -> dict:
+    def validate_yaml(cls: type, yaml: Path) -> dict:
         """Validate the YAML file and load into a serialized dictionary of an instance.
 
         This method checks that the given YAML file exists and has an appropriate file
@@ -105,6 +105,6 @@ class YamlValidatorMixin:
                 raise ValueError(
                     f"Could not deserialize '{cls}' as subtype '{cls_type}', "
                     "not found in subclasses."
-                )
+                ) from None
 
         return serialized
