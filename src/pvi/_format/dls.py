@@ -1,6 +1,7 @@
 from pathlib import Path
+from typing import Annotated
 
-from lxml import etree
+from lxml.etree import fromstring, tostring
 from pydantic import Field
 
 from pvi._format.bob import BobTemplate, find_element
@@ -25,12 +26,14 @@ from .utils import Bounds, GroupType, with_title
 
 
 class DLSFormatter(Formatter):
-    spacing: int = Field(5, description="Spacing between widgets")
-    title_height: int = Field(25, description="Height of screen title bar")
-    max_height: int = Field(900, description="Max height of the screen")
-    label_width: int = Field(150, description="Width of the widget description labels")
-    widget_width: int = Field(200, description="Width of the widgets")
-    widget_height: int = Field(20, description="Height of the widgets")
+    spacing: Annotated[int, Field(description="Spacing between widgets")] = 5
+    title_height: Annotated[int, Field(description="Height of screen title bar")] = 25
+    max_height: Annotated[int, Field(description="Max height of the screen")] = 900
+    label_width: Annotated[
+        int, Field(description="Width of the widget description labels")
+    ] = 150
+    widget_width: Annotated[int, Field(description="Width of the widgets")] = 200
+    widget_height: Annotated[int, Field(description="Height of the widgets")] = 20
 
     def format(self, device: Device, path: Path):
         if path.suffix == ".edl":
@@ -387,9 +390,14 @@ def write_bob(screen_formatter: GroupFormatter, path: Path):
     # SCREEN_WRITE DOCS REF: Generate the screen file
     # The root:'Display' is always the first element in texts
     texts = screen_formatter.format()
-    ET = etree.fromstring(etree.tostring(texts[0]))
+    ET = fromstring(tostring(texts[0]))
     for element in texts[:0:-1]:
-        ET.insert(ET.index(ET.find("grid_step_y")) + 1, element)
+        grid_step_y = ET.find("grid_step_y")
+        if grid_step_y is None:
+            raise ValueError(f"Could not find grid_step_y in element {element}")
+
+        ET.insert(ET.index(grid_step_y) + 1, element)
+
     ET = ET.getroottree()
     find_element(ET, "name").text = screen_formatter.title
     ET.write(str(path), pretty_print=True)

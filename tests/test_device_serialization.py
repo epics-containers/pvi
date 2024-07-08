@@ -82,7 +82,7 @@ def test_validate_fails():
     class NotTypedModel(BaseModel):
         pass
 
-    BadUnion: TypeAlias = Annotated[
+    BadUnion: TypeAlias = Annotated[  # type: ignore
         Annotated[SignalR, Tag("SignalR")]
         | Annotated[NotTypedModel, Tag("NotTypedModel")],
         Field(discriminator=Discriminator(TypedModel._get_type_name)),

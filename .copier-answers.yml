@@ -13,4 +13,4 @@ github_org: epics-containers
 package_name: pvi
 pypi: true
 repo_name: pvi
-type_checker: mypy
+type_checker: pyright

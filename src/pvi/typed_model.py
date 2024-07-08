@@ -55,12 +55,12 @@ class TypedModel(BaseModel):
         )
 
     @classmethod
-    def model_json_schema(cls, **kwargs):
+    def model_json_schema(cls, *args, **kwargs):
         """Ensure all child models have type field added before generating schema."""
         if not cls.models_typed:
             TypedModel._rebuild_child_models()
 
-        return super().model_json_schema(**kwargs)
+        return super().model_json_schema(*args, **kwargs)
 
     @classmethod
     def _rebuild_child_models(cls):
@@ -121,6 +121,6 @@ def as_tagged_union(union):
     union_members = get_args(union)
 
     return Annotated[
-        Union[tuple(cls._tag() for cls in union_members)],  # noqa
+        Union[tuple(cls._tag() for cls in union_members)],  # type: ignore # noqa: UP007
         TypedModel._discriminator(),
     ]

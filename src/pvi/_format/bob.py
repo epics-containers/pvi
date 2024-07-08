@@ -1,7 +1,7 @@
 from collections.abc import Sequence
 from copy import deepcopy
 
-from lxml.etree import ElementBase, SubElement, XMLParser, parse
+from lxml.etree import SubElement, XMLParser, _Element, parse
 
 from pvi._format.utils import Bounds
 from pvi._format.widget import UITemplate, WidgetFormatter
@@ -27,7 +27,7 @@ BOB_TEXT_FORMATS = {
 }
 
 
-class BobTemplate(UITemplate[ElementBase]):
+class BobTemplate(UITemplate[_Element]):
     """Extract and modify elements from a template .bob file."""
 
     def __init__(self, text: str):
@@ -39,11 +39,11 @@ class BobTemplate(UITemplate[ElementBase]):
 
     def set(
         self,
-        template: ElementBase,
+        template: _Element,
         bounds: Bounds | None = None,
         widget: WidgetUnion | None = None,
         **properties,
-    ) -> ElementBase:
+    ) -> _Element:
         if bounds:
             properties["x"] = bounds.x
             properties["y"] = bounds.y
@@ -95,7 +95,7 @@ class BobTemplate(UITemplate[ElementBase]):
 
         return t_copy
 
-    def search(self, search: str) -> ElementBase:
+    def search(self, search: str) -> _Element:
         """Locate and extract elements from the Element tree.
 
         Args:
@@ -109,9 +109,13 @@ class BobTemplate(UITemplate[ElementBase]):
         tree_copy = deepcopy(self.tree)
         # 'name' is the unique ID for each element
         matches = [
-            element.getparent()
-            for element in tree_copy.iter("name")
-            if element.text == search
+            e
+            for e in [
+                element.getparent()
+                for element in tree_copy.iter("name")
+                if element.text == search
+            ]
+            if isinstance(e, _Element)
         ]
         assert len(matches) == 1, f"Got {len(matches)} matches for {search!r}"
 
@@ -125,10 +129,10 @@ class BobTemplate(UITemplate[ElementBase]):
 
     def create_group(
         self,
-        group_object: list[ElementBase],
-        children: list[WidgetFormatter[ElementBase]],
+        group_object: list[_Element],
+        children: list[WidgetFormatter[_Element]],
         padding: Bounds | None = None,
-    ) -> list[ElementBase]:
+    ) -> list[_Element]:
         """Create an xml group object from a list of child widgets
 
         Args:
@@ -150,7 +154,7 @@ class BobTemplate(UITemplate[ElementBase]):
         return group_object
 
 
-def add_table_columns(widget_element: ElementBase, table: TableRead | TableWrite):
+def add_table_columns(widget_element: _Element, table: TableRead | TableWrite):
     if not table.widgets:
         # Default empty -> get options from pv
         return
@@ -163,7 +167,7 @@ def add_table_columns(widget_element: ElementBase, table: TableRead | TableWrite
 
 
 def add_table_column(
-    columns_element: ElementBase,
+    columns_element: _Element,
     name: str,
     widget: WidgetUnion,
 ):
@@ -183,7 +187,7 @@ def add_table_column(
             SubElement(options_element, "option").text = option
 
 
-def add_button_macros(widget_element: ElementBase, macros: dict[str, str]):
+def add_button_macros(widget_element: _Element, macros: dict[str, str]):
     """Add action macros to the given element.
 
     Args:
@@ -197,7 +201,7 @@ def add_button_macros(widget_element: ElementBase, macros: dict[str, str]):
         SubElement(macros_element, macro).text = value
 
 
-def add_combo_box_items(widget_element: ElementBase, combo_box: ComboBox):
+def add_combo_box_items(widget_element: _Element, combo_box: ComboBox):
     if not combo_box.get_choices():
         # Default empty -> get items from pv
         return
@@ -209,20 +213,20 @@ def add_combo_box_items(widget_element: ElementBase, combo_box: ComboBox):
     SubElement(widget_element, "items_from_pv").text = "false"
 
 
-def add_editable(element: ElementBase, editable: bool):
+def add_editable(element: _Element, editable: bool):
     SubElement(element, "editable").text = "true" if editable else "false"
 
 
-def add_format(element: ElementBase, format: str):
+def add_format(element: _Element, format: str):
     if format:
         SubElement(element, "format").text = format
 
 
-def add_byte_number_of_bits(element: ElementBase, number_of_bits: int):
+def add_byte_number_of_bits(element: _Element, number_of_bits: int):
     SubElement(element, "numBits").text = str(number_of_bits)
 
 
-def find_element(root_element: ElementBase, tag: str, index: int = 0) -> ElementBase:
+def find_element(root_element: _Element, tag: str, index: int = 0) -> _Element:
     """Iterate tree to find tag and replace text.
 
     Args:
@@ -232,8 +236,6 @@ def find_element(root_element: ElementBase, tag: str, index: int = 0) -> Element
     """
     match list(root_element.iter(tag=tag)):
         case []:
-            raise ValueError(
-                f"No matches for '{tag}' in {root_element.find('name').text}"
-            )
+            raise ValueError(f"No matches for '{tag}' in {root_element}")
         case matches:
             return matches[index]
