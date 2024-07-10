@@ -107,23 +107,59 @@ def device(
     output: Annotated[
         Path, typer.Argument(..., help="Directory to write output file to")
     ],
-    h: Annotated[Path, typer.Argument(..., help="Path to the .h file to convert")],
+    header: Annotated[
+        Optional[Path],  # noqa
+        typer.Option(..., "--header", help="Path to the .h file to convert"),
+    ] = None,
     templates: Annotated[
         Optional[list[Path]],  # noqa
         typer.Option(..., "--template", help="Paths to .template files to convert"),
+    ] = None,
+    name: Annotated[
+        Optional[str],  # noqa
+        typer.Option(
+            ...,
+            help=(
+                "Name to use for Device. "
+                "This is usually the same as the EPICS driver class."
+            ),
+        ),
+    ] = None,
+    label: Annotated[
+        Optional[str],  # noqa
+        typer.Option(
+            ...,
+            help=("Label for Device UI. Defaults to Device name."),
+        ),
+    ] = None,
+    parent: Annotated[
+        Optional[str],  # noqa
+        typer.Option(..., help="Parent Device name."),
     ] = None,
 ):
     """Convert template to device YAML"""
     templates = templates or []
 
+    device_name = None
+    parent_name = None
+    if header is not None:
+        device_name, parent_name = extract_device_and_parent_class(header.read_text())
+    if name is not None:
+        device_name = name.replace(" ", "")  # No whitespace in file name
+    if parent is not None:
+        parent_name = parent
+    if device_name is None:
+        raise ValueError("Either Device name or header file must be provided.")
+
+    component_group = TemplateConverter(templates).convert()
+    device = Device(
+        label=label or device_name, parent=parent_name, children=component_group
+    )
+
     if not output.exists():
         os.mkdir(output)
 
-    name, parent = extract_device_and_parent_class(h.read_text())
-    component_group = TemplateConverter(templates).convert()
-    device = Device(label=name, parent=parent, children=component_group)
-
-    device.serialize(output / f"{name}.pvi.device.yaml")
+    device.serialize(output / f"{device_name}.pvi.device.yaml")
 
 
 @app.command()

@@ -63,7 +63,7 @@ def test_signal_default_widgets(tmp_path, helper):
     )
 
 
-def test_convert(tmp_path, helper):
+def test_convert_header(tmp_path, helper):
     expected_path = HERE / "convert" / "output"
     input_path = HERE / "convert" / "input"
     helper.assert_cli_output_matches(
@@ -71,9 +71,29 @@ def test_convert(tmp_path, helper):
         expected_path,
         "convert device",
         tmp_path,
+        "--header",
         input_path / "simDetector.h",
         "--template",
         input_path / "simDetector.template",
+    )
+
+
+def test_convert_device_name(tmp_path, helper):
+    expected_path = HERE / "convert" / "output"
+    input_path = HERE / "convert" / "input"
+    helper.assert_cli_output_matches(
+        app,
+        expected_path,
+        "convert device",
+        tmp_path,
+        "--name",
+        "Mako125B",
+        "--label",
+        "GenICam Mako125B",
+        "--parent",
+        "GenICamDriver",
+        "--template",
+        input_path / "Mako125B.template",
     )
 
 
