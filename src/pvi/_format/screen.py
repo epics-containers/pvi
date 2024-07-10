@@ -1,12 +1,11 @@
 from __future__ import annotations
 
 from collections.abc import Iterator, Sequence
+from dataclasses import dataclass, field
 from typing import (
     Generic,
     TypeVar,
 )
-
-from pydantic import BaseModel, Field
 
 from pvi._format.utils import Bounds
 from pvi._format.widget import (
@@ -41,30 +40,26 @@ from pvi.device import (
 T = TypeVar("T")
 
 
-class ScreenLayout(BaseModel):
-    spacing: int = Field(description="Spacing between widgets")
-    title_height: int = Field(description="Height of screen title bar")
-    max_height: int = Field(description="Max height of the screen")
-    group_label_height: int = Field(description="Height of the group title label")
-    label_width: int = Field(description="Width of the labels describing widgets")
-    widget_width: int = Field(description="Width of the widgets")
-    widget_height: int = Field(
-        description="Height of the widgets (Labels use this too)"
-    )
-    group_widget_indent: int = Field(
-        0, description="Indentation of widgets within groups. Defaults to 0"
-    )
-    group_width_offset: int = Field(
-        0, description="Additional border width when using group objects. Defaults to 0"
-    )
+@dataclass
+class ScreenLayout:
+    spacing: int
+    title_height: int
+    max_height: int
+    group_label_height: int
+    label_width: int
+    widget_width: int
+    widget_height: int
+    group_widget_indent: int
+    group_width_offset: int
 
 
-class ScreenFormatterFactory(BaseModel, Generic[T]):
+@dataclass
+class ScreenFormatterFactory(Generic[T]):
     screen_formatter_cls: type[GroupFormatter[T]]
     group_formatter_cls: type[GroupFormatter[T]]
     widget_formatter_factory: WidgetFormatterFactory[T]
     layout: ScreenLayout
-    components: dict[str, ComponentUnion] = Field(default={}, init_var=False)
+    components: dict[str, ComponentUnion] = field(default_factory=dict)
     base_file_name: str = ""
 
     def create_screen_formatter(

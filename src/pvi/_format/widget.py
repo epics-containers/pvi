@@ -1,12 +1,11 @@
 from __future__ import annotations
 
 from collections.abc import Callable
+from dataclasses import dataclass, field
 from enum import StrEnum
 from typing import Any, Generic, TypeVar
 
 from typing_extensions import Self
-
-from pydantic import BaseModel, Field, create_model
 
 from pvi._format.utils import Bounds
 from pvi.device import (
@@ -79,7 +78,8 @@ class UITemplate(Generic[T]):
         raise NotImplementedError(self)
 
 
-class WidgetFormatter(BaseModel, Generic[T]):
+@dataclass
+class WidgetFormatter(Generic[T]):
     bounds: Bounds
 
     def format(self) -> list[T]:
@@ -132,23 +132,26 @@ class WidgetFormatter(BaseModel, Generic[T]):
                 )
             ]
 
-        return create_model(
+        return type(  # type: ignore
             f"""{cls.__name__}<{search.strip('"')}>""",
-            __base__=cls,
-            format=format,
+            (cls,),
+            {"format": format},
         )
 
 
+@dataclass
 class LabelWidgetFormatter(WidgetFormatter[T]):
     text: str
     description: str = ""
 
 
+@dataclass
 class PVWidgetFormatter(WidgetFormatter[T]):
     pv: str
     widget: WidgetUnion
 
 
+@dataclass
 class ActionWidgetFormatter(WidgetFormatter[T]):
     label: str
     pv: str
@@ -159,11 +162,12 @@ class ActionWidgetFormatter(WidgetFormatter[T]):
         return f"{self.pv} = {self.value}"
 
 
+@dataclass
 class SubScreenWidgetFormatter(WidgetFormatter[T]):
     label: str
     file_name: str
     components: Group | None = None
-    macros: dict[str, str] = Field(default={})
+    macros: dict[str, str] = field(default_factory=dict)
 
 
 class GroupType(StrEnum):
@@ -171,6 +175,7 @@ class GroupType(StrEnum):
     SCREEN = "SCREEN"
 
 
+@dataclass
 class GroupFormatter(WidgetFormatter[T]):
     bounds: Bounds
     title: str
@@ -180,7 +185,7 @@ class GroupFormatter(WidgetFormatter[T]):
         """Instances should be created using `from_template`, which defines `format`"""
         raise NotImplementedError(self)
 
-    def model_post_init(self, _context: Any) -> None:
+    def __post_init__(self) -> None:
         self.resize()
 
     def resize(self):
@@ -259,15 +264,15 @@ class GroupFormatter(WidgetFormatter[T]):
             )
             pass
 
-        return create_model(
+        return type(  # type: ignore
             f"{cls.__name__}<{search}>",
-            __base__=cls,
-            format=format,
-            resize=resize,
+            (cls,),
+            {"format": format, "resize": resize},
         )
 
 
-class WidgetFormatterFactory(BaseModel, Generic[T]):
+@dataclass
+class WidgetFormatterFactory(Generic[T]):
     header_formatter_cls: type[LabelWidgetFormatter[T]]
     label_formatter_cls: type[LabelWidgetFormatter[T]]
     led_formatter_cls: type[PVWidgetFormatter[T]]
