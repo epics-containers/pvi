@@ -94,7 +94,7 @@ def test_validate_fails():
     # Test that trying to validate a Union using TypedModel.get_type_name fails if not
     # all members are TypedModel
 
-    assert TypedModel._get_type_name(NotTypedModel()) is None
+    assert TypedModel._get_type_name(NotTypedModel()) is None  # type: ignore
 
     with pytest.raises(ValidationError):
         Container(m=NotTypedModel()).model_dump_json()

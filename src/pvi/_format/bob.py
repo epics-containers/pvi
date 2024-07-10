@@ -1,7 +1,13 @@
 from collections.abc import Sequence
 from copy import deepcopy
+from typing import Any
 
-from lxml.etree import SubElement, XMLParser, _Element, parse
+from lxml.etree import (
+    SubElement,
+    XMLParser,
+    _Element,  # pyright: ignore [reportPrivateUsage]
+    parse,
+)
 
 from pvi._format.utils import Bounds
 from pvi._format.widget import UITemplate, WidgetFormatter
@@ -42,8 +48,10 @@ class BobTemplate(UITemplate[_Element]):
         template: _Element,
         bounds: Bounds | None = None,
         widget: WidgetUnion | None = None,
-        **properties,
+        properties: dict[str, Any] | None = None,
     ) -> _Element:
+        properties = properties or {}
+
         if bounds:
             properties["x"] = bounds.x
             properties["y"] = bounds.y
@@ -67,14 +75,15 @@ class BobTemplate(UITemplate[_Element]):
                     new_text = file_name
                     if not new_text.endswith(".bob"):
                         new_text += ".bob"  # Must include file extension
-                case "action_button", "macros", dict() as macros:
+                case "action_button", "macros", dict():
+                    macros: dict[str, str] = value
                     if macros:
-                        add_button_macros(t_copy, value)
+                        add_button_macros(t_copy, macros)
                 case _:
                     new_text = str(value)
 
             if new_text:
-                find_element(t_copy, item).text = new_text
+                find_element(t_copy, item).text = new_text  # type: ignore
 
         # Add additional properties from widget
         match widget_type, widget:
@@ -92,6 +101,8 @@ class BobTemplate(UITemplate[_Element]):
                 add_format(t_copy, BOB_TEXT_FORMATS[TextFormat(format)])
             case ("byte_monitor", BitField() as bit_field):
                 add_byte_number_of_bits(t_copy, bit_field.number_of_bits)
+            case _:
+                pass
 
         return t_copy
 

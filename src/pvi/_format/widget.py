@@ -1,11 +1,14 @@
 from __future__ import annotations
 
 from collections.abc import Callable
-from typing import Generic, TypeVar
+from enum import StrEnum
+from typing import Any, Generic, TypeVar
+
+from typing_extensions import Self
 
 from pydantic import BaseModel, Field, create_model
 
-from pvi._format.utils import Bounds, GroupType
+from pvi._format.utils import Bounds
 from pvi.device import (
     LED,
     ArrayTrace,
@@ -48,7 +51,7 @@ class UITemplate(Generic[T]):
         template: T,
         bounds: Bounds | None = None,
         widget: WidgetUnion | None = None,
-        **properties,
+        properties: dict[str, Any] | None = None,
     ) -> T:
         """Modify template elements with component data
 
@@ -56,7 +59,7 @@ class UITemplate(Generic[T]):
             template: A template element
             bounds: The size and position of the widget
             widget: A Widget to define some additional properties for the element
-            **properties: The element properties in the form: {placeholder: value}
+            properties: The element properties in the form: {placeholder: value}
                 placeholder is value to find in the template and value is the component
                 value to replace it with
 
@@ -76,9 +79,6 @@ class UITemplate(Generic[T]):
         raise NotImplementedError(self)
 
 
-WF = TypeVar("WF", bound="WidgetFormatter")
-
-
 class WidgetFormatter(BaseModel, Generic[T]):
     bounds: Bounds
 
@@ -88,14 +88,14 @@ class WidgetFormatter(BaseModel, Generic[T]):
 
     @classmethod
     def from_template(
-        cls: type[WF],
+        cls: type[Self],
         template: UITemplate[T],
-        search,
+        search: str,
         sized: Callable[[Bounds], Bounds] = Bounds.clone,
         widget_formatter_hook: Callable[[Bounds, str], list[WidgetFormatter[T]]]
         | None = None,
         property_map: dict[str, str] | None = None,
-    ) -> type[WF]:
+    ) -> type[Self]:
         """Create a WidgetFormatter class from the given template
 
         Create a `format` method that searches the template for the `search` section and
@@ -115,7 +115,7 @@ class WidgetFormatter(BaseModel, Generic[T]):
         """
 
         def format(self: WidgetFormatter[T]) -> list[T]:
-            properties = {}
+            properties: dict[str, str] = {}
             if property_map is not None:
                 for placeholder, widget_property in property_map.items():
                     assert hasattr(
@@ -128,7 +128,7 @@ class WidgetFormatter(BaseModel, Generic[T]):
                     template.search(search),
                     sized(self.bounds),
                     self.widget if isinstance(self, PVWidgetFormatter) else None,
-                    **properties,
+                    properties,
                 )
             ]
 
@@ -166,7 +166,9 @@ class SubScreenWidgetFormatter(WidgetFormatter[T]):
     macros: dict[str, str] = Field(default={})
 
 
-GWF = TypeVar("GWF", bound="GroupFormatter")
+class GroupType(StrEnum):
+    GROUP = "GROUP"
+    SCREEN = "SCREEN"
 
 
 class GroupFormatter(WidgetFormatter[T]):
@@ -178,8 +180,7 @@ class GroupFormatter(WidgetFormatter[T]):
         """Instances should be created using `from_template`, which defines `format`"""
         raise NotImplementedError(self)
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    def model_post_init(self, _context: Any) -> None:
         self.resize()
 
     def resize(self):
@@ -187,14 +188,14 @@ class GroupFormatter(WidgetFormatter[T]):
 
     @classmethod
     def from_template(
-        cls: type[GWF],
+        cls: type[Self],
         template: UITemplate[T],
-        search: GroupType,
+        search: str,
         sized: Callable[[Bounds], Bounds] = Bounds.clone,
         widget_formatter_hook: Callable[[Bounds, str], list[WidgetFormatter[T]]]
         | None = None,
         property_map: dict[str, str] | None = None,
-    ) -> type[GWF]:
+    ) -> type[Self]:
         """Create a WidgetFormatter class from the given template
 
         Create a `format` method that searches the template for the `search` section and
@@ -218,7 +219,7 @@ class GroupFormatter(WidgetFormatter[T]):
             made_widgets: list[T] = []
 
             if search == GroupType.SCREEN:
-                properties = {}
+                properties: dict[str, str] = {}
                 if property_map is not None:
                     for placeholder, widget_property in property_map.items():
                         assert hasattr(
@@ -226,7 +227,9 @@ class GroupFormatter(WidgetFormatter[T]):
                         ), f"{self} has no property {widget_property}"
                         properties[placeholder] = getattr(self, widget_property)
 
-                texts.append(template.set(template.screen, self.bounds, **properties))
+                texts.append(
+                    template.set(template.screen, self.bounds, properties=properties)
+                )
                 # Make screen title
                 if widget_formatter_hook:
                     for widget in widget_formatter_hook(self.bounds, self.title):
@@ -244,7 +247,7 @@ class GroupFormatter(WidgetFormatter[T]):
                 texts += template.create_group(made_widgets, self.children, padding)
             return texts
 
-        def resize(self):
+        def resize(self: GroupFormatter[T]):
             """Resize based on widget template.
 
             Called in __init__ by parent class.
@@ -257,7 +260,7 @@ class GroupFormatter(WidgetFormatter[T]):
             pass
 
         return create_model(
-            f"{cls.__name__}<{search.name}>",
+            f"{cls.__name__}<{search}>",
             __base__=cls,
             format=format,
             resize=resize,

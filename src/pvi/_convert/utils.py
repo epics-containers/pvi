@@ -11,7 +11,7 @@ def extract_device_and_parent_class(header_text: str) -> tuple[str, str]:
     return classname, parent
 
 
-def extract_define_strs(header_text, info_strings: list[str]) -> list[str]:
+def extract_define_strs(header_text: str, info_strings: list[str]) -> list[str]:
     # e.g. extract: #define SimGainXString                "SIM_GAIN_X";
     define_extractor = re.compile(r'\#define[_A-Za-z0-9 ]*"[^"]*".*')
     definitions = re.findall(define_extractor, header_text)
@@ -20,7 +20,7 @@ def extract_define_strs(header_text, info_strings: list[str]) -> list[str]:
     return definitions
 
 
-def extract_create_param_strs(source_text, param_strings: list[str]) -> list[str]:
+def extract_create_param_strs(source_text: str, param_strings: list[str]) -> list[str]:
     # e.g. extract: createParam(SimGainXString, asynParamFloat64, &SimGainX);
     create_param_extractor = re.compile(r"((?:this->)?createParam\([^\)]*\);.*)")
     create_param_strs = re.findall(create_param_extractor, source_text)
@@ -29,7 +29,7 @@ def extract_create_param_strs(source_text, param_strings: list[str]) -> list[str
     return create_param_strs
 
 
-def extract_index_declarations(header_text, index_names: list[str]) -> list[str]:
+def extract_index_declarations(header_text: str, index_names: list[str]) -> list[str]:
     # e.g. extract:     int SimGainX;
     declaration_extractor = re.compile(r"\s*int [^;]*;")
     declarations = re.findall(declaration_extractor, header_text)

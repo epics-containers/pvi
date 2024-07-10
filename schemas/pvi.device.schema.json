@@ -155,13 +155,20 @@
       "description": "Selection of an enum PV",
       "properties": {
         "choices": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
           "default": null,
           "description": "Choices to select from",
-          "items": {
-            "type": "string"
-          },
-          "title": "Choices",
-          "type": "array"
+          "title": "Choices"
         },
         "type": {
           "const": "ComboBox",

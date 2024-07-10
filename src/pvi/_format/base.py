@@ -22,14 +22,14 @@ class Formatter(TypedModel, YamlValidatorMixin):
     """Base UI formatter."""
 
     @classmethod
-    def type_adapter(cls) -> TypeAdapter:
+    def type_adapter(cls) -> TypeAdapter["Formatter"]:
         """Create TypeAdapter of all child classes"""
         return TypeAdapter(
             as_tagged_union(Union[tuple(cls.__subclasses__())])  # type: ignore # noqa: UP007
         )
 
     @classmethod
-    def from_dict(cls, serialized: dict) -> "Formatter":
+    def from_dict(cls, serialized: dict[str, Any]) -> "Formatter":
         """Instantiate a Formatter child class from a dictionary.
 
         Args:
@@ -59,7 +59,7 @@ class Formatter(TypedModel, YamlValidatorMixin):
         cls._rebuild_child_models()
         return cls.type_adapter().json_schema()
 
-    def format(self, device: Device, path: Path):
+    def format(self, device: Device, path: Path) -> None:
         """To be implemented by child classes to define how to format specific UIs.
 
         Args:

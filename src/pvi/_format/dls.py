@@ -1,7 +1,11 @@
 from pathlib import Path
 from typing import Annotated
 
-from lxml.etree import fromstring, tostring
+from lxml.etree import (
+    _Element,  # pyright: ignore [reportPrivateUsage]
+    fromstring,
+    tostring,
+)
 from pydantic import Field
 
 from pvi._format.bob import BobTemplate, find_element
@@ -14,6 +18,7 @@ from pvi._format.screen import (
 from pvi._format.widget import (
     ActionWidgetFormatter,
     GroupFormatter,
+    GroupType,
     LabelWidgetFormatter,
     PVWidgetFormatter,
     SubScreenWidgetFormatter,
@@ -22,7 +27,7 @@ from pvi._format.widget import (
 from pvi.device import Device
 
 from .base import Formatter
-from .utils import Bounds, GroupType, with_title
+from .utils import Bounds, with_title
 
 
 class DLSFormatter(Formatter):
@@ -35,7 +40,7 @@ class DLSFormatter(Formatter):
     widget_width: Annotated[int, Field(description="Width of the widgets")] = 200
     widget_height: Annotated[int, Field(description="Height of the widgets")] = 20
 
-    def format(self, device: Device, path: Path):
+    def format(self, device: Device, path: Path) -> None:
         if path.suffix == ".edl":
             f = self.format_edl
         elif path.suffix == ".bob":
@@ -57,60 +62,60 @@ class DLSFormatter(Formatter):
             group_widget_indent=5,
             group_width_offset=0,
         )
-        widget_formatter_factory = WidgetFormatterFactory(
-            header_formatter_cls=LabelWidgetFormatter.from_template(
+        widget_formatter_factory = WidgetFormatterFactory[str](
+            header_formatter_cls=LabelWidgetFormatter[str].from_template(
                 template,
                 search='"Heading"',
                 property_map={"value": "text"},
             ),
-            label_formatter_cls=LabelWidgetFormatter.from_template(
+            label_formatter_cls=LabelWidgetFormatter[str].from_template(
                 template,
                 search='"Label"',
                 property_map={"value": "text"},
             ),
-            led_formatter_cls=PVWidgetFormatter.from_template(
+            led_formatter_cls=PVWidgetFormatter[str].from_template(
                 template,
                 search='"LED"',
                 sized=Bounds.square,
                 property_map={"controlPv": "pv"},
             ),
-            progress_bar_formatter_cls=PVWidgetFormatter.from_template(
+            progress_bar_formatter_cls=PVWidgetFormatter[str].from_template(
                 template,
                 search='"ProgressBar"',
                 property_map={"indicatorPv": "pv"},
             ),
-            text_read_formatter_cls=PVWidgetFormatter.from_template(
+            text_read_formatter_cls=PVWidgetFormatter[str].from_template(
                 template,
                 search='"TextRead"',
                 property_map={"controlPv": "pv"},
             ),
-            check_box_formatter_cls=PVWidgetFormatter.from_template(
+            check_box_formatter_cls=PVWidgetFormatter[str].from_template(
                 template,
                 search='"ComboBox"',
                 property_map={"controlPv": "pv"},
             ),
-            toggle_formatter_cls=PVWidgetFormatter.from_template(
+            toggle_formatter_cls=PVWidgetFormatter[str].from_template(
                 template,
                 search='"ToggleButton"',
                 property_map={"controlPv": "pv"},
             ),
-            combo_box_formatter_cls=PVWidgetFormatter.from_template(
+            combo_box_formatter_cls=PVWidgetFormatter[str].from_template(
                 template,
                 search='"ComboBox"',
                 property_map={"controlPv": "pv"},
             ),
-            text_write_formatter_cls=PVWidgetFormatter.from_template(
+            text_write_formatter_cls=PVWidgetFormatter[str].from_template(
                 template,
                 search='"TextWrite"',
                 property_map={"controlPv": "pv"},
             ),
             # Cannot handle dynamic tables so insert a label with the PV name
-            table_formatter_cls=PVWidgetFormatter.from_template(
+            table_formatter_cls=PVWidgetFormatter[str].from_template(
                 template,
                 search='"Label"',
                 property_map={"value": "pv"},
             ),
-            action_formatter_cls=ActionWidgetFormatter.from_template(
+            action_formatter_cls=ActionWidgetFormatter[str].from_template(
                 template,
                 search='"SignalX"',
                 property_map={
@@ -119,43 +124,43 @@ class DLSFormatter(Formatter):
                     "controlPv": "pv",
                 },
             ),
-            sub_screen_formatter_cls=SubScreenWidgetFormatter.from_template(
+            sub_screen_formatter_cls=SubScreenWidgetFormatter[str].from_template(
                 template,
                 search='"SubScreenFile"',
                 property_map={"displayFileName": "file_name"},
             ),
-            bitfield_formatter_cls=PVWidgetFormatter.from_template(
+            bitfield_formatter_cls=PVWidgetFormatter[str].from_template(
                 template,
                 search='"LED"',
                 property_map={"controlPv": "pv"},
             ),
-            button_panel_formatter_cls=PVWidgetFormatter.from_template(
+            button_panel_formatter_cls=PVWidgetFormatter[str].from_template(
                 template,
                 search='"Label"',
                 property_map={"value": "pv"},
             ),
-            array_trace_formatter_cls=PVWidgetFormatter.from_template(
+            array_trace_formatter_cls=PVWidgetFormatter[str].from_template(
                 template,
                 search='"Label"',
                 property_map={"value": "pv"},
             ),
-            image_read_formatter_cls=PVWidgetFormatter.from_template(
+            image_read_formatter_cls=PVWidgetFormatter[str].from_template(
                 template,
                 search='"Label"',
                 property_map={"value": "pv"},
             ),
         )
-        screen_title_cls = LabelWidgetFormatter.from_template(
+        screen_title_cls = LabelWidgetFormatter[str].from_template(
             template,
             search='"Title"',
             property_map={"value": "text"},
         )
-        group_title_cls = LabelWidgetFormatter.from_template(
+        group_title_cls = LabelWidgetFormatter[str].from_template(
             template,
             search='"  Group  "',
             property_map={"value": "text"},
         )
-        group_box_cls = WidgetFormatter.from_template(
+        group_box_cls = WidgetFormatter[str].from_template(
             template, search="fillColor index 5"
         )
 
@@ -188,14 +193,14 @@ class DLSFormatter(Formatter):
                 )
             ]
 
-        formatter_factory: ScreenFormatterFactory = ScreenFormatterFactory(
-            screen_formatter_cls=GroupFormatter.from_template(
+        formatter_factory: ScreenFormatterFactory[str] = ScreenFormatterFactory(
+            screen_formatter_cls=GroupFormatter[str].from_template(
                 template,
                 search=GroupType.SCREEN,
                 sized=with_title(screen_layout.spacing, screen_layout.title_height),
                 widget_formatter_hook=create_screen_title_formatter,
             ),
-            group_formatter_cls=GroupFormatter.from_template(
+            group_formatter_cls=GroupFormatter[str].from_template(
                 template,
                 search=GroupType.GROUP,
                 sized=with_title(
@@ -233,101 +238,109 @@ class DLSFormatter(Formatter):
             group_width_offset=26,
         )
         # SW DOCS REF: Extract widget types from template file
-        widget_formatter_factory = WidgetFormatterFactory(
-            header_formatter_cls=LabelWidgetFormatter.from_template(
-                template,
-                search="Heading",
-                property_map={"text": "text"},
-            ),
-            label_formatter_cls=LabelWidgetFormatter.from_template(
-                template,
-                search="Label",
-                property_map={"text": "text", "tooltip": "description"},
-            ),
-            led_formatter_cls=PVWidgetFormatter.from_template(
-                template,
-                search="LED",
-                sized=Bounds.square,
-                property_map={"pv_name": "pv"},
-            ),
-            progress_bar_formatter_cls=PVWidgetFormatter.from_template(
-                template,
-                search="ProgressBar",
-                property_map={"pv_name": "pv"},
-            ),
-            bitfield_formatter_cls=PVWidgetFormatter.from_template(
-                template,
-                search="BitField",
-                property_map={"pv_name": "pv"},
-            ),
-            button_panel_formatter_cls=PVWidgetFormatter.from_template(
-                template,
-                search="ButtonPanel",
-                property_map={"pv_name": "pv"},
-            ),
-            array_trace_formatter_cls=PVWidgetFormatter.from_template(
-                template,
-                search="ArrayTrace",
-                property_map={"y_pv": "pv"},
-            ),
-            image_read_formatter_cls=PVWidgetFormatter.from_template(
-                template,
-                search="ImageRead",
-                property_map={"pv_name": "pv"},
-            ),
-            text_read_formatter_cls=PVWidgetFormatter.from_template(
-                template,
-                search="TextUpdate",
-                property_map={"pv_name": "pv"},
-            ),
-            check_box_formatter_cls=PVWidgetFormatter.from_template(
-                template,
-                search="ChoiceButton",
-                property_map={"pv_name": "pv"},
-            ),
-            toggle_formatter_cls=PVWidgetFormatter.from_template(
-                template,
-                search="ToggleButton",
-                property_map={"pv_name": "pv"},
-            ),
-            combo_box_formatter_cls=PVWidgetFormatter.from_template(
-                template,
-                search="ComboBox",
-                property_map={"pv_name": "pv"},
-            ),
-            text_write_formatter_cls=PVWidgetFormatter.from_template(
-                template,
-                search="TextEntry",
-                property_map={"pv_name": "pv"},
-            ),
-            table_formatter_cls=PVWidgetFormatter.from_template(
-                template,
-                search="Table",
-                property_map={"pv_name": "pv"},
-            ),
-            action_formatter_cls=ActionWidgetFormatter.from_template(
-                template,
-                search="WritePV",
-                property_map={
-                    "text": "label",
-                    "pv_name": "pv",
-                    "value": "value",
-                    "tooltip": "tooltip",
-                },
-            ),
-            sub_screen_formatter_cls=SubScreenWidgetFormatter.from_template(
-                template,
-                search="OpenDisplay",
-                property_map={"file": "file_name", "text": "label", "macros": "macros"},
-            ),
+        widget_formatter_factory: WidgetFormatterFactory[_Element] = (
+            WidgetFormatterFactory(
+                header_formatter_cls=LabelWidgetFormatter[_Element].from_template(
+                    template,
+                    search="Heading",
+                    property_map={"text": "text"},
+                ),
+                label_formatter_cls=LabelWidgetFormatter[_Element].from_template(
+                    template,
+                    search="Label",
+                    property_map={"text": "text", "tooltip": "description"},
+                ),
+                led_formatter_cls=PVWidgetFormatter[_Element].from_template(
+                    template,
+                    search="LED",
+                    sized=Bounds.square,
+                    property_map={"pv_name": "pv"},
+                ),
+                progress_bar_formatter_cls=PVWidgetFormatter[_Element].from_template(
+                    template,
+                    search="ProgressBar",
+                    property_map={"pv_name": "pv"},
+                ),
+                bitfield_formatter_cls=PVWidgetFormatter[_Element].from_template(
+                    template,
+                    search="BitField",
+                    property_map={"pv_name": "pv"},
+                ),
+                button_panel_formatter_cls=PVWidgetFormatter[_Element].from_template(
+                    template,
+                    search="ButtonPanel",
+                    property_map={"pv_name": "pv"},
+                ),
+                array_trace_formatter_cls=PVWidgetFormatter[_Element].from_template(
+                    template,
+                    search="ArrayTrace",
+                    property_map={"y_pv": "pv"},
+                ),
+                image_read_formatter_cls=PVWidgetFormatter[_Element].from_template(
+                    template,
+                    search="ImageRead",
+                    property_map={"pv_name": "pv"},
+                ),
+                text_read_formatter_cls=PVWidgetFormatter[_Element].from_template(
+                    template,
+                    search="TextUpdate",
+                    property_map={"pv_name": "pv"},
+                ),
+                check_box_formatter_cls=PVWidgetFormatter[_Element].from_template(
+                    template,
+                    search="ChoiceButton",
+                    property_map={"pv_name": "pv"},
+                ),
+                toggle_formatter_cls=PVWidgetFormatter[_Element].from_template(
+                    template,
+                    search="ToggleButton",
+                    property_map={"pv_name": "pv"},
+                ),
+                combo_box_formatter_cls=PVWidgetFormatter[_Element].from_template(
+                    template,
+                    search="ComboBox",
+                    property_map={"pv_name": "pv"},
+                ),
+                text_write_formatter_cls=PVWidgetFormatter[_Element].from_template(
+                    template,
+                    search="TextEntry",
+                    property_map={"pv_name": "pv"},
+                ),
+                table_formatter_cls=PVWidgetFormatter[_Element].from_template(
+                    template,
+                    search="Table",
+                    property_map={"pv_name": "pv"},
+                ),
+                action_formatter_cls=ActionWidgetFormatter[_Element].from_template(
+                    template,
+                    search="WritePV",
+                    property_map={
+                        "text": "label",
+                        "pv_name": "pv",
+                        "value": "value",
+                        "tooltip": "tooltip",
+                    },
+                ),
+                sub_screen_formatter_cls=SubScreenWidgetFormatter[
+                    _Element
+                ].from_template(
+                    template,
+                    search="OpenDisplay",
+                    property_map={
+                        "file": "file_name",
+                        "text": "label",
+                        "macros": "macros",
+                    },
+                ),
+            )
         )
         # MAKE_WIDGETS DOCS REF: Define screen and group widgets
-        screen_title_cls = LabelWidgetFormatter.from_template(
+        screen_title_cls = LabelWidgetFormatter[_Element].from_template(
             template,
             search="Title",
             property_map={"text": "text"},
         )
-        group_title_cls = LabelWidgetFormatter.from_template(
+        group_title_cls = LabelWidgetFormatter[_Element].from_template(
             template,
             search="Group",
             property_map={"name": "text"},
@@ -335,7 +348,7 @@ class DLSFormatter(Formatter):
 
         def create_group_object_formatter(
             bounds: Bounds, title: str
-        ) -> list[WidgetFormatter[str]]:
+        ) -> list[WidgetFormatter[_Element]]:
             return [
                 group_title_cls(
                     bounds=Bounds(x=bounds.x, y=bounds.y, w=bounds.w, h=bounds.h),
@@ -345,7 +358,7 @@ class DLSFormatter(Formatter):
 
         def create_screen_title_formatter(
             bounds: Bounds, title: str
-        ) -> list[WidgetFormatter[str]]:
+        ) -> list[WidgetFormatter[_Element]]:
             return [
                 screen_title_cls(
                     bounds=Bounds(x=0, y=0, w=bounds.w, h=screen_layout.title_height),
@@ -354,14 +367,14 @@ class DLSFormatter(Formatter):
             ]
 
         # SCREEN_INI DOCS REF: Construct a screen object
-        formatter_factory: ScreenFormatterFactory = ScreenFormatterFactory(
-            screen_formatter_cls=GroupFormatter.from_template(
+        formatter_factory: ScreenFormatterFactory[_Element] = ScreenFormatterFactory(
+            screen_formatter_cls=GroupFormatter[_Element].from_template(
                 template,
                 search=GroupType.SCREEN,
                 sized=with_title(screen_layout.spacing, screen_layout.title_height),
                 widget_formatter_hook=create_screen_title_formatter,
             ),
-            group_formatter_cls=GroupFormatter.from_template(
+            group_formatter_cls=GroupFormatter[_Element].from_template(
                 template,
                 search=GroupType.GROUP,
                 sized=with_title(
@@ -386,18 +399,18 @@ class DLSFormatter(Formatter):
             write_bob(sub_screen_formatter, sub_screen_path)
 
 
-def write_bob(screen_formatter: GroupFormatter, path: Path):
+def write_bob(screen_formatter: GroupFormatter[_Element], path: Path):
     # SCREEN_WRITE DOCS REF: Generate the screen file
     # The root:'Display' is always the first element in texts
     texts = screen_formatter.format()
-    ET = fromstring(tostring(texts[0]))
+    element_tree = fromstring(tostring(texts[0]), None)
     for element in texts[:0:-1]:
-        grid_step_y = ET.find("grid_step_y")
+        grid_step_y = element_tree.find("grid_step_y")
         if grid_step_y is None:
             raise ValueError(f"Could not find grid_step_y in element {element}")
 
-        ET.insert(ET.index(grid_step_y) + 1, element)
+        element_tree.insert(element_tree.index(grid_step_y) + 1, element)
 
-    ET = ET.getroottree()
-    find_element(ET, "name").text = screen_formatter.title
-    ET.write(str(path), pretty_print=True)
+    element_tree = element_tree.getroottree()
+    find_element(element_tree, "name").text = screen_formatter.title  # type: ignore
+    element_tree.write(str(path), pretty_print=True)

@@ -60,9 +60,9 @@ class ScreenLayout(BaseModel):
 
 
 class ScreenFormatterFactory(BaseModel, Generic[T]):
-    screen_formatter_cls: type[GroupFormatter]
-    group_formatter_cls: type[GroupFormatter]
-    widget_formatter_factory: WidgetFormatterFactory
+    screen_formatter_cls: type[GroupFormatter[T]]
+    group_formatter_cls: type[GroupFormatter[T]]
+    widget_formatter_factory: WidgetFormatterFactory[T]
     layout: ScreenLayout
     components: dict[str, ComponentUnion] = Field(default={}, init_var=False)
     base_file_name: str = ""
@@ -95,6 +95,8 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
                 # This is where the actual content of sub screens are created after
                 # being replaced by a sub screen button in the original location
                 components = component.children
+            case _:
+                pass
 
         for c in components:
             last_column_bounds = columns[-1]
@@ -185,7 +187,7 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
                 # This is a reference to an existing screen - don't create it
                 continue
 
-            factory: ScreenFormatterFactory = ScreenFormatterFactory(
+            factory: ScreenFormatterFactory[T] = ScreenFormatterFactory(
                 screen_formatter_cls=self.screen_formatter_cls,
                 group_formatter_cls=self.group_formatter_cls,
                 widget_formatter_factory=self.widget_formatter_factory,
@@ -346,8 +348,8 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
         parent_bounds: Bounds,
         column_bounds: Bounds,
         next_column_bounds: Bounds,
-        indent=False,
-        add_label=True,
+        indent: bool = False,
+        add_label: bool = True,
     ) -> list[WidgetFormatter[T]]:
         """Generate widgets from component data and position them in a grid format
 
@@ -397,7 +399,7 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
         self,
         c: ComponentUnion,
         bounds: Bounds,
-        add_label=True,
+        add_label: bool = True,
     ) -> Iterator[WidgetFormatter[T]]:
         """Convert a component into its WidgetFormatter equivalents
 
@@ -476,6 +478,8 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
                     add_label = False  # Do not add row labels for Tables
                     component_bounds.w = 100 * len(widgets)
                     component_bounds.h *= 10  # TODO: How do we know the number of rows?
+                case _:
+                    pass
 
         if add_label:
             # Insert label and reduce width for widget
