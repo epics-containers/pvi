@@ -1,3 +1,4 @@
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -94,6 +95,26 @@ def test_convert_device_name(tmp_path, helper):
         "GenICamDriver",
         "--template",
         input_path / "Mako125B.template",
+    )
+
+
+def test_reconvert(tmp_path, helper):
+    expected_path = HERE / "reconvert" / "output"
+    input_path = HERE / "reconvert" / "input"
+    # Make a copy to modify in place
+    shutil.copy(
+        input_path / "simDetector.pvi.device.yaml",
+        tmp_path / "simDetector.pvi.device.yaml",
+    )
+    helper.assert_cli_output_matches(
+        app,
+        expected_path / "simDetector.pvi.device.yaml",
+        "reconvert",
+        tmp_path / "simDetector.pvi.device.yaml",
+        "--template",
+        input_path / "simDetector.template",
+        "--template",
+        input_path / "simDetectorExtra.template",
     )
 
 

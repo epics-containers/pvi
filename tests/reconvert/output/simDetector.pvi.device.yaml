@@ -1,0 +1,357 @@
+label: simDetector
+parent: ADDriver
+children:
+
+- type: Group
+  name: SimDetector
+  layout:
+    type: Grid
+    labelled: true
+  children:
+
+  - type: SignalW
+    name: ResetPower
+    write_pv: $(P)$(R)ResetPower
+    write_widget:
+      type: ToggleButton
+
+  - type: SignalR
+    name: Read
+    read_pv: $(P)$(R)Read
+    read_widget:
+      type: TextRead
+
+  - type: SignalR
+    name: XMLErrorMsg
+    read_pv: $(P)$(R)XMLErrorMsg_RBV
+    read_widget:
+      type: TextRead
+      format: string
+
+  - type: SignalR
+    name: Dimensions
+    read_pv: $(P)$(R)Dimensions_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: GainX
+    write_pv: $(P)$(R)GainX
+    write_widget:
+      type: TextWrite
+    read_pv: $(P)$(R)GainX_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: GainY
+    write_pv: $(P)$(R)GainY
+    write_widget:
+      type: TextWrite
+    read_pv: $(P)$(R)GainY_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: GainRed
+    write_pv: $(P)$(R)GainRed
+    write_widget:
+      type: TextWrite
+    read_pv: $(P)$(R)GainRed_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: GainGreen
+    write_pv: $(P)$(R)GainGreen
+    write_widget:
+      type: TextWrite
+    read_pv: $(P)$(R)GainGreen_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: GainBlue
+    write_pv: $(P)$(R)GainBlue
+    write_widget:
+      type: TextWrite
+    read_pv: $(P)$(R)GainBlue_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: Reset
+    write_pv: $(P)$(R)Reset
+    write_widget:
+      type: TextWrite
+    read_pv: $(P)$(R)Reset_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: Offset
+    write_pv: $(P)$(R)Offset
+    write_widget:
+      type: TextWrite
+    read_pv: $(P)$(R)Offset_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: Noise
+    write_pv: $(P)$(R)Noise
+    write_widget:
+      type: TextWrite
+    read_pv: $(P)$(R)Noise_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: SimMode
+    write_pv: $(P)$(R)SimMode
+    write_widget:
+      type: ComboBox
+    read_pv: $(P)$(R)SimMode_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: PeakStartX
+    write_pv: $(P)$(R)PeakStartX
+    write_widget:
+      type: TextWrite
+    read_pv: $(P)$(R)PeakStartX_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: PeakStartY
+    write_pv: $(P)$(R)PeakStartY
+    write_widget:
+      type: TextWrite
+    read_pv: $(P)$(R)PeakStartY_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: PeakNumX
+    write_pv: $(P)$(R)PeakNumX
+    write_widget:
+      type: TextWrite
+    read_pv: $(P)$(R)PeakNumX_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: PeakNumY
+    write_pv: $(P)$(R)PeakNumY
+    write_widget:
+      type: TextWrite
+    read_pv: $(P)$(R)PeakNumY_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: PeakStepX
+    write_pv: $(P)$(R)PeakStepX
+    write_widget:
+      type: TextWrite
+    read_pv: $(P)$(R)PeakStepX_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: PeakStepY
+    write_pv: $(P)$(R)PeakStepY
+    write_widget:
+      type: TextWrite
+    read_pv: $(P)$(R)PeakStepY_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: PeakWidthX
+    write_pv: $(P)$(R)PeakWidthX
+    write_widget:
+      type: TextWrite
+    read_pv: $(P)$(R)PeakWidthX_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: PeakWidthY
+    write_pv: $(P)$(R)PeakWidthY
+    write_widget:
+      type: TextWrite
+    read_pv: $(P)$(R)PeakWidthY_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: PeakVariation
+    write_pv: $(P)$(R)PeakVariation
+    write_widget:
+      type: TextWrite
+    read_pv: $(P)$(R)PeakVariation_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: XSineOperation
+    write_pv: $(P)$(R)XSineOperation
+    write_widget:
+      type: ComboBox
+    read_pv: $(P)$(R)XSineOperation_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: XSine1Amplitude
+    write_pv: $(P)$(R)XSine1Amplitude
+    write_widget:
+      type: TextWrite
+    read_pv: $(P)$(R)XSine1Amplitude_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: XSine1Frequency
+    write_pv: $(P)$(R)XSine1Frequency
+    write_widget:
+      type: TextWrite
+    read_pv: $(P)$(R)XSine1Frequency_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: XSine1Phase
+    write_pv: $(P)$(R)XSine1Phase
+    write_widget:
+      type: TextWrite
+    read_pv: $(P)$(R)XSine1Phase_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: XSine2Amplitude
+    write_pv: $(P)$(R)XSine2Amplitude
+    write_widget:
+      type: TextWrite
+    read_pv: $(P)$(R)XSine2Amplitude_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: XSine2Frequency
+    write_pv: $(P)$(R)XSine2Frequency
+    write_widget:
+      type: TextWrite
+    read_pv: $(P)$(R)XSine2Frequency_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: XSine2Phase
+    write_pv: $(P)$(R)XSine2Phase
+    write_widget:
+      type: TextWrite
+    read_pv: $(P)$(R)XSine2Phase_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: YSineOperation
+    write_pv: $(P)$(R)YSineOperation
+    write_widget:
+      type: ComboBox
+    read_pv: $(P)$(R)YSineOperation_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: YSine1Amplitude
+    write_pv: $(P)$(R)YSine1Amplitude
+    write_widget:
+      type: TextWrite
+    read_pv: $(P)$(R)YSine1Amplitude_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: YSine1Frequency
+    write_pv: $(P)$(R)YSine1Frequency
+    write_widget:
+      type: TextWrite
+    read_pv: $(P)$(R)YSine1Frequency_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: YSine1Phase
+    write_pv: $(P)$(R)YSine1Phase
+    write_widget:
+      type: TextWrite
+    read_pv: $(P)$(R)YSine1Phase_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: YSine2Amplitude
+    write_pv: $(P)$(R)YSine2Amplitude
+    write_widget:
+      type: TextWrite
+    read_pv: $(P)$(R)YSine2Amplitude_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: YSine2Frequency
+    write_pv: $(P)$(R)YSine2Frequency
+    write_widget:
+      type: TextWrite
+    read_pv: $(P)$(R)YSine2Frequency_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: YSine2Phase
+    write_pv: $(P)$(R)YSine2Phase
+    write_widget:
+      type: TextWrite
+    read_pv: $(P)$(R)YSine2Phase_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: GainZ
+    write_pv: $(P)$(R)GainZ
+    write_widget:
+      type: TextWrite
+    read_pv: $(P)$(R)GainZ_RBV
+    read_widget:
+      type: TextRead
+
+- type: Group
+  name: SimDetectorExtra
+  layout:
+    type: Grid
+    labelled: true
+  children:
+
+  - type: SignalRW
+    name: Mode
+    write_pv: $(P)$(R)Mode
+    write_widget:
+      type: ComboBox
+    read_pv: $(P)$(R)Mode_RBV
+    read_widget:
+      type: TextRead
+
+  - type: SignalRW
+    name: Compressor
+    write_pv: $(P)$(R)Compressor
+    write_widget:
+      type: ComboBox
+    read_pv: $(P)$(R)Compressor_RBV
+    read_widget:
+      type: TextRead

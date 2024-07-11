@@ -300,6 +300,9 @@ class Component(Named):
     def get_label(self):
         return self.label or to_title_case(self.name)
 
+    def __eq__(self, other: object) -> bool:
+        return isinstance(other, Component) and self.name == other.name
+
 
 class Signal(Component, AccessModeMixin):
     """Base signal type representing one or two PVs of a `Device`."""
@@ -492,23 +495,32 @@ class Device(TypedModel, YamlValidatorMixin):
         if self.parent is None or self.parent == "asynPortDriver":
             return
 
-        parent_parameters = find_components(self.parent, yaml_paths)
-        for node in parent_parameters:
+        parent_components = find_components(self.parent, yaml_paths)
+        self.merge_components(parent_components)
+
+    def merge_components(self, components: Tree) -> None:
+        existing_components = list(walk(self.children))
+        for node in components:
             if isinstance(node, Group):
-                for param_group in self.children:
-                    if not isinstance(param_group, Group):
+                for group in self.children:
+                    if not isinstance(group, Group):
                         continue
-                    elif param_group.name == node.name:
-                        param_group.children = list(node.children) + list(
-                            param_group.children
-                        )
-                        break  # Groups merged - skip to next parent group
+                    elif group.name == node.name:
+                        group.children = list(group.children) + [
+                            c for c in node.children if c not in group.children
+                        ]
+                        break  # Groups merged - skip to next group
 
                 else:  # No break - Did not find the Group
-                    # Inherit as a new Group
-                    self.children = list(self.children) + [node]
-                    continue  # Skip to next parent group
+                    # Remove any signals already in device from node
+                    node.children = [
+                        c for c in node.children if c not in existing_components
+                    ]
 
+                    # Add node as a new group
+                    self.children = list(self.children) + [node]
+
+                    continue  # Skip to next group
             else:
                 # Node is an individual AsynParameter - just append it
                 self.children = list(self.children) + [node]
