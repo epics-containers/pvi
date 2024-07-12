@@ -58,6 +58,7 @@ cov.xml
 
 # Sphinx documentation
 docs/_build/
+docs/reference/_api
 
 # PyBuilder
 target/

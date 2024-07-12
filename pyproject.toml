@@ -42,6 +42,7 @@ dev = [
     "sphinx-autobuild",
     "sphinx-copybutton",
     "sphinx-design",
+    "sphinx-autodoc2",
     "tox-direct",
     "types-mock",
 ]
