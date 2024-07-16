@@ -48,7 +48,7 @@ class TypedModel(BaseModel):
 
         The `model_rebuild` method must be called to propagate this to the core schema
         of the models, once all `TypedModel` child classes have been defined. The
-        `model_json_schema` method is overidden in this class to make sure this is
+        `model_json_schema` method is overridden in this class to make sure this is
         applied automatically before generating schema.
 
         """
@@ -97,7 +97,7 @@ class TypedModel(BaseModel):
         This is a callable for pydantic Discriminator to discriminate between types in a
         tagged union of `TypedModel` child classes.
 
-        If given an instance of `TypeModel` then this method is being called to
+        If given an instance of `TypedModel` then this method is being called to
         serialize an instance. The type field of the entry for this instance should be
         its class name.
 

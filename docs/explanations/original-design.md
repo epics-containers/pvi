@@ -176,7 +176,7 @@ I suggest creating adl and edl files initially, following the example of
 makeAdl.py in ADGenICam, then expanding to support opi, bob and ui files
 natively. This would avoid needing screen converters installed
 
-# Drivers
+## Drivers
 
 The generated header file contains the string parameters, and defines the parameters to
 make the interface. In this example we have a header file pilatusDetectorParamSet.h:
