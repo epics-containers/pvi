@@ -39,11 +39,11 @@ class TemplateConverter:
         ]
 
     def _extract_components(self) -> list[list[ComponentUnion]]:
-        components = []
+        components: list[list[ComponentUnion]] = []
         for text in self._text:
             record_extractor = RecordExtractor(text)
             asyn_records = record_extractor.get_asyn_records()
-            template_components = []
+            template_components: list[ComponentUnion] = []
             for parameter in RecordRoleSorter.sort_records(asyn_records):
                 component = parameter.generate_component()
                 template_components.append(component)
@@ -52,7 +52,7 @@ class TemplateConverter:
 
 
 class RecordExtractor:
-    def __init__(self, text):
+    def __init__(self, text: str):
         self._text = text
 
     def _extract_record_strs(self):
@@ -69,7 +69,7 @@ class RecordExtractor:
         record_extractor = re.compile(r"\s*^[^#\n]*record\([^{]*{[^}]*}", re.MULTILINE)
         return re.findall(record_extractor, self._text)
 
-    def _parse_record(self, record_str: str) -> tuple:
+    def _parse_record(self, record_str: str) -> tuple[str, str, str]:
         # extract three groups from a record definition e.g.
         # from:
         # record(waveform, "$(P)$(R)FilePath")
@@ -137,7 +137,7 @@ class RecordExtractor:
 
     def get_asyn_records(self) -> list[AsynRecord]:
         record_strs = self._extract_record_strs()
-        record_list = []
+        record_list: list[AsynRecord] = []
         for record_str in record_strs:
             try:
                 record_list.append(self._create_asyn_record(record_str))
@@ -156,7 +156,7 @@ class RecordRoleSorter:
             write_records = [r for r in records if "OUT" in r.fields]
 
             # Move waveform records with asynOctetWrite from read to write
-            read_records = []
+            read_records: list[AsynRecord] = []
             for r in inp_records:
                 if r.type == "waveform" and (
                     r.fields["DTYP"] == "asynOctetWrite"

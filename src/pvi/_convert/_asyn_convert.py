@@ -58,22 +58,20 @@ class AsynRecord(Record):
         if self.type == "waveform":
             return get_waveform_parameter(self.fields["DTYP"])
 
+        if "INP" in self.fields.keys():
+            record_types = InRecordTypes
+        elif "OUT" in self.fields.keys():
+            record_types = OutRecordTypes
+        else:
+            raise ValueError(f"Record {self} has no 'INP' or 'OUT' field")
+
         try:
-            if "INP" in self.fields.keys():
-                record_types = InRecordTypes
-                return record_types[self.type]
-            elif "OUT" in self.fields.keys():
-                record_types = OutRecordTypes
-                return record_types[self.type]
+            return record_types[self.type]
         except KeyError as e:
             raise KeyError(
                 f"{self.pv} asyn type {self.type}({self.fields}) not found in"
                 f"{list(record_types)}"
             ) from e
-
-        raise ValueError(
-            f"Could not determine asyn type for {self.pv} fields {self.fields}"
-        )
 
 
 class AsynParameter(Named):
@@ -88,8 +86,8 @@ class AsynParameter(Named):
         default=None,
         description="A write AsynRecord, if not given then use $(name) as write PV",
     )
-    read_widget: ReadWidgetUnion = Field(default=TextRead())
-    write_widget: WriteWidgetUnion = Field(default=TextWrite())
+    read_widget: ReadWidgetUnion = TextRead()
+    write_widget: WriteWidgetUnion = TextWrite()
 
     def get_read_pv(self) -> str:
         if self.read_record:
@@ -112,8 +110,8 @@ class AsynBinary(AsynParameter):
         asyn_write="asynInt32",
         asyn_param="asynParamInt32",
     )
-    read_widget: ReadWidgetUnion = Field(LED())
-    write_widget: WriteWidgetUnion = Field(ToggleButton())
+    read_widget: ReadWidgetUnion = LED()
+    write_widget: WriteWidgetUnion = ToggleButton()
 
     def model_post_init(self, __context: Any) -> None:
         if self.write_record is not None:
@@ -136,8 +134,8 @@ class AsynFloat64(AsynParameter):
         asyn_write="asynFloat64",
         asyn_param="asynParamFloat64",
     )
-    read_widget: ReadWidgetUnion = Field(default=TextRead())
-    write_widget: WriteWidgetUnion = Field(default=TextWrite())
+    read_widget: ReadWidgetUnion = TextRead()
+    write_widget: WriteWidgetUnion = TextWrite()
 
 
 class AsynInt32(AsynParameter):
@@ -148,8 +146,8 @@ class AsynInt32(AsynParameter):
         asyn_write="asynInt32",
         asyn_param="asynParamInt32",
     )
-    read_widget: ReadWidgetUnion = Field(default=TextRead())
-    write_widget: WriteWidgetUnion = Field(default=TextWrite())
+    read_widget: ReadWidgetUnion = TextRead()
+    write_widget: WriteWidgetUnion = TextWrite()
 
 
 class AsynLong(AsynInt32):
@@ -164,8 +162,8 @@ class AsynMultiBitBinary(AsynParameter):
         asyn_write="asynInt32",
         asyn_param="asynParamInt32",
     )
-    read_widget: ReadWidgetUnion = Field(TextRead())
-    write_widget: WriteWidgetUnion = Field(ComboBox())
+    read_widget: ReadWidgetUnion = TextRead()
+    write_widget: WriteWidgetUnion = ComboBox()
 
 
 class AsynString(AsynParameter):
@@ -176,8 +174,8 @@ class AsynString(AsynParameter):
         asyn_write="asynOctetWrite",
         asyn_param="asynParamOctet",
     )
-    read_widget: ReadWidgetUnion = Field(TextRead())
-    write_widget: WriteWidgetUnion = Field(TextWrite())
+    read_widget: ReadWidgetUnion = TextRead()
+    write_widget: WriteWidgetUnion = TextWrite()
 
 
 InRecordTypes = {
@@ -207,8 +205,8 @@ class AsynWaveform(AsynParameter):
         asyn_write="asynOctetWrite",
         asyn_param="asynParamOctet",
     )
-    read_widget: ReadWidgetUnion = Field(TextRead(format=TextFormat.string))
-    write_widget: WriteWidgetUnion = Field(TextWrite(format=TextFormat.string))
+    read_widget: ReadWidgetUnion = TextRead(format=TextFormat.string)
+    write_widget: WriteWidgetUnion = TextWrite(format=TextFormat.string)
 
 
 class AsynInt32Waveform(AsynWaveform):
@@ -219,8 +217,8 @@ class AsynInt32Waveform(AsynWaveform):
         asyn_write="asynInt32ArrayOut",
         asyn_param="asynParamInt32",
     )
-    read_widget: ReadWidgetUnion = Field(TextRead())
-    write_widget: WriteWidgetUnion = Field(TextWrite())
+    read_widget: ReadWidgetUnion = TextRead()
+    write_widget: WriteWidgetUnion = TextWrite()
 
 
 class AsynFloat64Waveform(AsynWaveform):
@@ -231,8 +229,8 @@ class AsynFloat64Waveform(AsynWaveform):
         asyn_write="asynFloat64ArrayOut",
         asyn_param="asynParamFloat64",
     )
-    read_widget: ReadWidgetUnion = Field(TextRead())
-    write_widget: WriteWidgetUnion = Field(TextWrite())
+    read_widget: ReadWidgetUnion = TextRead()
+    write_widget: WriteWidgetUnion = TextWrite()
 
 
 WaveformRecordTypes = [AsynWaveform] + cast(

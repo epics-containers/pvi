@@ -1,12 +1,11 @@
 from __future__ import annotations
 
 from collections.abc import Iterator, Sequence
+from dataclasses import dataclass, field
 from typing import (
     Generic,
     TypeVar,
 )
-
-from pydantic import BaseModel, Field
 
 from pvi._format.utils import Bounds
 from pvi._format.widget import (
@@ -41,30 +40,26 @@ from pvi.device import (
 T = TypeVar("T")
 
 
-class ScreenLayout(BaseModel):
-    spacing: int = Field(description="Spacing between widgets")
-    title_height: int = Field(description="Height of screen title bar")
-    max_height: int = Field(description="Max height of the screen")
-    group_label_height: int = Field(description="Height of the group title label")
-    label_width: int = Field(description="Width of the labels describing widgets")
-    widget_width: int = Field(description="Width of the widgets")
-    widget_height: int = Field(
-        description="Height of the widgets (Labels use this too)"
-    )
-    group_widget_indent: int = Field(
-        0, description="Indentation of widgets within groups. Defaults to 0"
-    )
-    group_width_offset: int = Field(
-        0, description="Additional border width when using group objects. Defaults to 0"
-    )
+@dataclass
+class ScreenLayout:
+    spacing: int
+    title_height: int
+    max_height: int
+    group_label_height: int
+    label_width: int
+    widget_width: int
+    widget_height: int
+    group_widget_indent: int
+    group_width_offset: int
 
 
-class ScreenFormatterFactory(BaseModel, Generic[T]):
-    screen_formatter_cls: type[GroupFormatter]
-    group_formatter_cls: type[GroupFormatter]
-    widget_formatter_factory: WidgetFormatterFactory
+@dataclass
+class ScreenFormatterFactory(Generic[T]):
+    screen_formatter_cls: type[GroupFormatter[T]]
+    group_formatter_cls: type[GroupFormatter[T]]
+    widget_formatter_factory: WidgetFormatterFactory[T]
     layout: ScreenLayout
-    components: dict[str, ComponentUnion] = Field(default={}, init_var=False)
+    components: dict[str, ComponentUnion] = field(default_factory=dict)
     base_file_name: str = ""
 
     def create_screen_formatter(
@@ -95,6 +90,8 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
                 # This is where the actual content of sub screens are created after
                 # being replaced by a sub screen button in the original location
                 components = component.children
+            case _:
+                pass
 
         for c in components:
             last_column_bounds = columns[-1]
@@ -185,7 +182,7 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
                 # This is a reference to an existing screen - don't create it
                 continue
 
-            factory: ScreenFormatterFactory = ScreenFormatterFactory(
+            factory: ScreenFormatterFactory[T] = ScreenFormatterFactory(
                 screen_formatter_cls=self.screen_formatter_cls,
                 group_formatter_cls=self.group_formatter_cls,
                 widget_formatter_factory=self.widget_formatter_factory,
@@ -346,8 +343,8 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
         parent_bounds: Bounds,
         column_bounds: Bounds,
         next_column_bounds: Bounds,
-        indent=False,
-        add_label=True,
+        indent: bool = False,
+        add_label: bool = True,
     ) -> list[WidgetFormatter[T]]:
         """Generate widgets from component data and position them in a grid format
 
@@ -397,7 +394,7 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
         self,
         c: ComponentUnion,
         bounds: Bounds,
-        add_label=True,
+        add_label: bool = True,
     ) -> Iterator[WidgetFormatter[T]]:
         """Convert a component into its WidgetFormatter equivalents
 
@@ -476,6 +473,8 @@ class ScreenFormatterFactory(BaseModel, Generic[T]):
                     add_label = False  # Do not add row labels for Tables
                     component_bounds.w = 100 * len(widgets)
                     component_bounds.h *= 10  # TODO: How do we know the number of rows?
+                case _:
+                    pass
 
         if add_label:
             # Insert label and reduce width for widget

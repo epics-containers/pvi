@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from collections.abc import Callable
-from enum import Enum
 from typing import TypeVar
 
 from pydantic import BaseModel
@@ -77,11 +76,6 @@ class Bounds(BaseModel):
         self.x += indentation
 
 
-class GroupType(Enum):
-    GROUP = "GROUP"
-    SCREEN = "SCREEN"
-
-
 T = TypeVar("T")
 
 
@@ -93,7 +87,7 @@ def split_with_sep(text: str, sep: str, maxsplit: int = -1) -> list[str]:
     return [t + sep for t in text.split(sep, maxsplit=maxsplit)]
 
 
-def with_title(spacing, title_height: int) -> Callable[[Bounds], Bounds]:
+def with_title(spacing: int, title_height: int) -> Callable[[Bounds], Bounds]:
     return Bounds(
         x=spacing, y=spacing + title_height, w=2 * spacing, h=2 * spacing + title_height
     ).added_to

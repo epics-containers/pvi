@@ -11,6 +11,11 @@ from typing import (
 
 from pydantic import BaseModel, ConfigDict, Discriminator, Field, Tag, computed_field
 from pydantic.fields import FieldInfo
+from pydantic.json_schema import (
+    DEFAULT_REF_TEMPLATE,
+    GenerateJsonSchema,
+    JsonSchemaMode,
+)
 
 
 class TypedModel(BaseModel):
@@ -55,12 +60,18 @@ class TypedModel(BaseModel):
         )
 
     @classmethod
-    def model_json_schema(cls, **kwargs):
+    def model_json_schema(
+        cls,
+        by_alias: bool = True,
+        ref_template: str = DEFAULT_REF_TEMPLATE,
+        schema_generator: type[GenerateJsonSchema] = GenerateJsonSchema,
+        mode: JsonSchemaMode = "validation",
+    ):
         """Ensure all child models have type field added before generating schema."""
         if not cls.models_typed:
             TypedModel._rebuild_child_models()
 
-        return super().model_json_schema(**kwargs)
+        return super().model_json_schema(by_alias, ref_template, schema_generator, mode)
 
     @classmethod
     def _rebuild_child_models(cls):
@@ -75,12 +86,12 @@ class TypedModel(BaseModel):
         return Annotated[cls, Tag(cls.__name__)]
 
     @staticmethod
-    def _discriminator():
+    def discriminator():
         """Create a pydantic `Discriminator` for a tagged union of `TypedModel`."""
         return Field(discriminator=Discriminator(TypedModel._get_type_name))
 
     @staticmethod
-    def _get_type_name(x: Any) -> str | None:
+    def _get_type_name(x: TypedModel | dict[str, Any]) -> str | None:
         """Get the type name from an instance or serialized `dict` of `TypeModel`.
 
         This is a callable for pydantic Discriminator to discriminate between types in a
@@ -105,11 +116,9 @@ class TypedModel(BaseModel):
                 return x.__class__.__name__
             case dict() as serialized:
                 return serialized.pop("type", None)
-            case _:
-                return None
 
 
-def as_tagged_union(union):
+def as_tagged_union(union: type[TypedModel]):
     """Create a tagged union from a `Union` of `TypedModel`.
 
     Members will be tagged with their class name to be discriminated by pydantic.
@@ -121,6 +130,6 @@ def as_tagged_union(union):
     union_members = get_args(union)
 
     return Annotated[
-        Union[tuple(cls._tag() for cls in union_members)],  # noqa
-        TypedModel._discriminator(),
+        Union[tuple(cls._tag() for cls in union_members)],  # type: ignore # noqa: UP007
+        TypedModel.discriminator(),
     ]

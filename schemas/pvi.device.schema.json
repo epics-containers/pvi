@@ -155,13 +155,20 @@
       "description": "Selection of an enum PV",
       "properties": {
         "choices": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
           "default": null,
           "description": "Choices to select from",
-          "items": {
-            "type": "string"
-          },
-          "title": "Choices",
-          "type": "array"
+          "title": "Choices"
         },
         "type": {
           "const": "ComboBox",
@@ -517,31 +524,42 @@
           "type": "string"
         },
         "read_widget": {
-          "default": null,
-          "description": "Widget to use for display. `TextRead` will be used if unset.",
-          "oneOf": [
+          "anyOf": [
             {
-              "$ref": "#/$defs/ArrayTrace"
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/ArrayTrace"
+                },
+                {
+                  "$ref": "#/$defs/BitField"
+                },
+                {
+                  "$ref": "#/$defs/ImageRead"
+                },
+                {
+                  "$ref": "#/$defs/LED"
+                },
+                {
+                  "$ref": "#/$defs/ProgressBar"
+                },
+                {
+                  "$ref": "#/$defs/TableRead"
+                },
+                {
+                  "$ref": "#/$defs/TextRead"
+                }
+              ]
             },
             {
-              "$ref": "#/$defs/BitField"
-            },
-            {
-              "$ref": "#/$defs/ImageRead"
-            },
-            {
-              "$ref": "#/$defs/LED"
-            },
-            {
-              "$ref": "#/$defs/ProgressBar"
-            },
-            {
-              "$ref": "#/$defs/TableRead"
-            },
-            {
-              "$ref": "#/$defs/TextRead"
+              "type": "null"
             }
           ],
+          "default": {
+            "lines": null,
+            "format": null,
+            "type": "TextRead"
+          },
+          "description": "Widget to use for display. `TextRead` will be used if unset.",
           "title": "Read Widget"
         },
         "type": {
@@ -603,6 +621,11 @@
           "type": "string"
         },
         "write_widget": {
+          "default": {
+            "lines": null,
+            "format": null,
+            "type": "TextWrite"
+          },
           "description": "Widget to use for control",
           "oneOf": [
             {
@@ -636,31 +659,38 @@
           "type": "string"
         },
         "read_widget": {
-          "default": null,
-          "description": "Widget to use for readback display. A `TextRead` will be used if unset and `read_pv` is given, else no readback widget will be displayed.",
-          "oneOf": [
+          "anyOf": [
             {
-              "$ref": "#/$defs/ArrayTrace"
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/ArrayTrace"
+                },
+                {
+                  "$ref": "#/$defs/BitField"
+                },
+                {
+                  "$ref": "#/$defs/ImageRead"
+                },
+                {
+                  "$ref": "#/$defs/LED"
+                },
+                {
+                  "$ref": "#/$defs/ProgressBar"
+                },
+                {
+                  "$ref": "#/$defs/TableRead"
+                },
+                {
+                  "$ref": "#/$defs/TextRead"
+                }
+              ]
             },
             {
-              "$ref": "#/$defs/BitField"
-            },
-            {
-              "$ref": "#/$defs/ImageRead"
-            },
-            {
-              "$ref": "#/$defs/LED"
-            },
-            {
-              "$ref": "#/$defs/ProgressBar"
-            },
-            {
-              "$ref": "#/$defs/TableRead"
-            },
-            {
-              "$ref": "#/$defs/TextRead"
+              "type": "null"
             }
           ],
+          "default": null,
+          "description": "Widget to use for readback display. A `TextRead` will be used if unset and `read_pv` is given, else no readback widget will be displayed.",
           "title": "Read Widget"
         },
         "type": {
@@ -774,6 +804,11 @@
           "type": "string"
         },
         "write_widget": {
+          "default": {
+            "lines": null,
+            "format": null,
+            "type": "TextWrite"
+          },
           "description": "Widget to use for control",
           "oneOf": [
             {
@@ -859,16 +894,41 @@
           "type": "string"
         },
         "write_widget": {
-          "allOf": [
+          "default": {
+            "actions": {
+              "Go": "1"
+            },
+            "type": "ButtonPanel"
+          },
+          "description": "Widget to use for actions",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ArrayWrite"
+            },
             {
               "$ref": "#/$defs/ButtonPanel"
+            },
+            {
+              "$ref": "#/$defs/CheckBox"
+            },
+            {
+              "$ref": "#/$defs/ComboBox"
+            },
+            {
+              "$ref": "#/$defs/TableWrite"
+            },
+            {
+              "$ref": "#/$defs/TextWrite"
+            },
+            {
+              "$ref": "#/$defs/ToggleButton"
             }
           ],
-          "description": "Widget to use for actions"
+          "title": "Write Widget"
         },
         "value": {
-          "default": null,
-          "description": "Value to write. None means zero",
+          "default": "1",
+          "description": "Value to write. Uses '1' if unset.",
           "title": "Value",
           "type": "string"
         },

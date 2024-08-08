@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+from typing import Any
 
 from pvi._format.utils import Bounds, split_with_sep
 from pvi._format.widget import UITemplate, WidgetFormatter
@@ -26,8 +27,10 @@ class EdlTemplate(UITemplate[str]):
         template: str,
         bounds: Bounds | None = None,
         widget: WidgetUnion | None = None,
-        **properties,
+        properties: dict[str, Any] | None = None,
     ) -> str:
+        properties = properties or {}
+
         if bounds:
             for k in "xywh":
                 properties[k] = getattr(bounds, k)
@@ -57,6 +60,8 @@ class EdlTemplate(UITemplate[str]):
                 template = add_property(
                     template, "displayMode", EDL_TEXT_FORMATS[TextFormat(format)]
                 )
+            case _:
+                pass
 
         return template
 

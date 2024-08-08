@@ -37,6 +37,8 @@ def format_template(device: Device, pv_prefix: str, output: Path):
                 records.append(PviRecord(signal.name, signal.write_pv, "w"))
             case SignalR() as signal:
                 records.append(PviRecord(signal.name, signal.read_pv, "r"))
+            case _:
+                pass
 
     with output.open("w") as expanded, open(PVI_TEMPLATE) as template:
         template_txt = Template(template.read()).render(

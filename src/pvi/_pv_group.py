@@ -51,7 +51,7 @@ def find_pvs(pvs: list[str], file_path: Path) -> tuple[list[str], list[str]]:
 
         remaining_pvs.remove(pv)
 
-    grouped_pvs = []
+    grouped_pvs: list[str] = []
     for coord in sorted(pv_coordinates.keys()):
         grouped_pvs.extend(pv_coordinates[coord])
 

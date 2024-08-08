@@ -10,7 +10,7 @@ Cls = TypeVar("Cls", bound=type)
 def rec_subclasses(cls: Cls) -> list[Cls]:
     """Recursive implementation of type.__subclasses__"""
 
-    subclasses = []
+    subclasses: list[Cls] = []
     for sub_cls in cls.__subclasses__():
         subclasses += [sub_cls] + rec_subclasses(sub_cls)
 

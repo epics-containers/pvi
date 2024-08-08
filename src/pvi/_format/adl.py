@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+from typing import Any
 
 from pvi._format.utils import Bounds, split_with_sep
 from pvi._format.widget import UITemplate, WidgetFormatter
@@ -27,8 +28,10 @@ class AdlTemplate(UITemplate[str]):
         template: str,
         bounds: Bounds | None = None,
         widget: WidgetUnion | None = None,
-        **properties,
+        properties: dict[str, Any] | None = None,
     ) -> str:
+        properties = properties or {}
+
         if bounds:
             properties["x"] = bounds.x
             properties["y"] = bounds.y
@@ -56,6 +59,8 @@ class AdlTemplate(UITemplate[str]):
                 template = add_property(
                     template, "format", ADL_TEXT_FORMATS[TextFormat(format)]
                 )
+            case _:
+                pass
 
         return template
 

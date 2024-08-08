@@ -17,9 +17,9 @@ from pydantic import (
     ConfigDict,
     Field,
     ValidationError,
-    field_validator,
     model_validator,
 )
+from typing_extensions import Self
 
 from pvi._yaml_utils import YamlValidatorMixin, dump_yaml, type_first
 from pvi.typed_model import TypedModel, as_tagged_union
@@ -163,9 +163,11 @@ class ToggleButton(WriteWidget):
 class ComboBox(WriteWidget):
     """Selection of an enum PV"""
 
-    choices: Sequence[str] = Field(default=None, description="Choices to select from")
+    choices: Annotated[
+        Sequence[str] | None, Field(default=None, description="Choices to select from")
+    ] = None
 
-    def get_choices(self) -> list:
+    def get_choices(self) -> list[str]:
         return [] if self.choices is None else list(self.choices)
 
 
@@ -247,7 +249,9 @@ class Row(Layout):
 class Grid(Layout):
     """Children are rows in the grid"""
 
-    labelled: bool = Field(True, description="If True use names of children as labels")
+    labelled: Annotated[
+        bool, Field(description="If True use names of children as labels")
+    ] = True
 
 
 class SubScreen(Layout):
@@ -307,19 +311,13 @@ class SignalR(Signal):
     _access_mode = "r"
 
     read_pv: str = Field(description="PV to use for readback")
-    read_widget: ReadWidgetUnion = Field(
-        None,
-        description="Widget to use for display. `TextRead` will be used if unset.",
-        validate_default=True,
-    )
-
-    @field_validator("read_widget", mode="before")
-    @classmethod
-    def _validate_read_widget(cls, read_widget: Any):
-        if read_widget is None:
-            return TextRead()
-
-        return read_widget
+    read_widget: Annotated[
+        ReadWidgetUnion | None,
+        Field(
+            description="Widget to use for display. `TextRead` will be used if unset.",
+            validate_default=True,
+        ),
+    ] = TextRead()
 
 
 class SignalW(Signal):
@@ -328,9 +326,10 @@ class SignalW(Signal):
     _access_mode = "w"
 
     write_pv: str = Field(description="PV to use for demand")
-    write_widget: WriteWidgetUnion = Field(
-        default_factory=TextWrite, description="Widget to use for control"
-    )
+    write_widget: Annotated[
+        WriteWidgetUnion,
+        Field(description="Widget to use for control"),
+    ] = TextWrite()
 
 
 class SignalRW(SignalR, SignalW):
@@ -343,27 +342,30 @@ class SignalRW(SignalR, SignalW):
     """
 
     _access_mode = "rw"
-
-    # Make optional and replace with `write_pv` during validation if not given
-    read_pv: str = Field(
-        "", description="PV to use for readback. If empty, `write_pv` will be used."
-    )
-    # Override description
-    read_widget: ReadWidgetUnion = Field(
-        None,
-        description=(
-            "Widget to use for readback display. "
-            "A `TextRead` will be used if unset and `read_pv` is given, "
-            "else no readback widget will be displayed."
-        ),
-    )
-
     # Flag to show this is a single PV SignalRW and the `read_pv` has been dynamically
     # set to `write_pv`. This ensures that `_validate_model` is idempotent.
-    _single_pv_rw: bool = False
+    _single_pv_rw = False
+
+    # Make optional and replace with `write_pv` during validation if not given
+    read_pv: Annotated[
+        str,
+        Field(description="PV to use for readback. If empty, `write_pv` will be used."),
+    ] = ""
+    # Override description
+    read_widget: Annotated[
+        ReadWidgetUnion | None,
+        Field(
+            description=(
+                "Widget to use for readback display. "
+                "A `TextRead` will be used if unset and `read_pv` is given, "
+                "else no readback widget will be displayed."
+            ),
+            validate_default=True,
+        ),
+    ] = None
 
     @model_validator(mode="after")
-    def _validate_model(self) -> SignalRW:
+    def _validate_model(self) -> Self:
         if self.read_pv and not self._single_pv_rw and self.read_widget is None:
             # Update default read widget if given a read PV
             self.read_widget = TextRead()
@@ -378,10 +380,21 @@ class SignalRW(SignalR, SignalW):
 class SignalX(SignalW):
     """`SignalW` that can be triggered to write a fixed value to a PV."""
 
-    value: str = Field(None, description="Value to write. None means zero")
-    write_widget: ButtonPanel = Field(
-        default_factory=ButtonPanel, description="Widget to use for actions"
-    )
+    value: Annotated[
+        str,
+        Field(None, description="Value to write. Uses '1' if unset."),
+    ] = "1"
+    write_widget: Annotated[
+        WriteWidgetUnion,
+        Field(description="Widget to use for actions"),
+    ] = ButtonPanel()
+
+    @model_validator(mode="after")
+    def check_write_widget(self) -> Self:
+        if not isinstance(self.write_widget, ButtonPanel):
+            raise TypeError("SignalX write_widget must be ButtonPanel")
+
+        return self
 
 
 class DeviceRef(Component):
