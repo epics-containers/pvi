@@ -179,6 +179,25 @@ def regroup(
     device.serialize(device_path)
 
 
+@app.command()
+def reconvert(
+    device_path: Annotated[
+        Path, typer.Argument(..., help="Path to the device.yaml file to add to")
+    ],
+    templates: Annotated[
+        list[Path],
+        typer.Option(..., "--template", help="Paths of templates to add PVs from"),
+    ],
+):
+    """Add PVs to an existing device.yaml file based on extra / updated templates."""
+    device = Device.deserialize(device_path)
+    template_components = TemplateConverter(templates).convert()
+
+    device.merge_components(template_components)
+
+    device.serialize(device_path)
+
+
 # test with: pipenv run python -m pvi
 if __name__ == "__main__":
     app()

@@ -1,0 +1,37 @@
+include "ADBase.template"
+
+# Include an existing record to make sure signals aren't duplicated
+record(ao, "$(P)$(R)GainX")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynFloat64")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))SIM_GAIN_X")
+   field(PREC, "2")
+   info(autosaveFields, "VAL")
+}
+
+record(ai, "$(P)$(R)GainX_RBV")
+{
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))SIM_GAIN_X")
+   field(PREC, "2")
+   field(SCAN, "I/O Intr")
+}
+
+# Add a new GainZ to the existing group (as defined by using the same template name)
+record(ao, "$(P)$(R)GainZ")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynFloat64")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))SIM_GAIN_Z")
+   field(PREC, "2")
+   info(autosaveFields, "VAL")
+}
+
+record(ai, "$(P)$(R)GainZ_RBV")
+{
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))SIM_GAIN_Z")
+   field(PREC, "2")
+   field(SCAN, "I/O Intr")
+}
