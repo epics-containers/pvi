@@ -12,6 +12,7 @@ def rec_subclasses(cls: Cls) -> list[Cls]:
 
     subclasses: list[Cls] = []
     for sub_cls in cls.__subclasses__():
-        subclasses += [sub_cls] + rec_subclasses(sub_cls)
+        subclasses.append(sub_cls)
+        subclasses.extend(rec_subclasses(sub_cls))
 
     return subclasses
