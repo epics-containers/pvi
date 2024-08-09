@@ -399,8 +399,10 @@ class DLSFormatter(Formatter):
             write_bob(sub_screen_formatter, sub_screen_path)
 
 
+# SCREEN_WRITE DOCS REF: Generate the screen file
+
+
 def write_bob(screen_formatter: GroupFormatter[_Element], path: Path):
-    # SCREEN_WRITE DOCS REF: Generate the screen file
     # The root:'Display' is always the first element in texts
     texts = screen_formatter.format()
     element_tree = fromstring(tostring(texts[0]), None)
