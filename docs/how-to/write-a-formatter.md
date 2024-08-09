@@ -96,7 +96,7 @@ pvi supports templates for edl, adl and bob files, which can be referenced from 
 Inside of the format function, we need to provide a reference to the template file that
 can then be used to identify what each widget should look like.
 
-```python3
+```python3 notest
 template = BobTemplate(str(Path(__file__).parent / "dls.bob"))
 ```
 

@@ -38,6 +38,7 @@ dev = [
     "pyright",
     "pytest",
     "pytest-cov",
+    "pytest-markdown-docs",
     "ruff",
     "sphinx-autobuild",
     "sphinx-copybutton",
@@ -70,7 +71,7 @@ strict = ["src/**"]
 [tool.pytest.ini_options]
 # Run pytest with all our checkers, and don't spam us with massive tracebacks on error
 addopts = """
-    --tb=native -vv --doctest-modules --doctest-glob="*.rst"
+    --tb=native -vv --doctest-modules --doctest-glob="*.md" --markdown-docs
     """
 # https://iscinumpy.gitlab.io/post/bound-version-constraints/#watch-for-warnings
 filterwarnings = "error"
