@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../../schemas/pvi.device.schema.json
+
+label: Parent
+children:
+  - type: Group
+    name: ParentGroup
+    layout:
+      type: Grid
+    children:
+      - type: SignalR
+        name: ParentGroupSignal
+        read_pv: ParentGroupParent_RBV
