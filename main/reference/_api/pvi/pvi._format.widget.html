@@ -1,0 +1,1173 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>pvi._format.widget &#8212; pvi 0.9.1.dev17+gcebf4448 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=3bd22e2c"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=30646c52"></script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/_api/pvi/pvi._format.widget';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.15.4';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://epics-containers.github.io/pvi/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'main';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner = false;
+        </script>
+    <link rel="icon" href="../../../_static/pvi-favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="pvi._format.base" href="pvi._format.base.html" />
+    <link rel="prev" title="pvi._format.template" href="pvi._format.template.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/pvi-logo.svg" class="logo__image only-light" alt=""/>
+    <script>document.write(`<img src="../../../_static/pvi-logo.svg" class="logo__image only-dark" alt=""/>`);</script>
+  
+  
+    <p class="title logo__title">pvi</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../how-to.html">
+    How-to Guides
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../explanations.html">
+    Explanations
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../../../reference.html">
+    Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://github.com/epics-containers/pvi/releases">
+    Release Notes
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/epics-containers/pvi" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/pvi" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-cube fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button id="pst-version-switcher-button-2"
+      type="button"
+      class="version-switcher__button btn btn-sm dropdown-toggle"
+      data-bs-toggle="dropdown"
+      aria-haspopup="listbox"
+      aria-controls="pst-version-switcher-list-2"
+      aria-label="Version switcher list"
+    >
+      Choose version  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div id="pst-version-switcher-list-2"
+      class="version-switcher__menu dropdown-menu list-group-flush py-0"
+      role="listbox" aria-labelledby="pst-version-switcher-button-2">
+      <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../how-to.html">
+    How-to Guides
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../explanations.html">
+    Explanations
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../../../reference.html">
+    Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://github.com/epics-containers/pvi/releases">
+    Release Notes
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/epics-containers/pvi" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/pvi" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-cube fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button id="pst-version-switcher-button-3"
+      type="button"
+      class="version-switcher__button btn btn-sm dropdown-toggle"
+      data-bs-toggle="dropdown"
+      aria-haspopup="listbox"
+      aria-controls="pst-version-switcher-list-3"
+      aria-label="Version switcher list"
+    >
+      Choose version  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div id="pst-version-switcher-list-3"
+      class="version-switcher__menu dropdown-menu list-group-flush py-0"
+      role="listbox" aria-labelledby="pst-version-switcher-button-3">
+      <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../api.html">API</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="../index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3 current active has-children"><a class="reference internal" href="pvi.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi</span></code></a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="pvi._convert.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._convert</span></code></a></li>
+<li class="toctree-l4 current active"><a class="reference internal" href="pvi._format.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._format</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi.__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.__main__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.utils</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi._version.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._version</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi.typed_model.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.typed_model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi._pv_group.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._pv_group</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi.device.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.device</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi._schema_utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._schema_utils</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi._yaml_utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._yaml_utils</span></code></a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/epics-containers/pvi/releases">Release Notes</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../reference.html" class="nav-link">Reference</a></li>
+    
+    
+    <li class="breadcrumb-item"><i class="fa-solid fa-ellipsis"></i></li>
+    
+    
+    <li class="breadcrumb-item"><a href="pvi._format.html" class="nav-link"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._format</span></code></a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><code...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="module-pvi._format.widget">
+<span id="pvi-format-widget"></span><h1><a class="reference internal" href="#module-pvi._format.widget" title="pvi._format.widget"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._format.widget</span></code></a><a class="headerlink" href="#module-pvi._format.widget" title="Link to this heading">#</a></h1>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table table-left">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi._format.widget.UITemplate" title="pvi._format.widget.UITemplate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UITemplate</span></code></a></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi._format.widget.WidgetFormatter" title="pvi._format.widget.WidgetFormatter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WidgetFormatter</span></code></a></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi._format.widget.LabelWidgetFormatter" title="pvi._format.widget.LabelWidgetFormatter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LabelWidgetFormatter</span></code></a></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi._format.widget.PVWidgetFormatter" title="pvi._format.widget.PVWidgetFormatter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PVWidgetFormatter</span></code></a></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi._format.widget.ActionWidgetFormatter" title="pvi._format.widget.ActionWidgetFormatter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ActionWidgetFormatter</span></code></a></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi._format.widget.SubScreenWidgetFormatter" title="pvi._format.widget.SubScreenWidgetFormatter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SubScreenWidgetFormatter</span></code></a></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi._format.widget.GroupFormatter" title="pvi._format.widget.GroupFormatter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GroupFormatter</span></code></a></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi._format.widget.WidgetFormatterFactory" title="pvi._format.widget.WidgetFormatterFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WidgetFormatterFactory</span></code></a></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table table-left">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi._format.widget.max_x" title="pvi._format.widget.max_x"><code class="xref py py-obj docutils literal notranslate"><span class="pre">max_x</span></code></a></p></td>
+<td><p>Given multiple widgets, calulate the maximum x position that they occupy</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi._format.widget.max_y" title="pvi._format.widget.max_y"><code class="xref py py-obj docutils literal notranslate"><span class="pre">max_y</span></code></a></p></td>
+<td><p>Given multiple widgets, calulate the maximum y position that they occupy</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi._format.widget.next_x" title="pvi._format.widget.next_x"><code class="xref py py-obj docutils literal notranslate"><span class="pre">next_x</span></code></a></p></td>
+<td><p>Given multiple widgets, calulate the next feasible location for an
+additional widget in the x axis</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi._format.widget.next_y" title="pvi._format.widget.next_y"><code class="xref py py-obj docutils literal notranslate"><span class="pre">next_y</span></code></a></p></td>
+<td><p>Given multiple widgets, calulate the next feasible location for an
+additional widget in the y axis</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="data">
+<h3>Data<a class="headerlink" href="#data" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table table-left">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi._format.widget.T" title="pvi._format.widget.T"><code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code></a></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="api">
+<h3>API<a class="headerlink" href="#api" title="Link to this heading">#</a></h3>
+<dl class="py data">
+<dt class="sig sig-object py" id="pvi._format.widget.T">
+<span class="sig-prename descclassname"><span class="pre">pvi._format.widget.</span></span><span class="sig-name descname"><span class="pre">T</span></span><a class="headerlink" href="#pvi._format.widget.T" title="Link to this definition">#</a></dt>
+<dd><p>‘TypeVar(…)’</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pvi._format.widget.UITemplate">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pvi._format.widget.</span></span><span class="sig-name descname"><span class="pre">UITemplate</span></span><a class="reference internal" href="../../../_modules/pvi/_format/widget.html#UITemplate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._format.widget.UITemplate" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Generic" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">typing.Generic</span></code></a>[<a class="reference internal" href="#pvi._format.widget.T" title="pvi._format.widget.T"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pvi._format.widget.T</span></code></a>]</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._format.widget.UITemplate.screen">
+<span class="sig-name descname"><span class="pre">screen</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">pvi._format.widget.T</span></em><a class="headerlink" href="#pvi._format.widget.UITemplate.screen" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvi._format.widget.UITemplate.search">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pvi._format.widget.T</span></span></span><a class="reference internal" href="../../../_modules/pvi/_format/widget.html#UITemplate.search"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._format.widget.UITemplate.search" title="Link to this definition">#</a></dt>
+<dd><p>Extract a snippet from the template</p>
+<p>Args:
+search: The search expression
+This must be unique in the template so that there is only one match</p>
+<p>Returns:
+The snippet matching the search</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvi._format.widget.UITemplate.set">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pvi._format.widget.T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bounds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pvi._format.utils.html#pvi._format.utils.Bounds" title="pvi._format.utils.Bounds"><span class="pre">pvi._format.utils.Bounds</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">widget</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pvi.device.WidgetUnion</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pvi._format.widget.T</span></span></span><a class="reference internal" href="../../../_modules/pvi/_format/widget.html#UITemplate.set"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._format.widget.UITemplate.set" title="Link to this definition">#</a></dt>
+<dd><p>Modify template elements with component data</p>
+<p>Args:
+template: A template element
+bounds: The size and position of the widget
+widget: A Widget to define some additional properties for the element
+properties: The element properties in the form: {placeholder: value}
+placeholder is value to find in the template and value is the component
+value to replace it with</p>
+<p>Returns:
+The modified element</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvi._format.widget.UITemplate.create_group">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group_object</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi._format.widget.T</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">children</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pvi._format.widget.WidgetFormatter" title="pvi._format.widget.WidgetFormatter"><span class="pre">pvi._format.widget.WidgetFormatter</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi._format.widget.T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">padding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pvi._format.utils.html#pvi._format.utils.Bounds" title="pvi._format.utils.Bounds"><span class="pre">pvi._format.utils.Bounds</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi._format.widget.T</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/pvi/_format/widget.html#UITemplate.create_group"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._format.widget.UITemplate.create_group" title="Link to this definition">#</a></dt>
+<dd><p>Create a group widget with its children embedded and appropriately padded</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pvi._format.widget.WidgetFormatter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pvi._format.widget.</span></span><span class="sig-name descname"><span class="pre">WidgetFormatter</span></span><a class="reference internal" href="../../../_modules/pvi/_format/widget.html#WidgetFormatter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._format.widget.WidgetFormatter" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Generic" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">typing.Generic</span></code></a>[<a class="reference internal" href="#pvi._format.widget.T" title="pvi._format.widget.T"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pvi._format.widget.T</span></code></a>]</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._format.widget.WidgetFormatter.bounds">
+<span class="sig-name descname"><span class="pre">bounds</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="pvi._format.utils.html#pvi._format.utils.Bounds" title="pvi._format.utils.Bounds"><span class="pre">pvi._format.utils.Bounds</span></a></em><a class="headerlink" href="#pvi._format.widget.WidgetFormatter.bounds" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvi._format.widget.WidgetFormatter.format">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">format</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi._format.widget.T</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/pvi/_format/widget.html#WidgetFormatter.format"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._format.widget.WidgetFormatter.format" title="Link to this definition">#</a></dt>
+<dd><p>Instances should be created using <code class="docutils literal notranslate"><span class="pre">from_template</span></code>, which defines <code class="docutils literal notranslate"><span class="pre">format</span></code></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvi._format.widget.WidgetFormatter.from_template">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_template</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pvi._format.widget.UITemplate" title="pvi._format.widget.UITemplate"><span class="pre">pvi._format.widget.UITemplate</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi._format.widget.T</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sized</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.12)"><span class="pre">collections.abc.Callable</span></a><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pvi._format.utils.html#pvi._format.utils.Bounds" title="pvi._format.utils.Bounds"><span class="pre">pvi._format.utils.Bounds</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="pvi._format.utils.html#pvi._format.utils.Bounds" title="pvi._format.utils.Bounds"><span class="pre">pvi._format.utils.Bounds</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Bounds.clone</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">widget_formatter_hook</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.12)"><span class="pre">collections.abc.Callable</span></a><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pvi._format.utils.html#pvi._format.utils.Bounds" title="pvi._format.utils.Bounds"><span class="pre">pvi._format.utils.Bounds</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pvi._format.widget.WidgetFormatter" title="pvi._format.widget.WidgetFormatter"><span class="pre">pvi._format.widget.WidgetFormatter</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi._format.widget.T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">property_map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.12)"><span class="pre">type</span></a><span class="p"><span class="pre">[</span></span><span class="pre">typing_extensions.Self</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/pvi/_format/widget.html#WidgetFormatter.from_template"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._format.widget.WidgetFormatter.from_template" title="Link to this definition">#</a></dt>
+<dd><p>Create a WidgetFormatter class from the given template</p>
+<p>Create a <code class="docutils literal notranslate"><span class="pre">format</span></code> method that searches the template for the <code class="docutils literal notranslate"><span class="pre">search</span></code> section and
+extract it as a formattable template for a single widget. Create a child class
+of <code class="docutils literal notranslate"><span class="pre">parent_cls</span></code> implementing the method.</p>
+<p>Args:
+parent_cls: The class of formatter to create
+template: UI template to search for formattable widget sections
+search: Search expression for the widget section to find
+sized: Function to pad or restrict the <code class="docutils literal notranslate"><span class="pre">Bounds</span></code> of the formatted widget
+widget_formatter_hook: Hook to add additional formatters.
+Currently this is unused and available for child classes to use in
+overrided <code class="docutils literal notranslate"><span class="pre">from_template</span></code> calls.
+property_map: Map of template macro string to <code class="docutils literal notranslate"><span class="pre">WidgetFormatter</span></code> property.
+Instances of the macro will be replaced with the value of the property.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pvi._format.widget.LabelWidgetFormatter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pvi._format.widget.</span></span><span class="sig-name descname"><span class="pre">LabelWidgetFormatter</span></span><a class="reference internal" href="../../../_modules/pvi/_format/widget.html#LabelWidgetFormatter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._format.widget.LabelWidgetFormatter" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pvi._format.widget.WidgetFormatter" title="pvi._format.widget.WidgetFormatter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pvi._format.widget.WidgetFormatter</span></code></a>[<a class="reference internal" href="#pvi._format.widget.T" title="pvi._format.widget.T"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pvi._format.widget.T</span></code></a>]</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._format.widget.LabelWidgetFormatter.text">
+<span class="sig-name descname"><span class="pre">text</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#pvi._format.widget.LabelWidgetFormatter.text" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._format.widget.LabelWidgetFormatter.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Multiline-String&gt;</span></em><a class="headerlink" href="#pvi._format.widget.LabelWidgetFormatter.description" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pvi._format.widget.PVWidgetFormatter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pvi._format.widget.</span></span><span class="sig-name descname"><span class="pre">PVWidgetFormatter</span></span><a class="reference internal" href="../../../_modules/pvi/_format/widget.html#PVWidgetFormatter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._format.widget.PVWidgetFormatter" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pvi._format.widget.WidgetFormatter" title="pvi._format.widget.WidgetFormatter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pvi._format.widget.WidgetFormatter</span></code></a>[<a class="reference internal" href="#pvi._format.widget.T" title="pvi._format.widget.T"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pvi._format.widget.T</span></code></a>]</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._format.widget.PVWidgetFormatter.pv">
+<span class="sig-name descname"><span class="pre">pv</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#pvi._format.widget.PVWidgetFormatter.pv" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._format.widget.PVWidgetFormatter.widget">
+<span class="sig-name descname"><span class="pre">widget</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">pvi.device.WidgetUnion</span></em><a class="headerlink" href="#pvi._format.widget.PVWidgetFormatter.widget" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pvi._format.widget.ActionWidgetFormatter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pvi._format.widget.</span></span><span class="sig-name descname"><span class="pre">ActionWidgetFormatter</span></span><a class="reference internal" href="../../../_modules/pvi/_format/widget.html#ActionWidgetFormatter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._format.widget.ActionWidgetFormatter" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pvi._format.widget.WidgetFormatter" title="pvi._format.widget.WidgetFormatter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pvi._format.widget.WidgetFormatter</span></code></a>[<a class="reference internal" href="#pvi._format.widget.T" title="pvi._format.widget.T"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pvi._format.widget.T</span></code></a>]</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._format.widget.ActionWidgetFormatter.label">
+<span class="sig-name descname"><span class="pre">label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#pvi._format.widget.ActionWidgetFormatter.label" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._format.widget.ActionWidgetFormatter.pv">
+<span class="sig-name descname"><span class="pre">pv</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#pvi._format.widget.ActionWidgetFormatter.pv" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._format.widget.ActionWidgetFormatter.value">
+<span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#pvi._format.widget.ActionWidgetFormatter.value" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pvi._format.widget.ActionWidgetFormatter.tooltip">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tooltip</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#pvi._format.widget.ActionWidgetFormatter.tooltip" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pvi._format.widget.SubScreenWidgetFormatter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pvi._format.widget.</span></span><span class="sig-name descname"><span class="pre">SubScreenWidgetFormatter</span></span><a class="reference internal" href="../../../_modules/pvi/_format/widget.html#SubScreenWidgetFormatter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._format.widget.SubScreenWidgetFormatter" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pvi._format.widget.WidgetFormatter" title="pvi._format.widget.WidgetFormatter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pvi._format.widget.WidgetFormatter</span></code></a>[<a class="reference internal" href="#pvi._format.widget.T" title="pvi._format.widget.T"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pvi._format.widget.T</span></code></a>]</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._format.widget.SubScreenWidgetFormatter.label">
+<span class="sig-name descname"><span class="pre">label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#pvi._format.widget.SubScreenWidgetFormatter.label" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._format.widget.SubScreenWidgetFormatter.file_name">
+<span class="sig-name descname"><span class="pre">file_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#pvi._format.widget.SubScreenWidgetFormatter.file_name" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._format.widget.SubScreenWidgetFormatter.components">
+<span class="sig-name descname"><span class="pre">components</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="pvi.device.html#pvi.device.Group" title="pvi.device.Group"><span class="pre">pvi.device.Group</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><a class="headerlink" href="#pvi._format.widget.SubScreenWidgetFormatter.components" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._format.widget.SubScreenWidgetFormatter.macros">
+<span class="sig-name descname"><span class="pre">macros</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi._format.widget.SubScreenWidgetFormatter.macros" title="Link to this definition">#</a></dt>
+<dd><p>‘field(…)’</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pvi._format.widget.GroupFormatter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pvi._format.widget.</span></span><span class="sig-name descname"><span class="pre">GroupFormatter</span></span><a class="reference internal" href="../../../_modules/pvi/_format/widget.html#GroupFormatter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._format.widget.GroupFormatter" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pvi._format.widget.WidgetFormatter" title="pvi._format.widget.WidgetFormatter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pvi._format.widget.WidgetFormatter</span></code></a>[<a class="reference internal" href="#pvi._format.widget.T" title="pvi._format.widget.T"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pvi._format.widget.T</span></code></a>]</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._format.widget.GroupFormatter.bounds">
+<span class="sig-name descname"><span class="pre">bounds</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="pvi._format.utils.html#pvi._format.utils.Bounds" title="pvi._format.utils.Bounds"><span class="pre">pvi._format.utils.Bounds</span></a></em><a class="headerlink" href="#pvi._format.widget.GroupFormatter.bounds" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._format.widget.GroupFormatter.title">
+<span class="sig-name descname"><span class="pre">title</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#pvi._format.widget.GroupFormatter.title" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._format.widget.GroupFormatter.children">
+<span class="sig-name descname"><span class="pre">children</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pvi._format.widget.WidgetFormatter" title="pvi._format.widget.WidgetFormatter"><span class="pre">pvi._format.widget.WidgetFormatter</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi._format.widget.T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi._format.widget.GroupFormatter.children" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvi._format.widget.GroupFormatter.format">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">format</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi._format.widget.T</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/pvi/_format/widget.html#GroupFormatter.format"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._format.widget.GroupFormatter.format" title="Link to this definition">#</a></dt>
+<dd><p>Instances should be created using <code class="docutils literal notranslate"><span class="pre">from_template</span></code>, which defines <code class="docutils literal notranslate"><span class="pre">format</span></code></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvi._format.widget.GroupFormatter.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../_modules/pvi/_format/widget.html#GroupFormatter.__post_init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._format.widget.GroupFormatter.__post_init__" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvi._format.widget.GroupFormatter.resize">
+<span class="sig-name descname"><span class="pre">resize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pvi/_format/widget.html#GroupFormatter.resize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._format.widget.GroupFormatter.resize" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvi._format.widget.GroupFormatter.from_template">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_template</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pvi._format.widget.UITemplate" title="pvi._format.widget.UITemplate"><span class="pre">pvi._format.widget.UITemplate</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi._format.widget.T</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sized</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.12)"><span class="pre">collections.abc.Callable</span></a><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pvi._format.utils.html#pvi._format.utils.Bounds" title="pvi._format.utils.Bounds"><span class="pre">pvi._format.utils.Bounds</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="pvi._format.utils.html#pvi._format.utils.Bounds" title="pvi._format.utils.Bounds"><span class="pre">pvi._format.utils.Bounds</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Bounds.clone</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">widget_formatter_hook</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.12)"><span class="pre">collections.abc.Callable</span></a><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pvi._format.utils.html#pvi._format.utils.Bounds" title="pvi._format.utils.Bounds"><span class="pre">pvi._format.utils.Bounds</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pvi._format.widget.WidgetFormatter" title="pvi._format.widget.WidgetFormatter"><span class="pre">pvi._format.widget.WidgetFormatter</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi._format.widget.T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">property_map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.12)"><span class="pre">type</span></a><span class="p"><span class="pre">[</span></span><span class="pre">typing_extensions.Self</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/pvi/_format/widget.html#GroupFormatter.from_template"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._format.widget.GroupFormatter.from_template" title="Link to this definition">#</a></dt>
+<dd><p>Create a WidgetFormatter class from the given template</p>
+<p>Create a <code class="docutils literal notranslate"><span class="pre">format</span></code> method that searches the template for the <code class="docutils literal notranslate"><span class="pre">search</span></code> section and
+extract it as a formattable template for a single widget. Create a child class
+of <code class="docutils literal notranslate"><span class="pre">parent_cls</span></code> implementing the method.</p>
+<p>Args:
+parent_cls: The class of formatter to create
+template: UI template to search for formattable widget sections
+search: Search expression for the widget section to find
+sized: Function to pad or restrict the <code class="docutils literal notranslate"><span class="pre">Bounds</span></code> of the formatted widget
+widget_formatter_hook: Callable to format widgets for the group itself, such
+as a label or a box around the group components.
+property_map: Map of template macro string to <code class="docutils literal notranslate"><span class="pre">WidgetFormatter</span></code> property.
+Instances of the macro will be replaced with the value of the property.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pvi._format.widget.WidgetFormatterFactory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pvi._format.widget.</span></span><span class="sig-name descname"><span class="pre">WidgetFormatterFactory</span></span><a class="reference internal" href="../../../_modules/pvi/_format/widget.html#WidgetFormatterFactory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._format.widget.WidgetFormatterFactory" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Generic" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">typing.Generic</span></code></a>[<a class="reference internal" href="#pvi._format.widget.T" title="pvi._format.widget.T"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pvi._format.widget.T</span></code></a>]</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._format.widget.WidgetFormatterFactory.header_formatter_cls">
+<span class="sig-name descname"><span class="pre">header_formatter_cls</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.12)"><span class="pre">type</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pvi._format.widget.LabelWidgetFormatter" title="pvi._format.widget.LabelWidgetFormatter"><span class="pre">pvi._format.widget.LabelWidgetFormatter</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi._format.widget.T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi._format.widget.WidgetFormatterFactory.header_formatter_cls" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._format.widget.WidgetFormatterFactory.label_formatter_cls">
+<span class="sig-name descname"><span class="pre">label_formatter_cls</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.12)"><span class="pre">type</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pvi._format.widget.LabelWidgetFormatter" title="pvi._format.widget.LabelWidgetFormatter"><span class="pre">pvi._format.widget.LabelWidgetFormatter</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi._format.widget.T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi._format.widget.WidgetFormatterFactory.label_formatter_cls" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._format.widget.WidgetFormatterFactory.led_formatter_cls">
+<span class="sig-name descname"><span class="pre">led_formatter_cls</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.12)"><span class="pre">type</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pvi._format.widget.PVWidgetFormatter" title="pvi._format.widget.PVWidgetFormatter"><span class="pre">pvi._format.widget.PVWidgetFormatter</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi._format.widget.T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi._format.widget.WidgetFormatterFactory.led_formatter_cls" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._format.widget.WidgetFormatterFactory.progress_bar_formatter_cls">
+<span class="sig-name descname"><span class="pre">progress_bar_formatter_cls</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.12)"><span class="pre">type</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pvi._format.widget.PVWidgetFormatter" title="pvi._format.widget.PVWidgetFormatter"><span class="pre">pvi._format.widget.PVWidgetFormatter</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi._format.widget.T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi._format.widget.WidgetFormatterFactory.progress_bar_formatter_cls" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._format.widget.WidgetFormatterFactory.text_read_formatter_cls">
+<span class="sig-name descname"><span class="pre">text_read_formatter_cls</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.12)"><span class="pre">type</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pvi._format.widget.PVWidgetFormatter" title="pvi._format.widget.PVWidgetFormatter"><span class="pre">pvi._format.widget.PVWidgetFormatter</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi._format.widget.T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi._format.widget.WidgetFormatterFactory.text_read_formatter_cls" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._format.widget.WidgetFormatterFactory.check_box_formatter_cls">
+<span class="sig-name descname"><span class="pre">check_box_formatter_cls</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.12)"><span class="pre">type</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pvi._format.widget.PVWidgetFormatter" title="pvi._format.widget.PVWidgetFormatter"><span class="pre">pvi._format.widget.PVWidgetFormatter</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi._format.widget.T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi._format.widget.WidgetFormatterFactory.check_box_formatter_cls" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._format.widget.WidgetFormatterFactory.toggle_formatter_cls">
+<span class="sig-name descname"><span class="pre">toggle_formatter_cls</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.12)"><span class="pre">type</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pvi._format.widget.PVWidgetFormatter" title="pvi._format.widget.PVWidgetFormatter"><span class="pre">pvi._format.widget.PVWidgetFormatter</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi._format.widget.T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi._format.widget.WidgetFormatterFactory.toggle_formatter_cls" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._format.widget.WidgetFormatterFactory.combo_box_formatter_cls">
+<span class="sig-name descname"><span class="pre">combo_box_formatter_cls</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.12)"><span class="pre">type</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pvi._format.widget.PVWidgetFormatter" title="pvi._format.widget.PVWidgetFormatter"><span class="pre">pvi._format.widget.PVWidgetFormatter</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi._format.widget.T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi._format.widget.WidgetFormatterFactory.combo_box_formatter_cls" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._format.widget.WidgetFormatterFactory.text_write_formatter_cls">
+<span class="sig-name descname"><span class="pre">text_write_formatter_cls</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.12)"><span class="pre">type</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pvi._format.widget.PVWidgetFormatter" title="pvi._format.widget.PVWidgetFormatter"><span class="pre">pvi._format.widget.PVWidgetFormatter</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi._format.widget.T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi._format.widget.WidgetFormatterFactory.text_write_formatter_cls" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._format.widget.WidgetFormatterFactory.table_formatter_cls">
+<span class="sig-name descname"><span class="pre">table_formatter_cls</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.12)"><span class="pre">type</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pvi._format.widget.PVWidgetFormatter" title="pvi._format.widget.PVWidgetFormatter"><span class="pre">pvi._format.widget.PVWidgetFormatter</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi._format.widget.T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi._format.widget.WidgetFormatterFactory.table_formatter_cls" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._format.widget.WidgetFormatterFactory.action_formatter_cls">
+<span class="sig-name descname"><span class="pre">action_formatter_cls</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.12)"><span class="pre">type</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pvi._format.widget.ActionWidgetFormatter" title="pvi._format.widget.ActionWidgetFormatter"><span class="pre">pvi._format.widget.ActionWidgetFormatter</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi._format.widget.T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi._format.widget.WidgetFormatterFactory.action_formatter_cls" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._format.widget.WidgetFormatterFactory.sub_screen_formatter_cls">
+<span class="sig-name descname"><span class="pre">sub_screen_formatter_cls</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.12)"><span class="pre">type</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pvi._format.widget.SubScreenWidgetFormatter" title="pvi._format.widget.SubScreenWidgetFormatter"><span class="pre">pvi._format.widget.SubScreenWidgetFormatter</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi._format.widget.T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi._format.widget.WidgetFormatterFactory.sub_screen_formatter_cls" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._format.widget.WidgetFormatterFactory.bitfield_formatter_cls">
+<span class="sig-name descname"><span class="pre">bitfield_formatter_cls</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.12)"><span class="pre">type</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pvi._format.widget.PVWidgetFormatter" title="pvi._format.widget.PVWidgetFormatter"><span class="pre">pvi._format.widget.PVWidgetFormatter</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi._format.widget.T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi._format.widget.WidgetFormatterFactory.bitfield_formatter_cls" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._format.widget.WidgetFormatterFactory.array_trace_formatter_cls">
+<span class="sig-name descname"><span class="pre">array_trace_formatter_cls</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.12)"><span class="pre">type</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pvi._format.widget.PVWidgetFormatter" title="pvi._format.widget.PVWidgetFormatter"><span class="pre">pvi._format.widget.PVWidgetFormatter</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi._format.widget.T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi._format.widget.WidgetFormatterFactory.array_trace_formatter_cls" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._format.widget.WidgetFormatterFactory.button_panel_formatter_cls">
+<span class="sig-name descname"><span class="pre">button_panel_formatter_cls</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.12)"><span class="pre">type</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pvi._format.widget.PVWidgetFormatter" title="pvi._format.widget.PVWidgetFormatter"><span class="pre">pvi._format.widget.PVWidgetFormatter</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi._format.widget.T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi._format.widget.WidgetFormatterFactory.button_panel_formatter_cls" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._format.widget.WidgetFormatterFactory.image_read_formatter_cls">
+<span class="sig-name descname"><span class="pre">image_read_formatter_cls</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.12)"><span class="pre">type</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pvi._format.widget.PVWidgetFormatter" title="pvi._format.widget.PVWidgetFormatter"><span class="pre">pvi._format.widget.PVWidgetFormatter</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi._format.widget.T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi._format.widget.WidgetFormatterFactory.image_read_formatter_cls" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvi._format.widget.WidgetFormatterFactory.pv_widget_formatter">
+<span class="sig-name descname"><span class="pre">pv_widget_formatter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widget</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pvi.device.WidgetUnion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bounds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pvi._format.utils.html#pvi._format.utils.Bounds" title="pvi._format.utils.Bounds"><span class="pre">pvi._format.utils.Bounds</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">pv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pvi._format.widget.PVWidgetFormatter" title="pvi._format.widget.PVWidgetFormatter"><span class="pre">pvi._format.widget.PVWidgetFormatter</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi._format.widget.T</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/pvi/_format/widget.html#WidgetFormatterFactory.pv_widget_formatter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._format.widget.WidgetFormatterFactory.pv_widget_formatter" title="Link to this definition">#</a></dt>
+<dd><p>Convert a component into its WidgetFormatter equivalent</p>
+<p>Args:
+widget: The read/write widget property of a component
+bounds: The size and position of the widget (x,y,w,h).
+pv: The process variable assigned to a component</p>
+<p>Returns:
+A WidgetFormatter representing the component</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pvi._format.widget.max_x">
+<span class="sig-prename descclassname"><span class="pre">pvi._format.widget.</span></span><span class="sig-name descname"><span class="pre">max_x</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widgets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pvi._format.widget.WidgetFormatter" title="pvi._format.widget.WidgetFormatter"><span class="pre">pvi._format.widget.WidgetFormatter</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi._format.widget.T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../../../_modules/pvi/_format/widget.html#max_x"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._format.widget.max_x" title="Link to this definition">#</a></dt>
+<dd><p>Given multiple widgets, calulate the maximum x position that they occupy</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pvi._format.widget.max_y">
+<span class="sig-prename descclassname"><span class="pre">pvi._format.widget.</span></span><span class="sig-name descname"><span class="pre">max_y</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widgets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pvi._format.widget.WidgetFormatter" title="pvi._format.widget.WidgetFormatter"><span class="pre">pvi._format.widget.WidgetFormatter</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi._format.widget.T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../../../_modules/pvi/_format/widget.html#max_y"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._format.widget.max_y" title="Link to this definition">#</a></dt>
+<dd><p>Given multiple widgets, calulate the maximum y position that they occupy</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pvi._format.widget.next_x">
+<span class="sig-prename descclassname"><span class="pre">pvi._format.widget.</span></span><span class="sig-name descname"><span class="pre">next_x</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widgets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pvi._format.widget.WidgetFormatter" title="pvi._format.widget.WidgetFormatter"><span class="pre">pvi._format.widget.WidgetFormatter</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi._format.widget.T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spacing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../../../_modules/pvi/_format/widget.html#next_x"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._format.widget.next_x" title="Link to this definition">#</a></dt>
+<dd><p>Given multiple widgets, calulate the next feasible location for an
+additional widget in the x axis</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pvi._format.widget.next_y">
+<span class="sig-prename descclassname"><span class="pre">pvi._format.widget.</span></span><span class="sig-name descname"><span class="pre">next_y</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widgets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pvi._format.widget.WidgetFormatter" title="pvi._format.widget.WidgetFormatter"><span class="pre">pvi._format.widget.WidgetFormatter</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi._format.widget.T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spacing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../../../_modules/pvi/_format/widget.html#next_y"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._format.widget.next_y" title="Link to this definition">#</a></dt>
+<dd><p>Given multiple widgets, calulate the next feasible location for an
+additional widget in the y axis</p>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="pvi._format.template.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._format.template</span></code></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="pvi._format.base.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._format.base</span></code></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#api">API</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.T"><code class="docutils literal notranslate"><span class="pre">T</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.UITemplate"><code class="docutils literal notranslate"><span class="pre">UITemplate</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.UITemplate.screen"><code class="docutils literal notranslate"><span class="pre">UITemplate.screen</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.UITemplate.search"><code class="docutils literal notranslate"><span class="pre">UITemplate.search()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.UITemplate.set"><code class="docutils literal notranslate"><span class="pre">UITemplate.set()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.UITemplate.create_group"><code class="docutils literal notranslate"><span class="pre">UITemplate.create_group()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.WidgetFormatter"><code class="docutils literal notranslate"><span class="pre">WidgetFormatter</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.WidgetFormatter.bounds"><code class="docutils literal notranslate"><span class="pre">WidgetFormatter.bounds</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.WidgetFormatter.format"><code class="docutils literal notranslate"><span class="pre">WidgetFormatter.format()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.WidgetFormatter.from_template"><code class="docutils literal notranslate"><span class="pre">WidgetFormatter.from_template()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.LabelWidgetFormatter"><code class="docutils literal notranslate"><span class="pre">LabelWidgetFormatter</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.LabelWidgetFormatter.text"><code class="docutils literal notranslate"><span class="pre">LabelWidgetFormatter.text</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.LabelWidgetFormatter.description"><code class="docutils literal notranslate"><span class="pre">LabelWidgetFormatter.description</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.PVWidgetFormatter"><code class="docutils literal notranslate"><span class="pre">PVWidgetFormatter</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.PVWidgetFormatter.pv"><code class="docutils literal notranslate"><span class="pre">PVWidgetFormatter.pv</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.PVWidgetFormatter.widget"><code class="docutils literal notranslate"><span class="pre">PVWidgetFormatter.widget</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.ActionWidgetFormatter"><code class="docutils literal notranslate"><span class="pre">ActionWidgetFormatter</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.ActionWidgetFormatter.label"><code class="docutils literal notranslate"><span class="pre">ActionWidgetFormatter.label</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.ActionWidgetFormatter.pv"><code class="docutils literal notranslate"><span class="pre">ActionWidgetFormatter.pv</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.ActionWidgetFormatter.value"><code class="docutils literal notranslate"><span class="pre">ActionWidgetFormatter.value</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.ActionWidgetFormatter.tooltip"><code class="docutils literal notranslate"><span class="pre">ActionWidgetFormatter.tooltip</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.SubScreenWidgetFormatter"><code class="docutils literal notranslate"><span class="pre">SubScreenWidgetFormatter</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.SubScreenWidgetFormatter.label"><code class="docutils literal notranslate"><span class="pre">SubScreenWidgetFormatter.label</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.SubScreenWidgetFormatter.file_name"><code class="docutils literal notranslate"><span class="pre">SubScreenWidgetFormatter.file_name</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.SubScreenWidgetFormatter.components"><code class="docutils literal notranslate"><span class="pre">SubScreenWidgetFormatter.components</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.SubScreenWidgetFormatter.macros"><code class="docutils literal notranslate"><span class="pre">SubScreenWidgetFormatter.macros</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.GroupFormatter"><code class="docutils literal notranslate"><span class="pre">GroupFormatter</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.GroupFormatter.bounds"><code class="docutils literal notranslate"><span class="pre">GroupFormatter.bounds</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.GroupFormatter.title"><code class="docutils literal notranslate"><span class="pre">GroupFormatter.title</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.GroupFormatter.children"><code class="docutils literal notranslate"><span class="pre">GroupFormatter.children</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.GroupFormatter.format"><code class="docutils literal notranslate"><span class="pre">GroupFormatter.format()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.GroupFormatter.__post_init__"><code class="docutils literal notranslate"><span class="pre">GroupFormatter.__post_init__()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.GroupFormatter.resize"><code class="docutils literal notranslate"><span class="pre">GroupFormatter.resize()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.GroupFormatter.from_template"><code class="docutils literal notranslate"><span class="pre">GroupFormatter.from_template()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.WidgetFormatterFactory"><code class="docutils literal notranslate"><span class="pre">WidgetFormatterFactory</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.WidgetFormatterFactory.header_formatter_cls"><code class="docutils literal notranslate"><span class="pre">WidgetFormatterFactory.header_formatter_cls</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.WidgetFormatterFactory.label_formatter_cls"><code class="docutils literal notranslate"><span class="pre">WidgetFormatterFactory.label_formatter_cls</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.WidgetFormatterFactory.led_formatter_cls"><code class="docutils literal notranslate"><span class="pre">WidgetFormatterFactory.led_formatter_cls</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.WidgetFormatterFactory.progress_bar_formatter_cls"><code class="docutils literal notranslate"><span class="pre">WidgetFormatterFactory.progress_bar_formatter_cls</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.WidgetFormatterFactory.text_read_formatter_cls"><code class="docutils literal notranslate"><span class="pre">WidgetFormatterFactory.text_read_formatter_cls</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.WidgetFormatterFactory.check_box_formatter_cls"><code class="docutils literal notranslate"><span class="pre">WidgetFormatterFactory.check_box_formatter_cls</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.WidgetFormatterFactory.toggle_formatter_cls"><code class="docutils literal notranslate"><span class="pre">WidgetFormatterFactory.toggle_formatter_cls</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.WidgetFormatterFactory.combo_box_formatter_cls"><code class="docutils literal notranslate"><span class="pre">WidgetFormatterFactory.combo_box_formatter_cls</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.WidgetFormatterFactory.text_write_formatter_cls"><code class="docutils literal notranslate"><span class="pre">WidgetFormatterFactory.text_write_formatter_cls</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.WidgetFormatterFactory.table_formatter_cls"><code class="docutils literal notranslate"><span class="pre">WidgetFormatterFactory.table_formatter_cls</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.WidgetFormatterFactory.action_formatter_cls"><code class="docutils literal notranslate"><span class="pre">WidgetFormatterFactory.action_formatter_cls</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.WidgetFormatterFactory.sub_screen_formatter_cls"><code class="docutils literal notranslate"><span class="pre">WidgetFormatterFactory.sub_screen_formatter_cls</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.WidgetFormatterFactory.bitfield_formatter_cls"><code class="docutils literal notranslate"><span class="pre">WidgetFormatterFactory.bitfield_formatter_cls</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.WidgetFormatterFactory.array_trace_formatter_cls"><code class="docutils literal notranslate"><span class="pre">WidgetFormatterFactory.array_trace_formatter_cls</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.WidgetFormatterFactory.button_panel_formatter_cls"><code class="docutils literal notranslate"><span class="pre">WidgetFormatterFactory.button_panel_formatter_cls</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.WidgetFormatterFactory.image_read_formatter_cls"><code class="docutils literal notranslate"><span class="pre">WidgetFormatterFactory.image_read_formatter_cls</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.WidgetFormatterFactory.pv_widget_formatter"><code class="docutils literal notranslate"><span class="pre">WidgetFormatterFactory.pv_widget_formatter()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.max_x"><code class="docutils literal notranslate"><span class="pre">max_x()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.max_y"><code class="docutils literal notranslate"><span class="pre">max_y()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.next_x"><code class="docutils literal notranslate"><span class="pre">next_x()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.widget.next_y"><code class="docutils literal notranslate"><span class="pre">next_y()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  
+  <div class="tocsection editthispage">
+    <a href="https://github.com/epics-containers/pvi/edit/main/docs/reference/_api/pvi/pvi._format.widget.md">
+      <i class="fa-solid fa-pencil"></i>
+      
+      
+        
+          Edit on GitHub
+        
+      
+    </a>
+  </div>
+</div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="../../../_sources/reference/_api/pvi/pvi._format.widget.md.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.4.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

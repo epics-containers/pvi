@@ -1,0 +1,182 @@
+# {py:mod}`pvi._format.bob`
+
+```{py:module} pvi._format.bob
+```
+
+```{autodoc2-docstring} pvi._format.bob
+:allowtitles:
+```
+
+## Module Contents
+
+### Classes
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`BobTemplate <pvi._format.bob.BobTemplate>`
+  - ```{autodoc2-docstring} pvi._format.bob.BobTemplate
+    :summary:
+    ```
+````
+
+### Functions
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`add_table_columns <pvi._format.bob.add_table_columns>`
+  - ```{autodoc2-docstring} pvi._format.bob.add_table_columns
+    :summary:
+    ```
+* - {py:obj}`add_table_column <pvi._format.bob.add_table_column>`
+  - ```{autodoc2-docstring} pvi._format.bob.add_table_column
+    :summary:
+    ```
+* - {py:obj}`add_button_macros <pvi._format.bob.add_button_macros>`
+  - ```{autodoc2-docstring} pvi._format.bob.add_button_macros
+    :summary:
+    ```
+* - {py:obj}`add_combo_box_items <pvi._format.bob.add_combo_box_items>`
+  - ```{autodoc2-docstring} pvi._format.bob.add_combo_box_items
+    :summary:
+    ```
+* - {py:obj}`add_editable <pvi._format.bob.add_editable>`
+  - ```{autodoc2-docstring} pvi._format.bob.add_editable
+    :summary:
+    ```
+* - {py:obj}`add_format <pvi._format.bob.add_format>`
+  - ```{autodoc2-docstring} pvi._format.bob.add_format
+    :summary:
+    ```
+* - {py:obj}`add_byte_number_of_bits <pvi._format.bob.add_byte_number_of_bits>`
+  - ```{autodoc2-docstring} pvi._format.bob.add_byte_number_of_bits
+    :summary:
+    ```
+* - {py:obj}`find_element <pvi._format.bob.find_element>`
+  - ```{autodoc2-docstring} pvi._format.bob.find_element
+    :summary:
+    ```
+````
+
+### Data
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`BOB_TEXT_FORMATS <pvi._format.bob.BOB_TEXT_FORMATS>`
+  - ```{autodoc2-docstring} pvi._format.bob.BOB_TEXT_FORMATS
+    :summary:
+    ```
+````
+
+### API
+
+````{py:data} BOB_TEXT_FORMATS
+:canonical: pvi._format.bob.BOB_TEXT_FORMATS
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.bob.BOB_TEXT_FORMATS
+```
+
+````
+
+`````{py:class} BobTemplate(text: str)
+:canonical: pvi._format.bob.BobTemplate
+
+Bases: {py:obj}`pvi._format.widget.UITemplate`\[{py:obj}`lxml.etree._Element`\]
+
+```{autodoc2-docstring} pvi._format.bob.BobTemplate
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi._format.bob.BobTemplate.__init__
+```
+
+````{py:method} set(template: lxml.etree._Element, bounds: pvi._format.utils.Bounds | None = None, widget: pvi.device.WidgetUnion | None = None, properties: dict[str, typing.Any] | None = None) -> lxml.etree._Element
+:canonical: pvi._format.bob.BobTemplate.set
+
+```{autodoc2-docstring} pvi._format.bob.BobTemplate.set
+```
+
+````
+
+````{py:method} search(search: str) -> lxml.etree._Element
+:canonical: pvi._format.bob.BobTemplate.search
+
+```{autodoc2-docstring} pvi._format.bob.BobTemplate.search
+```
+
+````
+
+````{py:method} create_group(group_object: list[lxml.etree._Element], children: list[pvi._format.widget.WidgetFormatter[lxml.etree._Element]], padding: pvi._format.utils.Bounds | None = None) -> list[lxml.etree._Element]
+:canonical: pvi._format.bob.BobTemplate.create_group
+
+```{autodoc2-docstring} pvi._format.bob.BobTemplate.create_group
+```
+
+````
+
+`````
+
+````{py:function} add_table_columns(widget_element: lxml.etree._Element, table: pvi.device.TableRead | pvi.device.TableWrite)
+:canonical: pvi._format.bob.add_table_columns
+
+```{autodoc2-docstring} pvi._format.bob.add_table_columns
+```
+````
+
+````{py:function} add_table_column(columns_element: lxml.etree._Element, name: str, widget: pvi.device.WidgetUnion)
+:canonical: pvi._format.bob.add_table_column
+
+```{autodoc2-docstring} pvi._format.bob.add_table_column
+```
+````
+
+````{py:function} add_button_macros(widget_element: lxml.etree._Element, macros: dict[str, str])
+:canonical: pvi._format.bob.add_button_macros
+
+```{autodoc2-docstring} pvi._format.bob.add_button_macros
+```
+````
+
+````{py:function} add_combo_box_items(widget_element: lxml.etree._Element, combo_box: pvi.device.ComboBox)
+:canonical: pvi._format.bob.add_combo_box_items
+
+```{autodoc2-docstring} pvi._format.bob.add_combo_box_items
+```
+````
+
+````{py:function} add_editable(element: lxml.etree._Element, editable: bool)
+:canonical: pvi._format.bob.add_editable
+
+```{autodoc2-docstring} pvi._format.bob.add_editable
+```
+````
+
+````{py:function} add_format(element: lxml.etree._Element, format: str)
+:canonical: pvi._format.bob.add_format
+
+```{autodoc2-docstring} pvi._format.bob.add_format
+```
+````
+
+````{py:function} add_byte_number_of_bits(element: lxml.etree._Element, number_of_bits: int)
+:canonical: pvi._format.bob.add_byte_number_of_bits
+
+```{autodoc2-docstring} pvi._format.bob.add_byte_number_of_bits
+```
+````
+
+````{py:function} find_element(root_element: lxml.etree._Element, tag: str, index: int = 0) -> lxml.etree._Element
+:canonical: pvi._format.bob.find_element
+
+```{autodoc2-docstring} pvi._format.bob.find_element
+```
+````

@@ -1,0 +1,200 @@
+# {py:mod}`pvi._format.utils`
+
+```{py:module} pvi._format.utils
+```
+
+```{autodoc2-docstring} pvi._format.utils
+:allowtitles:
+```
+
+## Module Contents
+
+### Classes
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`Bounds <pvi._format.utils.Bounds>`
+  -
+````
+
+### Functions
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`concat <pvi._format.utils.concat>`
+  - ```{autodoc2-docstring} pvi._format.utils.concat
+    :summary:
+    ```
+* - {py:obj}`split_with_sep <pvi._format.utils.split_with_sep>`
+  - ```{autodoc2-docstring} pvi._format.utils.split_with_sep
+    :summary:
+    ```
+* - {py:obj}`with_title <pvi._format.utils.with_title>`
+  - ```{autodoc2-docstring} pvi._format.utils.with_title
+    :summary:
+    ```
+````
+
+### Data
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`T <pvi._format.utils.T>`
+  - ```{autodoc2-docstring} pvi._format.utils.T
+    :summary:
+    ```
+````
+
+### API
+
+`````{py:class} Bounds(/, **data: typing.Any)
+:canonical: pvi._format.utils.Bounds
+
+Bases: {py:obj}`pydantic.BaseModel`
+
+````{py:attribute} x
+:canonical: pvi._format.utils.Bounds.x
+:type: int
+:value: >
+   0
+
+```{autodoc2-docstring} pvi._format.utils.Bounds.x
+```
+
+````
+
+````{py:attribute} y
+:canonical: pvi._format.utils.Bounds.y
+:type: int
+:value: >
+   0
+
+```{autodoc2-docstring} pvi._format.utils.Bounds.y
+```
+
+````
+
+````{py:attribute} w
+:canonical: pvi._format.utils.Bounds.w
+:type: int
+:value: >
+   0
+
+```{autodoc2-docstring} pvi._format.utils.Bounds.w
+```
+
+````
+
+````{py:attribute} h
+:canonical: pvi._format.utils.Bounds.h
+:type: int
+:value: >
+   0
+
+```{autodoc2-docstring} pvi._format.utils.Bounds.h
+```
+
+````
+
+````{py:method} clone() -> pvi._format.utils.Bounds
+:canonical: pvi._format.utils.Bounds.clone
+
+```{autodoc2-docstring} pvi._format.utils.Bounds.clone
+```
+
+````
+
+````{py:method} split_left(width: int, spacing: int) -> tuple[pvi._format.utils.Bounds, pvi._format.utils.Bounds]
+:canonical: pvi._format.utils.Bounds.split_left
+
+```{autodoc2-docstring} pvi._format.utils.Bounds.split_left
+```
+
+````
+
+````{py:method} split_by_ratio(ratio: tuple[float, ...], spacing: int) -> tuple[pvi._format.utils.Bounds, ...]
+:canonical: pvi._format.utils.Bounds.split_by_ratio
+
+```{autodoc2-docstring} pvi._format.utils.Bounds.split_by_ratio
+```
+
+````
+
+````{py:method} split_into(count: int, spacing: int) -> tuple[pvi._format.utils.Bounds, ...]
+:canonical: pvi._format.utils.Bounds.split_into
+
+```{autodoc2-docstring} pvi._format.utils.Bounds.split_into
+```
+
+````
+
+````{py:method} square() -> pvi._format.utils.Bounds
+:canonical: pvi._format.utils.Bounds.square
+
+```{autodoc2-docstring} pvi._format.utils.Bounds.square
+```
+
+````
+
+````{py:method} added_to(bounds: pvi._format.utils.Bounds) -> pvi._format.utils.Bounds
+:canonical: pvi._format.utils.Bounds.added_to
+
+```{autodoc2-docstring} pvi._format.utils.Bounds.added_to
+```
+
+````
+
+````{py:method} tile(*, horizontal: int = 1, vertical: int = 1, spacing: int = 0) -> pvi._format.utils.Bounds
+:canonical: pvi._format.utils.Bounds.tile
+
+```{autodoc2-docstring} pvi._format.utils.Bounds.tile
+```
+
+````
+
+````{py:method} indent(indentation: int) -> None
+:canonical: pvi._format.utils.Bounds.indent
+
+```{autodoc2-docstring} pvi._format.utils.Bounds.indent
+```
+
+````
+
+`````
+
+````{py:data} T
+:canonical: pvi._format.utils.T
+:value: >
+   'TypeVar(...)'
+
+```{autodoc2-docstring} pvi._format.utils.T
+```
+
+````
+
+````{py:function} concat(items: list[list[pvi._format.utils.T]]) -> list[pvi._format.utils.T]
+:canonical: pvi._format.utils.concat
+
+```{autodoc2-docstring} pvi._format.utils.concat
+```
+````
+
+````{py:function} split_with_sep(text: str, sep: str, maxsplit: int = -1) -> list[str]
+:canonical: pvi._format.utils.split_with_sep
+
+```{autodoc2-docstring} pvi._format.utils.split_with_sep
+```
+````
+
+````{py:function} with_title(spacing: int, title_height: int) -> collections.abc.Callable[[pvi._format.utils.Bounds], pvi._format.utils.Bounds]
+:canonical: pvi._format.utils.with_title
+
+```{autodoc2-docstring} pvi._format.utils.with_title
+```
+````
