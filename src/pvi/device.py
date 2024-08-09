@@ -32,10 +32,10 @@ NON_PASCAL_CHARS_RE = re.compile(r"[^A-Za-z0-9]")
 def to_title_case(pascal_s: str) -> str:
     """Takes a PascalCaseFieldName and returns an Title Case Field Name
 
-    Args:
-        pascal_s: E.g. PascalCaseFieldName
-    Returns:
-        Title Case converted name. E.g. Pascal Case Field Name
+    :param pascal_s: e.g. PascalCaseFieldName
+
+    :returns: Title Case converted name. E.g. Pascal Case Field Name
+
     """
     return PASCAL_CASE_REGEX.sub(lambda m: " " + m.group(), pascal_s)[1:]
 

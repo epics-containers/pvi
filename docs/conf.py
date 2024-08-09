@@ -30,8 +30,8 @@ else:
     version = release
 
 extensions = [
-    # Use this for generating API docs
-    "sphinx.ext.autodoc",
+    # Autodoc2 for generating API docs from docstrings
+    "autodoc2",
     # This can parse google style docstrings
     "sphinx.ext.napoleon",
     # For linking to external sphinx documentation
@@ -49,7 +49,18 @@ extensions = [
 ]
 
 # So we can use the ::: syntax
-myst_enable_extensions = ["colon_fence"]
+myst_enable_extensions = [
+    "colon_fence",
+    "fieldlist",
+]
+
+# Autodoc2 Config
+autodoc2_packages = [
+    "../src/pvi",
+]
+autodoc2_render_plugin = "myst"
+autodoc2_output_dir = "reference/_api"
+# autodoc2_annotations = False
 
 # If true, Sphinx will warn about all references where the target cannot
 # be found.
@@ -67,7 +78,23 @@ nitpick_ignore = [
     ("py:class", "'bool'"),
     ("py:class", "'object'"),
     ("py:class", "'id'"),
-    ("py:class", "typing_extensions.Literal"),
+    ("py:class", "typing.Literal"),
+    ("py:class", f"{project}._version.VERSION_TUPLE"),
+]
+nitpick_ignore_regex = [
+    ("py:obj", "pydantic.*"),
+    ("py:class", "pydantic.*"),
+    ("py:class", "Field"),
+    ("py:class", "typer.*"),
+    ("py:obj", "lxml.*"),
+    ("py:class", "lxml.*"),
+    ("py:class", "typing_extensions.*"),
+    ("py:obj", r"typing.Annotated\[.*"),
+    ("py:class", r".*\.T"),
+    ("py:class", r"pvi\.device\..*Union"),
+    ("py:class", ".*.?Tree"),
+    ("py:class", ".*.PascalStr"),
+    ("py:class", ".*.Cls"),
 ]
 
 # Both the class’ and the __init__ method’s docstring are concatenated and
@@ -167,6 +194,7 @@ html_theme_options = {
         }
     ],
     "navigation_with_keys": False,
+    "show_toc_level": 3,
 }
 
 # A dictionary of values to pass into the template engine’s context for all pages
