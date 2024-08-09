@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pvi.typed_model &#8212; pvi 0.9.1.dev17+gcebf4448 documentation</title>
+    <title>pvi.typed_model &#8212; pvi 0.9.1.dev22+g68664209 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../../_static/documentation_options.js?v=3bd22e2c"></script>
+    <script src="../../_static/documentation_options.js?v=30fc1571"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -537,7 +537,7 @@ document.write(`
 
 <span class="sd">        The `model_rebuild` method must be called to propagate this to the core schema</span>
 <span class="sd">        of the models, once all `TypedModel` child classes have been defined. The</span>
-<span class="sd">        `model_json_schema` method is overidden in this class to make sure this is</span>
+<span class="sd">        `model_json_schema` method is overridden in this class to make sure this is</span>
 <span class="sd">        applied automatically before generating schema.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -601,7 +601,7 @@ document.write(`
 <span class="sd">        This is a callable for pydantic Discriminator to discriminate between types in a</span>
 <span class="sd">        tagged union of `TypedModel` child classes.</span>
 
-<span class="sd">        If given an instance of `TypeModel` then this method is being called to</span>
+<span class="sd">        If given an instance of `TypedModel` then this method is being called to</span>
 <span class="sd">        serialize an instance. The type field of the entry for this instance should be</span>
 <span class="sd">        its class name.</span>
 

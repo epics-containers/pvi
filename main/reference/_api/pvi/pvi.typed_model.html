@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pvi.typed_model &#8212; pvi 0.9.1.dev17+gcebf4448 documentation</title>
+    <title>pvi.typed_model &#8212; pvi 0.9.1.dev22+g68664209 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../../../_static/documentation_options.js?v=3bd22e2c"></script>
+    <script src="../../../_static/documentation_options.js?v=30fc1571"></script>
     <script src="../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -594,7 +594,7 @@ validated to form a valid model.</p>
 <dd><p>Add computed type field to model_fields to include it in the schema.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">model_rebuild</span></code> method must be called to propagate this to the core schema
 of the models, once all <code class="docutils literal notranslate"><span class="pre">TypedModel</span></code> child classes have been defined. The
-<code class="docutils literal notranslate"><span class="pre">model_json_schema</span></code> method is overidden in this class to make sure this is
+<code class="docutils literal notranslate"><span class="pre">model_json_schema</span></code> method is overridden in this class to make sure this is
 applied automatically before generating schema.</p>
 </dd></dl>
 
@@ -628,7 +628,7 @@ applied automatically before generating schema.</p>
 <dd><p>Get the type name from an instance or serialized <code class="docutils literal notranslate"><span class="pre">dict</span></code> of <code class="docutils literal notranslate"><span class="pre">TypeModel</span></code>.</p>
 <p>This is a callable for pydantic Discriminator to discriminate between types in a
 tagged union of <code class="docutils literal notranslate"><span class="pre">TypedModel</span></code> child classes.</p>
-<p>If given an instance of <code class="docutils literal notranslate"><span class="pre">TypeModel</span></code> then this method is being called to
+<p>If given an instance of <code class="docutils literal notranslate"><span class="pre">TypedModel</span></code> then this method is being called to
 serialize an instance. The type field of the entry for this instance should be
 its class name.</p>
 <p>If given a dictionary, then an instance is being deserialized. The name of the

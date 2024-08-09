@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>API &#8212; pvi 0.9.1.dev17+gcebf4448 documentation</title>
+    <title>API &#8212; pvi 0.9.1.dev22+g68664209 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=3bd22e2c"></script>
+    <script src="../_static/documentation_options.js?v=30fc1571"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -521,12 +521,49 @@ document.write(`
                   
   <section id="api">
 <h1>API<a class="headerlink" href="#api" title="Link to this heading">#</a></h1>
-<p>This is the internal API reference for pvi</p>
+<p>Full API docs are linked below. Some key points of interest are:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="_api/pvi/pvi.device.html#pvi.device.Device" title="pvi.device.Device"><span class="xref myst py py-class">Device</span></a></p></li>
+<li><p>Device Components</p>
+<ul>
+<li><p><a class="reference internal" href="_api/pvi/pvi.device.html#pvi.device.DeviceRef" title="pvi.device.DeviceRef"><span class="xref myst py py-class">DeviceRef</span></a></p></li>
+<li><p><a class="reference internal" href="_api/pvi/pvi.device.html#pvi.device.SignalR" title="pvi.device.SignalR"><span class="xref myst py py-class">SignalR</span></a></p></li>
+<li><p><a class="reference internal" href="_api/pvi/pvi.device.html#pvi.device.SignalW" title="pvi.device.SignalW"><span class="xref myst py py-class">SignalW</span></a></p></li>
+<li><p><a class="reference internal" href="_api/pvi/pvi.device.html#pvi.device.SignalRW" title="pvi.device.SignalRW"><span class="xref myst py py-class">SignalRW</span></a></p></li>
+<li><p><a class="reference internal" href="_api/pvi/pvi.device.html#pvi.device.SignalX" title="pvi.device.SignalX"><span class="xref myst py py-class">SignalX</span></a></p></li>
+<li><p><a class="reference internal" href="_api/pvi/pvi.device.html#pvi.device.SignalRef" title="pvi.device.SignalRef"><span class="xref myst py py-class">SignalRef</span></a></p></li>
+<li><p><a class="reference internal" href="_api/pvi/pvi.device.html#pvi.device.Group" title="pvi.device.Group"><span class="xref myst py py-class">Group</span></a></p></li>
+</ul>
+</li>
+<li><p>Signal Widgets</p>
+<ul>
+<li><p><a class="reference internal" href="_api/pvi/pvi.device.html#pvi.device.ButtonPanel" title="pvi.device.ButtonPanel"><span class="xref myst py py-class">ButtonPanel</span></a></p></li>
+<li><p><a class="reference internal" href="_api/pvi/pvi.device.html#pvi.device.ComboBox" title="pvi.device.ComboBox"><span class="xref myst py py-class">ComboBox</span></a></p></li>
+<li><p><a class="reference internal" href="_api/pvi/pvi.device.html#pvi.device.LED" title="pvi.device.LED"><span class="xref myst py py-class">LED</span></a></p></li>
+<li><p><a class="reference internal" href="_api/pvi/pvi.device.html#pvi.device.SubScreen" title="pvi.device.SubScreen"><span class="xref myst py py-class">SubScreen</span></a></p></li>
+<li><p><a class="reference internal" href="_api/pvi/pvi.device.html#pvi.device.TextRead" title="pvi.device.TextRead"><span class="xref myst py py-class">TextRead</span></a></p></li>
+<li><p><a class="reference internal" href="_api/pvi/pvi.device.html#pvi.device.TextWrite" title="pvi.device.TextWrite"><span class="xref myst py py-class">TextWrite</span></a></p></li>
+</ul>
+</li>
+<li><p>UI Formatting</p>
+<ul>
+<li><p><a class="reference internal" href="_api/pvi/pvi._format.base.html#pvi._format.base.Formatter" title="pvi._format.base.Formatter"><span class="xref myst py py-class">Formatter</span></a></p></li>
+<li><p><a class="reference internal" href="_api/pvi/pvi._format.widget.html#pvi._format.widget.UITemplate" title="pvi._format.widget.UITemplate"><span class="xref myst py py-class">UITemplate</span></a></p></li>
+<li><p><a class="reference internal" href="_api/pvi/pvi._format.bob.html#pvi._format.bob.BobTemplate" title="pvi._format.bob.BobTemplate"><span class="xref myst py py-class">BobTemplate</span></a></p></li>
+<li><p><a class="reference internal" href="_api/pvi/pvi._format.widget.html#pvi._format.widget.WidgetFormatter" title="pvi._format.widget.WidgetFormatter"><span class="xref myst py py-class">WidgetFormatter</span></a></p></li>
+<li><p><a class="reference internal" href="_api/pvi/pvi._format.utils.html#pvi._format.utils.Bounds" title="pvi._format.utils.Bounds"><span class="xref myst py py-class">Bounds</span></a></p></li>
+</ul>
+</li>
+</ul>
+<section id="full-reference-api">
+<h2>Full Reference API<a class="headerlink" href="#full-reference-api" title="Link to this heading">#</a></h2>
+<p>To browse the full generated reference API:</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="_api/index.html">API Reference</a></li>
 </ul>
 </div>
+</section>
 </section>
 
 
@@ -566,6 +603,18 @@ document.write(`
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#full-reference-api">Full Reference API</a></li>
+</ul>
+  </nav></div>
 
   <div class="sidebar-secondary-item">
 

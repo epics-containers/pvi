@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pvi._format.dls &#8212; pvi 0.9.1.dev17+gcebf4448 documentation</title>
+    <title>pvi._format.dls &#8212; pvi 0.9.1.dev22+g68664209 documentation</title>
   
   
   
@@ -37,7 +37,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../../../_static/documentation_options.js?v=3bd22e2c"></script>
+    <script src="../../../_static/documentation_options.js?v=30fc1571"></script>
     <script src="../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -896,10 +896,12 @@ document.write(`
 
 
 
+<span class="c1"># SCREEN_WRITE DOCS REF: Generate the screen file</span>
+
+
 <div class="viewcode-block" id="write_bob">
 <a class="viewcode-back" href="../../../reference/_api/pvi/pvi._format.dls.html#pvi._format.dls.write_bob">[docs]</a>
 <span class="k">def</span> <span class="nf">write_bob</span><span class="p">(</span><span class="n">screen_formatter</span><span class="p">:</span> <span class="n">GroupFormatter</span><span class="p">[</span><span class="n">_Element</span><span class="p">],</span> <span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">):</span>
-    <span class="c1"># SCREEN_WRITE DOCS REF: Generate the screen file</span>
     <span class="c1"># The root:&#39;Display&#39; is always the first element in texts</span>
     <span class="n">texts</span> <span class="o">=</span> <span class="n">screen_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">()</span>
     <span class="n">element_tree</span> <span class="o">=</span> <span class="n">fromstring</span><span class="p">(</span><span class="n">tostring</span><span class="p">(</span><span class="n">texts</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="kc">None</span><span class="p">)</span>

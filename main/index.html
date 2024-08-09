@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>PVI &#8212; pvi 0.9.1.dev17+gcebf4448 documentation</title>
+    <title>PVI &#8212; pvi 0.9.1.dev22+g68664209 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=3bd22e2c"></script>
+    <script src="_static/documentation_options.js?v=30fc1571"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -455,19 +455,18 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <p><a class="reference external" href="https://github.com/epics-containers/pvi/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/epics-containers/pvi/actions/workflows/ci.yml/badge.svg" /></a>
+  <img alt="FastCS Logo" align="right" width="100" height="100" src="https://raw.githubusercontent.com/epics-containers/pvi/main/docs/images/pvi-logo.svg" target=https://github.com/epics-containers/pvi>
+<p><a class="reference external" href="https://github.com/epics-containers/pvi/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/epics-containers/pvi/actions/workflows/ci.yml/badge.svg" /></a>
 <a class="reference external" href="https://codecov.io/gh/epics-containers/pvi"><img alt="Coverage" src="https://codecov.io/gh/epics-containers/pvi/branch/main/graph/badge.svg" /></a>
 <a class="reference external" href="https://pypi.org/project/pvi"><img alt="PyPI" src="https://img.shields.io/pypi/v/pvi.svg" /></a>
 <a class="reference external" href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" /></a></p>
 <section id="pvi">
 <h1>PVI<a class="headerlink" href="#pvi" title="Link to this heading">#</a></h1>
 <p>PVI (PV Interface) is a framework for specifying the interface to an EPICS
-driver in a single YAML file. The initial target is asyn port driver based
-drivers, but it could be extended to streamDevice and other driver types at a
-later date.</p>
-<p>It allows the asyn parameter interface to be specified in a single place,
-and removes boilerplate code in the driver CPP, template files, documentation,
-and low level opis.</p>
+driver. PVI can be used either as a library or an application. PVI Devices can be
+defined either in code or a YAML file. It can be used to generate UIs (adl, edl, bob) or
+a template appending info tags to existing records to define an NTTable of the PVs in an
+IOC.</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head text-center"><p>Source</p></th>
@@ -487,11 +486,15 @@ and low level opis.</p>
 </tbody>
 </table>
 </div>
-<hr class="docutils" />
-<p>Note: This module is currently a proposal only, so all details are subject to
-change at any point. The documentation is written in the present tense, but only
-prototype code is written.</p>
-<hr class="docutils" />
+<section id="projects-using-pvi">
+<h2>Projects Using PVI<a class="headerlink" href="#projects-using-pvi" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/epics-containers/ibek">ibek</a> - IOC Builder for EPICS and
+Kubernetes</p></li>
+<li><p><a class="reference external" href="https://github.com/DiamondLightSource/FastCS">FastCS</a> - Control system agnostic
+framework for building device support in Python for both EPICS and Tango</p></li>
+</ul>
+</section>
 <section id="how-the-documentation-is-structured">
 <h2>How the documentation is structured<a class="headerlink" href="#how-the-documentation-is-structured" title="Link to this heading">#</a></h2>
 <p>Documentation is split into <a class="reference external" href="https://diataxis.fr">four categories</a>, also accessible from links in the top bar.</p>
@@ -507,6 +510,10 @@ prototype code is written.</p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="tutorials/installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/create-pvi-device.html">Create a PVI Device from a database template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/format-device-ui.html">Format a UI from a Device</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/generate-pvi-template.html">Generate a PVI template from a Device</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/pvi-as-a-library.html">Using PVI as a library</a></li>
 </ul>
 </li>
 </ul>
@@ -525,8 +532,8 @@ prototype code is written.</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="how-to.html">How-to Guides</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="how-to/contribute.html">Contribute to the project</a></li>
 <li class="toctree-l2"><a class="reference internal" href="how-to/write-a-formatter.html">How to Write a Site Specific Formatter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how-to/contribute.html">Contribute to the project</a></li>
 </ul>
 </li>
 </ul>
@@ -545,9 +552,9 @@ prototype code is written.</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="explanations.html">Explanations</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="explanations/decisions.html">Architectural Decision Records</a></li>
+<li class="toctree-l2"><a class="reference internal" href="explanations/pvi-pv.html">PVI IOC Introspection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="explanations/original-design.html">Original Design</a></li>
-<li class="toctree-l2"><a class="reference internal" href="explanations/original-design.html#drivers">Drivers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="explanations/decisions.html">Architectural Decision Records</a></li>
 </ul>
 </li>
 </ul>
