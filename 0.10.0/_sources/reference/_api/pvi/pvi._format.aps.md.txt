@@ -1,0 +1,100 @@
+# {py:mod}`pvi._format.aps`
+
+```{py:module} pvi._format.aps
+```
+
+```{autodoc2-docstring} pvi._format.aps
+:allowtitles:
+```
+
+## Module Contents
+
+### Classes
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`APSFormatter <pvi._format.aps.APSFormatter>`
+  -
+````
+
+### API
+
+`````{py:class} APSFormatter(/, **data: typing.Any)
+:canonical: pvi._format.aps.APSFormatter
+
+Bases: {py:obj}`pvi._format.base.Formatter`
+
+````{py:attribute} spacing
+:canonical: pvi._format.aps.APSFormatter.spacing
+:type: int
+:value: >
+   'Field(...)'
+
+```{autodoc2-docstring} pvi._format.aps.APSFormatter.spacing
+```
+
+````
+
+````{py:attribute} title_height
+:canonical: pvi._format.aps.APSFormatter.title_height
+:type: int
+:value: >
+   'Field(...)'
+
+```{autodoc2-docstring} pvi._format.aps.APSFormatter.title_height
+```
+
+````
+
+````{py:attribute} max_height
+:canonical: pvi._format.aps.APSFormatter.max_height
+:type: int
+:value: >
+   'Field(...)'
+
+```{autodoc2-docstring} pvi._format.aps.APSFormatter.max_height
+```
+
+````
+
+````{py:attribute} label_width
+:canonical: pvi._format.aps.APSFormatter.label_width
+:type: int
+:value: >
+   'Field(...)'
+
+```{autodoc2-docstring} pvi._format.aps.APSFormatter.label_width
+```
+
+````
+
+````{py:attribute} widget_width
+:canonical: pvi._format.aps.APSFormatter.widget_width
+:type: int
+:value: >
+   'Field(...)'
+
+```{autodoc2-docstring} pvi._format.aps.APSFormatter.widget_width
+```
+
+````
+
+````{py:attribute} widget_height
+:canonical: pvi._format.aps.APSFormatter.widget_height
+:type: int
+:value: >
+   'Field(...)'
+
+```{autodoc2-docstring} pvi._format.aps.APSFormatter.widget_height
+```
+
+````
+
+````{py:method} format(device: pvi.device.Device, path: pathlib.Path) -> None
+:canonical: pvi._format.aps.APSFormatter.format
+
+````
+
+`````

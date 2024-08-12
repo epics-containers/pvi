@@ -1,0 +1,882 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>pvi._convert._template_convert &#8212; pvi 0.10.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=82662543"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=30646c52"></script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/_api/pvi/pvi._convert._template_convert';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.15.4';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://epics-containers.github.io/pvi/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.10.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner = false;
+        </script>
+    <link rel="icon" href="../../../_static/pvi-favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="pvi._convert.utils" href="pvi._convert.utils.html" />
+    <link rel="prev" title="pvi._convert" href="pvi._convert.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/pvi-logo.svg" class="logo__image only-light" alt=""/>
+    <script>document.write(`<img src="../../../_static/pvi-logo.svg" class="logo__image only-dark" alt=""/>`);</script>
+  
+  
+    <p class="title logo__title">pvi</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../how-to.html">
+    How-to Guides
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../explanations.html">
+    Explanations
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../../../reference.html">
+    Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://github.com/epics-containers/pvi/releases">
+    Release Notes
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/epics-containers/pvi" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/pvi" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-cube fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button id="pst-version-switcher-button-2"
+      type="button"
+      class="version-switcher__button btn btn-sm dropdown-toggle"
+      data-bs-toggle="dropdown"
+      aria-haspopup="listbox"
+      aria-controls="pst-version-switcher-list-2"
+      aria-label="Version switcher list"
+    >
+      Choose version  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div id="pst-version-switcher-list-2"
+      class="version-switcher__menu dropdown-menu list-group-flush py-0"
+      role="listbox" aria-labelledby="pst-version-switcher-button-2">
+      <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../how-to.html">
+    How-to Guides
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../explanations.html">
+    Explanations
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../../../reference.html">
+    Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://github.com/epics-containers/pvi/releases">
+    Release Notes
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/epics-containers/pvi" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/pvi" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-cube fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button id="pst-version-switcher-button-3"
+      type="button"
+      class="version-switcher__button btn btn-sm dropdown-toggle"
+      data-bs-toggle="dropdown"
+      aria-haspopup="listbox"
+      aria-controls="pst-version-switcher-list-3"
+      aria-label="Version switcher list"
+    >
+      Choose version  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div id="pst-version-switcher-list-3"
+      class="version-switcher__menu dropdown-menu list-group-flush py-0"
+      role="listbox" aria-labelledby="pst-version-switcher-button-3">
+      <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../api.html">API</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="../index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3 current active has-children"><a class="reference internal" href="pvi.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi</span></code></a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l4 current active"><a class="reference internal" href="pvi._convert.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._convert</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi._format.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._format</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi.__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.__main__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.utils</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi._version.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._version</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi.typed_model.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.typed_model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi._pv_group.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._pv_group</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi.device.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.device</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi._schema_utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._schema_utils</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi._yaml_utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._yaml_utils</span></code></a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/epics-containers/pvi/releases">Release Notes</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../reference.html" class="nav-link">Reference</a></li>
+    
+    
+    <li class="breadcrumb-item"><i class="fa-solid fa-ellipsis"></i></li>
+    
+    
+    <li class="breadcrumb-item"><a href="pvi._convert.html" class="nav-link"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._convert</span></code></a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><code...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="module-pvi._convert._template_convert">
+<span id="pvi-convert-template-convert"></span><h1><a class="reference internal" href="#module-pvi._convert._template_convert" title="pvi._convert._template_convert"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._convert._template_convert</span></code></a><a class="headerlink" href="#module-pvi._convert._template_convert" title="Link to this heading">#</a></h1>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table table-left">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi._convert._template_convert.TemplateConverter" title="pvi._convert._template_convert.TemplateConverter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TemplateConverter</span></code></a></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi._convert._template_convert.RecordExtractor" title="pvi._convert._template_convert.RecordExtractor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RecordExtractor</span></code></a></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi._convert._template_convert.RecordRoleSorter" title="pvi._convert._template_convert.RecordRoleSorter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RecordRoleSorter</span></code></a></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi._convert._template_convert.SettingPair" title="pvi._convert._template_convert.SettingPair"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SettingPair</span></code></a></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi._convert._template_convert.Readback" title="pvi._convert._template_convert.Readback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Readback</span></code></a></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi._convert._template_convert.Action" title="pvi._convert._template_convert.Action"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Action</span></code></a></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi._convert._template_convert.ParameterRoleMatcher" title="pvi._convert._template_convert.ParameterRoleMatcher"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ParameterRoleMatcher</span></code></a></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="data">
+<h3>Data<a class="headerlink" href="#data" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table table-left">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi._convert._template_convert.OVERRIDE_DESC" title="pvi._convert._template_convert.OVERRIDE_DESC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OVERRIDE_DESC</span></code></a></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="api">
+<h3>API<a class="headerlink" href="#api" title="Link to this heading">#</a></h3>
+<dl class="py data">
+<dt class="sig sig-object py" id="pvi._convert._template_convert.OVERRIDE_DESC">
+<span class="sig-prename descclassname"><span class="pre">pvi._convert._template_convert.</span></span><span class="sig-name descname"><span class="pre">OVERRIDE_DESC</span></span><a class="headerlink" href="#pvi._convert._template_convert.OVERRIDE_DESC" title="Link to this definition">#</a></dt>
+<dd><p>‘# Overriding value in auto-generated template’</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pvi._convert._template_convert.TemplateConverter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pvi._convert._template_convert.</span></span><span class="sig-name descname"><span class="pre">TemplateConverter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">templates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.12)"><span class="pre">pathlib.Path</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pvi/_convert/_template_convert.html#TemplateConverter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._convert._template_convert.TemplateConverter" title="Link to this definition">#</a></dt>
+<dd><p class="rubric">Initialization</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pvi._convert._template_convert.TemplateConverter.convert">
+<span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pvi.device.Tree</span></span></span><a class="reference internal" href="../../../_modules/pvi/_convert/_template_convert.html#TemplateConverter.convert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._convert._template_convert.TemplateConverter.convert" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvi._convert._template_convert.TemplateConverter._extract_components">
+<span class="sig-name descname"><span class="pre">_extract_components</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi.device.ComponentUnion</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/pvi/_convert/_template_convert.html#TemplateConverter._extract_components"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._convert._template_convert.TemplateConverter._extract_components" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pvi._convert._template_convert.RecordExtractor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pvi._convert._template_convert.</span></span><span class="sig-name descname"><span class="pre">RecordExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pvi/_convert/_template_convert.html#RecordExtractor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._convert._template_convert.RecordExtractor" title="Link to this definition">#</a></dt>
+<dd><p class="rubric">Initialization</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pvi._convert._template_convert.RecordExtractor._extract_record_strs">
+<span class="sig-name descname"><span class="pre">_extract_record_strs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pvi/_convert/_template_convert.html#RecordExtractor._extract_record_strs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._convert._template_convert.RecordExtractor._extract_record_strs" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvi._convert._template_convert.RecordExtractor._parse_record">
+<span class="sig-name descname"><span class="pre">_parse_record</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/pvi/_convert/_template_convert.html#RecordExtractor._parse_record"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._convert._template_convert.RecordExtractor._parse_record" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvi._convert._template_convert.RecordExtractor._extract_fields">
+<span class="sig-name descname"><span class="pre">_extract_fields</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fields_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/pvi/_convert/_template_convert.html#RecordExtractor._extract_fields"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._convert._template_convert.RecordExtractor._extract_fields" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvi._convert._template_convert.RecordExtractor._extract_infos">
+<span class="sig-name descname"><span class="pre">_extract_infos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fields_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/pvi/_convert/_template_convert.html#RecordExtractor._extract_infos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._convert._template_convert.RecordExtractor._extract_infos" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvi._convert._template_convert.RecordExtractor._create_asyn_record">
+<span class="sig-name descname"><span class="pre">_create_asyn_record</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynRecord" title="pvi._convert._asyn_convert.AsynRecord"><span class="pre">pvi._convert._asyn_convert.AsynRecord</span></a></span></span><a class="reference internal" href="../../../_modules/pvi/_convert/_template_convert.html#RecordExtractor._create_asyn_record"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._convert._template_convert.RecordExtractor._create_asyn_record" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvi._convert._template_convert.RecordExtractor.get_asyn_records">
+<span class="sig-name descname"><span class="pre">get_asyn_records</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynRecord" title="pvi._convert._asyn_convert.AsynRecord"><span class="pre">pvi._convert._asyn_convert.AsynRecord</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/pvi/_convert/_template_convert.html#RecordExtractor.get_asyn_records"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._convert._template_convert.RecordExtractor.get_asyn_records" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pvi._convert._template_convert.RecordRoleSorter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pvi._convert._template_convert.</span></span><span class="sig-name descname"><span class="pre">RecordRoleSorter</span></span><a class="reference internal" href="../../../_modules/pvi/_convert/_template_convert.html#RecordRoleSorter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._convert._template_convert.RecordRoleSorter" title="Link to this definition">#</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="pvi._convert._template_convert.RecordRoleSorter.sort_records">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sort_records</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">records</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynRecord" title="pvi._convert._asyn_convert.AsynRecord"><span class="pre">pvi._convert._asyn_convert.AsynRecord</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pvi._convert._parameters.html#pvi._convert._parameters.Parameter" title="pvi._convert._parameters.Parameter"><span class="pre">pvi._convert._parameters.Parameter</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/pvi/_convert/_template_convert.html#RecordRoleSorter.sort_records"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._convert._template_convert.RecordRoleSorter.sort_records" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pvi._convert._template_convert.SettingPair">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pvi._convert._template_convert.</span></span><span class="sig-name descname"><span class="pre">SettingPair</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**data:</span> <span class="pre">typing.Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pvi/_convert/_template_convert.html#SettingPair"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._convert._template_convert.SettingPair" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pvi._convert._parameters.html#pvi._convert._parameters.Parameter" title="pvi._convert._parameters.Parameter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pvi._convert._parameters.Parameter</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._convert._template_convert.SettingPair.read_record">
+<span class="sig-name descname"><span class="pre">read_record</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynRecord" title="pvi._convert._asyn_convert.AsynRecord"><span class="pre">pvi._convert._asyn_convert.AsynRecord</span></a></em><a class="headerlink" href="#pvi._convert._template_convert.SettingPair.read_record" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._convert._template_convert.SettingPair.write_record">
+<span class="sig-name descname"><span class="pre">write_record</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynRecord" title="pvi._convert._asyn_convert.AsynRecord"><span class="pre">pvi._convert._asyn_convert.AsynRecord</span></a></em><a class="headerlink" href="#pvi._convert._template_convert.SettingPair.write_record" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvi._convert._template_convert.SettingPair.generate_component">
+<span class="sig-name descname"><span class="pre">generate_component</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="pvi.device.html#pvi.device.SignalRW" title="pvi.device.SignalRW"><span class="pre">pvi.device.SignalRW</span></a></span></span><a class="reference internal" href="../../../_modules/pvi/_convert/_template_convert.html#SettingPair.generate_component"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._convert._template_convert.SettingPair.generate_component" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pvi._convert._template_convert.Readback">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pvi._convert._template_convert.</span></span><span class="sig-name descname"><span class="pre">Readback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**data:</span> <span class="pre">typing.Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pvi/_convert/_template_convert.html#Readback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._convert._template_convert.Readback" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pvi._convert._parameters.html#pvi._convert._parameters.Parameter" title="pvi._convert._parameters.Parameter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pvi._convert._parameters.Parameter</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._convert._template_convert.Readback.read_record">
+<span class="sig-name descname"><span class="pre">read_record</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynRecord" title="pvi._convert._asyn_convert.AsynRecord"><span class="pre">pvi._convert._asyn_convert.AsynRecord</span></a></em><a class="headerlink" href="#pvi._convert._template_convert.Readback.read_record" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvi._convert._template_convert.Readback.generate_component">
+<span class="sig-name descname"><span class="pre">generate_component</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="pvi.device.html#pvi.device.SignalR" title="pvi.device.SignalR"><span class="pre">pvi.device.SignalR</span></a></span></span><a class="reference internal" href="../../../_modules/pvi/_convert/_template_convert.html#Readback.generate_component"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._convert._template_convert.Readback.generate_component" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pvi._convert._template_convert.Action">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pvi._convert._template_convert.</span></span><span class="sig-name descname"><span class="pre">Action</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**data:</span> <span class="pre">typing.Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pvi/_convert/_template_convert.html#Action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._convert._template_convert.Action" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pvi._convert._parameters.html#pvi._convert._parameters.Parameter" title="pvi._convert._parameters.Parameter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pvi._convert._parameters.Parameter</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._convert._template_convert.Action.write_record">
+<span class="sig-name descname"><span class="pre">write_record</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynRecord" title="pvi._convert._asyn_convert.AsynRecord"><span class="pre">pvi._convert._asyn_convert.AsynRecord</span></a></em><a class="headerlink" href="#pvi._convert._template_convert.Action.write_record" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvi._convert._template_convert.Action.generate_component">
+<span class="sig-name descname"><span class="pre">generate_component</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="pvi.device.html#pvi.device.SignalW" title="pvi.device.SignalW"><span class="pre">pvi.device.SignalW</span></a></span></span><a class="reference internal" href="../../../_modules/pvi/_convert/_template_convert.html#Action.generate_component"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._convert._template_convert.Action.generate_component" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pvi._convert._template_convert.ParameterRoleMatcher">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pvi._convert._template_convert.</span></span><span class="sig-name descname"><span class="pre">ParameterRoleMatcher</span></span><a class="reference internal" href="../../../_modules/pvi/_convert/_template_convert.html#ParameterRoleMatcher"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._convert._template_convert.ParameterRoleMatcher" title="Link to this definition">#</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="pvi._convert._template_convert.ParameterRoleMatcher.get_actions">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_actions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">read_records</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynRecord" title="pvi._convert._asyn_convert.AsynRecord"><span class="pre">pvi._convert._asyn_convert.AsynRecord</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_records</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynRecord" title="pvi._convert._asyn_convert.AsynRecord"><span class="pre">pvi._convert._asyn_convert.AsynRecord</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pvi._convert._template_convert.Action" title="pvi._convert._template_convert.Action"><span class="pre">pvi._convert._template_convert.Action</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/pvi/_convert/_template_convert.html#ParameterRoleMatcher.get_actions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._convert._template_convert.ParameterRoleMatcher.get_actions" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvi._convert._template_convert.ParameterRoleMatcher.get_readbacks">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_readbacks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">read_records</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynRecord" title="pvi._convert._asyn_convert.AsynRecord"><span class="pre">pvi._convert._asyn_convert.AsynRecord</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_records</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynRecord" title="pvi._convert._asyn_convert.AsynRecord"><span class="pre">pvi._convert._asyn_convert.AsynRecord</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pvi._convert._template_convert.Readback" title="pvi._convert._template_convert.Readback"><span class="pre">pvi._convert._template_convert.Readback</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/pvi/_convert/_template_convert.html#ParameterRoleMatcher.get_readbacks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._convert._template_convert.ParameterRoleMatcher.get_readbacks" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvi._convert._template_convert.ParameterRoleMatcher.get_setting_pairs">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_setting_pairs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">read_records</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynRecord" title="pvi._convert._asyn_convert.AsynRecord"><span class="pre">pvi._convert._asyn_convert.AsynRecord</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_records</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynRecord" title="pvi._convert._asyn_convert.AsynRecord"><span class="pre">pvi._convert._asyn_convert.AsynRecord</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pvi._convert._template_convert.SettingPair" title="pvi._convert._template_convert.SettingPair"><span class="pre">pvi._convert._template_convert.SettingPair</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/pvi/_convert/_template_convert.html#ParameterRoleMatcher.get_setting_pairs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._convert._template_convert.ParameterRoleMatcher.get_setting_pairs" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="pvi._convert.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._convert</span></code></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="pvi._convert.utils.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._convert.utils</span></code></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#api">API</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._template_convert.OVERRIDE_DESC"><code class="docutils literal notranslate"><span class="pre">OVERRIDE_DESC</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._template_convert.TemplateConverter"><code class="docutils literal notranslate"><span class="pre">TemplateConverter</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._template_convert.TemplateConverter.convert"><code class="docutils literal notranslate"><span class="pre">TemplateConverter.convert()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._template_convert.TemplateConverter._extract_components"><code class="docutils literal notranslate"><span class="pre">TemplateConverter._extract_components()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._template_convert.RecordExtractor"><code class="docutils literal notranslate"><span class="pre">RecordExtractor</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._template_convert.RecordExtractor._extract_record_strs"><code class="docutils literal notranslate"><span class="pre">RecordExtractor._extract_record_strs()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._template_convert.RecordExtractor._parse_record"><code class="docutils literal notranslate"><span class="pre">RecordExtractor._parse_record()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._template_convert.RecordExtractor._extract_fields"><code class="docutils literal notranslate"><span class="pre">RecordExtractor._extract_fields()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._template_convert.RecordExtractor._extract_infos"><code class="docutils literal notranslate"><span class="pre">RecordExtractor._extract_infos()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._template_convert.RecordExtractor._create_asyn_record"><code class="docutils literal notranslate"><span class="pre">RecordExtractor._create_asyn_record()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._template_convert.RecordExtractor.get_asyn_records"><code class="docutils literal notranslate"><span class="pre">RecordExtractor.get_asyn_records()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._template_convert.RecordRoleSorter"><code class="docutils literal notranslate"><span class="pre">RecordRoleSorter</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._template_convert.RecordRoleSorter.sort_records"><code class="docutils literal notranslate"><span class="pre">RecordRoleSorter.sort_records()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._template_convert.SettingPair"><code class="docutils literal notranslate"><span class="pre">SettingPair</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._template_convert.SettingPair.read_record"><code class="docutils literal notranslate"><span class="pre">SettingPair.read_record</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._template_convert.SettingPair.write_record"><code class="docutils literal notranslate"><span class="pre">SettingPair.write_record</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._template_convert.SettingPair.generate_component"><code class="docutils literal notranslate"><span class="pre">SettingPair.generate_component()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._template_convert.Readback"><code class="docutils literal notranslate"><span class="pre">Readback</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._template_convert.Readback.read_record"><code class="docutils literal notranslate"><span class="pre">Readback.read_record</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._template_convert.Readback.generate_component"><code class="docutils literal notranslate"><span class="pre">Readback.generate_component()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._template_convert.Action"><code class="docutils literal notranslate"><span class="pre">Action</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._template_convert.Action.write_record"><code class="docutils literal notranslate"><span class="pre">Action.write_record</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._template_convert.Action.generate_component"><code class="docutils literal notranslate"><span class="pre">Action.generate_component()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._template_convert.ParameterRoleMatcher"><code class="docutils literal notranslate"><span class="pre">ParameterRoleMatcher</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._template_convert.ParameterRoleMatcher.get_actions"><code class="docutils literal notranslate"><span class="pre">ParameterRoleMatcher.get_actions()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._template_convert.ParameterRoleMatcher.get_readbacks"><code class="docutils literal notranslate"><span class="pre">ParameterRoleMatcher.get_readbacks()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._template_convert.ParameterRoleMatcher.get_setting_pairs"><code class="docutils literal notranslate"><span class="pre">ParameterRoleMatcher.get_setting_pairs()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  
+  <div class="tocsection editthispage">
+    <a href="https://github.com/epics-containers/pvi/edit/0.10.0/docs/reference/_api/pvi/pvi._convert._template_convert.md">
+      <i class="fa-solid fa-pencil"></i>
+      
+      
+        
+          Edit on GitHub
+        
+      
+    </a>
+  </div>
+</div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="../../../_sources/reference/_api/pvi/pvi._convert._template_convert.md.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.4.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

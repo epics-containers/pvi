@@ -1,0 +1,1517 @@
+# {py:mod}`pvi.device`
+
+```{py:module} pvi.device
+```
+
+```{autodoc2-docstring} pvi.device
+:allowtitles:
+```
+
+## Module Contents
+
+### Classes
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`TextFormat <pvi.device.TextFormat>`
+  - ```{autodoc2-docstring} pvi.device.TextFormat
+    :summary:
+    ```
+* - {py:obj}`AccessModeMixin <pvi.device.AccessModeMixin>`
+  -
+* - {py:obj}`ReadWidget <pvi.device.ReadWidget>`
+  -
+* - {py:obj}`LED <pvi.device.LED>`
+  - ```{autodoc2-docstring} pvi.device.LED
+    :summary:
+    ```
+* - {py:obj}`BitField <pvi.device.BitField>`
+  - ```{autodoc2-docstring} pvi.device.BitField
+    :summary:
+    ```
+* - {py:obj}`ProgressBar <pvi.device.ProgressBar>`
+  - ```{autodoc2-docstring} pvi.device.ProgressBar
+    :summary:
+    ```
+* - {py:obj}`TextRead <pvi.device.TextRead>`
+  - ```{autodoc2-docstring} pvi.device.TextRead
+    :summary:
+    ```
+* - {py:obj}`ArrayTrace <pvi.device.ArrayTrace>`
+  - ```{autodoc2-docstring} pvi.device.ArrayTrace
+    :summary:
+    ```
+* - {py:obj}`ImageRead <pvi.device.ImageRead>`
+  - ```{autodoc2-docstring} pvi.device.ImageRead
+    :summary:
+    ```
+* - {py:obj}`WriteWidget <pvi.device.WriteWidget>`
+  - ```{autodoc2-docstring} pvi.device.WriteWidget
+    :summary:
+    ```
+* - {py:obj}`CheckBox <pvi.device.CheckBox>`
+  - ```{autodoc2-docstring} pvi.device.CheckBox
+    :summary:
+    ```
+* - {py:obj}`ToggleButton <pvi.device.ToggleButton>`
+  - ```{autodoc2-docstring} pvi.device.ToggleButton
+    :summary:
+    ```
+* - {py:obj}`ComboBox <pvi.device.ComboBox>`
+  - ```{autodoc2-docstring} pvi.device.ComboBox
+    :summary:
+    ```
+* - {py:obj}`ButtonPanel <pvi.device.ButtonPanel>`
+  - ```{autodoc2-docstring} pvi.device.ButtonPanel
+    :summary:
+    ```
+* - {py:obj}`TextWrite <pvi.device.TextWrite>`
+  - ```{autodoc2-docstring} pvi.device.TextWrite
+    :summary:
+    ```
+* - {py:obj}`ArrayWrite <pvi.device.ArrayWrite>`
+  - ```{autodoc2-docstring} pvi.device.ArrayWrite
+    :summary:
+    ```
+* - {py:obj}`TableRead <pvi.device.TableRead>`
+  - ```{autodoc2-docstring} pvi.device.TableRead
+    :summary:
+    ```
+* - {py:obj}`TableWrite <pvi.device.TableWrite>`
+  - ```{autodoc2-docstring} pvi.device.TableWrite
+    :summary:
+    ```
+* - {py:obj}`Layout <pvi.device.Layout>`
+  - ```{autodoc2-docstring} pvi.device.Layout
+    :summary:
+    ```
+* - {py:obj}`Plot <pvi.device.Plot>`
+  - ```{autodoc2-docstring} pvi.device.Plot
+    :summary:
+    ```
+* - {py:obj}`Row <pvi.device.Row>`
+  - ```{autodoc2-docstring} pvi.device.Row
+    :summary:
+    ```
+* - {py:obj}`Grid <pvi.device.Grid>`
+  - ```{autodoc2-docstring} pvi.device.Grid
+    :summary:
+    ```
+* - {py:obj}`SubScreen <pvi.device.SubScreen>`
+  - ```{autodoc2-docstring} pvi.device.SubScreen
+    :summary:
+    ```
+* - {py:obj}`Named <pvi.device.Named>`
+  -
+* - {py:obj}`Component <pvi.device.Component>`
+  - ```{autodoc2-docstring} pvi.device.Component
+    :summary:
+    ```
+* - {py:obj}`Signal <pvi.device.Signal>`
+  - ```{autodoc2-docstring} pvi.device.Signal
+    :summary:
+    ```
+* - {py:obj}`SignalR <pvi.device.SignalR>`
+  - ```{autodoc2-docstring} pvi.device.SignalR
+    :summary:
+    ```
+* - {py:obj}`SignalW <pvi.device.SignalW>`
+  - ```{autodoc2-docstring} pvi.device.SignalW
+    :summary:
+    ```
+* - {py:obj}`SignalRW <pvi.device.SignalRW>`
+  - ```{autodoc2-docstring} pvi.device.SignalRW
+    :summary:
+    ```
+* - {py:obj}`SignalX <pvi.device.SignalX>`
+  - ```{autodoc2-docstring} pvi.device.SignalX
+    :summary:
+    ```
+* - {py:obj}`DeviceRef <pvi.device.DeviceRef>`
+  - ```{autodoc2-docstring} pvi.device.DeviceRef
+    :summary:
+    ```
+* - {py:obj}`SignalRef <pvi.device.SignalRef>`
+  - ```{autodoc2-docstring} pvi.device.SignalRef
+    :summary:
+    ```
+* - {py:obj}`Group <pvi.device.Group>`
+  - ```{autodoc2-docstring} pvi.device.Group
+    :summary:
+    ```
+* - {py:obj}`Device <pvi.device.Device>`
+  - ```{autodoc2-docstring} pvi.device.Device
+    :summary:
+    ```
+````
+
+### Functions
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`to_title_case <pvi.device.to_title_case>`
+  - ```{autodoc2-docstring} pvi.device.to_title_case
+    :summary:
+    ```
+* - {py:obj}`to_snake_case <pvi.device.to_snake_case>`
+  - ```{autodoc2-docstring} pvi.device.to_snake_case
+    :summary:
+    ```
+* - {py:obj}`enforce_pascal_case <pvi.device.enforce_pascal_case>`
+  - ```{autodoc2-docstring} pvi.device.enforce_pascal_case
+    :summary:
+    ```
+* - {py:obj}`walk <pvi.device.walk>`
+  - ```{autodoc2-docstring} pvi.device.walk
+    :summary:
+    ```
+* - {py:obj}`find_components <pvi.device.find_components>`
+  - ```{autodoc2-docstring} pvi.device.find_components
+    :summary:
+    ```
+````
+
+### Data
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`PASCAL_CASE_REGEX <pvi.device.PASCAL_CASE_REGEX>`
+  - ```{autodoc2-docstring} pvi.device.PASCAL_CASE_REGEX
+    :summary:
+    ```
+* - {py:obj}`NON_PASCAL_CHARS_RE <pvi.device.NON_PASCAL_CHARS_RE>`
+  - ```{autodoc2-docstring} pvi.device.NON_PASCAL_CHARS_RE
+    :summary:
+    ```
+* - {py:obj}`PascalStr <pvi.device.PascalStr>`
+  - ```{autodoc2-docstring} pvi.device.PascalStr
+    :summary:
+    ```
+* - {py:obj}`_RowWriteUnion <pvi.device._RowWriteUnion>`
+  - ```{autodoc2-docstring} pvi.device._RowWriteUnion
+    :summary:
+    ```
+* - {py:obj}`_RowReadUnion <pvi.device._RowReadUnion>`
+  - ```{autodoc2-docstring} pvi.device._RowReadUnion
+    :summary:
+    ```
+* - {py:obj}`LayoutUnion <pvi.device.LayoutUnion>`
+  - ```{autodoc2-docstring} pvi.device.LayoutUnion
+    :summary:
+    ```
+* - {py:obj}`ReadWidgetUnion <pvi.device.ReadWidgetUnion>`
+  - ```{autodoc2-docstring} pvi.device.ReadWidgetUnion
+    :summary:
+    ```
+* - {py:obj}`WriteWidgetUnion <pvi.device.WriteWidgetUnion>`
+  - ```{autodoc2-docstring} pvi.device.WriteWidgetUnion
+    :summary:
+    ```
+* - {py:obj}`WidgetUnion <pvi.device.WidgetUnion>`
+  - ```{autodoc2-docstring} pvi.device.WidgetUnion
+    :summary:
+    ```
+* - {py:obj}`ComponentUnion <pvi.device.ComponentUnion>`
+  - ```{autodoc2-docstring} pvi.device.ComponentUnion
+    :summary:
+    ```
+* - {py:obj}`Tree <pvi.device.Tree>`
+  - ```{autodoc2-docstring} pvi.device.Tree
+    :summary:
+    ```
+````
+
+### API
+
+````{py:data} PASCAL_CASE_REGEX
+:canonical: pvi.device.PASCAL_CASE_REGEX
+:value: >
+   'compile(...)'
+
+```{autodoc2-docstring} pvi.device.PASCAL_CASE_REGEX
+```
+
+````
+
+````{py:data} NON_PASCAL_CHARS_RE
+:canonical: pvi.device.NON_PASCAL_CHARS_RE
+:value: >
+   'compile(...)'
+
+```{autodoc2-docstring} pvi.device.NON_PASCAL_CHARS_RE
+```
+
+````
+
+````{py:function} to_title_case(pascal_s: str) -> str
+:canonical: pvi.device.to_title_case
+
+```{autodoc2-docstring} pvi.device.to_title_case
+```
+````
+
+````{py:function} to_snake_case(pascal_s: str) -> str
+:canonical: pvi.device.to_snake_case
+
+```{autodoc2-docstring} pvi.device.to_snake_case
+```
+````
+
+````{py:function} enforce_pascal_case(s: str) -> str
+:canonical: pvi.device.enforce_pascal_case
+
+```{autodoc2-docstring} pvi.device.enforce_pascal_case
+```
+````
+
+````{py:data} PascalStr
+:canonical: pvi.device.PascalStr
+:value: >
+   None
+
+```{autodoc2-docstring} pvi.device.PascalStr
+```
+
+````
+
+`````{py:class} TextFormat(*args, **kwds)
+:canonical: pvi.device.TextFormat
+
+Bases: {py:obj}`enum.Enum`
+
+```{autodoc2-docstring} pvi.device.TextFormat
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi.device.TextFormat.__init__
+```
+
+````{py:attribute} decimal
+:canonical: pvi.device.TextFormat.decimal
+:value: >
+   'decimal'
+
+```{autodoc2-docstring} pvi.device.TextFormat.decimal
+```
+
+````
+
+````{py:attribute} hexadecimal
+:canonical: pvi.device.TextFormat.hexadecimal
+:value: >
+   'hexadecimal'
+
+```{autodoc2-docstring} pvi.device.TextFormat.hexadecimal
+```
+
+````
+
+````{py:attribute} engineer
+:canonical: pvi.device.TextFormat.engineer
+:value: >
+   'engineer'
+
+```{autodoc2-docstring} pvi.device.TextFormat.engineer
+```
+
+````
+
+````{py:attribute} exponential
+:canonical: pvi.device.TextFormat.exponential
+:value: >
+   'exponential'
+
+```{autodoc2-docstring} pvi.device.TextFormat.exponential
+```
+
+````
+
+````{py:attribute} string
+:canonical: pvi.device.TextFormat.string
+:value: >
+   'string'
+
+```{autodoc2-docstring} pvi.device.TextFormat.string
+```
+
+````
+
+`````
+
+`````{py:class} AccessModeMixin(/, **data: typing.Any)
+:canonical: pvi.device.AccessModeMixin
+
+Bases: {py:obj}`pydantic.BaseModel`
+
+````{py:attribute} _access_mode
+:canonical: pvi.device.AccessModeMixin._access_mode
+:type: typing.ClassVar[str]
+:value: >
+   None
+
+```{autodoc2-docstring} pvi.device.AccessModeMixin._access_mode
+```
+
+````
+
+````{py:property} access_mode
+:canonical: pvi.device.AccessModeMixin.access_mode
+:type: str
+
+```{autodoc2-docstring} pvi.device.AccessModeMixin.access_mode
+```
+
+````
+
+`````
+
+`````{py:class} ReadWidget(/, **data: typing.Any)
+:canonical: pvi.device.ReadWidget
+
+Bases: {py:obj}`pvi.typed_model.TypedModel`, {py:obj}`pvi.device.AccessModeMixin`
+
+````{py:attribute} _access_mode
+:canonical: pvi.device.ReadWidget._access_mode
+:value: >
+   'r'
+
+```{autodoc2-docstring} pvi.device.ReadWidget._access_mode
+```
+
+````
+
+`````
+
+````{py:class} LED(/, **data: typing.Any)
+:canonical: pvi.device.LED
+
+Bases: {py:obj}`pvi.device.ReadWidget`
+
+```{autodoc2-docstring} pvi.device.LED
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi.device.LED.__init__
+```
+
+````
+
+`````{py:class} BitField(/, **data: typing.Any)
+:canonical: pvi.device.BitField
+
+Bases: {py:obj}`pvi.device.ReadWidget`
+
+```{autodoc2-docstring} pvi.device.BitField
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi.device.BitField.__init__
+```
+
+````{py:attribute} labels
+:canonical: pvi.device.BitField.labels
+:type: collections.abc.Sequence[str] | None
+:value: >
+   'Field(...)'
+
+```{autodoc2-docstring} pvi.device.BitField.labels
+```
+
+````
+
+````{py:attribute} number_of_bits
+:canonical: pvi.device.BitField.number_of_bits
+:type: int
+:value: >
+   'Field(...)'
+
+```{autodoc2-docstring} pvi.device.BitField.number_of_bits
+```
+
+````
+
+`````
+
+````{py:class} ProgressBar(/, **data: typing.Any)
+:canonical: pvi.device.ProgressBar
+
+Bases: {py:obj}`pvi.device.ReadWidget`
+
+```{autodoc2-docstring} pvi.device.ProgressBar
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi.device.ProgressBar.__init__
+```
+
+````
+
+`````{py:class} TextRead(/, **data: typing.Any)
+:canonical: pvi.device.TextRead
+
+Bases: {py:obj}`pvi.device.ReadWidget`
+
+```{autodoc2-docstring} pvi.device.TextRead
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi.device.TextRead.__init__
+```
+
+````{py:attribute} model_config
+:canonical: pvi.device.TextRead.model_config
+:value: >
+   'ConfigDict(...)'
+
+```{autodoc2-docstring} pvi.device.TextRead.model_config
+```
+
+````
+
+````{py:attribute} lines
+:canonical: pvi.device.TextRead.lines
+:type: int | None
+:value: >
+   'Field(...)'
+
+```{autodoc2-docstring} pvi.device.TextRead.lines
+```
+
+````
+
+````{py:attribute} format
+:canonical: pvi.device.TextRead.format
+:type: pvi.device.TextFormat | None
+:value: >
+   'Field(...)'
+
+```{autodoc2-docstring} pvi.device.TextRead.format
+```
+
+````
+
+````{py:method} get_lines()
+:canonical: pvi.device.TextRead.get_lines
+
+```{autodoc2-docstring} pvi.device.TextRead.get_lines
+```
+
+````
+
+`````
+
+`````{py:class} ArrayTrace(/, **data: typing.Any)
+:canonical: pvi.device.ArrayTrace
+
+Bases: {py:obj}`pvi.device.ReadWidget`
+
+```{autodoc2-docstring} pvi.device.ArrayTrace
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi.device.ArrayTrace.__init__
+```
+
+````{py:attribute} axis
+:canonical: pvi.device.ArrayTrace.axis
+:type: str
+:value: >
+   'Field(...)'
+
+```{autodoc2-docstring} pvi.device.ArrayTrace.axis
+```
+
+````
+
+`````
+
+````{py:class} ImageRead(/, **data: typing.Any)
+:canonical: pvi.device.ImageRead
+
+Bases: {py:obj}`pvi.device.ReadWidget`
+
+```{autodoc2-docstring} pvi.device.ImageRead
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi.device.ImageRead.__init__
+```
+
+````
+
+`````{py:class} WriteWidget(/, **data: typing.Any)
+:canonical: pvi.device.WriteWidget
+
+Bases: {py:obj}`pvi.typed_model.TypedModel`, {py:obj}`pvi.device.AccessModeMixin`
+
+```{autodoc2-docstring} pvi.device.WriteWidget
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi.device.WriteWidget.__init__
+```
+
+````{py:attribute} _access_mode
+:canonical: pvi.device.WriteWidget._access_mode
+:value: >
+   'w'
+
+```{autodoc2-docstring} pvi.device.WriteWidget._access_mode
+```
+
+````
+
+`````
+
+````{py:class} CheckBox(/, **data: typing.Any)
+:canonical: pvi.device.CheckBox
+
+Bases: {py:obj}`pvi.device.WriteWidget`
+
+```{autodoc2-docstring} pvi.device.CheckBox
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi.device.CheckBox.__init__
+```
+
+````
+
+````{py:class} ToggleButton(/, **data: typing.Any)
+:canonical: pvi.device.ToggleButton
+
+Bases: {py:obj}`pvi.device.WriteWidget`
+
+```{autodoc2-docstring} pvi.device.ToggleButton
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi.device.ToggleButton.__init__
+```
+
+````
+
+`````{py:class} ComboBox(/, **data: typing.Any)
+:canonical: pvi.device.ComboBox
+
+Bases: {py:obj}`pvi.device.WriteWidget`
+
+```{autodoc2-docstring} pvi.device.ComboBox
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi.device.ComboBox.__init__
+```
+
+````{py:attribute} choices
+:canonical: pvi.device.ComboBox.choices
+:type: typing.Annotated[collections.abc.Sequence[str] | None, Field(default=None, description='Choices to select from')]
+:value: >
+   None
+
+```{autodoc2-docstring} pvi.device.ComboBox.choices
+```
+
+````
+
+````{py:method} get_choices() -> list[str]
+:canonical: pvi.device.ComboBox.get_choices
+
+```{autodoc2-docstring} pvi.device.ComboBox.get_choices
+```
+
+````
+
+`````
+
+`````{py:class} ButtonPanel(/, **data: typing.Any)
+:canonical: pvi.device.ButtonPanel
+
+Bases: {py:obj}`pvi.device.WriteWidget`
+
+```{autodoc2-docstring} pvi.device.ButtonPanel
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi.device.ButtonPanel.__init__
+```
+
+````{py:attribute} actions
+:canonical: pvi.device.ButtonPanel.actions
+:type: dict[pvi.device.PascalStr, str]
+:value: >
+   'Field(...)'
+
+```{autodoc2-docstring} pvi.device.ButtonPanel.actions
+```
+
+````
+
+`````
+
+`````{py:class} TextWrite(/, **data: typing.Any)
+:canonical: pvi.device.TextWrite
+
+Bases: {py:obj}`pvi.device.WriteWidget`
+
+```{autodoc2-docstring} pvi.device.TextWrite
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi.device.TextWrite.__init__
+```
+
+````{py:attribute} model_config
+:canonical: pvi.device.TextWrite.model_config
+:value: >
+   'ConfigDict(...)'
+
+```{autodoc2-docstring} pvi.device.TextWrite.model_config
+```
+
+````
+
+````{py:attribute} lines
+:canonical: pvi.device.TextWrite.lines
+:type: int | None
+:value: >
+   'Field(...)'
+
+```{autodoc2-docstring} pvi.device.TextWrite.lines
+```
+
+````
+
+````{py:attribute} format
+:canonical: pvi.device.TextWrite.format
+:type: pvi.device.TextFormat | None
+:value: >
+   'Field(...)'
+
+```{autodoc2-docstring} pvi.device.TextWrite.format
+```
+
+````
+
+````{py:method} get_lines()
+:canonical: pvi.device.TextWrite.get_lines
+
+```{autodoc2-docstring} pvi.device.TextWrite.get_lines
+```
+
+````
+
+`````
+
+````{py:data} _RowWriteUnion
+:canonical: pvi.device._RowWriteUnion
+:value: >
+   None
+
+```{autodoc2-docstring} pvi.device._RowWriteUnion
+```
+
+````
+
+````{py:data} _RowReadUnion
+:canonical: pvi.device._RowReadUnion
+:value: >
+   None
+
+```{autodoc2-docstring} pvi.device._RowReadUnion
+```
+
+````
+
+`````{py:class} ArrayWrite(/, **data: typing.Any)
+:canonical: pvi.device.ArrayWrite
+
+Bases: {py:obj}`pvi.device.WriteWidget`
+
+```{autodoc2-docstring} pvi.device.ArrayWrite
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi.device.ArrayWrite.__init__
+```
+
+````{py:attribute} widget
+:canonical: pvi.device.ArrayWrite.widget
+:type: pvi.device._RowWriteUnion
+:value: >
+   'Field(...)'
+
+```{autodoc2-docstring} pvi.device.ArrayWrite.widget
+```
+
+````
+
+`````
+
+`````{py:class} TableRead(/, **data: typing.Any)
+:canonical: pvi.device.TableRead
+
+Bases: {py:obj}`pvi.device.ReadWidget`
+
+```{autodoc2-docstring} pvi.device.TableRead
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi.device.TableRead.__init__
+```
+
+````{py:attribute} widgets
+:canonical: pvi.device.TableRead.widgets
+:type: collections.abc.Sequence[pvi.device._RowReadUnion]
+:value: >
+   'Field(...)'
+
+```{autodoc2-docstring} pvi.device.TableRead.widgets
+```
+
+````
+
+`````
+
+`````{py:class} TableWrite(/, **data: typing.Any)
+:canonical: pvi.device.TableWrite
+
+Bases: {py:obj}`pvi.device.WriteWidget`
+
+```{autodoc2-docstring} pvi.device.TableWrite
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi.device.TableWrite.__init__
+```
+
+````{py:attribute} widgets
+:canonical: pvi.device.TableWrite.widgets
+:type: collections.abc.Sequence[pvi.device._RowWriteUnion]
+:value: >
+   'Field(...)'
+
+```{autodoc2-docstring} pvi.device.TableWrite.widgets
+```
+
+````
+
+`````
+
+````{py:class} Layout(/, **data: typing.Any)
+:canonical: pvi.device.Layout
+
+Bases: {py:obj}`pvi.typed_model.TypedModel`
+
+```{autodoc2-docstring} pvi.device.Layout
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi.device.Layout.__init__
+```
+
+````
+
+````{py:class} Plot(/, **data: typing.Any)
+:canonical: pvi.device.Plot
+
+Bases: {py:obj}`pvi.device.Layout`
+
+```{autodoc2-docstring} pvi.device.Plot
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi.device.Plot.__init__
+```
+
+````
+
+`````{py:class} Row(/, **data: typing.Any)
+:canonical: pvi.device.Row
+
+Bases: {py:obj}`pvi.device.Layout`
+
+```{autodoc2-docstring} pvi.device.Row
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi.device.Row.__init__
+```
+
+````{py:attribute} header
+:canonical: pvi.device.Row.header
+:type: collections.abc.Sequence[str] | None
+:value: >
+   'Field(...)'
+
+```{autodoc2-docstring} pvi.device.Row.header
+```
+
+````
+
+`````
+
+`````{py:class} Grid(/, **data: typing.Any)
+:canonical: pvi.device.Grid
+
+Bases: {py:obj}`pvi.device.Layout`
+
+```{autodoc2-docstring} pvi.device.Grid
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi.device.Grid.__init__
+```
+
+````{py:attribute} labelled
+:canonical: pvi.device.Grid.labelled
+:type: typing.Annotated[bool, Field(description='If True use names of children as labels')]
+:value: >
+   True
+
+```{autodoc2-docstring} pvi.device.Grid.labelled
+```
+
+````
+
+`````
+
+`````{py:class} SubScreen(/, **data: typing.Any)
+:canonical: pvi.device.SubScreen
+
+Bases: {py:obj}`pvi.device.Layout`
+
+```{autodoc2-docstring} pvi.device.SubScreen
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi.device.SubScreen.__init__
+```
+
+````{py:attribute} labelled
+:canonical: pvi.device.SubScreen.labelled
+:type: bool
+:value: >
+   'Field(...)'
+
+```{autodoc2-docstring} pvi.device.SubScreen.labelled
+```
+
+````
+
+`````
+
+````{py:data} LayoutUnion
+:canonical: pvi.device.LayoutUnion
+:value: >
+   None
+
+```{autodoc2-docstring} pvi.device.LayoutUnion
+```
+
+````
+
+````{py:data} ReadWidgetUnion
+:canonical: pvi.device.ReadWidgetUnion
+:value: >
+   None
+
+```{autodoc2-docstring} pvi.device.ReadWidgetUnion
+```
+
+````
+
+````{py:data} WriteWidgetUnion
+:canonical: pvi.device.WriteWidgetUnion
+:value: >
+   None
+
+```{autodoc2-docstring} pvi.device.WriteWidgetUnion
+```
+
+````
+
+````{py:data} WidgetUnion
+:canonical: pvi.device.WidgetUnion
+:value: >
+   None
+
+```{autodoc2-docstring} pvi.device.WidgetUnion
+```
+
+````
+
+`````{py:class} Named(/, **data: typing.Any)
+:canonical: pvi.device.Named
+
+Bases: {py:obj}`pvi.typed_model.TypedModel`
+
+````{py:attribute} name
+:canonical: pvi.device.Named.name
+:type: pvi.device.PascalStr
+:value: >
+   'Field(...)'
+
+```{autodoc2-docstring} pvi.device.Named.name
+```
+
+````
+
+`````
+
+`````{py:class} Component(/, **data: typing.Any)
+:canonical: pvi.device.Component
+
+Bases: {py:obj}`pvi.device.Named`
+
+```{autodoc2-docstring} pvi.device.Component
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi.device.Component.__init__
+```
+
+````{py:attribute} label
+:canonical: pvi.device.Component.label
+:type: typing.Annotated[str | None, Field(description='Label for component')]
+:value: >
+   None
+
+```{autodoc2-docstring} pvi.device.Component.label
+```
+
+````
+
+````{py:attribute} description
+:canonical: pvi.device.Component.description
+:type: typing.Annotated[str | None, Field(description='Description for label tooltip')]
+:value: >
+   None
+
+```{autodoc2-docstring} pvi.device.Component.description
+```
+
+````
+
+````{py:method} get_label()
+:canonical: pvi.device.Component.get_label
+
+```{autodoc2-docstring} pvi.device.Component.get_label
+```
+
+````
+
+````{py:method} __eq__(other: object) -> bool
+:canonical: pvi.device.Component.__eq__
+
+````
+
+`````
+
+````{py:class} Signal(/, **data: typing.Any)
+:canonical: pvi.device.Signal
+
+Bases: {py:obj}`pvi.device.Component`, {py:obj}`pvi.device.AccessModeMixin`
+
+```{autodoc2-docstring} pvi.device.Signal
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi.device.Signal.__init__
+```
+
+````
+
+`````{py:class} SignalR(/, **data: typing.Any)
+:canonical: pvi.device.SignalR
+
+Bases: {py:obj}`pvi.device.Signal`
+
+```{autodoc2-docstring} pvi.device.SignalR
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi.device.SignalR.__init__
+```
+
+````{py:attribute} _access_mode
+:canonical: pvi.device.SignalR._access_mode
+:value: >
+   'r'
+
+```{autodoc2-docstring} pvi.device.SignalR._access_mode
+```
+
+````
+
+````{py:attribute} read_pv
+:canonical: pvi.device.SignalR.read_pv
+:type: str
+:value: >
+   'Field(...)'
+
+```{autodoc2-docstring} pvi.device.SignalR.read_pv
+```
+
+````
+
+````{py:attribute} read_widget
+:canonical: pvi.device.SignalR.read_widget
+:type: typing.Annotated[pvi.device.ReadWidgetUnion | None, Field(description='Widget to use for display. `TextRead` will be used if unset.', validate_default=True)]
+:value: >
+   'TextRead(...)'
+
+```{autodoc2-docstring} pvi.device.SignalR.read_widget
+```
+
+````
+
+`````
+
+`````{py:class} SignalW(/, **data: typing.Any)
+:canonical: pvi.device.SignalW
+
+Bases: {py:obj}`pvi.device.Signal`
+
+```{autodoc2-docstring} pvi.device.SignalW
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi.device.SignalW.__init__
+```
+
+````{py:attribute} _access_mode
+:canonical: pvi.device.SignalW._access_mode
+:value: >
+   'w'
+
+```{autodoc2-docstring} pvi.device.SignalW._access_mode
+```
+
+````
+
+````{py:attribute} write_pv
+:canonical: pvi.device.SignalW.write_pv
+:type: str
+:value: >
+   'Field(...)'
+
+```{autodoc2-docstring} pvi.device.SignalW.write_pv
+```
+
+````
+
+````{py:attribute} write_widget
+:canonical: pvi.device.SignalW.write_widget
+:type: typing.Annotated[pvi.device.WriteWidgetUnion, Field(description='Widget to use for control')]
+:value: >
+   'TextWrite(...)'
+
+```{autodoc2-docstring} pvi.device.SignalW.write_widget
+```
+
+````
+
+`````
+
+`````{py:class} SignalRW(/, **data: typing.Any)
+:canonical: pvi.device.SignalRW
+
+Bases: {py:obj}`pvi.device.SignalR`, {py:obj}`pvi.device.SignalW`
+
+```{autodoc2-docstring} pvi.device.SignalRW
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi.device.SignalRW.__init__
+```
+
+````{py:attribute} _access_mode
+:canonical: pvi.device.SignalRW._access_mode
+:value: >
+   'rw'
+
+```{autodoc2-docstring} pvi.device.SignalRW._access_mode
+```
+
+````
+
+````{py:attribute} _single_pv_rw
+:canonical: pvi.device.SignalRW._single_pv_rw
+:value: >
+   False
+
+```{autodoc2-docstring} pvi.device.SignalRW._single_pv_rw
+```
+
+````
+
+````{py:attribute} read_pv
+:canonical: pvi.device.SignalRW.read_pv
+:type: typing.Annotated[str, Field(description='PV to use for readback. If empty, `write_pv` will be used.')]
+:value: <Multiline-String>
+
+```{autodoc2-docstring} pvi.device.SignalRW.read_pv
+```
+
+````
+
+````{py:attribute} read_widget
+:canonical: pvi.device.SignalRW.read_widget
+:type: typing.Annotated[pvi.device.ReadWidgetUnion | None, Field(description='Widget to use for readback display. A `TextRead` will be used if unset and `read_pv` is given, else no readback widget will be displayed.', validate_default=True)]
+:value: >
+   None
+
+```{autodoc2-docstring} pvi.device.SignalRW.read_widget
+```
+
+````
+
+````{py:method} _validate_model() -> typing_extensions.Self
+:canonical: pvi.device.SignalRW._validate_model
+
+```{autodoc2-docstring} pvi.device.SignalRW._validate_model
+```
+
+````
+
+`````
+
+`````{py:class} SignalX(/, **data: typing.Any)
+:canonical: pvi.device.SignalX
+
+Bases: {py:obj}`pvi.device.SignalW`
+
+```{autodoc2-docstring} pvi.device.SignalX
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi.device.SignalX.__init__
+```
+
+````{py:attribute} value
+:canonical: pvi.device.SignalX.value
+:type: typing.Annotated[str, Field(None, description="Value to write. Uses '1' if unset.")]
+:value: >
+   '1'
+
+```{autodoc2-docstring} pvi.device.SignalX.value
+```
+
+````
+
+````{py:attribute} write_widget
+:canonical: pvi.device.SignalX.write_widget
+:type: typing.Annotated[pvi.device.WriteWidgetUnion, Field(description='Widget to use for actions')]
+:value: >
+   'ButtonPanel(...)'
+
+```{autodoc2-docstring} pvi.device.SignalX.write_widget
+```
+
+````
+
+````{py:method} check_write_widget() -> typing_extensions.Self
+:canonical: pvi.device.SignalX.check_write_widget
+
+```{autodoc2-docstring} pvi.device.SignalX.check_write_widget
+```
+
+````
+
+`````
+
+`````{py:class} DeviceRef(/, **data: typing.Any)
+:canonical: pvi.device.DeviceRef
+
+Bases: {py:obj}`pvi.device.Component`
+
+```{autodoc2-docstring} pvi.device.DeviceRef
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi.device.DeviceRef.__init__
+```
+
+````{py:attribute} pv
+:canonical: pvi.device.DeviceRef.pv
+:type: str
+:value: >
+   'Field(...)'
+
+```{autodoc2-docstring} pvi.device.DeviceRef.pv
+```
+
+````
+
+````{py:attribute} ui
+:canonical: pvi.device.DeviceRef.ui
+:type: str
+:value: >
+   'Field(...)'
+
+```{autodoc2-docstring} pvi.device.DeviceRef.ui
+```
+
+````
+
+````{py:attribute} macros
+:canonical: pvi.device.DeviceRef.macros
+:type: dict[str, str]
+:value: >
+   'Field(...)'
+
+```{autodoc2-docstring} pvi.device.DeviceRef.macros
+```
+
+````
+
+`````
+
+````{py:class} SignalRef(/, **data: typing.Any)
+:canonical: pvi.device.SignalRef
+
+Bases: {py:obj}`pvi.device.Component`
+
+```{autodoc2-docstring} pvi.device.SignalRef
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi.device.SignalRef.__init__
+```
+
+````
+
+`````{py:class} Group(/, **data: typing.Any)
+:canonical: pvi.device.Group
+
+Bases: {py:obj}`pvi.device.Component`
+
+```{autodoc2-docstring} pvi.device.Group
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi.device.Group.__init__
+```
+
+````{py:attribute} layout
+:canonical: pvi.device.Group.layout
+:type: pvi.device.LayoutUnion
+:value: >
+   'Field(...)'
+
+```{autodoc2-docstring} pvi.device.Group.layout
+```
+
+````
+
+````{py:attribute} children
+:canonical: pvi.device.Group.children
+:type: Tree
+:value: >
+   'Field(...)'
+
+```{autodoc2-docstring} pvi.device.Group.children
+```
+
+````
+
+`````
+
+````{py:data} ComponentUnion
+:canonical: pvi.device.ComponentUnion
+:value: >
+   None
+
+```{autodoc2-docstring} pvi.device.ComponentUnion
+```
+
+````
+
+````{py:data} Tree
+:canonical: pvi.device.Tree
+:value: >
+   None
+
+```{autodoc2-docstring} pvi.device.Tree
+```
+
+````
+
+````{py:function} walk(tree: pvi.device.Tree) -> collections.abc.Iterator[pvi.device.ComponentUnion]
+:canonical: pvi.device.walk
+
+```{autodoc2-docstring} pvi.device.walk
+```
+````
+
+`````{py:class} Device(/, **data: typing.Any)
+:canonical: pvi.device.Device
+
+Bases: {py:obj}`pvi.typed_model.TypedModel`, {py:obj}`pvi._yaml_utils.YamlValidatorMixin`
+
+```{autodoc2-docstring} pvi.device.Device
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi.device.Device.__init__
+```
+
+````{py:attribute} label
+:canonical: pvi.device.Device.label
+:type: str
+:value: >
+   'Field(...)'
+
+```{autodoc2-docstring} pvi.device.Device.label
+```
+
+````
+
+````{py:attribute} parent
+:canonical: pvi.device.Device.parent
+:type: typing.Annotated[str, The parent device (basename of yaml file)] | None
+:value: >
+   None
+
+```{autodoc2-docstring} pvi.device.Device.parent
+```
+
+````
+
+````{py:attribute} children
+:canonical: pvi.device.Device.children
+:type: pvi.device.Tree
+:value: >
+   'Field(...)'
+
+```{autodoc2-docstring} pvi.device.Device.children
+```
+
+````
+
+````{py:method} _to_dict() -> dict[str, typing.Any]
+:canonical: pvi.device.Device._to_dict
+
+```{autodoc2-docstring} pvi.device.Device._to_dict
+```
+
+````
+
+````{py:method} serialize(yaml: pathlib.Path)
+:canonical: pvi.device.Device.serialize
+
+```{autodoc2-docstring} pvi.device.Device.serialize
+```
+
+````
+
+````{py:method} deserialize(yaml: pathlib.Path) -> pvi.device.Device
+:canonical: pvi.device.Device.deserialize
+:classmethod:
+
+```{autodoc2-docstring} pvi.device.Device.deserialize
+```
+
+````
+
+````{py:method} deserialize_parents(yaml_paths: list[pathlib.Path])
+:canonical: pvi.device.Device.deserialize_parents
+
+```{autodoc2-docstring} pvi.device.Device.deserialize_parents
+```
+
+````
+
+````{py:method} merge_components(components: pvi.device.Tree) -> None
+:canonical: pvi.device.Device.merge_components
+
+```{autodoc2-docstring} pvi.device.Device.merge_components
+```
+
+````
+
+````{py:method} generate_param_tree() -> str
+:canonical: pvi.device.Device.generate_param_tree
+
+```{autodoc2-docstring} pvi.device.Device.generate_param_tree
+```
+
+````
+
+`````
+
+````{py:function} find_components(yaml_name: str, yaml_paths: list[pathlib.Path]) -> pvi.device.Tree
+:canonical: pvi.device.find_components
+
+```{autodoc2-docstring} pvi.device.find_components
+```
+````

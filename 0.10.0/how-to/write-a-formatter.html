@@ -1,0 +1,976 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>How to Write a Site Specific Formatter &#8212; pvi 0.10.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=82662543"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=30646c52"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'how-to/write-a-formatter';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.15.4';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://epics-containers.github.io/pvi/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.10.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner = false;
+        </script>
+    <link rel="icon" href="../_static/pvi-favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Contribute to the project" href="contribute.html" />
+    <link rel="prev" title="How-to Guides" href="../how-to.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/pvi-logo.svg" class="logo__image only-light" alt=""/>
+    <script>document.write(`<img src="../_static/pvi-logo.svg" class="logo__image only-dark" alt=""/>`);</script>
+  
+  
+    <p class="title logo__title">pvi</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../how-to.html">
+    How-to Guides
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../explanations.html">
+    Explanations
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../reference.html">
+    Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://github.com/epics-containers/pvi/releases">
+    Release Notes
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/epics-containers/pvi" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/pvi" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-cube fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button id="pst-version-switcher-button-2"
+      type="button"
+      class="version-switcher__button btn btn-sm dropdown-toggle"
+      data-bs-toggle="dropdown"
+      aria-haspopup="listbox"
+      aria-controls="pst-version-switcher-list-2"
+      aria-label="Version switcher list"
+    >
+      Choose version  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div id="pst-version-switcher-list-2"
+      class="version-switcher__menu dropdown-menu list-group-flush py-0"
+      role="listbox" aria-labelledby="pst-version-switcher-button-2">
+      <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../how-to.html">
+    How-to Guides
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../explanations.html">
+    Explanations
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../reference.html">
+    Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://github.com/epics-containers/pvi/releases">
+    Release Notes
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/epics-containers/pvi" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/pvi" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-cube fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button id="pst-version-switcher-button-3"
+      type="button"
+      class="version-switcher__button btn btn-sm dropdown-toggle"
+      data-bs-toggle="dropdown"
+      aria-haspopup="listbox"
+      aria-controls="pst-version-switcher-list-3"
+      aria-label="Version switcher list"
+    >
+      Choose version  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div id="pst-version-switcher-list-3"
+      class="version-switcher__menu dropdown-menu list-group-flush py-0"
+      role="listbox" aria-labelledby="pst-version-switcher-button-3">
+      <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">How to Write a Site Specific Formatter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contribute to the project</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../how-to.html" class="nav-link">How-to Guides</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">How to...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="how-to-write-a-site-specific-formatter">
+<h1>How to Write a Site Specific Formatter<a class="headerlink" href="#how-to-write-a-site-specific-formatter" title="Link to this heading">#</a></h1>
+<p>This guide explains how you can create a pvi formatter to generate screens for
+your own use cases.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
+<p>The formatters role is to take a <code class="docutils literal notranslate"><span class="pre">Device</span></code> - defined either in code or in a
+<code class="docutils literal notranslate"><span class="pre">pvi.device.yaml</span></code> file - and turn this into a screen file that can be used by the
+display software. The <code class="docutils literal notranslate"><span class="pre">Device</span></code> has a list of components that specify its name, a widget
+type and any additional properties that can be assigned to that widget (such as a pv
+name). During formatting, <code class="docutils literal notranslate"><span class="pre">Component</span></code> objects of the <code class="docutils literal notranslate"><span class="pre">Device</span></code> are translated into
+widgets to be written to a UI file.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Component</span><span class="p">(</span><span class="n">Named</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;These make up a Device&quot;&quot;&quot;</span>
+
+    <span class="n">label</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Label for component&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">description</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span>
+        <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Description for label tooltip&quot;</span><span class="p">)</span>
+    <span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">get_label</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="ow">or</span> <span class="n">to_title_case</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Component</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">name</span>
+</pre></div>
+</div>
+<p>There are various types of <code class="docutils literal notranslate"><span class="pre">Component</span></code>. The simplest is a read-only signal.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SignalR</span><span class="p">(</span><span class="n">Signal</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Read-only `Signal` backed by a single PV.&quot;&quot;&quot;</span>
+
+    <span class="n">_access_mode</span> <span class="o">=</span> <span class="s2">&quot;r&quot;</span>
+
+    <span class="n">read_pv</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;PV to use for readback&quot;</span><span class="p">)</span>
+    <span class="n">read_widget</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span>
+        <span class="n">ReadWidgetUnion</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">Field</span><span class="p">(</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Widget to use for display. `TextRead` will be used if unset.&quot;</span><span class="p">,</span>
+            <span class="n">validate_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">]</span> <span class="o">=</span> <span class="n">TextRead</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>To add structure, there is a <code class="docutils literal notranslate"><span class="pre">Group</span></code> component, which itself has a list of <code class="docutils literal notranslate"><span class="pre">Components</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Group</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Group of child components in a Layout&quot;&quot;&quot;</span>
+
+    <span class="n">layout</span><span class="p">:</span> <span class="n">LayoutUnion</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;How to layout children on screen&quot;</span><span class="p">)</span>
+    <span class="n">children</span><span class="p">:</span> <span class="n">Tree</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Child Components&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To make a screen from this, we need a template UI file. This contains a blank
+representation of each supported widget for each of the supported file formats (bob, edl
+etc…). Below is an example of a <code class="docutils literal notranslate"><span class="pre">textentry</span></code> widget for a .bob file.</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="nt">&lt;widget</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;textentry&quot;</span><span class="w"> </span><span class="na">version=</span><span class="s">&quot;3.0.0&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;name&gt;</span>TextEntry<span class="nt">&lt;/name&gt;</span>
+<span class="w">    </span><span class="nt">&lt;pv_name&gt;</span>TextWrite<span class="nt">&lt;/pv_name&gt;</span>
+<span class="w">    </span><span class="nt">&lt;x&gt;</span>18<span class="nt">&lt;/x&gt;</span>
+<span class="w">    </span><span class="nt">&lt;y&gt;</span>78<span class="nt">&lt;/y&gt;</span>
+<span class="w">    </span><span class="nt">&lt;width&gt;</span>120<span class="nt">&lt;/width&gt;</span>
+<span class="w">    </span><span class="nt">&lt;height&gt;</span>30<span class="nt">&lt;/height&gt;</span>
+<span class="w">    </span><span class="nt">&lt;horizontal_alignment&gt;</span>1<span class="nt">&lt;/horizontal_alignment&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/widget&gt;</span>
+</pre></div>
+</div>
+<p>By extracting and altering the template widgets with the information provided by the
+components, we can create a screen file.</p>
+</section>
+<section id="create-a-formatter-subclass">
+<h2>Create a Formatter subclass<a class="headerlink" href="#create-a-formatter-subclass" title="Link to this heading">#</a></h2>
+<p>To start, we will need to create our own formatter class. These inherit from an abstract
+<code class="docutils literal notranslate"><span class="pre">Formatter</span></code> class that is defined in base.py. Inside, we need to define one mandatory
+<code class="docutils literal notranslate"><span class="pre">format</span></code> function, which will be used to create our screen file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">Device</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;To be implemented by child classes to define how to format specific UIs.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            device: Device to populate UI from</span>
+<span class="sd">            path: Output file path to write UI to</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>With a formatter defined, we now can start to populate this by defining the screen
+dependencies.</p>
+</section>
+<section id="define-the-screenlayout-properties">
+<h2>Define the ScreenLayout properties<a class="headerlink" href="#define-the-screenlayout-properties" title="Link to this heading">#</a></h2>
+<p>Each screen requires a number of layout properties that allow you to customise the size
+and placement of widgets. These are stored within <code class="docutils literal notranslate"><span class="pre">ScreenLayout</span></code> dataclass with the
+following configurable parameters:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">ScreenLayout</span><span class="p">:</span>
+    <span class="n">spacing</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">title_height</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">max_height</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">group_label_height</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">label_width</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">widget_width</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">widget_height</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">group_widget_indent</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">group_width_offset</span><span class="p">:</span> <span class="nb">int</span>
+</pre></div>
+</div>
+<p>When defining these in our formatter, we have the option of deciding which properties
+should be configurable inside of the formatter.yaml. Properties defined as member
+variables of the formatter class (and then referenced by the layout properties in the
+screen format function) will be available to adjust inside of the formatter.yaml.
+Anything else, should be considered as defaults for the formatter:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>        <span class="n">screen_layout</span> <span class="o">=</span> <span class="n">ScreenLayout</span><span class="p">(</span>
+            <span class="n">spacing</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">spacing</span><span class="p">,</span>
+            <span class="n">title_height</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">title_height</span><span class="p">,</span>
+            <span class="n">max_height</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_height</span><span class="p">,</span>
+            <span class="n">group_label_height</span><span class="o">=</span><span class="mi">26</span><span class="p">,</span>
+            <span class="n">label_width</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">label_width</span><span class="p">,</span>
+            <span class="n">widget_width</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">widget_width</span><span class="p">,</span>
+            <span class="n">widget_height</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">widget_height</span><span class="p">,</span>
+            <span class="n">group_widget_indent</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span>
+            <span class="n">group_width_offset</span><span class="o">=</span><span class="mi">26</span><span class="p">,</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+<p>In the example above, everything has been made adjustable from the formatter.yaml except
+the properties relating to groups. This is because they are more dependant on the file
+format used rather than the users personal preference.</p>
+<p>For clarity, the example below shows how the formatter.yaml can be used to set the
+layout properties. Note that these are optional as each property is defined with a
+default value.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># yaml-language-server: $schema=../schemas/pvi.formatter.schema.json</span>
+<span class="nb">type</span><span class="p">:</span> <span class="n">DLSFormatter</span>
+<span class="c1"># Remove screen property to use default value</span>
+<span class="n">spacing</span><span class="p">:</span> <span class="mi">4</span>
+<span class="n">title_height</span><span class="p">:</span> <span class="mi">26</span>
+<span class="n">max_height</span><span class="p">:</span> <span class="mi">900</span>
+<span class="n">label_width</span><span class="p">:</span> <span class="mi">120</span>
+<span class="n">widget_width</span><span class="p">:</span> <span class="mi">120</span>
+<span class="n">widget_height</span><span class="p">:</span> <span class="mi">20</span>
+</pre></div>
+</div>
+</section>
+<section id="assign-a-template-file">
+<h2>Assign a template file<a class="headerlink" href="#assign-a-template-file" title="Link to this heading">#</a></h2>
+<p>As previously stated, a template file provides the formatter with a base model of all
+of the supported widgets that it can then overwrite with component data. Currently,
+pvi supports templates for edl, adl and bob files, which can be referenced from the
+_format directory with the filename ‘dls’ + the file formats suffix (eg. dls.bob).</p>
+<p>Inside of the format function, we need to provide a reference to the template file that
+can then be used to identify what each widget should look like.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">template</span> <span class="o">=</span> <span class="n">BobTemplate</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;dls.bob&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="divide-the-template-into-widgets">
+<h2>Divide the template into widgets<a class="headerlink" href="#divide-the-template-into-widgets" title="Link to this heading">#</a></h2>
+<p>With a template defined, we now need to assign each part of it to a supported widget
+formatter. This is achieved by instantiating a WidgetFormatterFactory composed of
+WidgetFormatters created from the UI template. WidgetFormatters are created by searching
+the UI template for the given search term and a set of properties in the template to
+replace with widget fields.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">WidgetFormatter</span></code>s are generic types that must be parameterised depending on the
+specific UI. Commonly this would use <code class="docutils literal notranslate"><span class="pre">str</span></code> for formatting text to a file directly. In
+this case we use <code class="docutils literal notranslate"><span class="pre">_Element</span></code>, which will serialised to text with the <code class="docutils literal notranslate"><span class="pre">lxml</span></code> library.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>        <span class="n">widget_formatter_factory</span><span class="p">:</span> <span class="n">WidgetFormatterFactory</span><span class="p">[</span><span class="n">_Element</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">WidgetFormatterFactory</span><span class="p">(</span>
+                <span class="n">header_formatter_cls</span><span class="o">=</span><span class="n">LabelWidgetFormatter</span><span class="p">[</span><span class="n">_Element</span><span class="p">]</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                    <span class="n">template</span><span class="p">,</span>
+                    <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Heading&quot;</span><span class="p">,</span>
+                    <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">},</span>
+                <span class="p">),</span>
+                <span class="n">label_formatter_cls</span><span class="o">=</span><span class="n">LabelWidgetFormatter</span><span class="p">[</span><span class="n">_Element</span><span class="p">]</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                    <span class="n">template</span><span class="p">,</span>
+                    <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Label&quot;</span><span class="p">,</span>
+                    <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;tooltip&quot;</span><span class="p">:</span> <span class="s2">&quot;description&quot;</span><span class="p">},</span>
+                <span class="p">),</span>
+                <span class="n">led_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">_Element</span><span class="p">]</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                    <span class="n">template</span><span class="p">,</span>
+                    <span class="n">search</span><span class="o">=</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span>
+                    <span class="n">sized</span><span class="o">=</span><span class="n">Bounds</span><span class="o">.</span><span class="n">square</span><span class="p">,</span>
+                    <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
+                <span class="p">),</span>
+                <span class="n">progress_bar_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">_Element</span><span class="p">]</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                    <span class="n">template</span><span class="p">,</span>
+                    <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ProgressBar&quot;</span><span class="p">,</span>
+                    <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
+                <span class="p">),</span>
+                <span class="n">bitfield_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">_Element</span><span class="p">]</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                    <span class="n">template</span><span class="p">,</span>
+                    <span class="n">search</span><span class="o">=</span><span class="s2">&quot;BitField&quot;</span><span class="p">,</span>
+                    <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
+                <span class="p">),</span>
+                <span class="n">button_panel_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">_Element</span><span class="p">]</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                    <span class="n">template</span><span class="p">,</span>
+                    <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ButtonPanel&quot;</span><span class="p">,</span>
+                    <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
+                <span class="p">),</span>
+                <span class="n">array_trace_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">_Element</span><span class="p">]</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                    <span class="n">template</span><span class="p">,</span>
+                    <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ArrayTrace&quot;</span><span class="p">,</span>
+                    <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;y_pv&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
+                <span class="p">),</span>
+                <span class="n">image_read_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">_Element</span><span class="p">]</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                    <span class="n">template</span><span class="p">,</span>
+                    <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ImageRead&quot;</span><span class="p">,</span>
+                    <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
+                <span class="p">),</span>
+                <span class="n">text_read_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">_Element</span><span class="p">]</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                    <span class="n">template</span><span class="p">,</span>
+                    <span class="n">search</span><span class="o">=</span><span class="s2">&quot;TextUpdate&quot;</span><span class="p">,</span>
+                    <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
+                <span class="p">),</span>
+                <span class="n">check_box_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">_Element</span><span class="p">]</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                    <span class="n">template</span><span class="p">,</span>
+                    <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ChoiceButton&quot;</span><span class="p">,</span>
+                    <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
+                <span class="p">),</span>
+                <span class="n">toggle_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">_Element</span><span class="p">]</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                    <span class="n">template</span><span class="p">,</span>
+                    <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ToggleButton&quot;</span><span class="p">,</span>
+                    <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
+                <span class="p">),</span>
+                <span class="n">combo_box_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">_Element</span><span class="p">]</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                    <span class="n">template</span><span class="p">,</span>
+                    <span class="n">search</span><span class="o">=</span><span class="s2">&quot;ComboBox&quot;</span><span class="p">,</span>
+                    <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
+                <span class="p">),</span>
+                <span class="n">text_write_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">_Element</span><span class="p">]</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                    <span class="n">template</span><span class="p">,</span>
+                    <span class="n">search</span><span class="o">=</span><span class="s2">&quot;TextEntry&quot;</span><span class="p">,</span>
+                    <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
+                <span class="p">),</span>
+                <span class="n">table_formatter_cls</span><span class="o">=</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">_Element</span><span class="p">]</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                    <span class="n">template</span><span class="p">,</span>
+                    <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Table&quot;</span><span class="p">,</span>
+                    <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">},</span>
+                <span class="p">),</span>
+                <span class="n">action_formatter_cls</span><span class="o">=</span><span class="n">ActionWidgetFormatter</span><span class="p">[</span><span class="n">_Element</span><span class="p">]</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                    <span class="n">template</span><span class="p">,</span>
+                    <span class="n">search</span><span class="o">=</span><span class="s2">&quot;WritePV&quot;</span><span class="p">,</span>
+                    <span class="n">property_map</span><span class="o">=</span><span class="p">{</span>
+                        <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;pv_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pv&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;tooltip&quot;</span><span class="p">:</span> <span class="s2">&quot;tooltip&quot;</span><span class="p">,</span>
+                    <span class="p">},</span>
+                <span class="p">),</span>
+                <span class="n">sub_screen_formatter_cls</span><span class="o">=</span><span class="n">SubScreenWidgetFormatter</span><span class="p">[</span>
+                    <span class="n">_Element</span>
+                <span class="p">]</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                    <span class="n">template</span><span class="p">,</span>
+                    <span class="n">search</span><span class="o">=</span><span class="s2">&quot;OpenDisplay&quot;</span><span class="p">,</span>
+                    <span class="n">property_map</span><span class="o">=</span><span class="p">{</span>
+                        <span class="s2">&quot;file&quot;</span><span class="p">:</span> <span class="s2">&quot;file_name&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;macros&quot;</span><span class="p">:</span> <span class="s2">&quot;macros&quot;</span><span class="p">,</span>
+                    <span class="p">},</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This function uses a unique search term to locate and extract a widget from the template.
+As such, the search term MUST be unique to avoid extracting multiple or irrelevant
+widgets from the template.</p>
+</div>
+</section>
+<section id="define-screen-and-group-widget-functions">
+<h2>Define screen and group widget functions<a class="headerlink" href="#define-screen-and-group-widget-functions" title="Link to this heading">#</a></h2>
+<p>Additionally, formatters for the title and a group on a screen must be defined along
+with functions to create multiple components, for example a rectangle with a label on
+top. In this example, we provide two arguments: The <code class="docutils literal notranslate"><span class="pre">bounds</span></code>, to set the widgets size
+and position, and the <code class="docutils literal notranslate"><span class="pre">title</span></code> to populate the label with.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>        <span class="n">screen_title_cls</span> <span class="o">=</span> <span class="n">LabelWidgetFormatter</span><span class="p">[</span><span class="n">_Element</span><span class="p">]</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+            <span class="n">template</span><span class="p">,</span>
+            <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Title&quot;</span><span class="p">,</span>
+            <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">},</span>
+        <span class="p">)</span>
+        <span class="n">group_title_cls</span> <span class="o">=</span> <span class="n">LabelWidgetFormatter</span><span class="p">[</span><span class="n">_Element</span><span class="p">]</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+            <span class="n">template</span><span class="p">,</span>
+            <span class="n">search</span><span class="o">=</span><span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+            <span class="n">property_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">},</span>
+        <span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">create_group_object_formatter</span><span class="p">(</span>
+            <span class="n">bounds</span><span class="p">:</span> <span class="n">Bounds</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span>
+        <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">WidgetFormatter</span><span class="p">[</span><span class="n">_Element</span><span class="p">]]:</span>
+            <span class="k">return</span> <span class="p">[</span>
+                <span class="n">group_title_cls</span><span class="p">(</span>
+                    <span class="n">bounds</span><span class="o">=</span><span class="n">Bounds</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">bounds</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">bounds</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="n">bounds</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="n">bounds</span><span class="o">.</span><span class="n">h</span><span class="p">),</span>
+                    <span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">]</span>
+
+        <span class="k">def</span> <span class="nf">create_screen_title_formatter</span><span class="p">(</span>
+            <span class="n">bounds</span><span class="p">:</span> <span class="n">Bounds</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span>
+        <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">WidgetFormatter</span><span class="p">[</span><span class="n">_Element</span><span class="p">]]:</span>
+            <span class="k">return</span> <span class="p">[</span>
+                <span class="n">screen_title_cls</span><span class="p">(</span>
+                    <span class="n">bounds</span><span class="o">=</span><span class="n">Bounds</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="n">bounds</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="n">screen_layout</span><span class="o">.</span><span class="n">title_height</span><span class="p">),</span>
+                    <span class="n">text</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">]</span>
+
+</pre></div>
+</div>
+</section>
+<section id="construct-a-screenformatter">
+<h2>Construct a ScreenFormatter<a class="headerlink" href="#construct-a-screenformatter" title="Link to this heading">#</a></h2>
+<p>These formatters can be used to define a <code class="docutils literal notranslate"><span class="pre">ScreenFormatterFactory</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>        <span class="n">formatter_factory</span><span class="p">:</span> <span class="n">ScreenFormatterFactory</span><span class="p">[</span><span class="n">_Element</span><span class="p">]</span> <span class="o">=</span> <span class="n">ScreenFormatterFactory</span><span class="p">(</span>
+            <span class="n">screen_formatter_cls</span><span class="o">=</span><span class="n">GroupFormatter</span><span class="p">[</span><span class="n">_Element</span><span class="p">]</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="n">GroupType</span><span class="o">.</span><span class="n">SCREEN</span><span class="p">,</span>
+                <span class="n">sized</span><span class="o">=</span><span class="n">with_title</span><span class="p">(</span><span class="n">screen_layout</span><span class="o">.</span><span class="n">spacing</span><span class="p">,</span> <span class="n">screen_layout</span><span class="o">.</span><span class="n">title_height</span><span class="p">),</span>
+                <span class="n">widget_formatter_hook</span><span class="o">=</span><span class="n">create_screen_title_formatter</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">group_formatter_cls</span><span class="o">=</span><span class="n">GroupFormatter</span><span class="p">[</span><span class="n">_Element</span><span class="p">]</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+                <span class="n">template</span><span class="p">,</span>
+                <span class="n">search</span><span class="o">=</span><span class="n">GroupType</span><span class="o">.</span><span class="n">GROUP</span><span class="p">,</span>
+                <span class="n">sized</span><span class="o">=</span><span class="n">with_title</span><span class="p">(</span>
+                    <span class="n">screen_layout</span><span class="o">.</span><span class="n">spacing</span><span class="p">,</span> <span class="n">screen_layout</span><span class="o">.</span><span class="n">group_label_height</span>
+                <span class="p">),</span>
+                <span class="n">widget_formatter_hook</span><span class="o">=</span><span class="n">create_group_object_formatter</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">widget_formatter_factory</span><span class="o">=</span><span class="n">widget_formatter_factory</span><span class="p">,</span>
+            <span class="n">layout</span><span class="o">=</span><span class="n">screen_layout</span><span class="p">,</span>
+            <span class="n">base_file_name</span><span class="o">=</span><span class="n">path</span><span class="o">.</span><span class="n">stem</span><span class="p">,</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+<p>which can be used to instantiate a <code class="docutils literal notranslate"><span class="pre">ScreenFormatter</span></code> by passing a set of <code class="docutils literal notranslate"><span class="pre">Components</span></code>
+and a title. This can then create <code class="docutils literal notranslate"><span class="pre">WidgetFormatters</span></code> for each <code class="docutils literal notranslate"><span class="pre">Component</span></code> for the
+specific UI type the factory was parameterised with.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>        <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">device</span><span class="o">.</span><span class="n">label</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="n">screen_formatter</span><span class="p">,</span> <span class="n">sub_screens</span> <span class="o">=</span> <span class="n">formatter_factory</span><span class="o">.</span><span class="n">create_screen_formatter</span><span class="p">(</span>
+            <span class="n">device</span><span class="o">.</span><span class="n">children</span><span class="p">,</span> <span class="n">title</span>
+        <span class="p">)</span>
+
+        <span class="n">write_bob</span><span class="p">(</span><span class="n">screen_formatter</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">sub_screen_name</span><span class="p">,</span> <span class="n">sub_screen_formatter</span> <span class="ow">in</span> <span class="n">sub_screens</span><span class="p">:</span>
+            <span class="n">sub_screen_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">sub_screen_name</span><span class="si">}{</span><span class="n">path</span><span class="o">.</span><span class="n">suffix</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">write_bob</span><span class="p">(</span><span class="n">sub_screen_formatter</span><span class="p">,</span> <span class="n">sub_screen_path</span><span class="p">)</span>
+
+
+</pre></div>
+</div>
+<p>In this case the <code class="docutils literal notranslate"><span class="pre">write_bob</span></code> function calls into the <code class="docutils literal notranslate"><span class="pre">lxml</span></code> library to format the
+<code class="docutils literal notranslate"><span class="pre">_Element</span></code> instances to text. For <code class="docutils literal notranslate"><span class="pre">str</span></code> formatters this would call
+<code class="docutils literal notranslate"><span class="pre">pathlib.Path.write_file</span></code>.</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../how-to.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">How-to Guides</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="contribute.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Contribute to the project</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-formatter-subclass">Create a Formatter subclass</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-the-screenlayout-properties">Define the ScreenLayout properties</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assign-a-template-file">Assign a template file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#divide-the-template-into-widgets">Divide the template into widgets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-screen-and-group-widget-functions">Define screen and group widget functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#construct-a-screenformatter">Construct a ScreenFormatter</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  
+  <div class="tocsection editthispage">
+    <a href="https://github.com/epics-containers/pvi/edit/0.10.0/docs/how-to/write-a-formatter.md">
+      <i class="fa-solid fa-pencil"></i>
+      
+      
+        
+          Edit on GitHub
+        
+      
+    </a>
+  </div>
+</div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="../_sources/how-to/write-a-formatter.md.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.4.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
