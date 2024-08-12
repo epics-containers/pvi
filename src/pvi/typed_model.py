@@ -69,16 +69,16 @@ class TypedModel(BaseModel):
     ):
         """Ensure all child models have type field added before generating schema."""
         if not cls.models_typed:
-            TypedModel._rebuild_child_models()
+            TypedModel.rebuild_child_models()
 
         return super().model_json_schema(by_alias, ref_template, schema_generator, mode)
 
     @classmethod
-    def _rebuild_child_models(cls):
+    def rebuild_child_models(cls):
         """Recursively rebuild all subclass models to add type into core schema."""
         for subclass in cls.__subclasses__():
             subclass.model_rebuild(force=True)
-            subclass._rebuild_child_models()
+            subclass.rebuild_child_models()
 
     @classmethod
     def _tag(cls):
