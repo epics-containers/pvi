@@ -56,7 +56,7 @@ class Formatter(TypedModel, YamlValidatorMixin):
         Formatter itself is not included, as it should not be instanstiated directly.
 
         """
-        cls._rebuild_child_models()
+        cls.rebuild_child_models()
         return cls.type_adapter().json_schema()
 
     def format(self, device: Device, path: Path) -> None:

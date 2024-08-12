@@ -44,4 +44,4 @@ def format_template(device: Device, pv_prefix: str, output: Path):
         template_txt = Template(template.read()).render(
             device=device.label, pv_prefix=pv_prefix, records=records
         )
-        expanded.write(template_txt)
+        expanded.write(template_txt + "\n")

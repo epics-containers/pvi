@@ -5,6 +5,6 @@ metadata:
   title: pvi
   description: EPICS PV Interface described in YAML
 spec:
-  type: documentation
+  type: library
   lifecycle: experimental
   owner: mef65357
