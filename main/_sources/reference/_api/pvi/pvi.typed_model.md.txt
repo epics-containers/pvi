@@ -97,11 +97,11 @@ Bases: {py:obj}`pydantic.BaseModel`
 
 ````
 
-````{py:method} _rebuild_child_models()
-:canonical: pvi.typed_model.TypedModel._rebuild_child_models
+````{py:method} rebuild_child_models()
+:canonical: pvi.typed_model.TypedModel.rebuild_child_models
 :classmethod:
 
-```{autodoc2-docstring} pvi.typed_model.TypedModel._rebuild_child_models
+```{autodoc2-docstring} pvi.typed_model.TypedModel.rebuild_child_models
 ```
 
 ````
