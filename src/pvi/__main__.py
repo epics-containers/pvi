@@ -58,7 +58,7 @@ def schema(
         typer.echo(f"Don't know how to create {output.name}")
         raise typer.Exit(code=1)
 
-    output.write_text(json.dumps(schema, indent=2))
+    output.write_text(json.dumps(schema, indent=2) + "\n")
 
 
 @app.command()
