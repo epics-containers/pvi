@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import json
 import re
 from collections.abc import Iterator, Sequence
@@ -418,7 +416,7 @@ class Group(Component):
     """Group of child components in a Layout"""
 
     layout: LayoutUnion = Field(description="How to layout children on screen")
-    children: Tree = Field(description="Child Components")
+    children: "Tree" = Field(description="Child Components")
 
 
 ComponentUnion = Group | SignalR | SignalW | SignalRW | SignalX | SignalRef | DeviceRef
@@ -471,7 +469,7 @@ class Device(TypedModel, YamlValidatorMixin):
         dump_yaml(d, yaml)
 
     @classmethod
-    def deserialize(cls, yaml: Path) -> Device:
+    def deserialize(cls, yaml: Path) -> "Device":
         """Instantiate a Device instance from YAML.
 
         Args:
