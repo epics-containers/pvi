@@ -1,0 +1,52 @@
+# {py:mod}`pvi._format`
+
+```{py:module} pvi._format
+```
+
+```{autodoc2-docstring} pvi._format
+:allowtitles:
+```
+
+## Submodules
+
+```{toctree}
+:titlesonly:
+:maxdepth: 1
+
+pvi._format.adl
+pvi._format.widget
+pvi._format.bob
+pvi._format.dls
+pvi._format.base
+pvi._format.aps
+pvi._format.edl
+pvi._format.screen
+pvi._format.utils
+pvi._format.template
+```
+
+## Package Contents
+
+### Data
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`__all__ <pvi._format.__all__>`
+  - ```{autodoc2-docstring} pvi._format.__all__
+    :summary:
+    ```
+````
+
+### API
+
+````{py:data} __all__
+:canonical: pvi._format.__all__
+:value: >
+   ['Formatter', 'APSFormatter', 'DLSFormatter']
+
+```{autodoc2-docstring} pvi._format.__all__
+```
+
+````

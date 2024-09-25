@@ -1,0 +1,74 @@
+# {py:mod}`pvi`
+
+```{py:module} pvi
+```
+
+```{autodoc2-docstring} pvi
+:allowtitles:
+```
+
+## Subpackages
+
+```{toctree}
+:titlesonly:
+:maxdepth: 3
+
+pvi._format
+pvi._convert
+```
+
+## Submodules
+
+```{toctree}
+:titlesonly:
+:maxdepth: 1
+
+pvi._schema_utils
+pvi.device
+pvi.typed_model
+pvi._version
+pvi.__main__
+pvi._pv_group
+pvi._yaml_utils
+pvi.utils
+```
+
+## Package Contents
+
+### Data
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`__version__ <pvi.__version__>`
+  - ```{autodoc2-docstring} pvi.__version__
+    :summary:
+    ```
+* - {py:obj}`__all__ <pvi.__all__>`
+  - ```{autodoc2-docstring} pvi.__all__
+    :summary:
+    ```
+````
+
+### API
+
+````{py:data} __version__
+:canonical: pvi.__version__
+:value: >
+   'version(...)'
+
+```{autodoc2-docstring} pvi.__version__
+```
+
+````
+
+````{py:data} __all__
+:canonical: pvi.__all__
+:value: >
+   ['__version__', 'device']
+
+```{autodoc2-docstring} pvi.__all__
+```
+
+````
