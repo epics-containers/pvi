@@ -50,6 +50,7 @@ dev = [
 
 [tool.setuptools.package-data]
 pvi = [
+    "py.typed",
     "_format/*.adl",
     "_format/*.edl",
     "_format/*.bob",
