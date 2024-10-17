@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Original Design &#8212; pvi 0.10.1.dev2+g409ec571 documentation</title>
+    <title>Original Design &#8212; pvi 0.10.2.dev2+gb34b1123 documentation</title>
   
   
   
@@ -29,7 +29,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -38,8 +38,8 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=78d0fc54"></script>
-    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/documentation_options.js?v=af03b99d"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=30646c52"></script>
@@ -2580,14 +2580,14 @@ order such that when the asynPortDriver constructor the <code class="docutils li
 <h3>Change Summary<a class="headerlink" href="#change-summary" title="Link to this heading">#</a></h3>
 <blockquote>
 <div><ul class="simple">
-<li><p>asyn - <a class="github reference external" href="https://github.com/dls-controls/asyn/tree/pvi">dls-controls/asyn</a>
+<li><p>asyn
 : - Created <code class="docutils literal notranslate"><span class="pre">asynParamSet</span></code></p>
 <ul>
 <li><p>New overloaded asynPortDriver constructor that takes an <code class="docutils literal notranslate"><span class="pre">asynParamSet*</span></code>
 and calls createParams()</p></li>
 </ul>
 </li>
-<li><p>ADCore - <a class="github reference external" href="https://github.com/dls-controls/ADCore/tree/pvi">dls-controls/ADCore</a>
+<li><p>ADCore
 : - <code class="docutils literal notranslate"><span class="pre">asynNDArrayDriver</span></code> parameters split into <code class="docutils literal notranslate"><span class="pre">asynNDArrayDriverParamSet</span></code>
 : Constructor updated to take an <code class="docutils literal notranslate"><span class="pre">asynNDArrayDriverParamSet*</span></code>.
 Updated to access parameters via <code class="docutils literal notranslate"><span class="pre">paramSet-&gt;</span></code></p>
@@ -2601,7 +2601,7 @@ Child classes work with no changes</p></li>
 <li><p>Some trivial updates to the tests</p></li>
 </ul>
 </li>
-<li><p>ADSimDetector - <a class="github reference external" href="https://github.com/dls-controls/ADSimDetector/tree/pvi">dls-controls/ADSimDetector</a>
+<li><p>ADSimDetector
 : - <code class="docutils literal notranslate"><span class="pre">simDetector</span></code> parameters split into <code class="docutils literal notranslate"><span class="pre">simDetectorParamSet</span></code></p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">simDetector</span></code> inherits from <code class="docutils literal notranslate"><span class="pre">simDetectorParamSet</span></code> in addition to
@@ -2609,15 +2609,15 @@ Child classes work with no changes</p></li>
 <li><p>Can access parameters as before</p></li>
 </ul>
 </li>
-<li><p>ADPilatus - <a class="github reference external" href="https://github.com/dls-controls/ADPilatus/tree/pvi">dls-controls/ADPilatus</a>
+<li><p>ADPilatus
 : - Equivalent to ADSimDetector changes</p></li>
-<li><p>motor - <a class="github reference external" href="https://github.com/dls-controls/motor/tree/pvi">dls-controls/motor</a>
+<li><p>motor
 : - <code class="docutils literal notranslate"><span class="pre">asynMotorController</span></code> parameters split into <code class="docutils literal notranslate"><span class="pre">asynMotorControllerParamSet</span></code></p>
 <ul>
 <li><p>Updated to access parameters via <code class="docutils literal notranslate"><span class="pre">paramSet-&gt;</span></code></p></li>
 </ul>
 </li>
-<li><p>pmac - <a class="github reference external" href="https://github.com/dls-controls/pmac/tree/pvi">dls-controls/pmac</a>
+<li><p>pmac
 : - <code class="docutils literal notranslate"><span class="pre">pmacController</span></code> parameters split into <code class="docutils literal notranslate"><span class="pre">pmacControllerParamSet</span></code></p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">pmacCSController</span></code> same</p></li>

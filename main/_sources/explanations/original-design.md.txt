@@ -365,11 +365,11 @@ order such that when the asynPortDriver constructor the ``asynParamSet``
 
 ### Change Summary
 
-> - asyn - <https://github.com/dls-controls/asyn/tree/pvi>
+> - asyn
 >   : - Created ``asynParamSet``
 >     - New overloaded asynPortDriver constructor that takes an ``asynParamSet*``
 >       and calls createParams()
-> - ADCore - <https://github.com/dls-controls/ADCore/tree/pvi>
+> - ADCore
 >   : - ``asynNDArrayDriver`` parameters split into ``asynNDArrayDriverParamSet``
 >       : Constructor updated to take an ``asynNDArrayDriverParamSet*``.
 >         Updated to access parameters via ``paramSet->``
@@ -380,17 +380,17 @@ order such that when the asynPortDriver constructor the ``asynParamSet``
 >       : Updated to access parameters via ``paramSet->``.
 >         Child classes work with no changes
 >     - Some trivial updates to the tests
-> - ADSimDetector - <https://github.com/dls-controls/ADSimDetector/tree/pvi>
+> - ADSimDetector
 >   : - ``simDetector`` parameters split into ``simDetectorParamSet``
 >     - ``simDetector`` inherits from ``simDetectorParamSet`` in addition to
 >       ``ADDriver``
 >     - Can access parameters as before
-> - ADPilatus - <https://github.com/dls-controls/ADPilatus/tree/pvi>
+> - ADPilatus
 >   : - Equivalent to ADSimDetector changes
-> - motor - <https://github.com/dls-controls/motor/tree/pvi>
+> - motor
 >   : - ``asynMotorController`` parameters split into ``asynMotorControllerParamSet``
 >     - Updated to access parameters via ``paramSet->``
-> - pmac - <https://github.com/dls-controls/pmac/tree/pvi>
+> - pmac
 >   : - ``pmacController`` parameters split into ``pmacControllerParamSet``
 >     - ``pmacCSController`` same
 >     - Each inherit from their own param set (which inherits
