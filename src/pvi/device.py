@@ -72,7 +72,8 @@ def enforce_pascal_case(s: str) -> str:
     return s[0].upper() + s[1:]
 
 
-PascalStr = Annotated[str, Field(pattern="^([A-Z][a-z0-9]*)*$")]
+PascalStr = Annotated[str, Field(pattern=r"^([A-Z][a-z0-9]*)*$")]
+NumberStr = Annotated[str, Field(pattern=r"^\d*$")]
 
 
 class TextFormat(Enum):
@@ -286,7 +287,10 @@ WidgetUnion = ReadWidgetUnion | WriteWidgetUnion
 
 
 class Named(TypedModel):
-    name: PascalStr = Field(description="PascalCase name to uniquely identify")
+    name: Annotated[
+        PascalStr | NumberStr,
+        Field(description="PascalCase name or number to uniquely identify"),
+    ]
 
 
 class Component(Named):

@@ -188,10 +188,18 @@
       "description": "Reference to another Device.",
       "properties": {
         "name": {
-          "description": "PascalCase name to uniquely identify",
-          "pattern": "^([A-Z][a-z0-9]*)*$",
-          "title": "Name",
-          "type": "string"
+          "anyOf": [
+            {
+              "pattern": "^([A-Z][a-z0-9]*)*$",
+              "type": "string"
+            },
+            {
+              "pattern": "^\\d*$",
+              "type": "string"
+            }
+          ],
+          "description": "PascalCase name or number to uniquely identify",
+          "title": "Name"
         },
         "label": {
           "anyOf": [
@@ -284,10 +292,18 @@
       "description": "Group of child components in a Layout",
       "properties": {
         "name": {
-          "description": "PascalCase name to uniquely identify",
-          "pattern": "^([A-Z][a-z0-9]*)*$",
-          "title": "Name",
-          "type": "string"
+          "anyOf": [
+            {
+              "pattern": "^([A-Z][a-z0-9]*)*$",
+              "type": "string"
+            },
+            {
+              "pattern": "^\\d*$",
+              "type": "string"
+            }
+          ],
+          "description": "PascalCase name or number to uniquely identify",
+          "title": "Name"
         },
         "label": {
           "anyOf": [
@@ -487,10 +503,18 @@
       "description": "Read-only `Signal` backed by a single PV.",
       "properties": {
         "name": {
-          "description": "PascalCase name to uniquely identify",
-          "pattern": "^([A-Z][a-z0-9]*)*$",
-          "title": "Name",
-          "type": "string"
+          "anyOf": [
+            {
+              "pattern": "^([A-Z][a-z0-9]*)*$",
+              "type": "string"
+            },
+            {
+              "pattern": "^\\d*$",
+              "type": "string"
+            }
+          ],
+          "description": "PascalCase name or number to uniquely identify",
+          "title": "Name"
         },
         "label": {
           "anyOf": [
@@ -584,10 +608,18 @@
       "description": "Read/write `Signal` backed by a demand PV and a readback PV.\n\nOne PV can be used as both a demand and a readback by leaving `read_pv` unset. In\nthis case no readback widget will be displayed unless `read_widget` is set.\n\nIf `read_pv` is set and `read_widget` is not, a `TextRead` widget will be used.",
       "properties": {
         "name": {
-          "description": "PascalCase name to uniquely identify",
-          "pattern": "^([A-Z][a-z0-9]*)*$",
-          "title": "Name",
-          "type": "string"
+          "anyOf": [
+            {
+              "pattern": "^([A-Z][a-z0-9]*)*$",
+              "type": "string"
+            },
+            {
+              "pattern": "^\\d*$",
+              "type": "string"
+            }
+          ],
+          "description": "PascalCase name or number to uniquely identify",
+          "title": "Name"
         },
         "label": {
           "anyOf": [
@@ -715,10 +747,18 @@
       "description": "Reference to another Signal with the same name in this Device.",
       "properties": {
         "name": {
-          "description": "PascalCase name to uniquely identify",
-          "pattern": "^([A-Z][a-z0-9]*)*$",
-          "title": "Name",
-          "type": "string"
+          "anyOf": [
+            {
+              "pattern": "^([A-Z][a-z0-9]*)*$",
+              "type": "string"
+            },
+            {
+              "pattern": "^\\d*$",
+              "type": "string"
+            }
+          ],
+          "description": "PascalCase name or number to uniquely identify",
+          "title": "Name"
         },
         "label": {
           "anyOf": [
@@ -767,10 +807,18 @@
       "description": "Write-only `Signal` backed by a single PV.",
       "properties": {
         "name": {
-          "description": "PascalCase name to uniquely identify",
-          "pattern": "^([A-Z][a-z0-9]*)*$",
-          "title": "Name",
-          "type": "string"
+          "anyOf": [
+            {
+              "pattern": "^([A-Z][a-z0-9]*)*$",
+              "type": "string"
+            },
+            {
+              "pattern": "^\\d*$",
+              "type": "string"
+            }
+          ],
+          "description": "PascalCase name or number to uniquely identify",
+          "title": "Name"
         },
         "label": {
           "anyOf": [
@@ -857,10 +905,18 @@
       "description": "`SignalW` that can be triggered to write a fixed value to a PV.",
       "properties": {
         "name": {
-          "description": "PascalCase name to uniquely identify",
-          "pattern": "^([A-Z][a-z0-9]*)*$",
-          "title": "Name",
-          "type": "string"
+          "anyOf": [
+            {
+              "pattern": "^([A-Z][a-z0-9]*)*$",
+              "type": "string"
+            },
+            {
+              "pattern": "^\\d*$",
+              "type": "string"
+            }
+          ],
+          "description": "PascalCase name or number to uniquely identify",
+          "title": "Name"
         },
         "label": {
           "anyOf": [
