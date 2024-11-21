@@ -42,9 +42,6 @@
         "type": {
           "const": "APSFormatter",
           "default": "APSFormatter",
-          "enum": [
-            "APSFormatter"
-          ],
           "title": "Type",
           "type": "string"
         }
@@ -94,9 +91,6 @@
         "type": {
           "const": "DLSFormatter",
           "default": "DLSFormatter",
-          "enum": [
-            "DLSFormatter"
-          ],
           "title": "Type",
           "type": "string"
         }
