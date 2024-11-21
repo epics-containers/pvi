@@ -104,10 +104,13 @@ class LED(ReadWidget):
 class BitField(ReadWidget):
     """LED and label for each bit of an int PV"""
 
-    labels: Sequence[str] | None = Field(default=None, description="Label for each bit")
-    number_of_bits: int = Field(
-        default=8, description="Number of bits to display", gt=0
-    )
+    labels: Annotated[
+        Sequence[str] | None,
+        Field(description="Label for each bit"),
+    ] = None
+    number_of_bits: Annotated[
+        int, Field(description="Number of bits to display", gt=0)
+    ] = 8
 
 
 class ProgressBar(ReadWidget):
@@ -119,8 +122,8 @@ class TextRead(ReadWidget):
 
     model_config = ConfigDict(use_enum_values=True)  # Use Enum value when dumping
 
-    lines: int | None = Field(default=None, description="Number of lines to display")
-    format: TextFormat | None = Field(default=None, description="Display format")
+    lines: Annotated[int | None, Field(description="Number of lines to display")] = None
+    format: Annotated[TextFormat | None, Field(description="Display format")] = None
 
     def get_lines(self):
         return self.lines or 1
@@ -129,13 +132,16 @@ class TextRead(ReadWidget):
 class ArrayTrace(ReadWidget):
     """Trace of the array in a plot view"""
 
-    axis: str = Field(
-        description=(
-            "Traces with same axis name will appear on same axis, "
-            "plotted against 'x' trace if it exists, or indexes if not. "
-            "Only one traces with axis='x' allowed."
+    axis: Annotated[
+        str,
+        Field(
+            description=(
+                "Traces with same axis name will appear on same axis, "
+                "plotted against 'x' trace if it exists, or indexes if not. "
+                "Only one traces with axis='x' allowed."
+            ),
         ),
-    )
+    ]
 
 
 class ImageRead(ReadWidget):
@@ -164,7 +170,7 @@ class ComboBox(WriteWidget):
     """Selection of an enum PV"""
 
     choices: Annotated[
-        Sequence[str] | None, Field(default=None, description="Choices to select from")
+        Sequence[str] | None, Field(description="Choices to select from")
     ] = None
 
     def get_choices(self) -> list[str]:
@@ -179,9 +185,10 @@ class ButtonPanel(WriteWidget):
 
     """
 
-    actions: dict[PascalStr, str] = Field(
-        default={"Go": "1"}, description="PV poker buttons"
-    )
+    actions: Annotated[
+        dict[PascalStr, str],
+        Field(description="PV poker buttons"),
+    ] = {"Go": "1"}
 
 
 class TextWrite(WriteWidget):
@@ -189,8 +196,8 @@ class TextWrite(WriteWidget):
 
     model_config = ConfigDict(use_enum_values=True)  # Use Enum value when dumping
 
-    lines: int | None = Field(default=None, description="Number of lines to display")
-    format: TextFormat | None = Field(default=None, description="Display format")
+    lines: Annotated[int | None, Field(description="Number of lines to display")] = None
+    format: Annotated[TextFormat | None, Field(description="Display format")] = None
 
     def get_lines(self):
         return self.lines or 1
@@ -208,25 +215,31 @@ if not TYPE_CHECKING:
 class ArrayWrite(WriteWidget):
     """Control of an array PV"""
 
-    widget: _RowWriteUnion = Field(
-        description="What widget should be used for each item"
-    )
+    widget: Annotated[
+        _RowWriteUnion, Field(description="What widget should be used for each item")
+    ]
 
 
 class TableRead(ReadWidget):
     """A read-only tabular view of an NTTable."""
 
-    widgets: Sequence[_RowReadUnion] = Field(
-        [], description="For each column, what widget should be repeated for every row"
-    )
+    widgets: Annotated[
+        Sequence[_RowReadUnion],
+        Field(
+            description="For each column, what widget should be repeated for every row",
+        ),
+    ] = []
 
 
 class TableWrite(WriteWidget):
     """A writeable tabular view of an NTTable."""
 
-    widgets: Sequence[_RowWriteUnion] = Field(
-        [], description="For each column, what widget should be repeated for every row"
-    )
+    widgets: Annotated[
+        Sequence[_RowWriteUnion],
+        Field(
+            description="For each column, what widget should be repeated for every row",
+        ),
+    ] = []
 
 
 class Layout(TypedModel):
@@ -240,10 +253,9 @@ class Plot(Layout):
 class Row(Layout):
     """Children are columns in the row"""
 
-    header: Sequence[str] | None = Field(
-        None,
-        description="Labels for the items in the row",
-    )
+    header: Annotated[
+        Sequence[str] | None, Field(description="Labels for the items in the row")
+    ] = None
 
 
 class Grid(Layout):
@@ -257,7 +269,7 @@ class Grid(Layout):
 class SubScreen(Layout):
     """Children are displayed on another screen opened with a button."""
 
-    labelled: bool = Field(default=True, description="Display labels for components")
+    labelled: Annotated[bool, Field(description="Display labels for components")] = True
 
 
 LayoutUnion = Plot | Row | Grid | SubScreen
@@ -286,7 +298,9 @@ WidgetUnion = ReadWidgetUnion | WriteWidgetUnion
 
 
 class Named(TypedModel):
-    name: PascalStr = Field(description="PascalCase name to uniquely identify")
+    name: Annotated[
+        PascalStr, Field(description="PascalCase name to uniquely identify")
+    ]
 
 
 class Component(Named):
@@ -313,7 +327,7 @@ class SignalR(Signal):
 
     _access_mode = "r"
 
-    read_pv: str = Field(description="PV to use for readback")
+    read_pv: Annotated[str, Field(description="PV to use for readback")]
     read_widget: Annotated[
         ReadWidgetUnion | None,
         Field(
@@ -328,7 +342,7 @@ class SignalW(Signal):
 
     _access_mode = "w"
 
-    write_pv: str = Field(description="PV to use for demand")
+    write_pv: Annotated[str, Field(description="PV to use for demand")]
     write_widget: Annotated[
         WriteWidgetUnion,
         Field(description="Widget to use for control"),
@@ -403,11 +417,11 @@ class SignalX(SignalW):
 class DeviceRef(Component):
     """Reference to another Device."""
 
-    pv: str = Field(description="Child device PVI PV")
-    ui: str = Field(description="UI file to open for referenced Device")
-    macros: dict[str, str] = Field(
-        default={}, description="Macro-value pairs for UI file"
-    )
+    pv: Annotated[str, Field(description="Child device PVI PV")]
+    ui: Annotated[str, Field(description="UI file to open for referenced Device")]
+    macros: Annotated[
+        dict[str, str], Field(description="Macro-value pairs for UI file")
+    ] = {}
 
 
 class SignalRef(Component):
@@ -417,8 +431,10 @@ class SignalRef(Component):
 class Group(Component):
     """Group of child components in a Layout"""
 
-    layout: LayoutUnion = Field(description="How to layout children on screen")
-    children: Tree = Field(description="Child Components")
+    layout: Annotated[
+        LayoutUnion, Field(description="How to layout children on screen")
+    ]
+    children: Annotated[Tree, Field(description="Child Components")]
 
 
 ComponentUnion = Group | SignalR | SignalW | SignalRW | SignalX | SignalRef | DeviceRef
@@ -441,9 +457,9 @@ def walk(tree: Tree) -> Iterator[ComponentUnion]:
 class Device(TypedModel, YamlValidatorMixin):
     """Collection of Components"""
 
-    label: str = Field(description="Label for screen")
-    parent: Annotated[str, "The parent device (basename of yaml file)"] | None = None
-    children: Tree = Field([], description="Child Components")
+    label: Annotated[str, Field(description="Label for screen")]
+    parent: Annotated[str | None, "The parent device (basename of yaml file)"] = None
+    children: Annotated[Tree, Field(description="Child Components")] = []
 
     def _to_dict(self) -> dict[str, Any]:
         """Serialize a `Device` instance to a `dict`.

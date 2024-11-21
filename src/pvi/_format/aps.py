@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Annotated
 
 from pydantic import Field
 
@@ -24,12 +25,14 @@ from .utils import Bounds, with_title
 
 
 class APSFormatter(Formatter):
-    spacing: int = Field(5, description="Spacing between widgets")
-    title_height: int = Field(25, description="Height of screen title bar")
-    max_height: int = Field(900, description="Max height of the screen")
-    label_width: int = Field(205, description="Width of the widget description labels")
-    widget_width: int = Field(100, description="Width of the widgets")
-    widget_height: int = Field(20, description="Height of the widgets")
+    spacing: Annotated[int, Field(description="Spacing between widgets")] = 5
+    title_height: Annotated[int, Field(description="Height of screen title bar")] = 25
+    max_height: Annotated[int, Field(description="Max height of the screen")] = 900
+    label_width: Annotated[
+        int, Field(description="Width of the widget description labels")
+    ] = 205
+    widget_width: Annotated[int, Field(description="Width of the widgets")] = 100
+    widget_height: Annotated[int, Field(description="Height of the widgets")] = 20
 
     def format(self, device: Device, path: Path) -> None:
         assert path.suffix == ".adl", "Can only write adl files"

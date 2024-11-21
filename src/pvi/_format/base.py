@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Any, Union
+from typing import Annotated, Any, Union
 
 from pydantic import Field, TypeAdapter
 
@@ -11,11 +11,12 @@ from pvi.typed_model import TypedModel, as_tagged_union
 class IndexEntry(TypedModel):
     """A structure defining an index button to launch a UI with some macros."""
 
-    label: str = Field(
-        "Button label. This will be converted to PascalCase if it is not already."
-    )
-    ui: str = Field("File name of UI to open with button")
-    macros: dict[str, str] = Field("Macros to launch UI with")
+    label: Annotated[
+        str,
+        Field(description="Button label (this will be converted to PascalCase)"),
+    ]
+    ui: Annotated[str, Field(description="File name of UI to open with button")]
+    macros: Annotated[dict[str, str], Field(description="Macros to launch UI with")]
 
 
 class Formatter(TypedModel, YamlValidatorMixin):

@@ -1,6 +1,7 @@
 import re
 from enum import Enum
 from functools import cached_property
+from typing import Annotated
 
 from pydantic import BaseModel, Field
 
@@ -10,9 +11,9 @@ from pvi.device import ComponentUnion
 class TypeStrings(BaseModel):
     """The type strings for record dtypes and parameter names"""
 
-    asyn_read: str = Field(description="e.g. asynInt32, asynOctetRead")
-    asyn_write: str = Field(description="e.g. asynInt32, asynOctetWrite")
-    asyn_param: str = Field(description="e.g. asynParamInt32, asynParamOctet")
+    asyn_read: Annotated[str, Field(description="e.g. asynInt32, asynOctetRead")]
+    asyn_write: Annotated[str, Field(description="e.g. asynInt32, asynOctetWrite")]
+    asyn_param: Annotated[str, Field(description="e.g. asynParamInt32, asynParamOctet")]
 
 
 class Access(Enum):

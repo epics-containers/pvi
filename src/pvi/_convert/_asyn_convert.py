@@ -1,5 +1,5 @@
 import re
-from typing import Any, ClassVar, cast
+from typing import Annotated, Any, ClassVar, cast
 
 from pydantic import Field
 
@@ -78,14 +78,16 @@ class AsynParameter(Named):
     """Base class for all Asyn Parameters to inherit from"""
 
     type_strings: ClassVar[TypeStrings]
-    read_record: AsynRecord | None = Field(
-        default=None,
-        description="A read AsynRecord, if not given then use $(name)_RBV as read PV",
-    )
-    write_record: AsynRecord | None = Field(
-        default=None,
-        description="A write AsynRecord, if not given then use $(name) as write PV",
-    )
+    read_record: Annotated[
+        AsynRecord | None,
+        Field(description="A read AsynRecord ($(name)_RBV if not given)"),
+    ] = None
+    write_record: Annotated[
+        AsynRecord | None,
+        Field(
+            description="A write AsynRecord, if not given then use $(name) as write PV",
+        ),
+    ] = None
     read_widget: ReadWidgetUnion = TextRead()
     write_widget: WriteWidgetUnion = TextWrite()
 
