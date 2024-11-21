@@ -159,9 +159,9 @@ Bases: {py:obj}`pvi.device.Named`
 
 ````{py:attribute} read_record
 :canonical: pvi._convert._asyn_convert.AsynParameter.read_record
-:type: pvi._convert._asyn_convert.AsynRecord | None
+:type: typing.Annotated[pvi._convert._asyn_convert.AsynRecord | None, Field(description='A read AsynRecord ($(name)_RBV if not given)')]
 :value: >
-   'Field(...)'
+   None
 
 ```{autodoc2-docstring} pvi._convert._asyn_convert.AsynParameter.read_record
 ```
@@ -170,9 +170,9 @@ Bases: {py:obj}`pvi.device.Named`
 
 ````{py:attribute} write_record
 :canonical: pvi._convert._asyn_convert.AsynParameter.write_record
-:type: pvi._convert._asyn_convert.AsynRecord | None
+:type: typing.Annotated[pvi._convert._asyn_convert.AsynRecord | None, Field(description='A write AsynRecord, if not given then use $(name) as write PV')]
 :value: >
-   'Field(...)'
+   None
 
 ```{autodoc2-docstring} pvi._convert._asyn_convert.AsynParameter.write_record
 ```

@@ -69,9 +69,9 @@ Bases: {py:obj}`pydantic.BaseModel`
 
 ````{py:attribute} asyn_read
 :canonical: pvi._convert._parameters.TypeStrings.asyn_read
-:type: str
+:type: typing.Annotated[str, Field(description='e.g. asynInt32, asynOctetRead')]
 :value: >
-   'Field(...)'
+   None
 
 ```{autodoc2-docstring} pvi._convert._parameters.TypeStrings.asyn_read
 ```
@@ -80,9 +80,9 @@ Bases: {py:obj}`pydantic.BaseModel`
 
 ````{py:attribute} asyn_write
 :canonical: pvi._convert._parameters.TypeStrings.asyn_write
-:type: str
+:type: typing.Annotated[str, Field(description='e.g. asynInt32, asynOctetWrite')]
 :value: >
-   'Field(...)'
+   None
 
 ```{autodoc2-docstring} pvi._convert._parameters.TypeStrings.asyn_write
 ```
@@ -91,9 +91,9 @@ Bases: {py:obj}`pydantic.BaseModel`
 
 ````{py:attribute} asyn_param
 :canonical: pvi._convert._parameters.TypeStrings.asyn_param
-:type: str
+:type: typing.Annotated[str, Field(description='e.g. asynParamInt32, asynParamOctet')]
 :value: >
-   'Field(...)'
+   None
 
 ```{autodoc2-docstring} pvi._convert._parameters.TypeStrings.asyn_param
 ```

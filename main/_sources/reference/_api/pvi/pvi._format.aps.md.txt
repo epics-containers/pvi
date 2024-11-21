@@ -28,9 +28,9 @@ Bases: {py:obj}`pvi._format.base.Formatter`
 
 ````{py:attribute} spacing
 :canonical: pvi._format.aps.APSFormatter.spacing
-:type: int
+:type: typing.Annotated[int, Field(description='Spacing between widgets')]
 :value: >
-   'Field(...)'
+   5
 
 ```{autodoc2-docstring} pvi._format.aps.APSFormatter.spacing
 ```
@@ -39,9 +39,9 @@ Bases: {py:obj}`pvi._format.base.Formatter`
 
 ````{py:attribute} title_height
 :canonical: pvi._format.aps.APSFormatter.title_height
-:type: int
+:type: typing.Annotated[int, Field(description='Height of screen title bar')]
 :value: >
-   'Field(...)'
+   25
 
 ```{autodoc2-docstring} pvi._format.aps.APSFormatter.title_height
 ```
@@ -50,9 +50,9 @@ Bases: {py:obj}`pvi._format.base.Formatter`
 
 ````{py:attribute} max_height
 :canonical: pvi._format.aps.APSFormatter.max_height
-:type: int
+:type: typing.Annotated[int, Field(description='Max height of the screen')]
 :value: >
-   'Field(...)'
+   900
 
 ```{autodoc2-docstring} pvi._format.aps.APSFormatter.max_height
 ```
@@ -61,9 +61,9 @@ Bases: {py:obj}`pvi._format.base.Formatter`
 
 ````{py:attribute} label_width
 :canonical: pvi._format.aps.APSFormatter.label_width
-:type: int
+:type: typing.Annotated[int, Field(description='Width of the widget description labels')]
 :value: >
-   'Field(...)'
+   205
 
 ```{autodoc2-docstring} pvi._format.aps.APSFormatter.label_width
 ```
@@ -72,9 +72,9 @@ Bases: {py:obj}`pvi._format.base.Formatter`
 
 ````{py:attribute} widget_width
 :canonical: pvi._format.aps.APSFormatter.widget_width
-:type: int
+:type: typing.Annotated[int, Field(description='Width of the widgets')]
 :value: >
-   'Field(...)'
+   100
 
 ```{autodoc2-docstring} pvi._format.aps.APSFormatter.widget_width
 ```
@@ -83,9 +83,9 @@ Bases: {py:obj}`pvi._format.base.Formatter`
 
 ````{py:attribute} widget_height
 :canonical: pvi._format.aps.APSFormatter.widget_height
-:type: int
+:type: typing.Annotated[int, Field(description='Height of the widgets')]
 :value: >
-   'Field(...)'
+   20
 
 ```{autodoc2-docstring} pvi._format.aps.APSFormatter.widget_height
 ```

@@ -422,9 +422,9 @@ Bases: {py:obj}`pvi.device.ReadWidget`
 
 ````{py:attribute} labels
 :canonical: pvi.device.BitField.labels
-:type: collections.abc.Sequence[str] | None
+:type: typing.Annotated[collections.abc.Sequence[str] | None, Field(description='Label for each bit')]
 :value: >
-   'Field(...)'
+   None
 
 ```{autodoc2-docstring} pvi.device.BitField.labels
 ```
@@ -433,9 +433,9 @@ Bases: {py:obj}`pvi.device.ReadWidget`
 
 ````{py:attribute} number_of_bits
 :canonical: pvi.device.BitField.number_of_bits
-:type: int
+:type: typing.Annotated[int, Field(description='Number of bits to display', gt=0)]
 :value: >
-   'Field(...)'
+   8
 
 ```{autodoc2-docstring} pvi.device.BitField.number_of_bits
 ```
@@ -486,9 +486,9 @@ Bases: {py:obj}`pvi.device.ReadWidget`
 
 ````{py:attribute} lines
 :canonical: pvi.device.TextRead.lines
-:type: int | None
+:type: typing.Annotated[int | None, Field(description='Number of lines to display')]
 :value: >
-   'Field(...)'
+   None
 
 ```{autodoc2-docstring} pvi.device.TextRead.lines
 ```
@@ -497,9 +497,9 @@ Bases: {py:obj}`pvi.device.ReadWidget`
 
 ````{py:attribute} format
 :canonical: pvi.device.TextRead.format
-:type: pvi.device.TextFormat | None
+:type: typing.Annotated[pvi.device.TextFormat | None, Field(description='Display format')]
 :value: >
-   'Field(...)'
+   None
 
 ```{autodoc2-docstring} pvi.device.TextRead.format
 ```
@@ -532,9 +532,9 @@ Bases: {py:obj}`pvi.device.ReadWidget`
 
 ````{py:attribute} axis
 :canonical: pvi.device.ArrayTrace.axis
-:type: str
+:type: typing.Annotated[str, Field(description="Traces with same axis name will appear on same axis, plotted against 'x' trace if it exists, or indexes if not. Only one traces with axis='x' allowed.")]
 :value: >
-   'Field(...)'
+   None
 
 ```{autodoc2-docstring} pvi.device.ArrayTrace.axis
 ```
@@ -633,7 +633,7 @@ Bases: {py:obj}`pvi.device.WriteWidget`
 
 ````{py:attribute} choices
 :canonical: pvi.device.ComboBox.choices
-:type: typing.Annotated[collections.abc.Sequence[str] | None, Field(default=None, description='Choices to select from')]
+:type: typing.Annotated[collections.abc.Sequence[str] | None, Field(description='Choices to select from')]
 :value: >
    None
 
@@ -668,9 +668,9 @@ Bases: {py:obj}`pvi.device.WriteWidget`
 
 ````{py:attribute} actions
 :canonical: pvi.device.ButtonPanel.actions
-:type: dict[pvi.device.PascalStr, str]
+:type: typing.Annotated[dict[pvi.device.PascalStr, str], Field(description='PV poker buttons')]
 :value: >
-   'Field(...)'
+   None
 
 ```{autodoc2-docstring} pvi.device.ButtonPanel.actions
 ```
@@ -705,9 +705,9 @@ Bases: {py:obj}`pvi.device.WriteWidget`
 
 ````{py:attribute} lines
 :canonical: pvi.device.TextWrite.lines
-:type: int | None
+:type: typing.Annotated[int | None, Field(description='Number of lines to display')]
 :value: >
-   'Field(...)'
+   None
 
 ```{autodoc2-docstring} pvi.device.TextWrite.lines
 ```
@@ -716,9 +716,9 @@ Bases: {py:obj}`pvi.device.WriteWidget`
 
 ````{py:attribute} format
 :canonical: pvi.device.TextWrite.format
-:type: pvi.device.TextFormat | None
+:type: typing.Annotated[pvi.device.TextFormat | None, Field(description='Display format')]
 :value: >
-   'Field(...)'
+   None
 
 ```{autodoc2-docstring} pvi.device.TextWrite.format
 ```
@@ -771,9 +771,9 @@ Bases: {py:obj}`pvi.device.WriteWidget`
 
 ````{py:attribute} widget
 :canonical: pvi.device.ArrayWrite.widget
-:type: pvi.device._RowWriteUnion
+:type: typing.Annotated[pvi.device._RowWriteUnion, Field(description='What widget should be used for each item')]
 :value: >
-   'Field(...)'
+   None
 
 ```{autodoc2-docstring} pvi.device.ArrayWrite.widget
 ```
@@ -798,9 +798,9 @@ Bases: {py:obj}`pvi.device.ReadWidget`
 
 ````{py:attribute} widgets
 :canonical: pvi.device.TableRead.widgets
-:type: collections.abc.Sequence[pvi.device._RowReadUnion]
+:type: typing.Annotated[collections.abc.Sequence[pvi.device._RowReadUnion], Field(description='For each column, what widget should be repeated for every row')]
 :value: >
-   'Field(...)'
+   []
 
 ```{autodoc2-docstring} pvi.device.TableRead.widgets
 ```
@@ -825,9 +825,9 @@ Bases: {py:obj}`pvi.device.WriteWidget`
 
 ````{py:attribute} widgets
 :canonical: pvi.device.TableWrite.widgets
-:type: collections.abc.Sequence[pvi.device._RowWriteUnion]
+:type: typing.Annotated[collections.abc.Sequence[pvi.device._RowWriteUnion], Field(description='For each column, what widget should be repeated for every row')]
 :value: >
-   'Field(...)'
+   []
 
 ```{autodoc2-docstring} pvi.device.TableWrite.widgets
 ```
@@ -884,9 +884,9 @@ Bases: {py:obj}`pvi.device.Layout`
 
 ````{py:attribute} header
 :canonical: pvi.device.Row.header
-:type: collections.abc.Sequence[str] | None
+:type: typing.Annotated[collections.abc.Sequence[str] | None, Field(description='Labels for the items in the row')]
 :value: >
-   'Field(...)'
+   None
 
 ```{autodoc2-docstring} pvi.device.Row.header
 ```
@@ -938,9 +938,9 @@ Bases: {py:obj}`pvi.device.Layout`
 
 ````{py:attribute} labelled
 :canonical: pvi.device.SubScreen.labelled
-:type: bool
+:type: typing.Annotated[bool, Field(description='Display labels for components')]
 :value: >
-   'Field(...)'
+   True
 
 ```{autodoc2-docstring} pvi.device.SubScreen.labelled
 ```
@@ -996,9 +996,9 @@ Bases: {py:obj}`pvi.typed_model.TypedModel`
 
 ````{py:attribute} name
 :canonical: pvi.device.Named.name
-:type: pvi.device.PascalStr
+:type: typing.Annotated[pvi.device.PascalStr, Field(description='PascalCase name to uniquely identify')]
 :value: >
-   'Field(...)'
+   None
 
 ```{autodoc2-docstring} pvi.device.Named.name
 ```
@@ -1100,9 +1100,9 @@ Bases: {py:obj}`pvi.device.Signal`
 
 ````{py:attribute} read_pv
 :canonical: pvi.device.SignalR.read_pv
-:type: str
+:type: typing.Annotated[str, Field(description='PV to use for readback')]
 :value: >
-   'Field(...)'
+   None
 
 ```{autodoc2-docstring} pvi.device.SignalR.read_pv
 ```
@@ -1148,9 +1148,9 @@ Bases: {py:obj}`pvi.device.Signal`
 
 ````{py:attribute} write_pv
 :canonical: pvi.device.SignalW.write_pv
-:type: str
+:type: typing.Annotated[str, Field(description='PV to use for demand')]
 :value: >
-   'Field(...)'
+   None
 
 ```{autodoc2-docstring} pvi.device.SignalW.write_pv
 ```
@@ -1297,9 +1297,9 @@ Bases: {py:obj}`pvi.device.Component`
 
 ````{py:attribute} pv
 :canonical: pvi.device.DeviceRef.pv
-:type: str
+:type: typing.Annotated[str, Field(description='Child device PVI PV')]
 :value: >
-   'Field(...)'
+   None
 
 ```{autodoc2-docstring} pvi.device.DeviceRef.pv
 ```
@@ -1308,9 +1308,9 @@ Bases: {py:obj}`pvi.device.Component`
 
 ````{py:attribute} ui
 :canonical: pvi.device.DeviceRef.ui
-:type: str
+:type: typing.Annotated[str, Field(description='UI file to open for referenced Device')]
 :value: >
-   'Field(...)'
+   None
 
 ```{autodoc2-docstring} pvi.device.DeviceRef.ui
 ```
@@ -1319,9 +1319,9 @@ Bases: {py:obj}`pvi.device.Component`
 
 ````{py:attribute} macros
 :canonical: pvi.device.DeviceRef.macros
-:type: dict[str, str]
+:type: typing.Annotated[dict[str, str], Field(description='Macro-value pairs for UI file')]
 :value: >
-   'Field(...)'
+   None
 
 ```{autodoc2-docstring} pvi.device.DeviceRef.macros
 ```
@@ -1362,9 +1362,9 @@ Bases: {py:obj}`pvi.device.Component`
 
 ````{py:attribute} layout
 :canonical: pvi.device.Group.layout
-:type: pvi.device.LayoutUnion
+:type: typing.Annotated[pvi.device.LayoutUnion, Field(description='How to layout children on screen')]
 :value: >
-   'Field(...)'
+   None
 
 ```{autodoc2-docstring} pvi.device.Group.layout
 ```
@@ -1373,9 +1373,9 @@ Bases: {py:obj}`pvi.device.Component`
 
 ````{py:attribute} children
 :canonical: pvi.device.Group.children
-:type: Tree
+:type: typing.Annotated[Tree, Field(description='Child Components')]
 :value: >
-   'Field(...)'
+   None
 
 ```{autodoc2-docstring} pvi.device.Group.children
 ```
@@ -1427,9 +1427,9 @@ Bases: {py:obj}`pvi.typed_model.TypedModel`, {py:obj}`pvi._yaml_utils.YamlValida
 
 ````{py:attribute} label
 :canonical: pvi.device.Device.label
-:type: str
+:type: typing.Annotated[str, Field(description='Label for screen')]
 :value: >
-   'Field(...)'
+   None
 
 ```{autodoc2-docstring} pvi.device.Device.label
 ```
@@ -1438,7 +1438,7 @@ Bases: {py:obj}`pvi.typed_model.TypedModel`, {py:obj}`pvi._yaml_utils.YamlValida
 
 ````{py:attribute} parent
 :canonical: pvi.device.Device.parent
-:type: typing.Annotated[str, The parent device (basename of yaml file)] | None
+:type: typing.Annotated[str | None, The parent device (basename of yaml file)]
 :value: >
    None
 
@@ -1449,9 +1449,9 @@ Bases: {py:obj}`pvi.typed_model.TypedModel`, {py:obj}`pvi._yaml_utils.YamlValida
 
 ````{py:attribute} children
 :canonical: pvi.device.Device.children
-:type: pvi.device.Tree
+:type: typing.Annotated[pvi.device.Tree, Field(description='Child Components')]
 :value: >
-   'Field(...)'
+   []
 
 ```{autodoc2-docstring} pvi.device.Device.children
 ```

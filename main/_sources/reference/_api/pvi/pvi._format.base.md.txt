@@ -43,9 +43,9 @@ Bases: {py:obj}`pvi.typed_model.TypedModel`
 
 ````{py:attribute} label
 :canonical: pvi._format.base.IndexEntry.label
-:type: str
+:type: typing.Annotated[str, Field(description='Button label (this will be converted to PascalCase)')]
 :value: >
-   'Field(...)'
+   None
 
 ```{autodoc2-docstring} pvi._format.base.IndexEntry.label
 ```
@@ -54,9 +54,9 @@ Bases: {py:obj}`pvi.typed_model.TypedModel`
 
 ````{py:attribute} ui
 :canonical: pvi._format.base.IndexEntry.ui
-:type: str
+:type: typing.Annotated[str, Field(description='File name of UI to open with button')]
 :value: >
-   'Field(...)'
+   None
 
 ```{autodoc2-docstring} pvi._format.base.IndexEntry.ui
 ```
@@ -65,9 +65,9 @@ Bases: {py:obj}`pvi.typed_model.TypedModel`
 
 ````{py:attribute} macros
 :canonical: pvi._format.base.IndexEntry.macros
-:type: dict[str, str]
+:type: typing.Annotated[dict[str, str], Field(description='Macros to launch UI with')]
 :value: >
-   'Field(...)'
+   None
 
 ```{autodoc2-docstring} pvi._format.base.IndexEntry.macros
 ```
