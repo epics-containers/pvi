@@ -3,7 +3,7 @@
 [![CI](https://github.com/epics-containers/pvi/actions/workflows/ci.yml/badge.svg)](https://github.com/epics-containers/pvi/actions/workflows/ci.yml)
 [![Coverage](https://codecov.io/gh/epics-containers/pvi/branch/main/graph/badge.svg)](https://codecov.io/gh/epics-containers/pvi)
 [![PyPI](https://img.shields.io/pypi/v/pvi.svg)](https://pypi.org/project/pvi)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 # PVI
 

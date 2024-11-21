@@ -12,9 +12,6 @@
         "type": {
           "const": "ArrayTrace",
           "default": "ArrayTrace",
-          "enum": [
-            "ArrayTrace"
-          ],
           "title": "Type",
           "type": "string"
         }
@@ -50,9 +47,6 @@
         "type": {
           "const": "ArrayWrite",
           "default": "ArrayWrite",
-          "enum": [
-            "ArrayWrite"
-          ],
           "title": "Type",
           "type": "string"
         }
@@ -93,9 +87,6 @@
         "type": {
           "const": "BitField",
           "default": "BitField",
-          "enum": [
-            "BitField"
-          ],
           "title": "Type",
           "type": "string"
         }
@@ -123,9 +114,6 @@
         "type": {
           "const": "ButtonPanel",
           "default": "ButtonPanel",
-          "enum": [
-            "ButtonPanel"
-          ],
           "title": "Type",
           "type": "string"
         }
@@ -140,9 +128,6 @@
         "type": {
           "const": "CheckBox",
           "default": "CheckBox",
-          "enum": [
-            "CheckBox"
-          ],
           "title": "Type",
           "type": "string"
         }
@@ -173,9 +158,6 @@
         "type": {
           "const": "ComboBox",
           "default": "ComboBox",
-          "enum": [
-            "ComboBox"
-          ],
           "title": "Type",
           "type": "string"
         }
@@ -241,9 +223,6 @@
         "type": {
           "const": "DeviceRef",
           "default": "DeviceRef",
-          "enum": [
-            "DeviceRef"
-          ],
           "title": "Type",
           "type": "string"
         }
@@ -269,9 +248,6 @@
         "type": {
           "const": "Grid",
           "default": "Grid",
-          "enum": [
-            "Grid"
-          ],
           "title": "Type",
           "type": "string"
         }
@@ -366,9 +342,6 @@
         "type": {
           "const": "Group",
           "default": "Group",
-          "enum": [
-            "Group"
-          ],
           "title": "Type",
           "type": "string"
         }
@@ -388,9 +361,6 @@
         "type": {
           "const": "ImageRead",
           "default": "ImageRead",
-          "enum": [
-            "ImageRead"
-          ],
           "title": "Type",
           "type": "string"
         }
@@ -405,9 +375,6 @@
         "type": {
           "const": "LED",
           "default": "LED",
-          "enum": [
-            "LED"
-          ],
           "title": "Type",
           "type": "string"
         }
@@ -422,9 +389,6 @@
         "type": {
           "const": "Plot",
           "default": "Plot",
-          "enum": [
-            "Plot"
-          ],
           "title": "Type",
           "type": "string"
         }
@@ -439,9 +403,6 @@
         "type": {
           "const": "ProgressBar",
           "default": "ProgressBar",
-          "enum": [
-            "ProgressBar"
-          ],
           "title": "Type",
           "type": "string"
         }
@@ -472,9 +433,6 @@
         "type": {
           "const": "Row",
           "default": "Row",
-          "enum": [
-            "Row"
-          ],
           "title": "Type",
           "type": "string"
         }
@@ -565,9 +523,6 @@
         "type": {
           "const": "SignalR",
           "default": "SignalR",
-          "enum": [
-            "SignalR"
-          ],
           "title": "Type",
           "type": "string"
         }
@@ -696,9 +651,6 @@
         "type": {
           "const": "SignalRW",
           "default": "SignalRW",
-          "enum": [
-            "SignalRW"
-          ],
           "title": "Type",
           "type": "string"
         }
@@ -749,9 +701,6 @@
         "type": {
           "const": "SignalRef",
           "default": "SignalRef",
-          "enum": [
-            "SignalRef"
-          ],
           "title": "Type",
           "type": "string"
         }
@@ -838,9 +787,6 @@
         "type": {
           "const": "SignalW",
           "default": "SignalW",
-          "enum": [
-            "SignalW"
-          ],
           "title": "Type",
           "type": "string"
         }
@@ -935,9 +881,6 @@
         "type": {
           "const": "SignalX",
           "default": "SignalX",
-          "enum": [
-            "SignalX"
-          ],
           "title": "Type",
           "type": "string"
         }
@@ -962,9 +905,6 @@
         "type": {
           "const": "SubScreen",
           "default": "SubScreen",
-          "enum": [
-            "SubScreen"
-          ],
           "title": "Type",
           "type": "string"
         }
@@ -1001,9 +941,6 @@
         "type": {
           "const": "TableRead",
           "default": "TableRead",
-          "enum": [
-            "TableRead"
-          ],
           "title": "Type",
           "type": "string"
         }
@@ -1040,9 +977,6 @@
         "type": {
           "const": "TableWrite",
           "default": "TableWrite",
-          "enum": [
-            "TableWrite"
-          ],
           "title": "Type",
           "type": "string"
         }
@@ -1094,9 +1028,6 @@
         "type": {
           "const": "TextRead",
           "default": "TextRead",
-          "enum": [
-            "TextRead"
-          ],
           "title": "Type",
           "type": "string"
         }
@@ -1136,9 +1067,6 @@
         "type": {
           "const": "TextWrite",
           "default": "TextWrite",
-          "enum": [
-            "TextWrite"
-          ],
           "title": "Type",
           "type": "string"
         }
@@ -1153,9 +1081,6 @@
         "type": {
           "const": "ToggleButton",
           "default": "ToggleButton",
-          "enum": [
-            "ToggleButton"
-          ],
           "title": "Type",
           "type": "string"
         }
@@ -1218,9 +1143,6 @@
     "type": {
       "const": "Device",
       "default": "Device",
-      "enum": [
-        "Device"
-      ],
       "title": "Type",
       "type": "string"
     }
