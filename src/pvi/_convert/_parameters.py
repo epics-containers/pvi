@@ -58,7 +58,7 @@ class DisplayForm(Enum):
     ENGINEERING = "Engineering"
 
 
-MACRO_RE = re.compile(r"\$\(.*\)")
+MACRO_RE = re.compile(r"\$\([^\)]*\)")
 
 
 class Record(BaseModel):
