@@ -91,12 +91,9 @@ class BobTemplate(UITemplate[_Element]):
                 add_combo_box_items(t_copy, combo_box)
             case ("table", TableRead() | TableWrite() as table):
                 add_table_columns(t_copy, table)
-            case (
-                ("textentry", TextWrite(format=format))
-                | (
-                    "textupdate",
-                    TextRead(format=format),
-                )
+            case ("textentry", TextWrite(format=format)) | (
+                "textupdate",
+                TextRead(format=format),
             ) if format is not None:
                 add_format(t_copy, BOB_TEXT_FORMATS[TextFormat(format)])
             case ("byte_monitor", BitField() as bit_field):
@@ -157,9 +154,9 @@ class BobTemplate(UITemplate[_Element]):
         """
         padding = padding or Bounds()
 
-        assert (
-            len(group_object) == 1
-        ), f"Size of group_object is {len(group_object)}, should be 1"
+        assert len(group_object) == 1, (
+            f"Size of group_object is {len(group_object)}, should be 1"
+        )
         for c in children:
             group_object[0].append(c.format()[0])
         return group_object
