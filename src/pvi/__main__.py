@@ -46,9 +46,9 @@ def schema(
     ],
 ):
     """Write the JSON schema for the pvi interface"""
-    assert output.name.endswith(
-        ".schema.json"
-    ), f"Expected '{output.name}' to end with '.schema.json'"
+    assert output.name.endswith(".schema.json"), (
+        f"Expected '{output.name}' to end with '.schema.json'"
+    )
 
     if output.name == "pvi.device.schema.json":
         schema = Device.model_json_schema()

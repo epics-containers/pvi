@@ -292,9 +292,9 @@ class ScreenFormatterFactory(Generic[T]):
         column_bounds = Bounds(w=full_w, h=self.layout.widget_height)
         widget_factories: list[WidgetFormatter[T]] = []
 
-        assert isinstance(
-            group.layout, Grid | SubScreen
-        ), "Can only do Grid and SubScreen at the moment"
+        assert isinstance(group.layout, Grid | SubScreen), (
+            "Can only do Grid and SubScreen at the moment"
+        )
 
         for c in group.children:
             component: Group | Component
@@ -418,9 +418,9 @@ class ScreenFormatterFactory(Generic[T]):
             # This Group should be formatted as a table
             if c.layout.header is not None:
                 # Create table header
-                assert len(c.layout.header) == len(
-                    c.children
-                ), "Header length does not match number of elements"
+                assert len(c.layout.header) == len(c.children), (
+                    "Header length does not match number of elements"
+                )
 
                 header_bounds = component_bounds.clone()
                 if add_label:

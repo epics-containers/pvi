@@ -124,9 +124,9 @@ class WidgetFormatter(Generic[T]):
             properties: dict[str, str] = {}
             if property_map is not None:
                 for placeholder, widget_property in property_map.items():
-                    assert hasattr(
-                        self, widget_property
-                    ), f"{self} has no property {widget_property}"
+                    assert hasattr(self, widget_property), (
+                        f"{self} has no property {widget_property}"
+                    )
                     properties[placeholder] = getattr(self, widget_property)
 
             return [
@@ -240,9 +240,9 @@ class GroupFormatter(WidgetFormatter[T]):
                 properties: dict[str, str] = {}
                 if property_map is not None:
                     for placeholder, widget_property in property_map.items():
-                        assert hasattr(
-                            self, widget_property
-                        ), f"{self} has no property {widget_property}"
+                        assert hasattr(self, widget_property), (
+                            f"{self} has no property {widget_property}"
+                        )
                         properties[placeholder] = getattr(self, widget_property)
 
                 texts.append(
