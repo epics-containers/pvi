@@ -15,6 +15,10 @@
 :class: autosummary longtable
 :align: left
 
+* - {py:obj}`__all__ <pvi._version.__all__>`
+  - ```{autodoc2-docstring} pvi._version.__all__
+    :summary:
+    ```
 * - {py:obj}`TYPE_CHECKING <pvi._version.TYPE_CHECKING>`
   - ```{autodoc2-docstring} pvi._version.TYPE_CHECKING
     :summary:
@@ -38,6 +42,16 @@
 ````
 
 ### API
+
+````{py:data} __all__
+:canonical: pvi._version.__all__
+:value: >
+   ['__version__', '__version_tuple__', 'version', 'version_tuple']
+
+```{autodoc2-docstring} pvi._version.__all__
+```
+
+````
 
 ````{py:data} TYPE_CHECKING
 :canonical: pvi._version.TYPE_CHECKING

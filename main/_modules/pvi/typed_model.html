@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pvi.typed_model &#8212; pvi 0.10.2.dev6+gbc8905f6 documentation</title>
+    <title>pvi.typed_model &#8212; pvi 0.10.2.dev9+g3b73f9ed documentation</title>
   
   
   
@@ -15,8 +15,8 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!-- 
-    this give us a css class that will be invisible only if js is disabled 
+  <!--
+    this give us a css class that will be invisible only if js is disabled
   -->
   <noscript>
     <style>
@@ -26,21 +26,21 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- So that users can add custom icons -->
-  <script src="../../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=e5d43dd0"></script>
+    <script src="../../_static/documentation_options.js?v=383914f7"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -48,10 +48,11 @@
     <script src="../../_static/design-tabs.js?v=f930bc37"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pvi/typed_model';</script>
     <script>
-        DOCUMENTATION_OPTIONS.theme_version = '0.16.0';
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://epics-containers.github.io/pvi/switcher.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'main';
-        DOCUMENTATION_OPTIONS.show_version_warning_banner = false;
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
         </script>
     <link rel="icon" href="../../_static/pvi-favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -401,9 +402,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -450,9 +456,9 @@
                 <article class="bd-article">
                   
   <h1>Source code for pvi.typed_model</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">Annotated</span><span class="p">,</span>
     <span class="n">Any</span><span class="p">,</span>
     <span class="n">ClassVar</span><span class="p">,</span>
@@ -461,9 +467,9 @@
     <span class="n">get_args</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">ConfigDict</span><span class="p">,</span> <span class="n">Discriminator</span><span class="p">,</span> <span class="n">Field</span><span class="p">,</span> <span class="n">Tag</span><span class="p">,</span> <span class="n">computed_field</span>
-<span class="kn">from</span> <span class="nn">pydantic.fields</span> <span class="kn">import</span> <span class="n">FieldInfo</span>
-<span class="kn">from</span> <span class="nn">pydantic.json_schema</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">ConfigDict</span><span class="p">,</span> <span class="n">Discriminator</span><span class="p">,</span> <span class="n">Field</span><span class="p">,</span> <span class="n">Tag</span><span class="p">,</span> <span class="n">computed_field</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic.fields</span><span class="w"> </span><span class="kn">import</span> <span class="n">FieldInfo</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic.json_schema</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">DEFAULT_REF_TEMPLATE</span><span class="p">,</span>
     <span class="n">GenerateJsonSchema</span><span class="p">,</span>
     <span class="n">JsonSchemaMode</span><span class="p">,</span>
@@ -472,7 +478,7 @@
 
 <div class="viewcode-block" id="TypedModel">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.typed_model.html#pvi.typed_model.TypedModel">[docs]</a>
-<span class="k">class</span> <span class="nc">TypedModel</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TypedModel</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A Base class for members of tagged unions discriminated by the class name.</span>
 
 <span class="sd">    This class defines some hooks called by pydantic during validation and schema</span>
@@ -492,14 +498,14 @@
 
     <span class="nd">@computed_field</span>  <span class="c1"># type: ignore</span>
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Property to create type field from class name when serializing.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
 
 <div class="viewcode-block" id="TypedModel.__pydantic_init_subclass__">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.typed_model.html#pvi.typed_model.TypedModel.__pydantic_init_subclass__">[docs]</a>
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">__pydantic_init_subclass__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__pydantic_init_subclass__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add computed type field to model_fields to include it in the schema.</span>
 
 <span class="sd">        The `model_rebuild` method must be called to propagate this to the core schema</span>
@@ -519,7 +525,7 @@
 <div class="viewcode-block" id="TypedModel.model_json_schema">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.typed_model.html#pvi.typed_model.TypedModel.model_json_schema">[docs]</a>
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">model_json_schema</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">model_json_schema</span><span class="p">(</span>
         <span class="bp">cls</span><span class="p">,</span>
         <span class="n">by_alias</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="n">ref_template</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_REF_TEMPLATE</span><span class="p">,</span>
@@ -536,7 +542,7 @@
 <div class="viewcode-block" id="TypedModel.rebuild_child_models">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.typed_model.html#pvi.typed_model.TypedModel.rebuild_child_models">[docs]</a>
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">rebuild_child_models</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rebuild_child_models</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Recursively rebuild all subclass models to add type into core schema.&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">subclass</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">__subclasses__</span><span class="p">():</span>
             <span class="n">subclass</span><span class="o">.</span><span class="n">model_rebuild</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -546,7 +552,7 @@
 <div class="viewcode-block" id="TypedModel._tag">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.typed_model.html#pvi.typed_model.TypedModel._tag">[docs]</a>
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">_tag</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_tag</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a pydantic `Tag` for this class to include it in tagged unions.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">Annotated</span><span class="p">[</span><span class="bp">cls</span><span class="p">,</span> <span class="n">Tag</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)]</span></div>
 
@@ -554,7 +560,7 @@
 <div class="viewcode-block" id="TypedModel.discriminator">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.typed_model.html#pvi.typed_model.TypedModel.discriminator">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">discriminator</span><span class="p">():</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">discriminator</span><span class="p">():</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a pydantic `Discriminator` for a tagged union of `TypedModel`.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">Field</span><span class="p">(</span><span class="n">discriminator</span><span class="o">=</span><span class="n">Discriminator</span><span class="p">(</span><span class="n">TypedModel</span><span class="o">.</span><span class="n">_get_type_name</span><span class="p">))</span></div>
 
@@ -562,7 +568,7 @@
 <div class="viewcode-block" id="TypedModel._get_type_name">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.typed_model.html#pvi.typed_model.TypedModel._get_type_name">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_get_type_name</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">TypedModel</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_type_name</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">TypedModel</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the type name from an instance or serialized `dict` of `TypeModel`.</span>
 
 <span class="sd">        This is a callable for pydantic Discriminator to discriminate between types in a</span>
@@ -593,7 +599,7 @@
 
 <div class="viewcode-block" id="as_tagged_union">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.typed_model.html#pvi.typed_model.as_tagged_union">[docs]</a>
-<span class="k">def</span> <span class="nf">as_tagged_union</span><span class="p">(</span><span class="n">union</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">TypedModel</span><span class="p">]):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">as_tagged_union</span><span class="p">(</span><span class="n">union</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">TypedModel</span><span class="p">]):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a tagged union from a `Union` of `TypedModel`.</span>
 
 <span class="sd">    Members will be tagged with their class name to be discriminated by pydantic.</span>
@@ -638,8 +644,8 @@
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
-<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -650,7 +656,8 @@
       
         <div class="footer-item">
 <p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.0.
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
 </p></div>
       
     </div>

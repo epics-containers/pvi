@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pvi.device &#8212; pvi 0.10.2.dev6+gbc8905f6 documentation</title>
+    <title>pvi.device &#8212; pvi 0.10.2.dev9+g3b73f9ed documentation</title>
   
   
   
@@ -15,8 +15,8 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!-- 
-    this give us a css class that will be invisible only if js is disabled 
+  <!--
+    this give us a css class that will be invisible only if js is disabled
   -->
   <noscript>
     <style>
@@ -26,21 +26,21 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- So that users can add custom icons -->
-  <script src="../../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=e5d43dd0"></script>
+    <script src="../../_static/documentation_options.js?v=383914f7"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -48,10 +48,11 @@
     <script src="../../_static/design-tabs.js?v=f930bc37"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pvi/device';</script>
     <script>
-        DOCUMENTATION_OPTIONS.theme_version = '0.16.0';
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://epics-containers.github.io/pvi/switcher.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'main';
-        DOCUMENTATION_OPTIONS.show_version_warning_banner = false;
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
         </script>
     <link rel="icon" href="../../_static/pvi-favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -401,9 +402,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -450,32 +456,32 @@
                 <article class="bd-article">
                   
   <h1>Source code for pvi.device</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Sequence</span>
-<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Sequence</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">TYPE_CHECKING</span><span class="p">,</span>
     <span class="n">Annotated</span><span class="p">,</span>
     <span class="n">Any</span><span class="p">,</span>
     <span class="n">ClassVar</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">BaseModel</span><span class="p">,</span>
     <span class="n">ConfigDict</span><span class="p">,</span>
     <span class="n">Field</span><span class="p">,</span>
     <span class="n">ValidationError</span><span class="p">,</span>
     <span class="n">model_validator</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">typing_extensions</span> <span class="kn">import</span> <span class="n">Self</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing_extensions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Self</span>
 
-<span class="kn">from</span> <span class="nn">pvi._yaml_utils</span> <span class="kn">import</span> <span class="n">YamlValidatorMixin</span><span class="p">,</span> <span class="n">dump_yaml</span><span class="p">,</span> <span class="n">type_first</span>
-<span class="kn">from</span> <span class="nn">pvi.typed_model</span> <span class="kn">import</span> <span class="n">TypedModel</span><span class="p">,</span> <span class="n">as_tagged_union</span>
-<span class="kn">from</span> <span class="nn">pvi.utils</span> <span class="kn">import</span> <span class="n">find_pvi_yaml</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pvi._yaml_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">YamlValidatorMixin</span><span class="p">,</span> <span class="n">dump_yaml</span><span class="p">,</span> <span class="n">type_first</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pvi.typed_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">TypedModel</span><span class="p">,</span> <span class="n">as_tagged_union</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pvi.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">find_pvi_yaml</span>
 
 <span class="n">PASCAL_CASE_REGEX</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(?&lt;![A-Z])[A-Z]|[A-Z][a-z/d]|(?&lt;=[a-z])\d&quot;</span><span class="p">)</span>
 <span class="n">NON_PASCAL_CHARS_RE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[^A-Za-z0-9]&quot;</span><span class="p">)</span>
@@ -483,7 +489,7 @@
 
 <div class="viewcode-block" id="to_title_case">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.to_title_case">[docs]</a>
-<span class="k">def</span> <span class="nf">to_title_case</span><span class="p">(</span><span class="n">pascal_s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">to_title_case</span><span class="p">(</span><span class="n">pascal_s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Takes a PascalCaseFieldName and returns an Title Case Field Name</span>
 
 <span class="sd">    :param pascal_s: e.g. PascalCaseFieldName</span>
@@ -497,7 +503,7 @@
 
 <div class="viewcode-block" id="to_snake_case">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.to_snake_case">[docs]</a>
-<span class="k">def</span> <span class="nf">to_snake_case</span><span class="p">(</span><span class="n">pascal_s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">to_snake_case</span><span class="p">(</span><span class="n">pascal_s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Takes a PascalCaseFieldName and returns a snake_case_field_name</span>
 <span class="sd">    Args:</span>
 <span class="sd">        pascal_s: E.g. PascalCaseFieldName</span>
@@ -510,7 +516,7 @@
 
 <div class="viewcode-block" id="enforce_pascal_case">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.enforce_pascal_case">[docs]</a>
-<span class="k">def</span> <span class="nf">enforce_pascal_case</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">enforce_pascal_case</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Enforce a pascal case string, removing any invalid characters.</span>
 
 <span class="sd">    String will be returned unchanged if it is already valid PascalCase.</span>
@@ -538,7 +544,7 @@
 
 <div class="viewcode-block" id="TextFormat">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.TextFormat">[docs]</a>
-<span class="k">class</span> <span class="nc">TextFormat</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TextFormat</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Format to use for display of Text{Read,Write} widgets on a UI&quot;&quot;&quot;</span>
 
     <span class="n">decimal</span> <span class="o">=</span> <span class="s2">&quot;decimal&quot;</span>
@@ -551,32 +557,32 @@
 
 <div class="viewcode-block" id="AccessModeMixin">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.AccessModeMixin">[docs]</a>
-<span class="k">class</span> <span class="nc">AccessModeMixin</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">AccessModeMixin</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="n">_access_mode</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">access_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">access_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_access_mode</span></div>
 
 
 
 <div class="viewcode-block" id="ReadWidget">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.ReadWidget">[docs]</a>
-<span class="k">class</span> <span class="nc">ReadWidget</span><span class="p">(</span><span class="n">TypedModel</span><span class="p">,</span> <span class="n">AccessModeMixin</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ReadWidget</span><span class="p">(</span><span class="n">TypedModel</span><span class="p">,</span> <span class="n">AccessModeMixin</span><span class="p">):</span>
     <span class="n">_access_mode</span> <span class="o">=</span> <span class="s2">&quot;r&quot;</span></div>
 
 
 
 <div class="viewcode-block" id="LED">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.LED">[docs]</a>
-<span class="k">class</span> <span class="nc">LED</span><span class="p">(</span><span class="n">ReadWidget</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">LED</span><span class="p">(</span><span class="n">ReadWidget</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;LED display of a boolean PV&quot;&quot;&quot;</span></div>
 
 
 
 <div class="viewcode-block" id="BitField">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.BitField">[docs]</a>
-<span class="k">class</span> <span class="nc">BitField</span><span class="p">(</span><span class="n">ReadWidget</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">BitField</span><span class="p">(</span><span class="n">ReadWidget</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;LED and label for each bit of an int PV&quot;&quot;&quot;</span>
 
     <span class="n">labels</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span>
@@ -591,14 +597,14 @@
 
 <div class="viewcode-block" id="ProgressBar">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.ProgressBar">[docs]</a>
-<span class="k">class</span> <span class="nc">ProgressBar</span><span class="p">(</span><span class="n">ReadWidget</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ProgressBar</span><span class="p">(</span><span class="n">ReadWidget</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Progress bar from lower to upper limit of a float PV&quot;&quot;&quot;</span></div>
 
 
 
 <div class="viewcode-block" id="TextRead">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.TextRead">[docs]</a>
-<span class="k">class</span> <span class="nc">TextRead</span><span class="p">(</span><span class="n">ReadWidget</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TextRead</span><span class="p">(</span><span class="n">ReadWidget</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Text view of any PV&quot;&quot;&quot;</span>
 
     <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">use_enum_values</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Use Enum value when dumping</span>
@@ -608,7 +614,7 @@
 
 <div class="viewcode-block" id="TextRead.get_lines">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.TextRead.get_lines">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span> <span class="ow">or</span> <span class="mi">1</span></div>
 </div>
 
@@ -616,7 +622,7 @@
 
 <div class="viewcode-block" id="ArrayTrace">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.ArrayTrace">[docs]</a>
-<span class="k">class</span> <span class="nc">ArrayTrace</span><span class="p">(</span><span class="n">ReadWidget</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ArrayTrace</span><span class="p">(</span><span class="n">ReadWidget</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Trace of the array in a plot view&quot;&quot;&quot;</span>
 
     <span class="n">axis</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span>
@@ -634,14 +640,14 @@
 
 <div class="viewcode-block" id="ImageRead">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.ImageRead">[docs]</a>
-<span class="k">class</span> <span class="nc">ImageRead</span><span class="p">(</span><span class="n">ReadWidget</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ImageRead</span><span class="p">(</span><span class="n">ReadWidget</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;2D Image view of an NTNDArray&quot;&quot;&quot;</span></div>
 
 
 
 <div class="viewcode-block" id="WriteWidget">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.WriteWidget">[docs]</a>
-<span class="k">class</span> <span class="nc">WriteWidget</span><span class="p">(</span><span class="n">TypedModel</span><span class="p">,</span> <span class="n">AccessModeMixin</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">WriteWidget</span><span class="p">(</span><span class="n">TypedModel</span><span class="p">,</span> <span class="n">AccessModeMixin</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Widget that controls a PV&quot;&quot;&quot;</span>
 
     <span class="n">_access_mode</span> <span class="o">=</span> <span class="s2">&quot;w&quot;</span></div>
@@ -650,7 +656,7 @@
 
 <div class="viewcode-block" id="CheckBox">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.CheckBox">[docs]</a>
-<span class="k">class</span> <span class="nc">CheckBox</span><span class="p">(</span><span class="n">WriteWidget</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">CheckBox</span><span class="p">(</span><span class="n">WriteWidget</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Checkable control of a boolean PV.</span>
 
 <span class="sd">    This is compact replacement for a `ToggleButton` to be used in rows and tables.</span>
@@ -661,14 +667,14 @@
 
 <div class="viewcode-block" id="ToggleButton">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.ToggleButton">[docs]</a>
-<span class="k">class</span> <span class="nc">ToggleButton</span><span class="p">(</span><span class="n">WriteWidget</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ToggleButton</span><span class="p">(</span><span class="n">WriteWidget</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A pair of buttons to select between two mutually exclusive states.&quot;&quot;&quot;</span></div>
 
 
 
 <div class="viewcode-block" id="ComboBox">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.ComboBox">[docs]</a>
-<span class="k">class</span> <span class="nc">ComboBox</span><span class="p">(</span><span class="n">WriteWidget</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ComboBox</span><span class="p">(</span><span class="n">WriteWidget</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Selection of an enum PV&quot;&quot;&quot;</span>
 
     <span class="n">choices</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span>
@@ -677,7 +683,7 @@
 
 <div class="viewcode-block" id="ComboBox.get_choices">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.ComboBox.get_choices">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_choices</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_choices</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
         <span class="k">return</span> <span class="p">[]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">choices</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">choices</span><span class="p">)</span></div>
 </div>
 
@@ -685,7 +691,7 @@
 
 <div class="viewcode-block" id="ButtonPanel">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.ButtonPanel">[docs]</a>
-<span class="k">class</span> <span class="nc">ButtonPanel</span><span class="p">(</span><span class="n">WriteWidget</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ButtonPanel</span><span class="p">(</span><span class="n">WriteWidget</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;One-or-more buttons that poke a PV with a value</span>
 
 <span class="sd">    Args:</span>
@@ -702,7 +708,7 @@
 
 <div class="viewcode-block" id="TextWrite">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.TextWrite">[docs]</a>
-<span class="k">class</span> <span class="nc">TextWrite</span><span class="p">(</span><span class="n">WriteWidget</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TextWrite</span><span class="p">(</span><span class="n">WriteWidget</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Text control of any PV&quot;&quot;&quot;</span>
 
     <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">use_enum_values</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Use Enum value when dumping</span>
@@ -712,7 +718,7 @@
 
 <div class="viewcode-block" id="TextWrite.get_lines">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.TextWrite.get_lines">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span> <span class="ow">or</span> <span class="mi">1</span></div>
 </div>
 
@@ -729,7 +735,7 @@
 
 <div class="viewcode-block" id="ArrayWrite">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.ArrayWrite">[docs]</a>
-<span class="k">class</span> <span class="nc">ArrayWrite</span><span class="p">(</span><span class="n">WriteWidget</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ArrayWrite</span><span class="p">(</span><span class="n">WriteWidget</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Control of an array PV&quot;&quot;&quot;</span>
 
     <span class="n">widget</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span>
@@ -740,7 +746,7 @@
 
 <div class="viewcode-block" id="TableRead">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.TableRead">[docs]</a>
-<span class="k">class</span> <span class="nc">TableRead</span><span class="p">(</span><span class="n">ReadWidget</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TableRead</span><span class="p">(</span><span class="n">ReadWidget</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A read-only tabular view of an NTTable.&quot;&quot;&quot;</span>
 
     <span class="n">widgets</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span>
@@ -754,7 +760,7 @@
 
 <div class="viewcode-block" id="TableWrite">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.TableWrite">[docs]</a>
-<span class="k">class</span> <span class="nc">TableWrite</span><span class="p">(</span><span class="n">WriteWidget</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TableWrite</span><span class="p">(</span><span class="n">WriteWidget</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A writeable tabular view of an NTTable.&quot;&quot;&quot;</span>
 
     <span class="n">widgets</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span>
@@ -768,21 +774,21 @@
 
 <div class="viewcode-block" id="Layout">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.Layout">[docs]</a>
-<span class="k">class</span> <span class="nc">Layout</span><span class="p">(</span><span class="n">TypedModel</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Layout</span><span class="p">(</span><span class="n">TypedModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Widget displaying child Components&quot;&quot;&quot;</span></div>
 
 
 
 <div class="viewcode-block" id="Plot">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.Plot">[docs]</a>
-<span class="k">class</span> <span class="nc">Plot</span><span class="p">(</span><span class="n">Layout</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Plot</span><span class="p">(</span><span class="n">Layout</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Children are traces of the plot&quot;&quot;&quot;</span></div>
 
 
 
 <div class="viewcode-block" id="Row">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.Row">[docs]</a>
-<span class="k">class</span> <span class="nc">Row</span><span class="p">(</span><span class="n">Layout</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Row</span><span class="p">(</span><span class="n">Layout</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Children are columns in the row&quot;&quot;&quot;</span>
 
     <span class="n">header</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span>
@@ -793,7 +799,7 @@
 
 <div class="viewcode-block" id="Grid">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.Grid">[docs]</a>
-<span class="k">class</span> <span class="nc">Grid</span><span class="p">(</span><span class="n">Layout</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Grid</span><span class="p">(</span><span class="n">Layout</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Children are rows in the grid&quot;&quot;&quot;</span>
 
     <span class="n">labelled</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span>
@@ -804,7 +810,7 @@
 
 <div class="viewcode-block" id="SubScreen">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.SubScreen">[docs]</a>
-<span class="k">class</span> <span class="nc">SubScreen</span><span class="p">(</span><span class="n">Layout</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SubScreen</span><span class="p">(</span><span class="n">Layout</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Children are displayed on another screen opened with a button.&quot;&quot;&quot;</span>
 
     <span class="n">labelled</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Display labels for components&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="kc">True</span></div>
@@ -838,7 +844,7 @@
 
 <div class="viewcode-block" id="Named">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.Named">[docs]</a>
-<span class="k">class</span> <span class="nc">Named</span><span class="p">(</span><span class="n">TypedModel</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Named</span><span class="p">(</span><span class="n">TypedModel</span><span class="p">):</span>
     <span class="n">name</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span>
         <span class="n">PascalStr</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;PascalCase name to uniquely identify&quot;</span><span class="p">)</span>
     <span class="p">]</span></div>
@@ -847,7 +853,7 @@
 
 <div class="viewcode-block" id="Component">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.Component">[docs]</a>
-<span class="k">class</span> <span class="nc">Component</span><span class="p">(</span><span class="n">Named</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Component</span><span class="p">(</span><span class="n">Named</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;These make up a Device&quot;&quot;&quot;</span>
 
     <span class="n">label</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Label for component&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="kc">None</span>
@@ -857,13 +863,13 @@
 
 <div class="viewcode-block" id="Component.get_label">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.Component.get_label">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_label</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_label</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="ow">or</span> <span class="n">to_title_case</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Component.__eq__">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.Component.__eq__">[docs]</a>
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Component</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">name</span></div>
 </div>
 
@@ -871,14 +877,14 @@
 
 <div class="viewcode-block" id="Signal">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.Signal">[docs]</a>
-<span class="k">class</span> <span class="nc">Signal</span><span class="p">(</span><span class="n">Component</span><span class="p">,</span> <span class="n">AccessModeMixin</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Signal</span><span class="p">(</span><span class="n">Component</span><span class="p">,</span> <span class="n">AccessModeMixin</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Base signal type representing one or two PVs of a `Device`.&quot;&quot;&quot;</span></div>
 
 
 
 <div class="viewcode-block" id="SignalR">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.SignalR">[docs]</a>
-<span class="k">class</span> <span class="nc">SignalR</span><span class="p">(</span><span class="n">Signal</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SignalR</span><span class="p">(</span><span class="n">Signal</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Read-only `Signal` backed by a single PV.&quot;&quot;&quot;</span>
 
     <span class="n">_access_mode</span> <span class="o">=</span> <span class="s2">&quot;r&quot;</span>
@@ -896,7 +902,7 @@
 
 <div class="viewcode-block" id="SignalW">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.SignalW">[docs]</a>
-<span class="k">class</span> <span class="nc">SignalW</span><span class="p">(</span><span class="n">Signal</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SignalW</span><span class="p">(</span><span class="n">Signal</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Write-only `Signal` backed by a single PV.&quot;&quot;&quot;</span>
 
     <span class="n">_access_mode</span> <span class="o">=</span> <span class="s2">&quot;w&quot;</span>
@@ -911,7 +917,7 @@
 
 <div class="viewcode-block" id="SignalRW">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.SignalRW">[docs]</a>
-<span class="k">class</span> <span class="nc">SignalRW</span><span class="p">(</span><span class="n">SignalR</span><span class="p">,</span> <span class="n">SignalW</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SignalRW</span><span class="p">(</span><span class="n">SignalR</span><span class="p">,</span> <span class="n">SignalW</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Read/write `Signal` backed by a demand PV and a readback PV.</span>
 
 <span class="sd">    One PV can be used as both a demand and a readback by leaving `read_pv` unset. In</span>
@@ -946,7 +952,7 @@
 <div class="viewcode-block" id="SignalRW._validate_model">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.SignalRW._validate_model">[docs]</a>
     <span class="nd">@model_validator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">_validate_model</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_validate_model</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_pv</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_single_pv_rw</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_widget</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="c1"># Update default read widget if given a read PV</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">read_widget</span> <span class="o">=</span> <span class="n">TextRead</span><span class="p">()</span>
@@ -962,7 +968,7 @@
 
 <div class="viewcode-block" id="SignalX">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.SignalX">[docs]</a>
-<span class="k">class</span> <span class="nc">SignalX</span><span class="p">(</span><span class="n">SignalW</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SignalX</span><span class="p">(</span><span class="n">SignalW</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;`SignalW` that can be triggered to write a fixed value to a PV.&quot;&quot;&quot;</span>
 
     <span class="n">value</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span>
@@ -977,7 +983,7 @@
 <div class="viewcode-block" id="SignalX.check_write_widget">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.SignalX.check_write_widget">[docs]</a>
     <span class="nd">@model_validator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">check_write_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_write_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">write_widget</span><span class="p">,</span> <span class="n">ButtonPanel</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;SignalX write_widget must be ButtonPanel&quot;</span><span class="p">)</span>
 
@@ -988,7 +994,7 @@
 
 <div class="viewcode-block" id="DeviceRef">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.DeviceRef">[docs]</a>
-<span class="k">class</span> <span class="nc">DeviceRef</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DeviceRef</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Reference to another Device.&quot;&quot;&quot;</span>
 
     <span class="n">pv</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Child device PVI PV&quot;</span><span class="p">)]</span>
@@ -1001,14 +1007,14 @@
 
 <div class="viewcode-block" id="SignalRef">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.SignalRef">[docs]</a>
-<span class="k">class</span> <span class="nc">SignalRef</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SignalRef</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Reference to another Signal with the same name in this Device.&quot;&quot;&quot;</span></div>
 
 
 
 <div class="viewcode-block" id="Group">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.Group">[docs]</a>
-<span class="k">class</span> <span class="nc">Group</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Group</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Group of child components in a Layout&quot;&quot;&quot;</span>
 
     <span class="n">layout</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span>
@@ -1028,7 +1034,7 @@
 
 <div class="viewcode-block" id="walk">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.walk">[docs]</a>
-<span class="k">def</span> <span class="nf">walk</span><span class="p">(</span><span class="n">tree</span><span class="p">:</span> <span class="n">Tree</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">ComponentUnion</span><span class="p">]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">walk</span><span class="p">(</span><span class="n">tree</span><span class="p">:</span> <span class="n">Tree</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">ComponentUnion</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Depth first traversal of tree&quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tree</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">Group</span><span class="p">):</span>
@@ -1040,7 +1046,7 @@
 
 <div class="viewcode-block" id="Device">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.Device">[docs]</a>
-<span class="k">class</span> <span class="nc">Device</span><span class="p">(</span><span class="n">TypedModel</span><span class="p">,</span> <span class="n">YamlValidatorMixin</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Device</span><span class="p">(</span><span class="n">TypedModel</span><span class="p">,</span> <span class="n">YamlValidatorMixin</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Collection of Components&quot;&quot;&quot;</span>
 
     <span class="n">label</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Label for screen&quot;</span><span class="p">)]</span>
@@ -1049,7 +1055,7 @@
 
 <div class="viewcode-block" id="Device._to_dict">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.Device._to_dict">[docs]</a>
-    <span class="k">def</span> <span class="nf">_to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Serialize a `Device` instance to a `dict`.</span>
 
 <span class="sd">        The returned dictionary does not include a type field for the `Device` itself</span>
@@ -1067,7 +1073,7 @@
 
 <div class="viewcode-block" id="Device.serialize">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.Device.serialize">[docs]</a>
-    <span class="k">def</span> <span class="nf">serialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">yaml</span><span class="p">:</span> <span class="n">Path</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">serialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">yaml</span><span class="p">:</span> <span class="n">Path</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Serialize a `Device` instance to YAML.</span>
 
 <span class="sd">        Args:</span>
@@ -1081,7 +1087,7 @@
 <div class="viewcode-block" id="Device.deserialize">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.Device.deserialize">[docs]</a>
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">deserialize</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">yaml</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Device</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">deserialize</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">yaml</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Device</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Instantiate a Device instance from YAML.</span>
 
 <span class="sd">        Args:</span>
@@ -1098,7 +1104,7 @@
 
 <div class="viewcode-block" id="Device.deserialize_parents">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.Device.deserialize_parents">[docs]</a>
-    <span class="k">def</span> <span class="nf">deserialize_parents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">yaml_paths</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">]):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">deserialize_parents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">yaml_paths</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">]):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Populate Device with Components from Device yaml of parent classes.</span>
 
 <span class="sd">        Args:</span>
@@ -1114,7 +1120,7 @@
 
 <div class="viewcode-block" id="Device.merge_components">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.Device.merge_components">[docs]</a>
-    <span class="k">def</span> <span class="nf">merge_components</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">components</span><span class="p">:</span> <span class="n">Tree</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">merge_components</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">components</span><span class="p">:</span> <span class="n">Tree</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">existing_components</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">walk</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">components</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">Group</span><span class="p">):</span>
@@ -1144,7 +1150,7 @@
 
 <div class="viewcode-block" id="Device.generate_param_tree">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.Device.generate_param_tree">[docs]</a>
-    <span class="k">def</span> <span class="nf">generate_param_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_param_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="n">param_tree</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
             <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">group</span><span class="o">.</span><span class="n">model_dump_json</span><span class="p">())</span> <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span>
         <span class="p">)</span>
@@ -1156,7 +1162,7 @@
 
 <div class="viewcode-block" id="find_components">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.find_components">[docs]</a>
-<span class="k">def</span> <span class="nf">find_components</span><span class="p">(</span><span class="n">yaml_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">yaml_paths</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tree</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">find_components</span><span class="p">(</span><span class="n">yaml_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">yaml_paths</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tree</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">yaml_name</span> <span class="o">==</span> <span class="s2">&quot;asynPortDriver&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">[]</span>  <span class="c1"># asynPortDriver is the most base class and has no parameters</span>
 
@@ -1206,8 +1212,8 @@
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
-<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -1218,7 +1224,8 @@
       
         <div class="footer-item">
 <p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.0.
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
 </p></div>
       
     </div>
