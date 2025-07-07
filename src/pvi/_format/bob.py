@@ -70,7 +70,10 @@ class BobTemplate(UITemplate[_Element]):
 
             match widget_type, item, value:
                 case "table", "pv_name", pv:
-                    new_text = f"pva://{pv}"  # Must include pva prefix
+                    if pva_prefix := "pva://" not in pv:
+                        new_text = f"{pva_prefix}{pv}"  # Must include pva prefix
+                    else:
+                        new_text = str(pv)
                 case "action_button", "file", file_name:
                     new_text = file_name
                     if not new_text.endswith(".bob"):
