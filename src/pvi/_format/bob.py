@@ -70,7 +70,8 @@ class BobTemplate(UITemplate[_Element]):
 
             match widget_type, item, value:
                 case "table", "pv_name", pv:
-                    if pva_prefix := "pva://" not in pv:
+                    pva_prefix = "pva://"
+                    if pva_prefix not in pv:
                         new_text = f"{pva_prefix}{pv}"  # Must include pva prefix
                     else:
                         new_text = str(pv)
