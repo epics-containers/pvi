@@ -59,7 +59,9 @@ class ScreenFormatterFactory(Generic[T]):
     group_formatter_cls: type[GroupFormatter[T]]
     widget_formatter_factory: WidgetFormatterFactory[T]
     layout: ScreenLayout
-    components: dict[str, ComponentUnion] = field(default_factory=dict)
+    components: dict[str, ComponentUnion] = field(
+        default_factory=dict[str, ComponentUnion]
+    )
     base_file_name: str = ""
 
     def create_screen_formatter(
