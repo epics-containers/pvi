@@ -1,6 +1,6 @@
 from collections.abc import Sequence
 from copy import deepcopy
-from typing import Any
+from typing import Any, cast
 
 from lxml.etree import (
     SubElement,
@@ -80,7 +80,7 @@ class BobTemplate(UITemplate[_Element]):
                     if not new_text.endswith(".bob"):
                         new_text += ".bob"  # Must include file extension
                 case "action_button", "macros", dict():
-                    macros: dict[str, str] = value
+                    macros = cast(dict[str, str], value)
                     if macros:
                         add_button_macros(t_copy, macros)
                 case _:
