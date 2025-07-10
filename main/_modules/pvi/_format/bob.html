@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pvi._format.bob &#8212; pvi 0.10.2.dev9+g3b73f9ed documentation</title>
+    <title>pvi._format.bob &#8212; pvi 0.10.2.dev10+ge26f1700 documentation</title>
   
   
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=383914f7"></script>
+    <script src="../../../_static/documentation_options.js?v=7142982b"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -532,13 +532,17 @@
 
             <span class="k">match</span> <span class="n">widget_type</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span>
                 <span class="k">case</span> <span class="s2">&quot;table&quot;</span><span class="p">,</span> <span class="s2">&quot;pv_name&quot;</span><span class="p">,</span> <span class="n">pv</span><span class="p">:</span>
-                    <span class="n">new_text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;pva://</span><span class="si">{</span><span class="n">pv</span><span class="si">}</span><span class="s2">&quot;</span>  <span class="c1"># Must include pva prefix</span>
+                    <span class="n">pva_prefix</span> <span class="o">=</span> <span class="s2">&quot;pva://&quot;</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">pv</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">pva_prefix</span><span class="p">):</span>
+                        <span class="n">new_text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pva_prefix</span><span class="si">}{</span><span class="n">pv</span><span class="si">}</span><span class="s2">&quot;</span>  <span class="c1"># Must include pva prefix</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">new_text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">pv</span><span class="p">)</span>
                 <span class="k">case</span> <span class="s2">&quot;action_button&quot;</span><span class="p">,</span> <span class="s2">&quot;file&quot;</span><span class="p">,</span> <span class="n">file_name</span><span class="p">:</span>
                     <span class="n">new_text</span> <span class="o">=</span> <span class="n">file_name</span>
                     <span class="k">if</span> <span class="ow">not</span> <span class="n">new_text</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.bob&quot;</span><span class="p">):</span>
                         <span class="n">new_text</span> <span class="o">+=</span> <span class="s2">&quot;.bob&quot;</span>  <span class="c1"># Must include file extension</span>
                 <span class="k">case</span> <span class="s2">&quot;action_button&quot;</span><span class="p">,</span> <span class="s2">&quot;macros&quot;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">():</span>
-                    <span class="n">macros</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                    <span class="n">macros</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>  <span class="c1"># type: ignore</span>
                     <span class="k">if</span> <span class="n">macros</span><span class="p">:</span>
                         <span class="n">add_button_macros</span><span class="p">(</span><span class="n">t_copy</span><span class="p">,</span> <span class="n">macros</span><span class="p">)</span>
                 <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
