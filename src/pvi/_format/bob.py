@@ -70,13 +70,17 @@ class BobTemplate(UITemplate[_Element]):
 
             match widget_type, item, value:
                 case "table", "pv_name", pv:
-                    new_text = f"pva://{pv}"  # Must include pva prefix
+                    pva_prefix = "pva://"
+                    if not pv.startswith(pva_prefix):
+                        new_text = f"{pva_prefix}{pv}"  # Must include pva prefix
+                    else:
+                        new_text = str(pv)
                 case "action_button", "file", file_name:
                     new_text = file_name
                     if not new_text.endswith(".bob"):
                         new_text += ".bob"  # Must include file extension
                 case "action_button", "macros", dict():
-                    macros: dict[str, str] = value
+                    macros: dict[str, str] = value  # type: ignore
                     if macros:
                         add_button_macros(t_copy, macros)
                 case _:

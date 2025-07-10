@@ -173,7 +173,7 @@ class SubScreenWidgetFormatter(WidgetFormatter[T]):
     label: str
     file_name: str
     components: Group | None = None
-    macros: dict[str, str] = field(default_factory=dict)
+    macros: dict[str, str] = field(default_factory=dict[str, str])
 
 
 if sys.version_info >= (3, 11):
