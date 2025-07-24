@@ -10,5 +10,8 @@ children:
         - type: CheckBox
 
         - type: ComboBox
+          choices:
+            - "One"
+            - "Two"
 
         - type: TextWrite

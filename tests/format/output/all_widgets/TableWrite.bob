@@ -43,10 +43,18 @@
       <column>
         <name>Column 1</name>
         <editable>true</editable>
+        <options>
+          <option>false</option>
+          <option>true</option>
+        </options>
       </column>
       <column>
         <name>Column 2</name>
         <editable>true</editable>
+        <options>
+          <option>One</option>
+          <option>Two</option>
+        </options>
       </column>
       <column>
         <name>Column 3</name>
