@@ -5,8 +5,8 @@ minor 0
 release 1
 x 0
 y 0
-w 755
-h 745
+w 1130
+h 710
 font "arial-bold-r-12.0"
 ctlFont "arial-bold-r-12.0"
 btnFont "arial-bold-r-12.0"
@@ -33,7 +33,7 @@ minor 1
 release 1
 x 0
 y 0
-w 755
+w 1130
 h 25
 font "arial-bold-r-16.0"
 fontAlign "center"
@@ -1798,10 +1798,10 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 380
-y 480
+x 755
+y 35
 w 370
-h 260
+h 670
 lineColor index 14
 fill
 fillColor index 5
@@ -1813,8 +1813,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 380
-y 475
+x 755
+y 30
 w 370
 h 10
 font "arial-medium-r-12.0"
@@ -1834,8 +1834,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 385
-y 490
+x 760
+y 45
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -1853,8 +1853,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 540
-y 490
+x 915
+y 45
 w 100
 h 20
 controlPv "$(P)$(R)ThresholdEnergy"
@@ -1872,8 +1872,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 645
-y 490
+x 1020
+y 45
 w 100
 h 20
 controlPv "$(P)$(R)ThresholdEnergy_RBV"
@@ -1891,8 +1891,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 385
-y 515
+x 760
+y 70
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -1910,8 +1910,8 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 540
-y 515
+x 915
+y 70
 w 100
 h 20
 fgColor index 14
@@ -1932,8 +1932,8 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 685
-y 515
+x 1060
+y 70
 w 20
 h 20
 controlPv "$(P)$(R)ThresholdAutoApply_RBV"
@@ -1950,8 +1950,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 385
-y 540
+x 760
+y 95
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -1969,8 +1969,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 540
-y 540
+x 915
+y 95
 w 100
 h 20
 controlPv "$(P)$(R)Energy"
@@ -1988,8 +1988,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 645
-y 540
+x 1020
+y 95
 w 100
 h 20
 controlPv "$(P)$(R)Energy_RBV"
@@ -2007,8 +2007,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 385
-y 565
+x 760
+y 120
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -2026,8 +2026,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 540
-y 565
+x 915
+y 120
 w 100
 h 20
 controlPv "$(P)$(R)MinFlatField"
@@ -2045,8 +2045,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 645
-y 565
+x 1020
+y 120
 w 100
 h 20
 controlPv "$(P)$(R)MinFlatField_RBV"
@@ -2064,8 +2064,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 385
-y 590
+x 760
+y 145
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -2083,8 +2083,8 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 540
-y 590
+x 915
+y 145
 w 100
 h 20
 fgColor index 25
@@ -2102,8 +2102,8 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 645
-y 590
+x 1020
+y 145
 w 100
 h 20
 controlPv "$(P)$(R)GapFill_RBV"
@@ -2121,8 +2121,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 385
-y 615
+x 760
+y 170
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -2140,8 +2140,8 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 540
-y 615
+x 915
+y 170
 w 205
 h 20
 fgColor index 25
@@ -2159,8 +2159,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 385
-y 640
+x 760
+y 195
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -2178,8 +2178,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 540
-y 640
+x 915
+y 195
 w 205
 h 20
 indicatorColor index 16
@@ -2200,8 +2200,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 385
-y 665
+x 760
+y 220
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -2219,8 +2219,8 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 540
-y 665
+x 915
+y 220
 w 205
 h 20
 controlPv "$(P)$(R)ByteMonitor_RBV"
@@ -2237,8 +2237,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 385
-y 690
+x 760
+y 245
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -2256,8 +2256,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 540
-y 690
+x 915
+y 245
 w 205
 h 20
 font "arial-bold-r-10.0"
@@ -2275,8 +2275,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 385
-y 715
+x 760
+y 270
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -2294,8 +2294,8 @@ beginObjectProperties
 major 4
 minor 1
 release 1
-x 540
-y 715
+x 915
+y 270
 w 205
 h 20
 font "arial-bold-r-10.0"
@@ -2304,5 +2304,43 @@ bgColor index 3
 useDisplayBg
 value {
   "$(P)$(R)ImageRead_RBV"
+}
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 760
+y 295
+w 100
+h 200
+font "arial-bold-r-10.0"
+fgColor index 14
+bgColor index 3
+useDisplayBg
+value {
+  "$(P)$(R)TableReadLED_RBV"
+}
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 760
+y 500
+w 200
+h 200
+font "arial-bold-r-10.0"
+fgColor index 14
+bgColor index 3
+useDisplayBg
+value {
+  "$(P)$(R)TableComboBoxCheckBoxTest"
 }
 endObjectProperties

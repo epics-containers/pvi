@@ -7,7 +7,7 @@ display {
 	object {
 		x=0
 		y=0
-		width=995
+		width=1200
 		height=615
 	}
 	clr=14
@@ -91,7 +91,7 @@ rectangle {
 	object {
 		x=0
 		y=0
-		width=995
+		width=1200
 		height=25
 	}
 	"basic attribute" {
@@ -102,7 +102,7 @@ text {
 	object {
 		x=0
 		y=0
-		width=995
+		width=1200
 		height=25
 	}
 	"basic attribute" {
@@ -1417,8 +1417,8 @@ rectangle {
 	object {
 		x=665
 		y=30
-		width=325
-		height=280
+		width=530
+		height=485
 	}
 	"basic attribute" {
 		clr=14
@@ -1429,7 +1429,7 @@ rectangle {
 	object {
 		x=670
 		y=35
-		width=315
+		width=520
 		height=20
 	}
 	"basic attribute" {
@@ -1440,7 +1440,7 @@ text {
 	object {
 		x=670
 		y=35
-		width=315
+		width=520
 		height=20
 	}
 	"basic attribute" {
@@ -1790,5 +1790,31 @@ text {
 		clr=14
 	}
 	textix="$(P)$(R)ImageRead_RBV"
+	align="horiz. right"
+}
+text {
+	object {
+		x=670
+		y=310
+		width=100
+		height=200
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="$(P)$(R)TableReadLED_RBV"
+	align="horiz. right"
+}
+text {
+	object {
+		x=990
+		y=60
+		width=200
+		height=200
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="$(P)$(R)TableComboBoxCheckBoxTest"
 	align="horiz. right"
 }
