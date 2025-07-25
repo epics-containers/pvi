@@ -14,6 +14,7 @@ from pvi._format.widget import UITemplate, WidgetFormatter
 from pvi.device import (
     LED,
     BitField,
+    CheckBox,
     ComboBox,
     TableRead,
     TableWrite,
@@ -184,7 +185,7 @@ def add_table_column(
     widget: WidgetUnion,
 ):
     options: Sequence[str] = []
-    if isinstance(widget, LED):
+    if isinstance(widget, LED | CheckBox):
         options = ["false", "true"]
     elif isinstance(widget, ComboBox):
         options = widget.get_choices()

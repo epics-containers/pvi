@@ -360,3 +360,23 @@ children:
     read_pv: $(P)$(R)ImageRead_RBV
     read_widget:
       type: ImageRead
+  
+  - type: SignalR
+    name: TableLEDTest
+    read_pv: $(P)$(R)TableReadLED_RBV
+    read_widget:
+      type: TableRead
+      widgets:
+        - type: LED
+  
+  - type: SignalW
+    name: TableComboBoxCheckBoxTest
+    write_pv: $(P)$(R)TableComboBoxCheckBoxTest
+    write_widget:
+      type: TableWrite
+      widgets:
+        - type: ComboBox
+          choices:
+            - "One"
+            - "Two"
+        - type: CheckBox
