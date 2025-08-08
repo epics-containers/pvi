@@ -7,3 +7,6 @@ children:
   write_pv: $(P)$(R)ComboBox
   write_widget:
     type: ComboBox
+    choices:
+      - "One"
+      - "Two"

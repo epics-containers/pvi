@@ -27,24 +27,19 @@
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label</name>
-    <text>Combo Box</text>
+    <text>Toggle Test</text>
     <x>22</x>
     <y>30</y>
     <width>120</width>
     <height>20</height>
     <tooltip>$(text)</tooltip>
   </widget>
-  <widget type="combo" version="2.0.0">
-    <name>ComboBox</name>
-    <pv_name>$(P)$(R)ComboBox</pv_name>
+  <widget type="choice" version="2.0.0">
+    <name>ToggleButton</name>
+    <pv_name>$(P)$(R)ToggleButton</pv_name>
     <x>146</x>
     <y>30</y>
     <width>124</width>
     <height>20</height>
-    <items>
-      <item>One</item>
-      <item>Two</item>
-    </items>
-    <items_from_pv>false</items_from_pv>
   </widget>
 </display>

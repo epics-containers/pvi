@@ -2,11 +2,8 @@
 label: $(P)$(R)
 parent: asynPortDriver
 children:
-- type: SignalRW
+- type: SignalW
   name: ToggleTest
   write_pv: $(P)$(R)ToggleButton
-  widget:
+  write_widget:
     type: ToggleButton
-  read_pv: ToggleButton_RBV
-  read_widget:
-    type: LED
