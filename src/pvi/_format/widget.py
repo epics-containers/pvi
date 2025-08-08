@@ -286,22 +286,22 @@ class GroupFormatter(WidgetFormatter[T]):
 
 @dataclass
 class WidgetFormatterFactory(Generic[T]):
-    header_formatter_cls: type[LabelWidgetFormatter[T]]
-    label_formatter_cls: type[LabelWidgetFormatter[T]]
-    led_formatter_cls: type[PVWidgetFormatter[T]]
-    progress_bar_formatter_cls: type[PVWidgetFormatter[T]]
-    text_read_formatter_cls: type[PVWidgetFormatter[T]]
-    check_box_formatter_cls: type[PVWidgetFormatter[T]]
-    toggle_formatter_cls: type[PVWidgetFormatter[T]]
-    combo_box_formatter_cls: type[PVWidgetFormatter[T]]
-    text_write_formatter_cls: type[PVWidgetFormatter[T]]
-    table_formatter_cls: type[PVWidgetFormatter[T]]
-    action_formatter_cls: type[ActionWidgetFormatter[T]]
-    sub_screen_formatter_cls: type[SubScreenWidgetFormatter[T]]
-    bitfield_formatter_cls: type[PVWidgetFormatter[T]]
-    array_trace_formatter_cls: type[PVWidgetFormatter[T]]
-    button_panel_formatter_cls: type[PVWidgetFormatter[T]]
-    image_read_formatter_cls: type[PVWidgetFormatter[T]]
+    header_formatter_cls: type[LabelWidgetFormatter[T]] | None = None
+    label_formatter_cls: type[LabelWidgetFormatter[T]] | None = None
+    led_formatter_cls: type[PVWidgetFormatter[T]] | None = None
+    progress_bar_formatter_cls: type[PVWidgetFormatter[T]] | None = None
+    text_read_formatter_cls: type[PVWidgetFormatter[T]] | None = None
+    check_box_formatter_cls: type[PVWidgetFormatter[T]] | None = None
+    toggle_formatter_cls: type[PVWidgetFormatter[T]] | None = None
+    combo_box_formatter_cls: type[PVWidgetFormatter[T]] | None = None
+    text_write_formatter_cls: type[PVWidgetFormatter[T]] | None = None
+    table_formatter_cls: type[PVWidgetFormatter[T]] | None = None
+    action_formatter_cls: type[ActionWidgetFormatter[T]] | None = None
+    sub_screen_formatter_cls: type[SubScreenWidgetFormatter[T]] | None = None
+    bitfield_formatter_cls: type[PVWidgetFormatter[T]] | None = None
+    array_trace_formatter_cls: type[PVWidgetFormatter[T]] | None = None
+    button_panel_formatter_cls: type[PVWidgetFormatter[T]] | None = None
+    image_read_formatter_cls: type[PVWidgetFormatter[T]] | None = None
 
     def pv_widget_formatter(
         self,
@@ -320,7 +320,7 @@ class WidgetFormatterFactory(Generic[T]):
             A WidgetFormatter representing the component
         """
 
-        widget_formatter_classes: dict[type, type[PVWidgetFormatter[T]]] = {
+        widget_formatter_classes: dict[type, type[PVWidgetFormatter[T]] | None] = {
             # Currently supported formatters of ReadWidget/WriteWidget Components
             LED: self.led_formatter_cls,
             ProgressBar: self.progress_bar_formatter_cls,
@@ -340,6 +340,10 @@ class WidgetFormatterFactory(Generic[T]):
             bounds.h *= widget.get_lines()
 
         widget_formatter_cls = widget_formatter_classes[type(widget)]
+        if widget_formatter_cls is None:
+            raise NotImplementedError(
+                f"No formatter provided for widget {type(widget).__name__}"
+            )
         return widget_formatter_cls(bounds=bounds, pv=pv, widget=widget)
 
 
