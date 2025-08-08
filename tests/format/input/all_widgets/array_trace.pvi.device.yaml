@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../schemas/pvi.device.schema.json
+label: $(P)$(R)
+parent: asynPortDriver
+children:
+- type: SignalR
+  name: ArrayTraceTest
+  read_pv: $(P)$(R)ArrayTrace_RBV
+  read_widget:
+    type: ArrayTrace
+    axis: "x"

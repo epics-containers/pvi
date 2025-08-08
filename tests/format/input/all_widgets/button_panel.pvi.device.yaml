@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=../../../schemas/pvi.device.schema.json
+label: $(P)$(R)
+parent: asynPortDriver
+children:
+  - type: SignalW
+    name: ButtonPannel
+    write_pv: $(P)$(R)ButtonPanel
+    write_widget:
+      type: ButtonPanel
+      actions:
+        Stop: "0"
+        Start: "1"
+

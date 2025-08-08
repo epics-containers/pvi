@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../../schemas/pvi.device.schema.json
+label: $(P)$(R)
+parent: asynPortDriver
+children:
+- type: SignalRW
+  name: ToggleTest
+  write_pv: $(P)$(R)ToggleButton
+  widget:
+    type: ToggleButton
+  read_pv: ToggleButton_RBV
+  read_widget:
+    type: LED

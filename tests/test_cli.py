@@ -28,16 +28,46 @@ def test_schemas(tmp_path, helper, filename):
     helper.assert_cli_output_matches(app, expected_path, "schema", tmp_path / filename)
 
 
+@pytest.fixture(scope="module")
+def formats_to_skip():
+    return {
+        ".adl": ["bit_field", "array_trace", "image_read", "table_read", "table_write"],
+        ".edl": ["array_trace", "image_read", "table_read", "table_write"],
+        ".bob": [],
+    }
+
+
 @pytest.mark.parametrize(
-    "filename,formatter",
+    "widget_name",
     [
-        ("mixedWidgets.adl", "aps.adl.pvi.formatter.yaml"),
-        ("mixedWidgets.edl", "dls.edl.pvi.formatter.yaml"),
-        ("mixedWidgets.bob", "dls.bob.pvi.formatter.yaml"),
+        "array_trace",
+        "bit_field",
+        "button_panel",
+        "check_box",
+        "combo_box",
+        "image_read",
+        "led",
+        "progress_bar",
+        "table_read",
+        "table_write",
+        "text_read",
+        "text_write",
+        "toggle_button",
     ],
 )
-def test_format(tmp_path, helper, filename, formatter):
-    expected_path = HERE / "format" / "output" / filename
+@pytest.mark.parametrize(
+    "formatter,format",
+    [
+        ("aps.adl.pvi.formatter.yaml", ".adl"),
+        ("dls.edl.pvi.formatter.yaml", ".edl"),
+        ("dls.bob.pvi.formatter.yaml", ".bob"),
+    ],
+)
+def test_format(tmp_path, helper, formatter, format, widget_name, formats_to_skip):
+    if widget_name in formats_to_skip[format]:
+        pytest.skip(f"{widget_name} not supported in {format} format")
+    filename = widget_name + format
+    expected_path = HERE / "format" / "output" / "all_widgets" / filename
     input_path = HERE / "format" / "input"
     formatter_path = input_path / formatter
     helper.assert_cli_output_matches(
@@ -45,7 +75,7 @@ def test_format(tmp_path, helper, filename, formatter):
         expected_path,
         "format --yaml-path " + str(input_path),
         tmp_path / filename,
-        HERE / "format" / "input" / "mixedWidgets.pvi.device.yaml",
+        input_path / "all_widgets" / (widget_name + ".pvi.device.yaml"),
         formatter_path,
     )
 
