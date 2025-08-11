@@ -267,7 +267,7 @@ class DLSFormatter(Formatter):
                 ),
                 check_box_formatter_cls=PVWidgetFormatter[_Element].from_template(
                     template,
-                    search="ChoiceButton",
+                    search="CheckBox",
                     property_map={"pv_name": "pv"},
                 ),
                 toggle_formatter_cls=PVWidgetFormatter[_Element].from_template(
