@@ -286,8 +286,10 @@ class GroupFormatter(WidgetFormatter[T]):
 
 @dataclass
 class WidgetFormatterFactory(Generic[T]):
-    header_formatter_cls: type[LabelWidgetFormatter[T]] | None = None
-    label_formatter_cls: type[LabelWidgetFormatter[T]] | None = None
+    header_formatter_cls: type[LabelWidgetFormatter[T]]
+    label_formatter_cls: type[LabelWidgetFormatter[T]]
+    action_formatter_cls: type[ActionWidgetFormatter[T]]
+    sub_screen_formatter_cls: type[SubScreenWidgetFormatter[T]]
     led_formatter_cls: type[PVWidgetFormatter[T]] | None = None
     progress_bar_formatter_cls: type[PVWidgetFormatter[T]] | None = None
     text_read_formatter_cls: type[PVWidgetFormatter[T]] | None = None
@@ -296,8 +298,6 @@ class WidgetFormatterFactory(Generic[T]):
     combo_box_formatter_cls: type[PVWidgetFormatter[T]] | None = None
     text_write_formatter_cls: type[PVWidgetFormatter[T]] | None = None
     table_formatter_cls: type[PVWidgetFormatter[T]] | None = None
-    action_formatter_cls: type[ActionWidgetFormatter[T]] | None = None
-    sub_screen_formatter_cls: type[SubScreenWidgetFormatter[T]] | None = None
     bitfield_formatter_cls: type[PVWidgetFormatter[T]] | None = None
     array_trace_formatter_cls: type[PVWidgetFormatter[T]] | None = None
     button_panel_formatter_cls: type[PVWidgetFormatter[T]] | None = None
