@@ -121,7 +121,7 @@ text {
 	"basic attribute" {
 		clr=14
 	}
-	textix="Toggle Test"
+	textix="Toggle Button"
 	align="horiz. right"
 }
 "choice button" {

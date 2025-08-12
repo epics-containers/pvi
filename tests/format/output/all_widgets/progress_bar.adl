@@ -121,7 +121,7 @@ text {
 	"basic attribute" {
 		clr=14
 	}
-	textix="Progress Bar Test"
+	textix="Progress Bar"
 	align="horiz. right"
 }
 bar {
@@ -132,7 +132,7 @@ bar {
 		height=20
 	}
 	monitor {
-		chan="$(P)$(R)ProgressBarTest_RBV"
+		chan="$(P)$(R)ProgressBar_RBV"
 		clr=51
 		bclr=4
 	}

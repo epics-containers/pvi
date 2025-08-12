@@ -59,7 +59,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  "Progress Bar Test"
+  "Progress Bar"
 }
 endObjectProperties
 
@@ -76,7 +76,7 @@ h 20
 indicatorColor index 16
 fgColor index 14
 bgColor index 10
-indicatorPv "$(P)$(R)ProgressBarTest_RBV"
+indicatorPv "$(P)$(R)ProgressBar_RBV"
 origin "0"
 font "arial-bold-r-12.0"
 border

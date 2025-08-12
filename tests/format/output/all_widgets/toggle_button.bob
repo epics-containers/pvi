@@ -27,7 +27,7 @@
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label</name>
-    <text>Toggle Test</text>
+    <text>Toggle Button</text>
     <x>22</x>
     <y>30</y>
     <width>120</width>

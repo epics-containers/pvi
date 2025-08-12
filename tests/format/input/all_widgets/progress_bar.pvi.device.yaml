@@ -3,7 +3,7 @@ label: $(P)$(R)
 parent: asynPortDriver
 children:
 - type: SignalR
-  name: ProgressBarTest
-  read_pv: $(P)$(R)ProgressBarTest_RBV
+  name: ProgressBar
+  read_pv: $(P)$(R)ProgressBar_RBV
   read_widget:
     type: ProgressBar

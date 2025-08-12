@@ -3,7 +3,7 @@ label: $(P)$(R)
 parent: asynPortDriver
 children:
 - type: SignalR
-  name: ImageReadTest
+  name: ImageRead
   read_pv: $(P)$(R)ImageRead_RBV
   read_widget:
     type: ImageRead

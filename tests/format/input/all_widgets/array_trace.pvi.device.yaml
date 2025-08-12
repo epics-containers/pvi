@@ -3,7 +3,7 @@ label: $(P)$(R)
 parent: asynPortDriver
 children:
 - type: SignalR
-  name: ArrayTraceTest
+  name: ArrayTrace
   read_pv: $(P)$(R)ArrayTrace_RBV
   read_widget:
     type: ArrayTrace

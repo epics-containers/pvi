@@ -59,7 +59,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  "Toggle Test"
+  "Toggle Button"
 }
 endObjectProperties
 
