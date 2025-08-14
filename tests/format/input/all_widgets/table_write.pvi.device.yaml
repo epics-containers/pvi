@@ -1,16 +1,15 @@
-# yaml-language-server: $schema=../../../schemas/pvi.device.schema.json
+# yaml-language-server: $schema=../../../../schemas/pvi.device.schema.json
 label: $(P)$(R)
 parent: asynPortDriver
 children:
-- type: SignalW
-  name: Table
-  write_pv: $(P)(R)Table
-  write_widget:
-    type: TableWrite
-    widgets:
+  - type: SignalW
+    name: Table
+    write_pv: $(P)(R)Table
+    write_widget:
+      type: TableWrite
+      widgets:
+        - type: CheckBox
 
-    - type: CheckBox
+        - type: ComboBox
 
-    - type: ComboBox
-
-    - type: TextWrite
+        - type: TextWrite
