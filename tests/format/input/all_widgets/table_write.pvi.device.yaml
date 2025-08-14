@@ -3,8 +3,8 @@ label: $(P)$(R)
 parent: asynPortDriver
 children:
   - type: SignalW
-    name: Table
-    write_pv: $(P)(R)Table
+    name: TableWrite
+    write_pv: $(P)(R)TableWrite
     write_widget:
       type: TableWrite
       widgets:

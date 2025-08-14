@@ -1,0 +1,63 @@
+parent: asynPortDriver
+label: $(P)$(R)
+children:
+
+- type: SignalW
+  name: ButtonPannel
+  write_pv: $(P)$(R)ButtonPanel
+  write_widget:
+    type: ButtonPanel
+    actions:
+      Stop: '0'
+      Start: '1'
+
+- type: SignalW
+  name: CheckBox
+  write_pv: $(P)$(R)CheckBox
+  write_widget:
+    type: CheckBox
+
+- type: SignalW
+  name: ComboBox
+  write_pv: $(P)$(R)ComboBox
+  write_widget:
+    type: ComboBox
+    choices:
+    - One
+    - Two
+
+- type: SignalR
+  name: LED
+  read_pv: $(P)$(R)LED
+  read_widget:
+    type: LED
+
+- type: SignalR
+  name: ProgressBar
+  read_pv: $(P)$(R)ProgressBar_RBV
+  read_widget:
+    type: ProgressBar
+
+- type: SignalR
+  name: TextRead
+  read_pv: $(P)$(R)TextRead
+  read_widget:
+    type: TextRead
+
+- type: SignalW
+  name: TextWrite
+  write_pv: $(P)$(R)TextWrite
+  write_widget:
+    type: TextWrite
+
+- type: SignalW
+  name: ToggleButton
+  write_pv: $(P)$(R)ToggleButton
+  write_widget:
+    type: ToggleButton
+
+- type: SignalR
+  name: BitField
+  read_pv: $(P)$(R)BitField_RBV
+  read_widget:
+    type: BitField

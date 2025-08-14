@@ -59,7 +59,7 @@ fgColor index 14
 bgColor index 3
 useDisplayBg
 value {
-  "Byte Monitor"
+  "Bit Field"
 }
 endObjectProperties
 
@@ -73,7 +73,7 @@ x 165
 y 30
 w 205
 h 20
-controlPv "$(P)$(R)ByteMonitor_RBV"
+controlPv "$(P)$(R)BitField_RBV"
 lineColor index 14
 onColor index 15
 offColor index 19

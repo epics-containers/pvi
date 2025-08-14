@@ -7,6 +7,7 @@ import pytest
 
 from pvi import __version__
 from pvi.__main__ import app
+from pvi._yaml_utils import dump_yaml, load_yaml
 
 HERE = Path(__file__).parent
 
@@ -192,5 +193,51 @@ def test_static_table(tmp_path, helper, input_yaml, formatter, output):
         "format --yaml-path " + str(input_path),
         tmp_path / output,
         input_path / input_yaml,
+        formatter_path,
+    )
+
+
+@pytest.mark.parametrize(
+    "formatter,format,skip",
+    [
+        (
+            "aps.adl.pvi.formatter.yaml",
+            ".adl",
+            ["ArrayTrace", "ImageRead", "TableRead", "TableWrite", "BitField"],
+        ),
+        (
+            "dls.edl.pvi.formatter.yaml",
+            ".edl",
+            ["ArrayTrace", "ImageRead", "TableRead", "TableWrite"],
+        ),
+        ("dls.bob.pvi.formatter.yaml", ".bob", []),
+    ],
+)
+def test_combine_widgets(tmp_path, helper, formatter, format, skip):
+    children = []
+    for path in (HERE / "format" / "input" / "all_widgets").iterdir():
+        yaml = load_yaml(path)
+        children += [child for child in yaml["children"] if child["name"] not in skip]
+    combined_yaml = {
+        "parent": "asynPortDriver",
+        "label": "$(P)$(R)",
+        "children": children,
+    }
+
+    combined_path = tmp_path / ("all_widgets" + format + ".pvi.device.yaml")
+    dump_yaml(combined_yaml, combined_path)
+
+    input_path = HERE / "format" / "input"
+    formatter_path = input_path / formatter
+    expected_path = (
+        HERE / "format" / "output" / "all_widgets" / ("all_widgets" + format)
+    )
+
+    helper.assert_cli_output_matches(
+        app,
+        expected_path,
+        "format --yaml-path " + str(combined_path),
+        tmp_path / ("all_widgets" + format),
+        combined_path,
         formatter_path,
     )

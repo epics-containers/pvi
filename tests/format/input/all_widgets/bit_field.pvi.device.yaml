@@ -3,7 +3,7 @@ label: $(P)$(R)
 parent: asynPortDriver
 children:
   - type: SignalR
-    name: ByteMonitor
-    read_pv: $(P)$(R)ByteMonitor_RBV
+    name: BitField
+    read_pv: $(P)$(R)BitField_RBV
     read_widget:
       type: BitField

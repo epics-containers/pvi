@@ -27,7 +27,7 @@
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label</name>
-    <text>Byte Monitor</text>
+    <text>Bit Field</text>
     <x>22</x>
     <y>30</y>
     <width>120</width>
@@ -36,7 +36,7 @@
   </widget>
   <widget type="byte_monitor" version="2.0.0">
     <name>BitField</name>
-    <pv_name>$(P)$(R)ByteMonitor_RBV</pv_name>
+    <pv_name>$(P)$(R)BitField_RBV</pv_name>
     <x>146</x>
     <y>30</y>
     <width>160</width>

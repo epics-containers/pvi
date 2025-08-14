@@ -27,7 +27,7 @@
   </widget>
   <widget type="table" version="2.0.0">
     <name>Table</name>
-    <pv_name>pva://$(P)(R)Table</pv_name>
+    <pv_name>pva://$(P)(R)TableWrite</pv_name>
     <x>22</x>
     <y>30</y>
     <width>300</width>
