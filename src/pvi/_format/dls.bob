@@ -90,14 +90,6 @@
     <width>30</width>
     <height>30</height>
   </widget>
-  <widget type="choice" version="2.0.0">
-    <name>ToggleButton</name>
-    <pv_name>ToggleButton</pv_name>
-    <x>18</x>
-    <y>207</y>
-    <width>120</width>
-    <height>31</height>
-  </widget>
   <widget type="combo" version="2.0.0">
     <name>ComboBox</name>
     <pv_name>ComboBox</pv_name>
@@ -242,5 +234,14 @@
     <y>58</y>
     <width>300</width>
     <height>301</height>
+  </widget>
+  <widget type="slide_button" version="2.0.0">
+    <name>ToggleButton</name>
+    <pv_name>ToggleButton</pv_name>
+    <label></label>
+    <x>56</x>
+    <y>204</y>
+    <width>36</width>
+    <height>36</height>
   </widget>
 </display>

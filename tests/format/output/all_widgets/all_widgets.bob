@@ -424,12 +424,13 @@
       <height>20</height>
       <tooltip>$(text)</tooltip>
     </widget>
-    <widget type="choice" version="2.0.0">
+    <widget type="slide_button" version="2.0.0">
       <name>ToggleButton</name>
       <pv_name>$(P)$(R)ToggleButton</pv_name>
-      <x>124</x>
+      <label/>
+      <x>176</x>
       <y>0</y>
-      <width>124</width>
+      <width>20</width>
       <height>20</height>
     </widget>
   </widget>

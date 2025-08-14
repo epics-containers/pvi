@@ -273,6 +273,7 @@ class DLSFormatter(Formatter):
                 toggle_formatter_cls=PVWidgetFormatter[_Element].from_template(
                     template,
                     search="ToggleButton",
+                    sized=Bounds.square,
                     property_map={"pv_name": "pv"},
                 ),
                 combo_box_formatter_cls=PVWidgetFormatter[_Element].from_template(
