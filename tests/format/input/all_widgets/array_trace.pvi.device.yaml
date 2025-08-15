@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../../schemas/pvi.device.schema.json
-label: $(P)$(R)
+label: $(P)$(R)ArrayTrace_RBV
 parent: asynPortDriver
 children:
   - type: SignalR

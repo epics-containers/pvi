@@ -1,9 +1,9 @@
 # yaml-language-server: $schema=../../../../schemas/pvi.device.schema.json
-label: $(P)$(R)
+label: $(P)$(R)ButtonPanel
 parent: asynPortDriver
 children:
   - type: SignalW
-    name: ButtonPannel
+    name: ButtonPanel
     write_pv: $(P)$(R)ButtonPanel
     write_widget:
       type: ButtonPanel
