@@ -1,3 +1,4 @@
+import os
 import shutil
 import subprocess
 import sys
@@ -7,6 +8,8 @@ import pytest
 
 from pvi import __version__
 from pvi.__main__ import app
+from pvi._format import Formatter
+from pvi.device import Device, Grid, Group
 
 HERE = Path(__file__).parent
 
@@ -28,16 +31,46 @@ def test_schemas(tmp_path, helper, filename):
     helper.assert_cli_output_matches(app, expected_path, "schema", tmp_path / filename)
 
 
+@pytest.fixture(scope="module")
+def formats_to_skip():
+    return {
+        ".adl": ["BitField", "ArrayTrace", "ImageRead", "TableRead", "TableWrite"],
+        ".edl": ["ArrayTrace", "ImageRead", "TableRead", "TableWrite"],
+        ".bob": [],
+    }
+
+
 @pytest.mark.parametrize(
-    "filename,formatter",
+    "widget_name",
     [
-        ("mixedWidgets.adl", "aps.adl.pvi.formatter.yaml"),
-        ("mixedWidgets.edl", "dls.edl.pvi.formatter.yaml"),
-        ("mixedWidgets.bob", "dls.bob.pvi.formatter.yaml"),
+        "ArrayTrace",
+        "BitField",
+        "ButtonPanel",
+        "CheckBox",
+        "ComboBox",
+        "ImageRead",
+        "LED",
+        "ProgressBar",
+        "TableRead",
+        "TableWrite",
+        "TextRead",
+        "TextWrite",
+        "ToggleButton",
     ],
 )
-def test_format(tmp_path, helper, filename, formatter):
-    expected_path = HERE / "format" / "output" / filename
+@pytest.mark.parametrize(
+    "formatter,format",
+    [
+        ("aps.adl.pvi.formatter.yaml", ".adl"),
+        ("dls.edl.pvi.formatter.yaml", ".edl"),
+        ("dls.bob.pvi.formatter.yaml", ".bob"),
+    ],
+)
+def test_format(tmp_path, helper, formatter, format, widget_name, formats_to_skip):
+    if widget_name in formats_to_skip[format]:
+        pytest.skip(f"{widget_name} not supported in {format} format")
+    filename = widget_name + format
+    expected_path = HERE / "format" / "output" / "all_widgets" / filename
     input_path = HERE / "format" / "input"
     formatter_path = input_path / formatter
     helper.assert_cli_output_matches(
@@ -45,7 +78,7 @@ def test_format(tmp_path, helper, filename, formatter):
         expected_path,
         "format --yaml-path " + str(input_path),
         tmp_path / filename,
-        HERE / "format" / "input" / "mixedWidgets.pvi.device.yaml",
+        input_path / "all_widgets" / (widget_name + ".pvi.device.yaml"),
         formatter_path,
     )
 
@@ -164,3 +197,49 @@ def test_static_table(tmp_path, helper, input_yaml, formatter, output):
         input_path / input_yaml,
         formatter_path,
     )
+
+
+@pytest.mark.parametrize(
+    "formatter,format,skip",
+    [
+        (
+            "aps.adl.pvi.formatter.yaml",
+            ".adl",
+            ["ArrayTrace", "ImageRead", "TableRead", "TableWrite", "BitField"],
+        ),
+        (
+            "dls.edl.pvi.formatter.yaml",
+            ".edl",
+            ["ArrayTrace", "ImageRead", "TableRead", "TableWrite"],
+        ),
+        ("dls.bob.pvi.formatter.yaml", ".bob", []),
+    ],
+)
+def test_combine_widgets(tmp_path, helper, formatter, format, skip):
+    children = []
+    for path in sorted((HERE / "format" / "input" / "all_widgets").iterdir()):
+        device = Device.deserialize(path)
+        children.append(
+            Group(
+                name=path.name.split(".")[0],
+                label=device.label,
+                children=[
+                    child
+                    for child in device.children
+                    if not any(s in child.name for s in skip)
+                ],
+                layout=Grid(),
+            )
+        )
+    all_device = Device(label="All Widgets", children=children)
+
+    screen_filename = f"all_widgets{format}"
+    output_path = tmp_path / screen_filename
+    expected_path = HERE / "format" / "output" / "all_widgets" / screen_filename
+    my_formatter = Formatter.deserialize(HERE / "format" / "input" / formatter)
+    my_formatter.format(all_device, output_path)
+
+    if os.environ.get("PVI_REGENERATE_OUTPUT", None):
+        shutil.copy(output_path, expected_path)
+
+    helper.assert_output_matches(expected_path, output_path)

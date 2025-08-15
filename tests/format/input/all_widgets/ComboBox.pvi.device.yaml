@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../schemas/pvi.device.schema.json
+label: ComboBox
+children:
+  - type: SignalW
+    name: ComboBox
+    write_pv: $(P)$(R)ComboBox
+    write_widget:
+      type: ComboBox
+      choices:
+        - "One"
+        - "Two"

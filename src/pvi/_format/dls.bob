@@ -116,6 +116,7 @@
   </widget>
   <widget type="checkbox" version="2.0.0">
     <name>CheckBox</name>
+    <pv_name>CheckBox</pv_name>
     <label></label>
     <x>64</x>
     <y>300</y>

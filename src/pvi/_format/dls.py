@@ -109,12 +109,6 @@ class DLSFormatter(Formatter):
                 search='"TextWrite"',
                 property_map={"controlPv": "pv"},
             ),
-            # Cannot handle dynamic tables so insert a label with the PV name
-            table_formatter_cls=PVWidgetFormatter[str].from_template(
-                template,
-                search='"Label"',
-                property_map={"value": "pv"},
-            ),
             action_formatter_cls=ActionWidgetFormatter[str].from_template(
                 template,
                 search='"SignalX"',
@@ -133,21 +127,6 @@ class DLSFormatter(Formatter):
                 template,
                 search='"LED"',
                 property_map={"controlPv": "pv"},
-            ),
-            button_panel_formatter_cls=PVWidgetFormatter[str].from_template(
-                template,
-                search='"Label"',
-                property_map={"value": "pv"},
-            ),
-            array_trace_formatter_cls=PVWidgetFormatter[str].from_template(
-                template,
-                search='"Label"',
-                property_map={"value": "pv"},
-            ),
-            image_read_formatter_cls=PVWidgetFormatter[str].from_template(
-                template,
-                search='"Label"',
-                property_map={"value": "pv"},
             ),
         )
         screen_title_cls = LabelWidgetFormatter[str].from_template(
@@ -288,7 +267,7 @@ class DLSFormatter(Formatter):
                 ),
                 check_box_formatter_cls=PVWidgetFormatter[_Element].from_template(
                     template,
-                    search="ChoiceButton",
+                    search="CheckBox",
                     property_map={"pv_name": "pv"},
                 ),
                 toggle_formatter_cls=PVWidgetFormatter[_Element].from_template(

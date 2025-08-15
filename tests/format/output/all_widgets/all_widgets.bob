@@ -1,0 +1,436 @@
+<display version="2.0.0">
+  <name>All Widgets</name>
+  <x>0</x>
+  <y use_class="true">0</y>
+  <width>628</width>
+  <height>732</height>
+  <grid_step_x>4</grid_step_x>
+  <grid_step_y>4</grid_step_y>
+  <widget type="label" version="2.0.0">
+    <name>Title</name>
+    <class>TITLE</class>
+    <text>All Widgets</text>
+    <x use_class="true">0</x>
+    <y use_class="true">0</y>
+    <width>628</width>
+    <height>26</height>
+    <font use_class="true">
+      <font name="Header 1" family="Liberation Sans" style="BOLD" size="22.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="Text" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <transparent use_class="true">true</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>ArrayTrace</name>
+    <x>4</x>
+    <y>30</y>
+    <width>282</width>
+    <height>54</height>
+    <transparent>true</transparent>
+    <widget type="label" version="2.0.0">
+      <name>Label</name>
+      <text>Array Trace</text>
+      <x>0</x>
+      <y>0</y>
+      <width>120</width>
+      <height>20</height>
+      <tooltip>$(text)</tooltip>
+    </widget>
+    <widget type="xyplot" version="3.0.0">
+      <name>ArrayTrace</name>
+      <x>124</x>
+      <y>0</y>
+      <width>124</width>
+      <height>20</height>
+      <traces>
+        <trace>
+          <name>$(traces[0].y_pv)</name>
+          <x_pv/>
+          <y_pv>$(P)$(R)ArrayTrace_RBV</y_pv>
+          <err_pv/>
+          <axis>0</axis>
+          <trace_type>1</trace_type>
+          <color>
+            <color red="0" green="0" blue="255">
+          </color>
+          </color>
+          <line_width>1</line_width>
+          <line_style>0</line_style>
+          <point_type>0</point_type>
+          <point_size>10</point_size>
+          <visible>true</visible>
+        </trace>
+      </traces>
+    </widget>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>BitField</name>
+    <x>4</x>
+    <y>88</y>
+    <width>282</width>
+    <height>54</height>
+    <transparent>true</transparent>
+    <widget type="label" version="2.0.0">
+      <name>Label</name>
+      <text>Bit Field</text>
+      <x>0</x>
+      <y>0</y>
+      <width>120</width>
+      <height>20</height>
+      <tooltip>$(text)</tooltip>
+    </widget>
+    <widget type="byte_monitor" version="2.0.0">
+      <name>BitField</name>
+      <pv_name>$(P)$(R)BitField_RBV</pv_name>
+      <x>124</x>
+      <y>0</y>
+      <width>160</width>
+      <numBits>8</numBits>
+    </widget>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>ButtonPanel</name>
+    <x>4</x>
+    <y>146</y>
+    <width>282</width>
+    <height>54</height>
+    <transparent>true</transparent>
+    <widget type="label" version="2.0.0">
+      <name>Label</name>
+      <text>Button Panel</text>
+      <x>0</x>
+      <y>0</y>
+      <width>120</width>
+      <height>20</height>
+      <tooltip>$(text)</tooltip>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>WritePV</name>
+      <pv_name>$(P)$(R)ButtonPanel</pv_name>
+      <actions>
+        <action type="write_pv">
+          <pv_name>$(pv_name)</pv_name>
+          <value>0</value>
+          <description>$(name)</description>
+        </action>
+      </actions>
+      <text>Stop</text>
+      <x>124</x>
+      <y>0</y>
+      <width>60</width>
+      <height>20</height>
+      <tooltip>$(P)$(R)ButtonPanel = 0</tooltip>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>WritePV</name>
+      <pv_name>$(P)$(R)ButtonPanel</pv_name>
+      <actions>
+        <action type="write_pv">
+          <pv_name>$(pv_name)</pv_name>
+          <value>1</value>
+          <description>$(name)</description>
+        </action>
+      </actions>
+      <text>Start</text>
+      <x>188</x>
+      <y>0</y>
+      <width>60</width>
+      <height>20</height>
+      <tooltip>$(P)$(R)ButtonPanel = 1</tooltip>
+    </widget>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>CheckBox</name>
+    <x>4</x>
+    <y>204</y>
+    <width>282</width>
+    <height>54</height>
+    <transparent>true</transparent>
+    <widget type="label" version="2.0.0">
+      <name>Label</name>
+      <text>Check Box</text>
+      <x>0</x>
+      <y>0</y>
+      <width>120</width>
+      <height>20</height>
+      <tooltip>$(text)</tooltip>
+    </widget>
+    <widget type="checkbox" version="2.0.0">
+      <name>CheckBox</name>
+      <pv_name>$(P)$(R)CheckBox</pv_name>
+      <label/>
+      <x>124</x>
+      <y>0</y>
+      <width>124</width>
+      <height>20</height>
+      <auto_size>true</auto_size>
+    </widget>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>ComboBox</name>
+    <x>4</x>
+    <y>262</y>
+    <width>282</width>
+    <height>54</height>
+    <transparent>true</transparent>
+    <widget type="label" version="2.0.0">
+      <name>Label</name>
+      <text>Combo Box</text>
+      <x>0</x>
+      <y>0</y>
+      <width>120</width>
+      <height>20</height>
+      <tooltip>$(text)</tooltip>
+    </widget>
+    <widget type="combo" version="2.0.0">
+      <name>ComboBox</name>
+      <pv_name>$(P)$(R)ComboBox</pv_name>
+      <x>124</x>
+      <y>0</y>
+      <width>124</width>
+      <height>20</height>
+      <items>
+        <item>One</item>
+        <item>Two</item>
+      </items>
+      <items_from_pv>false</items_from_pv>
+    </widget>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>ImageRead</name>
+    <x>4</x>
+    <y>320</y>
+    <width>282</width>
+    <height>54</height>
+    <transparent>true</transparent>
+    <widget type="label" version="2.0.0">
+      <name>Label</name>
+      <text>Image Read</text>
+      <x>0</x>
+      <y>0</y>
+      <width>120</width>
+      <height>20</height>
+      <tooltip>$(text)</tooltip>
+    </widget>
+    <widget type="image" version="2.0.0">
+      <name>ImageRead</name>
+      <pv_name>$(P)$(R)ImageRead_RBV</pv_name>
+      <x>124</x>
+      <y>0</y>
+      <width>124</width>
+      <height>20</height>
+    </widget>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>LED</name>
+    <x>4</x>
+    <y>378</y>
+    <width>282</width>
+    <height>54</height>
+    <transparent>true</transparent>
+    <widget type="label" version="2.0.0">
+      <name>Label</name>
+      <text>LED</text>
+      <x>0</x>
+      <y>0</y>
+      <width>120</width>
+      <height>20</height>
+      <tooltip>$(text)</tooltip>
+    </widget>
+    <widget type="led" version="2.0.0">
+      <name>LED</name>
+      <pv_name>$(P)$(R)LED</pv_name>
+      <x>176</x>
+      <y>0</y>
+      <width>20</width>
+      <height>20</height>
+    </widget>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>ProgressBar</name>
+    <x>4</x>
+    <y>436</y>
+    <width>282</width>
+    <height>54</height>
+    <transparent>true</transparent>
+    <widget type="label" version="2.0.0">
+      <name>Label</name>
+      <text>Progress Bar</text>
+      <x>0</x>
+      <y>0</y>
+      <width>120</width>
+      <height>20</height>
+      <tooltip>$(text)</tooltip>
+    </widget>
+    <widget type="progressbar" version="2.0.0">
+      <name>ProgressBar</name>
+      <pv_name>$(P)$(R)ProgressBar_RBV</pv_name>
+      <x>124</x>
+      <y>0</y>
+      <width>124</width>
+      <height>20</height>
+    </widget>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>TableRead</name>
+    <x>4</x>
+    <y>494</y>
+    <width>234</width>
+    <height>234</height>
+    <transparent>true</transparent>
+    <widget type="table" version="2.0.0">
+      <name>Table</name>
+      <pv_name>pva://$(P)$(R)TableRead</pv_name>
+      <x>0</x>
+      <y>0</y>
+      <width>200</width>
+      <height>200</height>
+      <columns>
+        <column>
+          <name>Column 1</name>
+          <width>100</width>
+          <editable>true</editable>
+        </column>
+      </columns>
+      <columns>
+        <column>
+          <name>Column 1</name>
+          <editable>false</editable>
+        </column>
+        <column>
+          <name>Column 2</name>
+          <editable>false</editable>
+          <options>
+            <option>false</option>
+            <option>true</option>
+          </options>
+        </column>
+      </columns>
+      <editable>false</editable>
+    </widget>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>TableWrite</name>
+    <x>290</x>
+    <y>30</y>
+    <width>334</width>
+    <height>234</height>
+    <transparent>true</transparent>
+    <widget type="table" version="2.0.0">
+      <name>Table</name>
+      <pv_name>pva://$(P)(R)TableWrite</pv_name>
+      <x>0</x>
+      <y>0</y>
+      <width>300</width>
+      <height>200</height>
+      <columns>
+        <column>
+          <name>Column 1</name>
+          <width>100</width>
+          <editable>true</editable>
+        </column>
+      </columns>
+      <columns>
+        <column>
+          <name>Column 1</name>
+          <editable>true</editable>
+        </column>
+        <column>
+          <name>Column 2</name>
+          <editable>true</editable>
+        </column>
+        <column>
+          <name>Column 3</name>
+          <editable>true</editable>
+        </column>
+      </columns>
+      <editable>true</editable>
+    </widget>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>TextRead</name>
+    <x>290</x>
+    <y>268</y>
+    <width>282</width>
+    <height>54</height>
+    <transparent>true</transparent>
+    <widget type="label" version="2.0.0">
+      <name>Label</name>
+      <text>Text Read</text>
+      <x>0</x>
+      <y>0</y>
+      <width>120</width>
+      <height>20</height>
+      <tooltip>$(text)</tooltip>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>TextUpdate</name>
+      <pv_name>$(P)$(R)TextRead</pv_name>
+      <x>124</x>
+      <y>0</y>
+      <width>124</width>
+      <height>20</height>
+      <font>
+        <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+      </font>
+      <horizontal_alignment>1</horizontal_alignment>
+    </widget>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>TextWrite</name>
+    <x>290</x>
+    <y>326</y>
+    <width>282</width>
+    <height>54</height>
+    <transparent>true</transparent>
+    <widget type="label" version="2.0.0">
+      <name>Label</name>
+      <text>Text Write</text>
+      <x>0</x>
+      <y>0</y>
+      <width>120</width>
+      <height>20</height>
+      <tooltip>$(text)</tooltip>
+    </widget>
+    <widget type="textentry" version="3.0.0">
+      <name>TextEntry</name>
+      <pv_name>$(P)$(R)TextWrite</pv_name>
+      <x>124</x>
+      <y>0</y>
+      <width>124</width>
+      <height>20</height>
+      <horizontal_alignment>1</horizontal_alignment>
+    </widget>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>ToggleButton</name>
+    <x>290</x>
+    <y>384</y>
+    <width>282</width>
+    <height>54</height>
+    <transparent>true</transparent>
+    <widget type="label" version="2.0.0">
+      <name>Label</name>
+      <text>Toggle Button</text>
+      <x>0</x>
+      <y>0</y>
+      <width>120</width>
+      <height>20</height>
+      <tooltip>$(text)</tooltip>
+    </widget>
+    <widget type="choice" version="2.0.0">
+      <name>ToggleButton</name>
+      <pv_name>$(P)$(R)ToggleButton</pv_name>
+      <x>124</x>
+      <y>0</y>
+      <width>124</width>
+      <height>20</height>
+    </widget>
+  </widget>
+</display>

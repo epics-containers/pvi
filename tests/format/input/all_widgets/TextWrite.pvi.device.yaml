@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../schemas/pvi.device.schema.json
+label: TextWrite
+children:
+  - type: SignalW
+    name: TextWrite
+    write_pv: $(P)$(R)TextWrite
+    write_widget:
+      type: TextWrite
