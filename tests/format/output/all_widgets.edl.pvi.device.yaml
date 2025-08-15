@@ -1,9 +1,9 @@
-parent: asynPortDriver
 label: $(P)$(R)
+parent: asynPortDriver
 children:
 
 - type: SignalW
-  name: ButtonPannel
+  name: ButtonPanel
   write_pv: $(P)$(R)ButtonPanel
   write_widget:
     type: ButtonPanel
@@ -55,3 +55,10 @@ children:
   write_pv: $(P)$(R)ToggleButton
   write_widget:
     type: ToggleButton
+
+- type: SignalR
+  name: BitField
+  read_pv: $(P)$(R)BitField_RBV
+  read_widget:
+    type: BitField
+    number_of_bits: 8

@@ -108,7 +108,7 @@ text {
 	"basic attribute" {
 		clr=54
 	}
-	textix="$(P)$(R)"
+	textix="$(P)$(R)ProgressBar_RBV"
 	align="horiz. centered"
 }
 text {

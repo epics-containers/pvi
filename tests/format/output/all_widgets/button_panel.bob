@@ -1,5 +1,5 @@
 <display version="2.0.0">
-  <name>$(P)$(R)</name>
+  <name>$(P)$(R)ButtonPanel</name>
   <x>0</x>
   <y use_class="true">0</y>
   <width>274</width>
@@ -9,7 +9,7 @@
   <widget type="label" version="2.0.0">
     <name>Title</name>
     <class>TITLE</class>
-    <text>$(P)$(R)</text>
+    <text>$(P)$(R)ButtonPanel</text>
     <x use_class="true">0</x>
     <y use_class="true">0</y>
     <width>274</width>
@@ -27,7 +27,7 @@
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label</name>
-    <text>Button Pannel</text>
+    <text>Button Panel</text>
     <x>22</x>
     <y>30</y>
     <width>120</width>

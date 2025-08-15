@@ -121,7 +121,7 @@ text {
 	"basic attribute" {
 		clr=14
 	}
-	textix="Button Pannel"
+	textix="Button Panel"
 	align="horiz. right"
 }
 "message button" {

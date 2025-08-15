@@ -1,16 +1,9 @@
-parent: asynPortDriver
 label: $(P)$(R)
+parent: asynPortDriver
 children:
 
-- type: SignalR
-  name: ArrayTrace
-  read_pv: $(P)$(R)ArrayTrace_RBV
-  read_widget:
-    type: ArrayTrace
-    axis: x
-
 - type: SignalW
-  name: ButtonPannel
+  name: ButtonPanel
   write_pv: $(P)$(R)ButtonPanel
   write_widget:
     type: ButtonPanel
@@ -34,12 +27,6 @@ children:
     - Two
 
 - type: SignalR
-  name: ImageRead
-  read_pv: $(P)$(R)ImageRead_RBV
-  read_widget:
-    type: ImageRead
-
-- type: SignalR
   name: LED
   read_pv: $(P)$(R)LED
   read_widget:
@@ -50,17 +37,6 @@ children:
   read_pv: $(P)$(R)ProgressBar_RBV
   read_widget:
     type: ProgressBar
-
-- type: SignalR
-  name: TableRead
-  read_pv: $(P)$(R)TableRead
-  read_widget:
-    type: TableRead
-    widgets:
-
-    - type: TextRead
-
-    - type: LED
 
 - type: SignalR
   name: TextRead
@@ -79,22 +55,3 @@ children:
   write_pv: $(P)$(R)ToggleButton
   write_widget:
     type: ToggleButton
-
-- type: SignalR
-  name: BitField
-  read_pv: $(P)$(R)BitField_RBV
-  read_widget:
-    type: BitField
-
-- type: SignalW
-  name: TableWrite
-  write_pv: $(P)(R)TableWrite
-  write_widget:
-    type: TableWrite
-    widgets:
-
-    - type: CheckBox
-
-    - type: ComboBox
-
-    - type: TextWrite

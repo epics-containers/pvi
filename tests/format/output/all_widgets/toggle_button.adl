@@ -108,7 +108,7 @@ text {
 	"basic attribute" {
 		clr=54
 	}
-	textix="$(P)$(R)"
+	textix="$(P)$(R)ToggleButton"
 	align="horiz. centered"
 }
 text {

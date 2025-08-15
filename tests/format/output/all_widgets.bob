@@ -62,7 +62,7 @@
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label</name>
-    <text>Button Pannel</text>
+    <text>Button Panel</text>
     <x>22</x>
     <y>54</y>
     <width>120</width>

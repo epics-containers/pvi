@@ -40,7 +40,7 @@ fontAlign "center"
 fgColor index 14
 bgColor index 48
 value {
-  "$(P)$(R)"
+  "$(P)$(R)LED"
 }
 endObjectProperties
 

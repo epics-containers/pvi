@@ -7,7 +7,9 @@ import pytest
 
 from pvi import __version__
 from pvi.__main__ import app
-from pvi._yaml_utils import dump_yaml, load_yaml
+from pvi._format import Formatter
+from pvi._yaml_utils import load_yaml
+from pvi.device import Device
 
 HERE = Path(__file__).parent
 
@@ -218,26 +220,25 @@ def test_combine_widgets(tmp_path, helper, formatter, format, skip):
     for path in (HERE / "format" / "input" / "all_widgets").iterdir():
         yaml = load_yaml(path)
         children += [child for child in yaml["children"] if child["name"] not in skip]
-    combined_yaml = {
-        "parent": "asynPortDriver",
-        "label": "$(P)$(R)",
-        "children": children,
-    }
 
-    combined_path = tmp_path / ("all_widgets" + format + ".pvi.device.yaml")
-    dump_yaml(combined_yaml, combined_path)
+    device = Device(label="$(P)$(R)", parent="asynPortDriver", children=children)
+
+    combined_yaml_path = tmp_path / ("all_widgets" + format + ".pvi.device.yaml")
+    device.serialize(combined_yaml_path)
 
     input_path = HERE / "format" / "input"
     formatter_path = input_path / formatter
-    expected_path = (
-        HERE / "format" / "output" / "all_widgets" / ("all_widgets" + format)
-    )
+    combined_screen_path = tmp_path / ("all_widgets" + format)
+    expected_path = HERE / "format" / "output" / "all_widgets"
+
+    my_formatter = Formatter.deserialize(formatter_path)
+    my_formatter.format(device, combined_screen_path)
 
     helper.assert_cli_output_matches(
         app,
         expected_path,
-        "format --yaml-path " + str(combined_path),
-        tmp_path / ("all_widgets" + format),
-        combined_path,
+        "format --yaml-path " + str(tmp_path),
+        tmp_path / f"all_widgets{format}",
+        combined_yaml_path,
         formatter_path,
     )
