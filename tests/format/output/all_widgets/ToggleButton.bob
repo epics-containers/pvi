@@ -3,7 +3,7 @@
   <x>0</x>
   <y use_class="true">0</y>
   <width>274</width>
-  <height>54</height>
+  <height>78</height>
   <grid_step_x>4</grid_step_x>
   <grid_step_y>4</grid_step_y>
   <widget type="label" version="2.0.0">
@@ -40,6 +40,32 @@
     <label/>
     <x>198</x>
     <y>30</y>
+    <width>20</width>
+    <height>20</height>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>Toggle Button RBV</text>
+    <x>22</x>
+    <y>54</y>
+    <width>120</width>
+    <height>20</height>
+    <tooltip>$(text)</tooltip>
+  </widget>
+  <widget type="slide_button" version="2.0.0">
+    <name>ToggleButton</name>
+    <pv_name>$(P)$(R)ToggleButton</pv_name>
+    <label/>
+    <x>166</x>
+    <y>54</y>
+    <width>20</width>
+    <height>20</height>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LED</name>
+    <pv_name>$(P)$(R)ToggleButton_RBV</pv_name>
+    <x>230</x>
+    <y>54</y>
     <width>20</width>
     <height>20</height>
   </widget>

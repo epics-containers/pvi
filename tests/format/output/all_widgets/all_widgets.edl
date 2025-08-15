@@ -6,7 +6,7 @@ release 1
 x 0
 y 0
 w 380
-h 535
+h 560
 font "arial-bold-r-12.0"
 ctlFont "arial-bold-r-12.0"
 btnFont "arial-bold-r-12.0"
@@ -817,7 +817,7 @@ release 0
 x 5
 y 495
 w 370
-h 35
+h 60
 lineColor index 14
 fill
 fillColor index 5
@@ -883,4 +883,63 @@ controlPv "$(P)$(R)ToggleButton"
 indicatorPv "None"
 font "arial-bold-r-14.0"
 orientation "horizontal"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 10
+y 530
+w 150
+h 20
+font "arial-bold-r-10.0"
+fgColor index 14
+bgColor index 3
+useDisplayBg
+value {
+  "Toggle Button RBV"
+}
+endObjectProperties
+
+# (Choice Button)
+object activeChoiceButtonClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 165
+y 530
+w 100
+h 20
+fgColor index 14
+bgColor index 3
+selectColor index 3
+inconsistentColor index 14
+topShadowColor index 1
+botShadowColor index 11
+controlPv "$(P)$(R)ToggleButton"
+indicatorPv "None"
+font "arial-bold-r-14.0"
+orientation "horizontal"
+endObjectProperties
+
+# (Byte)
+object ByteClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 310
+y 530
+w 20
+h 20
+controlPv "$(P)$(R)ToggleButton_RBV"
+lineColor index 14
+onColor index 15
+offColor index 19
+lineWidth 2
+numBits 1
 endObjectProperties

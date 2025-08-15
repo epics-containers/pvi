@@ -755,7 +755,7 @@ rectangle {
 		x=335
 		y=90
 		width=325
-		height=55
+		height=80
 	}
 	"basic attribute" {
 		clr=14
@@ -812,4 +812,45 @@ text {
 		bclr=51
 	}
 	stacking="column"
+}
+text {
+	object {
+		x=340
+		y=145
+		width=205
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Toggle Button RBV"
+	align="horiz. right"
+}
+"choice button" {
+	object {
+		x=550
+		y=145
+		width=50
+		height=20
+	}
+	control {
+		chan="$(P)$(R)ToggleButton"
+		clr=14
+		bclr=51
+	}
+	stacking="column"
+}
+byte {
+	object {
+		x=620
+		y=145
+		width=20
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)ToggleButton_RBV"
+		clr=60
+		bclr=64
+	}
+	sbit=0
 }
