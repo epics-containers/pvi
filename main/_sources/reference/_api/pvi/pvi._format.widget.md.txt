@@ -420,94 +420,6 @@ Bases: {py:obj}`typing.Generic`\[{py:obj}`pvi._format.widget.T`\]
 
 ````
 
-````{py:attribute} led_formatter_cls
-:canonical: pvi._format.widget.WidgetFormatterFactory.led_formatter_cls
-:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]]
-:value: >
-   None
-
-```{autodoc2-docstring} pvi._format.widget.WidgetFormatterFactory.led_formatter_cls
-```
-
-````
-
-````{py:attribute} progress_bar_formatter_cls
-:canonical: pvi._format.widget.WidgetFormatterFactory.progress_bar_formatter_cls
-:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]]
-:value: >
-   None
-
-```{autodoc2-docstring} pvi._format.widget.WidgetFormatterFactory.progress_bar_formatter_cls
-```
-
-````
-
-````{py:attribute} text_read_formatter_cls
-:canonical: pvi._format.widget.WidgetFormatterFactory.text_read_formatter_cls
-:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]]
-:value: >
-   None
-
-```{autodoc2-docstring} pvi._format.widget.WidgetFormatterFactory.text_read_formatter_cls
-```
-
-````
-
-````{py:attribute} check_box_formatter_cls
-:canonical: pvi._format.widget.WidgetFormatterFactory.check_box_formatter_cls
-:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]]
-:value: >
-   None
-
-```{autodoc2-docstring} pvi._format.widget.WidgetFormatterFactory.check_box_formatter_cls
-```
-
-````
-
-````{py:attribute} toggle_formatter_cls
-:canonical: pvi._format.widget.WidgetFormatterFactory.toggle_formatter_cls
-:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]]
-:value: >
-   None
-
-```{autodoc2-docstring} pvi._format.widget.WidgetFormatterFactory.toggle_formatter_cls
-```
-
-````
-
-````{py:attribute} combo_box_formatter_cls
-:canonical: pvi._format.widget.WidgetFormatterFactory.combo_box_formatter_cls
-:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]]
-:value: >
-   None
-
-```{autodoc2-docstring} pvi._format.widget.WidgetFormatterFactory.combo_box_formatter_cls
-```
-
-````
-
-````{py:attribute} text_write_formatter_cls
-:canonical: pvi._format.widget.WidgetFormatterFactory.text_write_formatter_cls
-:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]]
-:value: >
-   None
-
-```{autodoc2-docstring} pvi._format.widget.WidgetFormatterFactory.text_write_formatter_cls
-```
-
-````
-
-````{py:attribute} table_formatter_cls
-:canonical: pvi._format.widget.WidgetFormatterFactory.table_formatter_cls
-:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]]
-:value: >
-   None
-
-```{autodoc2-docstring} pvi._format.widget.WidgetFormatterFactory.table_formatter_cls
-```
-
-````
-
 ````{py:attribute} action_formatter_cls
 :canonical: pvi._format.widget.WidgetFormatterFactory.action_formatter_cls
 :type: type[pvi._format.widget.ActionWidgetFormatter[pvi._format.widget.T]]
@@ -530,9 +442,97 @@ Bases: {py:obj}`typing.Generic`\[{py:obj}`pvi._format.widget.T`\]
 
 ````
 
+````{py:attribute} led_formatter_cls
+:canonical: pvi._format.widget.WidgetFormatterFactory.led_formatter_cls
+:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]] | None
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.WidgetFormatterFactory.led_formatter_cls
+```
+
+````
+
+````{py:attribute} progress_bar_formatter_cls
+:canonical: pvi._format.widget.WidgetFormatterFactory.progress_bar_formatter_cls
+:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]] | None
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.WidgetFormatterFactory.progress_bar_formatter_cls
+```
+
+````
+
+````{py:attribute} text_read_formatter_cls
+:canonical: pvi._format.widget.WidgetFormatterFactory.text_read_formatter_cls
+:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]] | None
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.WidgetFormatterFactory.text_read_formatter_cls
+```
+
+````
+
+````{py:attribute} check_box_formatter_cls
+:canonical: pvi._format.widget.WidgetFormatterFactory.check_box_formatter_cls
+:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]] | None
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.WidgetFormatterFactory.check_box_formatter_cls
+```
+
+````
+
+````{py:attribute} toggle_formatter_cls
+:canonical: pvi._format.widget.WidgetFormatterFactory.toggle_formatter_cls
+:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]] | None
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.WidgetFormatterFactory.toggle_formatter_cls
+```
+
+````
+
+````{py:attribute} combo_box_formatter_cls
+:canonical: pvi._format.widget.WidgetFormatterFactory.combo_box_formatter_cls
+:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]] | None
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.WidgetFormatterFactory.combo_box_formatter_cls
+```
+
+````
+
+````{py:attribute} text_write_formatter_cls
+:canonical: pvi._format.widget.WidgetFormatterFactory.text_write_formatter_cls
+:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]] | None
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.WidgetFormatterFactory.text_write_formatter_cls
+```
+
+````
+
+````{py:attribute} table_formatter_cls
+:canonical: pvi._format.widget.WidgetFormatterFactory.table_formatter_cls
+:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]] | None
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.WidgetFormatterFactory.table_formatter_cls
+```
+
+````
+
 ````{py:attribute} bitfield_formatter_cls
 :canonical: pvi._format.widget.WidgetFormatterFactory.bitfield_formatter_cls
-:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]]
+:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]] | None
 :value: >
    None
 
@@ -543,7 +543,7 @@ Bases: {py:obj}`typing.Generic`\[{py:obj}`pvi._format.widget.T`\]
 
 ````{py:attribute} array_trace_formatter_cls
 :canonical: pvi._format.widget.WidgetFormatterFactory.array_trace_formatter_cls
-:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]]
+:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]] | None
 :value: >
    None
 
@@ -554,7 +554,7 @@ Bases: {py:obj}`typing.Generic`\[{py:obj}`pvi._format.widget.T`\]
 
 ````{py:attribute} button_panel_formatter_cls
 :canonical: pvi._format.widget.WidgetFormatterFactory.button_panel_formatter_cls
-:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]]
+:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]] | None
 :value: >
    None
 
@@ -565,7 +565,7 @@ Bases: {py:obj}`typing.Generic`\[{py:obj}`pvi._format.widget.T`\]
 
 ````{py:attribute} image_read_formatter_cls
 :canonical: pvi._format.widget.WidgetFormatterFactory.image_read_formatter_cls
-:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]]
+:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]] | None
 :value: >
    None
 

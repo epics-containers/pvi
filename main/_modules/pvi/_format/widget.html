@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pvi._format.widget &#8212; pvi 0.10.2.dev10+ge26f1700 documentation</title>
+    <title>pvi._format.widget &#8212; pvi 0.10.2.dev11+gc53fe566 documentation</title>
   
   
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=7142982b"></script>
+    <script src="../../../_static/documentation_options.js?v=a9e2c21a"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -796,20 +796,20 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">WidgetFormatterFactory</span><span class="p">(</span><span class="n">Generic</span><span class="p">[</span><span class="n">T</span><span class="p">]):</span>
     <span class="n">header_formatter_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">LabelWidgetFormatter</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span>
     <span class="n">label_formatter_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">LabelWidgetFormatter</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span>
-    <span class="n">led_formatter_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span>
-    <span class="n">progress_bar_formatter_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span>
-    <span class="n">text_read_formatter_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span>
-    <span class="n">check_box_formatter_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span>
-    <span class="n">toggle_formatter_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span>
-    <span class="n">combo_box_formatter_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span>
-    <span class="n">text_write_formatter_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span>
-    <span class="n">table_formatter_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span>
     <span class="n">action_formatter_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">ActionWidgetFormatter</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span>
     <span class="n">sub_screen_formatter_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">SubScreenWidgetFormatter</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span>
-    <span class="n">bitfield_formatter_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span>
-    <span class="n">array_trace_formatter_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span>
-    <span class="n">button_panel_formatter_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span>
-    <span class="n">image_read_formatter_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span>
+    <span class="n">led_formatter_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">progress_bar_formatter_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">text_read_formatter_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">check_box_formatter_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">toggle_formatter_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">combo_box_formatter_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">text_write_formatter_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">table_formatter_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">bitfield_formatter_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">array_trace_formatter_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">button_panel_formatter_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">image_read_formatter_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="WidgetFormatterFactory.pv_widget_formatter">
 <a class="viewcode-back" href="../../../reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.WidgetFormatterFactory.pv_widget_formatter">[docs]</a>
@@ -830,7 +830,7 @@
 <span class="sd">            A WidgetFormatter representing the component</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">widget_formatter_classes</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">type</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">T</span><span class="p">]]]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">widget_formatter_classes</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">type</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">PVWidgetFormatter</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
             <span class="c1"># Currently supported formatters of ReadWidget/WriteWidget Components</span>
             <span class="n">LED</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">led_formatter_cls</span><span class="p">,</span>
             <span class="n">ProgressBar</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">progress_bar_formatter_cls</span><span class="p">,</span>
@@ -850,6 +850,10 @@
             <span class="n">bounds</span><span class="o">.</span><span class="n">h</span> <span class="o">*=</span> <span class="n">widget</span><span class="o">.</span><span class="n">get_lines</span><span class="p">()</span>
 
         <span class="n">widget_formatter_cls</span> <span class="o">=</span> <span class="n">widget_formatter_classes</span><span class="p">[</span><span class="nb">type</span><span class="p">(</span><span class="n">widget</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="n">widget_formatter_cls</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;No formatter provided for widget </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
         <span class="k">return</span> <span class="n">widget_formatter_cls</span><span class="p">(</span><span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span> <span class="n">pv</span><span class="o">=</span><span class="n">pv</span><span class="p">,</span> <span class="n">widget</span><span class="o">=</span><span class="n">widget</span><span class="p">)</span></div>
 </div>
 
