@@ -1,9 +1,0 @@
-# yaml-language-server: $schema=../../../../schemas/pvi.device.schema.json
-label: $(P)$(R)CheckBox
-parent: asynPortDriver
-children:
-  - type: SignalW
-    name: CheckBox
-    write_pv: $(P)$(R)CheckBox
-    write_widget:
-      type: CheckBox

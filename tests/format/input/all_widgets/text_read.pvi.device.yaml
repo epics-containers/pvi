@@ -1,9 +1,0 @@
-# yaml-language-server: $schema=../../../../schemas/pvi.device.schema.json
-label: $(P)$(R)TextRead
-parent: asynPortDriver
-children:
-  - type: SignalR
-    name: TextRead
-    read_pv: $(P)$(R)TextRead
-    read_widget:
-      type: TextRead

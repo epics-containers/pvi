@@ -1,15 +1,15 @@
 <display version="2.0.0">
-  <name>$(P)$(R)</name>
+  <name>All Widgets</name>
   <x>0</x>
   <y use_class="true">0</y>
   <width>628</width>
-  <height>906</height>
+  <height>732</height>
   <grid_step_x>4</grid_step_x>
   <grid_step_y>4</grid_step_y>
   <widget type="label" version="2.0.0">
     <name>Title</name>
     <class>TITLE</class>
-    <text>$(P)$(R)</text>
+    <text>All Widgets</text>
     <x use_class="true">0</x>
     <y use_class="true">0</y>
     <width>628</width>
@@ -26,7 +26,7 @@
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="group" version="2.0.0">
-    <name>Array Trace</name>
+    <name>ArrayTrace</name>
     <x>4</x>
     <y>30</y>
     <width>282</width>
@@ -69,9 +69,34 @@
     </widget>
   </widget>
   <widget type="group" version="2.0.0">
-    <name>Button Panel</name>
+    <name>BitField</name>
     <x>4</x>
     <y>88</y>
+    <width>282</width>
+    <height>54</height>
+    <transparent>true</transparent>
+    <widget type="label" version="2.0.0">
+      <name>Label</name>
+      <text>Bit Field</text>
+      <x>0</x>
+      <y>0</y>
+      <width>120</width>
+      <height>20</height>
+      <tooltip>$(text)</tooltip>
+    </widget>
+    <widget type="byte_monitor" version="2.0.0">
+      <name>BitField</name>
+      <pv_name>$(P)$(R)BitField_RBV</pv_name>
+      <x>124</x>
+      <y>0</y>
+      <width>160</width>
+      <numBits>8</numBits>
+    </widget>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>ButtonPanel</name>
+    <x>4</x>
+    <y>146</y>
     <width>282</width>
     <height>54</height>
     <transparent>true</transparent>
@@ -120,9 +145,9 @@
     </widget>
   </widget>
   <widget type="group" version="2.0.0">
-    <name>Check Box</name>
+    <name>CheckBox</name>
     <x>4</x>
-    <y>146</y>
+    <y>204</y>
     <width>282</width>
     <height>54</height>
     <transparent>true</transparent>
@@ -147,9 +172,9 @@
     </widget>
   </widget>
   <widget type="group" version="2.0.0">
-    <name>Combo Box</name>
+    <name>ComboBox</name>
     <x>4</x>
-    <y>204</y>
+    <y>262</y>
     <width>282</width>
     <height>54</height>
     <transparent>true</transparent>
@@ -177,9 +202,9 @@
     </widget>
   </widget>
   <widget type="group" version="2.0.0">
-    <name>Image Read</name>
+    <name>ImageRead</name>
     <x>4</x>
-    <y>262</y>
+    <y>320</y>
     <width>282</width>
     <height>54</height>
     <transparent>true</transparent>
@@ -204,7 +229,7 @@
   <widget type="group" version="2.0.0">
     <name>LED</name>
     <x>4</x>
-    <y>320</y>
+    <y>378</y>
     <width>282</width>
     <height>54</height>
     <transparent>true</transparent>
@@ -227,9 +252,9 @@
     </widget>
   </widget>
   <widget type="group" version="2.0.0">
-    <name>Progress Bar</name>
+    <name>ProgressBar</name>
     <x>4</x>
-    <y>378</y>
+    <y>436</y>
     <width>282</width>
     <height>54</height>
     <transparent>true</transparent>
@@ -252,9 +277,9 @@
     </widget>
   </widget>
   <widget type="group" version="2.0.0">
-    <name>Table Read</name>
+    <name>TableRead</name>
     <x>4</x>
-    <y>436</y>
+    <y>494</y>
     <width>234</width>
     <height>234</height>
     <transparent>true</transparent>
@@ -290,113 +315,7 @@
     </widget>
   </widget>
   <widget type="group" version="2.0.0">
-    <name>Text Read</name>
-    <x>4</x>
-    <y>674</y>
-    <width>282</width>
-    <height>54</height>
-    <transparent>true</transparent>
-    <widget type="label" version="2.0.0">
-      <name>Label</name>
-      <text>Text Read</text>
-      <x>0</x>
-      <y>0</y>
-      <width>120</width>
-      <height>20</height>
-      <tooltip>$(text)</tooltip>
-    </widget>
-    <widget type="textupdate" version="2.0.0">
-      <name>TextUpdate</name>
-      <pv_name>$(P)$(R)TextRead</pv_name>
-      <x>124</x>
-      <y>0</y>
-      <width>124</width>
-      <height>20</height>
-      <font>
-        <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
-      </font>
-      </font>
-      <horizontal_alignment>1</horizontal_alignment>
-    </widget>
-  </widget>
-  <widget type="group" version="2.0.0">
-    <name>Text Write</name>
-    <x>4</x>
-    <y>732</y>
-    <width>282</width>
-    <height>54</height>
-    <transparent>true</transparent>
-    <widget type="label" version="2.0.0">
-      <name>Label</name>
-      <text>Text Write</text>
-      <x>0</x>
-      <y>0</y>
-      <width>120</width>
-      <height>20</height>
-      <tooltip>$(text)</tooltip>
-    </widget>
-    <widget type="textentry" version="3.0.0">
-      <name>TextEntry</name>
-      <pv_name>$(P)$(R)TextWrite</pv_name>
-      <x>124</x>
-      <y>0</y>
-      <width>124</width>
-      <height>20</height>
-      <horizontal_alignment>1</horizontal_alignment>
-    </widget>
-  </widget>
-  <widget type="group" version="2.0.0">
-    <name>Toggle Button</name>
-    <x>4</x>
-    <y>790</y>
-    <width>282</width>
-    <height>54</height>
-    <transparent>true</transparent>
-    <widget type="label" version="2.0.0">
-      <name>Label</name>
-      <text>Toggle Button</text>
-      <x>0</x>
-      <y>0</y>
-      <width>120</width>
-      <height>20</height>
-      <tooltip>$(text)</tooltip>
-    </widget>
-    <widget type="choice" version="2.0.0">
-      <name>ToggleButton</name>
-      <pv_name>$(P)$(R)ToggleButton</pv_name>
-      <x>124</x>
-      <y>0</y>
-      <width>124</width>
-      <height>20</height>
-    </widget>
-  </widget>
-  <widget type="group" version="2.0.0">
-    <name>Bit Field</name>
-    <x>4</x>
-    <y>848</y>
-    <width>282</width>
-    <height>54</height>
-    <transparent>true</transparent>
-    <widget type="label" version="2.0.0">
-      <name>Label</name>
-      <text>Bit Field</text>
-      <x>0</x>
-      <y>0</y>
-      <width>120</width>
-      <height>20</height>
-      <tooltip>$(text)</tooltip>
-    </widget>
-    <widget type="byte_monitor" version="2.0.0">
-      <name>BitField</name>
-      <pv_name>$(P)$(R)BitField_RBV</pv_name>
-      <x>124</x>
-      <y>0</y>
-      <width>160</width>
-      <numBits>8</numBits>
-    </widget>
-  </widget>
-  <widget type="group" version="2.0.0">
-    <name>Table Write</name>
+    <name>TableWrite</name>
     <x>290</x>
     <y>30</y>
     <width>334</width>
@@ -431,6 +350,87 @@
         </column>
       </columns>
       <editable>true</editable>
+    </widget>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>TextRead</name>
+    <x>290</x>
+    <y>268</y>
+    <width>282</width>
+    <height>54</height>
+    <transparent>true</transparent>
+    <widget type="label" version="2.0.0">
+      <name>Label</name>
+      <text>Text Read</text>
+      <x>0</x>
+      <y>0</y>
+      <width>120</width>
+      <height>20</height>
+      <tooltip>$(text)</tooltip>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>TextUpdate</name>
+      <pv_name>$(P)$(R)TextRead</pv_name>
+      <x>124</x>
+      <y>0</y>
+      <width>124</width>
+      <height>20</height>
+      <font>
+        <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+      </font>
+      <horizontal_alignment>1</horizontal_alignment>
+    </widget>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>TextWrite</name>
+    <x>290</x>
+    <y>326</y>
+    <width>282</width>
+    <height>54</height>
+    <transparent>true</transparent>
+    <widget type="label" version="2.0.0">
+      <name>Label</name>
+      <text>Text Write</text>
+      <x>0</x>
+      <y>0</y>
+      <width>120</width>
+      <height>20</height>
+      <tooltip>$(text)</tooltip>
+    </widget>
+    <widget type="textentry" version="3.0.0">
+      <name>TextEntry</name>
+      <pv_name>$(P)$(R)TextWrite</pv_name>
+      <x>124</x>
+      <y>0</y>
+      <width>124</width>
+      <height>20</height>
+      <horizontal_alignment>1</horizontal_alignment>
+    </widget>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>ToggleButton</name>
+    <x>290</x>
+    <y>384</y>
+    <width>282</width>
+    <height>54</height>
+    <transparent>true</transparent>
+    <widget type="label" version="2.0.0">
+      <name>Label</name>
+      <text>Toggle Button</text>
+      <x>0</x>
+      <y>0</y>
+      <width>120</width>
+      <height>20</height>
+      <tooltip>$(text)</tooltip>
+    </widget>
+    <widget type="choice" version="2.0.0">
+      <name>ToggleButton</name>
+      <pv_name>$(P)$(R)ToggleButton</pv_name>
+      <x>124</x>
+      <y>0</y>
+      <width>124</width>
+      <height>20</height>
     </widget>
   </widget>
 </display>

@@ -1,9 +1,0 @@
-# yaml-language-server: $schema=../../../../schemas/pvi.device.schema.json
-label: $(P)$(R)TextWrite
-parent: asynPortDriver
-children:
-  - type: SignalW
-    name: TextWrite
-    write_pv: $(P)$(R)TextWrite
-    write_widget:
-      type: TextWrite

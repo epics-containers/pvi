@@ -6,7 +6,7 @@ release 1
 x 0
 y 0
 w 380
-h 435
+h 535
 font "arial-bold-r-12.0"
 ctlFont "arial-bold-r-12.0"
 btnFont "arial-bold-r-12.0"
@@ -40,7 +40,7 @@ fontAlign "center"
 fgColor index 14
 bgColor index 48
 value {
-  "$(P)$(R)"
+  "All Widgets"
 }
 endObjectProperties
 
@@ -52,6 +52,42 @@ minor 0
 release 0
 x 5
 y 35
+w 10
+h 15
+lineColor index 14
+fill
+fillColor index 5
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 5
+y 30
+w 10
+h 10
+font "arial-medium-r-12.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 8
+value {
+  "  ArrayTrace  "
+}
+autoSize
+border
+endObjectProperties
+
+# (Rectangle)
+object activeRectangleClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 5
+y 60
 w 370
 h 35
 lineColor index 14
@@ -66,7 +102,7 @@ major 4
 minor 1
 release 1
 x 5
-y 30
+y 55
 w 370
 h 10
 font "arial-medium-r-12.0"
@@ -74,7 +110,7 @@ fontAlign "center"
 fgColor index 14
 bgColor index 8
 value {
-  "  Button Panel  "
+  "  BitField  "
 }
 autoSize
 border
@@ -87,7 +123,80 @@ major 4
 minor 1
 release 1
 x 10
-y 45
+y 70
+w 150
+h 20
+font "arial-bold-r-10.0"
+fgColor index 14
+bgColor index 3
+useDisplayBg
+value {
+  "Bit Field"
+}
+endObjectProperties
+
+# (Byte)
+object ByteClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 165
+y 70
+w 205
+h 20
+controlPv "$(P)$(R)BitField_RBV"
+lineColor index 14
+onColor index 15
+offColor index 19
+lineWidth 2
+numBits 1
+endObjectProperties
+
+# (Rectangle)
+object activeRectangleClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 5
+y 105
+w 370
+h 35
+lineColor index 14
+fill
+fillColor index 5
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 5
+y 100
+w 370
+h 10
+font "arial-medium-r-12.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 8
+value {
+  "  ButtonPanel  "
+}
+autoSize
+border
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 10
+y 115
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -106,7 +215,7 @@ major 4
 minor 1
 release 0
 x 165
-y 45
+y 115
 w 100
 h 20
 fgColor index 25
@@ -129,7 +238,7 @@ major 4
 minor 1
 release 0
 x 270
-y 45
+y 115
 w 100
 h 20
 fgColor index 25
@@ -152,7 +261,7 @@ major 4
 minor 0
 release 0
 x 5
-y 80
+y 150
 w 370
 h 35
 lineColor index 14
@@ -167,7 +276,7 @@ major 4
 minor 1
 release 1
 x 5
-y 75
+y 145
 w 370
 h 10
 font "arial-medium-r-12.0"
@@ -175,7 +284,7 @@ fontAlign "center"
 fgColor index 14
 bgColor index 8
 value {
-  "  Check Box  "
+  "  CheckBox  "
 }
 autoSize
 border
@@ -188,7 +297,7 @@ major 4
 minor 1
 release 1
 x 10
-y 90
+y 160
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -207,7 +316,7 @@ major 4
 minor 0
 release 0
 x 165
-y 90
+y 160
 w 205
 h 20
 fgColor index 25
@@ -226,7 +335,7 @@ major 4
 minor 0
 release 0
 x 5
-y 125
+y 195
 w 370
 h 35
 lineColor index 14
@@ -241,7 +350,7 @@ major 4
 minor 1
 release 1
 x 5
-y 120
+y 190
 w 370
 h 10
 font "arial-medium-r-12.0"
@@ -249,7 +358,7 @@ fontAlign "center"
 fgColor index 14
 bgColor index 8
 value {
-  "  Combo Box  "
+  "  ComboBox  "
 }
 autoSize
 border
@@ -262,7 +371,7 @@ major 4
 minor 1
 release 1
 x 10
-y 135
+y 205
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -281,7 +390,7 @@ major 4
 minor 0
 release 0
 x 165
-y 135
+y 205
 w 205
 h 20
 fgColor index 25
@@ -300,7 +409,43 @@ major 4
 minor 0
 release 0
 x 5
-y 170
+y 240
+w 10
+h 15
+lineColor index 14
+fill
+fillColor index 5
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 5
+y 235
+w 10
+h 10
+font "arial-medium-r-12.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 8
+value {
+  "  ImageRead  "
+}
+autoSize
+border
+endObjectProperties
+
+# (Rectangle)
+object activeRectangleClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 5
+y 265
 w 370
 h 35
 lineColor index 14
@@ -315,7 +460,7 @@ major 4
 minor 1
 release 1
 x 5
-y 165
+y 260
 w 370
 h 10
 font "arial-medium-r-12.0"
@@ -336,7 +481,7 @@ major 4
 minor 1
 release 1
 x 10
-y 180
+y 275
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -355,7 +500,7 @@ major 4
 minor 0
 release 0
 x 257
-y 180
+y 275
 w 20
 h 20
 controlPv "$(P)$(R)LED"
@@ -373,7 +518,7 @@ major 4
 minor 0
 release 0
 x 5
-y 215
+y 310
 w 370
 h 35
 lineColor index 14
@@ -388,7 +533,7 @@ major 4
 minor 1
 release 1
 x 5
-y 210
+y 305
 w 370
 h 10
 font "arial-medium-r-12.0"
@@ -396,7 +541,7 @@ fontAlign "center"
 fgColor index 14
 bgColor index 8
 value {
-  "  Progress Bar  "
+  "  ProgressBar  "
 }
 autoSize
 border
@@ -409,7 +554,7 @@ major 4
 minor 1
 release 1
 x 10
-y 225
+y 320
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -428,7 +573,7 @@ major 4
 minor 1
 release 1
 x 165
-y 225
+y 320
 w 205
 h 20
 indicatorColor index 16
@@ -450,7 +595,79 @@ major 4
 minor 0
 release 0
 x 5
-y 260
+y 355
+w 10
+h 15
+lineColor index 14
+fill
+fillColor index 5
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 5
+y 350
+w 10
+h 10
+font "arial-medium-r-12.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 8
+value {
+  "  TableRead  "
+}
+autoSize
+border
+endObjectProperties
+
+# (Rectangle)
+object activeRectangleClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 5
+y 380
+w 10
+h 15
+lineColor index 14
+fill
+fillColor index 5
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 5
+y 375
+w 10
+h 10
+font "arial-medium-r-12.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 8
+value {
+  "  TableWrite  "
+}
+autoSize
+border
+endObjectProperties
+
+# (Rectangle)
+object activeRectangleClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 5
+y 405
 w 370
 h 35
 lineColor index 14
@@ -465,7 +682,7 @@ major 4
 minor 1
 release 1
 x 5
-y 255
+y 400
 w 370
 h 10
 font "arial-medium-r-12.0"
@@ -473,7 +690,7 @@ fontAlign "center"
 fgColor index 14
 bgColor index 8
 value {
-  "  Text Read  "
+  "  TextRead  "
 }
 autoSize
 border
@@ -486,7 +703,7 @@ major 4
 minor 1
 release 1
 x 10
-y 270
+y 415
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -505,7 +722,7 @@ major 10
 minor 0
 release 0
 x 165
-y 270
+y 415
 w 205
 h 20
 controlPv "$(P)$(R)TextRead"
@@ -524,7 +741,7 @@ major 4
 minor 0
 release 0
 x 5
-y 305
+y 450
 w 370
 h 35
 lineColor index 14
@@ -539,7 +756,7 @@ major 4
 minor 1
 release 1
 x 5
-y 300
+y 445
 w 370
 h 10
 font "arial-medium-r-12.0"
@@ -547,7 +764,7 @@ fontAlign "center"
 fgColor index 14
 bgColor index 8
 value {
-  "  Text Write  "
+  "  TextWrite  "
 }
 autoSize
 border
@@ -560,7 +777,7 @@ major 4
 minor 1
 release 1
 x 10
-y 315
+y 460
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -579,7 +796,7 @@ major 10
 minor 0
 release 0
 x 165
-y 315
+y 460
 w 205
 h 20
 controlPv "$(P)$(R)TextWrite"
@@ -598,7 +815,7 @@ major 4
 minor 0
 release 0
 x 5
-y 350
+y 495
 w 370
 h 35
 lineColor index 14
@@ -613,7 +830,7 @@ major 4
 minor 1
 release 1
 x 5
-y 345
+y 490
 w 370
 h 10
 font "arial-medium-r-12.0"
@@ -621,7 +838,7 @@ fontAlign "center"
 fgColor index 14
 bgColor index 8
 value {
-  "  Toggle Button  "
+  "  ToggleButton  "
 }
 autoSize
 border
@@ -634,7 +851,7 @@ major 4
 minor 1
 release 1
 x 10
-y 360
+y 505
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -653,7 +870,7 @@ major 4
 minor 0
 release 0
 x 165
-y 360
+y 505
 w 205
 h 20
 fgColor index 14
@@ -666,77 +883,4 @@ controlPv "$(P)$(R)ToggleButton"
 indicatorPv "None"
 font "arial-bold-r-14.0"
 orientation "horizontal"
-endObjectProperties
-
-# (Rectangle)
-object activeRectangleClass
-beginObjectProperties
-major 4
-minor 0
-release 0
-x 5
-y 395
-w 370
-h 35
-lineColor index 14
-fill
-fillColor index 5
-endObjectProperties
-
-# (Static Text)
-object activeXTextClass
-beginObjectProperties
-major 4
-minor 1
-release 1
-x 5
-y 390
-w 370
-h 10
-font "arial-medium-r-12.0"
-fontAlign "center"
-fgColor index 14
-bgColor index 8
-value {
-  "  Bit Field  "
-}
-autoSize
-border
-endObjectProperties
-
-# (Static Text)
-object activeXTextClass
-beginObjectProperties
-major 4
-minor 1
-release 1
-x 10
-y 405
-w 150
-h 20
-font "arial-bold-r-10.0"
-fgColor index 14
-bgColor index 3
-useDisplayBg
-value {
-  "Bit Field"
-}
-endObjectProperties
-
-# (Byte)
-object ByteClass
-beginObjectProperties
-major 4
-minor 0
-release 0
-x 165
-y 405
-w 205
-h 20
-controlPv "$(P)$(R)BitField_RBV"
-lineColor index 14
-onColor index 15
-offColor index 19
-lineWidth 2
-numBits 1
 endObjectProperties

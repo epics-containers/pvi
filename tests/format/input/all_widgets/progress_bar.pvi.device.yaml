@@ -1,9 +1,0 @@
-# yaml-language-server: $schema=../../../../schemas/pvi.device.schema.json
-label: $(P)$(R)ProgressBar_RBV
-parent: asynPortDriver
-children:
-  - type: SignalR
-    name: ProgressBar
-    read_pv: $(P)$(R)ProgressBar_RBV
-    read_widget:
-      type: ProgressBar

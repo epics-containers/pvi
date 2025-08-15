@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../schemas/pvi.device.schema.json
+label: ToggleButton
+children:
+  - type: SignalW
+    name: ToggleButton
+    write_pv: $(P)$(R)ToggleButton
+    write_widget:
+      type: ToggleButton

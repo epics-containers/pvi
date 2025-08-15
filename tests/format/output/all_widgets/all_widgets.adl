@@ -7,8 +7,8 @@ display {
 	object {
 		x=0
 		y=0
-		width=335
-		height=510
+		width=665
+		height=590
 	}
 	clr=14
 	bclr=4
@@ -91,7 +91,7 @@ rectangle {
 	object {
 		x=0
 		y=0
-		width=335
+		width=665
 		height=25
 	}
 	"basic attribute" {
@@ -102,19 +102,91 @@ text {
 	object {
 		x=0
 		y=0
-		width=335
+		width=665
 		height=25
 	}
 	"basic attribute" {
 		clr=54
 	}
-	textix="$(P)$(R)"
+	textix="All Widgets"
 	align="horiz. centered"
 }
 rectangle {
 	object {
 		x=5
 		y=30
+		width=10
+		height=35
+	}
+	"basic attribute" {
+		clr=14
+		fill="outline"
+	}
+}
+rectangle {
+	object {
+		x=10
+		y=35
+		width=0
+		height=20
+	}
+	"basic attribute" {
+		clr=2
+	}
+}
+text {
+	object {
+		x=10
+		y=35
+		width=0
+		height=20
+	}
+	"basic attribute" {
+		clr=54
+	}
+	textix="ArrayTrace"
+	align="horiz. centered"
+}
+rectangle {
+	object {
+		x=5
+		y=70
+		width=10
+		height=35
+	}
+	"basic attribute" {
+		clr=14
+		fill="outline"
+	}
+}
+rectangle {
+	object {
+		x=10
+		y=75
+		width=0
+		height=20
+	}
+	"basic attribute" {
+		clr=2
+	}
+}
+text {
+	object {
+		x=10
+		y=75
+		width=0
+		height=20
+	}
+	"basic attribute" {
+		clr=54
+	}
+	textix="BitField"
+	align="horiz. centered"
+}
+rectangle {
+	object {
+		x=5
+		y=110
 		width=325
 		height=55
 	}
@@ -126,7 +198,7 @@ rectangle {
 rectangle {
 	object {
 		x=10
-		y=35
+		y=115
 		width=315
 		height=20
 	}
@@ -137,20 +209,20 @@ rectangle {
 text {
 	object {
 		x=10
-		y=35
+		y=115
 		width=315
 		height=20
 	}
 	"basic attribute" {
 		clr=54
 	}
-	textix="Button Panel"
+	textix="ButtonPanel"
 	align="horiz. centered"
 }
 text {
 	object {
 		x=10
-		y=60
+		y=140
 		width=205
 		height=20
 	}
@@ -163,7 +235,7 @@ text {
 "message button" {
 	object {
 		x=220
-		y=60
+		y=140
 		width=50
 		height=20
 	}
@@ -178,7 +250,7 @@ text {
 "message button" {
 	object {
 		x=275
-		y=60
+		y=140
 		width=50
 		height=20
 	}
@@ -193,7 +265,7 @@ text {
 rectangle {
 	object {
 		x=5
-		y=90
+		y=170
 		width=325
 		height=55
 	}
@@ -205,7 +277,7 @@ rectangle {
 rectangle {
 	object {
 		x=10
-		y=95
+		y=175
 		width=315
 		height=20
 	}
@@ -216,20 +288,20 @@ rectangle {
 text {
 	object {
 		x=10
-		y=95
+		y=175
 		width=315
 		height=20
 	}
 	"basic attribute" {
 		clr=54
 	}
-	textix="Check Box"
+	textix="CheckBox"
 	align="horiz. centered"
 }
 text {
 	object {
 		x=10
-		y=120
+		y=200
 		width=205
 		height=20
 	}
@@ -242,7 +314,7 @@ text {
 "choice button" {
 	object {
 		x=220
-		y=120
+		y=200
 		width=105
 		height=20
 	}
@@ -256,7 +328,7 @@ text {
 rectangle {
 	object {
 		x=5
-		y=150
+		y=230
 		width=325
 		height=55
 	}
@@ -268,7 +340,7 @@ rectangle {
 rectangle {
 	object {
 		x=10
-		y=155
+		y=235
 		width=315
 		height=20
 	}
@@ -279,20 +351,20 @@ rectangle {
 text {
 	object {
 		x=10
-		y=155
+		y=235
 		width=315
 		height=20
 	}
 	"basic attribute" {
 		clr=54
 	}
-	textix="Combo Box"
+	textix="ComboBox"
 	align="horiz. centered"
 }
 text {
 	object {
 		x=10
-		y=180
+		y=260
 		width=205
 		height=20
 	}
@@ -305,7 +377,7 @@ text {
 menu {
 	object {
 		x=220
-		y=180
+		y=260
 		width=105
 		height=20
 	}
@@ -318,9 +390,9 @@ menu {
 rectangle {
 	object {
 		x=5
-		y=210
-		width=325
-		height=55
+		y=290
+		width=10
+		height=35
 	}
 	"basic attribute" {
 		clr=14
@@ -330,8 +402,8 @@ rectangle {
 rectangle {
 	object {
 		x=10
-		y=215
-		width=315
+		y=295
+		width=0
 		height=20
 	}
 	"basic attribute" {
@@ -341,106 +413,15 @@ rectangle {
 text {
 	object {
 		x=10
-		y=215
-		width=315
+		y=295
+		width=0
 		height=20
 	}
 	"basic attribute" {
 		clr=54
 	}
-	textix="LED"
+	textix="ImageRead"
 	align="horiz. centered"
-}
-text {
-	object {
-		x=10
-		y=240
-		width=205
-		height=20
-	}
-	"basic attribute" {
-		clr=14
-	}
-	textix="LED"
-	align="horiz. right"
-}
-byte {
-	object {
-		x=262
-		y=240
-		width=20
-		height=20
-	}
-	monitor {
-		chan="$(P)$(R)LED"
-		clr=60
-		bclr=64
-	}
-	sbit=0
-}
-rectangle {
-	object {
-		x=5
-		y=270
-		width=325
-		height=55
-	}
-	"basic attribute" {
-		clr=14
-		fill="outline"
-	}
-}
-rectangle {
-	object {
-		x=10
-		y=275
-		width=315
-		height=20
-	}
-	"basic attribute" {
-		clr=2
-	}
-}
-text {
-	object {
-		x=10
-		y=275
-		width=315
-		height=20
-	}
-	"basic attribute" {
-		clr=54
-	}
-	textix="Progress Bar"
-	align="horiz. centered"
-}
-text {
-	object {
-		x=10
-		y=300
-		width=205
-		height=20
-	}
-	"basic attribute" {
-		clr=14
-	}
-	textix="Progress Bar"
-	align="horiz. right"
-}
-bar {
-	object {
-		x=220
-		y=300
-		width=105
-		height=20
-	}
-	monitor {
-		chan="$(P)$(R)ProgressBar_RBV"
-		clr=51
-		bclr=4
-	}
-	limits {
-	}
 }
 rectangle {
 	object {
@@ -475,7 +456,7 @@ text {
 	"basic attribute" {
 		clr=54
 	}
-	textix="Text Read"
+	textix="LED"
 	align="horiz. centered"
 }
 text {
@@ -488,23 +469,22 @@ text {
 	"basic attribute" {
 		clr=14
 	}
-	textix="Text Read"
+	textix="LED"
 	align="horiz. right"
 }
-"text update" {
+byte {
 	object {
-		x=220
+		x=262
 		y=360
-		width=105
+		width=20
 		height=20
 	}
 	monitor {
-		chan="$(P)$(R)TextRead"
-		clr=54
-		bclr=4
+		chan="$(P)$(R)LED"
+		clr=60
+		bclr=64
 	}
-	limits {
-	}
+	sbit=0
 }
 rectangle {
 	object {
@@ -539,7 +519,7 @@ text {
 	"basic attribute" {
 		clr=54
 	}
-	textix="Text Write"
+	textix="ProgressBar"
 	align="horiz. centered"
 }
 text {
@@ -552,13 +532,213 @@ text {
 	"basic attribute" {
 		clr=14
 	}
+	textix="Progress Bar"
+	align="horiz. right"
+}
+bar {
+	object {
+		x=220
+		y=420
+		width=105
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)ProgressBar_RBV"
+		clr=51
+		bclr=4
+	}
+	limits {
+	}
+}
+rectangle {
+	object {
+		x=5
+		y=450
+		width=10
+		height=35
+	}
+	"basic attribute" {
+		clr=14
+		fill="outline"
+	}
+}
+rectangle {
+	object {
+		x=10
+		y=455
+		width=0
+		height=20
+	}
+	"basic attribute" {
+		clr=2
+	}
+}
+text {
+	object {
+		x=10
+		y=455
+		width=0
+		height=20
+	}
+	"basic attribute" {
+		clr=54
+	}
+	textix="TableRead"
+	align="horiz. centered"
+}
+rectangle {
+	object {
+		x=5
+		y=490
+		width=10
+		height=35
+	}
+	"basic attribute" {
+		clr=14
+		fill="outline"
+	}
+}
+rectangle {
+	object {
+		x=10
+		y=495
+		width=0
+		height=20
+	}
+	"basic attribute" {
+		clr=2
+	}
+}
+text {
+	object {
+		x=10
+		y=495
+		width=0
+		height=20
+	}
+	"basic attribute" {
+		clr=54
+	}
+	textix="TableWrite"
+	align="horiz. centered"
+}
+rectangle {
+	object {
+		x=5
+		y=530
+		width=325
+		height=55
+	}
+	"basic attribute" {
+		clr=14
+		fill="outline"
+	}
+}
+rectangle {
+	object {
+		x=10
+		y=535
+		width=315
+		height=20
+	}
+	"basic attribute" {
+		clr=2
+	}
+}
+text {
+	object {
+		x=10
+		y=535
+		width=315
+		height=20
+	}
+	"basic attribute" {
+		clr=54
+	}
+	textix="TextRead"
+	align="horiz. centered"
+}
+text {
+	object {
+		x=10
+		y=560
+		width=205
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Text Read"
+	align="horiz. right"
+}
+"text update" {
+	object {
+		x=220
+		y=560
+		width=105
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)TextRead"
+		clr=54
+		bclr=4
+	}
+	limits {
+	}
+}
+rectangle {
+	object {
+		x=335
+		y=30
+		width=325
+		height=55
+	}
+	"basic attribute" {
+		clr=14
+		fill="outline"
+	}
+}
+rectangle {
+	object {
+		x=340
+		y=35
+		width=315
+		height=20
+	}
+	"basic attribute" {
+		clr=2
+	}
+}
+text {
+	object {
+		x=340
+		y=35
+		width=315
+		height=20
+	}
+	"basic attribute" {
+		clr=54
+	}
+	textix="TextWrite"
+	align="horiz. centered"
+}
+text {
+	object {
+		x=340
+		y=60
+		width=205
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
 	textix="Text Write"
 	align="horiz. right"
 }
 "text entry" {
 	object {
-		x=220
-		y=420
+		x=550
+		y=60
 		width=105
 		height=20
 	}
@@ -572,8 +752,8 @@ text {
 }
 rectangle {
 	object {
-		x=5
-		y=450
+		x=335
+		y=90
 		width=325
 		height=55
 	}
@@ -584,8 +764,8 @@ rectangle {
 }
 rectangle {
 	object {
-		x=10
-		y=455
+		x=340
+		y=95
 		width=315
 		height=20
 	}
@@ -595,21 +775,21 @@ rectangle {
 }
 text {
 	object {
-		x=10
-		y=455
+		x=340
+		y=95
 		width=315
 		height=20
 	}
 	"basic attribute" {
 		clr=54
 	}
-	textix="Toggle Button"
+	textix="ToggleButton"
 	align="horiz. centered"
 }
 text {
 	object {
-		x=10
-		y=480
+		x=340
+		y=120
 		width=205
 		height=20
 	}
@@ -621,8 +801,8 @@ text {
 }
 "choice button" {
 	object {
-		x=220
-		y=480
+		x=550
+		y=120
 		width=105
 		height=20
 	}

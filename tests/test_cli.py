@@ -9,8 +9,7 @@ import pytest
 from pvi import __version__
 from pvi.__main__ import app
 from pvi._format import Formatter
-from pvi._yaml_utils import load_yaml
-from pvi.device import Device
+from pvi.device import Device, Grid, Group
 
 HERE = Path(__file__).parent
 
@@ -35,8 +34,8 @@ def test_schemas(tmp_path, helper, filename):
 @pytest.fixture(scope="module")
 def formats_to_skip():
     return {
-        ".adl": ["bit_field", "array_trace", "image_read", "table_read", "table_write"],
-        ".edl": ["array_trace", "image_read", "table_read", "table_write"],
+        ".adl": ["BitField", "ArrayTrace", "ImageRead", "TableRead", "TableWrite"],
+        ".edl": ["ArrayTrace", "ImageRead", "TableRead", "TableWrite"],
         ".bob": [],
     }
 
@@ -44,19 +43,19 @@ def formats_to_skip():
 @pytest.mark.parametrize(
     "widget_name",
     [
-        "array_trace",
-        "bit_field",
-        "button_panel",
-        "check_box",
-        "combo_box",
-        "image_read",
-        "led",
-        "progress_bar",
-        "table_read",
-        "table_write",
-        "text_read",
-        "text_write",
-        "toggle_button",
+        "ArrayTrace",
+        "BitField",
+        "ButtonPanel",
+        "CheckBox",
+        "ComboBox",
+        "ImageRead",
+        "LED",
+        "ProgressBar",
+        "TableRead",
+        "TableWrite",
+        "TextRead",
+        "TextWrite",
+        "ToggleButton",
     ],
 )
 @pytest.mark.parametrize(
@@ -218,34 +217,29 @@ def test_static_table(tmp_path, helper, input_yaml, formatter, output):
 )
 def test_combine_widgets(tmp_path, helper, formatter, format, skip):
     children = []
-    for path in (HERE / "format" / "input" / "all_widgets").iterdir():
-        yaml = load_yaml(path)
-        group = {
-            "type": "Group",
-            "children": [
-                child for child in yaml["children"] if child["name"] not in skip
-            ],
-            "layout": {"type": "Grid"},
-        }
-        if group["children"]:
-            group["name"] = group["children"][0]["name"]
-            children.append(group)
+    for path in sorted((HERE / "format" / "input" / "all_widgets").iterdir()):
+        device = Device.deserialize(path)
+        children.append(
+            Group(
+                name=path.name.split(".")[0],
+                label=device.label,
+                children=[
+                    child
+                    for child in device.children
+                    if not any(s in child.name for s in skip)
+                ],
+                layout=Grid(),
+            )
+        )
+    all_device = Device(label="All Widgets", children=children)
 
-    device = Device(label="$(P)$(R)", parent="asynPortDriver", children=children)
-
-    yaml_filename = f"all_widgets{format}.pvi.device.yaml"
-    combined_yaml_path = tmp_path / yaml_filename
-    device.serialize(combined_yaml_path)
-
-    input_path = HERE / "format" / "input"
-    formatter_path = input_path / formatter
     screen_filename = f"all_widgets{format}"
-    combined_screen_path = tmp_path / screen_filename
-    expected_path = HERE / "format" / "output" / "all_widgets"
-
-    my_formatter = Formatter.deserialize(formatter_path)
-    my_formatter.format(device, combined_screen_path)
+    output_path = tmp_path / screen_filename
+    expected_path = HERE / "format" / "output" / "all_widgets" / screen_filename
+    my_formatter = Formatter.deserialize(HERE / "format" / "input" / formatter)
+    my_formatter.format(all_device, output_path)
 
     if os.environ.get("PVI_REGENERATE_OUTPUT", None):
-        shutil.copy(combined_screen_path, expected_path / screen_filename)
-        shutil.copy(combined_yaml_path, expected_path / yaml_filename)
+        shutil.copy(output_path, expected_path)
+
+    helper.assert_output_matches(expected_path, output_path)

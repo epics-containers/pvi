@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../../../../schemas/pvi.device.schema.json
+label: TableWrite
+children:
+  - type: SignalW
+    name: TableWrite
+    write_pv: $(P)(R)TableWrite
+    write_widget:
+      type: TableWrite
+      widgets:
+        - type: CheckBox
+
+        - type: ComboBox
+
+        - type: TextWrite

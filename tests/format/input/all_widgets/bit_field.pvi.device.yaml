@@ -1,9 +1,0 @@
-# yaml-language-server: $schema=../../../../schemas/pvi.device.schema.json
-label: $(P)$(R)BitField_RBV
-parent: asynPortDriver
-children:
-  - type: SignalR
-    name: BitField
-    read_pv: $(P)$(R)BitField_RBV
-    read_widget:
-      type: BitField
