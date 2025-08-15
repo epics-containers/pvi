@@ -8,7 +8,7 @@ display {
 		x=0
 		y=0
 		width=325
-		height=55
+		height=80
 	}
 	clr=14
 	bclr=4
@@ -137,4 +137,45 @@ text {
 		bclr=51
 	}
 	stacking="column"
+}
+text {
+	object {
+		x=5
+		y=55
+		width=205
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Toggle Button RBV"
+	align="horiz. right"
+}
+"choice button" {
+	object {
+		x=215
+		y=55
+		width=50
+		height=20
+	}
+	control {
+		chan="$(P)$(R)ToggleButton"
+		clr=14
+		bclr=51
+	}
+	stacking="column"
+}
+byte {
+	object {
+		x=285
+		y=55
+		width=20
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)ToggleButton_RBV"
+		clr=60
+		bclr=64
+	}
+	sbit=0
 }

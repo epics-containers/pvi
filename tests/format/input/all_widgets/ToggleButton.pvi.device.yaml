@@ -6,3 +6,12 @@ children:
     write_pv: $(P)$(R)ToggleButton
     write_widget:
       type: ToggleButton
+
+  - type: SignalRW
+    name: ToggleButtonRBV
+    write_pv: $(P)$(R)ToggleButton
+    write_widget:
+      type: ToggleButton
+    read_pv: $(P)$(R)ToggleButton_RBV
+    read_widget:
+      type: LED
