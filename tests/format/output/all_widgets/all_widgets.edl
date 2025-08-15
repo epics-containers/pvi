@@ -5,8 +5,8 @@ minor 0
 release 1
 x 0
 y 0
-w 375
-h 255
+w 380
+h 435
 font "arial-bold-r-12.0"
 ctlFont "arial-bold-r-12.0"
 btnFont "arial-bold-r-12.0"
@@ -33,7 +33,7 @@ minor 1
 release 1
 x 0
 y 0
-w 375
+w 380
 h 25
 font "arial-bold-r-16.0"
 fontAlign "center"
@@ -44,6 +44,42 @@ value {
 }
 endObjectProperties
 
+# (Rectangle)
+object activeRectangleClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 5
+y 35
+w 370
+h 35
+lineColor index 14
+fill
+fillColor index 5
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 5
+y 30
+w 370
+h 10
+font "arial-medium-r-12.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 8
+value {
+  "  Button Panel  "
+}
+autoSize
+border
+endObjectProperties
+
 # (Static Text)
 object activeXTextClass
 beginObjectProperties
@@ -51,7 +87,7 @@ major 4
 minor 1
 release 1
 x 10
-y 30
+y 45
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -70,7 +106,7 @@ major 4
 minor 1
 release 0
 x 165
-y 30
+y 45
 w 100
 h 20
 fgColor index 25
@@ -93,7 +129,7 @@ major 4
 minor 1
 release 0
 x 270
-y 30
+y 45
 w 100
 h 20
 fgColor index 25
@@ -109,6 +145,42 @@ offLabel "Start"
 font "arial-bold-r-12.0"
 endObjectProperties
 
+# (Rectangle)
+object activeRectangleClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 5
+y 80
+w 370
+h 35
+lineColor index 14
+fill
+fillColor index 5
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 5
+y 75
+w 370
+h 10
+font "arial-medium-r-12.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 8
+value {
+  "  Check Box  "
+}
+autoSize
+border
+endObjectProperties
+
 # (Static Text)
 object activeXTextClass
 beginObjectProperties
@@ -116,7 +188,7 @@ major 4
 minor 1
 release 1
 x 10
-y 55
+y 90
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -135,7 +207,7 @@ major 4
 minor 0
 release 0
 x 165
-y 55
+y 90
 w 205
 h 20
 fgColor index 25
@@ -147,6 +219,42 @@ controlPv "$(P)$(R)CheckBox"
 font "arial-bold-r-12.0"
 endObjectProperties
 
+# (Rectangle)
+object activeRectangleClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 5
+y 125
+w 370
+h 35
+lineColor index 14
+fill
+fillColor index 5
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 5
+y 120
+w 370
+h 10
+font "arial-medium-r-12.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 8
+value {
+  "  Combo Box  "
+}
+autoSize
+border
+endObjectProperties
+
 # (Static Text)
 object activeXTextClass
 beginObjectProperties
@@ -154,7 +262,7 @@ major 4
 minor 1
 release 1
 x 10
-y 80
+y 135
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -173,7 +281,7 @@ major 4
 minor 0
 release 0
 x 165
-y 80
+y 135
 w 205
 h 20
 fgColor index 25
@@ -185,6 +293,42 @@ controlPv "$(P)$(R)ComboBox"
 font "arial-bold-r-12.0"
 endObjectProperties
 
+# (Rectangle)
+object activeRectangleClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 5
+y 170
+w 370
+h 35
+lineColor index 14
+fill
+fillColor index 5
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 5
+y 165
+w 370
+h 10
+font "arial-medium-r-12.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 8
+value {
+  "  LED  "
+}
+autoSize
+border
+endObjectProperties
+
 # (Static Text)
 object activeXTextClass
 beginObjectProperties
@@ -192,7 +336,7 @@ major 4
 minor 1
 release 1
 x 10
-y 105
+y 180
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -211,7 +355,7 @@ major 4
 minor 0
 release 0
 x 257
-y 105
+y 180
 w 20
 h 20
 controlPv "$(P)$(R)LED"
@@ -222,6 +366,42 @@ lineWidth 2
 numBits 1
 endObjectProperties
 
+# (Rectangle)
+object activeRectangleClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 5
+y 215
+w 370
+h 35
+lineColor index 14
+fill
+fillColor index 5
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 5
+y 210
+w 370
+h 10
+font "arial-medium-r-12.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 8
+value {
+  "  Progress Bar  "
+}
+autoSize
+border
+endObjectProperties
+
 # (Static Text)
 object activeXTextClass
 beginObjectProperties
@@ -229,7 +409,7 @@ major 4
 minor 1
 release 1
 x 10
-y 130
+y 225
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -248,7 +428,7 @@ major 4
 minor 1
 release 1
 x 165
-y 130
+y 225
 w 205
 h 20
 indicatorColor index 16
@@ -263,6 +443,42 @@ max "100"
 scaleFormat "FFloat"
 endObjectProperties
 
+# (Rectangle)
+object activeRectangleClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 5
+y 260
+w 370
+h 35
+lineColor index 14
+fill
+fillColor index 5
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 5
+y 255
+w 370
+h 10
+font "arial-medium-r-12.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 8
+value {
+  "  Text Read  "
+}
+autoSize
+border
+endObjectProperties
+
 # (Static Text)
 object activeXTextClass
 beginObjectProperties
@@ -270,7 +486,7 @@ major 4
 minor 1
 release 1
 x 10
-y 155
+y 270
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -289,7 +505,7 @@ major 10
 minor 0
 release 0
 x 165
-y 155
+y 270
 w 205
 h 20
 controlPv "$(P)$(R)TextRead"
@@ -301,6 +517,42 @@ font "arial-bold-r-12.0"
 fontAlign "center"
 endObjectProperties
 
+# (Rectangle)
+object activeRectangleClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 5
+y 305
+w 370
+h 35
+lineColor index 14
+fill
+fillColor index 5
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 5
+y 300
+w 370
+h 10
+font "arial-medium-r-12.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 8
+value {
+  "  Text Write  "
+}
+autoSize
+border
+endObjectProperties
+
 # (Static Text)
 object activeXTextClass
 beginObjectProperties
@@ -308,7 +560,7 @@ major 4
 minor 1
 release 1
 x 10
-y 180
+y 315
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -327,7 +579,7 @@ major 10
 minor 0
 release 0
 x 165
-y 180
+y 315
 w 205
 h 20
 controlPv "$(P)$(R)TextWrite"
@@ -339,6 +591,42 @@ font "arial-bold-r-12.0"
 fontAlign "center"
 endObjectProperties
 
+# (Rectangle)
+object activeRectangleClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 5
+y 350
+w 370
+h 35
+lineColor index 14
+fill
+fillColor index 5
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 5
+y 345
+w 370
+h 10
+font "arial-medium-r-12.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 8
+value {
+  "  Toggle Button  "
+}
+autoSize
+border
+endObjectProperties
+
 # (Static Text)
 object activeXTextClass
 beginObjectProperties
@@ -346,7 +634,7 @@ major 4
 minor 1
 release 1
 x 10
-y 205
+y 360
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -365,7 +653,7 @@ major 4
 minor 0
 release 0
 x 165
-y 205
+y 360
 w 205
 h 20
 fgColor index 14
@@ -380,6 +668,42 @@ font "arial-bold-r-14.0"
 orientation "horizontal"
 endObjectProperties
 
+# (Rectangle)
+object activeRectangleClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 5
+y 395
+w 370
+h 35
+lineColor index 14
+fill
+fillColor index 5
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 5
+y 390
+w 370
+h 10
+font "arial-medium-r-12.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 8
+value {
+  "  Bit Field  "
+}
+autoSize
+border
+endObjectProperties
+
 # (Static Text)
 object activeXTextClass
 beginObjectProperties
@@ -387,7 +711,7 @@ major 4
 minor 1
 release 1
 x 10
-y 230
+y 405
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -406,7 +730,7 @@ major 4
 minor 0
 release 0
 x 165
-y 230
+y 405
 w 205
 h 20
 controlPv "$(P)$(R)BitField_RBV"
