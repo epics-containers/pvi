@@ -39,6 +39,14 @@
   - ```{autodoc2-docstring} pvi._version.version_tuple
     :summary:
     ```
+* - {py:obj}`commit_id <pvi._version.commit_id>`
+  - ```{autodoc2-docstring} pvi._version.commit_id
+    :summary:
+    ```
+* - {py:obj}`__commit_id__ <pvi._version.__commit_id__>`
+  - ```{autodoc2-docstring} pvi._version.__commit_id__
+    :summary:
+    ```
 ````
 
 ### API
@@ -46,7 +54,7 @@
 ````{py:data} __all__
 :canonical: pvi._version.__all__
 :value: >
-   ['__version__', '__version_tuple__', 'version', 'version_tuple']
+   ['__version__', '__version_tuple__', 'version', 'version_tuple', '__commit_id__', 'commit_id']
 
 ```{autodoc2-docstring} pvi._version.__all__
 ```
@@ -103,6 +111,28 @@
    None
 
 ```{autodoc2-docstring} pvi._version.version_tuple
+```
+
+````
+
+````{py:data} commit_id
+:canonical: pvi._version.commit_id
+:type: pvi._version.COMMIT_ID
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._version.commit_id
+```
+
+````
+
+````{py:data} __commit_id__
+:canonical: pvi._version.__commit_id__
+:type: pvi._version.COMMIT_ID
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._version.__commit_id__
 ```
 
 ````

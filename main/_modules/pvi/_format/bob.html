@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pvi._format.bob &#8212; pvi 0.10.2.dev14+g02610adc documentation</title>
+    <title>pvi._format.bob &#8212; pvi 0.10.2.dev18+g16592e4c8 documentation</title>
   
   
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=a30d0143"></script>
+    <script src="../../../_static/documentation_options.js?v=c33f1ef1"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -472,6 +472,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">pvi.device</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">LED</span><span class="p">,</span>
     <span class="n">BitField</span><span class="p">,</span>
+    <span class="n">CheckBox</span><span class="p">,</span>
     <span class="n">ComboBox</span><span class="p">,</span>
     <span class="n">TableRead</span><span class="p">,</span>
     <span class="n">TableWrite</span><span class="p">,</span>
@@ -659,7 +660,7 @@
     <span class="n">widget</span><span class="p">:</span> <span class="n">WidgetUnion</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="n">options</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">LED</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">LED</span> <span class="o">|</span> <span class="n">CheckBox</span><span class="p">):</span>
         <span class="n">options</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;false&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">]</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">ComboBox</span><span class="p">):</span>
         <span class="n">options</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">get_choices</span><span class="p">()</span>
