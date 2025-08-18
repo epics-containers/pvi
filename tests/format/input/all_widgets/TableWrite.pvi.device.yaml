@@ -3,7 +3,7 @@ label: TableWrite
 children:
   - type: SignalW
     name: TableWrite
-    write_pv: $(P)(R)TableWrite
+    write_pv: $(P)$(R)TableWrite
     write_widget:
       type: TableWrite
       widgets:
