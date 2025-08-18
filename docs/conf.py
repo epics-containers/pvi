@@ -91,6 +91,7 @@ nitpick_ignore_regex = [
     ("py:class", "typing_extensions.*"),
     ("py:obj", r"typing.Annotated\[.*"),
     ("py:class", r".*\.T"),
+    ("py:class", r"pvi\._version\..*"),
     ("py:class", r"pvi\.device\..*Union"),
     ("py:class", ".*.?Tree"),
     ("py:class", ".*.PascalStr"),
