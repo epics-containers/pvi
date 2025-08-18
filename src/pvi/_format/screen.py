@@ -25,6 +25,7 @@ from pvi.device import (
     DeviceRef,
     Grid,
     Group,
+    ImageRead,
     Row,
     SignalR,
     SignalRef,
@@ -102,6 +103,13 @@ class ScreenFormatterFactory(Generic[T]):
                 y=0,
                 **widget_dims,
             )
+            if isinstance(c, SignalR) and isinstance(c.read_widget, ImageRead):
+                if len(components) != 1:
+                    # move widget to its own screen
+                    c = Group(layout=SubScreen(), children=[c], name=c.name)
+                else:
+                    last_column_bounds.w = c.read_widget.width
+                    last_column_bounds.h = c.read_widget.height
             if isinstance(c, Group) and not isinstance(c.layout, Row):
                 # Create embedded group widget containing its components
                 # Note: Group adjusts bounds to fit the components
