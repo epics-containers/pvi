@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import re
 from collections.abc import Iterator, Sequence
-from enum import Enum
+from enum import StrEnum
 from pathlib import Path
 from typing import (
     TYPE_CHECKING,
@@ -75,7 +75,7 @@ def enforce_pascal_case(s: str) -> str:
 PascalStr = Annotated[str, Field(pattern="^([A-Z][a-z0-9]*)*$")]
 
 
-class TextFormat(Enum):
+class TextFormat(StrEnum):
     """Format to use for display of Text{Read,Write} widgets on a UI"""
 
     decimal = "decimal"
