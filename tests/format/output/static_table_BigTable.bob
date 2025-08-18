@@ -120,7 +120,7 @@
     <y>54</y>
     <width>120</width>
     <height>20</height>
-    <tooltip>$(text)</tooltip>
+    <tooltip>No description provided</tooltip>
   </widget>
   <widget type="led" version="2.0.0">
     <name>LED</name>
@@ -176,7 +176,7 @@
     <y>78</y>
     <width>120</width>
     <height>20</height>
-    <tooltip>$(text)</tooltip>
+    <tooltip>No description provided</tooltip>
   </widget>
   <widget type="led" version="2.0.0">
     <name>LED</name>
@@ -232,7 +232,7 @@
     <y>102</y>
     <width>120</width>
     <height>20</height>
-    <tooltip>$(text)</tooltip>
+    <tooltip>No description provided</tooltip>
   </widget>
   <widget type="led" version="2.0.0">
     <name>LED</name>
@@ -288,7 +288,7 @@
     <y>126</y>
     <width>120</width>
     <height>20</height>
-    <tooltip>$(text)</tooltip>
+    <tooltip>No description provided</tooltip>
   </widget>
   <widget type="led" version="2.0.0">
     <name>LED</name>

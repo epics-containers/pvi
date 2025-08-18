@@ -32,7 +32,7 @@
     <y>30</y>
     <width>120</width>
     <height>20</height>
-    <tooltip>$(text)</tooltip>
+    <tooltip>No description provided</tooltip>
   </widget>
   <widget type="slide_button" version="2.0.0">
     <name>ToggleButton</name>
@@ -50,7 +50,7 @@
     <y>54</y>
     <width>120</width>
     <height>20</height>
-    <tooltip>$(text)</tooltip>
+    <tooltip>No description provided</tooltip>
   </widget>
   <widget type="slide_button" version="2.0.0">
     <name>ToggleButton</name>

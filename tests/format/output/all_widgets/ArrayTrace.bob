@@ -32,7 +32,7 @@
     <y>30</y>
     <width>120</width>
     <height>20</height>
-    <tooltip>$(text)</tooltip>
+    <tooltip>No description provided</tooltip>
   </widget>
   <widget type="xyplot" version="3.0.0">
     <name>ArrayTrace</name>
