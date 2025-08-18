@@ -3,12 +3,15 @@ label: TableWrite
 children:
   - type: SignalW
     name: TableWrite
-    write_pv: $(P)(R)TableWrite
+    write_pv: $(P)$(R)TableWrite
     write_widget:
       type: TableWrite
       widgets:
         - type: CheckBox
 
         - type: ComboBox
+          choices:
+            - "One"
+            - "Two"
 
         - type: TextWrite
