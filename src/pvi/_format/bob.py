@@ -16,6 +16,7 @@ from pvi.device import (
     BitField,
     CheckBox,
     ComboBox,
+    ImageRead,
     TableRead,
     TableWrite,
     TextFormat,
@@ -103,6 +104,9 @@ class BobTemplate(UITemplate[_Element]):
                 add_format(t_copy, BOB_TEXT_FORMATS[TextFormat(format)])
             case ("byte_monitor", BitField() as bit_field):
                 add_byte_number_of_bits(t_copy, bit_field.number_of_bits)
+            case ("image", ImageRead(grayscale=grayscale)):
+                if grayscale:
+                    set_color_map(t_copy, "GRAY")
             case _:
                 pass
 
@@ -234,6 +238,9 @@ def add_format(element: _Element, format: str):
     if format:
         SubElement(element, "format").text = format
 
+def set_color_map(element: _Element, color_map: str):
+    color_map_element = SubElement(element, "color_map")
+    SubElement(color_map_element, "name").text = color_map
 
 def add_byte_number_of_bits(element: _Element, number_of_bits: int):
     SubElement(element, "numBits").text = str(number_of_bits)
