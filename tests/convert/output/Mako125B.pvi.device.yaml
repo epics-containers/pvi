@@ -1,49 +1,47 @@
 label: GenICam Mako125B
 parent: GenICamDriver
 children:
+  - type: Group
+    name: Mako125B
+    layout:
+      type: Grid
+      labelled: true
+    children:
+      - type: SignalW
+        name: GCFirmwareVerBuild
+        write_pv: $(P)$(R)GC_FirmwareVerBuild
+        write_widget:
+          type: TextWrite
 
-- type: Group
-  name: Mako125B
-  layout:
-    type: Grid
-    labelled: true
-  children:
+      - type: SignalR
+        name: GCFirmwareVerMajor
+        read_pv: $(P)$(R)GC_FirmwareVerMajor_RBV
+        read_widget:
+          type: TextRead
 
-  - type: SignalW
-    name: GCFirmwareVerBuild
-    write_pv: $(P)$(R)GC_FirmwareVerBuild
-    write_widget:
-      type: TextWrite
+      - type: SignalR
+        name: GCSensorType
+        read_pv: $(P)$(R)GC_SensorType_RBV
+        read_widget:
+          type: TextRead
 
-  - type: SignalR
-    name: GCFirmwareVerMajor
-    read_pv: $(P)$(R)GC_FirmwareVerMajor_RBV
-    read_widget:
-      type: TextRead
+      - type: SignalR
+        name: GCDeviceVendorName
+        read_pv: $(P)$(R)GC_DeviceVendorName_RBV
+        read_widget:
+          type: TextRead
 
-  - type: SignalR
-    name: GCSensorType
-    read_pv: $(P)$(R)GC_SensorType_RBV
-    read_widget:
-      type: TextRead
+      - type: SignalR
+        name: GCDeviceModelName
+        read_pv: $(P)$(R)GC_DeviceModelName_RBV
+        read_widget:
+          type: TextRead
 
-  - type: SignalR
-    name: GCDeviceVendorName
-    read_pv: $(P)$(R)GC_DeviceVendorName_RBV
-    read_widget:
-      type: TextRead
-
-  - type: SignalR
-    name: GCDeviceModelName
-    read_pv: $(P)$(R)GC_DeviceModelName_RBV
-    read_widget:
-      type: TextRead
-
-  - type: SignalRW
-    name: GCSensorBits
-    write_pv: $(P)$(R)GC_SensorBits
-    write_widget:
-      type: TextWrite
-    read_pv: $(P)$(R)GC_SensorBits_RBV
-    read_widget:
-      type: TextRead
+      - type: SignalRW
+        name: GCSensorBits
+        write_pv: $(P)$(R)GC_SensorBits
+        write_widget:
+          type: TextWrite
+        read_pv: $(P)$(R)GC_SensorBits_RBV
+        read_widget:
+          type: TextRead
