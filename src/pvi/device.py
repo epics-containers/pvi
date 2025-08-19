@@ -148,6 +148,9 @@ class ImageRead(ReadWidget):
     """2D Image view of an NTNDArray"""
     width: Annotated[int, Field(description="Width of image widget")] = 900
     height: Annotated[int, Field(description="Height of image widget")] = 500
+    grayscale: Annotated[
+        bool, Field(description="Whether to display image as grayscale")
+    ] = False
 
 
 class WriteWidget(TypedModel, AccessModeMixin):
