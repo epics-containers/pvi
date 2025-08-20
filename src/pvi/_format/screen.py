@@ -306,13 +306,13 @@ class ScreenFormatterFactory(Generic[T]):
 
         for c in group.children:
             component: Group | Component
-            add_label: bool = group.layout.labelled
+            add_label: bool = False
             match c:
-                case Group(layout=SubScreen()):
-                    add_label = c.layout.labelled
+                case Group(layout=SubScreen(labelled=labelled)):
+                    add_label = labelled
                     component = c
-                case Group(layout=Grid()):
-                    add_label = c.layout.labelled
+                case Group(layout=Grid(labelled=labelled)):
+                    add_label = labelled
                     if is_table(c):
                         # Display table on a sub screen
                         component = Group(
