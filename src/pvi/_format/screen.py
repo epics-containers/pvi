@@ -236,16 +236,16 @@ class ScreenFormatterFactory(Generic[T]):
         if is_table(c):
             # Make a sub screen button at the root to display this Group instead of
             # embedding the components within a Group widget
-            c = Group(name=c.name, layout=SubScreen(), children=c.children)
+            c = Group(name=c.name, layout=SubScreen(labelled=False), children=c.children)
 
         if isinstance(c.layout, SubScreen):
             return self.create_component_widget_formatters(
-                Group(name=c.name, layout=SubScreen(), children=c.children),
+                Group(name=c.name, layout=c.layout, children=c.children),
                 parent_bounds=screen_bounds,
                 column_bounds=column_bounds,
                 next_column_bounds=next_column_bounds,
                 indent=True,
-                add_label=False,
+                add_label=c.layout.labelled,
             )
         else:
             split_out_images(c)
@@ -306,8 +306,13 @@ class ScreenFormatterFactory(Generic[T]):
 
         for c in group.children:
             component: Group | Component
+            add_label: bool = group.layout.labelled
             match c:
+                case Group(layout=SubScreen()):
+                    add_label = c.layout.labelled
+                    component = c
                 case Group(layout=Grid()):
+                    add_label = c.layout.labelled
                     if is_table(c):
                         # Display table on a sub screen
                         component = Group(
@@ -332,7 +337,7 @@ class ScreenFormatterFactory(Generic[T]):
                     parent_bounds=bounds,
                     column_bounds=column_bounds,
                     next_column_bounds=next_column_bounds,
-                    add_label=group.layout.labelled,
+                    add_label=add_label,
                 )
             )
             if next_column_bounds.y != 0:
@@ -579,7 +584,7 @@ def is_table(component: Group) -> bool:
 
 def make_image_subscreen(component: SignalR) -> Group:
     return Group(
-        name=component.name, layout=SubScreen(), children=[component]
+        name=component.name, layout=SubScreen(labelled=False), children=[component]
     )
 
 def split_out_images(component: Group):
