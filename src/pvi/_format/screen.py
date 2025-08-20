@@ -105,11 +105,7 @@ class ScreenFormatterFactory(Generic[T]):
             )
             if isinstance(c, SignalR) and isinstance(c.read_widget, ImageRead):
                 if len(components) != 1:
-                    # move widget to its own screen
-                    c = Group(layout=SubScreen(), children=[c], name=c.name)
-                else:
-                    last_column_bounds.w = c.read_widget.width
-                    last_column_bounds.h = c.read_widget.height
+                    c = make_image_subscreen(c)
             if isinstance(c, Group) and not isinstance(c.layout, Row):
                 # Create embedded group widget containing its components
                 # Note: Group adjusts bounds to fit the components
@@ -251,6 +247,8 @@ class ScreenFormatterFactory(Generic[T]):
                 indent=True,
                 add_label=False,
             )
+        else:
+            split_out_images(c)
 
         group_formatter = self.create_group_formatter(
             c, bounds=Bounds(x=column_bounds.x, y=column_bounds.y, h=screen_bounds.h)
@@ -384,6 +382,10 @@ class ScreenFormatterFactory(Generic[T]):
         if indent:
             tmp_column_bounds.indent(self.layout.group_widget_indent)
             tmp_next_column_bounds.indent(self.layout.group_widget_indent)
+
+        if isinstance(c, SignalR) and isinstance(c.read_widget, ImageRead):
+            tmp_column_bounds.w = c.read_widget.width
+            tmp_column_bounds.h = c.read_widget.height
 
         widgets = list(
             self.generate_component_formatters(c, tmp_column_bounds, add_label)
@@ -574,3 +576,13 @@ def is_table(component: Group) -> bool:
         isinstance(sub_component, Group) and isinstance(sub_component.layout, Row)
         for sub_component in component.children
     )
+
+def make_image_subscreen(component: SignalR) -> Group:
+    return Group(
+        name=component.name, layout=SubScreen(), children=[component]
+    )
+
+def split_out_images(component: Group):
+    for idx, child in enumerate(component.children):
+        if isinstance(child, SignalR) and isinstance(child.read_widget, ImageRead):
+            component.children[idx] = make_image_subscreen(child)
