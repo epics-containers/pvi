@@ -178,12 +178,12 @@ Bases: {py:obj}`pvi._format.widget.WidgetFormatter`\[{py:obj}`pvi._format.widget
 
 ````
 
-````{py:attribute} description
-:canonical: pvi._format.widget.LabelWidgetFormatter.description
+````{py:attribute} tooltip
+:canonical: pvi._format.widget.LabelWidgetFormatter.tooltip
 :type: str
 :value: <Multiline-String>
 
-```{autodoc2-docstring} pvi._format.widget.LabelWidgetFormatter.description
+```{autodoc2-docstring} pvi._format.widget.LabelWidgetFormatter.tooltip
 ```
 
 ````
