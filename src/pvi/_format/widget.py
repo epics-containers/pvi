@@ -148,7 +148,7 @@ class WidgetFormatter(Generic[T]):
 @dataclass
 class LabelWidgetFormatter(WidgetFormatter[T]):
     text: str
-    description: str = ""
+    tooltip: str = ""
 
 
 @dataclass

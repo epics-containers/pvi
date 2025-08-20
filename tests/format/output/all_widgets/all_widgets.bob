@@ -39,7 +39,7 @@
       <y>0</y>
       <width>120</width>
       <height>20</height>
-      <tooltip>$(text)</tooltip>
+      <tooltip>No description provided</tooltip>
     </widget>
     <widget type="xyplot" version="3.0.0">
       <name>ArrayTrace</name>
@@ -82,7 +82,7 @@
       <y>0</y>
       <width>120</width>
       <height>20</height>
-      <tooltip>$(text)</tooltip>
+      <tooltip>No description provided</tooltip>
     </widget>
     <widget type="byte_monitor" version="2.0.0">
       <name>BitField</name>
@@ -107,7 +107,7 @@
       <y>0</y>
       <width>120</width>
       <height>20</height>
-      <tooltip>$(text)</tooltip>
+      <tooltip>One-or-more buttons that poke a PV with a value</tooltip>
     </widget>
     <widget type="action_button" version="3.0.0">
       <name>WritePV</name>
@@ -158,7 +158,7 @@
       <y>0</y>
       <width>120</width>
       <height>20</height>
-      <tooltip>$(text)</tooltip>
+      <tooltip>No description provided</tooltip>
     </widget>
     <widget type="checkbox" version="2.0.0">
       <name>CheckBox</name>
@@ -185,7 +185,7 @@
       <y>0</y>
       <width>120</width>
       <height>20</height>
-      <tooltip>$(text)</tooltip>
+      <tooltip>No description provided</tooltip>
     </widget>
     <widget type="combo" version="2.0.0">
       <name>ComboBox</name>
@@ -215,7 +215,7 @@
       <y>0</y>
       <width>120</width>
       <height>20</height>
-      <tooltip>$(text)</tooltip>
+      <tooltip>No description provided</tooltip>
     </widget>
     <widget type="image" version="2.0.0">
       <name>ImageRead</name>
@@ -240,7 +240,7 @@
       <y>0</y>
       <width>120</width>
       <height>20</height>
-      <tooltip>$(text)</tooltip>
+      <tooltip>No description provided</tooltip>
     </widget>
     <widget type="led" version="2.0.0">
       <name>LED</name>
@@ -265,7 +265,7 @@
       <y>0</y>
       <width>120</width>
       <height>20</height>
-      <tooltip>$(text)</tooltip>
+      <tooltip>No description provided</tooltip>
     </widget>
     <widget type="progressbar" version="2.0.0">
       <name>ProgressBar</name>
@@ -374,7 +374,7 @@
       <y>0</y>
       <width>120</width>
       <height>20</height>
-      <tooltip>$(text)</tooltip>
+      <tooltip>No description provided</tooltip>
     </widget>
     <widget type="textupdate" version="2.0.0">
       <name>TextUpdate</name>
@@ -404,7 +404,7 @@
       <y>0</y>
       <width>120</width>
       <height>20</height>
-      <tooltip>$(text)</tooltip>
+      <tooltip>No description provided</tooltip>
     </widget>
     <widget type="textentry" version="3.0.0">
       <name>TextEntry</name>
@@ -430,7 +430,7 @@
       <y>0</y>
       <width>120</width>
       <height>20</height>
-      <tooltip>$(text)</tooltip>
+      <tooltip>No description provided</tooltip>
     </widget>
     <widget type="slide_button" version="2.0.0">
       <name>ToggleButton</name>
@@ -448,7 +448,7 @@
       <y>24</y>
       <width>120</width>
       <height>20</height>
-      <tooltip>$(text)</tooltip>
+      <tooltip>No description provided</tooltip>
     </widget>
     <widget type="slide_button" version="2.0.0">
       <name>ToggleButton</name>

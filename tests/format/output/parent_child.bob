@@ -39,7 +39,7 @@
       <y>0</y>
       <width>120</width>
       <height>20</height>
-      <tooltip>$(text)</tooltip>
+      <tooltip>No description provided</tooltip>
     </widget>
     <widget type="textupdate" version="2.0.0">
       <name>TextUpdate</name>
@@ -61,7 +61,7 @@
       <y>24</y>
       <width>120</width>
       <height>20</height>
-      <tooltip>$(text)</tooltip>
+      <tooltip>No description provided</tooltip>
     </widget>
     <widget type="textupdate" version="2.0.0">
       <name>TextUpdate</name>
@@ -91,7 +91,7 @@
       <y>0</y>
       <width>120</width>
       <height>20</height>
-      <tooltip>$(text)</tooltip>
+      <tooltip>No description provided</tooltip>
     </widget>
     <widget type="textupdate" version="2.0.0">
       <name>TextUpdate</name>

@@ -3,6 +3,7 @@ label: ButtonPanel
 children:
   - type: SignalW
     name: ButtonPanel
+    description: One-or-more buttons that poke a PV with a value
     write_pv: $(P)$(R)ButtonPanel
     write_widget:
       type: ButtonPanel
