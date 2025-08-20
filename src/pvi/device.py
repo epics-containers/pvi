@@ -151,6 +151,9 @@ class ImageRead(ReadWidget):
     grayscale: Annotated[
         bool, Field(description="Whether to display image as grayscale")
     ] = False
+    color_bar: Annotated[
+        bool, Field(description="Whether to draw color bar on image widget")
+    ] = False
 
 
 class WriteWidget(TypedModel, AccessModeMixin):
