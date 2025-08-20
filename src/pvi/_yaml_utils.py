@@ -49,7 +49,7 @@ def type_first(tree: Tree) -> Tree:
 
 
 def add_line_before_type(s: str) -> str:
-    return re.sub(r"(\s*- type:)", "\n\\g<1>", s)
+    return re.sub(r"([^:])(\n\s*- type:)", "\\g<1>\n\\g<2>", s)
 
 
 def dump_yaml(serialized: dict[str, Any], path: Path) -> None:
@@ -61,7 +61,10 @@ def dump_yaml(serialized: dict[str, Any], path: Path) -> None:
     Add a space in between each entry for readability.
 
     """
-    YAML().dump(serialized, path, transform=add_line_before_type)  # type: ignore
+    yaml = YAML()
+    # RedHat YAML plugin settings
+    yaml.indent(mapping=2, sequence=4, offset=2)  # type: ignore
+    yaml.dump(serialized, path, transform=add_line_before_type)  # type: ignore
 
 
 def load_yaml(path: Path) -> dict[str, Any]:

@@ -1,44 +1,41 @@
 label: label
 parent: parent
 children:
+  - type: Group
+    name: Parameters
+    layout:
+      type: Grid
+      labelled: true
+    children:
+      - type: SignalW
+        name: WidthUnits
+        write_pv: WIDTH:UNITS
+        write_widget:
+          type: ComboBox
 
-- type: Group
-  name: Parameters
-  layout:
-    type: Grid
-    labelled: true
-  children:
+      - type: SignalRW
+        name: Width
+        write_pv: WIDTH
+        write_widget:
+          type: TextWrite
+        read_pv: WIDTH_RBV
+        read_widget:
+          type: TextRead
 
   - type: SignalW
-    name: WidthUnits
-    write_pv: WIDTH:UNITS
+    name: Table
+    write_pv: TABLE
     write_widget:
-      type: ComboBox
+      type: TableWrite
+      widgets:
+        - type: CheckBox
 
-  - type: SignalRW
-    name: Width
-    write_pv: WIDTH
-    write_widget:
-      type: TextWrite
-    read_pv: WIDTH_RBV
+        - type: ComboBox
+
+        - type: TextWrite
+
+  - type: SignalR
+    name: OutA
+    read_pv: OUTA
     read_widget:
-      type: TextRead
-
-- type: SignalW
-  name: Table
-  write_pv: TABLE
-  write_widget:
-    type: TableWrite
-    widgets:
-
-    - type: CheckBox
-
-    - type: ComboBox
-
-    - type: TextWrite
-
-- type: SignalR
-  name: OutA
-  read_pv: OUTA
-  read_widget:
-    type: LED
+      type: LED
