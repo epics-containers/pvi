@@ -25,6 +25,7 @@ from pvi.device import (
     DeviceRef,
     Grid,
     Group,
+    ImageRead,
     Row,
     SignalR,
     SignalRef,
@@ -102,6 +103,9 @@ class ScreenFormatterFactory(Generic[T]):
                 y=0,
                 **widget_dims,
             )
+            if isinstance(c, SignalR) and isinstance(c.read_widget, ImageRead):
+                if len(components) != 1:
+                    c = make_image_subscreen(c)
             if isinstance(c, Group) and not isinstance(c.layout, Row):
                 # Create embedded group widget containing its components
                 # Note: Group adjusts bounds to fit the components
@@ -232,17 +236,19 @@ class ScreenFormatterFactory(Generic[T]):
         if is_table(c):
             # Make a sub screen button at the root to display this Group instead of
             # embedding the components within a Group widget
-            c = Group(name=c.name, layout=SubScreen(), children=c.children)
+            c = Group(name=c.name, layout=SubScreen(labelled=False), children=c.children)
 
         if isinstance(c.layout, SubScreen):
             return self.create_component_widget_formatters(
-                Group(name=c.name, layout=SubScreen(), children=c.children),
+                Group(name=c.name, layout=c.layout, children=c.children),
                 parent_bounds=screen_bounds,
                 column_bounds=column_bounds,
                 next_column_bounds=next_column_bounds,
                 indent=True,
-                add_label=False,
+                add_label=c.layout.labelled,
             )
+        else:
+            split_out_images(c)
 
         group_formatter = self.create_group_formatter(
             c, bounds=Bounds(x=column_bounds.x, y=column_bounds.y, h=screen_bounds.h)
@@ -300,8 +306,13 @@ class ScreenFormatterFactory(Generic[T]):
 
         for c in group.children:
             component: Group | Component
+            add_label: bool = False
             match c:
-                case Group(layout=Grid()):
+                case Group(layout=SubScreen(labelled=labelled)):
+                    add_label = labelled
+                    component = c
+                case Group(layout=Grid(labelled=labelled)):
+                    add_label = labelled
                     if is_table(c):
                         # Display table on a sub screen
                         component = Group(
@@ -326,7 +337,7 @@ class ScreenFormatterFactory(Generic[T]):
                     parent_bounds=bounds,
                     column_bounds=column_bounds,
                     next_column_bounds=next_column_bounds,
-                    add_label=group.layout.labelled,
+                    add_label=add_label,
                 )
             )
             if next_column_bounds.y != 0:
@@ -376,6 +387,10 @@ class ScreenFormatterFactory(Generic[T]):
         if indent:
             tmp_column_bounds.indent(self.layout.group_widget_indent)
             tmp_next_column_bounds.indent(self.layout.group_widget_indent)
+
+        if isinstance(c, SignalR) and isinstance(c.read_widget, ImageRead):
+            tmp_column_bounds.w = c.read_widget.width
+            tmp_column_bounds.h = c.read_widget.height
 
         widgets = list(
             self.generate_component_formatters(c, tmp_column_bounds, add_label)
@@ -475,6 +490,8 @@ class ScreenFormatterFactory(Generic[T]):
                     add_label = False  # Do not add row labels for Tables
                     component_bounds.w = 100 * len(widgets)
                     component_bounds.h *= 10  # TODO: How do we know the number of rows?
+                case SignalR(read_widget=ImageRead()):
+                    add_label = False
                 case _:
                     pass
 
@@ -564,3 +581,13 @@ def is_table(component: Group) -> bool:
         isinstance(sub_component, Group) and isinstance(sub_component.layout, Row)
         for sub_component in component.children
     )
+
+def make_image_subscreen(component: SignalR) -> Group:
+    return Group(
+        name=component.name, layout=SubScreen(labelled=False), children=[component]
+    )
+
+def split_out_images(component: Group):
+    for idx, child in enumerate(component.children):
+        if isinstance(child, SignalR) and isinstance(child.read_widget, ImageRead):
+            component.children[idx] = make_image_subscreen(child)
