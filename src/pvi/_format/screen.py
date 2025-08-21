@@ -584,7 +584,7 @@ def is_table(component: Group) -> bool:
 
 def make_image_subscreen(component: SignalR) -> Group:
     return Group(
-        name=component.name, layout=SubScreen(labelled=False), children=[component]
+        name=component.name, layout=SubScreen(), children=[component]
     )
 
 def split_out_images(component: Group):
