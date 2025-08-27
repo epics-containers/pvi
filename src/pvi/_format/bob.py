@@ -239,8 +239,10 @@ def add_format(element: _Element, format: str):
     if format:
         SubElement(element, "format").text = format
 
+
 def set_visibility(element: _Element, visible: bool):
     SubElement(element, "visible").text = "true" if visible else "false"
+
 
 def set_color_map(element: _Element, color_map: str):
     color_map_element = SubElement(element, "color_map")

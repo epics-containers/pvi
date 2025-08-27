@@ -235,7 +235,9 @@ class ScreenFormatterFactory(Generic[T]):
         if is_table(c):
             # Make a sub screen button at the root to display this Group instead of
             # embedding the components within a Group widget
-            c = Group(name=c.name, layout=SubScreen(labelled=False), children=c.children)
+            c = Group(
+                name=c.name, layout=SubScreen(labelled=False), children=c.children
+            )
 
         if isinstance(c.layout, SubScreen):
             return self.create_component_widget_formatters(
@@ -581,17 +583,19 @@ def is_table(component: Group) -> bool:
         for sub_component in component.children
     )
 
+
 def move_to_subscreen(component: ComponentUnion) -> Group:
-    return Group(
-        name=component.name, layout=SubScreen(), children=[component]
-    )
+    return Group(name=component.name, layout=SubScreen(), children=[component])
+
 
 def split_out_images(component: Group):
     component.children = [
-        move_to_subscreen(child) if _has_image_widget(child) else child for child in component.children
+        move_to_subscreen(child) if _has_image_widget(child) else child
+        for child in component.children
     ]
 
+
 def _has_image_widget(component: ComponentUnion) -> bool:
-    return isinstance(
-        component, SignalR
-    ) and isinstance(component.read_widget, ImageRead)
+    return isinstance(component, SignalR) and isinstance(
+        component.read_widget, ImageRead
+    )
