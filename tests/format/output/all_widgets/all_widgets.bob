@@ -217,13 +217,21 @@
       <height>20</height>
       <tooltip>No description provided</tooltip>
     </widget>
-    <widget type="image" version="2.0.0">
-      <name>ImageRead</name>
-      <pv_name>$(P)$(R)ImageRead_RBV</pv_name>
+    <widget type="action_button" version="3.0.0">
+      <name>OpenDisplay</name>
+      <actions>
+        <action type="open_display">
+          <file>all_widgets_ImageRead.bob</file>
+          <target>tab</target>
+          <description>Open Display</description>
+        </action>
+      </actions>
+      <text>Image Read</text>
       <x>124</x>
       <y>0</y>
       <width>124</width>
       <height>20</height>
+      <tooltip>$(actions)</tooltip>
     </widget>
   </widget>
   <widget type="group" version="2.0.0">

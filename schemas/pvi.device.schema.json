@@ -358,6 +358,30 @@
       "additionalProperties": false,
       "description": "2D Image view of an NTNDArray",
       "properties": {
+        "width": {
+          "default": 900,
+          "description": "Width of image widget",
+          "title": "Width",
+          "type": "integer"
+        },
+        "height": {
+          "default": 500,
+          "description": "Height of image widget",
+          "title": "Height",
+          "type": "integer"
+        },
+        "grayscale": {
+          "default": false,
+          "description": "Whether to display image as grayscale",
+          "title": "Grayscale",
+          "type": "boolean"
+        },
+        "color_bar": {
+          "default": false,
+          "description": "Whether to draw color bar on image widget",
+          "title": "Color Bar",
+          "type": "boolean"
+        },
         "type": {
           "const": "ImageRead",
           "default": "ImageRead",

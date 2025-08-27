@@ -47,6 +47,15 @@
     </font>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>Group 1</text>
+    <x>22</x>
+    <y>54</y>
+    <width>120</width>
+    <height>20</height>
+    <tooltip>No description provided</tooltip>
+  </widget>
   <widget type="action_button" version="3.0.0">
     <name>OpenDisplay</name>
     <actions>
@@ -57,9 +66,9 @@
       </action>
     </actions>
     <text>Group 1</text>
-    <x>22</x>
+    <x>146</x>
     <y>54</y>
-    <width>248</width>
+    <width>124</width>
     <height>20</height>
     <tooltip>$(actions)</tooltip>
   </widget>
