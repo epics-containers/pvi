@@ -305,7 +305,7 @@ class ScreenFormatterFactory(Generic[T]):
 
         for c in group.children:
             component: Group | Component
-            add_label: bool = False
+            add_label: bool = True
             match c:
                 case Group(layout=SubScreen(labelled=labelled)):
                     add_label = labelled
