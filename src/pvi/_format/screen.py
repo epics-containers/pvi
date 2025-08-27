@@ -103,9 +103,8 @@ class ScreenFormatterFactory(Generic[T]):
                 y=0,
                 **widget_dims,
             )
-            if isinstance(c, SignalR) and isinstance(c.read_widget, ImageRead):
-                if len(components) != 1:
-                    c = make_image_subscreen(c)
+            if _has_image_widget(c) and len(components) != 1:
+                c = move_to_subscreen(c)
             if isinstance(c, Group) and not isinstance(c.layout, Row):
                 # Create embedded group widget containing its components
                 # Note: Group adjusts bounds to fit the components
@@ -247,7 +246,7 @@ class ScreenFormatterFactory(Generic[T]):
                 indent=True,
                 add_label=c.layout.labelled,
             )
-        else:
+        elif any(_has_image_widget(child) for child in c.children):
             split_out_images(c)
 
         group_formatter = self.create_group_formatter(
@@ -582,12 +581,17 @@ def is_table(component: Group) -> bool:
         for sub_component in component.children
     )
 
-def make_image_subscreen(component: SignalR) -> Group:
+def move_to_subscreen(component: ComponentUnion) -> Group:
     return Group(
         name=component.name, layout=SubScreen(), children=[component]
     )
 
 def split_out_images(component: Group):
-    for idx, child in enumerate(component.children):
-        if isinstance(child, SignalR) and isinstance(child.read_widget, ImageRead):
-            component.children[idx] = make_image_subscreen(child)
+    component.children = [
+        move_to_subscreen(child) if _has_image_widget(child) else child for child in component.children
+    ]
+
+def _has_image_widget(component: ComponentUnion) -> bool:
+    return isinstance(
+        component, SignalR
+    ) and isinstance(component.read_widget, ImageRead)
