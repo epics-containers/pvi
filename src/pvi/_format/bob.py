@@ -104,10 +104,24 @@ class BobTemplate(UITemplate[_Element]):
                 add_format(t_copy, BOB_TEXT_FORMATS[TextFormat(format)])
             case ("byte_monitor", BitField() as bit_field):
                 add_byte_number_of_bits(t_copy, bit_field.number_of_bits)
-            case ("image", ImageRead(grayscale=grayscale, color_bar=color_bar)):
+            case ("image", ImageRead(
+                    grayscale=grayscale,
+                    color_bar=color_bar,
+                    axes=axes
+                )
+            ):
                 if grayscale:
                     set_color_map(t_copy, "GRAY")
                 set_visibility(SubElement(t_copy, "color_bar"), color_bar)
+                if not axes:
+                    x_axis_element = SubElement(t_copy, "x_axis")
+                    y_axis_element = SubElement(t_copy, "y_axis")
+                    set_visibility(x_axis_element, axes)
+                    set_visibility(y_axis_element, axes)
+                    # setting x_axis visible to false still draws labels
+                    # explicitly set both to blank for consistency
+                    SubElement(x_axis_element, "title").text = ""
+                    SubElement(y_axis_element, "title").text = ""
             case _:
                 pass
 

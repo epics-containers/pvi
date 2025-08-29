@@ -35,5 +35,13 @@
     <color_bar>
       <visible>false</visible>
     </color_bar>
+    <x_axis>
+      <visible>false</visible>
+      <title></title>
+    </x_axis>
+    <y_axis>
+      <visible>false</visible>
+      <title></title>
+    </y_axis>
   </widget>
 </display>

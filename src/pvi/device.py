@@ -153,7 +153,10 @@ class ImageRead(ReadWidget):
         bool, Field(description="Whether to display image as grayscale")
     ] = False
     color_bar: Annotated[
-        bool, Field(description="Whether to draw color bar on image widget")
+        bool, Field(description="Whether to draw color bar")
+    ] = False
+    axes: Annotated[
+        bool, Field(description="Whether to draw axis labels and scales")
     ] = False
 
 

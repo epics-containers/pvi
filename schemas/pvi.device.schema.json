@@ -378,8 +378,14 @@
         },
         "color_bar": {
           "default": false,
-          "description": "Whether to draw color bar on image widget",
+          "description": "Whether to draw color bar",
           "title": "Color Bar",
+          "type": "boolean"
+        },
+        "axes": {
+          "default": false,
+          "description": "Whether to draw axis labels and scales",
+          "title": "Axes",
           "type": "boolean"
         },
         "type": {
