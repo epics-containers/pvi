@@ -27,6 +27,8 @@
   -
 * - {py:obj}`SubScreenWidgetFormatter <pvi._format.widget.SubScreenWidgetFormatter>`
   -
+* - {py:obj}`GroupType <pvi._format.widget.GroupType>`
+  -
 * - {py:obj}`GroupFormatter <pvi._format.widget.GroupFormatter>`
   -
 * - {py:obj}`WidgetFormatterFactory <pvi._format.widget.WidgetFormatterFactory>`
@@ -151,7 +153,7 @@ Bases: {py:obj}`typing.Generic`\[{py:obj}`pvi._format.widget.T`\]
 
 ````
 
-````{py:method} from_template(template: pvi._format.widget.UITemplate[pvi._format.widget.T], search: str, sized: collections.abc.Callable[[pvi._format.utils.Bounds], pvi._format.utils.Bounds] = Bounds.clone, widget_formatter_hook: collections.abc.Callable[[pvi._format.utils.Bounds, str], list[pvi._format.widget.WidgetFormatter[pvi._format.widget.T]]] | None = None, property_map: dict[str, str] | None = None) -> type[typing_extensions.Self]
+````{py:method} from_template(template: pvi._format.widget.UITemplate[pvi._format.widget.T], search: str, sized: collections.abc.Callable[[pvi._format.utils.Bounds], pvi._format.utils.Bounds] = Bounds.clone, widget_formatter_hook: collections.abc.Callable[[pvi._format.utils.Bounds, str], list[pvi._format.widget.WidgetFormatter[pvi._format.widget.T]]] | None = None, property_map: dict[str, str] | None = None) -> type[typing.Self]
 :canonical: pvi._format.widget.WidgetFormatter.from_template
 :classmethod:
 
@@ -319,6 +321,33 @@ Bases: {py:obj}`pvi._format.widget.WidgetFormatter`\[{py:obj}`pvi._format.widget
 
 `````
 
+`````{py:class} GroupType()
+:canonical: pvi._format.widget.GroupType
+
+Bases: {py:obj}`enum.StrEnum`
+
+````{py:attribute} GROUP
+:canonical: pvi._format.widget.GroupType.GROUP
+:value: >
+   'GROUP'
+
+```{autodoc2-docstring} pvi._format.widget.GroupType.GROUP
+```
+
+````
+
+````{py:attribute} SCREEN
+:canonical: pvi._format.widget.GroupType.SCREEN
+:value: >
+   'SCREEN'
+
+```{autodoc2-docstring} pvi._format.widget.GroupType.SCREEN
+```
+
+````
+
+`````
+
 `````{py:class} GroupFormatter
 :canonical: pvi._format.widget.GroupFormatter
 
@@ -382,7 +411,7 @@ Bases: {py:obj}`pvi._format.widget.WidgetFormatter`\[{py:obj}`pvi._format.widget
 
 ````
 
-````{py:method} from_template(template: pvi._format.widget.UITemplate[pvi._format.widget.T], search: str, sized: collections.abc.Callable[[pvi._format.utils.Bounds], pvi._format.utils.Bounds] = Bounds.clone, widget_formatter_hook: collections.abc.Callable[[pvi._format.utils.Bounds, str], list[pvi._format.widget.WidgetFormatter[pvi._format.widget.T]]] | None = None, property_map: dict[str, str] | None = None) -> type[typing_extensions.Self]
+````{py:method} from_template(template: pvi._format.widget.UITemplate[pvi._format.widget.T], search: str, sized: collections.abc.Callable[[pvi._format.utils.Bounds], pvi._format.utils.Bounds] = Bounds.clone, widget_formatter_hook: collections.abc.Callable[[pvi._format.utils.Bounds, str], list[pvi._format.widget.WidgetFormatter[pvi._format.widget.T]]] | None = None, property_map: dict[str, str] | None = None) -> type[typing.Self]
 :canonical: pvi._format.widget.GroupFormatter.from_template
 :classmethod:
 

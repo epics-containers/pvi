@@ -13,16 +13,16 @@
 :titlesonly:
 :maxdepth: 1
 
-pvi._format.dls
-pvi._format.bob
-pvi._format.adl
-pvi._format.screen
-pvi._format.utils
-pvi._format.widget
-pvi._format.template
-pvi._format.aps
-pvi._format.edl
 pvi._format.base
+pvi._format.utils
+pvi._format.bob
+pvi._format.edl
+pvi._format.widget
+pvi._format.aps
+pvi._format.dls
+pvi._format.template
+pvi._format.screen
+pvi._format.adl
 ```
 
 ## Package Contents

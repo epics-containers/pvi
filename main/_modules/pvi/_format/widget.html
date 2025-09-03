@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pvi._format.widget &#8212; pvi 0.10.2.dev20+g41af3b0ba documentation</title>
+    <title>pvi._format.widget &#8212; pvi 0.10.2.dev21+g2969a3b79 documentation</title>
   
   
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=c6ddc71c"></script>
+    <script src="../../../_static/documentation_options.js?v=9254b357"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -458,12 +458,10 @@
   <h1>Source code for pvi._format.widget</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Generic</span><span class="p">,</span> <span class="n">TypeVar</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing_extensions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Self</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">StrEnum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Generic</span><span class="p">,</span> <span class="n">Self</span><span class="p">,</span> <span class="n">TypeVar</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">pvi._format.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">Bounds</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pvi.device</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
@@ -483,12 +481,6 @@
     <span class="n">ToggleButton</span><span class="p">,</span>
     <span class="n">WidgetUnion</span><span class="p">,</span>
 <span class="p">)</span>
-
-<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">11</span><span class="p">):</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">StrEnum</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
-
 
 <span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">)</span>
 
@@ -667,16 +659,12 @@
 
 
 
-<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">11</span><span class="p">):</span>
+<div class="viewcode-block" id="GroupType">
+<a class="viewcode-back" href="../../../reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.GroupType">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">GroupType</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+    <span class="n">GROUP</span> <span class="o">=</span> <span class="s2">&quot;GROUP&quot;</span>
+    <span class="n">SCREEN</span> <span class="o">=</span> <span class="s2">&quot;SCREEN&quot;</span></div>
 
-    <span class="k">class</span><span class="w"> </span><span class="nc">GroupType</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
-        <span class="n">GROUP</span> <span class="o">=</span> <span class="s2">&quot;GROUP&quot;</span>
-        <span class="n">SCREEN</span> <span class="o">=</span> <span class="s2">&quot;SCREEN&quot;</span>
-<span class="k">else</span><span class="p">:</span>
-
-    <span class="k">class</span><span class="w"> </span><span class="nc">GroupType</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
-        <span class="n">GROUP</span> <span class="o">=</span> <span class="s2">&quot;GROUP&quot;</span>
-        <span class="n">SCREEN</span> <span class="o">=</span> <span class="s2">&quot;SCREEN&quot;</span>
 
 
 <div class="viewcode-block" id="GroupFormatter">
