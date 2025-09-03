@@ -468,6 +468,7 @@
     <span class="n">Annotated</span><span class="p">,</span>
     <span class="n">Any</span><span class="p">,</span>
     <span class="n">ClassVar</span><span class="p">,</span>
+    <span class="n">Self</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
@@ -477,7 +478,6 @@
     <span class="n">ValidationError</span><span class="p">,</span>
     <span class="n">model_validator</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing_extensions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Self</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">pvi._yaml_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">YamlValidatorMixin</span><span class="p">,</span> <span class="n">dump_yaml</span><span class="p">,</span> <span class="n">type_first</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pvi.typed_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">TypedModel</span><span class="p">,</span> <span class="n">as_tagged_union</span>

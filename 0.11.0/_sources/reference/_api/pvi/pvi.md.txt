@@ -41,10 +41,6 @@ pvi._schema_utils
 :class: autosummary longtable
 :align: left
 
-* - {py:obj}`__version__ <pvi.__version__>`
-  - ```{autodoc2-docstring} pvi.__version__
-    :summary:
-    ```
 * - {py:obj}`__all__ <pvi.__all__>`
   - ```{autodoc2-docstring} pvi.__all__
     :summary:
@@ -52,16 +48,6 @@ pvi._schema_utils
 ````
 
 ### API
-
-````{py:data} __version__
-:canonical: pvi.__version__
-:value: >
-   'version(...)'
-
-```{autodoc2-docstring} pvi.__version__
-```
-
-````
 
 ````{py:data} __all__
 :canonical: pvi.__all__

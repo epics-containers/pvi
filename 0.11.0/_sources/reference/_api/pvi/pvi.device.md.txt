@@ -1225,7 +1225,7 @@ Bases: {py:obj}`pvi.device.SignalR`, {py:obj}`pvi.device.SignalW`
 
 ````
 
-````{py:method} _validate_model() -> typing_extensions.Self
+````{py:method} _validate_model() -> typing.Self
 :canonical: pvi.device.SignalRW._validate_model
 
 ```{autodoc2-docstring} pvi.device.SignalRW._validate_model
@@ -1271,7 +1271,7 @@ Bases: {py:obj}`pvi.device.SignalW`
 
 ````
 
-````{py:method} check_write_widget() -> typing_extensions.Self
+````{py:method} check_write_widget() -> typing.Self
 :canonical: pvi.device.SignalX.check_write_widget
 
 ```{autodoc2-docstring} pvi.device.SignalX.check_write_widget
