@@ -1,0 +1,613 @@
+# {py:mod}`pvi._format.widget`
+
+```{py:module} pvi._format.widget
+```
+
+```{autodoc2-docstring} pvi._format.widget
+:allowtitles:
+```
+
+## Module Contents
+
+### Classes
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`UITemplate <pvi._format.widget.UITemplate>`
+  -
+* - {py:obj}`WidgetFormatter <pvi._format.widget.WidgetFormatter>`
+  -
+* - {py:obj}`LabelWidgetFormatter <pvi._format.widget.LabelWidgetFormatter>`
+  -
+* - {py:obj}`PVWidgetFormatter <pvi._format.widget.PVWidgetFormatter>`
+  -
+* - {py:obj}`ActionWidgetFormatter <pvi._format.widget.ActionWidgetFormatter>`
+  -
+* - {py:obj}`SubScreenWidgetFormatter <pvi._format.widget.SubScreenWidgetFormatter>`
+  -
+* - {py:obj}`GroupFormatter <pvi._format.widget.GroupFormatter>`
+  -
+* - {py:obj}`WidgetFormatterFactory <pvi._format.widget.WidgetFormatterFactory>`
+  -
+````
+
+### Functions
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`max_x <pvi._format.widget.max_x>`
+  - ```{autodoc2-docstring} pvi._format.widget.max_x
+    :summary:
+    ```
+* - {py:obj}`max_y <pvi._format.widget.max_y>`
+  - ```{autodoc2-docstring} pvi._format.widget.max_y
+    :summary:
+    ```
+* - {py:obj}`next_x <pvi._format.widget.next_x>`
+  - ```{autodoc2-docstring} pvi._format.widget.next_x
+    :summary:
+    ```
+* - {py:obj}`next_y <pvi._format.widget.next_y>`
+  - ```{autodoc2-docstring} pvi._format.widget.next_y
+    :summary:
+    ```
+````
+
+### Data
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`T <pvi._format.widget.T>`
+  - ```{autodoc2-docstring} pvi._format.widget.T
+    :summary:
+    ```
+````
+
+### API
+
+````{py:data} T
+:canonical: pvi._format.widget.T
+:value: >
+   'TypeVar(...)'
+
+```{autodoc2-docstring} pvi._format.widget.T
+```
+
+````
+
+`````{py:class} UITemplate
+:canonical: pvi._format.widget.UITemplate
+
+Bases: {py:obj}`typing.Generic`\[{py:obj}`pvi._format.widget.T`\]
+
+````{py:attribute} screen
+:canonical: pvi._format.widget.UITemplate.screen
+:type: pvi._format.widget.T
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.UITemplate.screen
+```
+
+````
+
+````{py:method} search(search: str) -> pvi._format.widget.T
+:canonical: pvi._format.widget.UITemplate.search
+:abstractmethod:
+
+```{autodoc2-docstring} pvi._format.widget.UITemplate.search
+```
+
+````
+
+````{py:method} set(template: pvi._format.widget.T, bounds: pvi._format.utils.Bounds | None = None, widget: pvi.device.WidgetUnion | None = None, properties: dict[str, typing.Any] | None = None) -> pvi._format.widget.T
+:canonical: pvi._format.widget.UITemplate.set
+:abstractmethod:
+
+```{autodoc2-docstring} pvi._format.widget.UITemplate.set
+```
+
+````
+
+````{py:method} create_group(group_object: list[pvi._format.widget.T], children: list[pvi._format.widget.WidgetFormatter[pvi._format.widget.T]], padding: pvi._format.utils.Bounds) -> list[pvi._format.widget.T]
+:canonical: pvi._format.widget.UITemplate.create_group
+:abstractmethod:
+
+```{autodoc2-docstring} pvi._format.widget.UITemplate.create_group
+```
+
+````
+
+`````
+
+`````{py:class} WidgetFormatter
+:canonical: pvi._format.widget.WidgetFormatter
+
+Bases: {py:obj}`typing.Generic`\[{py:obj}`pvi._format.widget.T`\]
+
+````{py:attribute} bounds
+:canonical: pvi._format.widget.WidgetFormatter.bounds
+:type: pvi._format.utils.Bounds
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.WidgetFormatter.bounds
+```
+
+````
+
+````{py:method} format() -> list[pvi._format.widget.T]
+:canonical: pvi._format.widget.WidgetFormatter.format
+:abstractmethod:
+
+```{autodoc2-docstring} pvi._format.widget.WidgetFormatter.format
+```
+
+````
+
+````{py:method} from_template(template: pvi._format.widget.UITemplate[pvi._format.widget.T], search: str, sized: collections.abc.Callable[[pvi._format.utils.Bounds], pvi._format.utils.Bounds] = Bounds.clone, widget_formatter_hook: collections.abc.Callable[[pvi._format.utils.Bounds, str], list[pvi._format.widget.WidgetFormatter[pvi._format.widget.T]]] | None = None, property_map: dict[str, str] | None = None) -> type[typing_extensions.Self]
+:canonical: pvi._format.widget.WidgetFormatter.from_template
+:classmethod:
+
+```{autodoc2-docstring} pvi._format.widget.WidgetFormatter.from_template
+```
+
+````
+
+`````
+
+`````{py:class} LabelWidgetFormatter
+:canonical: pvi._format.widget.LabelWidgetFormatter
+
+Bases: {py:obj}`pvi._format.widget.WidgetFormatter`\[{py:obj}`pvi._format.widget.T`\]
+
+````{py:attribute} text
+:canonical: pvi._format.widget.LabelWidgetFormatter.text
+:type: str
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.LabelWidgetFormatter.text
+```
+
+````
+
+````{py:attribute} tooltip
+:canonical: pvi._format.widget.LabelWidgetFormatter.tooltip
+:type: str
+:value: <Multiline-String>
+
+```{autodoc2-docstring} pvi._format.widget.LabelWidgetFormatter.tooltip
+```
+
+````
+
+`````
+
+`````{py:class} PVWidgetFormatter
+:canonical: pvi._format.widget.PVWidgetFormatter
+
+Bases: {py:obj}`pvi._format.widget.WidgetFormatter`\[{py:obj}`pvi._format.widget.T`\]
+
+````{py:attribute} pv
+:canonical: pvi._format.widget.PVWidgetFormatter.pv
+:type: str
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.PVWidgetFormatter.pv
+```
+
+````
+
+````{py:attribute} widget
+:canonical: pvi._format.widget.PVWidgetFormatter.widget
+:type: pvi.device.WidgetUnion
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.PVWidgetFormatter.widget
+```
+
+````
+
+`````
+
+`````{py:class} ActionWidgetFormatter
+:canonical: pvi._format.widget.ActionWidgetFormatter
+
+Bases: {py:obj}`pvi._format.widget.WidgetFormatter`\[{py:obj}`pvi._format.widget.T`\]
+
+````{py:attribute} label
+:canonical: pvi._format.widget.ActionWidgetFormatter.label
+:type: str
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.ActionWidgetFormatter.label
+```
+
+````
+
+````{py:attribute} pv
+:canonical: pvi._format.widget.ActionWidgetFormatter.pv
+:type: str
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.ActionWidgetFormatter.pv
+```
+
+````
+
+````{py:attribute} value
+:canonical: pvi._format.widget.ActionWidgetFormatter.value
+:type: str
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.ActionWidgetFormatter.value
+```
+
+````
+
+````{py:property} tooltip
+:canonical: pvi._format.widget.ActionWidgetFormatter.tooltip
+:type: str
+
+```{autodoc2-docstring} pvi._format.widget.ActionWidgetFormatter.tooltip
+```
+
+````
+
+`````
+
+`````{py:class} SubScreenWidgetFormatter
+:canonical: pvi._format.widget.SubScreenWidgetFormatter
+
+Bases: {py:obj}`pvi._format.widget.WidgetFormatter`\[{py:obj}`pvi._format.widget.T`\]
+
+````{py:attribute} label
+:canonical: pvi._format.widget.SubScreenWidgetFormatter.label
+:type: str
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.SubScreenWidgetFormatter.label
+```
+
+````
+
+````{py:attribute} file_name
+:canonical: pvi._format.widget.SubScreenWidgetFormatter.file_name
+:type: str
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.SubScreenWidgetFormatter.file_name
+```
+
+````
+
+````{py:attribute} components
+:canonical: pvi._format.widget.SubScreenWidgetFormatter.components
+:type: pvi.device.Group | None
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.SubScreenWidgetFormatter.components
+```
+
+````
+
+````{py:attribute} macros
+:canonical: pvi._format.widget.SubScreenWidgetFormatter.macros
+:type: dict[str, str]
+:value: >
+   'field(...)'
+
+```{autodoc2-docstring} pvi._format.widget.SubScreenWidgetFormatter.macros
+```
+
+````
+
+`````
+
+`````{py:class} GroupFormatter
+:canonical: pvi._format.widget.GroupFormatter
+
+Bases: {py:obj}`pvi._format.widget.WidgetFormatter`\[{py:obj}`pvi._format.widget.T`\]
+
+````{py:attribute} bounds
+:canonical: pvi._format.widget.GroupFormatter.bounds
+:type: pvi._format.utils.Bounds
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.GroupFormatter.bounds
+```
+
+````
+
+````{py:attribute} title
+:canonical: pvi._format.widget.GroupFormatter.title
+:type: str
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.GroupFormatter.title
+```
+
+````
+
+````{py:attribute} children
+:canonical: pvi._format.widget.GroupFormatter.children
+:type: list[pvi._format.widget.WidgetFormatter[pvi._format.widget.T]]
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.GroupFormatter.children
+```
+
+````
+
+````{py:method} format() -> list[pvi._format.widget.T]
+:canonical: pvi._format.widget.GroupFormatter.format
+:abstractmethod:
+
+```{autodoc2-docstring} pvi._format.widget.GroupFormatter.format
+```
+
+````
+
+````{py:method} __post_init__() -> None
+:canonical: pvi._format.widget.GroupFormatter.__post_init__
+
+```{autodoc2-docstring} pvi._format.widget.GroupFormatter.__post_init__
+```
+
+````
+
+````{py:method} resize()
+:canonical: pvi._format.widget.GroupFormatter.resize
+
+```{autodoc2-docstring} pvi._format.widget.GroupFormatter.resize
+```
+
+````
+
+````{py:method} from_template(template: pvi._format.widget.UITemplate[pvi._format.widget.T], search: str, sized: collections.abc.Callable[[pvi._format.utils.Bounds], pvi._format.utils.Bounds] = Bounds.clone, widget_formatter_hook: collections.abc.Callable[[pvi._format.utils.Bounds, str], list[pvi._format.widget.WidgetFormatter[pvi._format.widget.T]]] | None = None, property_map: dict[str, str] | None = None) -> type[typing_extensions.Self]
+:canonical: pvi._format.widget.GroupFormatter.from_template
+:classmethod:
+
+```{autodoc2-docstring} pvi._format.widget.GroupFormatter.from_template
+```
+
+````
+
+`````
+
+`````{py:class} WidgetFormatterFactory
+:canonical: pvi._format.widget.WidgetFormatterFactory
+
+Bases: {py:obj}`typing.Generic`\[{py:obj}`pvi._format.widget.T`\]
+
+````{py:attribute} header_formatter_cls
+:canonical: pvi._format.widget.WidgetFormatterFactory.header_formatter_cls
+:type: type[pvi._format.widget.LabelWidgetFormatter[pvi._format.widget.T]]
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.WidgetFormatterFactory.header_formatter_cls
+```
+
+````
+
+````{py:attribute} label_formatter_cls
+:canonical: pvi._format.widget.WidgetFormatterFactory.label_formatter_cls
+:type: type[pvi._format.widget.LabelWidgetFormatter[pvi._format.widget.T]]
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.WidgetFormatterFactory.label_formatter_cls
+```
+
+````
+
+````{py:attribute} action_formatter_cls
+:canonical: pvi._format.widget.WidgetFormatterFactory.action_formatter_cls
+:type: type[pvi._format.widget.ActionWidgetFormatter[pvi._format.widget.T]]
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.WidgetFormatterFactory.action_formatter_cls
+```
+
+````
+
+````{py:attribute} sub_screen_formatter_cls
+:canonical: pvi._format.widget.WidgetFormatterFactory.sub_screen_formatter_cls
+:type: type[pvi._format.widget.SubScreenWidgetFormatter[pvi._format.widget.T]]
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.WidgetFormatterFactory.sub_screen_formatter_cls
+```
+
+````
+
+````{py:attribute} led_formatter_cls
+:canonical: pvi._format.widget.WidgetFormatterFactory.led_formatter_cls
+:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]] | None
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.WidgetFormatterFactory.led_formatter_cls
+```
+
+````
+
+````{py:attribute} progress_bar_formatter_cls
+:canonical: pvi._format.widget.WidgetFormatterFactory.progress_bar_formatter_cls
+:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]] | None
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.WidgetFormatterFactory.progress_bar_formatter_cls
+```
+
+````
+
+````{py:attribute} text_read_formatter_cls
+:canonical: pvi._format.widget.WidgetFormatterFactory.text_read_formatter_cls
+:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]] | None
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.WidgetFormatterFactory.text_read_formatter_cls
+```
+
+````
+
+````{py:attribute} check_box_formatter_cls
+:canonical: pvi._format.widget.WidgetFormatterFactory.check_box_formatter_cls
+:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]] | None
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.WidgetFormatterFactory.check_box_formatter_cls
+```
+
+````
+
+````{py:attribute} toggle_formatter_cls
+:canonical: pvi._format.widget.WidgetFormatterFactory.toggle_formatter_cls
+:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]] | None
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.WidgetFormatterFactory.toggle_formatter_cls
+```
+
+````
+
+````{py:attribute} combo_box_formatter_cls
+:canonical: pvi._format.widget.WidgetFormatterFactory.combo_box_formatter_cls
+:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]] | None
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.WidgetFormatterFactory.combo_box_formatter_cls
+```
+
+````
+
+````{py:attribute} text_write_formatter_cls
+:canonical: pvi._format.widget.WidgetFormatterFactory.text_write_formatter_cls
+:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]] | None
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.WidgetFormatterFactory.text_write_formatter_cls
+```
+
+````
+
+````{py:attribute} table_formatter_cls
+:canonical: pvi._format.widget.WidgetFormatterFactory.table_formatter_cls
+:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]] | None
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.WidgetFormatterFactory.table_formatter_cls
+```
+
+````
+
+````{py:attribute} bitfield_formatter_cls
+:canonical: pvi._format.widget.WidgetFormatterFactory.bitfield_formatter_cls
+:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]] | None
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.WidgetFormatterFactory.bitfield_formatter_cls
+```
+
+````
+
+````{py:attribute} array_trace_formatter_cls
+:canonical: pvi._format.widget.WidgetFormatterFactory.array_trace_formatter_cls
+:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]] | None
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.WidgetFormatterFactory.array_trace_formatter_cls
+```
+
+````
+
+````{py:attribute} button_panel_formatter_cls
+:canonical: pvi._format.widget.WidgetFormatterFactory.button_panel_formatter_cls
+:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]] | None
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.WidgetFormatterFactory.button_panel_formatter_cls
+```
+
+````
+
+````{py:attribute} image_read_formatter_cls
+:canonical: pvi._format.widget.WidgetFormatterFactory.image_read_formatter_cls
+:type: type[pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]] | None
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.widget.WidgetFormatterFactory.image_read_formatter_cls
+```
+
+````
+
+````{py:method} pv_widget_formatter(widget: pvi.device.WidgetUnion, bounds: pvi._format.utils.Bounds, pv: str) -> pvi._format.widget.PVWidgetFormatter[pvi._format.widget.T]
+:canonical: pvi._format.widget.WidgetFormatterFactory.pv_widget_formatter
+
+```{autodoc2-docstring} pvi._format.widget.WidgetFormatterFactory.pv_widget_formatter
+```
+
+````
+
+`````
+
+````{py:function} max_x(widgets: list[pvi._format.widget.WidgetFormatter[pvi._format.widget.T]]) -> int
+:canonical: pvi._format.widget.max_x
+
+```{autodoc2-docstring} pvi._format.widget.max_x
+```
+````
+
+````{py:function} max_y(widgets: list[pvi._format.widget.WidgetFormatter[pvi._format.widget.T]]) -> int
+:canonical: pvi._format.widget.max_y
+
+```{autodoc2-docstring} pvi._format.widget.max_y
+```
+````
+
+````{py:function} next_x(widgets: list[pvi._format.widget.WidgetFormatter[pvi._format.widget.T]], spacing: int = 0) -> int
+:canonical: pvi._format.widget.next_x
+
+```{autodoc2-docstring} pvi._format.widget.next_x
+```
+````
+
+````{py:function} next_y(widgets: list[pvi._format.widget.WidgetFormatter[pvi._format.widget.T]], spacing: int = 0) -> int
+:canonical: pvi._format.widget.next_y
+
+```{autodoc2-docstring} pvi._format.widget.next_y
+```
+````

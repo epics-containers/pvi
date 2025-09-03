@@ -1,0 +1,1927 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Index &#8212; pvi 0.11.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=f3b36f1a"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=30646c52"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'genindex';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://epics-containers.github.io/pvi/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.11.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <link rel="icon" href="_static/pvi-favicon.ico"/>
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.11.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/pvi-logo.svg" class="logo__image only-light" alt=""/>
+    <img src="_static/pvi-logo.svg" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">pvi</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="how-to.html">
+    How-to Guides
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="explanations.html">
+    Explanations
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="reference.html">
+    Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://github.com/epics-containers/pvi/releases">
+    Release Notes
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/epics-containers/pvi" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/pvi" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-cube fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="how-to.html">
+    How-to Guides
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="explanations.html">
+    Explanations
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="reference.html">
+    Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://github.com/epics-containers/pvi/releases">
+    Release Notes
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/epics-containers/pvi" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/pvi" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-cube fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="reference/api.html">API</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="reference/_api/index.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="reference/_api/pvi/pvi.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="reference/_api/pvi/pvi._format.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._format</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/_api/pvi/pvi._convert.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._convert</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/_api/pvi/pvi.typed_model.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.typed_model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/_api/pvi/pvi.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.utils</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/_api/pvi/pvi._pv_group.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._pv_group</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/_api/pvi/pvi._yaml_utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._yaml_utils</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/_api/pvi/pvi.__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.__main__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/_api/pvi/pvi.device.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.device</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/_api/pvi/pvi._version.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._version</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/_api/pvi/pvi._schema_utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._schema_utils</span></code></a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Index</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/epics-containers/pvi/releases">Release Notes</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none"></div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+
+<h1 id="index">Index</h1>
+
+<div class="genindex-jumpbox">
+ <a href="#_"><strong>_</strong></a>
+ | <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
+ | <a href="#F"><strong>F</strong></a>
+ | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
+ | <a href="#I"><strong>I</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
+ | <a href="#N"><strong>N</strong></a>
+ | <a href="#O"><strong>O</strong></a>
+ | <a href="#P"><strong>P</strong></a>
+ | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
+ | <a href="#V"><strong>V</strong></a>
+ | <a href="#W"><strong>W</strong></a>
+ | <a href="#X"><strong>X</strong></a>
+ | <a href="#Y"><strong>Y</strong></a>
+ 
+</div>
+<h2 id="_">_</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi.html#pvi.__all__">__all__ (in module pvi)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._format.html#pvi._format.__all__">(in module pvi._format)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._version.html#pvi._version.__all__">(in module pvi._version)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi._version.html#pvi._version.__commit_id__">__commit_id__ (in module pvi._version)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.Component.__eq__">__eq__() (pvi.device.Component method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.GroupFormatter.__post_init__">__post_init__() (pvi._format.widget.GroupFormatter method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.typed_model.html#pvi.typed_model.TypedModel.__pydantic_init_subclass__">__pydantic_init_subclass__() (pvi.typed_model.TypedModel class method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.html#pvi.__version__">__version__ (in module pvi)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._version.html#pvi._version.__version__">(in module pvi._version)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi._version.html#pvi._version.__version_tuple__">__version_tuple__ (in module pvi._version)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.AccessModeMixin._access_mode">_access_mode (pvi.device.AccessModeMixin attribute)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.ReadWidget._access_mode">(pvi.device.ReadWidget attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.SignalR._access_mode">(pvi.device.SignalR attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.SignalRW._access_mode">(pvi.device.SignalRW attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.SignalW._access_mode">(pvi.device.SignalW attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.WriteWidget._access_mode">(pvi.device.WriteWidget attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._convert._template_convert.html#pvi._convert._template_convert.RecordExtractor._create_asyn_record">_create_asyn_record() (pvi._convert._template_convert.RecordExtractor method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._template_convert.html#pvi._convert._template_convert.TemplateConverter._extract_components">_extract_components() (pvi._convert._template_convert.TemplateConverter method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._template_convert.html#pvi._convert._template_convert.RecordExtractor._extract_fields">_extract_fields() (pvi._convert._template_convert.RecordExtractor method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._template_convert.html#pvi._convert._template_convert.RecordExtractor._extract_infos">_extract_infos() (pvi._convert._template_convert.RecordExtractor method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._template_convert.html#pvi._convert._template_convert.RecordExtractor._extract_record_strs">_extract_record_strs() (pvi._convert._template_convert.RecordExtractor method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._parameters.html#pvi._convert._parameters.ReadParameterMixin._get_read_record">_get_read_record() (pvi._convert._parameters.ReadParameterMixin method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.typed_model.html#pvi.typed_model.TypedModel._get_type_name">_get_type_name() (pvi.typed_model.TypedModel static method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._template_convert.html#pvi._convert._template_convert.RecordExtractor._parse_record">_parse_record() (pvi._convert._template_convert.RecordExtractor method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._parameters.html#pvi._convert._parameters.Parameter._remove_invalid">_remove_invalid() (pvi._convert._parameters.Parameter method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device._RowReadUnion">_RowReadUnion (in module pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device._RowWriteUnion">_RowWriteUnion (in module pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.SignalRW._single_pv_rw">_single_pv_rw (pvi.device.SignalRW attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.typed_model.html#pvi.typed_model.TypedModel._tag">_tag() (pvi.typed_model.TypedModel class method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.Device._to_dict">_to_dict() (pvi.device.Device method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.SignalRW._validate_model">_validate_model() (pvi.device.SignalRW method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._convert._parameters.html#pvi._convert._parameters.Access">Access (class in pvi._convert._parameters)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.template.html#pvi._format.template.PviRecord.access">access (pvi._format.template.PviRecord attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.AccessModeMixin.access_mode">access_mode (pvi.device.AccessModeMixin property)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.AccessModeMixin">AccessModeMixin (class in pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._template_convert.html#pvi._convert._template_convert.Action">Action (class in pvi._convert._template_convert)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.WidgetFormatterFactory.action_formatter_cls">action_formatter_cls (pvi._format.widget.WidgetFormatterFactory attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.ButtonPanel.actions">actions (pvi.device.ButtonPanel attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.ActionWidgetFormatter">ActionWidgetFormatter (class in pvi._format.widget)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.bob.html#pvi._format.bob.add_button_macros">add_button_macros() (in module pvi._format.bob)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.bob.html#pvi._format.bob.add_byte_number_of_bits">add_byte_number_of_bits() (in module pvi._format.bob)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.bob.html#pvi._format.bob.add_combo_box_items">add_combo_box_items() (in module pvi._format.bob)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.bob.html#pvi._format.bob.add_editable">add_editable() (in module pvi._format.bob)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.bob.html#pvi._format.bob.add_format">add_format() (in module pvi._format.bob)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._yaml_utils.html#pvi._yaml_utils.add_line_before_type">add_line_before_type() (in module pvi._yaml_utils)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.adl.html#pvi._format.adl.add_property">add_property() (in module pvi._format.adl)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._format.edl.html#pvi._format.edl.add_property">(in module pvi._format.edl)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi._format.bob.html#pvi._format.bob.add_table_column">add_table_column() (in module pvi._format.bob)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.bob.html#pvi._format.bob.add_table_columns">add_table_columns() (in module pvi._format.bob)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.utils.html#pvi._format.utils.Bounds.added_to">added_to() (pvi._format.utils.Bounds method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.adl.html#pvi._format.adl.ADL_TEXT_FORMATS">ADL_TEXT_FORMATS (in module pvi._format.adl)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.adl.html#pvi._format.adl.AdlTemplate">AdlTemplate (class in pvi._format.adl)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.__main__.html#pvi.__main__.app">app (in module pvi.__main__)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._format.aps.html#pvi._format.aps.APSFormatter">APSFormatter (class in pvi._format.aps)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.WidgetFormatterFactory.array_trace_formatter_cls">array_trace_formatter_cls (pvi._format.widget.WidgetFormatterFactory attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.ArrayTrace">ArrayTrace (class in pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.ArrayWrite">ArrayWrite (class in pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.typed_model.html#pvi.typed_model.as_tagged_union">as_tagged_union() (in module pvi.typed_model)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynRecord.asyn_component_type">asyn_component_type() (pvi._convert._asyn_convert.AsynRecord method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._parameters.html#pvi._convert._parameters.TypeStrings.asyn_param">asyn_param (pvi._convert._parameters.TypeStrings attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._parameters.html#pvi._convert._parameters.TypeStrings.asyn_read">asyn_read (pvi._convert._parameters.TypeStrings attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._parameters.html#pvi._convert._parameters.TypeStrings.asyn_write">asyn_write (pvi._convert._parameters.TypeStrings attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynBinary">AsynBinary (class in pvi._convert._asyn_convert)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynBusy">AsynBusy (class in pvi._convert._asyn_convert)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynFloat64">AsynFloat64 (class in pvi._convert._asyn_convert)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynFloat64Waveform">AsynFloat64Waveform (class in pvi._convert._asyn_convert)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynInt32">AsynInt32 (class in pvi._convert._asyn_convert)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynInt32Waveform">AsynInt32Waveform (class in pvi._convert._asyn_convert)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynLong">AsynLong (class in pvi._convert._asyn_convert)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynMultiBitBinary">AsynMultiBitBinary (class in pvi._convert._asyn_convert)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynParameter">AsynParameter (class in pvi._convert._asyn_convert)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynRecord">AsynRecord (class in pvi._convert._asyn_convert)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynString">AsynString (class in pvi._convert._asyn_convert)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynWaveform">AsynWaveform (class in pvi._convert._asyn_convert)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.ArrayTrace.axis">axis (pvi.device.ArrayTrace attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._format.screen.html#pvi._format.screen.ScreenFormatterFactory.base_file_name">base_file_name (pvi._format.screen.ScreenFormatterFactory attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._parameters.html#pvi._convert._parameters.DisplayForm.BINARY">BINARY (pvi._convert._parameters.DisplayForm attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.BitField">BitField (class in pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.WidgetFormatterFactory.bitfield_formatter_cls">bitfield_formatter_cls (pvi._format.widget.WidgetFormatterFactory attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.bob.html#pvi._format.bob.BOB_TEXT_FORMATS">BOB_TEXT_FORMATS (in module pvi._format.bob)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.bob.html#pvi._format.bob.BobTemplate">BobTemplate (class in pvi._format.bob)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._format.utils.html#pvi._format.utils.Bounds">Bounds (class in pvi._format.utils)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.GroupFormatter.bounds">bounds (pvi._format.widget.GroupFormatter attribute)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.WidgetFormatter.bounds">(pvi._format.widget.WidgetFormatter attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi._yaml_utils.html#pvi._yaml_utils.Branch">Branch (in module pvi._yaml_utils)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.WidgetFormatterFactory.button_panel_formatter_cls">button_panel_formatter_cls (pvi._format.widget.WidgetFormatterFactory attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.ButtonPanel">ButtonPanel (class in pvi.device)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.WidgetFormatterFactory.check_box_formatter_cls">check_box_formatter_cls (pvi._format.widget.WidgetFormatterFactory attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.SignalX.check_write_widget">check_write_widget() (pvi.device.SignalX method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.CheckBox">CheckBox (class in pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.GroupFormatter.children">children (pvi._format.widget.GroupFormatter attribute)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.Device.children">(pvi.device.Device attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.Group.children">(pvi.device.Group attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.ComboBox.choices">choices (pvi.device.ComboBox attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.utils.html#pvi._format.utils.Bounds.clone">clone() (pvi._format.utils.Bounds method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._schema_utils.html#pvi._schema_utils.Cls">Cls (in module pvi._schema_utils)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.WidgetFormatterFactory.combo_box_formatter_cls">combo_box_formatter_cls (pvi._format.widget.WidgetFormatterFactory attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.ComboBox">ComboBox (class in pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._version.html#pvi._version.commit_id">commit_id (in module pvi._version)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.Component">Component (class in pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.screen.html#pvi._format.screen.ScreenFormatterFactory.components">components (pvi._format.screen.ScreenFormatterFactory attribute)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.SubScreenWidgetFormatter.components">(pvi._format.widget.SubScreenWidgetFormatter attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.ComponentUnion">ComponentUnion (in module pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.utils.html#pvi._format.utils.concat">concat() (in module pvi._format.utils)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._template_convert.html#pvi._convert._template_convert.TemplateConverter.convert">convert() (pvi._convert._template_convert.TemplateConverter method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.__main__.html#pvi.__main__.convert_app">convert_app (in module pvi.__main__)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.screen.html#pvi._format.screen.ScreenFormatterFactory.create_component_widget_formatters">create_component_widget_formatters() (pvi._format.screen.ScreenFormatterFactory method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.adl.html#pvi._format.adl.AdlTemplate.create_group">create_group() (pvi._format.adl.AdlTemplate method)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._format.bob.html#pvi._format.bob.BobTemplate.create_group">(pvi._format.bob.BobTemplate method)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._format.edl.html#pvi._format.edl.EdlTemplate.create_group">(pvi._format.edl.EdlTemplate method)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.UITemplate.create_group">(pvi._format.widget.UITemplate method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi._format.screen.html#pvi._format.screen.ScreenFormatterFactory.create_group_formatter">create_group_formatter() (pvi._format.screen.ScreenFormatterFactory method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.screen.html#pvi._format.screen.ScreenFormatterFactory.create_group_formatters">create_group_formatters() (pvi._format.screen.ScreenFormatterFactory method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.base.html#pvi._format.base.Formatter.create_schema">create_schema() (pvi._format.base.Formatter class method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.screen.html#pvi._format.screen.ScreenFormatterFactory.create_screen_formatter">create_screen_formatter() (pvi._format.screen.ScreenFormatterFactory method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.screen.html#pvi._format.screen.ScreenFormatterFactory.create_sub_screen_formatters">create_sub_screen_formatters() (pvi._format.screen.ScreenFormatterFactory method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._convert._parameters.html#pvi._convert._parameters.DisplayForm.DECIMAL">DECIMAL (pvi._convert._parameters.DisplayForm attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.TextFormat.decimal">decimal (pvi.device.TextFormat attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._parameters.html#pvi._convert._parameters.DisplayForm.DEFAULT">DEFAULT (pvi._convert._parameters.DisplayForm attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.Component.description">description (pvi.device.Component attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.base.html#pvi._format.base.Formatter.deserialize">deserialize() (pvi._format.base.Formatter class method)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.Device.deserialize">(pvi.device.Device class method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.Device.deserialize_parents">deserialize_parents() (pvi.device.Device method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.Device">Device (class in pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.__main__.html#pvi.__main__.device">device() (in module pvi.__main__)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.DeviceRef">DeviceRef (class in pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.typed_model.html#pvi.typed_model.TypedModel.discriminator">discriminator() (pvi.typed_model.TypedModel static method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._parameters.html#pvi._convert._parameters.DisplayForm">DisplayForm (class in pvi._convert._parameters)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.dls.html#pvi._format.dls.DLSFormatter">DLSFormatter (class in pvi._format.dls)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._yaml_utils.html#pvi._yaml_utils.dump_yaml">dump_yaml() (in module pvi._yaml_utils)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._format.edl.html#pvi._format.edl.EDL_TEXT_FORMATS">EDL_TEXT_FORMATS (in module pvi._format.edl)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.edl.html#pvi._format.edl.EdlTemplate">EdlTemplate (class in pvi._format.edl)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.enforce_pascal_case">enforce_pascal_case() (in module pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.TextFormat.engineer">engineer (pvi.device.TextFormat attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._parameters.html#pvi._convert._parameters.DisplayForm.ENGINEERING">ENGINEERING (pvi._convert._parameters.DisplayForm attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._convert._parameters.html#pvi._convert._parameters.DisplayForm.EXPONENTIAL">EXPONENTIAL (pvi._convert._parameters.DisplayForm attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.TextFormat.exponential">exponential (pvi.device.TextFormat attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert.utils.html#pvi._convert.utils.extract_create_param_strs">extract_create_param_strs() (in module pvi._convert.utils)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert.utils.html#pvi._convert.utils.extract_define_strs">extract_define_strs() (in module pvi._convert.utils)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert.utils.html#pvi._convert.utils.extract_device_and_parent_class">extract_device_and_parent_class() (in module pvi._convert.utils)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert.utils.html#pvi._convert.utils.extract_index_declarations">extract_index_declarations() (in module pvi._convert.utils)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._convert._parameters.html#pvi._convert._parameters.Record.fields">fields (pvi._convert._parameters.Record attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.SubScreenWidgetFormatter.file_name">file_name (pvi._format.widget.SubScreenWidgetFormatter attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert.utils.html#pvi._convert.utils.filter_strings">filter_strings() (in module pvi._convert.utils)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.find_components">find_components() (in module pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.bob.html#pvi._format.bob.find_element">find_element() (in module pvi._format.bob)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.utils.html#pvi.utils.find_pvi_yaml">find_pvi_yaml() (in module pvi.utils)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._pv_group.html#pvi._pv_group.find_pvs">find_pvs() (in module pvi._pv_group)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.TextRead.format">format (pvi.device.TextRead attribute)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.TextWrite.format">(pvi.device.TextWrite attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi.__main__.html#pvi.__main__.format">format() (in module pvi.__main__)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._format.aps.html#pvi._format.aps.APSFormatter.format">(pvi._format.aps.APSFormatter method)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._format.base.html#pvi._format.base.Formatter.format">(pvi._format.base.Formatter method)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._format.dls.html#pvi._format.dls.DLSFormatter.format">(pvi._format.dls.DLSFormatter method)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.GroupFormatter.format">(pvi._format.widget.GroupFormatter method)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.WidgetFormatter.format">(pvi._format.widget.WidgetFormatter method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._format.dls.html#pvi._format.dls.DLSFormatter.format_bob">format_bob() (pvi._format.dls.DLSFormatter method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.dls.html#pvi._format.dls.DLSFormatter.format_edl">format_edl() (pvi._format.dls.DLSFormatter method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.base.html#pvi._format.base.Formatter.format_index">format_index() (pvi._format.base.Formatter method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.template.html#pvi._format.template.format_template">format_template() (in module pvi._format.template)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.base.html#pvi._format.base.Formatter">Formatter (class in pvi._format.base)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.base.html#pvi._format.base.Formatter.from_dict">from_dict() (pvi._format.base.Formatter class method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.GroupFormatter.from_template">from_template() (pvi._format.widget.GroupFormatter class method)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.WidgetFormatter.from_template">(pvi._format.widget.WidgetFormatter class method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._convert._parameters.html#pvi._convert._parameters.Parameter.generate_component">generate_component() (pvi._convert._parameters.Parameter method)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._convert._template_convert.html#pvi._convert._template_convert.Action.generate_component">(pvi._convert._template_convert.Action method)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._convert._template_convert.html#pvi._convert._template_convert.Readback.generate_component">(pvi._convert._template_convert.Readback method)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._convert._template_convert.html#pvi._convert._template_convert.SettingPair.generate_component">(pvi._convert._template_convert.SettingPair method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi._format.screen.html#pvi._format.screen.ScreenFormatterFactory.generate_component_formatters">generate_component_formatters() (pvi._format.screen.ScreenFormatterFactory method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.Device.generate_param_tree">generate_param_tree() (pvi.device.Device method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.screen.html#pvi._format.screen.ScreenFormatterFactory.generate_read_widget">generate_read_widget() (pvi._format.screen.ScreenFormatterFactory method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.screen.html#pvi._format.screen.ScreenFormatterFactory.generate_row_component_formatters">generate_row_component_formatters() (pvi._format.screen.ScreenFormatterFactory method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.__main__.html#pvi.__main__.generate_template">generate_template() (in module pvi.__main__)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.screen.html#pvi._format.screen.ScreenFormatterFactory.generate_write_widget">generate_write_widget() (pvi._format.screen.ScreenFormatterFactory method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._template_convert.html#pvi._convert._template_convert.ParameterRoleMatcher.get_actions">get_actions() (pvi._convert._template_convert.ParameterRoleMatcher static method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._template_convert.html#pvi._convert._template_convert.RecordExtractor.get_asyn_records">get_asyn_records() (pvi._convert._template_convert.RecordExtractor method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.ComboBox.get_choices">get_choices() (pvi.device.ComboBox method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.Component.get_label">get_label() (pvi.device.Component method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.TextRead.get_lines">get_lines() (pvi.device.TextRead method)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.TextWrite.get_lines">(pvi.device.TextWrite method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._convert.utils.html#pvi._convert.utils.get_param_set">get_param_set() (in module pvi._convert.utils)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynRecord.get_parameter_name">get_parameter_name() (pvi._convert._asyn_convert.AsynRecord method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynParameter.get_read_pv">get_read_pv() (pvi._convert._asyn_convert.AsynParameter method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._template_convert.html#pvi._convert._template_convert.ParameterRoleMatcher.get_readbacks">get_readbacks() (pvi._convert._template_convert.ParameterRoleMatcher static method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._template_convert.html#pvi._convert._template_convert.ParameterRoleMatcher.get_setting_pairs">get_setting_pairs() (pvi._convert._template_convert.ParameterRoleMatcher static method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.get_waveform_parameter">get_waveform_parameter() (in module pvi._convert._asyn_convert)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynParameter.get_write_pv">get_write_pv() (pvi._convert._asyn_convert.AsynParameter method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.Grid">Grid (class in pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.Group">Group (class in pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._pv_group.html#pvi._pv_group.group_by_ui">group_by_ui() (in module pvi._pv_group)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.screen.html#pvi._format.screen.ScreenFormatterFactory.group_formatter_cls">group_formatter_cls (pvi._format.screen.ScreenFormatterFactory attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.screen.html#pvi._format.screen.ScreenLayout.group_label_height">group_label_height (pvi._format.screen.ScreenLayout attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.screen.html#pvi._format.screen.ScreenLayout.group_widget_indent">group_widget_indent (pvi._format.screen.ScreenLayout attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.screen.html#pvi._format.screen.ScreenLayout.group_width_offset">group_width_offset (pvi._format.screen.ScreenLayout attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.GroupFormatter">GroupFormatter (class in pvi._format.widget)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._format.utils.html#pvi._format.utils.Bounds.h">h (pvi._format.utils.Bounds attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.Row.header">header (pvi.device.Row attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.WidgetFormatterFactory.header_formatter_cls">header_formatter_cls (pvi._format.widget.WidgetFormatterFactory attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._parameters.html#pvi._convert._parameters.DisplayForm.HEX">HEX (pvi._convert._parameters.DisplayForm attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.TextFormat.hexadecimal">hexadecimal (pvi.device.TextFormat attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="I">I</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.WidgetFormatterFactory.image_read_formatter_cls">image_read_formatter_cls (pvi._format.widget.WidgetFormatterFactory attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.ImageRead">ImageRead (class in pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.utils.html#pvi._format.utils.Bounds.indent">indent() (pvi._format.utils.Bounds method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.base.html#pvi._format.base.IndexEntry">IndexEntry (class in pvi._format.base)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._parameters.html#pvi._convert._parameters.Record.infos">infos (pvi._convert._parameters.Record attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.InRecordTypes">InRecordTypes (in module pvi._convert._asyn_convert)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert.utils.html#pvi._convert.utils.insert_param_set_accessors">insert_param_set_accessors() (in module pvi._convert.utils)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._parameters.html#pvi._convert._parameters.Parameter.invalid">invalid (pvi._convert._parameters.Parameter attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.screen.html#pvi._format.screen.is_table">is_table() (in module pvi._format.screen)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.adl.html#pvi._format.adl.is_text_widget">is_text_widget() (in module pvi._format.adl)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._format.edl.html#pvi._format.edl.is_text_widget">(in module pvi._format.edl)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._format.base.html#pvi._format.base.IndexEntry.label">label (pvi._format.base.IndexEntry attribute)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.ActionWidgetFormatter.label">(pvi._format.widget.ActionWidgetFormatter attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.SubScreenWidgetFormatter.label">(pvi._format.widget.SubScreenWidgetFormatter attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.Component.label">(pvi.device.Component attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.Device.label">(pvi.device.Device attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.WidgetFormatterFactory.label_formatter_cls">label_formatter_cls (pvi._format.widget.WidgetFormatterFactory attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.aps.html#pvi._format.aps.APSFormatter.label_width">label_width (pvi._format.aps.APSFormatter attribute)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._format.dls.html#pvi._format.dls.DLSFormatter.label_width">(pvi._format.dls.DLSFormatter attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._format.screen.html#pvi._format.screen.ScreenLayout.label_width">(pvi._format.screen.ScreenLayout attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.Grid.labelled">labelled (pvi.device.Grid attribute)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.SubScreen.labelled">(pvi.device.SubScreen attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.BitField.labels">labels (pvi.device.BitField attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.LabelWidgetFormatter">LabelWidgetFormatter (class in pvi._format.widget)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.Layout">Layout (class in pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.screen.html#pvi._format.screen.ScreenFormatterFactory.layout">layout (pvi._format.screen.ScreenFormatterFactory attribute)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.Group.layout">(pvi.device.Group attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.LayoutUnion">LayoutUnion (in module pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._yaml_utils.html#pvi._yaml_utils.Leaf">Leaf (in module pvi._yaml_utils)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.LED">LED (class in pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.WidgetFormatterFactory.led_formatter_cls">led_formatter_cls (pvi._format.widget.WidgetFormatterFactory attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.TextRead.lines">lines (pvi.device.TextRead attribute)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.TextWrite.lines">(pvi.device.TextWrite attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi._yaml_utils.html#pvi._yaml_utils.load_yaml">load_yaml() (in module pvi._yaml_utils)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._convert._parameters.html#pvi._convert._parameters.MACRO_RE">MACRO_RE (in module pvi._convert._parameters)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.base.html#pvi._format.base.IndexEntry.macros">macros (pvi._format.base.IndexEntry attribute)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.SubScreenWidgetFormatter.macros">(pvi._format.widget.SubScreenWidgetFormatter attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.DeviceRef.macros">(pvi.device.DeviceRef attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi.__main__.html#pvi.__main__.main">main() (in module pvi.__main__)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.aps.html#pvi._format.aps.APSFormatter.max_height">max_height (pvi._format.aps.APSFormatter attribute)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._format.dls.html#pvi._format.dls.DLSFormatter.max_height">(pvi._format.dls.DLSFormatter attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._format.screen.html#pvi._format.screen.ScreenLayout.max_height">(pvi._format.screen.ScreenLayout attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.max_x">max_x() (in module pvi._format.widget)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.max_y">max_y() (in module pvi._format.widget)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.Device.merge_components">merge_components() (pvi.device.Device method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.TextRead.model_config">model_config (pvi.device.TextRead attribute)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.TextWrite.model_config">(pvi.device.TextWrite attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi.typed_model.html#pvi.typed_model.TypedModel.model_config">(pvi.typed_model.TypedModel attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi.typed_model.html#pvi.typed_model.TypedModel.model_json_schema">model_json_schema() (pvi.typed_model.TypedModel class method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynBinary.model_post_init">model_post_init() (pvi._convert._asyn_convert.AsynBinary method)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynRecord.model_post_init">(pvi._convert._asyn_convert.AsynRecord method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi.typed_model.html#pvi.typed_model.TypedModel.models_typed">models_typed (pvi.typed_model.TypedModel attribute)</a>
+</li>
+      <li>
+    module
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi.html#module-pvi">pvi</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi.__main__.html#module-pvi.__main__">pvi.__main__</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._convert.html#module-pvi._convert">pvi._convert</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#module-pvi._convert._asyn_convert">pvi._convert._asyn_convert</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._convert._parameters.html#module-pvi._convert._parameters">pvi._convert._parameters</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._convert._template_convert.html#module-pvi._convert._template_convert">pvi._convert._template_convert</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._convert.utils.html#module-pvi._convert.utils">pvi._convert.utils</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._format.html#module-pvi._format">pvi._format</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._format.adl.html#module-pvi._format.adl">pvi._format.adl</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._format.aps.html#module-pvi._format.aps">pvi._format.aps</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._format.base.html#module-pvi._format.base">pvi._format.base</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._format.bob.html#module-pvi._format.bob">pvi._format.bob</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._format.dls.html#module-pvi._format.dls">pvi._format.dls</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._format.edl.html#module-pvi._format.edl">pvi._format.edl</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._format.screen.html#module-pvi._format.screen">pvi._format.screen</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._format.template.html#module-pvi._format.template">pvi._format.template</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._format.utils.html#module-pvi._format.utils">pvi._format.utils</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._format.widget.html#module-pvi._format.widget">pvi._format.widget</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._pv_group.html#module-pvi._pv_group">pvi._pv_group</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._schema_utils.html#module-pvi._schema_utils">pvi._schema_utils</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._version.html#module-pvi._version">pvi._version</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._yaml_utils.html#module-pvi._yaml_utils">pvi._yaml_utils</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi.device.html#module-pvi.device">pvi.device</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi.typed_model.html#module-pvi.typed_model">pvi.typed_model</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi.utils.html#module-pvi.utils">pvi.utils</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._format.template.html#pvi._format.template.PviRecord.name">name (pvi._format.template.PviRecord attribute)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.Named.name">(pvi.device.Named attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi._convert._parameters.html#pvi._convert._parameters.Record.name">name() (pvi._convert._parameters.Record method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.Named">Named (class in pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._parameters.html#pvi._convert._parameters.Access.needs_read_record">needs_read_record() (pvi._convert._parameters.Access method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._convert._parameters.html#pvi._convert._parameters.Access.needs_write_record">needs_write_record() (pvi._convert._parameters.Access method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.next_x">next_x() (in module pvi._format.widget)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.next_y">next_y() (in module pvi._format.widget)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.NON_PASCAL_CHARS_RE">NON_PASCAL_CHARS_RE (in module pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.BitField.number_of_bits">number_of_bits (pvi.device.BitField attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.OutRecordTypes">OutRecordTypes (in module pvi._convert._asyn_convert)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._convert._template_convert.html#pvi._convert._template_convert.OVERRIDE_DESC">OVERRIDE_DESC (in module pvi._convert._template_convert)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._convert._parameters.html#pvi._convert._parameters.Parameter">Parameter (class in pvi._convert._parameters)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._template_convert.html#pvi._convert._template_convert.ParameterRoleMatcher">ParameterRoleMatcher (class in pvi._convert._template_convert)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.Device.parent">parent (pvi.device.Device attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert.utils.html#pvi._convert.utils.parse_create_param_str">parse_create_param_str() (in module pvi._convert.utils)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert.utils.html#pvi._convert.utils.parse_definition_str">parse_definition_str() (in module pvi._convert.utils)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.PASCAL_CASE_REGEX">PASCAL_CASE_REGEX (in module pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.PascalStr">PascalStr (in module pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.Plot">Plot (class in pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.WidgetFormatterFactory.progress_bar_formatter_cls">progress_bar_formatter_cls (pvi._format.widget.WidgetFormatterFactory attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.ProgressBar">ProgressBar (class in pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._parameters.html#pvi._convert._parameters.Record.pv">pv (pvi._convert._parameters.Record attribute)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._format.template.html#pvi._format.template.PviRecord.pv">(pvi._format.template.PviRecord attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.ActionWidgetFormatter.pv">(pvi._format.widget.ActionWidgetFormatter attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.PVWidgetFormatter.pv">(pvi._format.widget.PVWidgetFormatter attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.DeviceRef.pv">(pvi.device.DeviceRef attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.WidgetFormatterFactory.pv_widget_formatter">pv_widget_formatter() (pvi._format.widget.WidgetFormatterFactory method)</a>
+</li>
+      <li>
+    pvi
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi.html#module-pvi">module</a>
+</li>
+      </ul></li>
+      <li>
+    pvi.__main__
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi.__main__.html#module-pvi.__main__">module</a>
+</li>
+      </ul></li>
+      <li>
+    pvi._convert
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._convert.html#module-pvi._convert">module</a>
+</li>
+      </ul></li>
+      <li>
+    pvi._convert._asyn_convert
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#module-pvi._convert._asyn_convert">module</a>
+</li>
+      </ul></li>
+      <li>
+    pvi._convert._parameters
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._convert._parameters.html#module-pvi._convert._parameters">module</a>
+</li>
+      </ul></li>
+      <li>
+    pvi._convert._template_convert
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._convert._template_convert.html#module-pvi._convert._template_convert">module</a>
+</li>
+      </ul></li>
+      <li>
+    pvi._convert.utils
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._convert.utils.html#module-pvi._convert.utils">module</a>
+</li>
+      </ul></li>
+      <li>
+    pvi._format
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._format.html#module-pvi._format">module</a>
+</li>
+      </ul></li>
+      <li>
+    pvi._format.adl
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._format.adl.html#module-pvi._format.adl">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    pvi._format.aps
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._format.aps.html#module-pvi._format.aps">module</a>
+</li>
+      </ul></li>
+      <li>
+    pvi._format.base
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._format.base.html#module-pvi._format.base">module</a>
+</li>
+      </ul></li>
+      <li>
+    pvi._format.bob
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._format.bob.html#module-pvi._format.bob">module</a>
+</li>
+      </ul></li>
+      <li>
+    pvi._format.dls
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._format.dls.html#module-pvi._format.dls">module</a>
+</li>
+      </ul></li>
+      <li>
+    pvi._format.edl
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._format.edl.html#module-pvi._format.edl">module</a>
+</li>
+      </ul></li>
+      <li>
+    pvi._format.screen
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._format.screen.html#module-pvi._format.screen">module</a>
+</li>
+      </ul></li>
+      <li>
+    pvi._format.template
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._format.template.html#module-pvi._format.template">module</a>
+</li>
+      </ul></li>
+      <li>
+    pvi._format.utils
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._format.utils.html#module-pvi._format.utils">module</a>
+</li>
+      </ul></li>
+      <li>
+    pvi._format.widget
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._format.widget.html#module-pvi._format.widget">module</a>
+</li>
+      </ul></li>
+      <li>
+    pvi._pv_group
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._pv_group.html#module-pvi._pv_group">module</a>
+</li>
+      </ul></li>
+      <li>
+    pvi._schema_utils
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._schema_utils.html#module-pvi._schema_utils">module</a>
+</li>
+      </ul></li>
+      <li>
+    pvi._version
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._version.html#module-pvi._version">module</a>
+</li>
+      </ul></li>
+      <li>
+    pvi._yaml_utils
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._yaml_utils.html#module-pvi._yaml_utils">module</a>
+</li>
+      </ul></li>
+      <li>
+    pvi.device
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi.device.html#module-pvi.device">module</a>
+</li>
+      </ul></li>
+      <li>
+    pvi.typed_model
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi.typed_model.html#module-pvi.typed_model">module</a>
+</li>
+      </ul></li>
+      <li>
+    pvi.utils
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi.utils.html#module-pvi.utils">module</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi._format.template.html#pvi._format.template.PVI_TEMPLATE">PVI_TEMPLATE (in module pvi._format.template)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.template.html#pvi._format.template.PviRecord">PviRecord (class in pvi._format.template)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.PVWidgetFormatter">PVWidgetFormatter (class in pvi._format.widget)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._convert._parameters.html#pvi._convert._parameters.Access.R">R (pvi._convert._parameters.Access attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.SignalR.read_pv">read_pv (pvi.device.SignalR attribute)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.SignalRW.read_pv">(pvi.device.SignalRW attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynParameter.read_record">read_record (pvi._convert._asyn_convert.AsynParameter attribute)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._convert._template_convert.html#pvi._convert._template_convert.Readback.read_record">(pvi._convert._template_convert.Readback attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._convert._template_convert.html#pvi._convert._template_convert.SettingPair.read_record">(pvi._convert._template_convert.SettingPair attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynBinary.read_widget">read_widget (pvi._convert._asyn_convert.AsynBinary attribute)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynFloat64.read_widget">(pvi._convert._asyn_convert.AsynFloat64 attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynFloat64Waveform.read_widget">(pvi._convert._asyn_convert.AsynFloat64Waveform attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynInt32.read_widget">(pvi._convert._asyn_convert.AsynInt32 attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynInt32Waveform.read_widget">(pvi._convert._asyn_convert.AsynInt32Waveform attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynMultiBitBinary.read_widget">(pvi._convert._asyn_convert.AsynMultiBitBinary attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynParameter.read_widget">(pvi._convert._asyn_convert.AsynParameter attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynString.read_widget">(pvi._convert._asyn_convert.AsynString attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynWaveform.read_widget">(pvi._convert._asyn_convert.AsynWaveform attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.SignalR.read_widget">(pvi.device.SignalR attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.SignalRW.read_widget">(pvi.device.SignalRW attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._convert._template_convert.html#pvi._convert._template_convert.Readback">Readback (class in pvi._convert._template_convert)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._parameters.html#pvi._convert._parameters.ReadParameterMixin">ReadParameterMixin (class in pvi._convert._parameters)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.ReadWidget">ReadWidget (class in pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.ReadWidgetUnion">ReadWidgetUnion (in module pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.typed_model.html#pvi.typed_model.TypedModel.rebuild_child_models">rebuild_child_models() (pvi.typed_model.TypedModel class method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._schema_utils.html#pvi._schema_utils.rec_subclasses">rec_subclasses() (in module pvi._schema_utils)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.__main__.html#pvi.__main__.reconvert">reconvert() (in module pvi.__main__)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._parameters.html#pvi._convert._parameters.Record">Record (class in pvi._convert._parameters)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.RecordError">RecordError</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._template_convert.html#pvi._convert._template_convert.RecordExtractor">RecordExtractor (class in pvi._convert._template_convert)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._template_convert.html#pvi._convert._template_convert.RecordRoleSorter">RecordRoleSorter (class in pvi._convert._template_convert)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.__main__.html#pvi.__main__.regroup">regroup() (in module pvi.__main__)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.GroupFormatter.resize">resize() (pvi._format.widget.GroupFormatter method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.Row">Row (class in pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._parameters.html#pvi._convert._parameters.Access.RW">RW (pvi._convert._parameters.Access attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi.__main__.html#pvi.__main__.schema">schema() (in module pvi.__main__)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.UITemplate.screen">screen (pvi._format.widget.UITemplate attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.screen.html#pvi._format.screen.ScreenFormatterFactory.screen_formatter_cls">screen_formatter_cls (pvi._format.screen.ScreenFormatterFactory attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.screen.html#pvi._format.screen.ScreenFormatterFactory">ScreenFormatterFactory (class in pvi._format.screen)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.screen.html#pvi._format.screen.ScreenLayout">ScreenLayout (class in pvi._format.screen)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.adl.html#pvi._format.adl.AdlTemplate.search">search() (pvi._format.adl.AdlTemplate method)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._format.bob.html#pvi._format.bob.BobTemplate.search">(pvi._format.bob.BobTemplate method)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._format.edl.html#pvi._format.edl.EdlTemplate.search">(pvi._format.edl.EdlTemplate method)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.UITemplate.search">(pvi._format.widget.UITemplate method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.Device.serialize">serialize() (pvi.device.Device method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.adl.html#pvi._format.adl.AdlTemplate.set">set() (pvi._format.adl.AdlTemplate method)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._format.bob.html#pvi._format.bob.BobTemplate.set">(pvi._format.bob.BobTemplate method)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._format.edl.html#pvi._format.edl.EdlTemplate.set">(pvi._format.edl.EdlTemplate method)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.UITemplate.set">(pvi._format.widget.UITemplate method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi._convert._template_convert.html#pvi._convert._template_convert.SettingPair">SettingPair (class in pvi._convert._template_convert)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.Signal">Signal (class in pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.SignalR">SignalR (class in pvi.device)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.SignalRef">SignalRef (class in pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.SignalRW">SignalRW (class in pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.SignalW">SignalW (class in pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.SignalX">SignalX (class in pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._template_convert.html#pvi._convert._template_convert.RecordRoleSorter.sort_records">sort_records() (pvi._convert._template_convert.RecordRoleSorter static method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.aps.html#pvi._format.aps.APSFormatter.spacing">spacing (pvi._format.aps.APSFormatter attribute)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._format.dls.html#pvi._format.dls.DLSFormatter.spacing">(pvi._format.dls.DLSFormatter attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._format.screen.html#pvi._format.screen.ScreenLayout.spacing">(pvi._format.screen.ScreenLayout attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi._format.utils.html#pvi._format.utils.Bounds.split_by_ratio">split_by_ratio() (pvi._format.utils.Bounds method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.utils.html#pvi._format.utils.Bounds.split_into">split_into() (pvi._format.utils.Bounds method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.utils.html#pvi._format.utils.Bounds.split_left">split_left() (pvi._format.utils.Bounds method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.utils.html#pvi._format.utils.split_with_sep">split_with_sep() (in module pvi._format.utils)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.utils.html#pvi._format.utils.Bounds.square">square() (pvi._format.utils.Bounds method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._parameters.html#pvi._convert._parameters.DisplayForm.STRING">STRING (pvi._convert._parameters.DisplayForm attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.TextFormat.string">string (pvi.device.TextFormat attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.WidgetFormatterFactory.sub_screen_formatter_cls">sub_screen_formatter_cls (pvi._format.widget.WidgetFormatterFactory attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.SubScreen">SubScreen (class in pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.SubScreenWidgetFormatter">SubScreenWidgetFormatter (class in pvi._format.widget)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._format.screen.html#pvi._format.screen.T">T (in module pvi._format.screen)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._format.utils.html#pvi._format.utils.T">(in module pvi._format.utils)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.T">(in module pvi._format.widget)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._yaml_utils.html#pvi._yaml_utils.T">(in module pvi._yaml_utils)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.WidgetFormatterFactory.table_formatter_cls">table_formatter_cls (pvi._format.widget.WidgetFormatterFactory attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.TableRead">TableRead (class in pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.TableWrite">TableWrite (class in pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._template_convert.html#pvi._convert._template_convert.TemplateConverter">TemplateConverter (class in pvi._convert._template_convert)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.LabelWidgetFormatter.text">text (pvi._format.widget.LabelWidgetFormatter attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.WidgetFormatterFactory.text_read_formatter_cls">text_read_formatter_cls (pvi._format.widget.WidgetFormatterFactory attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.WidgetFormatterFactory.text_write_formatter_cls">text_write_formatter_cls (pvi._format.widget.WidgetFormatterFactory attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.TextFormat">TextFormat (class in pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.TextRead">TextRead (class in pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.TextWrite">TextWrite (class in pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.utils.html#pvi._format.utils.Bounds.tile">tile() (pvi._format.utils.Bounds method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.GroupFormatter.title">title (pvi._format.widget.GroupFormatter attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.aps.html#pvi._format.aps.APSFormatter.title_height">title_height (pvi._format.aps.APSFormatter attribute)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._format.dls.html#pvi._format.dls.DLSFormatter.title_height">(pvi._format.dls.DLSFormatter attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._format.screen.html#pvi._format.screen.ScreenLayout.title_height">(pvi._format.screen.ScreenLayout attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.to_snake_case">to_snake_case() (in module pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.to_title_case">to_title_case() (in module pvi.device)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.WidgetFormatterFactory.toggle_formatter_cls">toggle_formatter_cls (pvi._format.widget.WidgetFormatterFactory attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.ToggleButton">ToggleButton (class in pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.ActionWidgetFormatter.tooltip">tooltip (pvi._format.widget.ActionWidgetFormatter property)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.LabelWidgetFormatter.tooltip">(pvi._format.widget.LabelWidgetFormatter attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi._yaml_utils.html#pvi._yaml_utils.Tree">Tree (in module pvi._yaml_utils)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.Tree">(in module pvi.device)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi._convert._parameters.html#pvi._convert._parameters.Record.type">type (pvi._convert._parameters.Record attribute)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi.typed_model.html#pvi.typed_model.TypedModel.type">(pvi.typed_model.TypedModel property)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi._format.base.html#pvi._format.base.Formatter.type_adapter">type_adapter() (pvi._format.base.Formatter class method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._version.html#pvi._version.TYPE_CHECKING">TYPE_CHECKING (in module pvi._version)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._yaml_utils.html#pvi._yaml_utils.type_first">type_first() (in module pvi._yaml_utils)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynBinary.type_strings">type_strings (pvi._convert._asyn_convert.AsynBinary attribute)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynFloat64.type_strings">(pvi._convert._asyn_convert.AsynFloat64 attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynFloat64Waveform.type_strings">(pvi._convert._asyn_convert.AsynFloat64Waveform attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynInt32.type_strings">(pvi._convert._asyn_convert.AsynInt32 attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynInt32Waveform.type_strings">(pvi._convert._asyn_convert.AsynInt32Waveform attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynMultiBitBinary.type_strings">(pvi._convert._asyn_convert.AsynMultiBitBinary attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynParameter.type_strings">(pvi._convert._asyn_convert.AsynParameter attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynString.type_strings">(pvi._convert._asyn_convert.AsynString attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynWaveform.type_strings">(pvi._convert._asyn_convert.AsynWaveform attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi.typed_model.html#pvi.typed_model.TypedModel">TypedModel (class in pvi.typed_model)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._parameters.html#pvi._convert._parameters.TypeStrings">TypeStrings (class in pvi._convert._parameters)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._format.base.html#pvi._format.base.IndexEntry.ui">ui (pvi._format.base.IndexEntry attribute)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.DeviceRef.ui">(pvi.device.DeviceRef attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.UITemplate">UITemplate (class in pvi._format.widget)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="V">V</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._yaml_utils.html#pvi._yaml_utils.YamlValidatorMixin.validate_yaml">validate_yaml() (pvi._yaml_utils.YamlValidatorMixin class method)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.ActionWidgetFormatter.value">value (pvi._format.widget.ActionWidgetFormatter attribute)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.SignalX.value">(pvi.device.SignalX attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._version.html#pvi._version.version">version (in module pvi._version)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.__main__.html#pvi.__main__.version_callback">version_callback() (in module pvi.__main__)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._version.html#pvi._version.version_tuple">version_tuple (in module pvi._version)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._convert._parameters.html#pvi._convert._parameters.Access.W">W (pvi._convert._parameters.Access attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.utils.html#pvi._format.utils.Bounds.w">w (pvi._format.utils.Bounds attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.walk">walk() (in module pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.WaveformRecordTypes">WaveformRecordTypes (in module pvi._convert._asyn_convert)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.PVWidgetFormatter.widget">widget (pvi._format.widget.PVWidgetFormatter attribute)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.ArrayWrite.widget">(pvi.device.ArrayWrite attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi._format.screen.html#pvi._format.screen.ScreenFormatterFactory.widget_formatter_factory">widget_formatter_factory (pvi._format.screen.ScreenFormatterFactory attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.aps.html#pvi._format.aps.APSFormatter.widget_height">widget_height (pvi._format.aps.APSFormatter attribute)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._format.dls.html#pvi._format.dls.DLSFormatter.widget_height">(pvi._format.dls.DLSFormatter attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._format.screen.html#pvi._format.screen.ScreenLayout.widget_height">(pvi._format.screen.ScreenLayout attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi._format.aps.html#pvi._format.aps.APSFormatter.widget_width">widget_width (pvi._format.aps.APSFormatter attribute)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._format.dls.html#pvi._format.dls.DLSFormatter.widget_width">(pvi._format.dls.DLSFormatter attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._format.screen.html#pvi._format.screen.ScreenLayout.widget_width">(pvi._format.screen.ScreenLayout attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.WidgetFormatter">WidgetFormatter (class in pvi._format.widget)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.widget.html#pvi._format.widget.WidgetFormatterFactory">WidgetFormatterFactory (class in pvi._format.widget)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.TableRead.widgets">widgets (pvi.device.TableRead attribute)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.TableWrite.widgets">(pvi.device.TableWrite attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.WidgetUnion">WidgetUnion (in module pvi.device)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._format.utils.html#pvi._format.utils.with_title">with_title() (in module pvi._format.utils)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._format.dls.html#pvi._format.dls.write_bob">write_bob() (in module pvi._format.dls)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.SignalW.write_pv">write_pv (pvi.device.SignalW attribute)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynParameter.write_record">write_record (pvi._convert._asyn_convert.AsynParameter attribute)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._convert._template_convert.html#pvi._convert._template_convert.Action.write_record">(pvi._convert._template_convert.Action attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._convert._template_convert.html#pvi._convert._template_convert.SettingPair.write_record">(pvi._convert._template_convert.SettingPair attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynBinary.write_widget">write_widget (pvi._convert._asyn_convert.AsynBinary attribute)</a>
+
+      <ul>
+        <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynFloat64.write_widget">(pvi._convert._asyn_convert.AsynFloat64 attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynFloat64Waveform.write_widget">(pvi._convert._asyn_convert.AsynFloat64Waveform attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynInt32.write_widget">(pvi._convert._asyn_convert.AsynInt32 attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynInt32Waveform.write_widget">(pvi._convert._asyn_convert.AsynInt32Waveform attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynMultiBitBinary.write_widget">(pvi._convert._asyn_convert.AsynMultiBitBinary attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynParameter.write_widget">(pvi._convert._asyn_convert.AsynParameter attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynString.write_widget">(pvi._convert._asyn_convert.AsynString attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynWaveform.write_widget">(pvi._convert._asyn_convert.AsynWaveform attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.SignalW.write_widget">(pvi.device.SignalW attribute)</a>
+</li>
+        <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.SignalX.write_widget">(pvi.device.SignalX attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.WriteWidget">WriteWidget (class in pvi.device)</a>
+</li>
+      <li><a href="reference/_api/pvi/pvi.device.html#pvi.device.WriteWidgetUnion">WriteWidgetUnion (in module pvi.device)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="X">X</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._format.utils.html#pvi._format.utils.Bounds.x">x (pvi._format.utils.Bounds attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="Y">Y</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._format.utils.html#pvi._format.utils.Bounds.y">y (pvi._format.utils.Bounds attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/_api/pvi/pvi._yaml_utils.html#pvi._yaml_utils.YamlValidatorMixin">YamlValidatorMixin (class in pvi._yaml_utils)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

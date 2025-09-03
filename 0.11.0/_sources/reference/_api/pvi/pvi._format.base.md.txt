@@ -1,0 +1,146 @@
+# {py:mod}`pvi._format.base`
+
+```{py:module} pvi._format.base
+```
+
+```{autodoc2-docstring} pvi._format.base
+:allowtitles:
+```
+
+## Module Contents
+
+### Classes
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`IndexEntry <pvi._format.base.IndexEntry>`
+  - ```{autodoc2-docstring} pvi._format.base.IndexEntry
+    :summary:
+    ```
+* - {py:obj}`Formatter <pvi._format.base.Formatter>`
+  - ```{autodoc2-docstring} pvi._format.base.Formatter
+    :summary:
+    ```
+````
+
+### API
+
+`````{py:class} IndexEntry(/, **data: typing.Any)
+:canonical: pvi._format.base.IndexEntry
+
+Bases: {py:obj}`pvi.typed_model.TypedModel`
+
+```{autodoc2-docstring} pvi._format.base.IndexEntry
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi._format.base.IndexEntry.__init__
+```
+
+````{py:attribute} label
+:canonical: pvi._format.base.IndexEntry.label
+:type: typing.Annotated[str, Field(description='Button label (this will be converted to PascalCase)')]
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.base.IndexEntry.label
+```
+
+````
+
+````{py:attribute} ui
+:canonical: pvi._format.base.IndexEntry.ui
+:type: typing.Annotated[str, Field(description='File name of UI to open with button')]
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.base.IndexEntry.ui
+```
+
+````
+
+````{py:attribute} macros
+:canonical: pvi._format.base.IndexEntry.macros
+:type: typing.Annotated[dict[str, str], Field(description='Macros to launch UI with')]
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.base.IndexEntry.macros
+```
+
+````
+
+`````
+
+`````{py:class} Formatter(/, **data: typing.Any)
+:canonical: pvi._format.base.Formatter
+
+Bases: {py:obj}`pvi.typed_model.TypedModel`, {py:obj}`pvi._yaml_utils.YamlValidatorMixin`
+
+```{autodoc2-docstring} pvi._format.base.Formatter
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi._format.base.Formatter.__init__
+```
+
+````{py:method} type_adapter() -> pydantic.TypeAdapter[pvi._format.base.Formatter]
+:canonical: pvi._format.base.Formatter.type_adapter
+:classmethod:
+
+```{autodoc2-docstring} pvi._format.base.Formatter.type_adapter
+```
+
+````
+
+````{py:method} from_dict(serialized: dict[str, typing.Any]) -> pvi._format.base.Formatter
+:canonical: pvi._format.base.Formatter.from_dict
+:classmethod:
+
+```{autodoc2-docstring} pvi._format.base.Formatter.from_dict
+```
+
+````
+
+````{py:method} deserialize(yaml: pathlib.Path) -> pvi._format.base.Formatter
+:canonical: pvi._format.base.Formatter.deserialize
+:classmethod:
+
+```{autodoc2-docstring} pvi._format.base.Formatter.deserialize
+```
+
+````
+
+````{py:method} create_schema() -> dict[str, typing.Any]
+:canonical: pvi._format.base.Formatter.create_schema
+:classmethod:
+
+```{autodoc2-docstring} pvi._format.base.Formatter.create_schema
+```
+
+````
+
+````{py:method} format(device: pvi.device.Device, path: pathlib.Path) -> None
+:canonical: pvi._format.base.Formatter.format
+:abstractmethod:
+
+```{autodoc2-docstring} pvi._format.base.Formatter.format
+```
+
+````
+
+````{py:method} format_index(label: str, index_entries: list[pvi._format.base.IndexEntry], path: pathlib.Path)
+:canonical: pvi._format.base.Formatter.format_index
+
+```{autodoc2-docstring} pvi._format.base.Formatter.format_index
+```
+
+````
+
+`````

@@ -1,0 +1,135 @@
+# {py:mod}`pvi._format.dls`
+
+```{py:module} pvi._format.dls
+```
+
+```{autodoc2-docstring} pvi._format.dls
+:allowtitles:
+```
+
+## Module Contents
+
+### Classes
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`DLSFormatter <pvi._format.dls.DLSFormatter>`
+  -
+````
+
+### Functions
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`write_bob <pvi._format.dls.write_bob>`
+  - ```{autodoc2-docstring} pvi._format.dls.write_bob
+    :summary:
+    ```
+````
+
+### API
+
+`````{py:class} DLSFormatter(/, **data: typing.Any)
+:canonical: pvi._format.dls.DLSFormatter
+
+Bases: {py:obj}`pvi._format.base.Formatter`
+
+````{py:attribute} spacing
+:canonical: pvi._format.dls.DLSFormatter.spacing
+:type: typing.Annotated[int, Field(description='Spacing between widgets')]
+:value: >
+   5
+
+```{autodoc2-docstring} pvi._format.dls.DLSFormatter.spacing
+```
+
+````
+
+````{py:attribute} title_height
+:canonical: pvi._format.dls.DLSFormatter.title_height
+:type: typing.Annotated[int, Field(description='Height of screen title bar')]
+:value: >
+   25
+
+```{autodoc2-docstring} pvi._format.dls.DLSFormatter.title_height
+```
+
+````
+
+````{py:attribute} max_height
+:canonical: pvi._format.dls.DLSFormatter.max_height
+:type: typing.Annotated[int, Field(description='Max height of the screen')]
+:value: >
+   900
+
+```{autodoc2-docstring} pvi._format.dls.DLSFormatter.max_height
+```
+
+````
+
+````{py:attribute} label_width
+:canonical: pvi._format.dls.DLSFormatter.label_width
+:type: typing.Annotated[int, Field(description='Width of the widget description labels')]
+:value: >
+   150
+
+```{autodoc2-docstring} pvi._format.dls.DLSFormatter.label_width
+```
+
+````
+
+````{py:attribute} widget_width
+:canonical: pvi._format.dls.DLSFormatter.widget_width
+:type: typing.Annotated[int, Field(description='Width of the widgets')]
+:value: >
+   200
+
+```{autodoc2-docstring} pvi._format.dls.DLSFormatter.widget_width
+```
+
+````
+
+````{py:attribute} widget_height
+:canonical: pvi._format.dls.DLSFormatter.widget_height
+:type: typing.Annotated[int, Field(description='Height of the widgets')]
+:value: >
+   20
+
+```{autodoc2-docstring} pvi._format.dls.DLSFormatter.widget_height
+```
+
+````
+
+````{py:method} format(device: pvi.device.Device, path: pathlib.Path) -> None
+:canonical: pvi._format.dls.DLSFormatter.format
+
+````
+
+````{py:method} format_edl(device: pvi.device.Device, path: pathlib.Path)
+:canonical: pvi._format.dls.DLSFormatter.format_edl
+
+```{autodoc2-docstring} pvi._format.dls.DLSFormatter.format_edl
+```
+
+````
+
+````{py:method} format_bob(device: pvi.device.Device, path: pathlib.Path)
+:canonical: pvi._format.dls.DLSFormatter.format_bob
+
+```{autodoc2-docstring} pvi._format.dls.DLSFormatter.format_bob
+```
+
+````
+
+`````
+
+````{py:function} write_bob(screen_formatter: pvi._format.widget.GroupFormatter[lxml.etree._Element], path: pathlib.Path)
+:canonical: pvi._format.dls.write_bob
+
+```{autodoc2-docstring} pvi._format.dls.write_bob
+```
+````
