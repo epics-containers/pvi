@@ -10,6 +10,7 @@ from typing import (
     Annotated,
     Any,
     ClassVar,
+    Self,
 )
 
 from pydantic import (
@@ -19,7 +20,6 @@ from pydantic import (
     ValidationError,
     model_validator,
 )
-from typing_extensions import Self
 
 from pvi._yaml_utils import YamlValidatorMixin, dump_yaml, type_first
 from pvi.typed_model import TypedModel, as_tagged_union

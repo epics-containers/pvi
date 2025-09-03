@@ -1,3 +1,5 @@
+"""Interface for ``python -m pvi``."""
+
 import json
 import os
 from pathlib import Path

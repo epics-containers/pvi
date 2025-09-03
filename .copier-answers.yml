@@ -1,9 +1,8 @@
 # Changes here will be overwritten by Copier
-_commit: 2.2.0
+_commit: 4.2.0
 _src_path: gh:DiamondLightSource/python-copier-template
 author_email: gary.yendell@diamond.ac.uk
 author_name: Gary Yendell
-component_owner: mef65357
 description: EPICS PV Interface described in YAML
 distribution_name: pvi
 docker: false
@@ -13,4 +12,5 @@ github_org: epics-containers
 package_name: pvi
 pypi: true
 repo_name: pvi
+strict_typing: true
 type_checker: pyright
