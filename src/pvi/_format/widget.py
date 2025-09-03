@@ -1,11 +1,9 @@
 from __future__ import annotations
 
-import sys
 from collections.abc import Callable
 from dataclasses import dataclass, field
-from typing import Any, Generic, TypeVar
-
-from typing_extensions import Self
+from enum import StrEnum
+from typing import Any, Generic, Self, TypeVar
 
 from pvi._format.utils import Bounds
 from pvi.device import (
@@ -25,12 +23,6 @@ from pvi.device import (
     ToggleButton,
     WidgetUnion,
 )
-
-if sys.version_info >= (3, 11):
-    from enum import StrEnum
-else:
-    from enum import Enum
-
 
 T = TypeVar("T")
 
@@ -176,16 +168,9 @@ class SubScreenWidgetFormatter(WidgetFormatter[T]):
     macros: dict[str, str] = field(default_factory=dict[str, str])
 
 
-if sys.version_info >= (3, 11):
-
-    class GroupType(StrEnum):
-        GROUP = "GROUP"
-        SCREEN = "SCREEN"
-else:
-
-    class GroupType(str, Enum):
-        GROUP = "GROUP"
-        SCREEN = "SCREEN"
+class GroupType(StrEnum):
+    GROUP = "GROUP"
+    SCREEN = "SCREEN"
 
 
 @dataclass
