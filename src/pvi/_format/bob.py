@@ -129,6 +129,8 @@ class BobTemplate(UITemplate[_Element]):
                 y_axis_element = SubElement(y_axes_element, "y_axis")
                 SubElement(x_axis_element, "title").text = ""
                 SubElement(y_axis_element, "title").text = widget.axis
+                SubElement(x_axis_element, "autoscale").text = "true"
+                SubElement(y_axis_element, "autoscale").text = "true"
             case _:
                 pass
 
