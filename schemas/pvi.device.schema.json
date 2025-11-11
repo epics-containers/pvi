@@ -9,6 +9,18 @@
           "title": "Axis",
           "type": "string"
         },
+        "width": {
+          "default": 900,
+          "description": "Width of trace widget",
+          "title": "Width",
+          "type": "integer"
+        },
+        "height": {
+          "default": 500,
+          "description": "Height of trace widget",
+          "title": "Height",
+          "type": "integer"
+        },
         "type": {
           "const": "ArrayTrace",
           "default": "ArrayTrace",

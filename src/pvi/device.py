@@ -147,6 +147,8 @@ class ArrayTrace(ReadWidget):
             ),
         ),
     ]
+    width: Annotated[int, Field(description="Width of trace widget")] = 900
+    height: Annotated[int, Field(description="Height of trace widget")] = 500
 
 
 class ImageRead(ReadWidget):

@@ -13,6 +13,7 @@ from pvi._format.utils import Bounds
 from pvi._format.widget import UITemplate, WidgetFormatter
 from pvi.device import (
     LED,
+    ArrayTrace,
     BitField,
     CheckBox,
     ComboBox,
@@ -122,6 +123,12 @@ class BobTemplate(UITemplate[_Element]):
                     # explicitly set titles for both to blank for consistency
                     SubElement(x_axis_element, "title").text = ""
                     SubElement(y_axis_element, "title").text = ""
+            case ("xyplot", ArrayTrace()):
+                x_axis_element = SubElement(t_copy, "x_axis")
+                y_axes_element = SubElement(t_copy, "y_axes")
+                y_axis_element = SubElement(y_axes_element, "y_axis")
+                SubElement(x_axis_element, "title").text = ""
+                SubElement(y_axis_element, "title").text = widget.axis
             case _:
                 pass
 
