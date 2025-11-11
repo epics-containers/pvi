@@ -16,6 +16,7 @@ from pvi.device import (
     BitField,
     CheckBox,
     ComboBox,
+    ImageColorMap,
     ImageRead,
     TableRead,
     TableWrite,
@@ -105,8 +106,12 @@ class BobTemplate(UITemplate[_Element]):
             case ("byte_monitor", BitField() as bit_field):
                 add_byte_number_of_bits(t_copy, bit_field.number_of_bits)
             case ("image", ImageRead()):
-                if widget.grayscale:
-                    set_color_map(t_copy, "GRAY")
+                match widget.color_map:
+                    case ImageColorMap.GRAY:
+                        color_map = "GRAY"
+                    case _:
+                        color_map = "VIRIDIS"
+                set_color_map(t_copy, color_map)
                 set_visibility(SubElement(t_copy, "color_bar"), widget.color_bar)
                 if not widget.axes:
                     x_axis_element = SubElement(t_copy, "x_axis")

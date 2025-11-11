@@ -29,6 +29,11 @@ PASCAL_CASE_REGEX = re.compile(r"(?<![A-Z])[A-Z]|[A-Z][a-z/d]|(?<=[a-z])\d")
 NON_PASCAL_CHARS_RE = re.compile(r"[^A-Za-z0-9]")
 
 
+class ImageColorMap(Enum):
+    GRAY = 0
+    COLOR = 1
+
+
 def to_title_case(pascal_s: str) -> str:
     """Takes a PascalCaseFieldName and returns an Title Case Field Name
 
@@ -149,12 +154,10 @@ class ImageRead(ReadWidget):
 
     width: Annotated[int, Field(description="Width of image widget")] = 900
     height: Annotated[int, Field(description="Height of image widget")] = 500
-    grayscale: Annotated[
-        bool, Field(description="Whether to display image as grayscale")
-    ] = False
-    color_bar: Annotated[
-        bool, Field(description="Whether to draw color bar")
-    ] = False
+    color_map: Annotated[
+        ImageColorMap, Field(description="Color map profile to use for image")
+    ] = ImageColorMap.GRAY
+    color_bar: Annotated[bool, Field(description="Whether to draw color bar")] = False
     axes: Annotated[
         bool, Field(description="Whether to draw axis labels and scales")
     ] = False

@@ -32,6 +32,9 @@
     <y>30</y>
     <width>900</width>
     <height>500</height>
+    <color_map>
+      <name>GRAY</name>
+    </color_map>
     <color_bar>
       <visible>false</visible>
     </color_bar>

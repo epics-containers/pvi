@@ -354,6 +354,14 @@
       "title": "Group",
       "type": "object"
     },
+    "ImageColorMap": {
+      "enum": [
+        0,
+        1
+      ],
+      "title": "ImageColorMap",
+      "type": "integer"
+    },
     "ImageRead": {
       "additionalProperties": false,
       "description": "2D Image view of an NTNDArray",
@@ -370,11 +378,10 @@
           "title": "Height",
           "type": "integer"
         },
-        "grayscale": {
-          "default": false,
-          "description": "Whether to display image as grayscale",
-          "title": "Grayscale",
-          "type": "boolean"
+        "color_map": {
+          "$ref": "#/$defs/ImageColorMap",
+          "default": 0,
+          "description": "Color map profile to use for image"
         },
         "color_bar": {
           "default": false,
