@@ -128,7 +128,7 @@ class DLSFormatter(Formatter):
                 search='"LED"',
                 property_map={"controlPv": "pv"},
             ),
-            array_trace_formatter_cls=PVWidgetFormatter[_Element].from_template(
+            array_trace_formatter_cls=PVWidgetFormatter[str].from_template(
                 template,
                 search="XYTrace",
                 property_map={"yPv": "pv"},
