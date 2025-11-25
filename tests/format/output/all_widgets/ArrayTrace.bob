@@ -29,7 +29,7 @@
     <name>ArrayTrace</name>
     <x>22</x>
     <y>30</y>
-    <width>776</width>
+    <width>900</width>
     <height>500</height>
     <traces>
       <trace>
@@ -52,10 +52,12 @@
     </traces>
     <x_axis>
       <title></title>
+      <autoscale>true</autoscale>
     </x_axis>
     <y_axes>
       <y_axis>
         <title>x</title>
+        <autoscale>true</autoscale>
       </y_axis>
     </y_axes>
   </widget>

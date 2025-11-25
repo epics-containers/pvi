@@ -32,11 +32,28 @@
     <width>282</width>
     <height>54</height>
     <transparent>true</transparent>
-    <widget type="xyplot" version="3.0.0">
-      <name>ArrayTrace</name>
+    <widget type="label" version="2.0.0">
+      <name>Label</name>
+      <text>Array Trace</text>
       <x>0</x>
       <y>0</y>
-      <width>248</width>
+      <width>120</width>
+      <height>20</height>
+      <tooltip>No description provided</tooltip>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>OpenDisplay</name>
+      <actions>
+        <action type="open_display">
+          <file>all_widgets_ArrayTrace.bob</file>
+          <target>tab</target>
+          <description>Open Display</description>
+        </action>
+      </actions>
+      <text>Array Trace</text>
+      <x>124</x>
+      <y>0</y>
+      <width>124</width>
       <height>20</height>
       <tooltip>$(actions)</tooltip>
     </widget>
@@ -200,9 +217,9 @@
         </action>
       </actions>
       <text>Image Read</text>
-      <x>0</x>
+      <x>124</x>
       <y>0</y>
-      <width>248</width>
+      <width>124</width>
       <height>20</height>
       <tooltip>$(actions)</tooltip>
     </widget>

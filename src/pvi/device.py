@@ -3,23 +3,11 @@ from __future__ import annotations
 import json
 import re
 from collections.abc import Iterator, Sequence
-from enum import StrEnum
+from enum import IntEnum, StrEnum
 from pathlib import Path
-from typing import (
-    TYPE_CHECKING,
-    Annotated,
-    Any,
-    ClassVar,
-    Self,
-)
+from typing import TYPE_CHECKING, Annotated, Any, ClassVar, Self
 
-from pydantic import (
-    BaseModel,
-    ConfigDict,
-    Field,
-    ValidationError,
-    model_validator,
-)
+from pydantic import BaseModel, ConfigDict, Field, ValidationError, model_validator
 
 from pvi._yaml_utils import YamlValidatorMixin, dump_yaml, type_first
 from pvi.typed_model import TypedModel, as_tagged_union
@@ -29,7 +17,7 @@ PASCAL_CASE_REGEX = re.compile(r"(?<![A-Z])[A-Z]|[A-Z][a-z/d]|(?<=[a-z])\d")
 NON_PASCAL_CHARS_RE = re.compile(r"[^A-Za-z0-9]")
 
 
-class ImageColorMap(Enum):
+class ImageColorMap(IntEnum):
     GRAY = 0
     COLOR = 1
 
