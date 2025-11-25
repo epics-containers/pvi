@@ -66,12 +66,16 @@ class TypedModel(BaseModel):
         ref_template: str = DEFAULT_REF_TEMPLATE,
         schema_generator: type[GenerateJsonSchema] = GenerateJsonSchema,
         mode: JsonSchemaMode = "validation",
+        *,
+        union_format: Literal["any_of", "primitive_type_array"] = "any_of",
     ):
         """Ensure all child models have type field added before generating schema."""
         if not cls.models_typed:
             TypedModel.rebuild_child_models()
 
-        return super().model_json_schema(by_alias, ref_template, schema_generator, mode)
+        return super().model_json_schema(
+            by_alias, ref_template, schema_generator, mode, union_format=union_format
+        )
 
     @classmethod
     def rebuild_child_models(cls):
