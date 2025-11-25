@@ -65,7 +65,7 @@
         <description>Open Display</description>
       </action>
     </actions>
-    <text>Group 1</text>
+    <text>Group 1 &#10697;</text>
     <x>146</x>
     <y>54</y>
     <width>124</width>
@@ -119,7 +119,7 @@
           <description>Open Display</description>
         </action>
       </actions>
-      <text>Group 4</text>
+      <text>Group 4 &#10697;</text>
       <x>124</x>
       <y>24</y>
       <width>124</width>

@@ -552,7 +552,7 @@ class ScreenFormatterFactory(Generic[T]):
             elif isinstance(rc, Group) and isinstance(rc.layout, SubScreen):
                 yield self.widget_formatter_factory.sub_screen_formatter_cls(
                     bounds=rc_bounds,
-                    label=rc.get_label(),
+                    label=rc.get_label() + " ⧉",
                     file_name=f"{self.base_file_name}_{rc.name.replace(' ', '_')}",
                     components=rc,
                 )
@@ -586,7 +586,9 @@ def is_table(component: Group) -> bool:
 
 
 def move_to_subscreen(component: ComponentUnion) -> Group:
-    return Group(name=component.name, layout=SubScreen(), children=[component])
+    return Group(
+        name=component.name, layout=SubScreen(labelled=False), children=[component]
+    )
 
 
 def split_out_plots(component: Group):

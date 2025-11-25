@@ -32,15 +32,6 @@
     <width>282</width>
     <height>54</height>
     <transparent>true</transparent>
-    <widget type="label" version="2.0.0">
-      <name>Label</name>
-      <text>Array Trace</text>
-      <x>0</x>
-      <y>0</y>
-      <width>120</width>
-      <height>20</height>
-      <tooltip>No description provided</tooltip>
-    </widget>
     <widget type="action_button" version="3.0.0">
       <name>OpenDisplay</name>
       <actions>
@@ -50,10 +41,10 @@
           <description>Open Display</description>
         </action>
       </actions>
-      <text>Array Trace</text>
-      <x>124</x>
+      <text>Array Trace &#10697;</text>
+      <x>0</x>
       <y>0</y>
-      <width>124</width>
+      <width>248</width>
       <height>20</height>
       <tooltip>$(actions)</tooltip>
     </widget>
@@ -198,15 +189,6 @@
     <width>282</width>
     <height>54</height>
     <transparent>true</transparent>
-    <widget type="label" version="2.0.0">
-      <name>Label</name>
-      <text>Image Read</text>
-      <x>0</x>
-      <y>0</y>
-      <width>120</width>
-      <height>20</height>
-      <tooltip>No description provided</tooltip>
-    </widget>
     <widget type="action_button" version="3.0.0">
       <name>OpenDisplay</name>
       <actions>
@@ -216,10 +198,10 @@
           <description>Open Display</description>
         </action>
       </actions>
-      <text>Image Read</text>
-      <x>124</x>
+      <text>Image Read &#10697;</text>
+      <x>0</x>
       <y>0</y>
-      <width>124</width>
+      <width>248</width>
       <height>20</height>
       <tooltip>$(actions)</tooltip>
     </widget>
