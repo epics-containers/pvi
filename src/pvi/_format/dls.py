@@ -178,6 +178,7 @@ class DLSFormatter(Formatter):
                 search=GroupType.SCREEN,
                 sized=with_title(screen_layout.spacing, screen_layout.title_height),
                 widget_formatter_hook=create_screen_title_formatter,
+                property_map={"title": "title"},
             ),
             group_formatter_cls=GroupFormatter[str].from_template(
                 template,
