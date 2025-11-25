@@ -280,10 +280,10 @@
 
 ````
 
-`````{py:class} TextFormat(*args, **kwds)
+`````{py:class} TextFormat()
 :canonical: pvi.device.TextFormat
 
-Bases: {py:obj}`enum.Enum`
+Bases: {py:obj}`enum.StrEnum`
 
 ```{autodoc2-docstring} pvi.device.TextFormat
 ```
