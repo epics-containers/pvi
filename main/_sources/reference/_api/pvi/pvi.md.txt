@@ -23,13 +23,13 @@ pvi._convert
 :titlesonly:
 :maxdepth: 1
 
-pvi.typed_model
-pvi.utils
-pvi._pv_group
-pvi._yaml_utils
-pvi.__main__
-pvi.device
 pvi._version
+pvi.utils
+pvi._yaml_utils
+pvi.typed_model
+pvi._pv_group
+pvi.device
+pvi.__main__
 pvi._schema_utils
 ```
 

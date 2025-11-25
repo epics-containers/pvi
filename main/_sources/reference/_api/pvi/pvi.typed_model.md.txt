@@ -88,7 +88,7 @@ Bases: {py:obj}`pydantic.BaseModel`
 
 ````
 
-````{py:method} model_json_schema(by_alias: bool = True, ref_template: str = DEFAULT_REF_TEMPLATE, schema_generator: type[pydantic.json_schema.GenerateJsonSchema] = GenerateJsonSchema, mode: pydantic.json_schema.JsonSchemaMode = 'validation')
+````{py:method} model_json_schema(by_alias: bool = True, ref_template: str = DEFAULT_REF_TEMPLATE, schema_generator: type[pydantic.json_schema.GenerateJsonSchema] = GenerateJsonSchema, mode: pydantic.json_schema.JsonSchemaMode = 'validation', *, union_format: typing.Literal[any_of, primitive_type_array] = 'any_of')
 :canonical: pvi.typed_model.TypedModel.model_json_schema
 :classmethod:
 

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pvi._schema_utils &#8212; pvi 0.10.2.dev21+g2969a3b79 documentation</title>
+    <title>pvi._schema_utils &#8212; pvi 0.11.1.dev3+ga291923ae documentation</title>
   
   
   
@@ -41,7 +41,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=9254b357"></script>
+    <script src="../../../_static/documentation_options.js?v=275a07e6"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -59,7 +59,7 @@
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="Index" href="../../../genindex.html" />
-    <link rel="prev" title="pvi._version" href="pvi._version.html" />
+    <link rel="prev" title="pvi.__main__" href="pvi.__main__.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="main" />
@@ -416,13 +416,13 @@
 <li class="toctree-l3 current active has-children"><a class="reference internal" href="pvi.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi</span></code></a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="pvi._format.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._format</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pvi._convert.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._convert</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pvi.typed_model.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.typed_model</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pvi.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.utils</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pvi._pv_group.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._pv_group</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pvi._yaml_utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._yaml_utils</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pvi.__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.__main__</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pvi.device.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.device</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pvi._version.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._version</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.utils</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi._yaml_utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._yaml_utils</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi.typed_model.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.typed_model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi._pv_group.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._pv_group</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi.device.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.device</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi.__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.__main__</span></code></a></li>
 <li class="toctree-l4 current active"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._schema_utils</span></code></a></li>
 </ul>
 </details></li>
@@ -537,7 +537,7 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pvi._schema_utils.rec_subclasses">
-<span class="sig-prename descclassname"><span class="pre">pvi._schema_utils.</span></span><span class="sig-name descname"><span class="pre">rec_subclasses</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pvi._schema_utils.Cls</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi._schema_utils.Cls</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/pvi/_schema_utils.html#rec_subclasses"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._schema_utils.rec_subclasses" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pvi._schema_utils.</span></span><span class="sig-name descname"><span class="pre">rec_subclasses</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pvi._schema_utils.Cls</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi._schema_utils.Cls</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/pvi/_schema_utils.html#rec_subclasses"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._schema_utils.rec_subclasses" title="Link to this definition">#</a></dt>
 <dd><p>Recursive implementation of type.<strong>subclasses</strong></p>
 </dd></dl>
 
@@ -556,12 +556,12 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="pvi._version.html"
+       href="pvi.__main__.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._version</span></code></p>
+        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.__main__</span></code></p>
       </div>
     </a>
     <a class="right-next"
