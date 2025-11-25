@@ -492,7 +492,7 @@ class ScreenFormatterFactory(Generic[T]):
                     add_label = False  # Do not add row labels for Tables
                     component_bounds.w = 100 * len(widgets)
                     component_bounds.h *= 10  # TODO: How do we know the number of rows?
-                case SignalR(read_widget=ImageRead()):
+                case SignalR(read_widget=ImageRead() | ArrayTrace()):
                     add_label = False
                 case _:
                     pass

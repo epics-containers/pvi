@@ -25,18 +25,9 @@
     <transparent use_class="true">true</transparent>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
-  <widget type="label" version="2.0.0">
-    <name>Label</name>
-    <text>Array Trace</text>
-    <x>22</x>
-    <y>30</y>
-    <width>120</width>
-    <height>500</height>
-    <tooltip>No description provided</tooltip>
-  </widget>
   <widget type="xyplot" version="3.0.0">
     <name>ArrayTrace</name>
-    <x>146</x>
+    <x>22</x>
     <y>30</y>
     <width>776</width>
     <height>500</height>
