@@ -407,6 +407,12 @@
           "title": "Axes",
           "type": "boolean"
         },
+        "color_bar": {
+          "default": false,
+          "description": "Whether to draw color bar on image widget",
+          "title": "Color Bar",
+          "type": "boolean"
+        },
         "type": {
           "const": "ImageRead",
           "default": "ImageRead",
