@@ -35,7 +35,7 @@ def test_schemas(tmp_path, helper, filename):
 def formats_to_skip():
     return {
         ".adl": ["BitField", "ArrayTrace", "ImageRead", "TableRead", "TableWrite"],
-        ".edl": ["ArrayTrace", "ImageRead", "TableRead", "TableWrite"],
+        ".edl": ["ImageRead", "TableRead", "TableWrite"],
         ".bob": [],
     }
 
@@ -210,7 +210,7 @@ def test_static_table(tmp_path, helper, input_yaml, formatter, output):
         (
             "dls.edl.pvi.formatter.yaml",
             ".edl",
-            ["ArrayTrace", "ImageRead", "TableRead", "TableWrite"],
+            ["ImageRead", "TableRead", "TableWrite"],
         ),
         ("dls.bob.pvi.formatter.yaml", ".bob", []),
     ],

@@ -32,40 +32,21 @@
     <width>282</width>
     <height>54</height>
     <transparent>true</transparent>
-    <widget type="label" version="2.0.0">
-      <name>Label</name>
-      <text>Array Trace</text>
+    <widget type="action_button" version="3.0.0">
+      <name>OpenDisplay</name>
+      <actions>
+        <action type="open_display">
+          <file>all_widgets_ArrayTrace.bob</file>
+          <target>tab</target>
+          <description>Open Display</description>
+        </action>
+      </actions>
+      <text>Array Trace &#10697;</text>
       <x>0</x>
       <y>0</y>
-      <width>120</width>
+      <width>248</width>
       <height>20</height>
-      <tooltip>No description provided</tooltip>
-    </widget>
-    <widget type="xyplot" version="3.0.0">
-      <name>ArrayTrace</name>
-      <x>124</x>
-      <y>0</y>
-      <width>124</width>
-      <height>20</height>
-      <traces>
-        <trace>
-          <name>$(traces[0].y_pv)</name>
-          <x_pv/>
-          <y_pv>$(P)$(R)ArrayTrace_RBV</y_pv>
-          <err_pv/>
-          <axis>0</axis>
-          <trace_type>1</trace_type>
-          <color>
-            <color red="0" green="0" blue="255">
-          </color>
-          </color>
-          <line_width>1</line_width>
-          <line_style>0</line_style>
-          <point_type>0</point_type>
-          <point_size>10</point_size>
-          <visible>true</visible>
-        </trace>
-      </traces>
+      <tooltip>$(actions)</tooltip>
     </widget>
   </widget>
   <widget type="group" version="2.0.0">
@@ -208,22 +189,21 @@
     <width>282</width>
     <height>54</height>
     <transparent>true</transparent>
-    <widget type="label" version="2.0.0">
-      <name>Label</name>
-      <text>Image Read</text>
+    <widget type="action_button" version="3.0.0">
+      <name>OpenDisplay</name>
+      <actions>
+        <action type="open_display">
+          <file>all_widgets_ImageRead.bob</file>
+          <target>tab</target>
+          <description>Open Display</description>
+        </action>
+      </actions>
+      <text>Image Read &#10697;</text>
       <x>0</x>
       <y>0</y>
-      <width>120</width>
+      <width>248</width>
       <height>20</height>
-      <tooltip>No description provided</tooltip>
-    </widget>
-    <widget type="image" version="2.0.0">
-      <name>ImageRead</name>
-      <pv_name>$(P)$(R)ImageRead_RBV</pv_name>
-      <x>124</x>
-      <y>0</y>
-      <width>124</width>
-      <height>20</height>
+      <tooltip>$(actions)</tooltip>
     </widget>
   </widget>
   <widget type="group" version="2.0.0">

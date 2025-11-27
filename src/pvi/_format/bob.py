@@ -13,9 +13,12 @@ from pvi._format.utils import Bounds
 from pvi._format.widget import UITemplate, WidgetFormatter
 from pvi.device import (
     LED,
+    ArrayTrace,
     BitField,
     CheckBox,
     ComboBox,
+    ImageColorMap,
+    ImageRead,
     TableRead,
     TableWrite,
     TextFormat,
@@ -103,6 +106,31 @@ class BobTemplate(UITemplate[_Element]):
                 add_format(t_copy, BOB_TEXT_FORMATS[TextFormat(format)])
             case ("byte_monitor", BitField() as bit_field):
                 add_byte_number_of_bits(t_copy, bit_field.number_of_bits)
+            case ("image", ImageRead()):
+                match widget.color_map:
+                    case ImageColorMap.GRAY:
+                        color_map = "GRAY"
+                    case _:
+                        color_map = "VIRIDIS"
+                set_color_map(t_copy, color_map)
+                set_visibility(SubElement(t_copy, "color_bar"), widget.color_bar)
+                if not widget.axes:
+                    x_axis_element = SubElement(t_copy, "x_axis")
+                    y_axis_element = SubElement(t_copy, "y_axis")
+                    set_visibility(x_axis_element, widget.axes)
+                    set_visibility(y_axis_element, widget.axes)
+                    # setting x_axis visible to false still draws labels
+                    # explicitly set titles for both to blank for consistency
+                    SubElement(x_axis_element, "title").text = ""
+                    SubElement(y_axis_element, "title").text = ""
+            case ("xyplot", ArrayTrace()):
+                x_axis_element = SubElement(t_copy, "x_axis")
+                y_axes_element = SubElement(t_copy, "y_axes")
+                y_axis_element = SubElement(y_axes_element, "y_axis")
+                SubElement(x_axis_element, "title").text = ""
+                SubElement(y_axis_element, "title").text = widget.axis
+                SubElement(x_axis_element, "autoscale").text = "true"
+                SubElement(y_axis_element, "autoscale").text = "true"
             case _:
                 pass
 
@@ -233,6 +261,15 @@ def add_editable(element: _Element, editable: bool):
 def add_format(element: _Element, format: str):
     if format:
         SubElement(element, "format").text = format
+
+
+def set_visibility(element: _Element, visible: bool):
+    SubElement(element, "visible").text = "true" if visible else "false"
+
+
+def set_color_map(element: _Element, color_map: str):
+    color_map_element = SubElement(element, "color_map")
+    SubElement(color_map_element, "name").text = color_map
 
 
 def add_byte_number_of_bits(element: _Element, number_of_bits: int):

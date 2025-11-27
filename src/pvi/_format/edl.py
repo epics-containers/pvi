@@ -35,7 +35,7 @@ class EdlTemplate(UITemplate[str]):
             for k in "xywh":
                 properties[k] = getattr(bounds, k)
         for item, value in properties.items():
-            if item == "displayFileName":
+            if item in ["displayFileName", "yPv"]:
                 value = f"0 {value}"  # These are items in an array but we only use one
 
             multiline = re.compile(rf"^{item} {{[^}}]*}}$", re.MULTILINE | re.DOTALL)

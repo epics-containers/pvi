@@ -19,12 +19,14 @@ from pvi._format.widget import (
     next_y,
 )
 from pvi.device import (
+    ArrayTrace,
     ButtonPanel,
     Component,
     ComponentUnion,
     DeviceRef,
     Grid,
     Group,
+    ImageRead,
     Row,
     SignalR,
     SignalRef,
@@ -102,6 +104,8 @@ class ScreenFormatterFactory(Generic[T]):
                 y=0,
                 **widget_dims,
             )
+            if _has_plot_widget(c) and len(components) != 1:
+                c = move_to_subscreen(c)
             if isinstance(c, Group) and not isinstance(c.layout, Row):
                 # Create embedded group widget containing its components
                 # Note: Group adjusts bounds to fit the components
@@ -232,17 +236,21 @@ class ScreenFormatterFactory(Generic[T]):
         if is_table(c):
             # Make a sub screen button at the root to display this Group instead of
             # embedding the components within a Group widget
-            c = Group(name=c.name, layout=SubScreen(), children=c.children)
+            c = Group(
+                name=c.name, layout=SubScreen(labelled=False), children=c.children
+            )
 
         if isinstance(c.layout, SubScreen):
             return self.create_component_widget_formatters(
-                Group(name=c.name, layout=SubScreen(), children=c.children),
+                Group(name=c.name, layout=c.layout, children=c.children),
                 parent_bounds=screen_bounds,
                 column_bounds=column_bounds,
                 next_column_bounds=next_column_bounds,
                 indent=True,
-                add_label=False,
+                add_label=c.layout.labelled,
             )
+        elif any(_has_plot_widget(child) for child in c.children):
+            split_out_plots(c)
 
         group_formatter = self.create_group_formatter(
             c, bounds=Bounds(x=column_bounds.x, y=column_bounds.y, h=screen_bounds.h)
@@ -300,8 +308,13 @@ class ScreenFormatterFactory(Generic[T]):
 
         for c in group.children:
             component: Group | Component
+            add_label: bool = True
             match c:
-                case Group(layout=Grid()):
+                case Group(layout=SubScreen(labelled=labelled)):
+                    add_label = labelled
+                    component = c
+                case Group(layout=Grid(labelled=labelled)):
+                    add_label = labelled
                     if is_table(c):
                         # Display table on a sub screen
                         component = Group(
@@ -326,7 +339,7 @@ class ScreenFormatterFactory(Generic[T]):
                     parent_bounds=bounds,
                     column_bounds=column_bounds,
                     next_column_bounds=next_column_bounds,
-                    add_label=group.layout.labelled,
+                    add_label=add_label,
                 )
             )
             if next_column_bounds.y != 0:
@@ -376,6 +389,10 @@ class ScreenFormatterFactory(Generic[T]):
         if indent:
             tmp_column_bounds.indent(self.layout.group_widget_indent)
             tmp_next_column_bounds.indent(self.layout.group_widget_indent)
+
+        if isinstance(c, SignalR) and isinstance(c.read_widget, ImageRead | ArrayTrace):
+            tmp_column_bounds.w = c.read_widget.width
+            tmp_column_bounds.h = c.read_widget.height
 
         widgets = list(
             self.generate_component_formatters(c, tmp_column_bounds, add_label)
@@ -475,6 +492,8 @@ class ScreenFormatterFactory(Generic[T]):
                     add_label = False  # Do not add row labels for Tables
                     component_bounds.w = 100 * len(widgets)
                     component_bounds.h *= 10  # TODO: How do we know the number of rows?
+                case SignalR(read_widget=ImageRead() | ArrayTrace()):
+                    add_label = False
                 case _:
                     pass
 
@@ -533,7 +552,7 @@ class ScreenFormatterFactory(Generic[T]):
             elif isinstance(rc, Group) and isinstance(rc.layout, SubScreen):
                 yield self.widget_formatter_factory.sub_screen_formatter_cls(
                     bounds=rc_bounds,
-                    label=rc.get_label(),
+                    label=rc.get_label() + " ⧉",
                     file_name=f"{self.base_file_name}_{rc.name.replace(' ', '_')}",
                     components=rc,
                 )
@@ -563,4 +582,23 @@ def is_table(component: Group) -> bool:
     return len(component.children) > 1 and all(
         isinstance(sub_component, Group) and isinstance(sub_component.layout, Row)
         for sub_component in component.children
+    )
+
+
+def move_to_subscreen(component: ComponentUnion) -> Group:
+    return Group(
+        name=component.name, layout=SubScreen(labelled=False), children=[component]
+    )
+
+
+def split_out_plots(component: Group):
+    component.children = [
+        move_to_subscreen(child) if _has_plot_widget(child) else child
+        for child in component.children
+    ]
+
+
+def _has_plot_widget(component: ComponentUnion) -> bool:
+    return isinstance(component, SignalR) and isinstance(
+        component.read_widget, ImageRead | ArrayTrace
     )

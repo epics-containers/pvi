@@ -6,7 +6,7 @@ release 1
 x 0
 y 0
 w 380
-h 560
+h 580
 font "arial-bold-r-12.0"
 ctlFont "arial-bold-r-12.0"
 btnFont "arial-bold-r-12.0"
@@ -52,42 +52,6 @@ minor 0
 release 0
 x 5
 y 35
-w 10
-h 15
-lineColor index 14
-fill
-fillColor index 5
-endObjectProperties
-
-# (Static Text)
-object activeXTextClass
-beginObjectProperties
-major 4
-minor 1
-release 1
-x 5
-y 30
-w 10
-h 10
-font "arial-medium-r-12.0"
-fontAlign "center"
-fgColor index 14
-bgColor index 8
-value {
-  "  ArrayTrace  "
-}
-autoSize
-border
-endObjectProperties
-
-# (Rectangle)
-object activeRectangleClass
-beginObjectProperties
-major 4
-minor 0
-release 0
-x 5
-y 60
 w 370
 h 35
 lineColor index 14
@@ -102,7 +66,66 @@ major 4
 minor 1
 release 1
 x 5
-y 55
+y 30
+w 370
+h 10
+font "arial-medium-r-12.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 8
+value {
+  "  ArrayTrace  "
+}
+autoSize
+border
+endObjectProperties
+
+# (Extended Related Display)
+object ExtendedRelatedDisplayClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 10
+y 45
+w 360
+h 20
+fgColor index 25
+bgColor index 3
+topShadowColor index 1
+botShadowColor index 11
+font "arial-bold-r-12.0"
+numPvs 4
+numDsps 1
+displayFileName {
+  "0 all_widgets_ArrayTrace"
+}
+icon
+endObjectProperties
+
+# (Rectangle)
+object activeRectangleClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 5
+y 80
+w 370
+h 35
+lineColor index 14
+fill
+fillColor index 5
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 5
+y 75
 w 370
 h 10
 font "arial-medium-r-12.0"
@@ -123,7 +146,7 @@ major 4
 minor 1
 release 1
 x 10
-y 70
+y 90
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -142,7 +165,7 @@ major 4
 minor 0
 release 0
 x 165
-y 70
+y 90
 w 205
 h 20
 controlPv "$(P)$(R)BitField_RBV"
@@ -160,7 +183,7 @@ major 4
 minor 0
 release 0
 x 5
-y 105
+y 125
 w 370
 h 35
 lineColor index 14
@@ -175,7 +198,7 @@ major 4
 minor 1
 release 1
 x 5
-y 100
+y 120
 w 370
 h 10
 font "arial-medium-r-12.0"
@@ -196,7 +219,7 @@ major 4
 minor 1
 release 1
 x 10
-y 115
+y 135
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -215,7 +238,7 @@ major 4
 minor 1
 release 0
 x 165
-y 115
+y 135
 w 100
 h 20
 fgColor index 25
@@ -238,7 +261,7 @@ major 4
 minor 1
 release 0
 x 270
-y 115
+y 135
 w 100
 h 20
 fgColor index 25
@@ -261,7 +284,7 @@ major 4
 minor 0
 release 0
 x 5
-y 150
+y 170
 w 370
 h 35
 lineColor index 14
@@ -276,7 +299,7 @@ major 4
 minor 1
 release 1
 x 5
-y 145
+y 165
 w 370
 h 10
 font "arial-medium-r-12.0"
@@ -297,7 +320,7 @@ major 4
 minor 1
 release 1
 x 10
-y 160
+y 180
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -316,7 +339,7 @@ major 4
 minor 0
 release 0
 x 165
-y 160
+y 180
 w 205
 h 20
 fgColor index 25
@@ -335,7 +358,7 @@ major 4
 minor 0
 release 0
 x 5
-y 195
+y 215
 w 370
 h 35
 lineColor index 14
@@ -350,7 +373,7 @@ major 4
 minor 1
 release 1
 x 5
-y 190
+y 210
 w 370
 h 10
 font "arial-medium-r-12.0"
@@ -371,7 +394,7 @@ major 4
 minor 1
 release 1
 x 10
-y 205
+y 225
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -390,7 +413,7 @@ major 4
 minor 0
 release 0
 x 165
-y 205
+y 225
 w 205
 h 20
 fgColor index 25
@@ -409,7 +432,7 @@ major 4
 minor 0
 release 0
 x 5
-y 240
+y 260
 w 10
 h 15
 lineColor index 14
@@ -424,7 +447,7 @@ major 4
 minor 1
 release 1
 x 5
-y 235
+y 255
 w 10
 h 10
 font "arial-medium-r-12.0"
@@ -445,7 +468,7 @@ major 4
 minor 0
 release 0
 x 5
-y 265
+y 285
 w 370
 h 35
 lineColor index 14
@@ -460,7 +483,7 @@ major 4
 minor 1
 release 1
 x 5
-y 260
+y 280
 w 370
 h 10
 font "arial-medium-r-12.0"
@@ -481,7 +504,7 @@ major 4
 minor 1
 release 1
 x 10
-y 275
+y 295
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -500,7 +523,7 @@ major 4
 minor 0
 release 0
 x 257
-y 275
+y 295
 w 20
 h 20
 controlPv "$(P)$(R)LED"
@@ -518,7 +541,7 @@ major 4
 minor 0
 release 0
 x 5
-y 310
+y 330
 w 370
 h 35
 lineColor index 14
@@ -533,7 +556,7 @@ major 4
 minor 1
 release 1
 x 5
-y 305
+y 325
 w 370
 h 10
 font "arial-medium-r-12.0"
@@ -554,7 +577,7 @@ major 4
 minor 1
 release 1
 x 10
-y 320
+y 340
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -573,7 +596,7 @@ major 4
 minor 1
 release 1
 x 165
-y 320
+y 340
 w 205
 h 20
 indicatorColor index 16
@@ -595,7 +618,7 @@ major 4
 minor 0
 release 0
 x 5
-y 355
+y 375
 w 10
 h 15
 lineColor index 14
@@ -610,7 +633,7 @@ major 4
 minor 1
 release 1
 x 5
-y 350
+y 370
 w 10
 h 10
 font "arial-medium-r-12.0"
@@ -631,7 +654,7 @@ major 4
 minor 0
 release 0
 x 5
-y 380
+y 400
 w 10
 h 15
 lineColor index 14
@@ -646,7 +669,7 @@ major 4
 minor 1
 release 1
 x 5
-y 375
+y 395
 w 10
 h 10
 font "arial-medium-r-12.0"
@@ -667,7 +690,7 @@ major 4
 minor 0
 release 0
 x 5
-y 405
+y 425
 w 370
 h 35
 lineColor index 14
@@ -682,7 +705,7 @@ major 4
 minor 1
 release 1
 x 5
-y 400
+y 420
 w 370
 h 10
 font "arial-medium-r-12.0"
@@ -703,7 +726,7 @@ major 4
 minor 1
 release 1
 x 10
-y 415
+y 435
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -722,7 +745,7 @@ major 10
 minor 0
 release 0
 x 165
-y 415
+y 435
 w 205
 h 20
 controlPv "$(P)$(R)TextRead"
@@ -741,7 +764,7 @@ major 4
 minor 0
 release 0
 x 5
-y 450
+y 470
 w 370
 h 35
 lineColor index 14
@@ -756,7 +779,7 @@ major 4
 minor 1
 release 1
 x 5
-y 445
+y 465
 w 370
 h 10
 font "arial-medium-r-12.0"
@@ -777,7 +800,7 @@ major 4
 minor 1
 release 1
 x 10
-y 460
+y 480
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -796,7 +819,7 @@ major 10
 minor 0
 release 0
 x 165
-y 460
+y 480
 w 205
 h 20
 controlPv "$(P)$(R)TextWrite"
@@ -815,7 +838,7 @@ major 4
 minor 0
 release 0
 x 5
-y 495
+y 515
 w 370
 h 60
 lineColor index 14
@@ -830,7 +853,7 @@ major 4
 minor 1
 release 1
 x 5
-y 490
+y 510
 w 370
 h 10
 font "arial-medium-r-12.0"
@@ -851,7 +874,7 @@ major 4
 minor 1
 release 1
 x 10
-y 505
+y 525
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -870,7 +893,7 @@ major 4
 minor 0
 release 0
 x 165
-y 505
+y 525
 w 205
 h 20
 fgColor index 14
@@ -892,7 +915,7 @@ major 4
 minor 1
 release 1
 x 10
-y 530
+y 550
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -911,7 +934,7 @@ major 4
 minor 0
 release 0
 x 165
-y 530
+y 550
 w 100
 h 20
 fgColor index 14
@@ -933,7 +956,7 @@ major 4
 minor 0
 release 0
 x 310
-y 530
+y 550
 w 20
 h 20
 controlPv "$(P)$(R)ToggleButton_RBV"

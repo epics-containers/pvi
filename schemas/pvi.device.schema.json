@@ -9,6 +9,18 @@
           "title": "Axis",
           "type": "string"
         },
+        "width": {
+          "default": 900,
+          "description": "Width of trace widget",
+          "title": "Width",
+          "type": "integer"
+        },
+        "height": {
+          "default": 500,
+          "description": "Height of trace widget",
+          "title": "Height",
+          "type": "integer"
+        },
         "type": {
           "const": "ArrayTrace",
           "default": "ArrayTrace",
@@ -354,10 +366,47 @@
       "title": "Group",
       "type": "object"
     },
+    "ImageColorMap": {
+      "enum": [
+        0,
+        1
+      ],
+      "title": "ImageColorMap",
+      "type": "integer"
+    },
     "ImageRead": {
       "additionalProperties": false,
       "description": "2D Image view of an NTNDArray",
       "properties": {
+        "width": {
+          "default": 900,
+          "description": "Width of image widget",
+          "title": "Width",
+          "type": "integer"
+        },
+        "height": {
+          "default": 500,
+          "description": "Height of image widget",
+          "title": "Height",
+          "type": "integer"
+        },
+        "color_map": {
+          "$ref": "#/$defs/ImageColorMap",
+          "default": 0,
+          "description": "Color map profile to use for image"
+        },
+        "color_bar": {
+          "default": false,
+          "description": "Whether to draw color bar",
+          "title": "Color Bar",
+          "type": "boolean"
+        },
+        "axes": {
+          "default": false,
+          "description": "Whether to draw axis labels and scales",
+          "title": "Axes",
+          "type": "boolean"
+        },
         "type": {
           "const": "ImageRead",
           "default": "ImageRead",
