@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pvi.device &#8212; pvi 0.11.1.dev4+g176352865 documentation</title>
+    <title>pvi.device &#8212; pvi 0.11.1.dev5+g6edc548c4 documentation</title>
   
   
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=b253b011"></script>
+    <script src="../../_static/documentation_options.js?v=13f329c3"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -461,23 +461,11 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Sequence</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">StrEnum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">IntEnum</span><span class="p">,</span> <span class="n">StrEnum</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">TYPE_CHECKING</span><span class="p">,</span>
-    <span class="n">Annotated</span><span class="p">,</span>
-    <span class="n">Any</span><span class="p">,</span>
-    <span class="n">ClassVar</span><span class="p">,</span>
-    <span class="n">Self</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Annotated</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">ClassVar</span><span class="p">,</span> <span class="n">Self</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">BaseModel</span><span class="p">,</span>
-    <span class="n">ConfigDict</span><span class="p">,</span>
-    <span class="n">Field</span><span class="p">,</span>
-    <span class="n">ValidationError</span><span class="p">,</span>
-    <span class="n">model_validator</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">ConfigDict</span><span class="p">,</span> <span class="n">Field</span><span class="p">,</span> <span class="n">ValidationError</span><span class="p">,</span> <span class="n">model_validator</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">pvi._yaml_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">YamlValidatorMixin</span><span class="p">,</span> <span class="n">dump_yaml</span><span class="p">,</span> <span class="n">type_first</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pvi.typed_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">TypedModel</span><span class="p">,</span> <span class="n">as_tagged_union</span>
@@ -485,6 +473,14 @@
 
 <span class="n">PASCAL_CASE_REGEX</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(?&lt;![A-Z])[A-Z]|[A-Z][a-z/d]|(?&lt;=[a-z])\d&quot;</span><span class="p">)</span>
 <span class="n">NON_PASCAL_CHARS_RE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[^A-Za-z0-9]&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="ImageColorMap">
+<a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.ImageColorMap">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ImageColorMap</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+    <span class="n">GRAY</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">COLOR</span> <span class="o">=</span> <span class="mi">1</span></div>
+
 
 
 <div class="viewcode-block" id="to_title_case">
@@ -634,14 +630,26 @@
                 <span class="s2">&quot;Only one traces with axis=&#39;x&#39; allowed.&quot;</span>
             <span class="p">),</span>
         <span class="p">),</span>
-    <span class="p">]</span></div>
+    <span class="p">]</span>
+    <span class="n">width</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Width of trace widget&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">900</span>
+    <span class="n">height</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Height of trace widget&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">500</span></div>
 
 
 
 <div class="viewcode-block" id="ImageRead">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.ImageRead">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">ImageRead</span><span class="p">(</span><span class="n">ReadWidget</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;2D Image view of an NTNDArray&quot;&quot;&quot;</span></div>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;2D Image view of an NTNDArray&quot;&quot;&quot;</span>
+
+    <span class="n">width</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Width of image widget&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">900</span>
+    <span class="n">height</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Height of image widget&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">500</span>
+    <span class="n">color_map</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span>
+        <span class="n">ImageColorMap</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Color map profile to use for image&quot;</span><span class="p">)</span>
+    <span class="p">]</span> <span class="o">=</span> <span class="n">ImageColorMap</span><span class="o">.</span><span class="n">GRAY</span>
+    <span class="n">color_bar</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Whether to draw color bar&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">axes</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span>
+        <span class="nb">bool</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Whether to draw axis labels and scales&quot;</span><span class="p">)</span>
+    <span class="p">]</span> <span class="o">=</span> <span class="kc">False</span></div>
 
 
 

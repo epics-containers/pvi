@@ -15,6 +15,8 @@
 :class: autosummary longtable
 :align: left
 
+* - {py:obj}`ImageColorMap <pvi.device.ImageColorMap>`
+  -
 * - {py:obj}`TextFormat <pvi.device.TextFormat>`
   - ```{autodoc2-docstring} pvi.device.TextFormat
     :summary:
@@ -248,6 +250,33 @@
 ```
 
 ````
+
+`````{py:class} ImageColorMap()
+:canonical: pvi.device.ImageColorMap
+
+Bases: {py:obj}`enum.IntEnum`
+
+````{py:attribute} GRAY
+:canonical: pvi.device.ImageColorMap.GRAY
+:value: >
+   0
+
+```{autodoc2-docstring} pvi.device.ImageColorMap.GRAY
+```
+
+````
+
+````{py:attribute} COLOR
+:canonical: pvi.device.ImageColorMap.COLOR
+:value: >
+   1
+
+```{autodoc2-docstring} pvi.device.ImageColorMap.COLOR
+```
+
+````
+
+`````
 
 ````{py:function} to_title_case(pascal_s: str) -> str
 :canonical: pvi.device.to_title_case
@@ -541,9 +570,31 @@ Bases: {py:obj}`pvi.device.ReadWidget`
 
 ````
 
+````{py:attribute} width
+:canonical: pvi.device.ArrayTrace.width
+:type: typing.Annotated[int, Field(description='Width of trace widget')]
+:value: >
+   900
+
+```{autodoc2-docstring} pvi.device.ArrayTrace.width
+```
+
+````
+
+````{py:attribute} height
+:canonical: pvi.device.ArrayTrace.height
+:type: typing.Annotated[int, Field(description='Height of trace widget')]
+:value: >
+   500
+
+```{autodoc2-docstring} pvi.device.ArrayTrace.height
+```
+
+````
+
 `````
 
-````{py:class} ImageRead(/, **data: typing.Any)
+`````{py:class} ImageRead(/, **data: typing.Any)
 :canonical: pvi.device.ImageRead
 
 Bases: {py:obj}`pvi.device.ReadWidget`
@@ -557,7 +608,62 @@ Bases: {py:obj}`pvi.device.ReadWidget`
 ```{autodoc2-docstring} pvi.device.ImageRead.__init__
 ```
 
+````{py:attribute} width
+:canonical: pvi.device.ImageRead.width
+:type: typing.Annotated[int, Field(description='Width of image widget')]
+:value: >
+   900
+
+```{autodoc2-docstring} pvi.device.ImageRead.width
+```
+
 ````
+
+````{py:attribute} height
+:canonical: pvi.device.ImageRead.height
+:type: typing.Annotated[int, Field(description='Height of image widget')]
+:value: >
+   500
+
+```{autodoc2-docstring} pvi.device.ImageRead.height
+```
+
+````
+
+````{py:attribute} color_map
+:canonical: pvi.device.ImageRead.color_map
+:type: typing.Annotated[pvi.device.ImageColorMap, Field(description='Color map profile to use for image')]
+:value: >
+   None
+
+```{autodoc2-docstring} pvi.device.ImageRead.color_map
+```
+
+````
+
+````{py:attribute} color_bar
+:canonical: pvi.device.ImageRead.color_bar
+:type: typing.Annotated[bool, Field(description='Whether to draw color bar')]
+:value: >
+   False
+
+```{autodoc2-docstring} pvi.device.ImageRead.color_bar
+```
+
+````
+
+````{py:attribute} axes
+:canonical: pvi.device.ImageRead.axes
+:type: typing.Annotated[bool, Field(description='Whether to draw axis labels and scales')]
+:value: >
+   False
+
+```{autodoc2-docstring} pvi.device.ImageRead.axes
+```
+
+````
+
+`````
 
 `````{py:class} WriteWidget(/, **data: typing.Any)
 :canonical: pvi.device.WriteWidget

@@ -33,6 +33,18 @@
   - ```{autodoc2-docstring} pvi._format.screen.is_table
     :summary:
     ```
+* - {py:obj}`move_to_subscreen <pvi._format.screen.move_to_subscreen>`
+  - ```{autodoc2-docstring} pvi._format.screen.move_to_subscreen
+    :summary:
+    ```
+* - {py:obj}`split_out_plots <pvi._format.screen.split_out_plots>`
+  - ```{autodoc2-docstring} pvi._format.screen.split_out_plots
+    :summary:
+    ```
+* - {py:obj}`_has_plot_widget <pvi._format.screen._has_plot_widget>`
+  - ```{autodoc2-docstring} pvi._format.screen._has_plot_widget
+    :summary:
+    ```
 ````
 
 ### Data
@@ -314,5 +326,26 @@ Bases: {py:obj}`typing.Generic`\[{py:obj}`pvi._format.screen.T`\]
 :canonical: pvi._format.screen.is_table
 
 ```{autodoc2-docstring} pvi._format.screen.is_table
+```
+````
+
+````{py:function} move_to_subscreen(component: pvi.device.ComponentUnion) -> pvi.device.Group
+:canonical: pvi._format.screen.move_to_subscreen
+
+```{autodoc2-docstring} pvi._format.screen.move_to_subscreen
+```
+````
+
+````{py:function} split_out_plots(component: pvi.device.Group)
+:canonical: pvi._format.screen.split_out_plots
+
+```{autodoc2-docstring} pvi._format.screen.split_out_plots
+```
+````
+
+````{py:function} _has_plot_widget(component: pvi.device.ComponentUnion) -> bool
+:canonical: pvi._format.screen._has_plot_widget
+
+```{autodoc2-docstring} pvi._format.screen._has_plot_widget
 ```
 ````

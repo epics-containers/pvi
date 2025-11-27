@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pvi.device &#8212; pvi 0.11.1.dev4+g176352865 documentation</title>
+    <title>pvi.device &#8212; pvi 0.11.1.dev5+g6edc548c4 documentation</title>
   
   
   
@@ -41,7 +41,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=b253b011"></script>
+    <script src="../../../_static/documentation_options.js?v=13f329c3"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -509,106 +509,109 @@
 <h3>Classes<a class="headerlink" href="#classes" title="Link to this heading">#</a></h3>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table table-left">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.TextFormat" title="pvi.device.TextFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TextFormat</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.ImageColorMap" title="pvi.device.ImageColorMap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ImageColorMap</span></code></a></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.TextFormat" title="pvi.device.TextFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TextFormat</span></code></a></p></td>
 <td><p>Format to use for display of Text{Read,Write} widgets on a UI</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.AccessModeMixin" title="pvi.device.AccessModeMixin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AccessModeMixin</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.AccessModeMixin" title="pvi.device.AccessModeMixin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AccessModeMixin</span></code></a></p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.ReadWidget" title="pvi.device.ReadWidget"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ReadWidget</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.ReadWidget" title="pvi.device.ReadWidget"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ReadWidget</span></code></a></p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.LED" title="pvi.device.LED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LED</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.LED" title="pvi.device.LED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LED</span></code></a></p></td>
 <td><p>LED display of a boolean PV</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.BitField" title="pvi.device.BitField"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BitField</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.BitField" title="pvi.device.BitField"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BitField</span></code></a></p></td>
 <td><p>LED and label for each bit of an int PV</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.ProgressBar" title="pvi.device.ProgressBar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ProgressBar</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.ProgressBar" title="pvi.device.ProgressBar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ProgressBar</span></code></a></p></td>
 <td><p>Progress bar from lower to upper limit of a float PV</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.TextRead" title="pvi.device.TextRead"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TextRead</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.TextRead" title="pvi.device.TextRead"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TextRead</span></code></a></p></td>
 <td><p>Text view of any PV</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.ArrayTrace" title="pvi.device.ArrayTrace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayTrace</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.ArrayTrace" title="pvi.device.ArrayTrace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayTrace</span></code></a></p></td>
 <td><p>Trace of the array in a plot view</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.ImageRead" title="pvi.device.ImageRead"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ImageRead</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.ImageRead" title="pvi.device.ImageRead"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ImageRead</span></code></a></p></td>
 <td><p>2D Image view of an NTNDArray</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.WriteWidget" title="pvi.device.WriteWidget"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WriteWidget</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.WriteWidget" title="pvi.device.WriteWidget"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WriteWidget</span></code></a></p></td>
 <td><p>Widget that controls a PV</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.CheckBox" title="pvi.device.CheckBox"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CheckBox</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.CheckBox" title="pvi.device.CheckBox"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CheckBox</span></code></a></p></td>
 <td><p>Checkable control of a boolean PV.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.ToggleButton" title="pvi.device.ToggleButton"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ToggleButton</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.ToggleButton" title="pvi.device.ToggleButton"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ToggleButton</span></code></a></p></td>
 <td><p>A pair of buttons to select between two mutually exclusive states.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.ComboBox" title="pvi.device.ComboBox"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ComboBox</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.ComboBox" title="pvi.device.ComboBox"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ComboBox</span></code></a></p></td>
 <td><p>Selection of an enum PV</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.ButtonPanel" title="pvi.device.ButtonPanel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ButtonPanel</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.ButtonPanel" title="pvi.device.ButtonPanel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ButtonPanel</span></code></a></p></td>
 <td><p>One-or-more buttons that poke a PV with a value</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.TextWrite" title="pvi.device.TextWrite"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TextWrite</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.TextWrite" title="pvi.device.TextWrite"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TextWrite</span></code></a></p></td>
 <td><p>Text control of any PV</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.ArrayWrite" title="pvi.device.ArrayWrite"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayWrite</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.ArrayWrite" title="pvi.device.ArrayWrite"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayWrite</span></code></a></p></td>
 <td><p>Control of an array PV</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.TableRead" title="pvi.device.TableRead"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TableRead</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.TableRead" title="pvi.device.TableRead"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TableRead</span></code></a></p></td>
 <td><p>A read-only tabular view of an NTTable.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.TableWrite" title="pvi.device.TableWrite"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TableWrite</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.TableWrite" title="pvi.device.TableWrite"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TableWrite</span></code></a></p></td>
 <td><p>A writeable tabular view of an NTTable.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.Layout" title="pvi.device.Layout"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Layout</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.Layout" title="pvi.device.Layout"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Layout</span></code></a></p></td>
 <td><p>Widget displaying child Components</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.Plot" title="pvi.device.Plot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Plot</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.Plot" title="pvi.device.Plot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Plot</span></code></a></p></td>
 <td><p>Children are traces of the plot</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.Row" title="pvi.device.Row"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Row</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.Row" title="pvi.device.Row"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Row</span></code></a></p></td>
 <td><p>Children are columns in the row</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.Grid" title="pvi.device.Grid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Grid</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.Grid" title="pvi.device.Grid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Grid</span></code></a></p></td>
 <td><p>Children are rows in the grid</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.SubScreen" title="pvi.device.SubScreen"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SubScreen</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.SubScreen" title="pvi.device.SubScreen"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SubScreen</span></code></a></p></td>
 <td><p>Children are displayed on another screen opened with a button.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.Named" title="pvi.device.Named"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Named</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.Named" title="pvi.device.Named"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Named</span></code></a></p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.Component" title="pvi.device.Component"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Component</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.Component" title="pvi.device.Component"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Component</span></code></a></p></td>
 <td><p>These make up a Device</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.Signal" title="pvi.device.Signal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Signal</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.Signal" title="pvi.device.Signal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Signal</span></code></a></p></td>
 <td><p>Base signal type representing one or two PVs of a <code class="docutils literal notranslate"><span class="pre">Device</span></code>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.SignalR" title="pvi.device.SignalR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SignalR</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.SignalR" title="pvi.device.SignalR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SignalR</span></code></a></p></td>
 <td><p>Read-only <code class="docutils literal notranslate"><span class="pre">Signal</span></code> backed by a single PV.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.SignalW" title="pvi.device.SignalW"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SignalW</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.SignalW" title="pvi.device.SignalW"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SignalW</span></code></a></p></td>
 <td><p>Write-only <code class="docutils literal notranslate"><span class="pre">Signal</span></code> backed by a single PV.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.SignalRW" title="pvi.device.SignalRW"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SignalRW</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.SignalRW" title="pvi.device.SignalRW"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SignalRW</span></code></a></p></td>
 <td><p>Read/write <code class="docutils literal notranslate"><span class="pre">Signal</span></code> backed by a demand PV and a readback PV.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.SignalX" title="pvi.device.SignalX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SignalX</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.SignalX" title="pvi.device.SignalX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SignalX</span></code></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">SignalW</span></code> that can be triggered to write a fixed value to a PV.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.DeviceRef" title="pvi.device.DeviceRef"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceRef</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.DeviceRef" title="pvi.device.DeviceRef"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceRef</span></code></a></p></td>
 <td><p>Reference to another Device.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.SignalRef" title="pvi.device.SignalRef"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SignalRef</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.SignalRef" title="pvi.device.SignalRef"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SignalRef</span></code></a></p></td>
 <td><p>Reference to another Signal with the same name in this Device.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.Group" title="pvi.device.Group"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Group</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.Group" title="pvi.device.Group"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Group</span></code></a></p></td>
 <td><p>Group of child components in a Layout</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.Device" title="pvi.device.Device"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Device</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.Device" title="pvi.device.Device"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Device</span></code></a></p></td>
 <td><p>Collection of Components</p></td>
 </tr>
 </tbody>
@@ -695,6 +698,24 @@ snake_case converted name. E.g. pascal_case_field_name</p></td>
 <dt class="sig sig-object py" id="pvi.device.NON_PASCAL_CHARS_RE">
 <span class="sig-prename descclassname"><span class="pre">pvi.device.</span></span><span class="sig-name descname"><span class="pre">NON_PASCAL_CHARS_RE</span></span><a class="headerlink" href="#pvi.device.NON_PASCAL_CHARS_RE" title="Link to this definition">#</a></dt>
 <dd><p>‘compile(…)’</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pvi.device.ImageColorMap">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pvi.device.</span></span><span class="sig-name descname"><span class="pre">ImageColorMap</span></span><a class="reference internal" href="../../../_modules/pvi/device.html#ImageColorMap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi.device.ImageColorMap" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.IntEnum" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enum.IntEnum</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi.device.ImageColorMap.GRAY">
+<span class="sig-name descname"><span class="pre">GRAY</span></span><a class="headerlink" href="#pvi.device.ImageColorMap.GRAY" title="Link to this definition">#</a></dt>
+<dd><p>0</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi.device.ImageColorMap.COLOR">
+<span class="sig-name descname"><span class="pre">COLOR</span></span><a class="headerlink" href="#pvi.device.ImageColorMap.COLOR" title="Link to this definition">#</a></dt>
+<dd><p>1</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py function">
@@ -904,6 +925,18 @@ validated to form a valid model.</p>
 <dd><p>None</p>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi.device.ArrayTrace.width">
+<span class="sig-name descname"><span class="pre">width</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Annotated" title="(in Python v3.14)"><span class="pre">Annotated</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Field</span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="s"><span class="pre">'Width</span> <span class="pre">of</span> <span class="pre">trace</span> <span class="pre">widget'</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi.device.ArrayTrace.width" title="Link to this definition">#</a></dt>
+<dd><p>900</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi.device.ArrayTrace.height">
+<span class="sig-name descname"><span class="pre">height</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Annotated" title="(in Python v3.14)"><span class="pre">Annotated</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Field</span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="s"><span class="pre">'Height</span> <span class="pre">of</span> <span class="pre">trace</span> <span class="pre">widget'</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi.device.ArrayTrace.height" title="Link to this definition">#</a></dt>
+<dd><p>500</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -916,6 +949,36 @@ validated to form a valid model.</p>
 <p>Raises [<code class="docutils literal notranslate"><span class="pre">ValidationError</span></code>][pydantic_core.ValidationError] if the input data cannot be
 validated to form a valid model.</p>
 <p><code class="docutils literal notranslate"><span class="pre">self</span></code> is explicitly positional-only to allow <code class="docutils literal notranslate"><span class="pre">self</span></code> as a field name.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi.device.ImageRead.width">
+<span class="sig-name descname"><span class="pre">width</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Annotated" title="(in Python v3.14)"><span class="pre">Annotated</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Field</span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="s"><span class="pre">'Width</span> <span class="pre">of</span> <span class="pre">image</span> <span class="pre">widget'</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi.device.ImageRead.width" title="Link to this definition">#</a></dt>
+<dd><p>900</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi.device.ImageRead.height">
+<span class="sig-name descname"><span class="pre">height</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Annotated" title="(in Python v3.14)"><span class="pre">Annotated</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Field</span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="s"><span class="pre">'Height</span> <span class="pre">of</span> <span class="pre">image</span> <span class="pre">widget'</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi.device.ImageRead.height" title="Link to this definition">#</a></dt>
+<dd><p>500</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi.device.ImageRead.color_map">
+<span class="sig-name descname"><span class="pre">color_map</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Annotated" title="(in Python v3.14)"><span class="pre">Annotated</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pvi.device.ImageColorMap" title="pvi.device.ImageColorMap"><span class="pre">pvi.device.ImageColorMap</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Field</span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="s"><span class="pre">'Color</span> <span class="pre">map</span> <span class="pre">profile</span> <span class="pre">to</span> <span class="pre">use</span> <span class="pre">for</span> <span class="pre">image'</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi.device.ImageRead.color_map" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi.device.ImageRead.color_bar">
+<span class="sig-name descname"><span class="pre">color_bar</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Annotated" title="(in Python v3.14)"><span class="pre">Annotated</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Field</span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="s"><span class="pre">'Whether</span> <span class="pre">to</span> <span class="pre">draw</span> <span class="pre">color</span> <span class="pre">bar'</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi.device.ImageRead.color_bar" title="Link to this definition">#</a></dt>
+<dd><p>False</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi.device.ImageRead.axes">
+<span class="sig-name descname"><span class="pre">axes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Annotated" title="(in Python v3.14)"><span class="pre">Annotated</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Field</span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="s"><span class="pre">'Whether</span> <span class="pre">to</span> <span class="pre">draw</span> <span class="pre">axis</span> <span class="pre">labels</span> <span class="pre">and</span> <span class="pre">scales'</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi.device.ImageRead.axes" title="Link to this definition">#</a></dt>
+<dd><p>False</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -1619,6 +1682,11 @@ yaml_paths: Paths of parent class Device YAMLs</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#api">API</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.PASCAL_CASE_REGEX"><code class="docutils literal notranslate"><span class="pre">PASCAL_CASE_REGEX</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.NON_PASCAL_CHARS_RE"><code class="docutils literal notranslate"><span class="pre">NON_PASCAL_CHARS_RE</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.ImageColorMap"><code class="docutils literal notranslate"><span class="pre">ImageColorMap</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.ImageColorMap.GRAY"><code class="docutils literal notranslate"><span class="pre">ImageColorMap.GRAY</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.ImageColorMap.COLOR"><code class="docutils literal notranslate"><span class="pre">ImageColorMap.COLOR</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.to_title_case"><code class="docutils literal notranslate"><span class="pre">to_title_case()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.to_snake_case"><code class="docutils literal notranslate"><span class="pre">to_snake_case()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.enforce_pascal_case"><code class="docutils literal notranslate"><span class="pre">enforce_pascal_case()</span></code></a></li>
@@ -1656,9 +1724,18 @@ yaml_paths: Paths of parent class Device YAMLs</p>
 </li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.ArrayTrace"><code class="docutils literal notranslate"><span class="pre">ArrayTrace</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.ArrayTrace.axis"><code class="docutils literal notranslate"><span class="pre">ArrayTrace.axis</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.ArrayTrace.width"><code class="docutils literal notranslate"><span class="pre">ArrayTrace.width</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.ArrayTrace.height"><code class="docutils literal notranslate"><span class="pre">ArrayTrace.height</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.ImageRead"><code class="docutils literal notranslate"><span class="pre">ImageRead</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.ImageRead"><code class="docutils literal notranslate"><span class="pre">ImageRead</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.ImageRead.width"><code class="docutils literal notranslate"><span class="pre">ImageRead.width</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.ImageRead.height"><code class="docutils literal notranslate"><span class="pre">ImageRead.height</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.ImageRead.color_map"><code class="docutils literal notranslate"><span class="pre">ImageRead.color_map</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.ImageRead.color_bar"><code class="docutils literal notranslate"><span class="pre">ImageRead.color_bar</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.ImageRead.axes"><code class="docutils literal notranslate"><span class="pre">ImageRead.axes</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.WriteWidget"><code class="docutils literal notranslate"><span class="pre">WriteWidget</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.WriteWidget._access_mode"><code class="docutils literal notranslate"><span class="pre">WriteWidget._access_mode</span></code></a></li>
 </ul>

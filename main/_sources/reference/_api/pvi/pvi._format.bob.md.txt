@@ -51,6 +51,14 @@
   - ```{autodoc2-docstring} pvi._format.bob.add_format
     :summary:
     ```
+* - {py:obj}`set_visibility <pvi._format.bob.set_visibility>`
+  - ```{autodoc2-docstring} pvi._format.bob.set_visibility
+    :summary:
+    ```
+* - {py:obj}`set_color_map <pvi._format.bob.set_color_map>`
+  - ```{autodoc2-docstring} pvi._format.bob.set_color_map
+    :summary:
+    ```
 * - {py:obj}`add_byte_number_of_bits <pvi._format.bob.add_byte_number_of_bits>`
   - ```{autodoc2-docstring} pvi._format.bob.add_byte_number_of_bits
     :summary:
@@ -164,6 +172,20 @@ Bases: {py:obj}`pvi._format.widget.UITemplate`\[{py:obj}`lxml.etree._Element`\]
 :canonical: pvi._format.bob.add_format
 
 ```{autodoc2-docstring} pvi._format.bob.add_format
+```
+````
+
+````{py:function} set_visibility(element: lxml.etree._Element, visible: bool)
+:canonical: pvi._format.bob.set_visibility
+
+```{autodoc2-docstring} pvi._format.bob.set_visibility
+```
+````
+
+````{py:function} set_color_map(element: lxml.etree._Element, color_map: str)
+:canonical: pvi._format.bob.set_color_map
+
+```{autodoc2-docstring} pvi._format.bob.set_color_map
 ```
 ````
 

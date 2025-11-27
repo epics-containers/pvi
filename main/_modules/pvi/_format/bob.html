@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pvi._format.bob &#8212; pvi 0.11.1.dev4+g176352865 documentation</title>
+    <title>pvi._format.bob &#8212; pvi 0.11.1.dev5+g6edc548c4 documentation</title>
   
   
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=b253b011"></script>
+    <script src="../../../_static/documentation_options.js?v=13f329c3"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -471,9 +471,12 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">pvi._format.widget</span><span class="w"> </span><span class="kn">import</span> <span class="n">UITemplate</span><span class="p">,</span> <span class="n">WidgetFormatter</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pvi.device</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">LED</span><span class="p">,</span>
+    <span class="n">ArrayTrace</span><span class="p">,</span>
     <span class="n">BitField</span><span class="p">,</span>
     <span class="n">CheckBox</span><span class="p">,</span>
     <span class="n">ComboBox</span><span class="p">,</span>
+    <span class="n">ImageColorMap</span><span class="p">,</span>
+    <span class="n">ImageRead</span><span class="p">,</span>
     <span class="n">TableRead</span><span class="p">,</span>
     <span class="n">TableWrite</span><span class="p">,</span>
     <span class="n">TextFormat</span><span class="p">,</span>
@@ -565,6 +568,31 @@
                 <span class="n">add_format</span><span class="p">(</span><span class="n">t_copy</span><span class="p">,</span> <span class="n">BOB_TEXT_FORMATS</span><span class="p">[</span><span class="n">TextFormat</span><span class="p">(</span><span class="nb">format</span><span class="p">)])</span>
             <span class="k">case</span> <span class="p">(</span><span class="s2">&quot;byte_monitor&quot;</span><span class="p">,</span> <span class="n">BitField</span><span class="p">()</span> <span class="k">as</span> <span class="n">bit_field</span><span class="p">):</span>
                 <span class="n">add_byte_number_of_bits</span><span class="p">(</span><span class="n">t_copy</span><span class="p">,</span> <span class="n">bit_field</span><span class="o">.</span><span class="n">number_of_bits</span><span class="p">)</span>
+            <span class="k">case</span> <span class="p">(</span><span class="s2">&quot;image&quot;</span><span class="p">,</span> <span class="n">ImageRead</span><span class="p">()):</span>
+                <span class="k">match</span> <span class="n">widget</span><span class="o">.</span><span class="n">color_map</span><span class="p">:</span>
+                    <span class="k">case</span> <span class="n">ImageColorMap</span><span class="o">.</span><span class="n">GRAY</span><span class="p">:</span>
+                        <span class="n">color_map</span> <span class="o">=</span> <span class="s2">&quot;GRAY&quot;</span>
+                    <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+                        <span class="n">color_map</span> <span class="o">=</span> <span class="s2">&quot;VIRIDIS&quot;</span>
+                <span class="n">set_color_map</span><span class="p">(</span><span class="n">t_copy</span><span class="p">,</span> <span class="n">color_map</span><span class="p">)</span>
+                <span class="n">set_visibility</span><span class="p">(</span><span class="n">SubElement</span><span class="p">(</span><span class="n">t_copy</span><span class="p">,</span> <span class="s2">&quot;color_bar&quot;</span><span class="p">),</span> <span class="n">widget</span><span class="o">.</span><span class="n">color_bar</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">widget</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
+                    <span class="n">x_axis_element</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">t_copy</span><span class="p">,</span> <span class="s2">&quot;x_axis&quot;</span><span class="p">)</span>
+                    <span class="n">y_axis_element</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">t_copy</span><span class="p">,</span> <span class="s2">&quot;y_axis&quot;</span><span class="p">)</span>
+                    <span class="n">set_visibility</span><span class="p">(</span><span class="n">x_axis_element</span><span class="p">,</span> <span class="n">widget</span><span class="o">.</span><span class="n">axes</span><span class="p">)</span>
+                    <span class="n">set_visibility</span><span class="p">(</span><span class="n">y_axis_element</span><span class="p">,</span> <span class="n">widget</span><span class="o">.</span><span class="n">axes</span><span class="p">)</span>
+                    <span class="c1"># setting x_axis visible to false still draws labels</span>
+                    <span class="c1"># explicitly set titles for both to blank for consistency</span>
+                    <span class="n">SubElement</span><span class="p">(</span><span class="n">x_axis_element</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+                    <span class="n">SubElement</span><span class="p">(</span><span class="n">y_axis_element</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="k">case</span> <span class="p">(</span><span class="s2">&quot;xyplot&quot;</span><span class="p">,</span> <span class="n">ArrayTrace</span><span class="p">()):</span>
+                <span class="n">x_axis_element</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">t_copy</span><span class="p">,</span> <span class="s2">&quot;x_axis&quot;</span><span class="p">)</span>
+                <span class="n">y_axes_element</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">t_copy</span><span class="p">,</span> <span class="s2">&quot;y_axes&quot;</span><span class="p">)</span>
+                <span class="n">y_axis_element</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">y_axes_element</span><span class="p">,</span> <span class="s2">&quot;y_axis&quot;</span><span class="p">)</span>
+                <span class="n">SubElement</span><span class="p">(</span><span class="n">x_axis_element</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+                <span class="n">SubElement</span><span class="p">(</span><span class="n">y_axis_element</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">axis</span>
+                <span class="n">SubElement</span><span class="p">(</span><span class="n">x_axis_element</span><span class="p">,</span> <span class="s2">&quot;autoscale&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;true&quot;</span>
+                <span class="n">SubElement</span><span class="p">(</span><span class="n">y_axis_element</span><span class="p">,</span> <span class="s2">&quot;autoscale&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;true&quot;</span>
             <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
                 <span class="k">pass</span>
 
@@ -720,6 +748,21 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">add_format</span><span class="p">(</span><span class="n">element</span><span class="p">:</span> <span class="n">_Element</span><span class="p">,</span> <span class="nb">format</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="k">if</span> <span class="nb">format</span><span class="p">:</span>
         <span class="n">SubElement</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="s2">&quot;format&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="nb">format</span></div>
+
+
+
+<div class="viewcode-block" id="set_visibility">
+<a class="viewcode-back" href="../../../reference/_api/pvi/pvi._format.bob.html#pvi._format.bob.set_visibility">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">set_visibility</span><span class="p">(</span><span class="n">element</span><span class="p">:</span> <span class="n">_Element</span><span class="p">,</span> <span class="n">visible</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+    <span class="n">SubElement</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="s2">&quot;visible&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;true&quot;</span> <span class="k">if</span> <span class="n">visible</span> <span class="k">else</span> <span class="s2">&quot;false&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="set_color_map">
+<a class="viewcode-back" href="../../../reference/_api/pvi/pvi._format.bob.html#pvi._format.bob.set_color_map">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">set_color_map</span><span class="p">(</span><span class="n">element</span><span class="p">:</span> <span class="n">_Element</span><span class="p">,</span> <span class="n">color_map</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="n">color_map_element</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="s2">&quot;color_map&quot;</span><span class="p">)</span>
+    <span class="n">SubElement</span><span class="p">(</span><span class="n">color_map_element</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">color_map</span></div>
 
 
 

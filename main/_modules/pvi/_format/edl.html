@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pvi._format.edl &#8212; pvi 0.11.1.dev4+g176352865 documentation</title>
+    <title>pvi._format.edl &#8212; pvi 0.11.1.dev5+g6edc548c4 documentation</title>
   
   
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=b253b011"></script>
+    <script src="../../../_static/documentation_options.js?v=13f329c3"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -497,7 +497,7 @@
             <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="s2">&quot;xywh&quot;</span><span class="p">:</span>
                 <span class="n">properties</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">bounds</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">item</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">properties</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="k">if</span> <span class="n">item</span> <span class="o">==</span> <span class="s2">&quot;displayFileName&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">item</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;displayFileName&quot;</span><span class="p">,</span> <span class="s2">&quot;yPv&quot;</span><span class="p">]:</span>
                 <span class="n">value</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;0 </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span>  <span class="c1"># These are items in an array but we only use one</span>
 
             <span class="n">multiline</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">rf</span><span class="s2">&quot;^</span><span class="si">{</span><span class="n">item</span><span class="si">}</span><span class="s2"> </span><span class="se">{{</span><span class="s2">[^</span><span class="se">}}</span><span class="s2">]*</span><span class="se">}}</span><span class="s2">$&quot;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)</span>
