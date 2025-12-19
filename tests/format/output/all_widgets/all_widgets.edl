@@ -6,7 +6,7 @@ release 1
 x 0
 y 0
 w 380
-h 580
+h 680
 font "arial-bold-r-12.0"
 ctlFont "arial-bold-r-12.0"
 btnFont "arial-bold-r-12.0"
@@ -692,7 +692,7 @@ release 0
 x 5
 y 425
 w 370
-h 35
+h 85
 lineColor index 14
 fill
 fillColor index 5
@@ -757,6 +757,82 @@ font "arial-bold-r-12.0"
 fontAlign "center"
 endObjectProperties
 
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 10
+y 460
+w 150
+h 20
+font "arial-bold-r-10.0"
+fgColor index 14
+bgColor index 3
+useDisplayBg
+value {
+  "Text Read Float"
+}
+endObjectProperties
+
+# (Textupdate)
+object TextupdateClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 165
+y 460
+w 205
+h 20
+controlPv "$(P)$(R)TextReadFloat"
+fgColor index 16
+fgAlarm
+bgColor index 10
+fill
+font "arial-bold-r-12.0"
+fontAlign "center"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 10
+y 485
+w 150
+h 20
+font "arial-bold-r-10.0"
+fgColor index 14
+bgColor index 3
+useDisplayBg
+value {
+  "Text Read Int"
+}
+endObjectProperties
+
+# (Textupdate)
+object TextupdateClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 165
+y 485
+w 205
+h 20
+controlPv "$(P)$(R)TextReadInt"
+fgColor index 16
+fgAlarm
+bgColor index 10
+fill
+font "arial-bold-r-12.0"
+fontAlign "center"
+endObjectProperties
+
 # (Rectangle)
 object activeRectangleClass
 beginObjectProperties
@@ -764,9 +840,9 @@ major 4
 minor 0
 release 0
 x 5
-y 470
+y 520
 w 370
-h 35
+h 85
 lineColor index 14
 fill
 fillColor index 5
@@ -779,7 +855,7 @@ major 4
 minor 1
 release 1
 x 5
-y 465
+y 515
 w 370
 h 10
 font "arial-medium-r-12.0"
@@ -800,7 +876,7 @@ major 4
 minor 1
 release 1
 x 10
-y 480
+y 530
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -819,10 +895,86 @@ major 10
 minor 0
 release 0
 x 165
-y 480
+y 530
 w 205
 h 20
 controlPv "$(P)$(R)TextWrite"
+fgColor index 25
+fgAlarm
+bgColor index 3
+fill
+font "arial-bold-r-12.0"
+fontAlign "center"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 10
+y 555
+w 150
+h 20
+font "arial-bold-r-10.0"
+fgColor index 14
+bgColor index 3
+useDisplayBg
+value {
+  "Text Write Float"
+}
+endObjectProperties
+
+# (Textentry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 165
+y 555
+w 205
+h 20
+controlPv "$(P)$(R)TextWriteFloat"
+fgColor index 25
+fgAlarm
+bgColor index 3
+fill
+font "arial-bold-r-12.0"
+fontAlign "center"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 10
+y 580
+w 150
+h 20
+font "arial-bold-r-10.0"
+fgColor index 14
+bgColor index 3
+useDisplayBg
+value {
+  "Text Write Int"
+}
+endObjectProperties
+
+# (Textentry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 165
+y 580
+w 205
+h 20
+controlPv "$(P)$(R)TextWriteInt"
 fgColor index 25
 fgAlarm
 bgColor index 3
@@ -838,7 +990,7 @@ major 4
 minor 0
 release 0
 x 5
-y 515
+y 615
 w 370
 h 60
 lineColor index 14
@@ -853,7 +1005,7 @@ major 4
 minor 1
 release 1
 x 5
-y 510
+y 610
 w 370
 h 10
 font "arial-medium-r-12.0"
@@ -874,7 +1026,7 @@ major 4
 minor 1
 release 1
 x 10
-y 525
+y 625
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -893,7 +1045,7 @@ major 4
 minor 0
 release 0
 x 165
-y 525
+y 625
 w 205
 h 20
 fgColor index 14
@@ -915,7 +1067,7 @@ major 4
 minor 1
 release 1
 x 10
-y 550
+y 650
 w 150
 h 20
 font "arial-bold-r-10.0"
@@ -934,7 +1086,7 @@ major 4
 minor 0
 release 0
 x 165
-y 550
+y 650
 w 100
 h 20
 fgColor index 14
@@ -956,7 +1108,7 @@ major 4
 minor 0
 release 0
 x 310
-y 550
+y 650
 w 20
 h 20
 controlPv "$(P)$(R)ToggleButton_RBV"

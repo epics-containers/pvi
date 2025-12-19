@@ -564,6 +564,7 @@
           "default": {
             "lines": null,
             "format": null,
+            "precision": null,
             "type": "TextRead"
           },
           "description": "Widget to use for display. `TextRead` will be used if unset.",
@@ -628,6 +629,7 @@
           "default": {
             "lines": null,
             "format": null,
+            "precision": null,
             "type": "TextWrite"
           },
           "description": "Widget to use for control",
@@ -805,6 +807,7 @@
           "default": {
             "lines": null,
             "format": null,
+            "precision": null,
             "type": "TextWrite"
           },
           "description": "Widget to use for control",
@@ -1074,6 +1077,19 @@
           "default": null,
           "description": "Display format"
         },
+        "precision": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Number of decimal places",
+          "title": "Precision"
+        },
         "type": {
           "const": "TextRead",
           "default": "TextRead",
@@ -1112,6 +1128,19 @@
           ],
           "default": null,
           "description": "Display format"
+        },
+        "precision": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Number of decimal places",
+          "title": "Precision"
         },
         "type": {
           "const": "TextWrite",

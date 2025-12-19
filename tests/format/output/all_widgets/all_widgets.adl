@@ -8,7 +8,7 @@ display {
 		x=0
 		y=0
 		width=665
-		height=590
+		height=530
 	}
 	clr=14
 	bclr=4
@@ -624,10 +624,10 @@ text {
 }
 rectangle {
 	object {
-		x=5
-		y=530
+		x=335
+		y=30
 		width=325
-		height=55
+		height=105
 	}
 	"basic attribute" {
 		clr=14
@@ -636,8 +636,8 @@ rectangle {
 }
 rectangle {
 	object {
-		x=10
-		y=535
+		x=340
+		y=35
 		width=315
 		height=20
 	}
@@ -647,8 +647,8 @@ rectangle {
 }
 text {
 	object {
-		x=10
-		y=535
+		x=340
+		y=35
 		width=315
 		height=20
 	}
@@ -660,8 +660,8 @@ text {
 }
 text {
 	object {
-		x=10
-		y=560
+		x=340
+		y=60
 		width=205
 		height=20
 	}
@@ -673,8 +673,8 @@ text {
 }
 "text update" {
 	object {
-		x=220
-		y=560
+		x=550
+		y=60
 		width=105
 		height=20
 	}
@@ -686,12 +686,68 @@ text {
 	limits {
 	}
 }
+text {
+	object {
+		x=340
+		y=85
+		width=205
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Text Read Float"
+	align="horiz. right"
+}
+"text update" {
+	object {
+		x=550
+		y=85
+		width=105
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)TextReadFloat"
+		clr=54
+		bclr=4
+	}
+	limits {
+	}
+}
+text {
+	object {
+		x=340
+		y=110
+		width=205
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Text Read Int"
+	align="horiz. right"
+}
+"text update" {
+	object {
+		x=550
+		y=110
+		width=105
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)TextReadInt"
+		clr=54
+		bclr=4
+	}
+	limits {
+	}
+}
 rectangle {
 	object {
 		x=335
-		y=30
+		y=140
 		width=325
-		height=55
+		height=105
 	}
 	"basic attribute" {
 		clr=14
@@ -701,7 +757,7 @@ rectangle {
 rectangle {
 	object {
 		x=340
-		y=35
+		y=145
 		width=315
 		height=20
 	}
@@ -712,7 +768,7 @@ rectangle {
 text {
 	object {
 		x=340
-		y=35
+		y=145
 		width=315
 		height=20
 	}
@@ -725,7 +781,7 @@ text {
 text {
 	object {
 		x=340
-		y=60
+		y=170
 		width=205
 		height=20
 	}
@@ -738,7 +794,7 @@ text {
 "text entry" {
 	object {
 		x=550
-		y=60
+		y=170
 		width=105
 		height=20
 	}
@@ -750,10 +806,66 @@ text {
 	limits {
 	}
 }
+text {
+	object {
+		x=340
+		y=195
+		width=205
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Text Write Float"
+	align="horiz. right"
+}
+"text entry" {
+	object {
+		x=550
+		y=195
+		width=105
+		height=20
+	}
+	control {
+		chan="$(P)$(R)TextWriteFloat"
+		clr=14
+		bclr=51
+	}
+	limits {
+	}
+}
+text {
+	object {
+		x=340
+		y=220
+		width=205
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Text Write Int"
+	align="horiz. right"
+}
+"text entry" {
+	object {
+		x=550
+		y=220
+		width=105
+		height=20
+	}
+	control {
+		chan="$(P)$(R)TextWriteInt"
+		clr=14
+		bclr=51
+	}
+	limits {
+	}
+}
 rectangle {
 	object {
 		x=335
-		y=90
+		y=250
 		width=325
 		height=80
 	}
@@ -765,7 +877,7 @@ rectangle {
 rectangle {
 	object {
 		x=340
-		y=95
+		y=255
 		width=315
 		height=20
 	}
@@ -776,7 +888,7 @@ rectangle {
 text {
 	object {
 		x=340
-		y=95
+		y=255
 		width=315
 		height=20
 	}
@@ -789,7 +901,7 @@ text {
 text {
 	object {
 		x=340
-		y=120
+		y=280
 		width=205
 		height=20
 	}
@@ -802,7 +914,7 @@ text {
 "choice button" {
 	object {
 		x=550
-		y=120
+		y=280
 		width=105
 		height=20
 	}
@@ -816,7 +928,7 @@ text {
 text {
 	object {
 		x=340
-		y=145
+		y=305
 		width=205
 		height=20
 	}
@@ -829,7 +941,7 @@ text {
 "choice button" {
 	object {
 		x=550
-		y=145
+		y=305
 		width=50
 		height=20
 	}
@@ -843,7 +955,7 @@ text {
 byte {
 	object {
 		x=620
-		y=145
+		y=305
 		width=20
 		height=20
 	}

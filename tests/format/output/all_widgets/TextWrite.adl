@@ -8,7 +8,7 @@ display {
 		x=0
 		y=0
 		width=325
-		height=55
+		height=105
 	}
 	clr=14
 	bclr=4
@@ -133,6 +133,62 @@ text {
 	}
 	control {
 		chan="$(P)$(R)TextWrite"
+		clr=14
+		bclr=51
+	}
+	limits {
+	}
+}
+text {
+	object {
+		x=5
+		y=55
+		width=205
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Text Write Float"
+	align="horiz. right"
+}
+"text entry" {
+	object {
+		x=215
+		y=55
+		width=105
+		height=20
+	}
+	control {
+		chan="$(P)$(R)TextWriteFloat"
+		clr=14
+		bclr=51
+	}
+	limits {
+	}
+}
+text {
+	object {
+		x=5
+		y=80
+		width=205
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Text Write Int"
+	align="horiz. right"
+}
+"text entry" {
+	object {
+		x=215
+		y=80
+		width=105
+		height=20
+	}
+	control {
+		chan="$(P)$(R)TextWriteInt"
 		clr=14
 		bclr=51
 	}

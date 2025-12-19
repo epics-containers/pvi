@@ -117,6 +117,9 @@ class TextRead(ReadWidget):
 
     lines: Annotated[int | None, Field(description="Number of lines to display")] = None
     format: Annotated[TextFormat | None, Field(description="Display format")] = None
+    precision: Annotated[int | None, Field(description="Number of decimal places")] = (
+        None
+    )
 
     def get_lines(self):
         return self.lines or 1
@@ -203,6 +206,9 @@ class TextWrite(WriteWidget):
 
     lines: Annotated[int | None, Field(description="Number of lines to display")] = None
     format: Annotated[TextFormat | None, Field(description="Display format")] = None
+    precision: Annotated[int | None, Field(description="Number of decimal places")] = (
+        None
+    )
 
     def get_lines(self):
         return self.lines or 1

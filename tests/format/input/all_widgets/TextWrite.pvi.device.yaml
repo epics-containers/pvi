@@ -6,3 +6,15 @@ children:
     write_pv: $(P)$(R)TextWrite
     write_widget:
       type: TextWrite
+  - type: SignalW
+    name: TextWriteFloat
+    write_pv: $(P)$(R)TextWriteFloat
+    write_widget:
+      type: TextWrite
+      precision: 3
+  - type: SignalW
+    name: TextWriteInt
+    write_pv: $(P)$(R)TextWriteInt
+    write_widget:
+      type: TextWrite
+      precision: 0

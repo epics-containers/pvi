@@ -99,11 +99,14 @@ class BobTemplate(UITemplate[_Element]):
                 add_combo_box_items(t_copy, combo_box)
             case ("table", TableRead() | TableWrite() as table):
                 add_table_columns(t_copy, table)
-            case ("textentry", TextWrite(format=format)) | (
+            case ("textentry", TextWrite(format=format, precision=precision)) | (
                 "textupdate",
-                TextRead(format=format),
-            ) if format is not None:
-                add_format(t_copy, BOB_TEXT_FORMATS[TextFormat(format)])
+                TextRead(format=format, precision=precision),
+            ):
+                if format is not None:
+                    add_format(t_copy, BOB_TEXT_FORMATS[TextFormat(format)])
+                if precision is not None:
+                    add_precision(t_copy, precision)
             case ("byte_monitor", BitField() as bit_field):
                 add_byte_number_of_bits(t_copy, bit_field.number_of_bits)
             case ("image", ImageRead()):
@@ -259,8 +262,11 @@ def add_editable(element: _Element, editable: bool):
 
 
 def add_format(element: _Element, format: str):
-    if format:
-        SubElement(element, "format").text = format
+    SubElement(element, "format").text = format
+
+
+def add_precision(element: _Element, precision: int):
+    SubElement(element, "precision").text = str(precision)
 
 
 def set_visibility(element: _Element, visible: bool):
