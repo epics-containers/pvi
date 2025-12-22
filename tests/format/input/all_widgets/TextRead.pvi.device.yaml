@@ -6,3 +6,15 @@ children:
     read_pv: $(P)$(R)TextRead
     read_widget:
       type: TextRead
+  - type: SignalR
+    name: TextReadFloat
+    read_pv: $(P)$(R)TextReadFloat
+    read_widget:
+      type: TextRead
+      precision: 3
+  - type: SignalR
+    name: TextReadInt
+    read_pv: $(P)$(R)TextReadInt
+    read_widget:
+      type: TextRead
+      precision: 0

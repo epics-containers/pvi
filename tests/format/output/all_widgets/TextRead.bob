@@ -3,7 +3,7 @@
   <x>0</x>
   <y use_class="true">0</y>
   <width>274</width>
-  <height>54</height>
+  <height>102</height>
   <grid_step_x>4</grid_step_x>
   <grid_step_y>4</grid_step_y>
   <widget type="label" version="2.0.0">
@@ -46,5 +46,51 @@
       </font>
     </font>
     <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>Text Read Float</text>
+    <x>22</x>
+    <y>54</y>
+    <width>120</width>
+    <height>20</height>
+    <tooltip>No description provided</tooltip>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>TextUpdate</name>
+    <pv_name>$(P)$(R)TextReadFloat</pv_name>
+    <x>146</x>
+    <y>54</y>
+    <width>124</width>
+    <height>20</height>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+    <precision>3</precision>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>Text Read Int</text>
+    <x>22</x>
+    <y>78</y>
+    <width>120</width>
+    <height>20</height>
+    <tooltip>No description provided</tooltip>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>TextUpdate</name>
+    <pv_name>$(P)$(R)TextReadInt</pv_name>
+    <x>146</x>
+    <y>78</y>
+    <width>124</width>
+    <height>20</height>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+    <precision>0</precision>
   </widget>
 </display>

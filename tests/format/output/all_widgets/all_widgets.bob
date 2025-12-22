@@ -345,7 +345,7 @@
     <x>290</x>
     <y>268</y>
     <width>282</width>
-    <height>54</height>
+    <height>102</height>
     <transparent>true</transparent>
     <widget type="label" version="2.0.0">
       <name>Label</name>
@@ -369,13 +369,59 @@
       </font>
       <horizontal_alignment>1</horizontal_alignment>
     </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label</name>
+      <text>Text Read Float</text>
+      <x>0</x>
+      <y>24</y>
+      <width>120</width>
+      <height>20</height>
+      <tooltip>No description provided</tooltip>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>TextUpdate</name>
+      <pv_name>$(P)$(R)TextReadFloat</pv_name>
+      <x>124</x>
+      <y>24</y>
+      <width>124</width>
+      <height>20</height>
+      <font>
+        <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+      </font>
+      <horizontal_alignment>1</horizontal_alignment>
+      <precision>3</precision>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label</name>
+      <text>Text Read Int</text>
+      <x>0</x>
+      <y>48</y>
+      <width>120</width>
+      <height>20</height>
+      <tooltip>No description provided</tooltip>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>TextUpdate</name>
+      <pv_name>$(P)$(R)TextReadInt</pv_name>
+      <x>124</x>
+      <y>48</y>
+      <width>124</width>
+      <height>20</height>
+      <font>
+        <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+      </font>
+      <horizontal_alignment>1</horizontal_alignment>
+      <precision>0</precision>
+    </widget>
   </widget>
   <widget type="group" version="2.0.0">
     <name>TextWrite</name>
     <x>290</x>
-    <y>326</y>
+    <y>374</y>
     <width>282</width>
-    <height>54</height>
+    <height>102</height>
     <transparent>true</transparent>
     <widget type="label" version="2.0.0">
       <name>Label</name>
@@ -395,11 +441,49 @@
       <height>20</height>
       <horizontal_alignment>1</horizontal_alignment>
     </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label</name>
+      <text>Text Write Float</text>
+      <x>0</x>
+      <y>24</y>
+      <width>120</width>
+      <height>20</height>
+      <tooltip>No description provided</tooltip>
+    </widget>
+    <widget type="textentry" version="3.0.0">
+      <name>TextEntry</name>
+      <pv_name>$(P)$(R)TextWriteFloat</pv_name>
+      <x>124</x>
+      <y>24</y>
+      <width>124</width>
+      <height>20</height>
+      <horizontal_alignment>1</horizontal_alignment>
+      <precision>3</precision>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label</name>
+      <text>Text Write Int</text>
+      <x>0</x>
+      <y>48</y>
+      <width>120</width>
+      <height>20</height>
+      <tooltip>No description provided</tooltip>
+    </widget>
+    <widget type="textentry" version="3.0.0">
+      <name>TextEntry</name>
+      <pv_name>$(P)$(R)TextWriteInt</pv_name>
+      <x>124</x>
+      <y>48</y>
+      <width>124</width>
+      <height>20</height>
+      <horizontal_alignment>1</horizontal_alignment>
+      <precision>0</precision>
+    </widget>
   </widget>
   <widget type="group" version="2.0.0">
     <name>ToggleButton</name>
     <x>290</x>
-    <y>384</y>
+    <y>480</y>
     <width>282</width>
     <height>78</height>
     <transparent>true</transparent>

@@ -8,7 +8,7 @@ display {
 		x=0
 		y=0
 		width=325
-		height=55
+		height=105
 	}
 	clr=14
 	bclr=4
@@ -133,6 +133,62 @@ text {
 	}
 	monitor {
 		chan="$(P)$(R)TextRead"
+		clr=54
+		bclr=4
+	}
+	limits {
+	}
+}
+text {
+	object {
+		x=5
+		y=55
+		width=205
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Text Read Float"
+	align="horiz. right"
+}
+"text update" {
+	object {
+		x=215
+		y=55
+		width=105
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)TextReadFloat"
+		clr=54
+		bclr=4
+	}
+	limits {
+	}
+}
+text {
+	object {
+		x=5
+		y=80
+		width=205
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Text Read Int"
+	align="horiz. right"
+}
+"text update" {
+	object {
+		x=215
+		y=80
+		width=105
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)TextReadInt"
 		clr=54
 		bclr=4
 	}
