@@ -1,0 +1,351 @@
+# {py:mod}`pvi._format.screen`
+
+```{py:module} pvi._format.screen
+```
+
+```{autodoc2-docstring} pvi._format.screen
+:allowtitles:
+```
+
+## Module Contents
+
+### Classes
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`ScreenLayout <pvi._format.screen.ScreenLayout>`
+  - ```{autodoc2-docstring} pvi._format.screen.ScreenLayout
+    :summary:
+    ```
+* - {py:obj}`ScreenFormatterFactory <pvi._format.screen.ScreenFormatterFactory>`
+  -
+````
+
+### Functions
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`is_table <pvi._format.screen.is_table>`
+  - ```{autodoc2-docstring} pvi._format.screen.is_table
+    :summary:
+    ```
+* - {py:obj}`move_to_subscreen <pvi._format.screen.move_to_subscreen>`
+  - ```{autodoc2-docstring} pvi._format.screen.move_to_subscreen
+    :summary:
+    ```
+* - {py:obj}`split_out_plots <pvi._format.screen.split_out_plots>`
+  - ```{autodoc2-docstring} pvi._format.screen.split_out_plots
+    :summary:
+    ```
+* - {py:obj}`_has_plot_widget <pvi._format.screen._has_plot_widget>`
+  - ```{autodoc2-docstring} pvi._format.screen._has_plot_widget
+    :summary:
+    ```
+````
+
+### Data
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`T <pvi._format.screen.T>`
+  - ```{autodoc2-docstring} pvi._format.screen.T
+    :summary:
+    ```
+````
+
+### API
+
+````{py:data} T
+:canonical: pvi._format.screen.T
+:value: >
+   'TypeVar(...)'
+
+```{autodoc2-docstring} pvi._format.screen.T
+```
+
+````
+
+`````{py:class} ScreenLayout
+:canonical: pvi._format.screen.ScreenLayout
+
+```{autodoc2-docstring} pvi._format.screen.ScreenLayout
+```
+
+````{py:attribute} spacing
+:canonical: pvi._format.screen.ScreenLayout.spacing
+:type: int
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.screen.ScreenLayout.spacing
+```
+
+````
+
+````{py:attribute} title_height
+:canonical: pvi._format.screen.ScreenLayout.title_height
+:type: int
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.screen.ScreenLayout.title_height
+```
+
+````
+
+````{py:attribute} max_height
+:canonical: pvi._format.screen.ScreenLayout.max_height
+:type: int
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.screen.ScreenLayout.max_height
+```
+
+````
+
+````{py:attribute} group_label_height
+:canonical: pvi._format.screen.ScreenLayout.group_label_height
+:type: int
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.screen.ScreenLayout.group_label_height
+```
+
+````
+
+````{py:attribute} label_width
+:canonical: pvi._format.screen.ScreenLayout.label_width
+:type: int
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.screen.ScreenLayout.label_width
+```
+
+````
+
+````{py:attribute} widget_width
+:canonical: pvi._format.screen.ScreenLayout.widget_width
+:type: int
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.screen.ScreenLayout.widget_width
+```
+
+````
+
+````{py:attribute} widget_height
+:canonical: pvi._format.screen.ScreenLayout.widget_height
+:type: int
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.screen.ScreenLayout.widget_height
+```
+
+````
+
+````{py:attribute} group_widget_indent
+:canonical: pvi._format.screen.ScreenLayout.group_widget_indent
+:type: int
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.screen.ScreenLayout.group_widget_indent
+```
+
+````
+
+````{py:attribute} group_width_offset
+:canonical: pvi._format.screen.ScreenLayout.group_width_offset
+:type: int
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.screen.ScreenLayout.group_width_offset
+```
+
+````
+
+`````
+
+`````{py:class} ScreenFormatterFactory
+:canonical: pvi._format.screen.ScreenFormatterFactory
+
+Bases: {py:obj}`typing.Generic`\[{py:obj}`pvi._format.screen.T`\]
+
+````{py:attribute} screen_formatter_cls
+:canonical: pvi._format.screen.ScreenFormatterFactory.screen_formatter_cls
+:type: type[pvi._format.widget.GroupFormatter[pvi._format.screen.T]]
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.screen.ScreenFormatterFactory.screen_formatter_cls
+```
+
+````
+
+````{py:attribute} group_formatter_cls
+:canonical: pvi._format.screen.ScreenFormatterFactory.group_formatter_cls
+:type: type[pvi._format.widget.GroupFormatter[pvi._format.screen.T]]
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.screen.ScreenFormatterFactory.group_formatter_cls
+```
+
+````
+
+````{py:attribute} widget_formatter_factory
+:canonical: pvi._format.screen.ScreenFormatterFactory.widget_formatter_factory
+:type: pvi._format.widget.WidgetFormatterFactory[pvi._format.screen.T]
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.screen.ScreenFormatterFactory.widget_formatter_factory
+```
+
+````
+
+````{py:attribute} layout
+:canonical: pvi._format.screen.ScreenFormatterFactory.layout
+:type: pvi._format.screen.ScreenLayout
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.screen.ScreenFormatterFactory.layout
+```
+
+````
+
+````{py:attribute} components
+:canonical: pvi._format.screen.ScreenFormatterFactory.components
+:type: dict[str, pvi.device.ComponentUnion]
+:value: >
+   'field(...)'
+
+```{autodoc2-docstring} pvi._format.screen.ScreenFormatterFactory.components
+```
+
+````
+
+````{py:attribute} base_file_name
+:canonical: pvi._format.screen.ScreenFormatterFactory.base_file_name
+:type: str
+:value: <Multiline-String>
+
+```{autodoc2-docstring} pvi._format.screen.ScreenFormatterFactory.base_file_name
+```
+
+````
+
+````{py:method} create_screen_formatter(components: pvi.device.Tree, title: str) -> tuple[pvi._format.widget.GroupFormatter[pvi._format.screen.T], list[tuple[str, pvi._format.widget.GroupFormatter[pvi._format.screen.T]]]]
+:canonical: pvi._format.screen.ScreenFormatterFactory.create_screen_formatter
+
+```{autodoc2-docstring} pvi._format.screen.ScreenFormatterFactory.create_screen_formatter
+```
+
+````
+
+````{py:method} create_sub_screen_formatters(screen_widgets: list[pvi._format.widget.WidgetFormatter[pvi._format.screen.T]]) -> list[tuple[str, pvi._format.widget.GroupFormatter[pvi._format.screen.T]]]
+:canonical: pvi._format.screen.ScreenFormatterFactory.create_sub_screen_formatters
+
+```{autodoc2-docstring} pvi._format.screen.ScreenFormatterFactory.create_sub_screen_formatters
+```
+
+````
+
+````{py:method} create_group_formatters(c: pvi.device.Group, screen_bounds: pvi._format.utils.Bounds, column_bounds: pvi._format.utils.Bounds, next_column_bounds: pvi._format.utils.Bounds) -> list[pvi._format.widget.WidgetFormatter[pvi._format.screen.T]]
+:canonical: pvi._format.screen.ScreenFormatterFactory.create_group_formatters
+
+```{autodoc2-docstring} pvi._format.screen.ScreenFormatterFactory.create_group_formatters
+```
+
+````
+
+````{py:method} create_group_formatter(group: pvi.device.Group, bounds: pvi._format.utils.Bounds) -> pvi._format.widget.GroupFormatter[pvi._format.screen.T]
+:canonical: pvi._format.screen.ScreenFormatterFactory.create_group_formatter
+
+```{autodoc2-docstring} pvi._format.screen.ScreenFormatterFactory.create_group_formatter
+```
+
+````
+
+````{py:method} create_component_widget_formatters(c: pvi.device.ComponentUnion, parent_bounds: pvi._format.utils.Bounds, column_bounds: pvi._format.utils.Bounds, next_column_bounds: pvi._format.utils.Bounds, indent: bool = False, add_label: bool = True) -> list[pvi._format.widget.WidgetFormatter[pvi._format.screen.T]]
+:canonical: pvi._format.screen.ScreenFormatterFactory.create_component_widget_formatters
+
+```{autodoc2-docstring} pvi._format.screen.ScreenFormatterFactory.create_component_widget_formatters
+```
+
+````
+
+````{py:method} generate_component_formatters(c: pvi.device.ComponentUnion, bounds: pvi._format.utils.Bounds, add_label: bool = True) -> collections.abc.Iterator[pvi._format.widget.WidgetFormatter[pvi._format.screen.T]]
+:canonical: pvi._format.screen.ScreenFormatterFactory.generate_component_formatters
+
+```{autodoc2-docstring} pvi._format.screen.ScreenFormatterFactory.generate_component_formatters
+```
+
+````
+
+````{py:method} generate_row_component_formatters(row_components: collections.abc.Sequence[pvi.device.Group | pvi.device.Component], row_bounds: pvi._format.utils.Bounds) -> collections.abc.Iterator[pvi._format.widget.WidgetFormatter[pvi._format.screen.T]]
+:canonical: pvi._format.screen.ScreenFormatterFactory.generate_row_component_formatters
+
+```{autodoc2-docstring} pvi._format.screen.ScreenFormatterFactory.generate_row_component_formatters
+```
+
+````
+
+````{py:method} generate_read_widget(signal: pvi.device.SignalR, bounds: pvi._format.utils.Bounds)
+:canonical: pvi._format.screen.ScreenFormatterFactory.generate_read_widget
+
+```{autodoc2-docstring} pvi._format.screen.ScreenFormatterFactory.generate_read_widget
+```
+
+````
+
+````{py:method} generate_write_widget(signal: pvi.device.SignalW, bounds: pvi._format.utils.Bounds)
+:canonical: pvi._format.screen.ScreenFormatterFactory.generate_write_widget
+
+```{autodoc2-docstring} pvi._format.screen.ScreenFormatterFactory.generate_write_widget
+```
+
+````
+
+`````
+
+````{py:function} is_table(component: pvi.device.Group) -> bool
+:canonical: pvi._format.screen.is_table
+
+```{autodoc2-docstring} pvi._format.screen.is_table
+```
+````
+
+````{py:function} move_to_subscreen(component: pvi.device.ComponentUnion) -> pvi.device.Group
+:canonical: pvi._format.screen.move_to_subscreen
+
+```{autodoc2-docstring} pvi._format.screen.move_to_subscreen
+```
+````
+
+````{py:function} split_out_plots(component: pvi.device.Group)
+:canonical: pvi._format.screen.split_out_plots
+
+```{autodoc2-docstring} pvi._format.screen.split_out_plots
+```
+````
+
+````{py:function} _has_plot_widget(component: pvi.device.ComponentUnion) -> bool
+:canonical: pvi._format.screen._has_plot_widget
+
+```{autodoc2-docstring} pvi._format.screen._has_plot_widget
+```
+````

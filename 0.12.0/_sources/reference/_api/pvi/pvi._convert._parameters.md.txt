@@ -1,0 +1,381 @@
+# {py:mod}`pvi._convert._parameters`
+
+```{py:module} pvi._convert._parameters
+```
+
+```{autodoc2-docstring} pvi._convert._parameters
+:allowtitles:
+```
+
+## Module Contents
+
+### Classes
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`TypeStrings <pvi._convert._parameters.TypeStrings>`
+  - ```{autodoc2-docstring} pvi._convert._parameters.TypeStrings
+    :summary:
+    ```
+* - {py:obj}`Access <pvi._convert._parameters.Access>`
+  - ```{autodoc2-docstring} pvi._convert._parameters.Access
+    :summary:
+    ```
+* - {py:obj}`DisplayForm <pvi._convert._parameters.DisplayForm>`
+  - ```{autodoc2-docstring} pvi._convert._parameters.DisplayForm
+    :summary:
+    ```
+* - {py:obj}`Record <pvi._convert._parameters.Record>`
+  -
+* - {py:obj}`Parameter <pvi._convert._parameters.Parameter>`
+  - ```{autodoc2-docstring} pvi._convert._parameters.Parameter
+    :summary:
+    ```
+* - {py:obj}`ReadParameterMixin <pvi._convert._parameters.ReadParameterMixin>`
+  - ```{autodoc2-docstring} pvi._convert._parameters.ReadParameterMixin
+    :summary:
+    ```
+````
+
+### Data
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`MACRO_RE <pvi._convert._parameters.MACRO_RE>`
+  - ```{autodoc2-docstring} pvi._convert._parameters.MACRO_RE
+    :summary:
+    ```
+````
+
+### API
+
+`````{py:class} TypeStrings(/, **data: typing.Any)
+:canonical: pvi._convert._parameters.TypeStrings
+
+Bases: {py:obj}`pydantic.BaseModel`
+
+```{autodoc2-docstring} pvi._convert._parameters.TypeStrings
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi._convert._parameters.TypeStrings.__init__
+```
+
+````{py:attribute} asyn_read
+:canonical: pvi._convert._parameters.TypeStrings.asyn_read
+:type: typing.Annotated[str, Field(description='e.g. asynInt32, asynOctetRead')]
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._convert._parameters.TypeStrings.asyn_read
+```
+
+````
+
+````{py:attribute} asyn_write
+:canonical: pvi._convert._parameters.TypeStrings.asyn_write
+:type: typing.Annotated[str, Field(description='e.g. asynInt32, asynOctetWrite')]
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._convert._parameters.TypeStrings.asyn_write
+```
+
+````
+
+````{py:attribute} asyn_param
+:canonical: pvi._convert._parameters.TypeStrings.asyn_param
+:type: typing.Annotated[str, Field(description='e.g. asynParamInt32, asynParamOctet')]
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._convert._parameters.TypeStrings.asyn_param
+```
+
+````
+
+`````
+
+`````{py:class} Access(*args, **kwds)
+:canonical: pvi._convert._parameters.Access
+
+Bases: {py:obj}`enum.Enum`
+
+```{autodoc2-docstring} pvi._convert._parameters.Access
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi._convert._parameters.Access.__init__
+```
+
+````{py:attribute} R
+:canonical: pvi._convert._parameters.Access.R
+:value: >
+   'R'
+
+```{autodoc2-docstring} pvi._convert._parameters.Access.R
+```
+
+````
+
+````{py:attribute} W
+:canonical: pvi._convert._parameters.Access.W
+:value: >
+   'W'
+
+```{autodoc2-docstring} pvi._convert._parameters.Access.W
+```
+
+````
+
+````{py:attribute} RW
+:canonical: pvi._convert._parameters.Access.RW
+:value: >
+   'RW'
+
+```{autodoc2-docstring} pvi._convert._parameters.Access.RW
+```
+
+````
+
+````{py:method} needs_read_record()
+:canonical: pvi._convert._parameters.Access.needs_read_record
+
+```{autodoc2-docstring} pvi._convert._parameters.Access.needs_read_record
+```
+
+````
+
+````{py:method} needs_write_record()
+:canonical: pvi._convert._parameters.Access.needs_write_record
+
+```{autodoc2-docstring} pvi._convert._parameters.Access.needs_write_record
+```
+
+````
+
+`````
+
+`````{py:class} DisplayForm(*args, **kwds)
+:canonical: pvi._convert._parameters.DisplayForm
+
+Bases: {py:obj}`enum.Enum`
+
+```{autodoc2-docstring} pvi._convert._parameters.DisplayForm
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi._convert._parameters.DisplayForm.__init__
+```
+
+````{py:attribute} DEFAULT
+:canonical: pvi._convert._parameters.DisplayForm.DEFAULT
+:value: >
+   'Default'
+
+```{autodoc2-docstring} pvi._convert._parameters.DisplayForm.DEFAULT
+```
+
+````
+
+````{py:attribute} STRING
+:canonical: pvi._convert._parameters.DisplayForm.STRING
+:value: >
+   'String'
+
+```{autodoc2-docstring} pvi._convert._parameters.DisplayForm.STRING
+```
+
+````
+
+````{py:attribute} BINARY
+:canonical: pvi._convert._parameters.DisplayForm.BINARY
+:value: >
+   'Binary'
+
+```{autodoc2-docstring} pvi._convert._parameters.DisplayForm.BINARY
+```
+
+````
+
+````{py:attribute} DECIMAL
+:canonical: pvi._convert._parameters.DisplayForm.DECIMAL
+:value: >
+   'Decimal'
+
+```{autodoc2-docstring} pvi._convert._parameters.DisplayForm.DECIMAL
+```
+
+````
+
+````{py:attribute} HEX
+:canonical: pvi._convert._parameters.DisplayForm.HEX
+:value: >
+   'Hex'
+
+```{autodoc2-docstring} pvi._convert._parameters.DisplayForm.HEX
+```
+
+````
+
+````{py:attribute} EXPONENTIAL
+:canonical: pvi._convert._parameters.DisplayForm.EXPONENTIAL
+:value: >
+   'Exponential'
+
+```{autodoc2-docstring} pvi._convert._parameters.DisplayForm.EXPONENTIAL
+```
+
+````
+
+````{py:attribute} ENGINEERING
+:canonical: pvi._convert._parameters.DisplayForm.ENGINEERING
+:value: >
+   'Engineering'
+
+```{autodoc2-docstring} pvi._convert._parameters.DisplayForm.ENGINEERING
+```
+
+````
+
+`````
+
+````{py:data} MACRO_RE
+:canonical: pvi._convert._parameters.MACRO_RE
+:value: >
+   'compile(...)'
+
+```{autodoc2-docstring} pvi._convert._parameters.MACRO_RE
+```
+
+````
+
+`````{py:class} Record(/, **data: typing.Any)
+:canonical: pvi._convert._parameters.Record
+
+Bases: {py:obj}`pydantic.BaseModel`
+
+````{py:attribute} pv
+:canonical: pvi._convert._parameters.Record.pv
+:type: str
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._convert._parameters.Record.pv
+```
+
+````
+
+````{py:attribute} type
+:canonical: pvi._convert._parameters.Record.type
+:type: str
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._convert._parameters.Record.type
+```
+
+````
+
+````{py:attribute} fields
+:canonical: pvi._convert._parameters.Record.fields
+:type: dict[str, str]
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._convert._parameters.Record.fields
+```
+
+````
+
+````{py:attribute} infos
+:canonical: pvi._convert._parameters.Record.infos
+:type: dict[str, str]
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._convert._parameters.Record.infos
+```
+
+````
+
+````{py:method} name() -> str
+:canonical: pvi._convert._parameters.Record.name
+
+```{autodoc2-docstring} pvi._convert._parameters.Record.name
+```
+
+````
+
+`````
+
+`````{py:class} Parameter(/, **data: typing.Any)
+:canonical: pvi._convert._parameters.Parameter
+
+Bases: {py:obj}`pydantic.BaseModel`
+
+```{autodoc2-docstring} pvi._convert._parameters.Parameter
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi._convert._parameters.Parameter.__init__
+```
+
+````{py:attribute} invalid
+:canonical: pvi._convert._parameters.Parameter.invalid
+:type: list[str]
+:value: >
+   ['DESC', 'DTYP', 'INP', 'OUT', 'PINI', 'VAL']
+
+```{autodoc2-docstring} pvi._convert._parameters.Parameter.invalid
+```
+
+````
+
+````{py:method} _remove_invalid(fields: dict[str, str]) -> dict[str, str]
+:canonical: pvi._convert._parameters.Parameter._remove_invalid
+
+```{autodoc2-docstring} pvi._convert._parameters.Parameter._remove_invalid
+```
+
+````
+
+````{py:method} generate_component() -> pvi.device.ComponentUnion
+:canonical: pvi._convert._parameters.Parameter.generate_component
+:abstractmethod:
+
+```{autodoc2-docstring} pvi._convert._parameters.Parameter.generate_component
+```
+
+````
+
+`````
+
+`````{py:class} ReadParameterMixin
+:canonical: pvi._convert._parameters.ReadParameterMixin
+
+```{autodoc2-docstring} pvi._convert._parameters.ReadParameterMixin
+```
+
+````{py:method} _get_read_record() -> str | None
+:canonical: pvi._convert._parameters.ReadParameterMixin._get_read_record
+:abstractmethod:
+
+```{autodoc2-docstring} pvi._convert._parameters.ReadParameterMixin._get_read_record
+```
+
+````
+
+`````
