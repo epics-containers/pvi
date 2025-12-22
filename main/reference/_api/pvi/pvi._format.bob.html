@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pvi._format.bob &#8212; pvi 0.11.1.dev5+g6edc548c4 documentation</title>
+    <title>pvi._format.bob &#8212; pvi 0.11.1.dev6+g334e044d6 documentation</title>
   
   
   
@@ -41,7 +41,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=13f329c3"></script>
+    <script src="../../../_static/documentation_options.js?v=349481c7"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -541,16 +541,19 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#pvi._format.bob.add_format" title="pvi._format.bob.add_format"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_format</span></code></a></p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pvi._format.bob.set_visibility" title="pvi._format.bob.set_visibility"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_visibility</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi._format.bob.add_precision" title="pvi._format.bob.add_precision"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_precision</span></code></a></p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pvi._format.bob.set_color_map" title="pvi._format.bob.set_color_map"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_color_map</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi._format.bob.set_visibility" title="pvi._format.bob.set_visibility"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_visibility</span></code></a></p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pvi._format.bob.add_byte_number_of_bits" title="pvi._format.bob.add_byte_number_of_bits"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_byte_number_of_bits</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi._format.bob.set_color_map" title="pvi._format.bob.set_color_map"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_color_map</span></code></a></p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pvi._format.bob.find_element" title="pvi._format.bob.find_element"><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_element</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi._format.bob.add_byte_number_of_bits" title="pvi._format.bob.add_byte_number_of_bits"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_byte_number_of_bits</span></code></a></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi._format.bob.find_element" title="pvi._format.bob.find_element"><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_element</span></code></a></p></td>
 <td><p>Iterate tree to find tag and replace text.</p></td>
 </tr>
 </tbody>
@@ -649,6 +652,11 @@ macros: Macros to add to element</p>
 <dd></dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="pvi._format.bob.add_precision">
+<span class="sig-prename descclassname"><span class="pre">pvi._format.bob.</span></span><span class="sig-name descname"><span class="pre">add_precision</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">lxml.etree._Element</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precision</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pvi/_format/bob.html#add_precision"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._format.bob.add_precision" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="pvi._format.bob.set_visibility">
 <span class="sig-prename descclassname"><span class="pre">pvi._format.bob.</span></span><span class="sig-name descname"><span class="pre">set_visibility</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">lxml.etree._Element</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visible</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pvi/_format/bob.html#set_visibility"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._format.bob.set_visibility" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
@@ -742,6 +750,7 @@ index: Match to return if multiple matches are found</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.bob.add_combo_box_items"><code class="docutils literal notranslate"><span class="pre">add_combo_box_items()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.bob.add_editable"><code class="docutils literal notranslate"><span class="pre">add_editable()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.bob.add_format"><code class="docutils literal notranslate"><span class="pre">add_format()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.bob.add_precision"><code class="docutils literal notranslate"><span class="pre">add_precision()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.bob.set_visibility"><code class="docutils literal notranslate"><span class="pre">set_visibility()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.bob.set_color_map"><code class="docutils literal notranslate"><span class="pre">set_color_map()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.bob.add_byte_number_of_bits"><code class="docutils literal notranslate"><span class="pre">add_byte_number_of_bits()</span></code></a></li>

@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pvi._format.bob &#8212; pvi 0.11.1.dev5+g6edc548c4 documentation</title>
+    <title>pvi._format.bob &#8212; pvi 0.11.1.dev6+g334e044d6 documentation</title>
   
   
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=13f329c3"></script>
+    <script src="../../../_static/documentation_options.js?v=349481c7"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -561,11 +561,14 @@
                 <span class="n">add_combo_box_items</span><span class="p">(</span><span class="n">t_copy</span><span class="p">,</span> <span class="n">combo_box</span><span class="p">)</span>
             <span class="k">case</span> <span class="p">(</span><span class="s2">&quot;table&quot;</span><span class="p">,</span> <span class="n">TableRead</span><span class="p">()</span> <span class="o">|</span> <span class="n">TableWrite</span><span class="p">()</span> <span class="k">as</span> <span class="n">table</span><span class="p">):</span>
                 <span class="n">add_table_columns</span><span class="p">(</span><span class="n">t_copy</span><span class="p">,</span> <span class="n">table</span><span class="p">)</span>
-            <span class="k">case</span> <span class="p">(</span><span class="s2">&quot;textentry&quot;</span><span class="p">,</span> <span class="n">TextWrite</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="nb">format</span><span class="p">))</span> <span class="o">|</span> <span class="p">(</span>
+            <span class="k">case</span> <span class="p">(</span><span class="s2">&quot;textentry&quot;</span><span class="p">,</span> <span class="n">TextWrite</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="nb">format</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="n">precision</span><span class="p">))</span> <span class="o">|</span> <span class="p">(</span>
                 <span class="s2">&quot;textupdate&quot;</span><span class="p">,</span>
-                <span class="n">TextRead</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="nb">format</span><span class="p">),</span>
-            <span class="p">)</span> <span class="k">if</span> <span class="nb">format</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">add_format</span><span class="p">(</span><span class="n">t_copy</span><span class="p">,</span> <span class="n">BOB_TEXT_FORMATS</span><span class="p">[</span><span class="n">TextFormat</span><span class="p">(</span><span class="nb">format</span><span class="p">)])</span>
+                <span class="n">TextRead</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="nb">format</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="n">precision</span><span class="p">),</span>
+            <span class="p">):</span>
+                <span class="k">if</span> <span class="nb">format</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">add_format</span><span class="p">(</span><span class="n">t_copy</span><span class="p">,</span> <span class="n">BOB_TEXT_FORMATS</span><span class="p">[</span><span class="n">TextFormat</span><span class="p">(</span><span class="nb">format</span><span class="p">)])</span>
+                <span class="k">if</span> <span class="n">precision</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">add_precision</span><span class="p">(</span><span class="n">t_copy</span><span class="p">,</span> <span class="n">precision</span><span class="p">)</span>
             <span class="k">case</span> <span class="p">(</span><span class="s2">&quot;byte_monitor&quot;</span><span class="p">,</span> <span class="n">BitField</span><span class="p">()</span> <span class="k">as</span> <span class="n">bit_field</span><span class="p">):</span>
                 <span class="n">add_byte_number_of_bits</span><span class="p">(</span><span class="n">t_copy</span><span class="p">,</span> <span class="n">bit_field</span><span class="o">.</span><span class="n">number_of_bits</span><span class="p">)</span>
             <span class="k">case</span> <span class="p">(</span><span class="s2">&quot;image&quot;</span><span class="p">,</span> <span class="n">ImageRead</span><span class="p">()):</span>
@@ -746,8 +749,14 @@
 <div class="viewcode-block" id="add_format">
 <a class="viewcode-back" href="../../../reference/_api/pvi/pvi._format.bob.html#pvi._format.bob.add_format">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">add_format</span><span class="p">(</span><span class="n">element</span><span class="p">:</span> <span class="n">_Element</span><span class="p">,</span> <span class="nb">format</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-    <span class="k">if</span> <span class="nb">format</span><span class="p">:</span>
-        <span class="n">SubElement</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="s2">&quot;format&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="nb">format</span></div>
+    <span class="n">SubElement</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="s2">&quot;format&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="nb">format</span></div>
+
+
+
+<div class="viewcode-block" id="add_precision">
+<a class="viewcode-back" href="../../../reference/_api/pvi/pvi._format.bob.html#pvi._format.bob.add_precision">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_precision</span><span class="p">(</span><span class="n">element</span><span class="p">:</span> <span class="n">_Element</span><span class="p">,</span> <span class="n">precision</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="n">SubElement</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="s2">&quot;precision&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">precision</span><span class="p">)</span></div>
 
 
 

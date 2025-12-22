@@ -535,6 +535,17 @@ Bases: {py:obj}`pvi.device.ReadWidget`
 
 ````
 
+````{py:attribute} precision
+:canonical: pvi.device.TextRead.precision
+:type: typing.Annotated[int | None, Field(description='Number of decimal places')]
+:value: >
+   None
+
+```{autodoc2-docstring} pvi.device.TextRead.precision
+```
+
+````
+
 ````{py:method} get_lines()
 :canonical: pvi.device.TextRead.get_lines
 
@@ -827,6 +838,17 @@ Bases: {py:obj}`pvi.device.WriteWidget`
    None
 
 ```{autodoc2-docstring} pvi.device.TextWrite.format
+```
+
+````
+
+````{py:attribute} precision
+:canonical: pvi.device.TextWrite.precision
+:type: typing.Annotated[int | None, Field(description='Number of decimal places')]
+:value: >
+   None
+
+```{autodoc2-docstring} pvi.device.TextWrite.precision
 ```
 
 ````
