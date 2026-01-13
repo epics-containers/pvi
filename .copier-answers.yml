@@ -1,6 +1,6 @@
 # Changes here will be overwritten by Copier
 _commit: 5.0.1
-_src_path: gh:DiamondLightSource/python-copier-template
+_src_path: https://github.com/DiamondLightSource/python-copier-template
 author_email: gary.yendell@diamond.ac.uk
 author_name: Gary Yendell
 description: EPICS PV Interface described in YAML
