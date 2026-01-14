@@ -157,7 +157,7 @@ class ActionWidgetFormatter(WidgetFormatter[T]):
 
     @property
     def tooltip(self) -> str:
-        return f"{self.pv} = {self.value}"
+        return f"{self.pv} = {self.value}\n$(pv_value)"
 
 
 @dataclass
