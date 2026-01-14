@@ -49,7 +49,8 @@
     <y>30</y>
     <width>60</width>
     <height>20</height>
-    <tooltip>$(P)$(R)ButtonPanel = 0</tooltip>
+    <tooltip>$(P)$(R)ButtonPanel = 0
+$(pv_value)</tooltip>
   </widget>
   <widget type="action_button" version="3.0.0">
     <name>WritePV</name>
@@ -66,6 +67,7 @@
     <y>30</y>
     <width>60</width>
     <height>20</height>
-    <tooltip>$(P)$(R)ButtonPanel = 1</tooltip>
+    <tooltip>$(P)$(R)ButtonPanel = 1
+$(pv_value)</tooltip>
   </widget>
 </display>
