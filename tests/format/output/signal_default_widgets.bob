@@ -138,6 +138,7 @@
     <y>126</y>
     <width>124</width>
     <height>20</height>
-    <tooltip>Execute = 1</tooltip>
+    <tooltip>Execute = 1
+$(pv_value)</tooltip>
   </widget>
 </display>
