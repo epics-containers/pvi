@@ -341,6 +341,9 @@
                 "$ref": "#/$defs/SignalX"
               },
               {
+                "$ref": "#/$defs/IgnoredSignal"
+              },
+              {
                 "$ref": "#/$defs/SignalRef"
               },
               {
@@ -364,6 +367,55 @@
         "children"
       ],
       "title": "Group",
+      "type": "object"
+    },
+    "IgnoredSignal": {
+      "additionalProperties": false,
+      "description": "A `Signal` that is ignored on screens.",
+      "properties": {
+        "name": {
+          "description": "PascalCase name to uniquely identify",
+          "pattern": "^([A-Z][a-z0-9]*)*$",
+          "title": "Name",
+          "type": "string"
+        },
+        "label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Label for component",
+          "title": "Label"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Description for label tooltip",
+          "title": "Description"
+        },
+        "type": {
+          "const": "IgnoredSignal",
+          "default": "IgnoredSignal",
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "IgnoredSignal",
       "type": "object"
     },
     "ImageColorMap": {
@@ -1206,6 +1258,9 @@
           },
           {
             "$ref": "#/$defs/SignalX"
+          },
+          {
+            "$ref": "#/$defs/IgnoredSignal"
           },
           {
             "$ref": "#/$defs/SignalRef"

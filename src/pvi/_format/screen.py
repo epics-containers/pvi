@@ -26,6 +26,7 @@ from pvi.device import (
     DeviceRef,
     Grid,
     Group,
+    IgnoredSignal,
     ImageRead,
     Row,
     SignalR,
@@ -307,6 +308,9 @@ class ScreenFormatterFactory(Generic[T]):
         )
 
         for c in group.children:
+            if isinstance(c, IgnoredSignal):
+                # Skip over ignored signals
+                continue
             component: Group | Component
             add_label: bool = True
             match c:
