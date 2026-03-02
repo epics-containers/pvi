@@ -115,6 +115,10 @@
   - ```{autodoc2-docstring} pvi.device.Signal
     :summary:
     ```
+* - {py:obj}`IgnoredSignal <pvi.device.IgnoredSignal>`
+  - ```{autodoc2-docstring} pvi.device.IgnoredSignal
+    :summary:
+    ```
 * - {py:obj}`SignalR <pvi.device.SignalR>`
   - ```{autodoc2-docstring} pvi.device.SignalR
     :summary:
@@ -1198,6 +1202,22 @@ Bases: {py:obj}`pvi.device.Component`, {py:obj}`pvi.device.AccessModeMixin`
 ```
 
 ```{autodoc2-docstring} pvi.device.Signal.__init__
+```
+
+````
+
+````{py:class} IgnoredSignal(/, **data: typing.Any)
+:canonical: pvi.device.IgnoredSignal
+
+Bases: {py:obj}`pvi.device.Signal`
+
+```{autodoc2-docstring} pvi.device.IgnoredSignal
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi.device.IgnoredSignal.__init__
 ```
 
 ````

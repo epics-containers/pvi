@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pvi.device &#8212; pvi 0.12.1.dev3+gd427c98fa documentation</title>
+    <title>pvi.device &#8212; pvi 0.12.1.dev5+g6d1c94298 documentation</title>
   
   
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=b32832db"></script>
+    <script src="../../_static/documentation_options.js?v=cc0a265d"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -896,6 +896,13 @@
 
 
 
+<div class="viewcode-block" id="IgnoredSignal">
+<a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.IgnoredSignal">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">IgnoredSignal</span><span class="p">(</span><span class="n">Signal</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A `Signal` that is ignored on screens.&quot;&quot;&quot;</span></div>
+
+
+
 <div class="viewcode-block" id="SignalR">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.SignalR">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">SignalR</span><span class="p">(</span><span class="n">Signal</span><span class="p">):</span>
@@ -1038,7 +1045,16 @@
 
 
 
-<span class="n">ComponentUnion</span> <span class="o">=</span> <span class="n">Group</span> <span class="o">|</span> <span class="n">SignalR</span> <span class="o">|</span> <span class="n">SignalW</span> <span class="o">|</span> <span class="n">SignalRW</span> <span class="o">|</span> <span class="n">SignalX</span> <span class="o">|</span> <span class="n">SignalRef</span> <span class="o">|</span> <span class="n">DeviceRef</span>
+<span class="n">ComponentUnion</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">Group</span>
+    <span class="o">|</span> <span class="n">SignalR</span>
+    <span class="o">|</span> <span class="n">SignalW</span>
+    <span class="o">|</span> <span class="n">SignalRW</span>
+    <span class="o">|</span> <span class="n">SignalX</span>
+    <span class="o">|</span> <span class="n">IgnoredSignal</span>
+    <span class="o">|</span> <span class="n">SignalRef</span>
+    <span class="o">|</span> <span class="n">DeviceRef</span>
+<span class="p">)</span>
 
 <span class="k">if</span> <span class="ow">not</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="n">ComponentUnion</span> <span class="o">=</span> <span class="n">as_tagged_union</span><span class="p">(</span><span class="n">ComponentUnion</span><span class="p">)</span>

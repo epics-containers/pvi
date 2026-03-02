@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pvi.device &#8212; pvi 0.12.1.dev3+gd427c98fa documentation</title>
+    <title>pvi.device &#8212; pvi 0.12.1.dev5+g6d1c94298 documentation</title>
   
   
   
@@ -41,7 +41,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=b32832db"></script>
+    <script src="../../../_static/documentation_options.js?v=cc0a265d"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -58,8 +58,8 @@
     <link rel="icon" href="../../../_static/pvi-favicon.ico"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="pvi.__main__" href="pvi.__main__.html" />
-    <link rel="prev" title="pvi._pv_group" href="pvi._pv_group.html" />
+    <link rel="next" title="pvi.utils" href="pvi.utils.html" />
+    <link rel="prev" title="pvi.typed_model" href="pvi.typed_model.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="main" />
@@ -414,16 +414,16 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../../api.html">API</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 current active has-children"><a class="reference internal" href="pvi.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi</span></code></a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="pvi._format.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._format</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pvi._convert.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._convert</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pvi._version.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._version</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pvi.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.utils</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pvi._yaml_utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._yaml_utils</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi._format.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._format</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pvi.typed_model.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.typed_model</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pvi._pv_group.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._pv_group</span></code></a></li>
 <li class="toctree-l4 current active"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.device</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pvi.__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.__main__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.utils</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi._pv_group.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._pv_group</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi._yaml_utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._yaml_utils</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pvi._schema_utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._schema_utils</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi.__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.__main__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi._version.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._version</span></code></a></li>
 </ul>
 </details></li>
 </ul>
@@ -590,28 +590,31 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.Signal" title="pvi.device.Signal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Signal</span></code></a></p></td>
 <td><p>Base signal type representing one or two PVs of a <code class="docutils literal notranslate"><span class="pre">Device</span></code>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.SignalR" title="pvi.device.SignalR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SignalR</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.IgnoredSignal" title="pvi.device.IgnoredSignal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IgnoredSignal</span></code></a></p></td>
+<td><p>A <code class="docutils literal notranslate"><span class="pre">Signal</span></code> that is ignored on screens.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.SignalR" title="pvi.device.SignalR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SignalR</span></code></a></p></td>
 <td><p>Read-only <code class="docutils literal notranslate"><span class="pre">Signal</span></code> backed by a single PV.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.SignalW" title="pvi.device.SignalW"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SignalW</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.SignalW" title="pvi.device.SignalW"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SignalW</span></code></a></p></td>
 <td><p>Write-only <code class="docutils literal notranslate"><span class="pre">Signal</span></code> backed by a single PV.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.SignalRW" title="pvi.device.SignalRW"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SignalRW</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.SignalRW" title="pvi.device.SignalRW"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SignalRW</span></code></a></p></td>
 <td><p>Read/write <code class="docutils literal notranslate"><span class="pre">Signal</span></code> backed by a demand PV and a readback PV.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.SignalX" title="pvi.device.SignalX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SignalX</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.SignalX" title="pvi.device.SignalX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SignalX</span></code></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">SignalW</span></code> that can be triggered to write a fixed value to a PV.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.DeviceRef" title="pvi.device.DeviceRef"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceRef</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.DeviceRef" title="pvi.device.DeviceRef"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeviceRef</span></code></a></p></td>
 <td><p>Reference to another Device.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.SignalRef" title="pvi.device.SignalRef"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SignalRef</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.SignalRef" title="pvi.device.SignalRef"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SignalRef</span></code></a></p></td>
 <td><p>Reference to another Signal with the same name in this Device.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.Group" title="pvi.device.Group"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Group</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.Group" title="pvi.device.Group"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Group</span></code></a></p></td>
 <td><p>Group of child components in a Layout</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.Device" title="pvi.device.Device"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Device</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.Device" title="pvi.device.Device"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Device</span></code></a></p></td>
 <td><p>Collection of Components</p></td>
 </tr>
 </tbody>
@@ -1341,6 +1344,18 @@ validated to form a valid model.</p>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="pvi.device.IgnoredSignal">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pvi.device.</span></span><span class="sig-name descname"><span class="pre">IgnoredSignal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**data:</span> <span class="pre">typing.Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pvi/device.html#IgnoredSignal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi.device.IgnoredSignal" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pvi.device.Signal" title="pvi.device.Signal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pvi.device.Signal</span></code></a></p>
+<p>A <code class="docutils literal notranslate"><span class="pre">Signal</span></code> that is ignored on screens.</p>
+<p class="rubric">Initialization</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code class="docutils literal notranslate"><span class="pre">ValidationError</span></code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code class="docutils literal notranslate"><span class="pre">self</span></code> is explicitly positional-only to allow <code class="docutils literal notranslate"><span class="pre">self</span></code> as a field name.</p>
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="pvi.device.SignalR">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pvi.device.</span></span><span class="sig-name descname"><span class="pre">SignalR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**data:</span> <span class="pre">typing.Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pvi/device.html#SignalR"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi.device.SignalR" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pvi.device.Signal" title="pvi.device.Signal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pvi.device.Signal</span></code></a></p>
@@ -1651,20 +1666,20 @@ yaml_paths: Paths of parent class Device YAMLs</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="pvi._pv_group.html"
+       href="pvi.typed_model.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._pv_group</span></code></p>
+        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.typed_model</span></code></p>
       </div>
     </a>
     <a class="right-next"
-       href="pvi.__main__.html"
+       href="pvi.utils.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.__main__</span></code></p>
+        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.utils</span></code></p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1816,6 +1831,7 @@ yaml_paths: Paths of parent class Device YAMLs</p>
 </ul>
 </li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.Signal"><code class="docutils literal notranslate"><span class="pre">Signal</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.IgnoredSignal"><code class="docutils literal notranslate"><span class="pre">IgnoredSignal</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.SignalR"><code class="docutils literal notranslate"><span class="pre">SignalR</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.SignalR._access_mode"><code class="docutils literal notranslate"><span class="pre">SignalR._access_mode</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.SignalR.read_pv"><code class="docutils literal notranslate"><span class="pre">SignalR.read_pv</span></code></a></li>
