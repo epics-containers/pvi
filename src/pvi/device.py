@@ -333,6 +333,10 @@ class Signal(Component, AccessModeMixin):
     """Base signal type representing one or two PVs of a `Device`."""
 
 
+class IgnoredSignal(Signal):
+    """A `Signal` that is ignored on screens."""
+
+
 class SignalR(Signal):
     """Read-only `Signal` backed by a single PV."""
 
@@ -448,7 +452,16 @@ class Group(Component):
     children: Annotated[Tree, Field(description="Child Components")]
 
 
-ComponentUnion = Group | SignalR | SignalW | SignalRW | SignalX | SignalRef | DeviceRef
+ComponentUnion = (
+    Group
+    | SignalR
+    | SignalW
+    | SignalRW
+    | SignalX
+    | IgnoredSignal
+    | SignalRef
+    | DeviceRef
+)
 
 if not TYPE_CHECKING:
     ComponentUnion = as_tagged_union(ComponentUnion)

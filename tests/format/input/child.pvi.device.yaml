@@ -11,6 +11,8 @@ children:
       - type: SignalR
         name: ParentGroupChildSignal
         read_pv: ParentGroupChild_RBV
+      - type: IgnoredSignal
+        name: ParentGroupSignalToIgnore
   - type: Group
     name: ChildGroup
     layout:

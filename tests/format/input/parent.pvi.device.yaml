@@ -10,3 +10,6 @@ children:
       - type: SignalR
         name: ParentGroupSignal
         read_pv: ParentGroupParent_RBV
+      - type: SignalR
+        name: ParentGroupSignalToIgnore
+        read_pv: ParentGroupSignalToIgnore_RBV
