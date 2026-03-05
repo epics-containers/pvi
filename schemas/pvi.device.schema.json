@@ -344,6 +344,9 @@
                 "$ref": "#/$defs/IgnoredSignal"
               },
               {
+                "$ref": "#/$defs/Include"
+              },
+              {
                 "$ref": "#/$defs/SignalRef"
               },
               {
@@ -467,6 +470,48 @@
         }
       },
       "title": "ImageRead",
+      "type": "object"
+    },
+    "Include": {
+      "additionalProperties": false,
+      "description": "Reference to another Device.",
+      "properties": {
+        "name": {
+          "description": "Name to identify PVI Device to include.",
+          "title": "Name",
+          "type": "string"
+        },
+        "label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Label for component",
+          "title": "Label"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Description for label tooltip",
+          "title": "Description"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "Include",
       "type": "object"
     },
     "LED": {
@@ -1261,6 +1306,9 @@
           },
           {
             "$ref": "#/$defs/IgnoredSignal"
+          },
+          {
+            "$ref": "#/$defs/Include"
           },
           {
             "$ref": "#/$defs/SignalRef"

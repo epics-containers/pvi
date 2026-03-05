@@ -452,6 +452,12 @@ class Group(Component):
     children: Annotated[Tree, Field(description="Child Components")]
 
 
+class Include(Component):
+    """Reference to another Device."""
+
+    name: Annotated[str, Field(description="Name to identify PVI Device to include.")]
+
+
 ComponentUnion = (
     Group
     | SignalR
@@ -459,6 +465,7 @@ ComponentUnion = (
     | SignalRW
     | SignalX
     | IgnoredSignal
+    | Include
     | SignalRef
     | DeviceRef
 )
@@ -532,38 +539,63 @@ class Device(TypedModel, YamlValidatorMixin):
             yaml_paths: Paths of parent class Device YAMLs
 
         """
-        if self.parent is None or self.parent == "asynPortDriver":
+        if self.parent == "asynPortDriver":
             return
 
-        parent_components = find_components(self.parent, yaml_paths)
-        self.merge_components(parent_components)
+        # For backwards compatability
+        # Replace parent field with an Include statement
+        if self.parent:
+            self.children = list(self.children) + [Include(name=self.parent)]
+        components: Tree = []
+        for component in self.children:
+            if isinstance(component, Include):
+                expanded_components = self.expand_includes(component, yaml_paths)
+                components.extend(expanded_components)
+            else:
+                components.append(component)
+
+        self.merge_components(components)
+
+    def expand_includes(
+        self, component: Include, yaml_paths: list[Path]
+    ) -> list[ComponentUnion]:
+        resolved: list[ComponentUnion] = []
+        include_components = find_components(component.name, yaml_paths)
+        for new_component in include_components:
+            if isinstance(new_component, Include):
+                resolved.extend(self.expand_includes(new_component, yaml_paths))
+            else:
+                resolved.append(new_component)
+        return resolved
 
     def merge_components(self, components: Tree) -> None:
-        existing_components = list(walk(self.children))
-        for node in components:
-            if isinstance(node, Group):
-                for group in self.children:
-                    if not isinstance(group, Group):
-                        continue
-                    elif group.name == node.name:
-                        group.children = list(group.children) + [
-                            c for c in node.children if c not in group.children
-                        ]
-                        break  # Groups merged - skip to next group
+        merged: list[ComponentUnion] = []
+        groups_by_name: dict[str, Group] = {}
 
-                else:  # No break - Did not find the Group
-                    # Remove any signals already in device from node
-                    node.children = [
-                        c for c in node.children if c not in existing_components
+        for component in components:
+            if not isinstance(component, Group):
+                # Component is an individual AsynParameter - just append it
+                merged.append(component)
+                continue
+
+            existing = groups_by_name.get(component.name)
+
+            if existing is None:
+                # New group, so remove any component that already exists
+                for group in groups_by_name.values():
+                    component.children = [
+                        c for c in component.children if c not in group.children
                     ]
-
-                    # Add node as a new group
-                    self.children = list(self.children) + [node]
-
-                    continue  # Skip to next group
+                groups_by_name[component.name] = component
+                merged.append(component)
             else:
-                # Node is an individual AsynParameter - just append it
-                self.children = list(self.children) + [node]
+                # Duplicate group, so merge duplicate into existing group
+                merged_children = list(existing.children) + [
+                    c for c in component.children if c not in existing.children
+                ]
+                existing.children = merged_children
+
+        self.children = merged
 
     def generate_param_tree(self) -> str:
         param_tree = ", ".join(
@@ -585,11 +617,7 @@ def find_components(yaml_name: str, yaml_paths: list[Path]) -> Tree:
         raise OSError(f"Cannot find {device_name} in {yaml_paths}")
 
     device = Device.deserialize(device_yaml)
+    if device.parent:
+        device.children = list(device.children) + [Include(name=device.parent)]
 
-    parent_components = (
-        list(find_components(device.parent, yaml_paths))
-        if device.parent is not None
-        else []
-    )
-
-    return list(device.children) + parent_components
+    return list(device.children)

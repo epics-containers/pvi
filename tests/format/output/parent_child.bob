@@ -3,7 +3,7 @@
   <x>0</x>
   <y use_class="true">0</y>
   <width>290</width>
-  <height>170</height>
+  <height>252</height>
   <grid_step_x>4</grid_step_x>
   <grid_step_y>4</grid_step_y>
   <widget type="label" version="2.0.0">
@@ -98,6 +98,58 @@
       <pv_name>ChildGroupChild_RBV</pv_name>
       <x>124</x>
       <y>0</y>
+      <width>124</width>
+      <height>20</height>
+      <font>
+        <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+      </font>
+      <horizontal_alignment>1</horizontal_alignment>
+    </widget>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>Grand Parent Group</name>
+    <x>4</x>
+    <y>170</y>
+    <width>282</width>
+    <height>78</height>
+    <transparent>true</transparent>
+    <widget type="label" version="2.0.0">
+      <name>Label</name>
+      <text>Grand Parent Top Signal</text>
+      <x>0</x>
+      <y>0</y>
+      <width>120</width>
+      <height>20</height>
+      <tooltip>No description provided</tooltip>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>TextUpdate</name>
+      <pv_name>GrandParentTopSignal_RBV</pv_name>
+      <x>124</x>
+      <y>0</y>
+      <width>124</width>
+      <height>20</height>
+      <font>
+        <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+      </font>
+      <horizontal_alignment>1</horizontal_alignment>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label</name>
+      <text>Grand Parent Bottom Signal</text>
+      <x>0</x>
+      <y>24</y>
+      <width>120</width>
+      <height>20</height>
+      <tooltip>No description provided</tooltip>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>TextUpdate</name>
+      <pv_name>GrandParentBottomSignal</pv_name>
+      <x>124</x>
+      <y>24</y>
       <width>124</width>
       <height>20</height>
       <font>
