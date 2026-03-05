@@ -194,8 +194,9 @@ def reconvert(
     """Add PVs to an existing device.yaml file based on extra / updated templates."""
     device = Device.deserialize(device_path)
     template_components = TemplateConverter(templates).convert()
+    components_to_merge = list(device.children) + list(template_components)
 
-    device.merge_components(template_components)
+    device.merge_components(components_to_merge)
 
     device.serialize(device_path)
 
