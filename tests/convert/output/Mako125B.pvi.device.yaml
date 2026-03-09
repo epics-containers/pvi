@@ -1,5 +1,4 @@
 label: GenICam Mako125B
-parent: GenICamDriver
 children:
   - type: Group
     name: Mako125B
@@ -45,3 +44,6 @@ children:
         read_pv: $(P)$(R)GC_SensorBits_RBV
         read_widget:
           type: TextRead
+
+  - type: Include
+    file_name: GenICamDriver

@@ -1,5 +1,4 @@
 label: simDetector
-parent: ADDriver
 children:
   - type: Group
     name: SimDetector
@@ -319,3 +318,6 @@ children:
         read_pv: $(P)$(R)YSine2Phase_RBV
         read_widget:
           type: TextRead
+
+  - type: Include
+    file_name: ADDriver

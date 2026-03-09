@@ -4,7 +4,6 @@ label: pilatus
 asyn_port: $(PORT)
 address: $(ADDR)
 timeout: $(TIMEOUT)
-parent: ADDriver
 parameters:
   - type: Group
     name: ComponentGroupOne
@@ -538,3 +537,5 @@ parameters:
           EGU: deg
           PREC: 4
         index_name: ProgressBarTest
+  - type: Include
+    file_name: ADDriver

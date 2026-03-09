@@ -1,9 +1,10 @@
 label: label
-parent: parent
 children:
+  - type: SignalR
+    name: OutA
+    red_pv: OUTA
+    read_widget:
+      type: LED
 
-- type: SignalR
-  name: OutA
-  red_pv: OUTA
-  read_widget:
-    type: LED
+  - type: Include
+    file_name: parent

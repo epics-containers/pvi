@@ -13,7 +13,7 @@ from pvi._convert.utils import extract_device_and_parent_class
 from pvi._format import Formatter
 from pvi._format.template import format_template
 from pvi._pv_group import group_by_ui
-from pvi.device import Device
+from pvi.device import Device, Include
 
 app = typer.Typer()
 convert_app = typer.Typer()
@@ -154,9 +154,11 @@ def device(
         raise ValueError("Either Device name or header file must be provided.")
 
     component_group = TemplateConverter(templates).convert()
-    device = Device(
-        label=label or device_name, parent=parent_name, children=component_group
-    )
+
+    if parent_name:
+        component_group = list(component_group) + [Include(file_name=parent_name)]
+
+    device = Device(label=label or device_name, children=component_group)
 
     if not output.exists():
         os.mkdir(output)

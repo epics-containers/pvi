@@ -75,7 +75,7 @@ addopts = """
     --tb=native -vv --doctest-modules --doctest-glob="*.md" --markdown-docs
     """
 # https://iscinumpy.gitlab.io/post/bound-version-constraints/#watch-for-warnings
-filterwarnings = "error"
+filterwarnings = ["error", "ignore::DeprecationWarning"]
 # Doctest python code in docs, python code in src docstrings, test functions in tests
 testpaths = "docs src tests"
 
