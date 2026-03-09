@@ -9,7 +9,7 @@ import pytest
 from pvi import __version__
 from pvi.__main__ import app
 from pvi._format import Formatter
-from pvi.device import Device, Grid, Group
+from pvi.device import Device, Grid, Group, Include
 
 HERE = Path(__file__).parent
 
@@ -226,7 +226,8 @@ def test_combine_widgets(tmp_path, helper, formatter, format, skip):
                 children=[
                     child
                     for child in device.children
-                    if not any(s in child.name for s in skip)
+                    if not isinstance(child, Include)
+                    and not any(s in child.name for s in skip)
                 ],
                 layout=Grid(),
             )

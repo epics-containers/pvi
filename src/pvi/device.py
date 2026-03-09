@@ -7,7 +7,13 @@ from enum import IntEnum, StrEnum
 from pathlib import Path
 from typing import TYPE_CHECKING, Annotated, Any, ClassVar, Self
 
-from pydantic import BaseModel, ConfigDict, Field, ValidationError, model_validator
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    ValidationError,
+    model_validator,
+)
 
 from pvi._yaml_utils import YamlValidatorMixin, dump_yaml, type_first
 from pvi.typed_model import TypedModel, as_tagged_union
@@ -449,13 +455,7 @@ class Group(Component):
     layout: Annotated[
         LayoutUnion, Field(description="How to layout children on screen")
     ]
-    children: Annotated[Tree, Field(description="Child Components")]
-
-
-class Include(Component):
-    """Reference to another Device."""
-
-    name: Annotated[str, Field(description="Name to identify PVI Device to include.")]
+    children: Annotated[ResolvedTree, Field(description="Child Components")]
 
 
 ComponentUnion = (
@@ -465,15 +465,31 @@ ComponentUnion = (
     | SignalRW
     | SignalX
     | IgnoredSignal
-    | Include
     | SignalRef
     | DeviceRef
 )
 
+
 if not TYPE_CHECKING:
     ComponentUnion = as_tagged_union(ComponentUnion)
 
-Tree = Sequence[ComponentUnion]
+
+class Include(TypedModel):
+    """Reference to another PVI Device.
+
+    This is resolved into the components of the referenced device,
+    by the device with the `Include` statement, in the location that
+    it is included.
+    """
+
+    file_name: Annotated[
+        str,
+        Field(description="Name of PVI Device to include (basename of yaml file)."),
+    ]
+
+
+Tree = Sequence[ComponentUnion | Include]
+ResolvedTree = Sequence[ComponentUnion]
 
 
 def walk(tree: Tree) -> Iterator[ComponentUnion]:
@@ -481,6 +497,11 @@ def walk(tree: Tree) -> Iterator[ComponentUnion]:
     for t in tree:
         if isinstance(t, Group):
             yield from walk(t.children)
+        elif isinstance(t, Include):
+            raise TypeError(
+                "`Include` statement should have been resolved "
+                "in device deserialization."
+            )
         else:
             yield t
 
@@ -489,7 +510,13 @@ class Device(TypedModel, YamlValidatorMixin):
     """Collection of Components"""
 
     label: Annotated[str, Field(description="Label for screen")]
-    parent: Annotated[str | None, "The parent device (basename of yaml file)"] = None
+    parent: Annotated[
+        str | None,
+        Field(
+            description="The parent device (basename of yaml file",
+            deprecated="parent is deprecated, use `Include` statement instead",
+        ),
+    ] = None
     children: Annotated[Tree, Field(description="Child Components")] = []
 
     def _to_dict(self) -> dict[str, Any]:
@@ -545,7 +572,7 @@ class Device(TypedModel, YamlValidatorMixin):
         # For backwards compatability
         # Replace parent field with an Include statement
         if self.parent:
-            self.children = list(self.children) + [Include(name=self.parent)]
+            self.children = list(self.children) + [Include(file_name=self.parent)]
         components: Tree = []
         for component in self.children:
             if isinstance(component, Include):
@@ -560,7 +587,7 @@ class Device(TypedModel, YamlValidatorMixin):
         self, component: Include, yaml_paths: list[Path]
     ) -> list[ComponentUnion]:
         resolved: list[ComponentUnion] = []
-        include_components = find_components(component.name, yaml_paths)
+        include_components = find_components(component.file_name, yaml_paths)
         for new_component in include_components:
             if isinstance(new_component, Include):
                 resolved.extend(self.expand_includes(new_component, yaml_paths))
@@ -569,7 +596,7 @@ class Device(TypedModel, YamlValidatorMixin):
         return resolved
 
     def merge_components(self, components: Tree) -> None:
-        merged: list[ComponentUnion] = []
+        merged: list[ComponentUnion | Include] = []
         groups_by_name: dict[str, Group] = {}
 
         for component in components:
@@ -578,9 +605,7 @@ class Device(TypedModel, YamlValidatorMixin):
                 merged.append(component)
                 continue
 
-            existing = groups_by_name.get(component.name)
-
-            if existing is None:
+            if (existing := groups_by_name.get(component.name)) is None:
                 # New group, so remove any component that already exists
                 for group in groups_by_name.values():
                     component.children = [
@@ -618,6 +643,6 @@ def find_components(yaml_name: str, yaml_paths: list[Path]) -> Tree:
 
     device = Device.deserialize(device_yaml)
     if device.parent:
-        device.children = list(device.children) + [Include(name=device.parent)]
+        device.children = list(device.children) + [Include(file_name=device.parent)]
 
     return list(device.children)

@@ -344,9 +344,6 @@
                 "$ref": "#/$defs/IgnoredSignal"
               },
               {
-                "$ref": "#/$defs/Include"
-              },
-              {
                 "$ref": "#/$defs/SignalRef"
               },
               {
@@ -474,42 +471,22 @@
     },
     "Include": {
       "additionalProperties": false,
-      "description": "Reference to another Device.",
+      "description": "Reference to another PVI Device.\n\nThis is resolved into the components of the referenced device,\nby the device with the `Include` statement, in the location that\nit is included.",
       "properties": {
-        "name": {
-          "description": "Name to identify PVI Device to include.",
-          "title": "Name",
+        "file_name": {
+          "description": "Name of PVI Device to include (basename of yaml file).",
+          "title": "File Name",
           "type": "string"
         },
-        "label": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "description": "Label for component",
-          "title": "Label"
-        },
-        "description": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "description": "Description for label tooltip",
-          "title": "Description"
+        "type": {
+          "const": "Include",
+          "default": "Include",
+          "title": "Type",
+          "type": "string"
         }
       },
       "required": [
-        "name"
+        "file_name"
       ],
       "title": "Include",
       "type": "object"
@@ -1282,39 +1259,45 @@
         }
       ],
       "default": null,
+      "deprecated": true,
+      "description": "The parent device (basename of yaml file",
       "title": "Parent"
     },
     "children": {
       "default": [],
       "description": "Child Components",
       "items": {
-        "oneOf": [
+        "anyOf": [
           {
-            "$ref": "#/$defs/Group"
-          },
-          {
-            "$ref": "#/$defs/SignalR"
-          },
-          {
-            "$ref": "#/$defs/SignalW"
-          },
-          {
-            "$ref": "#/$defs/SignalRW"
-          },
-          {
-            "$ref": "#/$defs/SignalX"
-          },
-          {
-            "$ref": "#/$defs/IgnoredSignal"
+            "oneOf": [
+              {
+                "$ref": "#/$defs/Group"
+              },
+              {
+                "$ref": "#/$defs/SignalR"
+              },
+              {
+                "$ref": "#/$defs/SignalW"
+              },
+              {
+                "$ref": "#/$defs/SignalRW"
+              },
+              {
+                "$ref": "#/$defs/SignalX"
+              },
+              {
+                "$ref": "#/$defs/IgnoredSignal"
+              },
+              {
+                "$ref": "#/$defs/SignalRef"
+              },
+              {
+                "$ref": "#/$defs/DeviceRef"
+              }
+            ]
           },
           {
             "$ref": "#/$defs/Include"
-          },
-          {
-            "$ref": "#/$defs/SignalRef"
-          },
-          {
-            "$ref": "#/$defs/DeviceRef"
           }
         ]
       },

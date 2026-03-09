@@ -14,7 +14,7 @@ children:
         name: ParentGroupSignalToIgnore
         read_pv: ParentGroupSignalToIgnore_RBV
   - type: Include
-    name: grandparent
+    file_name: grandparent
   - type: Group
     name: GrandParentGroup
     layout:
