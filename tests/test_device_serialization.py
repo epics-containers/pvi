@@ -2,6 +2,7 @@ import json
 import os
 from pathlib import Path
 from typing import Annotated, TypeAlias
+from unittest.mock import patch
 
 import pytest
 from pydantic import BaseModel, Discriminator, Field, Tag, ValidationError
@@ -83,12 +84,11 @@ def test_deserialize_raises_validation_error():
 
 @pytest.mark.filterwarnings("error::DeprecationWarning")
 def test_deserialize_parents_raises_deprecation_warning():
-    device = Device.deserialize(DEPRECATED_DEVICE_YAML)
-    with pytest.raises(
-        DeprecationWarning,
-        match="parent is deprecated, use `Include` statement instead",
-    ):
-        device.deserialize_parents([])
+    with patch("pvi.device.Device.expand_includes", return_value=[]):
+        with pytest.deprecated_call(
+            match="parent is deprecated, use `Include` statement instead"
+        ):
+            Device.deserialize(DEPRECATED_DEVICE_YAML).deserialize_parents([])
 
 
 def test_validate_fails():
