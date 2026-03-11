@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pvi.device &#8212; pvi 0.12.1.dev5+g6d1c94298 documentation</title>
+    <title>pvi.device &#8212; pvi 0.12.1.dev10+g5a3679952 documentation</title>
   
   
   
@@ -41,7 +41,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=cc0a265d"></script>
+    <script src="../../../_static/documentation_options.js?v=c298b75c"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -614,7 +614,10 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.Group" title="pvi.device.Group"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Group</span></code></a></p></td>
 <td><p>Group of child components in a Layout</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.Device" title="pvi.device.Device"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Device</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.Include" title="pvi.device.Include"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Include</span></code></a></p></td>
+<td><p>Reference to another PVI Device.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.Device" title="pvi.device.Device"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Device</span></code></a></p></td>
 <td><p>Collection of Components</p></td>
 </tr>
 </tbody>
@@ -683,6 +686,9 @@ snake_case converted name. E.g. pascal_case_field_name</p></td>
 <td></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.Tree" title="pvi.device.Tree"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Tree</span></code></a></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.ResolvedTree" title="pvi.device.ResolvedTree"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResolvedTree</span></code></a></p></td>
 <td></td>
 </tr>
 </tbody>
@@ -1547,7 +1553,7 @@ validated to form a valid model.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pvi.device.Group.children">
-<span class="sig-name descname"><span class="pre">children</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Annotated" title="(in Python v3.14)"><span class="pre">Annotated</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Tree</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Field</span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="s"><span class="pre">'Child</span> <span class="pre">Components'</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi.device.Group.children" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">children</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Annotated" title="(in Python v3.14)"><span class="pre">Annotated</span></a><span class="p"><span class="pre">[</span></span><span class="pre">ResolvedTree</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Field</span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="s"><span class="pre">'Child</span> <span class="pre">Components'</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi.device.Group.children" title="Link to this definition">#</a></dt>
 <dd><p>None</p>
 </dd></dl>
 
@@ -1559,9 +1565,36 @@ validated to form a valid model.</p>
 <dd><p>None</p>
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="pvi.device.Include">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pvi.device.</span></span><span class="sig-name descname"><span class="pre">Include</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**data:</span> <span class="pre">typing.Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pvi/device.html#Include"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi.device.Include" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pvi.typed_model.html#pvi.typed_model.TypedModel" title="pvi.typed_model.TypedModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pvi.typed_model.TypedModel</span></code></a></p>
+<p>Reference to another PVI Device.</p>
+<p>This is resolved into the components of the referenced device,
+by the device with the <code class="docutils literal notranslate"><span class="pre">Include</span></code> statement, in the location that
+it is included.</p>
+<p class="rubric">Initialization</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code class="docutils literal notranslate"><span class="pre">ValidationError</span></code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code class="docutils literal notranslate"><span class="pre">self</span></code> is explicitly positional-only to allow <code class="docutils literal notranslate"><span class="pre">self</span></code> as a field name.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi.device.Include.file_name">
+<span class="sig-name descname"><span class="pre">file_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Annotated" title="(in Python v3.14)"><span class="pre">Annotated</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Field</span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="s"><span class="pre">'Name</span> <span class="pre">of</span> <span class="pre">PVI</span> <span class="pre">Device</span> <span class="pre">to</span> <span class="pre">include</span> <span class="pre">(basename</span> <span class="pre">of</span> <span class="pre">yaml</span> <span class="pre">file).'</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi.device.Include.file_name" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+</dd></dl>
+
 <dl class="py data">
 <dt class="sig sig-object py" id="pvi.device.Tree">
 <span class="sig-prename descclassname"><span class="pre">pvi.device.</span></span><span class="sig-name descname"><span class="pre">Tree</span></span><a class="headerlink" href="#pvi.device.Tree" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="pvi.device.ResolvedTree">
+<span class="sig-prename descclassname"><span class="pre">pvi.device.</span></span><span class="sig-name descname"><span class="pre">ResolvedTree</span></span><a class="headerlink" href="#pvi.device.ResolvedTree" title="Link to this definition">#</a></dt>
 <dd><p>None</p>
 </dd></dl>
 
@@ -1589,7 +1622,7 @@ validated to form a valid model.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pvi.device.Device.parent">
-<span class="sig-name descname"><span class="pre">parent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Annotated[str</span> <span class="pre">|</span> <span class="pre">None,</span> <span class="pre">The</span> <span class="pre">parent</span> <span class="pre">device</span> <span class="pre">(basename</span> <span class="pre">of</span> <span class="pre">yaml</span> <span class="pre">file)]</span></em><a class="headerlink" href="#pvi.device.Device.parent" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">parent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Annotated" title="(in Python v3.14)"><span class="pre">Annotated</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Field</span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="s"><span class="pre">'The</span> <span class="pre">parent</span> <span class="pre">device</span> <span class="pre">(basename</span> <span class="pre">of</span> <span class="pre">yaml</span> <span class="pre">file'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">deprecated</span></span><span class="o"><span class="pre">=</span></span><span class="s"><span class="pre">'parent</span> <span class="pre">is</span> <span class="pre">deprecated,</span> <span class="pre">use</span> <span class="pre">`Include`</span> <span class="pre">statement</span> <span class="pre">instead'</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi.device.Device.parent" title="Link to this definition">#</a></dt>
 <dd><p>None</p>
 </dd></dl>
 
@@ -1633,6 +1666,11 @@ serialized: Dictionary of class instance</p>
 <p>Args:
 yaml_paths: Paths of parent class Device YAMLs</p>
 </dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pvi.device.Device.expand_includes">
+<span class="sig-name descname"><span class="pre">expand_includes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pvi.device.Include" title="pvi.device.Include"><span class="pre">pvi.device.Include</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaml_paths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.14)"><span class="pre">pathlib.Path</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pvi.device.ComponentUnion</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/pvi/device.html#Device.expand_includes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi.device.Device.expand_includes" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pvi.device.Device.merge_components">
@@ -1871,7 +1909,12 @@ yaml_paths: Paths of parent class Device YAMLs</p>
 </ul>
 </li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.ComponentUnion"><code class="docutils literal notranslate"><span class="pre">ComponentUnion</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.Include"><code class="docutils literal notranslate"><span class="pre">Include</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.Include.file_name"><code class="docutils literal notranslate"><span class="pre">Include.file_name</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.Tree"><code class="docutils literal notranslate"><span class="pre">Tree</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.ResolvedTree"><code class="docutils literal notranslate"><span class="pre">ResolvedTree</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.walk"><code class="docutils literal notranslate"><span class="pre">walk()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.Device"><code class="docutils literal notranslate"><span class="pre">Device</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.Device.label"><code class="docutils literal notranslate"><span class="pre">Device.label</span></code></a></li>
@@ -1881,6 +1924,7 @@ yaml_paths: Paths of parent class Device YAMLs</p>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.Device.serialize"><code class="docutils literal notranslate"><span class="pre">Device.serialize()</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.Device.deserialize"><code class="docutils literal notranslate"><span class="pre">Device.deserialize()</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.Device.deserialize_parents"><code class="docutils literal notranslate"><span class="pre">Device.deserialize_parents()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.Device.expand_includes"><code class="docutils literal notranslate"><span class="pre">Device.expand_includes()</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.Device.merge_components"><code class="docutils literal notranslate"><span class="pre">Device.merge_components()</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.Device.generate_param_tree"><code class="docutils literal notranslate"><span class="pre">Device.generate_param_tree()</span></code></a></li>
 </ul>

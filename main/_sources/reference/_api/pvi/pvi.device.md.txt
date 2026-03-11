@@ -147,6 +147,10 @@
   - ```{autodoc2-docstring} pvi.device.Group
     :summary:
     ```
+* - {py:obj}`Include <pvi.device.Include>`
+  - ```{autodoc2-docstring} pvi.device.Include
+    :summary:
+    ```
 * - {py:obj}`Device <pvi.device.Device>`
   - ```{autodoc2-docstring} pvi.device.Device
     :summary:
@@ -229,6 +233,10 @@
     ```
 * - {py:obj}`Tree <pvi.device.Tree>`
   - ```{autodoc2-docstring} pvi.device.Tree
+    :summary:
+    ```
+* - {py:obj}`ResolvedTree <pvi.device.ResolvedTree>`
+  - ```{autodoc2-docstring} pvi.device.ResolvedTree
     :summary:
     ```
 ````
@@ -1521,7 +1529,7 @@ Bases: {py:obj}`pvi.device.Component`
 
 ````{py:attribute} children
 :canonical: pvi.device.Group.children
-:type: typing.Annotated[Tree, Field(description='Child Components')]
+:type: typing.Annotated[ResolvedTree, Field(description='Child Components')]
 :value: >
    None
 
@@ -1542,12 +1550,49 @@ Bases: {py:obj}`pvi.device.Component`
 
 ````
 
+`````{py:class} Include(/, **data: typing.Any)
+:canonical: pvi.device.Include
+
+Bases: {py:obj}`pvi.typed_model.TypedModel`
+
+```{autodoc2-docstring} pvi.device.Include
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi.device.Include.__init__
+```
+
+````{py:attribute} file_name
+:canonical: pvi.device.Include.file_name
+:type: typing.Annotated[str, Field(description='Name of PVI Device to include (basename of yaml file).')]
+:value: >
+   None
+
+```{autodoc2-docstring} pvi.device.Include.file_name
+```
+
+````
+
+`````
+
 ````{py:data} Tree
 :canonical: pvi.device.Tree
 :value: >
    None
 
 ```{autodoc2-docstring} pvi.device.Tree
+```
+
+````
+
+````{py:data} ResolvedTree
+:canonical: pvi.device.ResolvedTree
+:value: >
+   None
+
+```{autodoc2-docstring} pvi.device.ResolvedTree
 ```
 
 ````
@@ -1586,7 +1631,7 @@ Bases: {py:obj}`pvi.typed_model.TypedModel`, {py:obj}`pvi._yaml_utils.YamlValida
 
 ````{py:attribute} parent
 :canonical: pvi.device.Device.parent
-:type: typing.Annotated[str | None, The parent device (basename of yaml file)]
+:type: typing.Annotated[str | None, Field(description='The parent device (basename of yaml file', deprecated='parent is deprecated, use `Include` statement instead')]
 :value: >
    None
 
@@ -1635,6 +1680,14 @@ Bases: {py:obj}`pvi.typed_model.TypedModel`, {py:obj}`pvi._yaml_utils.YamlValida
 :canonical: pvi.device.Device.deserialize_parents
 
 ```{autodoc2-docstring} pvi.device.Device.deserialize_parents
+```
+
+````
+
+````{py:method} expand_includes(component: pvi.device.Include, yaml_paths: list[pathlib.Path]) -> list[pvi.device.ComponentUnion]
+:canonical: pvi.device.Device.expand_includes
+
+```{autodoc2-docstring} pvi.device.Device.expand_includes
 ```
 
 ````

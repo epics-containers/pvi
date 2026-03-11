@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pvi.device &#8212; pvi 0.12.1.dev5+g6d1c94298 documentation</title>
+    <title>pvi.device &#8212; pvi 0.12.1.dev10+g5a3679952 documentation</title>
   
   
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=cc0a265d"></script>
+    <script src="../../_static/documentation_options.js?v=c298b75c"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -465,7 +465,13 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Annotated</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">ClassVar</span><span class="p">,</span> <span class="n">Self</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">ConfigDict</span><span class="p">,</span> <span class="n">Field</span><span class="p">,</span> <span class="n">ValidationError</span><span class="p">,</span> <span class="n">model_validator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">BaseModel</span><span class="p">,</span>
+    <span class="n">ConfigDict</span><span class="p">,</span>
+    <span class="n">Field</span><span class="p">,</span>
+    <span class="n">ValidationError</span><span class="p">,</span>
+    <span class="n">model_validator</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">pvi._yaml_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">YamlValidatorMixin</span><span class="p">,</span> <span class="n">dump_yaml</span><span class="p">,</span> <span class="n">type_first</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pvi.typed_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">TypedModel</span><span class="p">,</span> <span class="n">as_tagged_union</span>
@@ -1041,7 +1047,7 @@
     <span class="n">layout</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span>
         <span class="n">LayoutUnion</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;How to layout children on screen&quot;</span><span class="p">)</span>
     <span class="p">]</span>
-    <span class="n">children</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="n">Tree</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Child Components&quot;</span><span class="p">)]</span></div>
+    <span class="n">children</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="n">ResolvedTree</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Child Components&quot;</span><span class="p">)]</span></div>
 
 
 
@@ -1056,10 +1062,30 @@
     <span class="o">|</span> <span class="n">DeviceRef</span>
 <span class="p">)</span>
 
+
 <span class="k">if</span> <span class="ow">not</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="n">ComponentUnion</span> <span class="o">=</span> <span class="n">as_tagged_union</span><span class="p">(</span><span class="n">ComponentUnion</span><span class="p">)</span>
 
-<span class="n">Tree</span> <span class="o">=</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">ComponentUnion</span><span class="p">]</span>
+
+<div class="viewcode-block" id="Include">
+<a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.Include">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Include</span><span class="p">(</span><span class="n">TypedModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Reference to another PVI Device.</span>
+
+<span class="sd">    This is resolved into the components of the referenced device,</span>
+<span class="sd">    by the device with the `Include` statement, in the location that</span>
+<span class="sd">    it is included.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">file_name</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span>
+        <span class="nb">str</span><span class="p">,</span>
+        <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Name of PVI Device to include (basename of yaml file).&quot;</span><span class="p">),</span>
+    <span class="p">]</span></div>
+
+
+
+<span class="n">Tree</span> <span class="o">=</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">ComponentUnion</span> <span class="o">|</span> <span class="n">Include</span><span class="p">]</span>
+<span class="n">ResolvedTree</span> <span class="o">=</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">ComponentUnion</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="walk">
@@ -1069,6 +1095,11 @@
     <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tree</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">Group</span><span class="p">):</span>
             <span class="k">yield from</span> <span class="n">walk</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">children</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">Include</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="s2">&quot;`Include` statement should have been resolved &quot;</span>
+                <span class="s2">&quot;in device deserialization.&quot;</span>
+            <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">yield</span> <span class="n">t</span></div>
 
@@ -1080,7 +1111,13 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Collection of Components&quot;&quot;&quot;</span>
 
     <span class="n">label</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Label for screen&quot;</span><span class="p">)]</span>
-    <span class="n">parent</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;The parent device (basename of yaml file)&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">parent</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span>
+        <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">Field</span><span class="p">(</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The parent device (basename of yaml file&quot;</span><span class="p">,</span>
+            <span class="n">deprecated</span><span class="o">=</span><span class="s2">&quot;parent is deprecated, use `Include` statement instead&quot;</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">children</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="n">Tree</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Child Components&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[]</span>
 
 <div class="viewcode-block" id="Device._to_dict">
@@ -1141,41 +1178,67 @@
 <span class="sd">            yaml_paths: Paths of parent class Device YAMLs</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">==</span> <span class="s2">&quot;asynPortDriver&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">==</span> <span class="s2">&quot;asynPortDriver&quot;</span><span class="p">:</span>
             <span class="k">return</span>
 
-        <span class="n">parent_components</span> <span class="o">=</span> <span class="n">find_components</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span> <span class="n">yaml_paths</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">merge_components</span><span class="p">(</span><span class="n">parent_components</span><span class="p">)</span></div>
+        <span class="c1"># For backwards compatability</span>
+        <span class="c1"># Replace parent field with an Include statement</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="n">Include</span><span class="p">(</span><span class="n">file_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">)]</span>
+        <span class="n">components</span><span class="p">:</span> <span class="n">Tree</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">Include</span><span class="p">):</span>
+                <span class="n">expanded_components</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expand_includes</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">yaml_paths</span><span class="p">)</span>
+                <span class="n">components</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">expanded_components</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">components</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">merge_components</span><span class="p">(</span><span class="n">components</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Device.expand_includes">
+<a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.Device.expand_includes">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">expand_includes</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">:</span> <span class="n">Include</span><span class="p">,</span> <span class="n">yaml_paths</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">ComponentUnion</span><span class="p">]:</span>
+        <span class="n">resolved</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ComponentUnion</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">include_components</span> <span class="o">=</span> <span class="n">find_components</span><span class="p">(</span><span class="n">component</span><span class="o">.</span><span class="n">file_name</span><span class="p">,</span> <span class="n">yaml_paths</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">new_component</span> <span class="ow">in</span> <span class="n">include_components</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_component</span><span class="p">,</span> <span class="n">Include</span><span class="p">):</span>
+                <span class="n">resolved</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expand_includes</span><span class="p">(</span><span class="n">new_component</span><span class="p">,</span> <span class="n">yaml_paths</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">resolved</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_component</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">resolved</span></div>
 
 
 <div class="viewcode-block" id="Device.merge_components">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.Device.merge_components">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">merge_components</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">components</span><span class="p">:</span> <span class="n">Tree</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">existing_components</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">walk</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">))</span>
-        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">components</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">Group</span><span class="p">):</span>
-                <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">Group</span><span class="p">):</span>
-                        <span class="k">continue</span>
-                    <span class="k">elif</span> <span class="n">group</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
-                        <span class="n">group</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">group</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span>
-                            <span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">group</span><span class="o">.</span><span class="n">children</span>
-                        <span class="p">]</span>
-                        <span class="k">break</span>  <span class="c1"># Groups merged - skip to next group</span>
+        <span class="n">merged</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ComponentUnion</span> <span class="o">|</span> <span class="n">Include</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">groups_by_name</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Group</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 
-                <span class="k">else</span><span class="p">:</span>  <span class="c1"># No break - Did not find the Group</span>
-                    <span class="c1"># Remove any signals already in device from node</span>
-                    <span class="n">node</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="p">[</span>
-                        <span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">existing_components</span>
+        <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">components</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">Group</span><span class="p">):</span>
+                <span class="c1"># Component is an individual AsynParameter - just append it</span>
+                <span class="n">merged</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
+                <span class="k">continue</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="n">existing</span> <span class="o">:=</span> <span class="n">groups_by_name</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">component</span><span class="o">.</span><span class="n">name</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># New group, so remove any component that already exists</span>
+                <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groups_by_name</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                    <span class="n">component</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="p">[</span>
+                        <span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">component</span><span class="o">.</span><span class="n">children</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">group</span><span class="o">.</span><span class="n">children</span>
                     <span class="p">]</span>
-
-                    <span class="c1"># Add node as a new group</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="n">node</span><span class="p">]</span>
-
-                    <span class="k">continue</span>  <span class="c1"># Skip to next group</span>
+                <span class="n">groups_by_name</span><span class="p">[</span><span class="n">component</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">component</span>
+                <span class="n">merged</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="c1"># Node is an individual AsynParameter - just append it</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="n">node</span><span class="p">]</span></div>
+                <span class="c1"># Duplicate group, so merge duplicate into existing group</span>
+                <span class="n">merged_children</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">existing</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span>
+                    <span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">component</span><span class="o">.</span><span class="n">children</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">existing</span><span class="o">.</span><span class="n">children</span>
+                <span class="p">]</span>
+                <span class="n">existing</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="n">merged_children</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="n">merged</span></div>
 
 
 <div class="viewcode-block" id="Device.generate_param_tree">
@@ -1204,14 +1267,10 @@
         <span class="k">raise</span> <span class="ne">OSError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cannot find </span><span class="si">{</span><span class="n">device_name</span><span class="si">}</span><span class="s2"> in </span><span class="si">{</span><span class="n">yaml_paths</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="n">device</span> <span class="o">=</span> <span class="n">Device</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="n">device_yaml</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">device</span><span class="o">.</span><span class="n">parent</span><span class="p">:</span>
+        <span class="n">device</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">device</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="n">Include</span><span class="p">(</span><span class="n">file_name</span><span class="o">=</span><span class="n">device</span><span class="o">.</span><span class="n">parent</span><span class="p">)]</span>
 
-    <span class="n">parent_components</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="nb">list</span><span class="p">(</span><span class="n">find_components</span><span class="p">(</span><span class="n">device</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span> <span class="n">yaml_paths</span><span class="p">))</span>
-        <span class="k">if</span> <span class="n">device</span><span class="o">.</span><span class="n">parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-        <span class="k">else</span> <span class="p">[]</span>
-    <span class="p">)</span>
-
-    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">device</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">+</span> <span class="n">parent_components</span></div>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">device</span><span class="o">.</span><span class="n">children</span><span class="p">)</span></div>
 
 </pre></div>
 

@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pvi.__main__ &#8212; pvi 0.12.1.dev5+g6d1c94298 documentation</title>
+    <title>pvi.__main__ &#8212; pvi 0.12.1.dev10+g5a3679952 documentation</title>
   
   
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=cc0a265d"></script>
+    <script src="../../_static/documentation_options.js?v=c298b75c"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -471,7 +471,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">pvi._format</span><span class="w"> </span><span class="kn">import</span> <span class="n">Formatter</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pvi._format.template</span><span class="w"> </span><span class="kn">import</span> <span class="n">format_template</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pvi._pv_group</span><span class="w"> </span><span class="kn">import</span> <span class="n">group_by_ui</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pvi.device</span><span class="w"> </span><span class="kn">import</span> <span class="n">Device</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pvi.device</span><span class="w"> </span><span class="kn">import</span> <span class="n">Device</span><span class="p">,</span> <span class="n">Include</span>
 
 <span class="n">app</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Typer</span><span class="p">()</span>
 <span class="n">convert_app</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Typer</span><span class="p">()</span>
@@ -629,9 +629,11 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Either Device name or header file must be provided.&quot;</span><span class="p">)</span>
 
     <span class="n">component_group</span> <span class="o">=</span> <span class="n">TemplateConverter</span><span class="p">(</span><span class="n">templates</span><span class="p">)</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
-    <span class="n">device</span> <span class="o">=</span> <span class="n">Device</span><span class="p">(</span>
-        <span class="n">label</span><span class="o">=</span><span class="n">label</span> <span class="ow">or</span> <span class="n">device_name</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">parent_name</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="n">component_group</span>
-    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">parent_name</span><span class="p">:</span>
+        <span class="n">component_group</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">component_group</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="n">Include</span><span class="p">(</span><span class="n">file_name</span><span class="o">=</span><span class="n">parent_name</span><span class="p">)]</span>
+
+    <span class="n">device</span> <span class="o">=</span> <span class="n">Device</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">label</span> <span class="ow">or</span> <span class="n">device_name</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="n">component_group</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">output</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
         <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
@@ -675,8 +677,9 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Add PVs to an existing device.yaml file based on extra / updated templates.&quot;&quot;&quot;</span>
     <span class="n">device</span> <span class="o">=</span> <span class="n">Device</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="n">device_path</span><span class="p">)</span>
     <span class="n">template_components</span> <span class="o">=</span> <span class="n">TemplateConverter</span><span class="p">(</span><span class="n">templates</span><span class="p">)</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
+    <span class="n">components_to_merge</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">device</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">template_components</span><span class="p">)</span>
 
-    <span class="n">device</span><span class="o">.</span><span class="n">merge_components</span><span class="p">(</span><span class="n">template_components</span><span class="p">)</span>
+    <span class="n">device</span><span class="o">.</span><span class="n">merge_components</span><span class="p">(</span><span class="n">components_to_merge</span><span class="p">)</span>
 
     <span class="n">device</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">device_path</span><span class="p">)</span></div>
 
