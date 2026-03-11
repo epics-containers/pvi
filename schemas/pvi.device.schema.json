@@ -469,6 +469,28 @@
       "title": "ImageRead",
       "type": "object"
     },
+    "Include": {
+      "additionalProperties": false,
+      "description": "Reference to another PVI Device.\n\nThis is resolved into the components of the referenced device,\nby the device with the `Include` statement, in the location that\nit is included.",
+      "properties": {
+        "file_name": {
+          "description": "Name of PVI Device to include (basename of yaml file).",
+          "title": "File Name",
+          "type": "string"
+        },
+        "type": {
+          "const": "Include",
+          "default": "Include",
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "file_name"
+      ],
+      "title": "Include",
+      "type": "object"
+    },
     "LED": {
       "additionalProperties": false,
       "description": "LED display of a boolean PV",
@@ -1237,36 +1259,45 @@
         }
       ],
       "default": null,
+      "deprecated": true,
+      "description": "The parent device (basename of yaml file",
       "title": "Parent"
     },
     "children": {
       "default": [],
       "description": "Child Components",
       "items": {
-        "oneOf": [
+        "anyOf": [
           {
-            "$ref": "#/$defs/Group"
+            "oneOf": [
+              {
+                "$ref": "#/$defs/Group"
+              },
+              {
+                "$ref": "#/$defs/SignalR"
+              },
+              {
+                "$ref": "#/$defs/SignalW"
+              },
+              {
+                "$ref": "#/$defs/SignalRW"
+              },
+              {
+                "$ref": "#/$defs/SignalX"
+              },
+              {
+                "$ref": "#/$defs/IgnoredSignal"
+              },
+              {
+                "$ref": "#/$defs/SignalRef"
+              },
+              {
+                "$ref": "#/$defs/DeviceRef"
+              }
+            ]
           },
           {
-            "$ref": "#/$defs/SignalR"
-          },
-          {
-            "$ref": "#/$defs/SignalW"
-          },
-          {
-            "$ref": "#/$defs/SignalRW"
-          },
-          {
-            "$ref": "#/$defs/SignalX"
-          },
-          {
-            "$ref": "#/$defs/IgnoredSignal"
-          },
-          {
-            "$ref": "#/$defs/SignalRef"
-          },
-          {
-            "$ref": "#/$defs/DeviceRef"
+            "$ref": "#/$defs/Include"
           }
         ]
       },

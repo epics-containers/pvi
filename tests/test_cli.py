@@ -9,7 +9,7 @@ import pytest
 from pvi import __version__
 from pvi.__main__ import app
 from pvi._format import Formatter
-from pvi.device import Device, Grid, Group
+from pvi.device import Device, Grid, Group, Include
 
 HERE = Path(__file__).parent
 
@@ -73,42 +73,45 @@ def test_format(tmp_path, helper, formatter, format, widget_name, formats_to_ski
     expected_path = HERE / "format" / "output" / "all_widgets" / filename
     input_path = HERE / "format" / "input"
     formatter_path = input_path / formatter
-    helper.assert_cli_output_matches(
-        app,
-        expected_path,
-        "format --yaml-path " + str(input_path),
-        tmp_path / filename,
-        input_path / "all_widgets" / (widget_name + ".pvi.device.yaml"),
-        formatter_path,
-    )
+    with pytest.deprecated_call():
+        helper.assert_cli_output_matches(
+            app,
+            expected_path,
+            "format --yaml-path " + str(input_path),
+            tmp_path / filename,
+            input_path / "all_widgets" / (widget_name + ".pvi.device.yaml"),
+            formatter_path,
+        )
 
 
 def test_format_parent_child(tmp_path, helper):
     expected_path = HERE / "format" / "output" / "parent_child.bob"
     input_path = HERE / "format" / "input"
     formatter_path = input_path / "dls.bob.pvi.formatter.yaml"
-    helper.assert_cli_output_matches(
-        app,
-        expected_path,
-        "format --yaml-path " + str(input_path),
-        tmp_path / "parent_child.bob",
-        HERE / "format" / "input" / "child.pvi.device.yaml",
-        formatter_path,
-    )
+    with pytest.deprecated_call():
+        helper.assert_cli_output_matches(
+            app,
+            expected_path,
+            "format --yaml-path " + str(input_path),
+            tmp_path / "parent_child.bob",
+            HERE / "format" / "input" / "child.pvi.device.yaml",
+            formatter_path,
+        )
 
 
 def test_signal_default_widgets(tmp_path, helper):
     expected_path = HERE / "format" / "output" / "signal_default_widgets.bob"
     input_path = HERE / "format" / "input"
     formatter_path = input_path / "dls.bob.pvi.formatter.yaml"
-    helper.assert_cli_output_matches(
-        app,
-        expected_path,
-        "format --yaml-path " + str(input_path),
-        tmp_path / "signal_default_widgets.bob",
-        HERE / "format" / "input" / "signal_default_widgets.pvi.device.yaml",
-        formatter_path,
-    )
+    with pytest.deprecated_call():
+        helper.assert_cli_output_matches(
+            app,
+            expected_path,
+            "format --yaml-path " + str(input_path),
+            tmp_path / "signal_default_widgets.bob",
+            HERE / "format" / "input" / "signal_default_widgets.pvi.device.yaml",
+            formatter_path,
+        )
 
 
 def test_convert_header(tmp_path, helper):
@@ -189,14 +192,15 @@ def test_static_table(tmp_path, helper, input_yaml, formatter, output):
     expected_path = HERE / "format" / "output" / output
     input_path = HERE / "format" / "input"
     formatter_path = HERE / "../formatters/" / formatter
-    helper.assert_cli_output_matches(
-        app,
-        expected_path,
-        "format --yaml-path " + str(input_path),
-        tmp_path / output,
-        input_path / input_yaml,
-        formatter_path,
-    )
+    with pytest.deprecated_call():
+        helper.assert_cli_output_matches(
+            app,
+            expected_path,
+            "format --yaml-path " + str(input_path),
+            tmp_path / output,
+            input_path / input_yaml,
+            formatter_path,
+        )
 
 
 @pytest.mark.parametrize(
@@ -226,7 +230,8 @@ def test_combine_widgets(tmp_path, helper, formatter, format, skip):
                 children=[
                     child
                     for child in device.children
-                    if not any(s in child.name for s in skip)
+                    if not isinstance(child, Include)
+                    and not any(s in child.name for s in skip)
                 ],
                 layout=Grid(),
             )

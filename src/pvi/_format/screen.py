@@ -28,6 +28,7 @@ from pvi.device import (
     Group,
     IgnoredSignal,
     ImageRead,
+    Include,
     Row,
     SignalR,
     SignalRef,
@@ -99,6 +100,11 @@ class ScreenFormatterFactory(Generic[T]):
                 pass
 
         for c in components:
+            if isinstance(c, Include):
+                raise TypeError(
+                    "`Include` statement should have been resolved "
+                    "in device deserialization."
+                )
             last_column_bounds = columns[-1]
             next_column_bounds = Bounds(
                 x=next_x(screen_widgets, self.layout.spacing),

@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../../schemas/pvi.device.schema.json
+
+label: GrandParent
+children:
+  - type: Group
+    name: GrandParentGroup
+    layout:
+      type: Grid
+    children:
+      - type: SignalR
+        name: GrandParentTopSignal
+        read_pv: GrandParentTopSignal_RBV

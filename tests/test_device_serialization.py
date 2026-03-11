@@ -2,6 +2,7 @@ import json
 import os
 from pathlib import Path
 from typing import Annotated, TypeAlias
+from unittest.mock import patch
 
 import pytest
 from pydantic import BaseModel, Discriminator, Field, Tag, ValidationError
@@ -13,6 +14,7 @@ from pvi.device import (
     Device,
     Grid,
     Group,
+    Include,
     SignalR,
     SignalRW,
     SignalW,
@@ -50,12 +52,14 @@ def device():
             write_widget=TableWrite(widgets=[CheckBox(), ComboBox(), TextWrite()]),
         ),
         SignalR(name="OutA", read_pv="OUTA", read_widget=LED()),
+        Include(file_name="parent"),
     ]
-    return Device(label="label", parent="parent", children=components)
+    return Device(label="label", children=components)
 
 
 DEVICE_YAML = Path(__file__).parent / "test.pvi.device.yaml"
 BAD_DEVICE_YAML = Path(__file__).parent / "bad.pvi.device.yaml"
+DEPRECATED_DEVICE_YAML = Path(__file__).parent / "deprecated.pvi.device.yaml"
 
 
 def test_serialize(device: Device):
@@ -73,9 +77,18 @@ def test_deserialize(device: Device):
     assert d == device
 
 
-def test_deserialize_raises():
+def test_deserialize_raises_validation_error():
     with pytest.raises(ValidationError):
         Device.deserialize(BAD_DEVICE_YAML)
+
+
+@pytest.mark.filterwarnings("error::DeprecationWarning")
+def test_deserialize_parents_raises_deprecation_warning():
+    with patch("pvi.device.Device.expand_includes", return_value=[]):
+        with pytest.deprecated_call(
+            match="parent is deprecated, use `Include` statement instead"
+        ):
+            Device.deserialize(DEPRECATED_DEVICE_YAML).deserialize_parents([])
 
 
 def test_validate_fails():

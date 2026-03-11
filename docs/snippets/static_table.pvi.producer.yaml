@@ -5,7 +5,6 @@ prefix: $(P)$(R)
 asyn_port: $(PORT)
 address: $(ADDR=0)
 timeout: $(TIMEOUT=1)
-parent: asynPortDriver
 parameters:
   - type: AsynBinary
     name: Binary
@@ -420,3 +419,5 @@ parameters:
                 drv_info: STRING_4
                 access: R
                 index_name: String4
+  - type: Include
+    file_name: asynPortDriver

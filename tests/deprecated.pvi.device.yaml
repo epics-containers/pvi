@@ -1,4 +1,5 @@
 label: label
+parent: parent
 children:
   - type: Group
     name: Parameters
@@ -38,6 +39,3 @@ children:
     read_pv: OUTA
     read_widget:
       type: LED
-
-  - type: Include
-    file_name: parent
