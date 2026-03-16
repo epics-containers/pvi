@@ -339,8 +339,8 @@ class Signal(Component, AccessModeMixin):
     """Base signal type representing one or two PVs of a `Device`."""
 
 
-class IgnoredSignal(Signal):
-    """A `Signal` that is ignored on screens."""
+class IgnoredComponent(Component):
+    """A `Component` that is ignored on screens."""
 
 
 class SignalR(Signal):
@@ -455,7 +455,7 @@ class Group(Component):
     layout: Annotated[
         LayoutUnion, Field(description="How to layout children on screen")
     ]
-    children: Annotated[ResolvedTree, Field(description="Child Components")]
+    children: Annotated[ResolvedTree, Field(description="Child Components")] = []
 
 
 ComponentUnion = (
@@ -464,7 +464,7 @@ ComponentUnion = (
     | SignalW
     | SignalRW
     | SignalX
-    | IgnoredSignal
+    | IgnoredComponent
     | SignalRef
     | DeviceRef
 )
@@ -597,23 +597,38 @@ class Device(TypedModel, YamlValidatorMixin):
 
     def merge_components(self, components: Tree) -> None:
         merged: list[ComponentUnion | Include] = []
-        groups_by_name: dict[str, Group] = {}
+        # Components we may merge on
+        component_by_name: dict[str, Group | IgnoredComponent] = {}
 
         for component in components:
-            if not isinstance(component, Group):
+            if not isinstance(component, Group) and not isinstance(
+                component, IgnoredComponent
+            ):
                 # Component is an individual AsynParameter - just append it
                 merged.append(component)
                 continue
 
-            if (existing := groups_by_name.get(component.name)) is None:
-                # New group, so remove any component that already exists
-                for group in groups_by_name.values():
-                    component.children = [
-                        c for c in component.children if c not in group.children
-                    ]
-                groups_by_name[component.name] = component
+            if (existing := component_by_name.get(component.name)) is None:
+                for component_to_check in component_by_name.values():
+                    if isinstance(component, Group) and isinstance(
+                        component_to_check, Group
+                    ):
+                        # New group, so remove any component that already exists
+                        # in another group
+                        component.children = [
+                            c
+                            for c in component.children
+                            if c not in component_to_check.children
+                        ]
+                component_by_name[component.name] = component
                 merged.append(component)
             else:
+                if isinstance(existing, IgnoredComponent) or isinstance(
+                    component, IgnoredComponent
+                ):
+                    # If there is an existing IgnoredComponent (or group), ignore
+                    # the new group (or IgnoredComponent) of the same name.
+                    continue
                 # Duplicate group, so merge duplicate into existing group
                 merged_children = list(existing.children) + [
                     c for c in component.children if c not in existing.children

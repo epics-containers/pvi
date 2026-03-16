@@ -3,6 +3,15 @@
 label: Parent
 children:
   - type: Group
+    name: ParentGroupToIgnore
+    layout:
+      type: Grid
+    children:
+      - type: SignalR
+        name: SomeSignal
+        read_pv: SomeSignal_RBV
+
+  - type: Group
     name: ParentGroup
     layout:
       type: Grid
