@@ -515,7 +515,8 @@ class ScreenFormatterFactory(Generic[T]):
             yield self.widget_formatter_factory.label_formatter_cls(
                 bounds=left,
                 text=c.get_label(),
-                tooltip=c.description or "No description provided",
+                tooltip=f"{c.get_label()} - "
+                f"{c.description or 'No description provided'}",
             )
         else:
             # Allow full width for widget
