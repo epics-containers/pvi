@@ -5,7 +5,7 @@ minor 0
 release 1
 x 0
 y 0
-w 375
+w 425
 h 105
 font "arial-bold-r-12.0"
 ctlFont "arial-bold-r-12.0"
@@ -33,7 +33,7 @@ minor 1
 release 1
 x 0
 y 0
-w 375
+w 425
 h 25
 font "arial-bold-r-16.0"
 fontAlign "center"
@@ -52,7 +52,7 @@ minor 1
 release 1
 x 10
 y 30
-w 150
+w 200
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -69,7 +69,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 165
+x 215
 y 30
 w 205
 h 20
@@ -90,7 +90,7 @@ minor 1
 release 1
 x 10
 y 55
-w 150
+w 200
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -107,7 +107,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 165
+x 215
 y 55
 w 205
 h 20
@@ -128,7 +128,7 @@ minor 1
 release 1
 x 10
 y 80
-w 150
+w 200
 h 20
 font "arial-bold-r-10.0"
 fgColor index 14
@@ -145,7 +145,7 @@ beginObjectProperties
 major 10
 minor 0
 release 0
-x 165
+x 215
 y 80
 w 205
 h 20
