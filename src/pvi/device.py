@@ -339,8 +339,8 @@ class Signal(Component, AccessModeMixin):
     """Base signal type representing one or two PVs of a `Device`."""
 
 
-class IgnoredSignal(Signal):
-    """A `Signal` that is ignored on screens."""
+class IgnoredComponent(Component):
+    """A `Component` that is ignored on screens."""
 
 
 class SignalR(Signal):
@@ -455,7 +455,7 @@ class Group(Component):
     layout: Annotated[
         LayoutUnion, Field(description="How to layout children on screen")
     ]
-    children: Annotated[ResolvedTree, Field(description="Child Components")]
+    children: Annotated[ResolvedTree, Field(description="Child Components")] = []
 
 
 ComponentUnion = (
@@ -464,7 +464,7 @@ ComponentUnion = (
     | SignalW
     | SignalRW
     | SignalX
-    | IgnoredSignal
+    | IgnoredComponent
     | SignalRef
     | DeviceRef
 )
@@ -582,6 +582,7 @@ class Device(TypedModel, YamlValidatorMixin):
                 components.append(component)
 
         self.merge_components(components)
+        pass
 
     def expand_includes(
         self, component: Include, yaml_paths: list[Path]
@@ -597,28 +598,51 @@ class Device(TypedModel, YamlValidatorMixin):
 
     def merge_components(self, components: Tree) -> None:
         merged: list[ComponentUnion | Include] = []
-        groups_by_name: dict[str, Group] = {}
+        # Components we may merge on
+        # Key is group name, and value is group and index into `merged`
+        component_by_name: dict[str, tuple[Group, int]] = {}
 
         for component in components:
             if not isinstance(component, Group):
+                # Check if we are overriding an existing group's type
+                if not isinstance(component, Include) and (
+                    existing := component_by_name.get(component.name)
+                ):
+                    # Get position of existing group
+                    _, merged_position = existing
+                    # Replace with new component of different type
+                    merged[merged_position] = component
                 # Component is an individual AsynParameter - just append it
-                merged.append(component)
+                else:
+                    merged.append(component)
                 continue
 
-            if (existing := groups_by_name.get(component.name)) is None:
-                # New group, so remove any component that already exists
-                for group in groups_by_name.values():
+            if (existing := component_by_name.get(component.name)) is None:
+                for group, _ in component_by_name.values():
+                    # New group, so remove any component that already exists
+                    # in another group
                     component.children = [
                         c for c in component.children if c not in group.children
                     ]
-                groups_by_name[component.name] = component
+                component_by_name[component.name] = (component, len(merged))
                 merged.append(component)
             else:
-                # Duplicate group, so merge duplicate into existing group
-                merged_children = list(existing.children) + [
-                    c for c in component.children if c not in existing.children
-                ]
-                existing.children = merged_children
+                group, _ = existing
+                new_children = {c.name: c for c in component.children}
+
+                merged_children: list[ComponentUnion] = []
+
+                for existing_children in group.children:
+                    duplicate = new_children.pop(existing_children.name, None)
+
+                    if duplicate:
+                        # Use duplicate, as type may be new
+                        merged_children.append(duplicate)
+                    else:
+                        # Append existing child
+                        merged_children.append(existing_children)
+
+                group.children = merged_children + list(new_children.values())
 
         self.children = merged
 

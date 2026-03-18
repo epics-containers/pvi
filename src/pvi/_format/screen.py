@@ -26,7 +26,7 @@ from pvi.device import (
     DeviceRef,
     Grid,
     Group,
-    IgnoredSignal,
+    IgnoredComponent,
     ImageRead,
     Include,
     Row,
@@ -105,6 +105,9 @@ class ScreenFormatterFactory(Generic[T]):
                     "`Include` statement should have been resolved "
                     "in device deserialization."
                 )
+            if isinstance(c, IgnoredComponent):
+                # Skip over ignored components
+                continue
             last_column_bounds = columns[-1]
             next_column_bounds = Bounds(
                 x=next_x(screen_widgets, self.layout.spacing),
@@ -314,8 +317,8 @@ class ScreenFormatterFactory(Generic[T]):
         )
 
         for c in group.children:
-            if isinstance(c, IgnoredSignal):
-                # Skip over ignored signals
+            if isinstance(c, IgnoredComponent):
+                # Skip over ignored components
                 continue
             component: Group | Component
             add_label: bool = True

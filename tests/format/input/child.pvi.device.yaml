@@ -2,6 +2,9 @@
 
 label: Child
 children:
+  - type: Include
+    file_name: parent
+
   - type: Group
     name: ParentGroup
     layout:
@@ -10,8 +13,9 @@ children:
       - type: SignalR
         name: ParentGroupChildSignal
         read_pv: ParentGroupChild_RBV
-      - type: IgnoredSignal
+      - type: IgnoredComponent
         name: ParentGroupSignalToIgnore
+
   - type: Group
     name: ChildGroup
     layout:
@@ -20,5 +24,6 @@ children:
       - type: SignalR
         name: ChildGroupSignal
         read_pv: ChildGroupChild_RBV
-  - type: Include
-    file_name: parent
+
+  - type: IgnoredComponent
+    name: ParentGroupToIgnore
