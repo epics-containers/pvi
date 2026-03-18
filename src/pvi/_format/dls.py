@@ -36,7 +36,7 @@ class DLSFormatter(Formatter):
     max_height: Annotated[int, Field(description="Max height of the screen")] = 900
     label_width: Annotated[
         int, Field(description="Width of the widget description labels")
-    ] = 150
+    ] = 200
     widget_width: Annotated[int, Field(description="Width of the widgets")] = 200
     widget_height: Annotated[int, Field(description="Height of the widgets")] = 20
 

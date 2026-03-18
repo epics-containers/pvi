@@ -71,7 +71,7 @@
           "type": "integer"
         },
         "label_width": {
-          "default": 150,
+          "default": 200,
           "description": "Width of the widget description labels",
           "title": "Label Width",
           "type": "integer"

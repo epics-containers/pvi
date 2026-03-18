@@ -63,7 +63,7 @@
       <y>0</y>
       <width>120</width>
       <height>20</height>
-      <tooltip>No description provided</tooltip>
+      <tooltip>Bit Field - No description provided</tooltip>
     </widget>
     <widget type="byte_monitor" version="2.0.0">
       <name>BitField</name>
@@ -88,7 +88,7 @@
       <y>0</y>
       <width>120</width>
       <height>20</height>
-      <tooltip>One-or-more buttons that poke a PV with a value</tooltip>
+      <tooltip>Button Panel - One-or-more buttons that poke a PV with a value</tooltip>
     </widget>
     <widget type="action_button" version="3.0.0">
       <name>WritePV</name>
@@ -141,7 +141,7 @@ $(pv_value)</tooltip>
       <y>0</y>
       <width>120</width>
       <height>20</height>
-      <tooltip>No description provided</tooltip>
+      <tooltip>Check Box - No description provided</tooltip>
     </widget>
     <widget type="checkbox" version="2.0.0">
       <name>CheckBox</name>
@@ -168,7 +168,7 @@ $(pv_value)</tooltip>
       <y>0</y>
       <width>120</width>
       <height>20</height>
-      <tooltip>No description provided</tooltip>
+      <tooltip>Combo Box - No description provided</tooltip>
     </widget>
     <widget type="combo" version="2.0.0">
       <name>ComboBox</name>
@@ -222,7 +222,7 @@ $(pv_value)</tooltip>
       <y>0</y>
       <width>120</width>
       <height>20</height>
-      <tooltip>No description provided</tooltip>
+      <tooltip>LED - No description provided</tooltip>
     </widget>
     <widget type="led" version="2.0.0">
       <name>LED</name>
@@ -247,7 +247,7 @@ $(pv_value)</tooltip>
       <y>0</y>
       <width>120</width>
       <height>20</height>
-      <tooltip>No description provided</tooltip>
+      <tooltip>Progress Bar - No description provided</tooltip>
     </widget>
     <widget type="progressbar" version="2.0.0">
       <name>ProgressBar</name>
@@ -356,7 +356,7 @@ $(pv_value)</tooltip>
       <y>0</y>
       <width>120</width>
       <height>20</height>
-      <tooltip>No description provided</tooltip>
+      <tooltip>Text Read - No description provided</tooltip>
     </widget>
     <widget type="textupdate" version="2.0.0">
       <name>TextUpdate</name>
@@ -378,7 +378,7 @@ $(pv_value)</tooltip>
       <y>24</y>
       <width>120</width>
       <height>20</height>
-      <tooltip>No description provided</tooltip>
+      <tooltip>Text Read Float - No description provided</tooltip>
     </widget>
     <widget type="textupdate" version="2.0.0">
       <name>TextUpdate</name>
@@ -401,7 +401,7 @@ $(pv_value)</tooltip>
       <y>48</y>
       <width>120</width>
       <height>20</height>
-      <tooltip>No description provided</tooltip>
+      <tooltip>Text Read Int - No description provided</tooltip>
     </widget>
     <widget type="textupdate" version="2.0.0">
       <name>TextUpdate</name>
@@ -432,7 +432,7 @@ $(pv_value)</tooltip>
       <y>0</y>
       <width>120</width>
       <height>20</height>
-      <tooltip>No description provided</tooltip>
+      <tooltip>Text Write - No description provided</tooltip>
     </widget>
     <widget type="textentry" version="3.0.0">
       <name>TextEntry</name>
@@ -450,7 +450,7 @@ $(pv_value)</tooltip>
       <y>24</y>
       <width>120</width>
       <height>20</height>
-      <tooltip>No description provided</tooltip>
+      <tooltip>Text Write Float - No description provided</tooltip>
     </widget>
     <widget type="textentry" version="3.0.0">
       <name>TextEntry</name>
@@ -469,7 +469,7 @@ $(pv_value)</tooltip>
       <y>48</y>
       <width>120</width>
       <height>20</height>
-      <tooltip>No description provided</tooltip>
+      <tooltip>Text Write Int - No description provided</tooltip>
     </widget>
     <widget type="textentry" version="3.0.0">
       <name>TextEntry</name>
@@ -496,7 +496,7 @@ $(pv_value)</tooltip>
       <y>0</y>
       <width>120</width>
       <height>20</height>
-      <tooltip>No description provided</tooltip>
+      <tooltip>Toggle Button - No description provided</tooltip>
     </widget>
     <widget type="slide_button" version="2.0.0">
       <name>ToggleButton</name>
@@ -514,7 +514,7 @@ $(pv_value)</tooltip>
       <y>24</y>
       <width>120</width>
       <height>20</height>
-      <tooltip>No description provided</tooltip>
+      <tooltip>Toggle Button RBV - No description provided</tooltip>
     </widget>
     <widget type="slide_button" version="2.0.0">
       <name>ToggleButton</name>

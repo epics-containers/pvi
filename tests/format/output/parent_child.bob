@@ -39,7 +39,7 @@
       <y>0</y>
       <width>120</width>
       <height>20</height>
-      <tooltip>No description provided</tooltip>
+      <tooltip>Parent Group Signal - No description provided</tooltip>
     </widget>
     <widget type="textupdate" version="2.0.0">
       <name>TextUpdate</name>
@@ -61,7 +61,7 @@
       <y>24</y>
       <width>120</width>
       <height>20</height>
-      <tooltip>No description provided</tooltip>
+      <tooltip>Parent Group Child Signal - No description provided</tooltip>
     </widget>
     <widget type="textupdate" version="2.0.0">
       <name>TextUpdate</name>
@@ -91,7 +91,7 @@
       <y>0</y>
       <width>120</width>
       <height>20</height>
-      <tooltip>No description provided</tooltip>
+      <tooltip>Grand Parent Top Signal - No description provided</tooltip>
     </widget>
     <widget type="textupdate" version="2.0.0">
       <name>TextUpdate</name>
@@ -113,7 +113,7 @@
       <y>24</y>
       <width>120</width>
       <height>20</height>
-      <tooltip>No description provided</tooltip>
+      <tooltip>Grand Parent Bottom Signal - No description provided</tooltip>
     </widget>
     <widget type="textupdate" version="2.0.0">
       <name>TextUpdate</name>
@@ -143,7 +143,7 @@
       <y>0</y>
       <width>120</width>
       <height>20</height>
-      <tooltip>No description provided</tooltip>
+      <tooltip>Child Group Signal - No description provided</tooltip>
     </widget>
     <widget type="textupdate" version="2.0.0">
       <name>TextUpdate</name>
