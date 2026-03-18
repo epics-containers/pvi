@@ -75,7 +75,7 @@ Bases: {py:obj}`pvi._format.base.Formatter`
 :canonical: pvi._format.dls.DLSFormatter.label_width
 :type: typing.Annotated[int, Field(description='Width of the widget description labels')]
 :value: >
-   150
+   200
 
 ```{autodoc2-docstring} pvi._format.dls.DLSFormatter.label_width
 ```
