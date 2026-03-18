@@ -322,6 +322,7 @@
           "title": "Layout"
         },
         "children": {
+          "default": [],
           "description": "Child Components",
           "items": {
             "oneOf": [
@@ -341,7 +342,7 @@
                 "$ref": "#/$defs/SignalX"
               },
               {
-                "$ref": "#/$defs/IgnoredSignal"
+                "$ref": "#/$defs/IgnoredComponent"
               },
               {
                 "$ref": "#/$defs/SignalRef"
@@ -363,15 +364,14 @@
       },
       "required": [
         "name",
-        "layout",
-        "children"
+        "layout"
       ],
       "title": "Group",
       "type": "object"
     },
-    "IgnoredSignal": {
+    "IgnoredComponent": {
       "additionalProperties": false,
-      "description": "A `Signal` that is ignored on screens.",
+      "description": "A `Component` that is ignored on screens.",
       "properties": {
         "name": {
           "description": "PascalCase name to uniquely identify",
@@ -406,8 +406,8 @@
           "title": "Description"
         },
         "type": {
-          "const": "IgnoredSignal",
-          "default": "IgnoredSignal",
+          "const": "IgnoredComponent",
+          "default": "IgnoredComponent",
           "title": "Type",
           "type": "string"
         }
@@ -415,7 +415,7 @@
       "required": [
         "name"
       ],
-      "title": "IgnoredSignal",
+      "title": "IgnoredComponent",
       "type": "object"
     },
     "ImageColorMap": {
@@ -1286,7 +1286,7 @@
                 "$ref": "#/$defs/SignalX"
               },
               {
-                "$ref": "#/$defs/IgnoredSignal"
+                "$ref": "#/$defs/IgnoredComponent"
               },
               {
                 "$ref": "#/$defs/SignalRef"

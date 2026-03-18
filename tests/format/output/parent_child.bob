@@ -34,31 +34,9 @@
     <transparent>true</transparent>
     <widget type="label" version="2.0.0">
       <name>Label</name>
-      <text>Parent Group Child Signal</text>
-      <x>0</x>
-      <y>0</y>
-      <width>120</width>
-      <height>20</height>
-      <tooltip>No description provided</tooltip>
-    </widget>
-    <widget type="textupdate" version="2.0.0">
-      <name>TextUpdate</name>
-      <pv_name>ParentGroupChild_RBV</pv_name>
-      <x>124</x>
-      <y>0</y>
-      <width>124</width>
-      <height>20</height>
-      <font>
-        <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
-      </font>
-      </font>
-      <horizontal_alignment>1</horizontal_alignment>
-    </widget>
-    <widget type="label" version="2.0.0">
-      <name>Label</name>
       <text>Parent Group Signal</text>
       <x>0</x>
-      <y>24</y>
+      <y>0</y>
       <width>120</width>
       <height>20</height>
       <tooltip>No description provided</tooltip>
@@ -67,7 +45,7 @@
       <name>TextUpdate</name>
       <pv_name>ParentGroupParent_RBV</pv_name>
       <x>124</x>
-      <y>24</y>
+      <y>0</y>
       <width>124</width>
       <height>20</height>
       <font>
@@ -76,28 +54,20 @@
       </font>
       <horizontal_alignment>1</horizontal_alignment>
     </widget>
-  </widget>
-  <widget type="group" version="2.0.0">
-    <name>Child Group</name>
-    <x>4</x>
-    <y>112</y>
-    <width>282</width>
-    <height>54</height>
-    <transparent>true</transparent>
     <widget type="label" version="2.0.0">
       <name>Label</name>
-      <text>Child Group Signal</text>
+      <text>Parent Group Child Signal</text>
       <x>0</x>
-      <y>0</y>
+      <y>24</y>
       <width>120</width>
       <height>20</height>
       <tooltip>No description provided</tooltip>
     </widget>
     <widget type="textupdate" version="2.0.0">
       <name>TextUpdate</name>
-      <pv_name>ChildGroupChild_RBV</pv_name>
+      <pv_name>ParentGroupChild_RBV</pv_name>
       <x>124</x>
-      <y>0</y>
+      <y>24</y>
       <width>124</width>
       <height>20</height>
       <font>
@@ -110,7 +80,7 @@
   <widget type="group" version="2.0.0">
     <name>Grand Parent Group</name>
     <x>4</x>
-    <y>170</y>
+    <y>112</y>
     <width>282</width>
     <height>78</height>
     <transparent>true</transparent>
@@ -150,6 +120,36 @@
       <pv_name>GrandParentBottomSignal</pv_name>
       <x>124</x>
       <y>24</y>
+      <width>124</width>
+      <height>20</height>
+      <font>
+        <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+      </font>
+      <horizontal_alignment>1</horizontal_alignment>
+    </widget>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>Child Group</name>
+    <x>4</x>
+    <y>194</y>
+    <width>282</width>
+    <height>54</height>
+    <transparent>true</transparent>
+    <widget type="label" version="2.0.0">
+      <name>Label</name>
+      <text>Child Group Signal</text>
+      <x>0</x>
+      <y>0</y>
+      <width>120</width>
+      <height>20</height>
+      <tooltip>No description provided</tooltip>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>TextUpdate</name>
+      <pv_name>ChildGroupChild_RBV</pv_name>
+      <x>124</x>
+      <y>0</y>
       <width>124</width>
       <height>20</height>
       <font>
