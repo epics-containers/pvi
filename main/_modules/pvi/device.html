@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pvi.device &#8212; pvi 0.12.1.dev10+g5a3679952 documentation</title>
+    <title>pvi.device &#8212; pvi 0.12.1.dev14+gaa751202e documentation</title>
   
   
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=c298b75c"></script>
+    <script src="../../_static/documentation_options.js?v=6a5a7fb5"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -902,10 +902,10 @@
 
 
 
-<div class="viewcode-block" id="IgnoredSignal">
-<a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.IgnoredSignal">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">IgnoredSignal</span><span class="p">(</span><span class="n">Signal</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;A `Signal` that is ignored on screens.&quot;&quot;&quot;</span></div>
+<div class="viewcode-block" id="IgnoredComponent">
+<a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.IgnoredComponent">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">IgnoredComponent</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A `Component` that is ignored on screens.&quot;&quot;&quot;</span></div>
 
 
 
@@ -1047,7 +1047,7 @@
     <span class="n">layout</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span>
         <span class="n">LayoutUnion</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;How to layout children on screen&quot;</span><span class="p">)</span>
     <span class="p">]</span>
-    <span class="n">children</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="n">ResolvedTree</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Child Components&quot;</span><span class="p">)]</span></div>
+    <span class="n">children</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="n">ResolvedTree</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Child Components&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[]</span></div>
 
 
 
@@ -1057,7 +1057,7 @@
     <span class="o">|</span> <span class="n">SignalW</span>
     <span class="o">|</span> <span class="n">SignalRW</span>
     <span class="o">|</span> <span class="n">SignalX</span>
-    <span class="o">|</span> <span class="n">IgnoredSignal</span>
+    <span class="o">|</span> <span class="n">IgnoredComponent</span>
     <span class="o">|</span> <span class="n">SignalRef</span>
     <span class="o">|</span> <span class="n">DeviceRef</span>
 <span class="p">)</span>
@@ -1193,7 +1193,8 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">components</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">merge_components</span><span class="p">(</span><span class="n">components</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">merge_components</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
+        <span class="k">pass</span></div>
 
 
 <div class="viewcode-block" id="Device.expand_includes">
@@ -1215,28 +1216,51 @@
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi.device.html#pvi.device.Device.merge_components">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">merge_components</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">components</span><span class="p">:</span> <span class="n">Tree</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">merged</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ComponentUnion</span> <span class="o">|</span> <span class="n">Include</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">groups_by_name</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Group</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="c1"># Components we may merge on</span>
+        <span class="c1"># Key is group name, and value is group and index into `merged`</span>
+        <span class="n">component_by_name</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Group</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
 
         <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">components</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">Group</span><span class="p">):</span>
+                <span class="c1"># Check if we are overriding an existing group&#39;s type</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">Include</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span>
+                    <span class="n">existing</span> <span class="o">:=</span> <span class="n">component_by_name</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">component</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="p">):</span>
+                    <span class="c1"># Get position of existing group</span>
+                    <span class="n">_</span><span class="p">,</span> <span class="n">merged_position</span> <span class="o">=</span> <span class="n">existing</span>
+                    <span class="c1"># Replace with new component of different type</span>
+                    <span class="n">merged</span><span class="p">[</span><span class="n">merged_position</span><span class="p">]</span> <span class="o">=</span> <span class="n">component</span>
                 <span class="c1"># Component is an individual AsynParameter - just append it</span>
-                <span class="n">merged</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">merged</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
                 <span class="k">continue</span>
 
-            <span class="k">if</span> <span class="p">(</span><span class="n">existing</span> <span class="o">:=</span> <span class="n">groups_by_name</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">component</span><span class="o">.</span><span class="n">name</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="c1"># New group, so remove any component that already exists</span>
-                <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groups_by_name</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">existing</span> <span class="o">:=</span> <span class="n">component_by_name</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">component</span><span class="o">.</span><span class="n">name</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">group</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">component_by_name</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                    <span class="c1"># New group, so remove any component that already exists</span>
+                    <span class="c1"># in another group</span>
                     <span class="n">component</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="p">[</span>
                         <span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">component</span><span class="o">.</span><span class="n">children</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">group</span><span class="o">.</span><span class="n">children</span>
                     <span class="p">]</span>
-                <span class="n">groups_by_name</span><span class="p">[</span><span class="n">component</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">component</span>
+                <span class="n">component_by_name</span><span class="p">[</span><span class="n">component</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">merged</span><span class="p">))</span>
                 <span class="n">merged</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="c1"># Duplicate group, so merge duplicate into existing group</span>
-                <span class="n">merged_children</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">existing</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span>
-                    <span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">component</span><span class="o">.</span><span class="n">children</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">existing</span><span class="o">.</span><span class="n">children</span>
-                <span class="p">]</span>
-                <span class="n">existing</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="n">merged_children</span>
+                <span class="n">group</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">existing</span>
+                <span class="n">new_children</span> <span class="o">=</span> <span class="p">{</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">component</span><span class="o">.</span><span class="n">children</span><span class="p">}</span>
+
+                <span class="n">merged_children</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ComponentUnion</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+                <span class="k">for</span> <span class="n">existing_children</span> <span class="ow">in</span> <span class="n">group</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+                    <span class="n">duplicate</span> <span class="o">=</span> <span class="n">new_children</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">existing_children</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">duplicate</span><span class="p">:</span>
+                        <span class="c1"># Use duplicate, as type may be new</span>
+                        <span class="n">merged_children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">duplicate</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="c1"># Append existing child</span>
+                        <span class="n">merged_children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">existing_children</span><span class="p">)</span>
+
+                <span class="n">group</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="n">merged_children</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">new_children</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="n">merged</span></div>
 

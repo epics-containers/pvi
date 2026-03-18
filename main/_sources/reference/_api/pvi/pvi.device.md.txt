@@ -115,8 +115,8 @@
   - ```{autodoc2-docstring} pvi.device.Signal
     :summary:
     ```
-* - {py:obj}`IgnoredSignal <pvi.device.IgnoredSignal>`
-  - ```{autodoc2-docstring} pvi.device.IgnoredSignal
+* - {py:obj}`IgnoredComponent <pvi.device.IgnoredComponent>`
+  - ```{autodoc2-docstring} pvi.device.IgnoredComponent
     :summary:
     ```
 * - {py:obj}`SignalR <pvi.device.SignalR>`
@@ -1214,18 +1214,18 @@ Bases: {py:obj}`pvi.device.Component`, {py:obj}`pvi.device.AccessModeMixin`
 
 ````
 
-````{py:class} IgnoredSignal(/, **data: typing.Any)
-:canonical: pvi.device.IgnoredSignal
+````{py:class} IgnoredComponent(/, **data: typing.Any)
+:canonical: pvi.device.IgnoredComponent
 
-Bases: {py:obj}`pvi.device.Signal`
+Bases: {py:obj}`pvi.device.Component`
 
-```{autodoc2-docstring} pvi.device.IgnoredSignal
+```{autodoc2-docstring} pvi.device.IgnoredComponent
 ```
 
 ```{rubric} Initialization
 ```
 
-```{autodoc2-docstring} pvi.device.IgnoredSignal.__init__
+```{autodoc2-docstring} pvi.device.IgnoredComponent.__init__
 ```
 
 ````
@@ -1531,7 +1531,7 @@ Bases: {py:obj}`pvi.device.Component`
 :canonical: pvi.device.Group.children
 :type: typing.Annotated[ResolvedTree, Field(description='Child Components')]
 :value: >
-   None
+   []
 
 ```{autodoc2-docstring} pvi.device.Group.children
 ```
