@@ -228,7 +228,6 @@ if not TYPE_CHECKING:
     _RowWriteUnion = as_tagged_union(_RowWriteUnion)
     _RowReadUnion = as_tagged_union(_RowReadUnion)
 
-
 class ArrayWrite(WriteWidget):
     """Control of an array PV"""
 
@@ -241,7 +240,7 @@ class TableRead(ReadWidget):
     """A read-only tabular view of an NTTable."""
 
     widgets: Annotated[
-        Sequence[_RowReadUnion],
+        Sequence[Cell],
         Field(
             description="For each column, what widget should be repeated for every row",
         ),
@@ -252,7 +251,7 @@ class TableWrite(WriteWidget):
     """A writeable tabular view of an NTTable."""
 
     widgets: Annotated[
-        Sequence[_RowWriteUnion],
+        Sequence[Cell],
         Field(
             description="For each column, what widget should be repeated for every row",
         ),
@@ -458,6 +457,12 @@ class Group(Component):
     children: Annotated[ResolvedTree, Field(description="Child Components")] = []
 
 
+class Cell(Component):
+    """A table cell containing vertically stacked child components"""
+
+    children: Annotated[ResolvedTree, Field(description="Child Components")] = []
+
+
 ComponentUnion = (
     Group
     | SignalR
@@ -467,6 +472,7 @@ ComponentUnion = (
     | IgnoredComponent
     | SignalRef
     | DeviceRef
+    | Cell
 )
 
 

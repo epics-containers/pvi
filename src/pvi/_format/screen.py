@@ -21,6 +21,7 @@ from pvi._format.widget import (
 from pvi.device import (
     ArrayTrace,
     ButtonPanel,
+    Cell,
     Component,
     ComponentUnion,
     DeviceRef,
@@ -479,10 +480,19 @@ class ScreenFormatterFactory(Generic[T]):
                 component_bounds.y += self.layout.widget_height + self.layout.spacing
 
             row_components = c.children  # Create a widget for each row of Group
+            max_stack = max(
+                len(child.children) if isinstance(child, Cell) else 1
+                for child in c.children
+            )
             # Allow given component width for each column, plus spacing
             component_bounds = component_bounds.tile(
                 horizontal=len(c.children), spacing=self.layout.spacing
             )
+            if max_stack > 1:
+                component_bounds.h = (
+                    max_stack * self.layout.widget_height
+                    + (max_stack - 1) * self.layout.spacing
+                )
         elif isinstance(c, SignalW) and isinstance(c.write_widget, ButtonPanel):
             # Convert SignalW into a SignalX with a fixed value for each action
             row_components = [
@@ -570,6 +580,12 @@ class ScreenFormatterFactory(Generic[T]):
                     file_name=f"{self.base_file_name}_{rc.name.replace(' ', '_')}",
                     components=rc,
                 )
+            elif isinstance(rc, Cell):
+                child_bounds_list = rc_bounds.split_into_rows(
+                    len(rc.children), self.layout.spacing
+                )
+                for child_bounds, child in zip(child_bounds_list, rc.children, strict=True):
+                    yield from self.generate_row_component_formatters([child], child_bounds)
             elif isinstance(rc, DeviceRef):
                 yield self.widget_formatter_factory.sub_screen_formatter_cls(
                     bounds=rc_bounds,
