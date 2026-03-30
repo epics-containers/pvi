@@ -228,6 +228,7 @@ if not TYPE_CHECKING:
     _RowWriteUnion = as_tagged_union(_RowWriteUnion)
     _RowReadUnion = as_tagged_union(_RowReadUnion)
 
+
 class ArrayWrite(WriteWidget):
     """Control of an array PV"""
 
@@ -240,7 +241,7 @@ class TableRead(ReadWidget):
     """A read-only tabular view of an NTTable."""
 
     widgets: Annotated[
-        Sequence[Cell],
+        Sequence[_RowReadUnion],
         Field(
             description="For each column, what widget should be repeated for every row",
         ),
@@ -251,7 +252,7 @@ class TableWrite(WriteWidget):
     """A writeable tabular view of an NTTable."""
 
     widgets: Annotated[
-        Sequence[Cell],
+        Sequence[_RowWriteUnion],
         Field(
             description="For each column, what widget should be repeated for every row",
         ),

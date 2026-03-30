@@ -133,6 +133,92 @@
       "title": "ButtonPanel",
       "type": "object"
     },
+    "Cell": {
+      "additionalProperties": false,
+      "description": "A table cell containing vertically stacked child components",
+      "properties": {
+        "name": {
+          "description": "PascalCase name to uniquely identify",
+          "pattern": "^([A-Z][a-z0-9]*)*$",
+          "title": "Name",
+          "type": "string"
+        },
+        "label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Label for component",
+          "title": "Label"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Description for label tooltip",
+          "title": "Description"
+        },
+        "children": {
+          "default": [],
+          "description": "Child Components",
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/Group"
+              },
+              {
+                "$ref": "#/$defs/SignalR"
+              },
+              {
+                "$ref": "#/$defs/SignalW"
+              },
+              {
+                "$ref": "#/$defs/SignalRW"
+              },
+              {
+                "$ref": "#/$defs/SignalX"
+              },
+              {
+                "$ref": "#/$defs/IgnoredComponent"
+              },
+              {
+                "$ref": "#/$defs/SignalRef"
+              },
+              {
+                "$ref": "#/$defs/DeviceRef"
+              },
+              {
+                "$ref": "#/$defs/Cell"
+              }
+            ]
+          },
+          "title": "Children",
+          "type": "array"
+        },
+        "type": {
+          "const": "Cell",
+          "default": "Cell",
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "Cell",
+      "type": "object"
+    },
     "CheckBox": {
       "additionalProperties": false,
       "description": "Checkable control of a boolean PV.\n\nThis is compact replacement for a `ToggleButton` to be used in rows and tables.",
@@ -349,6 +435,9 @@
               },
               {
                 "$ref": "#/$defs/DeviceRef"
+              },
+              {
+                "$ref": "#/$defs/Cell"
               }
             ]
           },
@@ -1293,6 +1382,9 @@
               },
               {
                 "$ref": "#/$defs/DeviceRef"
+              },
+              {
+                "$ref": "#/$defs/Cell"
               }
             ]
           },

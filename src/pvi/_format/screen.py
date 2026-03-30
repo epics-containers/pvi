@@ -584,8 +584,12 @@ class ScreenFormatterFactory(Generic[T]):
                 child_bounds_list = rc_bounds.split_into_rows(
                     len(rc.children), self.layout.spacing
                 )
-                for child_bounds, child in zip(child_bounds_list, rc.children, strict=True):
-                    yield from self.generate_row_component_formatters([child], child_bounds)
+                for child_bounds, child in zip(
+                    child_bounds_list, rc.children, strict=True
+                ):
+                    yield from self.generate_row_component_formatters(
+                        [child], child_bounds
+                    )
             elif isinstance(rc, DeviceRef):
                 yield self.widget_formatter_factory.sub_screen_formatter_cls(
                     bounds=rc_bounds,
