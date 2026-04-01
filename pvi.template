@@ -1,0 +1,48 @@
+
+### PV Interface for Simple Device ###
+
+record("*", "Status_RBV") {
+    info(Q:group, {
+        "PREFIXPVI": {
+            "pvi.Status.r": {
+                "+channel": "NAME",
+                "+type": "plain",
+            }
+        }
+    })
+}
+
+record("*", "Config") {
+    info(Q:group, {
+        "PREFIXPVI": {
+            "pvi.Config.w": {
+                "+channel": "NAME",
+                "+type": "plain",
+            }
+        }
+    })
+}
+
+record("*", "Config_RBV") {
+    info(Q:group, {
+        "PREFIXPVI": {
+            "pvi.Config.r": {
+                "+channel": "NAME",
+                "+type": "plain",
+            }
+        }
+    })
+}
+
+record("*", "Go") {
+    info(Q:group, {
+        "PREFIXPVI": {
+            "pvi.Command.x": {
+                "+channel": "NAME",
+                "+type": "plain",
+            }
+        }
+    })
+}
+
+### End of PV Interface for Simple Device ###

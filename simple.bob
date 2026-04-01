@@ -1,0 +1,108 @@
+<display version="2.0.0">
+  <name>Simple Device</name>
+  <x>0</x>
+  <y use_class="true">0</y>
+  <width>438</width>
+  <height>105</height>
+  <grid_step_x>4</grid_step_x>
+  <grid_step_y>4</grid_step_y>
+  <widget type="label" version="2.0.0">
+    <name>Title</name>
+    <class>TITLE</class>
+    <text>Simple Device</text>
+    <x use_class="true">0</x>
+    <y use_class="true">0</y>
+    <width>438</width>
+    <height>25</height>
+    <font use_class="true">
+      <font name="Header 1" family="Liberation Sans" style="BOLD" size="22.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="Text" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <transparent use_class="true">true</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>Status</text>
+    <x>23</x>
+    <y>30</y>
+    <width>200</width>
+    <height>20</height>
+    <tooltip>Status - No description provided</tooltip>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>TextUpdate</name>
+    <pv_name>Status_RBV</pv_name>
+    <x>228</x>
+    <y>30</y>
+    <width>205</width>
+    <height>20</height>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>Config</text>
+    <x>23</x>
+    <y>55</y>
+    <width>200</width>
+    <height>20</height>
+    <tooltip>Config - No description provided</tooltip>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>TextEntry</name>
+    <pv_name>Config</pv_name>
+    <x>228</x>
+    <y>55</y>
+    <width>100</width>
+    <height>20</height>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>TextUpdate</name>
+    <pv_name>Config_RBV</pv_name>
+    <x>333</x>
+    <y>55</y>
+    <width>100</width>
+    <height>20</height>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>Command</text>
+    <x>23</x>
+    <y>80</y>
+    <width>200</width>
+    <height>20</height>
+    <tooltip>Command - No description provided</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>WritePV</name>
+    <pv_name>Go</pv_name>
+    <actions>
+      <action type="write_pv">
+        <pv_name>$(pv_name)</pv_name>
+        <value>1</value>
+        <description>$(name)</description>
+      </action>
+    </actions>
+    <text>Go</text>
+    <x>228</x>
+    <y>80</y>
+    <width>205</width>
+    <height>20</height>
+    <tooltip>Go = 1
+$(pv_value)</tooltip>
+  </widget>
+</display>

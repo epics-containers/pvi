@@ -282,11 +282,21 @@ class Grid(Layout):
         bool, Field(description="If True use names of children as labels")
     ] = True
 
+    stacked: Annotated[
+        bool,
+        Field(description="If True, RW widgets in each row are stacked vertically"),
+    ] = False
+
 
 class SubScreen(Layout):
     """Children are displayed on another screen opened with a button."""
 
     labelled: Annotated[bool, Field(description="Display labels for components")] = True
+
+    stacked: Annotated[
+        bool,
+        Field(description="If True, RW widgets in each row are stacked vertically"),
+    ] = False
 
 
 LayoutUnion = Plot | Row | Grid | SubScreen

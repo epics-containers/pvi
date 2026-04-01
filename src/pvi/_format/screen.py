@@ -90,12 +90,14 @@ class ScreenFormatterFactory(Generic[T]):
         screen_widgets: list[WidgetFormatter[T]] = []
         columns: list[Bounds] = [Bounds(**widget_dims)]
 
+        content_stacked = False
         match components:
-            case [Group(layout=SubScreen()) as component]:
+            case [Group(layout=SubScreen(stacked=stacked)) as component]:
                 # Expand single group sub screen as only component on screen
                 # This is where the actual content of sub screens are created after
                 # being replaced by a sub screen button in the original location
                 components = component.children
+                content_stacked = stacked
             case _:
                 pass
 
@@ -138,6 +140,7 @@ class ScreenFormatterFactory(Generic[T]):
                         next_column_bounds=next_column_bounds,
                         # Indent top-level widgets to align with Group widgets
                         indent=True,
+                        stacked=content_stacked,
                     )
                 )
 
@@ -247,7 +250,12 @@ class ScreenFormatterFactory(Generic[T]):
             # Make a sub screen button at the root to display this Group instead of
             # embedding the components within a Group widget
             c = Group(
-                name=c.name, layout=SubScreen(labelled=False), children=c.children
+                name=c.name,
+                layout=SubScreen(
+                    labelled=False,
+                    stacked=isinstance(c.layout, Grid) and c.layout.stacked,
+                ),
+                children=c.children,
             )
 
         if isinstance(c.layout, SubScreen):
@@ -353,6 +361,7 @@ class ScreenFormatterFactory(Generic[T]):
                     column_bounds=column_bounds,
                     next_column_bounds=next_column_bounds,
                     add_label=add_label,
+                    stacked=isinstance(group.layout, Grid) and group.layout.stacked,
                 )
             )
             if next_column_bounds.y != 0:
@@ -373,6 +382,7 @@ class ScreenFormatterFactory(Generic[T]):
         next_column_bounds: Bounds,
         indent: bool = False,
         add_label: bool = True,
+        stacked: bool = False,
     ) -> list[WidgetFormatter[T]]:
         """Generate widgets from component data and position them in a grid format
 
@@ -406,9 +416,12 @@ class ScreenFormatterFactory(Generic[T]):
         if isinstance(c, SignalR) and isinstance(c.read_widget, ImageRead | ArrayTrace):
             tmp_column_bounds.w = c.read_widget.width
             tmp_column_bounds.h = c.read_widget.height
+        elif stacked and isinstance(c, SignalRW) and c.read_widget is not None:
+            tmp_column_bounds.h = 2 * self.layout.widget_height + self.layout.spacing
+            tmp_next_column_bounds.h = tmp_column_bounds.h
 
         widgets = list(
-            self.generate_component_formatters(c, tmp_column_bounds, add_label)
+            self.generate_component_formatters(c, tmp_column_bounds, add_label, stacked)
         )
         if max_y(widgets) <= parent_bounds.h:
             # Current column still fits on screen
@@ -416,7 +429,9 @@ class ScreenFormatterFactory(Generic[T]):
         else:
             # Widget makes current column too tall. Repeat in next column.
             widgets = list(
-                self.generate_component_formatters(c, tmp_next_column_bounds, add_label)
+                self.generate_component_formatters(
+                    c, tmp_next_column_bounds, add_label, stacked
+                )
             )
             next_column_bounds.y = next_y(widgets, self.layout.spacing)
 
@@ -427,6 +442,7 @@ class ScreenFormatterFactory(Generic[T]):
         c: ComponentUnion,
         bounds: Bounds,
         add_label: bool = True,
+        stacked: bool = False,
     ) -> Iterator[WidgetFormatter[T]]:
         """Convert a component into its WidgetFormatter equivalents
 
@@ -479,6 +495,11 @@ class ScreenFormatterFactory(Generic[T]):
                 component_bounds.y += self.layout.widget_height + self.layout.spacing
 
             row_components = c.children  # Create a widget for each row of Group
+            if stacked and any(
+                isinstance(child, SignalRW) and child.read_widget is not None
+                for child in c.children
+            ):
+                component_bounds.h = 2 * self.layout.widget_height + self.layout.spacing
             # Allow given component width for each column, plus spacing
             component_bounds = component_bounds.tile(
                 horizontal=len(c.children), spacing=self.layout.spacing
@@ -531,12 +552,15 @@ class ScreenFormatterFactory(Generic[T]):
             )
             return
 
-        yield from self.generate_row_component_formatters(row_components, row_bounds)
+        yield from self.generate_row_component_formatters(
+            row_components, row_bounds, stacked
+        )
 
     def generate_row_component_formatters(
         self,
         row_components: Sequence[Group | Component],
         row_bounds: Bounds,
+        stacked: bool = False,
     ) -> Iterator[WidgetFormatter[T]]:
         row_component_bounds = row_bounds.clone().split_into(
             len(row_components), self.layout.spacing
@@ -553,7 +577,11 @@ class ScreenFormatterFactory(Generic[T]):
                     value=rc.value,
                 )
             elif isinstance(rc, SignalRW):
-                if rc.read_widget:
+                if stacked and rc.read_widget:
+                    top, bottom = rc_bounds.split_into_rows(2, self.layout.spacing)
+                    yield from self.generate_write_widget(rc, top)
+                    yield from self.generate_read_widget(rc, bottom)
+                elif rc.read_widget:
                     left, right = rc_bounds.split_into(2, self.layout.spacing)
                     yield from self.generate_write_widget(rc, left)
                     yield from self.generate_read_widget(rc, right)

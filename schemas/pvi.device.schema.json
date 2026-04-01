@@ -257,6 +257,12 @@
           "title": "Labelled",
           "type": "boolean"
         },
+        "stacked": {
+          "default": false,
+          "description": "If True, RW widgets in each row are stacked vertically",
+          "title": "Stacked",
+          "type": "boolean"
+        },
         "type": {
           "const": "Grid",
           "default": "Grid",
@@ -1026,6 +1032,12 @@
           "default": true,
           "description": "Display labels for components",
           "title": "Labelled",
+          "type": "boolean"
+        },
+        "stacked": {
+          "default": false,
+          "description": "If True, RW widgets in each row are stacked vertically",
+          "title": "Stacked",
           "type": "boolean"
         },
         "type": {
