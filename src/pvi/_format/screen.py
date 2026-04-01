@@ -91,6 +91,7 @@ class ScreenFormatterFactory(Generic[T]):
         columns: list[Bounds] = [Bounds(**widget_dims)]
 
         content_stacked = False
+        in_subscreen = False
         match components:
             case [Group(layout=SubScreen(stacked=stacked)) as component]:
                 # Expand single group sub screen as only component on screen
@@ -98,6 +99,7 @@ class ScreenFormatterFactory(Generic[T]):
                 # being replaced by a sub screen button in the original location
                 components = component.children
                 content_stacked = stacked
+                in_subscreen = True
             case _:
                 pass
 
@@ -127,6 +129,7 @@ class ScreenFormatterFactory(Generic[T]):
                         screen_bounds=screen_bounds,
                         column_bounds=last_column_bounds,
                         next_column_bounds=next_column_bounds,
+                        squeeze=not in_subscreen,
                     )
                 )
             else:
@@ -225,6 +228,7 @@ class ScreenFormatterFactory(Generic[T]):
         screen_bounds: Bounds,
         column_bounds: Bounds,
         next_column_bounds: Bounds,
+        squeeze: bool = True,
     ) -> list[WidgetFormatter[T]]:
         """Create widget formatters for a Group
 
@@ -246,18 +250,6 @@ class ScreenFormatterFactory(Generic[T]):
             added widget
 
         """
-        if is_table(c):
-            # Make a sub screen button at the root to display this Group instead of
-            # embedding the components within a Group widget
-            c = Group(
-                name=c.name,
-                layout=SubScreen(
-                    labelled=False,
-                    stacked=isinstance(c.layout, Grid) and c.layout.stacked,
-                ),
-                children=c.children,
-            )
-
         if isinstance(c.layout, SubScreen):
             return self.create_component_widget_formatters(
                 Group(name=c.name, layout=c.layout, children=c.children),
@@ -271,7 +263,9 @@ class ScreenFormatterFactory(Generic[T]):
             split_out_plots(c)
 
         group_formatter = self.create_group_formatter(
-            c, bounds=Bounds(x=column_bounds.x, y=column_bounds.y, h=screen_bounds.h)
+            c,
+            bounds=Bounds(x=column_bounds.x, y=column_bounds.y, h=screen_bounds.h),
+            squeeze=squeeze,
         )
 
         if group_formatter.bounds.h + group_formatter.bounds.y <= screen_bounds.h:
@@ -291,6 +285,7 @@ class ScreenFormatterFactory(Generic[T]):
                 bounds=Bounds(
                     x=next_column_bounds.x, y=next_column_bounds.y, h=screen_bounds.h
                 ),
+                squeeze=squeeze,
             )
             group_formatter.bounds.w += self.layout.group_width_offset
 
@@ -302,7 +297,9 @@ class ScreenFormatterFactory(Generic[T]):
 
         return [group_formatter]
 
-    def create_group_formatter(self, group: Group, bounds: Bounds) -> GroupFormatter[T]:
+    def create_group_formatter(
+        self, group: Group, bounds: Bounds, squeeze: bool = True
+    ) -> GroupFormatter[T]:
         """Convert components within groups into widgets and lay them out within a
         group object.
 
@@ -336,15 +333,9 @@ class ScreenFormatterFactory(Generic[T]):
                     component = c
                 case Group(layout=Grid(labelled=labelled)):
                     add_label = labelled
-                    if is_table(c):
-                        # Display table on a sub screen
-                        component = Group(
-                            name=c.name, layout=SubScreen(), children=c.children
-                        )
-                    else:
-                        raise NotImplementedError(
-                            "Cannot nest a Group(Grid()) in another Group on one screen"
-                        )
+                    raise NotImplementedError(
+                        "Cannot nest a Group(Grid()) in another Group on one screen"
+                    )
                 case _:
                     # Make single line with a component or Row of components
                     component = c
@@ -362,6 +353,7 @@ class ScreenFormatterFactory(Generic[T]):
                     next_column_bounds=next_column_bounds,
                     add_label=add_label,
                     stacked=isinstance(group.layout, Grid) and group.layout.stacked,
+                    squeeze=squeeze,
                 )
             )
             if next_column_bounds.y != 0:
@@ -383,6 +375,7 @@ class ScreenFormatterFactory(Generic[T]):
         indent: bool = False,
         add_label: bool = True,
         stacked: bool = False,
+        squeeze: bool = False,
     ) -> list[WidgetFormatter[T]]:
         """Generate widgets from component data and position them in a grid format
 
@@ -421,7 +414,9 @@ class ScreenFormatterFactory(Generic[T]):
             tmp_next_column_bounds.h = tmp_column_bounds.h
 
         widgets = list(
-            self.generate_component_formatters(c, tmp_column_bounds, add_label, stacked)
+            self.generate_component_formatters(
+                c, tmp_column_bounds, add_label, stacked, squeeze
+            )
         )
         if max_y(widgets) <= parent_bounds.h:
             # Current column still fits on screen
@@ -430,7 +425,7 @@ class ScreenFormatterFactory(Generic[T]):
             # Widget makes current column too tall. Repeat in next column.
             widgets = list(
                 self.generate_component_formatters(
-                    c, tmp_next_column_bounds, add_label, stacked
+                    c, tmp_next_column_bounds, add_label, stacked, squeeze
                 )
             )
             next_column_bounds.y = next_y(widgets, self.layout.spacing)
@@ -443,6 +438,7 @@ class ScreenFormatterFactory(Generic[T]):
         bounds: Bounds,
         add_label: bool = True,
         stacked: bool = False,
+        squeeze: bool = False,
     ) -> Iterator[WidgetFormatter[T]]:
         """Convert a component into its WidgetFormatter equivalents
 
@@ -462,8 +458,27 @@ class ScreenFormatterFactory(Generic[T]):
         # Take a copy to modify in this scope
         component_bounds = bounds.clone()
 
+        effective_label_w = self.layout.label_width
+
         if isinstance(c, Group) and isinstance(c.layout, Row):
             # This Group should be formatted as a table
+            widget_w = (
+                component_bounds.w - self.layout.label_width - self.layout.spacing
+            )
+            n = len(c.children)
+            if squeeze:
+                available_content = component_bounds.w - self.layout.spacing * n
+                scale = available_content / (self.layout.label_width + widget_w * n)
+                effective_label_w = round(self.layout.label_width * scale)
+                widget_w = (available_content - effective_label_w) // n
+            else:
+                component_bounds.w = (
+                    self.layout.label_width
+                    + self.layout.spacing
+                    + widget_w * n
+                    + self.layout.spacing * (n - 1)
+                )
+
             if c.layout.header is not None:
                 # Create table header
                 assert len(c.layout.header) == len(c.children), (
@@ -472,17 +487,8 @@ class ScreenFormatterFactory(Generic[T]):
 
                 header_bounds = component_bounds.clone()
                 if add_label:
-                    # Scale the headers by the width with the label then
-                    # indent them
-                    original_width = len(c.layout.header) * (
-                        header_bounds.w + self.layout.spacing
-                    )
-                    label_width = self.layout.label_width + self.layout.spacing
-
-                    scaling_factor = (original_width - label_width) / original_width
-                    header_bounds.w = int(header_bounds.w * scaling_factor)
-
-                    header_bounds.indent(label_width)
+                    header_bounds.w = widget_w
+                    header_bounds.indent(effective_label_w + self.layout.spacing)
 
                 # Create column headers
                 for column_header in c.layout.header:
@@ -500,10 +506,6 @@ class ScreenFormatterFactory(Generic[T]):
                 for child in c.children
             ):
                 component_bounds.h = 2 * self.layout.widget_height + self.layout.spacing
-            # Allow given component width for each column, plus spacing
-            component_bounds = component_bounds.tile(
-                horizontal=len(c.children), spacing=self.layout.spacing
-            )
         elif isinstance(c, SignalW) and isinstance(c.write_widget, ButtonPanel):
             # Convert SignalW into a SignalX with a fixed value for each action
             row_components = [
@@ -534,7 +536,7 @@ class ScreenFormatterFactory(Generic[T]):
         if add_label:
             # Insert label and reduce width for widget
             left, row_bounds = component_bounds.split_left(
-                self.layout.label_width, self.layout.spacing
+                effective_label_w, self.layout.spacing
             )
             yield self.widget_formatter_factory.label_formatter_cls(
                 bounds=left,

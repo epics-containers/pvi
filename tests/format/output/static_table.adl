@@ -7,8 +7,8 @@ display {
 	object {
 		x=0
 		y=0
-		width=416
-		height=78
+		width=422
+		height=207
 	}
 	clr=14
 	bclr=4
@@ -91,7 +91,7 @@ rectangle {
 	object {
 		x=0
 		y=0
-		width=416
+		width=422
 		height=26
 	}
 	"basic attribute" {
@@ -102,7 +102,7 @@ text {
 	object {
 		x=0
 		y=0
-		width=416
+		width=422
 		height=26
 	}
 	"basic attribute" {
@@ -138,16 +138,379 @@ byte {
 	}
 	sbit=0
 }
-"related display" {
+rectangle {
 	object {
 		x=4
 		y=54
-		width=408
+		width=414
+		height=149
+	}
+	"basic attribute" {
+		clr=14
+		fill="outline"
+	}
+}
+rectangle {
+	object {
+		x=8
+		y=58
+		width=406
+		height=21
+	}
+	"basic attribute" {
+		clr=2
+	}
+}
+text {
+	object {
+		x=8
+		y=58
+		width=406
+		height=21
+	}
+	"basic attribute" {
+		clr=54
+	}
+	textix="Big Table"
+	align="horiz. centered"
+}
+text {
+	object {
+		x=62
+		y=83
+		width=85
 		height=20
 	}
-	display[0] {
-		name="static_table_BigTable.adl"
+	"basic attribute" {
+		clr=14
 	}
-	clr=14
-	bclr=4
+	textix="Binary Column"
+	align="horiz. centered"
+}
+text {
+	object {
+		x=151
+		y=83
+		width=85
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Long Column"
+	align="horiz. centered"
+}
+text {
+	object {
+		x=240
+		y=83
+		width=85
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Float Column"
+	align="horiz. centered"
+}
+text {
+	object {
+		x=329
+		y=83
+		width=85
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="String Column"
+	align="horiz. centered"
+}
+text {
+	object {
+		x=8
+		y=107
+		width=50
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Row 1"
+	align="horiz. right"
+}
+byte {
+	object {
+		x=94
+		y=107
+		width=20
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)BINARY_1"
+		clr=60
+		bclr=64
+	}
+	sbit=0
+}
+"text update" {
+	object {
+		x=151
+		y=107
+		width=85
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)LONG_1"
+		clr=54
+		bclr=4
+	}
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=240
+		y=107
+		width=85
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)FLOAT_1"
+		clr=54
+		bclr=4
+	}
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=329
+		y=107
+		width=85
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)STRING_1"
+		clr=54
+		bclr=4
+	}
+	limits {
+	}
+}
+text {
+	object {
+		x=8
+		y=131
+		width=50
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Row 2"
+	align="horiz. right"
+}
+byte {
+	object {
+		x=94
+		y=131
+		width=20
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)BINARY_2"
+		clr=60
+		bclr=64
+	}
+	sbit=0
+}
+"text update" {
+	object {
+		x=151
+		y=131
+		width=85
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)LONG_2"
+		clr=54
+		bclr=4
+	}
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=240
+		y=131
+		width=85
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)FLOAT_2"
+		clr=54
+		bclr=4
+	}
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=329
+		y=131
+		width=85
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)STRING_2"
+		clr=54
+		bclr=4
+	}
+	limits {
+	}
+}
+text {
+	object {
+		x=8
+		y=155
+		width=50
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Row 3"
+	align="horiz. right"
+}
+byte {
+	object {
+		x=94
+		y=155
+		width=20
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)BINARY_3"
+		clr=60
+		bclr=64
+	}
+	sbit=0
+}
+"text update" {
+	object {
+		x=151
+		y=155
+		width=85
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)LONG_3"
+		clr=54
+		bclr=4
+	}
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=240
+		y=155
+		width=85
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)FLOAT_3"
+		clr=54
+		bclr=4
+	}
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=329
+		y=155
+		width=85
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)STRING_3"
+		clr=54
+		bclr=4
+	}
+	limits {
+	}
+}
+text {
+	object {
+		x=8
+		y=179
+		width=50
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Row 4"
+	align="horiz. right"
+}
+byte {
+	object {
+		x=94
+		y=179
+		width=20
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)BINARY_4"
+		clr=60
+		bclr=64
+	}
+	sbit=0
+}
+"text update" {
+	object {
+		x=151
+		y=179
+		width=85
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)LONG_4"
+		clr=54
+		bclr=4
+	}
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=240
+		y=179
+		width=85
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)FLOAT_4"
+		clr=54
+		bclr=4
+	}
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=329
+		y=179
+		width=85
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)STRING_4"
+		clr=54
+		bclr=4
+	}
+	limits {
+	}
 }
