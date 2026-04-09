@@ -134,6 +134,14 @@ Bases: {py:obj}`pydantic.BaseModel`
 
 ````
 
+````{py:method} split_into_rows(count: int, spacing: int) -> tuple[pvi._format.utils.Bounds, ...]
+:canonical: pvi._format.utils.Bounds.split_into_rows
+
+```{autodoc2-docstring} pvi._format.utils.Bounds.split_into_rows
+```
+
+````
+
 ````{py:method} square() -> pvi._format.utils.Bounds
 :canonical: pvi._format.utils.Bounds.square
 

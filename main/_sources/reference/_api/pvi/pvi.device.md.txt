@@ -1060,6 +1060,17 @@ Bases: {py:obj}`pvi.device.Layout`
 
 ````
 
+````{py:attribute} stacked
+:canonical: pvi.device.Grid.stacked
+:type: typing.Annotated[bool, Field(description='If True, RW widgets in each row are stacked vertically')]
+:value: >
+   False
+
+```{autodoc2-docstring} pvi.device.Grid.stacked
+```
+
+````
+
 `````
 
 `````{py:class} SubScreen(/, **data: typing.Any)
@@ -1083,6 +1094,17 @@ Bases: {py:obj}`pvi.device.Layout`
    True
 
 ```{autodoc2-docstring} pvi.device.SubScreen.labelled
+```
+
+````
+
+````{py:attribute} stacked
+:canonical: pvi.device.SubScreen.stacked
+:type: typing.Annotated[bool, Field(description='If True, RW widgets in each row are stacked vertically')]
+:value: >
+   False
+
+```{autodoc2-docstring} pvi.device.SubScreen.stacked
 ```
 
 ````

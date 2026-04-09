@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pvi._format.utils &#8212; pvi 0.12.1.dev15+g66d126791 documentation</title>
+    <title>pvi._format.utils &#8212; pvi 0.12.1.dev18+g3c338e66b documentation</title>
   
   
   
@@ -41,7 +41,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=2a38040a"></script>
+    <script src="../../../_static/documentation_options.js?v=36f4a4ce"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -58,8 +58,8 @@
     <link rel="icon" href="../../../_static/pvi-favicon.ico"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="pvi._format.adl" href="pvi._format.adl.html" />
-    <link rel="prev" title="pvi._format.aps" href="pvi._format.aps.html" />
+    <link rel="next" title="pvi._format.dls" href="pvi._format.dls.html" />
+    <link rel="prev" title="pvi._format.base" href="pvi._format.base.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="main" />
@@ -414,16 +414,16 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../../api.html">API</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 current active has-children"><a class="reference internal" href="pvi.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi</span></code></a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="pvi._convert.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._convert</span></code></a></li>
 <li class="toctree-l4 current active"><a class="reference internal" href="pvi._format.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._format</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pvi.typed_model.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.typed_model</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pvi.device.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.device</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi._convert.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._convert</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pvi.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.utils</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pvi._pv_group.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._pv_group</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pvi._yaml_utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._yaml_utils</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi.typed_model.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.typed_model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi._version.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._version</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi.device.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.device</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pvi._schema_utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._schema_utils</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pvi.__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.__main__</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pvi._version.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._version</span></code></a></li>
 </ul>
 </details></li>
 </ul>
@@ -601,6 +601,12 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="pvi._format.utils.Bounds.split_into_rows">
+<span class="sig-name descname"><span class="pre">split_into_rows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">spacing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pvi._format.utils.Bounds" title="pvi._format.utils.Bounds"><span class="pre">pvi._format.utils.Bounds</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/pvi/_format/utils.html#Bounds.split_into_rows"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._format.utils.Bounds.split_into_rows" title="Link to this definition">#</a></dt>
+<dd><p>Split vertically into count equal heights, separated by spacing</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="pvi._format.utils.Bounds.square">
 <span class="sig-name descname"><span class="pre">square</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pvi._format.utils.Bounds" title="pvi._format.utils.Bounds"><span class="pre">pvi._format.utils.Bounds</span></a></span></span><a class="reference internal" href="../../../_modules/pvi/_format/utils.html#Bounds.square"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._format.utils.Bounds.square" title="Link to this definition">#</a></dt>
 <dd><p>Return the largest square that will fit in self</p>
@@ -660,20 +666,20 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="pvi._format.aps.html"
+       href="pvi._format.base.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._format.aps</span></code></p>
+        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._format.base</span></code></p>
       </div>
     </a>
     <a class="right-next"
-       href="pvi._format.adl.html"
+       href="pvi._format.dls.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._format.adl</span></code></p>
+        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._format.dls</span></code></p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -710,6 +716,7 @@
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.utils.Bounds.split_left"><code class="docutils literal notranslate"><span class="pre">Bounds.split_left()</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.utils.Bounds.split_by_ratio"><code class="docutils literal notranslate"><span class="pre">Bounds.split_by_ratio()</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.utils.Bounds.split_into"><code class="docutils literal notranslate"><span class="pre">Bounds.split_into()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.utils.Bounds.split_into_rows"><code class="docutils literal notranslate"><span class="pre">Bounds.split_into_rows()</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.utils.Bounds.square"><code class="docutils literal notranslate"><span class="pre">Bounds.square()</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.utils.Bounds.added_to"><code class="docutils literal notranslate"><span class="pre">Bounds.added_to()</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.utils.Bounds.tile"><code class="docutils literal notranslate"><span class="pre">Bounds.tile()</span></code></a></li>

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pvi._version &#8212; pvi 0.12.1.dev15+g66d126791 documentation</title>
+    <title>pvi._version &#8212; pvi 0.12.1.dev18+g3c338e66b documentation</title>
   
   
   
@@ -41,7 +41,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=2a38040a"></script>
+    <script src="../../../_static/documentation_options.js?v=36f4a4ce"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -58,8 +58,8 @@
     <link rel="icon" href="../../../_static/pvi-favicon.ico"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="Index" href="../../../genindex.html" />
-    <link rel="prev" title="pvi.__main__" href="pvi.__main__.html" />
+    <link rel="next" title="pvi.device" href="pvi.device.html" />
+    <link rel="prev" title="pvi.typed_model" href="pvi.typed_model.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="main" />
@@ -414,16 +414,16 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../../api.html">API</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../index.html">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 current active has-children"><a class="reference internal" href="pvi.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi</span></code></a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="pvi._convert.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._convert</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pvi._format.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._format</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pvi.typed_model.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.typed_model</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pvi.device.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.device</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi._convert.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._convert</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pvi.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.utils</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pvi._pv_group.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._pv_group</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pvi._yaml_utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._yaml_utils</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi.typed_model.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.typed_model</span></code></a></li>
+<li class="toctree-l4 current active"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._version</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi.device.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.device</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pvi._schema_utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._schema_utils</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pvi.__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.__main__</span></code></a></li>
-<li class="toctree-l4 current active"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._version</span></code></a></li>
 </ul>
 </details></li>
 </ul>
@@ -512,25 +512,22 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#pvi._version.__all__" title="pvi._version.__all__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__all__</span></code></a></p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pvi._version.TYPE_CHECKING" title="pvi._version.TYPE_CHECKING"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TYPE_CHECKING</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi._version.version" title="pvi._version.version"><code class="xref py py-obj docutils literal notranslate"><span class="pre">version</span></code></a></p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pvi._version.version" title="pvi._version.version"><code class="xref py py-obj docutils literal notranslate"><span class="pre">version</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi._version.__version__" title="pvi._version.__version__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__version__</span></code></a></p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pvi._version.__version__" title="pvi._version.__version__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__version__</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi._version.__version_tuple__" title="pvi._version.__version_tuple__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__version_tuple__</span></code></a></p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pvi._version.__version_tuple__" title="pvi._version.__version_tuple__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__version_tuple__</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi._version.version_tuple" title="pvi._version.version_tuple"><code class="xref py py-obj docutils literal notranslate"><span class="pre">version_tuple</span></code></a></p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pvi._version.version_tuple" title="pvi._version.version_tuple"><code class="xref py py-obj docutils literal notranslate"><span class="pre">version_tuple</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi._version.commit_id" title="pvi._version.commit_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">commit_id</span></code></a></p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pvi._version.commit_id" title="pvi._version.commit_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">commit_id</span></code></a></p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pvi._version.__commit_id__" title="pvi._version.__commit_id__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__commit_id__</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi._version.__commit_id__" title="pvi._version.__commit_id__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__commit_id__</span></code></a></p></td>
 <td></td>
 </tr>
 </tbody>
@@ -543,12 +540,6 @@
 <dt class="sig sig-object py" id="pvi._version.__all__">
 <span class="sig-prename descclassname"><span class="pre">pvi._version.</span></span><span class="sig-name descname"><span class="pre">__all__</span></span><a class="headerlink" href="#pvi._version.__all__" title="Link to this definition">#</a></dt>
 <dd><p>[’<strong>version</strong>’, ‘<strong>version_tuple</strong>’, ‘version’, ‘version_tuple’, ‘<strong>commit_id</strong>’, ‘commit_id’]</p>
-</dd></dl>
-
-<dl class="py data">
-<dt class="sig sig-object py" id="pvi._version.TYPE_CHECKING">
-<span class="sig-prename descclassname"><span class="pre">pvi._version.</span></span><span class="sig-name descname"><span class="pre">TYPE_CHECKING</span></span><a class="headerlink" href="#pvi._version.TYPE_CHECKING" title="Link to this definition">#</a></dt>
-<dd><p>False</p>
 </dd></dl>
 
 <dl class="py data">
@@ -565,25 +556,25 @@
 
 <dl class="py data">
 <dt class="sig sig-object py" id="pvi._version.__version_tuple__">
-<span class="sig-prename descclassname"><span class="pre">pvi._version.</span></span><span class="sig-name descname"><span class="pre">__version_tuple__</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">pvi._version.VERSION_TUPLE</span></em><a class="headerlink" href="#pvi._version.__version_tuple__" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pvi._version.</span></span><span class="sig-name descname"><span class="pre">__version_tuple__</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi._version.__version_tuple__" title="Link to this definition">#</a></dt>
 <dd><p>None</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="pvi._version.version_tuple">
-<span class="sig-prename descclassname"><span class="pre">pvi._version.</span></span><span class="sig-name descname"><span class="pre">version_tuple</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">pvi._version.VERSION_TUPLE</span></em><a class="headerlink" href="#pvi._version.version_tuple" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pvi._version.</span></span><span class="sig-name descname"><span class="pre">version_tuple</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi._version.version_tuple" title="Link to this definition">#</a></dt>
 <dd><p>None</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="pvi._version.commit_id">
-<span class="sig-prename descclassname"><span class="pre">pvi._version.</span></span><span class="sig-name descname"><span class="pre">commit_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">pvi._version.COMMIT_ID</span></em><a class="headerlink" href="#pvi._version.commit_id" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pvi._version.</span></span><span class="sig-name descname"><span class="pre">commit_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="headerlink" href="#pvi._version.commit_id" title="Link to this definition">#</a></dt>
 <dd><p>None</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="pvi._version.__commit_id__">
-<span class="sig-prename descclassname"><span class="pre">pvi._version.</span></span><span class="sig-name descname"><span class="pre">__commit_id__</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">pvi._version.COMMIT_ID</span></em><a class="headerlink" href="#pvi._version.__commit_id__" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pvi._version.</span></span><span class="sig-name descname"><span class="pre">__commit_id__</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="headerlink" href="#pvi._version.__commit_id__" title="Link to this definition">#</a></dt>
 <dd><p>None</p>
 </dd></dl>
 
@@ -602,20 +593,20 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="pvi.__main__.html"
+       href="pvi.typed_model.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.__main__</span></code></p>
+        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.typed_model</span></code></p>
       </div>
     </a>
     <a class="right-next"
-       href="../../../genindex.html"
+       href="pvi.device.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Index</p>
+        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.device</span></code></p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -642,7 +633,6 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#api">API</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._version.__all__"><code class="docutils literal notranslate"><span class="pre">__all__</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._version.TYPE_CHECKING"><code class="docutils literal notranslate"><span class="pre">TYPE_CHECKING</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._version.version"><code class="docutils literal notranslate"><span class="pre">version</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._version.__version__"><code class="docutils literal notranslate"><span class="pre">__version__</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._version.__version_tuple__"><code class="docutils literal notranslate"><span class="pre">__version_tuple__</span></code></a></li>

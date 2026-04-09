@@ -264,7 +264,7 @@ Bases: {py:obj}`typing.Generic`\[{py:obj}`pvi._format.screen.T`\]
 
 ````
 
-````{py:method} create_group_formatters(c: pvi.device.Group, screen_bounds: pvi._format.utils.Bounds, column_bounds: pvi._format.utils.Bounds, next_column_bounds: pvi._format.utils.Bounds) -> list[pvi._format.widget.WidgetFormatter[pvi._format.screen.T]]
+````{py:method} create_group_formatters(c: pvi.device.Group, screen_bounds: pvi._format.utils.Bounds, column_bounds: pvi._format.utils.Bounds, next_column_bounds: pvi._format.utils.Bounds, squeeze: bool = True) -> list[pvi._format.widget.WidgetFormatter[pvi._format.screen.T]]
 :canonical: pvi._format.screen.ScreenFormatterFactory.create_group_formatters
 
 ```{autodoc2-docstring} pvi._format.screen.ScreenFormatterFactory.create_group_formatters
@@ -272,7 +272,7 @@ Bases: {py:obj}`typing.Generic`\[{py:obj}`pvi._format.screen.T`\]
 
 ````
 
-````{py:method} create_group_formatter(group: pvi.device.Group, bounds: pvi._format.utils.Bounds) -> pvi._format.widget.GroupFormatter[pvi._format.screen.T]
+````{py:method} create_group_formatter(group: pvi.device.Group, bounds: pvi._format.utils.Bounds, squeeze: bool = True) -> pvi._format.widget.GroupFormatter[pvi._format.screen.T]
 :canonical: pvi._format.screen.ScreenFormatterFactory.create_group_formatter
 
 ```{autodoc2-docstring} pvi._format.screen.ScreenFormatterFactory.create_group_formatter
@@ -280,7 +280,7 @@ Bases: {py:obj}`typing.Generic`\[{py:obj}`pvi._format.screen.T`\]
 
 ````
 
-````{py:method} create_component_widget_formatters(c: pvi.device.ComponentUnion, parent_bounds: pvi._format.utils.Bounds, column_bounds: pvi._format.utils.Bounds, next_column_bounds: pvi._format.utils.Bounds, indent: bool = False, add_label: bool = True) -> list[pvi._format.widget.WidgetFormatter[pvi._format.screen.T]]
+````{py:method} create_component_widget_formatters(c: pvi.device.ComponentUnion, parent_bounds: pvi._format.utils.Bounds, column_bounds: pvi._format.utils.Bounds, next_column_bounds: pvi._format.utils.Bounds, indent: bool = False, add_label: bool = True, stacked: bool = False, squeeze: bool = False) -> list[pvi._format.widget.WidgetFormatter[pvi._format.screen.T]]
 :canonical: pvi._format.screen.ScreenFormatterFactory.create_component_widget_formatters
 
 ```{autodoc2-docstring} pvi._format.screen.ScreenFormatterFactory.create_component_widget_formatters
@@ -288,7 +288,7 @@ Bases: {py:obj}`typing.Generic`\[{py:obj}`pvi._format.screen.T`\]
 
 ````
 
-````{py:method} generate_component_formatters(c: pvi.device.ComponentUnion, bounds: pvi._format.utils.Bounds, add_label: bool = True) -> collections.abc.Iterator[pvi._format.widget.WidgetFormatter[pvi._format.screen.T]]
+````{py:method} generate_component_formatters(c: pvi.device.ComponentUnion, bounds: pvi._format.utils.Bounds, add_label: bool = True, stacked: bool = False, squeeze: bool = False) -> collections.abc.Iterator[pvi._format.widget.WidgetFormatter[pvi._format.screen.T]]
 :canonical: pvi._format.screen.ScreenFormatterFactory.generate_component_formatters
 
 ```{autodoc2-docstring} pvi._format.screen.ScreenFormatterFactory.generate_component_formatters
@@ -296,7 +296,7 @@ Bases: {py:obj}`typing.Generic`\[{py:obj}`pvi._format.screen.T`\]
 
 ````
 
-````{py:method} generate_row_component_formatters(row_components: collections.abc.Sequence[pvi.device.Group | pvi.device.Component], row_bounds: pvi._format.utils.Bounds) -> collections.abc.Iterator[pvi._format.widget.WidgetFormatter[pvi._format.screen.T]]
+````{py:method} generate_row_component_formatters(row_components: collections.abc.Sequence[pvi.device.Group | pvi.device.Component], row_bounds: pvi._format.utils.Bounds, stacked: bool = False) -> collections.abc.Iterator[pvi._format.widget.WidgetFormatter[pvi._format.screen.T]]
 :canonical: pvi._format.screen.ScreenFormatterFactory.generate_row_component_formatters
 
 ```{autodoc2-docstring} pvi._format.screen.ScreenFormatterFactory.generate_row_component_formatters
