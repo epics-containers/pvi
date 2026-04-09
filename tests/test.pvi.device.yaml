@@ -5,6 +5,7 @@ children:
     layout:
       type: Grid
       labelled: true
+      stacked: false
     children:
       - type: SignalW
         name: WidthUnits

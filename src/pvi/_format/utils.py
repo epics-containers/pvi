@@ -43,6 +43,14 @@ class Bounds(BaseModel):
         """Split horizontally into count equal widths, separated by spacing"""
         return self.split_by_ratio((1 / count,) * count, spacing)
 
+    def split_into_rows(self, count: int, spacing: int) -> tuple[Bounds, ...]:
+        """Split vertically into count equal heights, separated by spacing"""
+        widget_h = (self.h - (count - 1) * spacing) // count
+        return tuple(
+            Bounds(x=self.x, y=self.y + i * (widget_h + spacing), w=self.w, h=widget_h)
+            for i in range(count)
+        )
+
     def square(self) -> Bounds:
         """Return the largest square that will fit in self"""
         size = min(self.w, self.h)
