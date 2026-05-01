@@ -13,8 +13,9 @@ defined either in code or a YAML file. It can be used to generate UIs (adl, edl,
 a template appending info tags to existing records to define an NTTable of the PVs in an
 IOC.
 
-Source          | <https://github.com/epics-containers/pvi>
+What            | Where
 :---:           | :---:
+Source          | <https://github.com/epics-containers/pvi>
 PyPI            | `pip install pvi`
 Documentation   | <https://epics-containers.github.io/pvi>
 Releases        | <https://github.com/epics-containers/pvi/releases>
