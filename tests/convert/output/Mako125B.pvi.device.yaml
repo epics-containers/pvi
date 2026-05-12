@@ -48,3 +48,4 @@ children:
 
   - type: Include
     file_name: GenICamDriver
+    in_subscreen: false
