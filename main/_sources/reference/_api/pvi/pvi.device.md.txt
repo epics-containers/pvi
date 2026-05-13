@@ -1597,6 +1597,17 @@ Bases: {py:obj}`pvi.typed_model.TypedModel`
 
 ````
 
+````{py:attribute} in_subscreen
+:canonical: pvi.device.Include.in_subscreen
+:type: typing.Annotated[bool, Field(description='Include components in a SubScreen, or flatten.')]
+:value: >
+   False
+
+```{autodoc2-docstring} pvi.device.Include.in_subscreen
+```
+
+````
+
 `````
 
 ````{py:data} Tree

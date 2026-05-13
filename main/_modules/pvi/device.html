@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pvi.device &#8212; pvi 0.12.1.dev18+g3c338e66b documentation</title>
+    <title>pvi.device &#8212; pvi 0.13.1.dev3+g4fd635266 documentation</title>
   
   
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=36f4a4ce"></script>
+    <script src="../../_static/documentation_options.js?v=fe3c4be8"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -1090,7 +1090,11 @@
     <span class="n">file_name</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span>
         <span class="nb">str</span><span class="p">,</span>
         <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Name of PVI Device to include (basename of yaml file).&quot;</span><span class="p">),</span>
-    <span class="p">]</span></div>
+    <span class="p">]</span>
+    <span class="n">in_subscreen</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span>
+        <span class="nb">bool</span><span class="p">,</span>
+        <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include components in a SubScreen, or flatten.&quot;</span><span class="p">),</span>
+    <span class="p">]</span> <span class="o">=</span> <span class="kc">False</span></div>
 
 
 
@@ -1219,6 +1223,15 @@
                 <span class="n">resolved</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expand_includes</span><span class="p">(</span><span class="n">new_component</span><span class="p">,</span> <span class="n">yaml_paths</span><span class="p">))</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">resolved</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_component</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">component</span><span class="o">.</span><span class="n">in_subscreen</span><span class="p">:</span>
+            <span class="n">resolved</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">Group</span><span class="p">(</span>
+                    <span class="n">name</span><span class="o">=</span><span class="n">component</span><span class="o">.</span><span class="n">file_name</span><span class="p">,</span>
+                    <span class="n">children</span><span class="o">=</span><span class="n">resolved</span><span class="p">,</span>
+                    <span class="n">layout</span><span class="o">=</span><span class="n">SubScreen</span><span class="p">(</span><span class="n">labelled</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+                <span class="p">)</span>
+            <span class="p">]</span>
         <span class="k">return</span> <span class="n">resolved</span></div>
 
 
