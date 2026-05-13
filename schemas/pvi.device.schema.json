@@ -484,6 +484,12 @@
           "title": "File Name",
           "type": "string"
         },
+        "in_subscreen": {
+          "default": false,
+          "description": "Include components in a SubScreen, or flatten.",
+          "title": "In Subscreen",
+          "type": "boolean"
+        },
         "type": {
           "const": "Include",
           "default": "Include",

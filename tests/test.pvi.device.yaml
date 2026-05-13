@@ -42,3 +42,4 @@ children:
 
   - type: Include
     file_name: parent
+    in_subscreen: false

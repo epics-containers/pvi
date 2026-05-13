@@ -496,6 +496,10 @@ class Include(TypedModel):
         str,
         Field(description="Name of PVI Device to include (basename of yaml file)."),
     ]
+    in_subscreen: Annotated[
+        bool,
+        Field(description="Include components in a SubScreen, or flatten."),
+    ] = False
 
 
 Tree = Sequence[ComponentUnion | Include]
@@ -604,6 +608,15 @@ class Device(TypedModel, YamlValidatorMixin):
                 resolved.extend(self.expand_includes(new_component, yaml_paths))
             else:
                 resolved.append(new_component)
+
+        if component.in_subscreen:
+            resolved = [
+                Group(
+                    name=component.file_name,
+                    children=resolved,
+                    layout=SubScreen(labelled=False),
+                )
+            ]
         return resolved
 
     def merge_components(self, components: Tree) -> None:
