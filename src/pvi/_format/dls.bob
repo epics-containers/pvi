@@ -2,19 +2,14 @@
 <display version="2.0.0">
   <name>Display</name>
   <x>12</x>
-  <y use_class="true">0</y>
-  <width>1000</width>
-  <height>800</height>
+  <width>871</width>
+  <height>770</height>
+  <background_color>
+    <color red="246" green="247" blue="249">
+    </color>
+  </background_color>
   <grid_step_x>4</grid_step_x>
   <grid_step_y>4</grid_step_y>
-  <widget type="rectangle" version="2.0.0">
-    <name>Rectangle</name>
-    <x>8</x>
-    <y>48</y>
-    <width>140</width>
-    <height>412</height>
-    <line_width>1</line_width>
-  </widget>
   <widget type="label" version="2.0.0">
     <name>Title</name>
     <class>TITLE</class>
@@ -41,6 +36,10 @@
     <y>58</y>
     <width>120</width>
     <height>30</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
     <tooltip>$(text)</tooltip>
   </widget>
   <widget type="textentry" version="3.0.0">
@@ -50,23 +49,43 @@
     <y>78</y>
     <width>120</width>
     <height>30</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="229" green="235" blue="255">
+      </color>
+    </background_color>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="action_button" version="3.0.0">
     <name>WritePV</name>
-    <pv_name>SignalX</pv_name>
     <actions>
       <action type="write_pv">
+        <description>$(name)</description>
         <pv_name>$(pv_name)</pv_name>
         <value>value</value>
-        <description>$(name)</description>
       </action>
     </actions>
+    <pv_name>SignalX</pv_name>
     <text>SignalX</text>
     <x>18</x>
     <y>118</y>
     <width>120</width>
     <height>40</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="37" green="99" blue="235">
+      </color>
+    </background_color>
     <tooltip>$(tooltip)</tooltip>
   </widget>
   <widget type="textupdate" version="2.0.0">
@@ -77,18 +96,40 @@
     <width>120</width>
     <height>30</height>
     <font>
-      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      <font family="Cantarell" style="BOLD" size="14.0">
       </font>
     </font>
+    <foreground_color>
+      <color red="15" green="23" blue="42">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="250" green="250" blue="252">
+      </color>
+    </background_color>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="led" version="2.0.0">
     <name>LED</name>
     <pv_name>LED</pv_name>
-    <x>64</x>
-    <y>336</y>
+    <x>384</x>
+    <y>378</y>
     <width>30</width>
     <height>30</height>
+    <off_label>Off</off_label>
+    <off_color>
+      <color red="167" green="243" blue="208">
+      </color>
+    </off_color>
+    <on_label>On</on_label>
+    <on_color>
+      <color red="22" green="163" blue="74">
+      </color>
+    </on_color>
+    <font>
+      <font family="Cantarell" style="BOLD" size="14.0">
+      </font>
+    </font>
   </widget>
   <widget type="combo" version="2.0.0">
     <name>ComboBox</name>
@@ -97,13 +138,36 @@
     <y>248</y>
     <width>120</width>
     <height>40</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="31" green="41" blue="51">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="243" green="245" blue="247">
+      </color>
+    </background_color>
+    <items>
+      <item>item 0</item>
+    </items>
   </widget>
-  <widget type="group" version="2.0.0">
+  <widget type="group" version="3.0.0">
     <name>Group</name>
     <x>160</x>
     <y>40</y>
     <width>350</width>
     <height>250</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="246" green="247" blue="249">
+      </color>
+    </background_color>
     <transparent>true</transparent>
   </widget>
   <widget type="checkbox" version="2.0.0">
@@ -114,6 +178,10 @@
     <y>300</y>
     <width>18</width>
     <height>18</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
     <auto_size>true</auto_size>
   </widget>
   <widget type="label" version="2.0.0">
@@ -123,6 +191,18 @@
     <y>300</y>
     <width>120</width>
     <height>30</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="15" green="23" blue="42">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="246" green="247" blue="249">
+      </color>
+    </background_color>
     <transparent>false</transparent>
     <border_width>1</border_width>
   </widget>
@@ -136,10 +216,18 @@
   <widget type="progressbar" version="2.0.0">
     <name>ProgressBar</name>
     <pv_name>sim://sine(0,1,0.1,0.4)</pv_name>
-    <x>28</x>
-    <y>376</y>
+    <x>26</x>
+    <y>330</y>
     <width>104</width>
     <height>24</height>
+    <fill_color>
+      <color red="37" green="99" blue="235">
+      </color>
+    </fill_color>
+    <background_color>
+      <color red="226" green="232" blue="240">
+      </color>
+    </background_color>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Heading</name>
@@ -149,15 +237,15 @@
     <width>120</width>
     <height>30</height>
     <font>
-      <font family="Liberation Sans" style="BOLD" size="16.0">
+      <font family="Cantarell" style="BOLD" size="16.0">
       </font>
     </font>
     <foreground_color>
-      <color name="Header_ForeGround" red="255" green="255" blue="255">
+      <color red="15" green="23" blue="42">
       </color>
     </foreground_color>
     <background_color>
-      <color name="Header_Background" red="77" green="77" blue="77">
+      <color red="246" green="247" blue="249">
       </color>
     </background_color>
     <transparent>false</transparent>
@@ -167,16 +255,28 @@
     <name>OpenDisplay</name>
     <actions>
       <action type="open_display">
+        <description>Open Display</description>
         <file>SubScreenFile</file>
         <target>tab</target>
-        <description>Open Display</description>
       </action>
     </actions>
     <text>SubScreen</text>
-    <x>20</x>
-    <y>412</y>
+    <x>18</x>
+    <y>366</y>
     <width>120</width>
     <height>40</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="37" green="99" blue="235">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
     <tooltip>$(actions)</tooltip>
   </widget>
   <widget type="table" version="2.0.0">
@@ -195,18 +295,50 @@
     </columns>
   </widget>
   <widget type="byte_monitor" version="2.0.0">
-    <name>BitField</name>
+    <name>BitFieldOK</name>
     <pv_name>ByteMonitor</pv_name>
     <x>172</x>
     <y>412</y>
     <width>165</width>
+    <off_color>
+      <color red="167" green="243" blue="208">
+      </color>
+    </off_color>
+    <on_color>
+      <color red="22" green="163" blue="74">
+      </color>
+    </on_color>
   </widget>
   <widget type="xyplot" version="3.0.0">
     <name>ArrayTrace</name>
-    <x>348</x>
-    <y>412</y>
+    <x>576</x>
+    <y>388</y>
     <width>230</width>
     <height>230</height>
+    <y_axes>
+      <y_axis>
+        <title>Y</title>
+        <autoscale>false</autoscale>
+        <log_scale>false</log_scale>
+        <minimum>0.0</minimum>
+        <maximum>100.0</maximum>
+        <show_grid>false</show_grid>
+        <title_font>
+          <font family="Cantarell" style="BOLD" size="14.0">
+          </font>
+        </title_font>
+        <scale_font>
+          <font family="Cantarell" style="REGULAR" size="14.0">
+          </font>
+        </scale_font>
+        <on_right>false</on_right>
+        <visible>true</visible>
+        <color>
+          <color name="Text" red="0" green="0" blue="0">
+          </color>
+        </color>
+      </y_axis>
+    </y_axes>
     <traces>
       <trace>
         <name>$(traces[0].y_pv)</name>
@@ -234,6 +366,34 @@
     <y>58</y>
     <width>300</width>
     <height>301</height>
+    <x_axis>
+      <visible>true</visible>
+      <title>X</title>
+      <minimum>0.0</minimum>
+      <maximum>100.0</maximum>
+      <title_font>
+        <font family="Cantarell" style="BOLD" size="14.0">
+        </font>
+      </title_font>
+      <scale_font>
+        <font family="Cantarell" style="REGULAR" size="14.0">
+        </font>
+      </scale_font>
+    </x_axis>
+    <y_axis>
+      <visible>true</visible>
+      <title>Y</title>
+      <minimum>0.0</minimum>
+      <maximum>100.0</maximum>
+      <title_font>
+        <font family="Cantarell" style="BOLD" size="14.0">
+        </font>
+      </title_font>
+      <scale_font>
+        <font family="Cantarell" style="REGULAR" size="14.0">
+        </font>
+      </scale_font>
+    </y_axis>
   </widget>
   <widget type="slide_button" version="2.0.0">
     <name>ToggleButton</name>
@@ -243,5 +403,124 @@
     <y>204</y>
     <width>36</width>
     <height>36</height>
+    <on_color>
+      <color red="37" green="99" blue="235">
+      </color>
+    </on_color>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LEDMajor</name>
+    <pv_name>LED</pv_name>
+    <x>384</x>
+    <y>442</y>
+    <width>30</width>
+    <height>30</height>
+    <off_label>Off</off_label>
+    <off_color>
+      <color red="252" green="165" blue="165">
+      </color>
+    </off_color>
+    <on_label>On</on_label>
+    <on_color>
+      <color red="220" green="38" blue="38">
+      </color>
+    </on_color>
+    <font>
+      <font family="Cantarell" style="BOLD" size="14.0">
+      </font>
+    </font>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LEDMinor</name>
+    <pv_name>LED</pv_name>
+    <x>384</x>
+    <y>412</y>
+    <width>30</width>
+    <height>30</height>
+    <off_label>Off</off_label>
+    <off_color>
+      <color red="253" green="230" blue="138">
+      </color>
+    </off_color>
+    <on_label>On</on_label>
+    <on_color>
+      <color red="245" green="158" blue="11">
+      </color>
+    </on_color>
+    <font>
+      <font family="Cantarell" style="BOLD" size="14.0">
+      </font>
+    </font>
+  </widget>
+  <widget type="byte_monitor" version="2.0.0">
+    <name>BitFieldMinor</name>
+    <pv_name>ByteMonitor</pv_name>
+    <x>172</x>
+    <y>436</y>
+    <width>165</width>
+    <off_color>
+      <color red="253" green="230" blue="138">
+      </color>
+    </off_color>
+    <on_color>
+      <color red="245" green="158" blue="11">
+      </color>
+    </on_color>
+  </widget>
+  <widget type="byte_monitor" version="2.0.0">
+    <name>BitFieldMajor</name>
+    <pv_name>ByteMonitor</pv_name>
+    <x>172</x>
+    <y>456</y>
+    <width>165</width>
+    <off_color>
+      <color red="252" green="165" blue="165">
+      </color>
+    </off_color>
+    <on_color>
+      <color red="220" green="38" blue="38">
+      </color>
+    </on_color>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LEDInfo</name>
+    <pv_name>LED</pv_name>
+    <x>384</x>
+    <y>472</y>
+    <width>30</width>
+    <height>30</height>
+    <off_label>Off</off_label>
+    <off_color>
+      <color red="219" green="234" blue="254">
+      </color>
+    </off_color>
+    <on_label>On</on_label>
+    <on_color>
+      <color red="37" green="99" blue="235">
+      </color>
+    </on_color>
+    <font>
+      <font family="Cantarell" style="BOLD" size="14.0">
+      </font>
+    </font>
+  </widget>
+  <widget type="byte_monitor" version="2.0.0">
+    <name>BitFieldInfo</name>
+    <pv_name>ByteMonitor</pv_name>
+    <x>172</x>
+    <y>476</y>
+    <width>165</width>
+    <off_color>
+      <color red="219" green="234" blue="254">
+      </color>
+    </off_color>
+    <on_color>
+      <color red="37" green="99" blue="235">
+      </color>
+    </on_color>
   </widget>
 </display>
