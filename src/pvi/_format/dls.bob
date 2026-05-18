@@ -2,11 +2,10 @@
 <display version="2.0.0">
   <name>Display</name>
   <x>12</x>
-  <y use_class="true">0</y>
   <width>871</width>
   <height>770</height>
   <background_color>
-    <color red="246" green="247" blue="249">
+    <color red="245" green="247" blue="250">
     </color>
   </background_color>
   <grid_step_x>4</grid_step_x>
@@ -105,32 +104,15 @@
       </color>
     </foreground_color>
     <background_color>
-      <color red="250" green="250" blue="252">
+      <color red="248" green="250" blue="252">
       </color>
     </background_color>
     <horizontal_alignment>1</horizontal_alignment>
-  </widget>
-  <widget type="led" version="2.0.0">
-    <name>LED</name>
-    <pv_name>LED</pv_name>
-    <x>384</x>
-    <y>378</y>
-    <width>30</width>
-    <height>30</height>
-    <off_label>Off</off_label>
-    <off_color>
-      <color red="167" green="243" blue="208">
+    <border_width>1</border_width>
+    <border_color>
+      <color red="203" green="213" blue="225">
       </color>
-    </off_color>
-    <on_label>On</on_label>
-    <on_color>
-      <color red="22" green="163" blue="74">
-      </color>
-    </on_color>
-    <font>
-      <font family="Cantarell" style="BOLD" size="14.0">
-      </font>
-    </font>
+    </border_color>
   </widget>
   <widget type="combo" version="2.0.0">
     <name>ComboBox</name>
@@ -144,15 +126,17 @@
       </font>
     </font>
     <foreground_color>
-      <color red="31" green="41" blue="51">
+      <color red="255" green="255" blue="255">
       </color>
     </foreground_color>
     <background_color>
-      <color red="243" green="245" blue="247">
+      <color red="229" green="235" blue="255">
       </color>
     </background_color>
     <items>
       <item>item 0</item>
+      <item>Item 1</item>
+      <item>Item 2</item>
     </items>
   </widget>
   <widget type="group" version="3.0.0">
@@ -162,7 +146,7 @@
     <width>350</width>
     <height>250</height>
     <font>
-      <font family="Cantarell" style="REGULAR" size="14.0">
+      <font family="Cantarell" style="REGULAR" size="16.0">
       </font>
     </font>
     <background_color>
@@ -193,7 +177,7 @@
     <width>120</width>
     <height>30</height>
     <font>
-      <font family="Cantarell" style="REGULAR" size="14.0">
+      <font family="Cantarell" style="REGULAR" size="16.0">
       </font>
     </font>
     <foreground_color>
@@ -275,7 +259,7 @@
       </color>
     </foreground_color>
     <background_color>
-      <color red="255" green="255" blue="255">
+      <color red="241" green="245" blue="249">
       </color>
     </background_color>
     <tooltip>$(actions)</tooltip>
@@ -299,7 +283,7 @@
     <name>BitFieldOK</name>
     <pv_name>ByteMonitor</pv_name>
     <x>172</x>
-    <y>412</y>
+    <y>415</y>
     <width>165</width>
     <off_color>
       <color red="167" green="243" blue="208">
@@ -404,56 +388,16 @@
     <y>204</y>
     <width>36</width>
     <height>36</height>
+    <off_color>
+      <color red="229" green="235" blue="255">
+      </color>
+    </off_color>
     <on_color>
       <color red="37" green="99" blue="235">
       </color>
     </on_color>
     <font>
       <font family="Cantarell" style="REGULAR" size="14.0">
-      </font>
-    </font>
-  </widget>
-  <widget type="led" version="2.0.0">
-    <name>LEDMajor</name>
-    <pv_name>LED</pv_name>
-    <x>384</x>
-    <y>442</y>
-    <width>30</width>
-    <height>30</height>
-    <off_label>Off</off_label>
-    <off_color>
-      <color red="252" green="165" blue="165">
-      </color>
-    </off_color>
-    <on_label>On</on_label>
-    <on_color>
-      <color red="220" green="38" blue="38">
-      </color>
-    </on_color>
-    <font>
-      <font family="Cantarell" style="BOLD" size="14.0">
-      </font>
-    </font>
-  </widget>
-  <widget type="led" version="2.0.0">
-    <name>LEDMinor</name>
-    <pv_name>LED</pv_name>
-    <x>384</x>
-    <y>412</y>
-    <width>30</width>
-    <height>30</height>
-    <off_label>Off</off_label>
-    <off_color>
-      <color red="253" green="230" blue="138">
-      </color>
-    </off_color>
-    <on_label>On</on_label>
-    <on_color>
-      <color red="245" green="158" blue="11">
-      </color>
-    </on_color>
-    <font>
-      <font family="Cantarell" style="BOLD" size="14.0">
       </font>
     </font>
   </widget>
@@ -487,28 +431,6 @@
       </color>
     </on_color>
   </widget>
-  <widget type="led" version="2.0.0">
-    <name>LEDInfo</name>
-    <pv_name>LED</pv_name>
-    <x>384</x>
-    <y>472</y>
-    <width>30</width>
-    <height>30</height>
-    <off_label>Off</off_label>
-    <off_color>
-      <color red="219" green="234" blue="254">
-      </color>
-    </off_color>
-    <on_label>On</on_label>
-    <on_color>
-      <color red="37" green="99" blue="235">
-      </color>
-    </on_color>
-    <font>
-      <font family="Cantarell" style="BOLD" size="14.0">
-      </font>
-    </font>
-  </widget>
   <widget type="byte_monitor" version="2.0.0">
     <name>BitFieldInfo</name>
     <pv_name>ByteMonitor</pv_name>
@@ -523,5 +445,97 @@
       <color red="37" green="99" blue="235">
       </color>
     </on_color>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LED_1</name>
+    <pv_name>LED</pv_name>
+    <x>384</x>
+    <y>406</y>
+    <width>30</width>
+    <height>30</height>
+    <off_label>Off</off_label>
+    <off_color>
+      <color red="22" green="163" blue="74">
+      </color>
+    </off_color>
+    <on_label>On</on_label>
+    <on_color>
+      <color red="167" green="243" blue="208">
+      </color>
+    </on_color>
+    <font>
+      <font family="Cantarell" style="BOLD" size="13.0">
+      </font>
+    </font>
+    <square>true</square>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LEDMajor_1</name>
+    <pv_name>LED</pv_name>
+    <x>384</x>
+    <y>466</y>
+    <width>30</width>
+    <height>30</height>
+    <off_label>Off</off_label>
+    <off_color>
+      <color red="220" green="38" blue="38">
+      </color>
+    </off_color>
+    <on_label>On</on_label>
+    <on_color>
+      <color red="252" green="165" blue="165">
+      </color>
+    </on_color>
+    <font>
+      <font family="Cantarell" style="BOLD" size="13.0">
+      </font>
+    </font>
+    <square>true</square>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LEDMinor_1</name>
+    <pv_name>LED</pv_name>
+    <x>384</x>
+    <y>436</y>
+    <width>30</width>
+    <height>30</height>
+    <off_label>Off</off_label>
+    <off_color>
+      <color red="245" green="158" blue="11">
+      </color>
+    </off_color>
+    <on_label>On</on_label>
+    <on_color>
+      <color red="253" green="230" blue="138">
+      </color>
+    </on_color>
+    <font>
+      <font family="Cantarell" style="BOLD" size="13.0">
+      </font>
+    </font>
+    <square>true</square>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LEDInfo_1</name>
+    <pv_name>LED</pv_name>
+    <x>384</x>
+    <y>496</y>
+    <width>30</width>
+    <height>30</height>
+    <off_label>Off</off_label>
+    <off_color>
+      <color red="37" green="99" blue="235">
+      </color>
+    </off_color>
+    <on_label>On</on_label>
+    <on_color>
+      <color red="219" green="234" blue="254">
+      </color>
+    </on_color>
+    <font>
+      <font family="Cantarell" style="BOLD" size="13.0">
+      </font>
+    </font>
+    <square>true</square>
   </widget>
 </display>
