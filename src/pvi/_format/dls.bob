@@ -2,6 +2,7 @@
 <display version="2.0.0">
   <name>Display</name>
   <x>12</x>
+  <y use_class="true">0</y>
   <width>871</width>
   <height>770</height>
   <background_color>
