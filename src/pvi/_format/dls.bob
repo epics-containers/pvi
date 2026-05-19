@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2026-05-19 13:31:03 by sfx44126-->
+<!--Saved on 2026-05-19 13:36:24 by sfx44126-->
 <display version="2.0.0">
   <name>Display</name>
   <x>12</x>
@@ -462,7 +462,7 @@
       </color>
     </on_color>
     <font>
-      <font family="Cantarell" style="BOLD" size="13.0">
+      <font family="Cantarell" style="BOLD" size="12.0">
       </font>
     </font>
     <square>true</square>
@@ -485,7 +485,7 @@
       </color>
     </on_color>
     <font>
-      <font family="Cantarell" style="BOLD" size="13.0">
+      <font family="Cantarell" style="BOLD" size="12.0">
       </font>
     </font>
     <square>true</square>
@@ -508,7 +508,7 @@
       </color>
     </on_color>
     <font>
-      <font family="Cantarell" style="BOLD" size="13.0">
+      <font family="Cantarell" style="BOLD" size="12.0">
       </font>
     </font>
     <square>true</square>
@@ -531,7 +531,7 @@
       </color>
     </on_color>
     <font>
-      <font family="Cantarell" style="BOLD" size="13.0">
+      <font family="Cantarell" style="BOLD" size="12.0">
       </font>
     </font>
     <square>true</square>
