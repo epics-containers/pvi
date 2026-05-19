@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2026-05-19 13:36:24 by sfx44126-->
+<!--Saved on 2026-05-19 13:44:07 by sfx44126-->
 <display version="2.0.0">
   <name>Display</name>
   <x>12</x>
@@ -106,11 +106,10 @@
       </color>
     </foreground_color>
     <background_color>
-      <color red="248" green="250" blue="252">
+      <color red="245" green="247" blue="250">
       </color>
     </background_color>
     <horizontal_alignment>1</horizontal_alignment>
-    <border_width>1</border_width>
     <border_color>
       <color red="203" green="213" blue="225">
       </color>
@@ -278,7 +277,7 @@
     </columns>
   </widget>
   <widget type="byte_monitor" version="2.0.0">
-    <name>BitFieldOK</name>
+    <name>BitField</name>
     <pv_name>ByteMonitor</pv_name>
     <x>172</x>
     <y>415</y>
