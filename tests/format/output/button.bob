@@ -4,6 +4,10 @@
   <y use_class="true">0</y>
   <width>274</width>
   <height>102</height>
+  <background_color>
+    <color red="245" green="247" blue="250">
+    </color>
+  </background_color>
   <grid_step_x>4</grid_step_x>
   <grid_step_y>4</grid_step_y>
   <widget type="label" version="2.0.0">
@@ -32,6 +36,10 @@
     <y>30</y>
     <width>120</width>
     <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
     <tooltip>Acquire Time - No description provided</tooltip>
   </widget>
   <widget type="textentry" version="3.0.0">
@@ -41,6 +49,14 @@
     <y>30</y>
     <width>60</width>
     <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="229" green="235" blue="255">
+      </color>
+    </background_color>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="textupdate" version="2.0.0">
@@ -51,10 +67,22 @@
     <width>60</width>
     <height>20</height>
     <font>
-      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      <font family="Cantarell" style="BOLD" size="14.0">
       </font>
     </font>
+    <foreground_color>
+      <color red="15" green="23" blue="42">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="245" green="247" blue="250">
+      </color>
+    </background_color>
     <horizontal_alignment>1</horizontal_alignment>
+    <border_color>
+      <color red="203" green="213" blue="225">
+      </color>
+    </border_color>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label</name>
@@ -63,41 +91,69 @@
     <y>54</y>
     <width>120</width>
     <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
     <tooltip>Acquire - No description provided</tooltip>
   </widget>
   <widget type="action_button" version="3.0.0">
     <name>WritePV</name>
-    <pv_name>$(P)Acquire</pv_name>
     <actions>
       <action type="write_pv">
-        <pv_name>$(pv_name)</pv_name>
-        <value>1</value>
         <description>$(name)</description>
+        <pv_name>$(P)Acquire</pv_name>
+        <value>1</value>
       </action>
     </actions>
+    <pv_name>SignalX</pv_name>
     <text>Start</text>
     <x>146</x>
     <y>54</y>
     <width>60</width>
     <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="37" green="99" blue="235">
+      </color>
+    </background_color>
     <tooltip>$(P)Acquire = 1
 $(pv_value)</tooltip>
   </widget>
   <widget type="action_button" version="3.0.0">
     <name>WritePV</name>
-    <pv_name>$(P)Acquire</pv_name>
     <actions>
       <action type="write_pv">
-        <pv_name>$(pv_name)</pv_name>
-        <value>0</value>
         <description>$(name)</description>
+        <pv_name>$(P)Acquire</pv_name>
+        <value>0</value>
       </action>
     </actions>
+    <pv_name>SignalX</pv_name>
     <text>Stop</text>
     <x>210</x>
     <y>54</y>
     <width>60</width>
     <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="37" green="99" blue="235">
+      </color>
+    </background_color>
     <tooltip>$(P)Acquire = 0
 $(pv_value)</tooltip>
   </widget>
@@ -108,41 +164,69 @@ $(pv_value)</tooltip>
     <y>78</y>
     <width>120</width>
     <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
     <tooltip>Acquire With RBV - No description provided</tooltip>
   </widget>
   <widget type="action_button" version="3.0.0">
     <name>WritePV</name>
-    <pv_name>$(P)Acquire</pv_name>
     <actions>
       <action type="write_pv">
-        <pv_name>$(pv_name)</pv_name>
-        <value>1</value>
         <description>$(name)</description>
+        <pv_name>$(P)Acquire</pv_name>
+        <value>1</value>
       </action>
     </actions>
+    <pv_name>SignalX</pv_name>
     <text>Start</text>
     <x>146</x>
     <y>78</y>
     <width>38</width>
     <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="37" green="99" blue="235">
+      </color>
+    </background_color>
     <tooltip>$(P)Acquire = 1
 $(pv_value)</tooltip>
   </widget>
   <widget type="action_button" version="3.0.0">
     <name>WritePV</name>
-    <pv_name>$(P)Acquire</pv_name>
     <actions>
       <action type="write_pv">
-        <pv_name>$(pv_name)</pv_name>
-        <value>0</value>
         <description>$(name)</description>
+        <pv_name>$(P)Acquire</pv_name>
+        <value>0</value>
       </action>
     </actions>
+    <pv_name>SignalX</pv_name>
     <text>Stop</text>
     <x>188</x>
     <y>78</y>
     <width>38</width>
     <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="37" green="99" blue="235">
+      </color>
+    </background_color>
     <tooltip>$(P)Acquire = 0
 $(pv_value)</tooltip>
   </widget>
@@ -153,5 +237,20 @@ $(pv_value)</tooltip>
     <y>78</y>
     <width>20</width>
     <height>20</height>
+    <off_label>&#9675;</off_label>
+    <off_color>
+      <color red="22" green="163" blue="74">
+      </color>
+    </off_color>
+    <on_label>&#9679;</on_label>
+    <on_color>
+      <color red="167" green="243" blue="208">
+      </color>
+    </on_color>
+    <font>
+      <font family="Cantarell" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <square>true</square>
   </widget>
 </display>

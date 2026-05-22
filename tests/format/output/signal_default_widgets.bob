@@ -4,6 +4,10 @@
   <y use_class="true">0</y>
   <width>274</width>
   <height>150</height>
+  <background_color>
+    <color red="245" green="247" blue="250">
+    </color>
+  </background_color>
   <grid_step_x>4</grid_step_x>
   <grid_step_y>4</grid_step_y>
   <widget type="label" version="2.0.0">
@@ -32,6 +36,10 @@
     <y>30</y>
     <width>120</width>
     <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
     <tooltip>Read - A read-only signal</tooltip>
   </widget>
   <widget type="textupdate" version="2.0.0">
@@ -42,10 +50,22 @@
     <width>124</width>
     <height>20</height>
     <font>
-      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      <font family="Cantarell" style="BOLD" size="14.0">
       </font>
     </font>
+    <foreground_color>
+      <color red="15" green="23" blue="42">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="245" green="247" blue="250">
+      </color>
+    </background_color>
     <horizontal_alignment>1</horizontal_alignment>
+    <border_color>
+      <color red="203" green="213" blue="225">
+      </color>
+    </border_color>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label</name>
@@ -54,6 +74,10 @@
     <y>54</y>
     <width>120</width>
     <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
     <tooltip>Write - No description provided</tooltip>
   </widget>
   <widget type="textentry" version="3.0.0">
@@ -63,6 +87,14 @@
     <y>54</y>
     <width>124</width>
     <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="229" green="235" blue="255">
+      </color>
+    </background_color>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="label" version="2.0.0">
@@ -72,6 +104,10 @@
     <y>78</y>
     <width>120</width>
     <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
     <tooltip>Read Write Single - No description provided</tooltip>
   </widget>
   <widget type="textentry" version="3.0.0">
@@ -81,6 +117,14 @@
     <y>78</y>
     <width>124</width>
     <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="229" green="235" blue="255">
+      </color>
+    </background_color>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="label" version="2.0.0">
@@ -90,6 +134,10 @@
     <y>102</y>
     <width>120</width>
     <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
     <tooltip>Read Write - No description provided</tooltip>
   </widget>
   <widget type="textentry" version="3.0.0">
@@ -99,6 +147,14 @@
     <y>102</y>
     <width>60</width>
     <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="229" green="235" blue="255">
+      </color>
+    </background_color>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="textupdate" version="2.0.0">
@@ -109,10 +165,22 @@
     <width>60</width>
     <height>20</height>
     <font>
-      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      <font family="Cantarell" style="BOLD" size="14.0">
       </font>
     </font>
+    <foreground_color>
+      <color red="15" green="23" blue="42">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="245" green="247" blue="250">
+      </color>
+    </background_color>
     <horizontal_alignment>1</horizontal_alignment>
+    <border_color>
+      <color red="203" green="213" blue="225">
+      </color>
+    </border_color>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label</name>
@@ -121,23 +189,39 @@
     <y>126</y>
     <width>120</width>
     <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
     <tooltip>Execute - No description provided</tooltip>
   </widget>
   <widget type="action_button" version="3.0.0">
     <name>WritePV</name>
-    <pv_name>Execute</pv_name>
     <actions>
       <action type="write_pv">
-        <pv_name>$(pv_name)</pv_name>
-        <value>1</value>
         <description>$(name)</description>
+        <pv_name>Execute</pv_name>
+        <value>1</value>
       </action>
     </actions>
+    <pv_name>SignalX</pv_name>
     <text>Go</text>
     <x>146</x>
     <y>126</y>
     <width>124</width>
     <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="37" green="99" blue="235">
+      </color>
+    </background_color>
     <tooltip>Execute = 1
 $(pv_value)</tooltip>
   </widget>

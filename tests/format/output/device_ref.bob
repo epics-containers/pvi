@@ -4,6 +4,10 @@
   <y use_class="true">0</y>
   <width>274</width>
   <height>54</height>
+  <background_color>
+    <color red="245" green="247" blue="250">
+    </color>
+  </background_color>
   <grid_step_x>4</grid_step_x>
   <grid_step_y>4</grid_step_y>
   <widget type="label" version="2.0.0">
@@ -32,15 +36,19 @@
     <y>30</y>
     <width>120</width>
     <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
     <tooltip>Combo Box - No description provided</tooltip>
   </widget>
   <widget type="action_button" version="3.0.0">
     <name>OpenDisplay</name>
     <actions>
       <action type="open_display">
+        <description>Open Display</description>
         <file>combo_box.bob</file>
         <target>tab</target>
-        <description>Open Display</description>
         <macros>
           <P>TEST:</P>
         </macros>
@@ -51,6 +59,18 @@
     <y>30</y>
     <width>124</width>
     <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="37" green="99" blue="235">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="241" green="245" blue="249">
+      </color>
+    </background_color>
     <tooltip>$(actions)</tooltip>
   </widget>
 </display>
