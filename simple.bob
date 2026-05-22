@@ -4,6 +4,10 @@
   <y use_class="true">0</y>
   <width>438</width>
   <height>105</height>
+  <background_color>
+    <color red="245" green="247" blue="250">
+    </color>
+  </background_color>
   <grid_step_x>4</grid_step_x>
   <grid_step_y>4</grid_step_y>
   <widget type="label" version="2.0.0">
@@ -32,6 +36,10 @@
     <y>30</y>
     <width>200</width>
     <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
     <tooltip>Status - No description provided</tooltip>
   </widget>
   <widget type="textupdate" version="2.0.0">
@@ -42,10 +50,22 @@
     <width>205</width>
     <height>20</height>
     <font>
-      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      <font family="Cantarell" style="BOLD" size="14.0">
       </font>
     </font>
+    <foreground_color>
+      <color red="15" green="23" blue="42">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="245" green="247" blue="250">
+      </color>
+    </background_color>
     <horizontal_alignment>1</horizontal_alignment>
+    <border_color>
+      <color red="203" green="213" blue="225">
+      </color>
+    </border_color>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label</name>
@@ -54,6 +74,10 @@
     <y>55</y>
     <width>200</width>
     <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
     <tooltip>Config - No description provided</tooltip>
   </widget>
   <widget type="textentry" version="3.0.0">
@@ -63,6 +87,14 @@
     <y>55</y>
     <width>100</width>
     <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="229" green="235" blue="255">
+      </color>
+    </background_color>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
   <widget type="textupdate" version="2.0.0">
@@ -73,10 +105,22 @@
     <width>100</width>
     <height>20</height>
     <font>
-      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      <font family="Cantarell" style="BOLD" size="14.0">
       </font>
     </font>
+    <foreground_color>
+      <color red="15" green="23" blue="42">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="245" green="247" blue="250">
+      </color>
+    </background_color>
     <horizontal_alignment>1</horizontal_alignment>
+    <border_color>
+      <color red="203" green="213" blue="225">
+      </color>
+    </border_color>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label</name>
@@ -85,23 +129,39 @@
     <y>80</y>
     <width>200</width>
     <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
     <tooltip>Command - No description provided</tooltip>
   </widget>
   <widget type="action_button" version="3.0.0">
     <name>WritePV</name>
-    <pv_name>Go</pv_name>
     <actions>
       <action type="write_pv">
-        <pv_name>$(pv_name)</pv_name>
-        <value>1</value>
         <description>$(name)</description>
+        <pv_name>Go</pv_name>
+        <value>1</value>
       </action>
     </actions>
+    <pv_name>SignalX</pv_name>
     <text>Go</text>
     <x>228</x>
     <y>80</y>
     <width>205</width>
     <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="37" green="99" blue="235">
+      </color>
+    </background_color>
     <tooltip>Go = 1
 $(pv_value)</tooltip>
   </widget>
