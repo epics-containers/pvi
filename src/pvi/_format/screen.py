@@ -252,7 +252,7 @@ class ScreenFormatterFactory(Generic[T]):
         """
         if isinstance(c.layout, SubScreen):
             return self.create_component_widget_formatters(
-                Group(name=c.name, layout=c.layout, children=c.children),
+                Group(name=c.name, label=c.label, layout=c.layout, children=c.children),
                 parent_bounds=screen_bounds,
                 column_bounds=column_bounds,
                 next_column_bounds=next_column_bounds,
@@ -631,7 +631,10 @@ def is_table(component: Group) -> bool:
 
 def move_to_subscreen(component: ComponentUnion) -> Group:
     return Group(
-        name=component.name, layout=SubScreen(labelled=False), children=[component]
+        name=component.name,
+        label=component.label if isinstance(component, Group) else None,
+        layout=SubScreen(labelled=False),
+        children=[component],
     )
 
 
