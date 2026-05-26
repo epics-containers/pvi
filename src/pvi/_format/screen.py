@@ -332,10 +332,32 @@ class ScreenFormatterFactory(Generic[T]):
                     add_label = labelled
                     component = c
                 case Group(layout=Grid(labelled=labelled)):
-                    add_label = labelled
-                    raise NotImplementedError(
-                        "Cannot nest a Group(Grid()) in another Group on one screen"
-                    )
+                    # PVI cannot render a Grid inside another Grid as a nested group.
+                    # Flatten the inner Grid's children directly into the parent, which
+                    # is equivalent to merging the two Grid sections on the same screen.
+                    for nested_child in c.children:
+                        if isinstance(nested_child, IgnoredComponent):
+                            continue
+                        next_column_bounds = Bounds(
+                            x=next_x(widget_factories, self.layout.spacing),
+                            w=full_w,
+                            h=self.layout.widget_height,
+                        )
+                        widget_factories.extend(
+                            self.create_component_widget_formatters(
+                                nested_child,
+                                parent_bounds=bounds,
+                                column_bounds=column_bounds,
+                                next_column_bounds=next_column_bounds,
+                                add_label=True,
+                                stacked=isinstance(group.layout, Grid)
+                                and group.layout.stacked,
+                                squeeze=squeeze,
+                            )
+                        )
+                        if next_column_bounds.y != 0:
+                            column_bounds = next_column_bounds
+                    continue
                 case _:
                     # Make single line with a component or Row of components
                     component = c
