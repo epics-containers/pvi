@@ -1,0 +1,75 @@
+<display version="2.0.0">
+  <name>Label Test - $(P)</name>
+  <x>0</x>
+  <y use_class="true">0</y>
+  <width>274</width>
+  <height>78</height>
+  <grid_step_x>4</grid_step_x>
+  <grid_step_y>4</grid_step_y>
+  <widget type="label" version="2.0.0">
+    <name>Title</name>
+    <class>TITLE</class>
+    <text>Label Test - $(P)</text>
+    <x use_class="true">0</x>
+    <y use_class="true">0</y>
+    <width>274</width>
+    <height>26</height>
+    <font use_class="true">
+      <font name="Header 1" family="Liberation Sans" style="BOLD" size="22.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="Text" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <transparent use_class="true">true</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>Other Sig</text>
+    <x>22</x>
+    <y>30</y>
+    <width>120</width>
+    <height>20</height>
+    <tooltip>Other Sig - No description provided</tooltip>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>TextUpdate</name>
+    <pv_name>$(P)Other</pv_name>
+    <x>146</x>
+    <y>30</y>
+    <width>124</width>
+    <height>20</height>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>BL04I-EA-E1RIO-01</text>
+    <x>22</x>
+    <y>54</y>
+    <width>120</width>
+    <height>20</height>
+    <tooltip>BL04I-EA-E1RIO-01 - No description provided</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>OpenDisplay</name>
+    <actions>
+      <action type="open_display">
+        <file>group_label_preserved_Bl04iEaErio01.bob</file>
+        <target>tab</target>
+        <description>Open Display</description>
+      </action>
+    </actions>
+    <text>BL04I-EA-E1RIO-01 &#10697;</text>
+    <x>146</x>
+    <y>54</y>
+    <width>124</width>
+    <height>20</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+</display>
