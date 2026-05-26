@@ -291,3 +291,41 @@ def test_pvi_template(tmp_path, helper):
     format_template(device, "$(P)", output_template)
 
     helper.assert_output_matches(expected_bob, output_template)
+
+
+def test_group_label_preserved_through_subscreen(tmp_path, helper):
+    """Group.label must survive SubScreen reconstruction.
+
+    When create_group_formatters reconstructs a Group for SubScreen layout, and
+    when move_to_subscreen wraps a Group in a SubScreen, both must forward the
+    original label rather than letting it default to None.  Without the fix,
+    get_label() falls back to to_title_case(name) and a name like
+    "Bl04iEaErio01" would produce "Bl 04i Ea Erio 01" instead of the intended
+    "BL04I-EA-E1RIO-01".
+    """
+    formatter_yaml = HERE / "format" / "input" / "dls.bob.pvi.formatter.yaml"
+    formatter = Formatter.deserialize(formatter_yaml)
+
+    # A sibling signal forces the SubScreen group through create_group_formatters
+    # rather than the single-group special-case expansion of create_screen_formatter,
+    # so the SubScreen button is rendered and its label can be verified.
+    labeled_sub = Group(
+        name="Bl04iEaErio01",
+        label="BL04I-EA-E1RIO-01",
+        layout=SubScreen(),
+        children=[
+            SignalR(
+                name="Status",
+                read_pv="$(P)BL04I:EA:E1RIO01:Status",
+                read_widget=TextRead(),
+            ),
+        ],
+    )
+    sibling = SignalR(name="OtherSig", read_pv="$(P)Other", read_widget=TextRead())
+    device = Device(label="Label Test - $(P)", children=[sibling, labeled_sub])
+
+    expected_bob = HERE / "format" / "output" / "group_label_preserved.bob"
+    output_bob = tmp_path / "group_label_preserved.bob"
+    formatter.format(device, output_bob)
+
+    helper.assert_output_matches(expected_bob, output_bob)
