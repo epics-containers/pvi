@@ -1,0 +1,102 @@
+<display version="2.0.0">
+  <name>Grid Flatten Test - $(P)</name>
+  <x>0</x>
+  <y use_class="true">0</y>
+  <width>290</width>
+  <height>136</height>
+  <grid_step_x>4</grid_step_x>
+  <grid_step_y>4</grid_step_y>
+  <widget type="label" version="2.0.0">
+    <name>Title</name>
+    <class>TITLE</class>
+    <text>Grid Flatten Test - $(P)</text>
+    <x use_class="true">0</x>
+    <y use_class="true">0</y>
+    <width>290</width>
+    <height>26</height>
+    <font use_class="true">
+      <font name="Header 1" family="Liberation Sans" style="BOLD" size="22.0">
+      </font>
+    </font>
+    <foreground_color use_class="true">
+      <color name="Text" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <transparent use_class="true">true</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>Outer Group</name>
+    <x>4</x>
+    <y>30</y>
+    <width>282</width>
+    <height>102</height>
+    <transparent>true</transparent>
+    <widget type="label" version="2.0.0">
+      <name>Label</name>
+      <text>Direct Signal</text>
+      <x>0</x>
+      <y>0</y>
+      <width>120</width>
+      <height>20</height>
+      <tooltip>Direct Signal - No description provided</tooltip>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>TextUpdate</name>
+      <pv_name>$(P)Direct</pv_name>
+      <x>124</x>
+      <y>0</y>
+      <width>124</width>
+      <height>20</height>
+      <font>
+        <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+      </font>
+      <horizontal_alignment>1</horizontal_alignment>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label</name>
+      <text>Nested A</text>
+      <x>0</x>
+      <y>24</y>
+      <width>120</width>
+      <height>20</height>
+      <tooltip>Nested A - No description provided</tooltip>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>TextUpdate</name>
+      <pv_name>$(P)Nested:A</pv_name>
+      <x>124</x>
+      <y>24</y>
+      <width>124</width>
+      <height>20</height>
+      <font>
+        <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+      </font>
+      <horizontal_alignment>1</horizontal_alignment>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label</name>
+      <text>Nested B</text>
+      <x>0</x>
+      <y>48</y>
+      <width>120</width>
+      <height>20</height>
+      <tooltip>Nested B - No description provided</tooltip>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>TextUpdate</name>
+      <pv_name>$(P)Nested:B</pv_name>
+      <x>124</x>
+      <y>48</y>
+      <width>124</width>
+      <height>20</height>
+      <font>
+        <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+      </font>
+      <horizontal_alignment>1</horizontal_alignment>
+    </widget>
+  </widget>
+</display>
