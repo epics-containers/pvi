@@ -314,7 +314,11 @@ def test_group_label_preserved_through_subscreen(tmp_path, helper):
         label="BL04I-EA-E1RIO-01",
         layout=SubScreen(),
         children=[
-            SignalR(name="Status", read_pv="$(P)BL04I:EA:E1RIO01:Status", read_widget=TextRead()),
+            SignalR(
+                name="Status",
+                read_pv="$(P)BL04I:EA:E1RIO01:Status",
+                read_widget=TextRead(),
+            ),
         ],
     )
     sibling = SignalR(name="OtherSig", read_pv="$(P)Other", read_widget=TextRead())
@@ -350,8 +354,12 @@ def test_nested_grid_groups_flattened(tmp_path, helper):
                 label="Inner Group",
                 layout=Grid(),
                 children=[
-                    SignalR(name="NestedA", read_pv="$(P)Nested:A", read_widget=TextRead()),
-                    SignalR(name="NestedB", read_pv="$(P)Nested:B", read_widget=TextRead()),
+                    SignalR(
+                        name="NestedA", read_pv="$(P)Nested:A", read_widget=TextRead()
+                    ),
+                    SignalR(
+                        name="NestedB", read_pv="$(P)Nested:B", read_widget=TextRead()
+                    ),
                 ],
             ),
         ],
