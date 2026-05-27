@@ -35,6 +35,8 @@ class TypedModel(BaseModel):
 
     # Whether child models have been rebuilt with type field inserted
     models_typed: ClassVar[bool] = False
+    # Track which models have been rebuilt to avoid redundant rebuilds
+    _rebuilt_models: ClassVar[set[str]] = set()
 
     @computed_field  # type: ignore
     @property
@@ -72,6 +74,7 @@ class TypedModel(BaseModel):
         """Ensure all child models have type field added before generating schema."""
         if not cls.models_typed:
             TypedModel.rebuild_child_models()
+            TypedModel.models_typed = True
 
         return super().model_json_schema(
             by_alias, ref_template, schema_generator, mode, union_format=union_format
@@ -81,7 +84,10 @@ class TypedModel(BaseModel):
     def rebuild_child_models(cls):
         """Recursively rebuild all subclass models to add type into core schema."""
         for subclass in cls.__subclasses__():
-            subclass.model_rebuild(force=True)
+            # Only rebuild if we haven't already
+            if subclass.__name__ not in TypedModel._rebuilt_models:
+                TypedModel._rebuilt_models.add(subclass.__name__)
+                subclass.model_rebuild(force=True)
             subclass.rebuild_child_models()
 
     @classmethod
