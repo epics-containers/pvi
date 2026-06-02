@@ -490,6 +490,12 @@
           "title": "In Subscreen",
           "type": "boolean"
         },
+        "dynamic": {
+          "default": false,
+          "description": "Defines if device will be dynamically generated",
+          "title": "Dynamic",
+          "type": "boolean"
+        },
         "type": {
           "const": "Include",
           "default": "Include",
