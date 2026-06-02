@@ -14,6 +14,8 @@ from pvi.device import (
     DeviceRef,
     Grid,
     Group,
+    IgnoredComponent,
+    Include,
     SignalR,
     SignalRW,
     SignalW,
@@ -178,6 +180,49 @@ def test_device_ref(tmp_path, helper):
     formatter.format(device, output_bob)
 
     helper.assert_output_matches(expected_bob, output_bob)
+
+
+def test_dynamic_include_resolves(tmp_path):
+    grandchild = Device(
+        label="GrandChildDevice",
+        children=[
+            SignalR(
+                name="GrandChildSignal",
+                read_pv="GRANDCHILD:PV",
+                read_widget=TextRead(),
+            )
+        ],
+    )
+
+    # Set up file name, but don't serialize yet.
+    grandchild_file = tmp_path / "GrandChildDevice.pvi.device.yaml"
+    grandchild.serialize(grandchild_file)
+
+    child = Device(
+        label="ChildDevice",
+        children=[Include(file_name="GrandChildDevice", dynamic=True)],
+    )
+    child_file = tmp_path / "ChildDevice.pvi.device.yaml"
+    child.serialize(child_file)
+
+    parent = Device(
+        label="ParentDevice", children=[Include(file_name="ChildDevice", dynamic=False)]
+    )
+
+    with pytest.deprecated_call():
+        parent.deserialize_parents([tmp_path])
+
+    assert parent._dynamic_children == {0: "GrandChildDevice"}
+    assert len(parent.children) == 1
+    assert parent.children[0] == IgnoredComponent(name="GrandChildDevice")
+
+    grandchild.serialize(grandchild_file)
+    with pytest.deprecated_call():
+        parent.resolve_dynamic_children([tmp_path])
+
+    assert len(parent.children) == 1
+    assert isinstance(parent.children[0], SignalR)
+    assert parent.children[0].name == "GrandChildSignal"
 
 
 def test_group_sub_screen(tmp_path, helper):
