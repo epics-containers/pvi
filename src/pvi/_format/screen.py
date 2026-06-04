@@ -530,6 +530,10 @@ class ScreenFormatterFactory(Generic[T]):
                     component_bounds.h *= 10  # TODO: How do we know the number of rows?
                 case SignalR(read_widget=ImageRead() | ArrayTrace()):
                     add_label = False
+                case DeviceRef():
+                    # DeviceRef buttons are self-identifying; the label is
+                    # shown as the button text so no separate label is needed.
+                    add_label = False
                 case _:
                     pass
 
@@ -603,7 +607,7 @@ class ScreenFormatterFactory(Generic[T]):
             elif isinstance(rc, DeviceRef):
                 yield self.widget_formatter_factory.sub_screen_formatter_cls(
                     bounds=rc_bounds,
-                    label=" ".join(rc.macros.values()),
+                    label=rc.get_label(),
                     file_name=rc.ui,
                     macros=rc.macros,
                 )
