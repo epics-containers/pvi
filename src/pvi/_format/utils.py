@@ -99,3 +99,7 @@ def with_title(spacing: int, title_height: int) -> Callable[[Bounds], Bounds]:
     return Bounds(
         x=spacing, y=spacing + title_height, w=2 * spacing, h=2 * spacing + title_height
     ).added_to
+
+
+def without_title(spacing: int) -> Callable[[Bounds], Bounds]:
+    return Bounds(x=spacing, y=spacing, w=2 * spacing, h=2 * spacing).added_to
