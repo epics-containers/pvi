@@ -693,3 +693,10 @@ def find_components(yaml_name: str, yaml_paths: list[Path]) -> Tree:
         device.children = list(device.children) + [Include(file_name=device.parent)]
 
     return list(device.children)
+
+
+# Rebuild all Device models at module load time to ensure the type field is properly
+# included in the schema and serializer. This must happen before any tests or actual
+# usage of these models.
+TypedModel.rebuild_child_models()
+TypedModel.models_typed = True
