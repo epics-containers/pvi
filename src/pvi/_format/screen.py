@@ -338,6 +338,10 @@ class ScreenFormatterFactory(Generic[T]):
                     for nested_child in c.children:
                         if isinstance(nested_child, IgnoredComponent):
                             continue
+                        if _has_plot_widget(nested_child):
+                            # Promote waveform/image signals to SubScreen buttons,
+                            # matching split_out_plots behaviour at the top level.
+                            nested_child = move_to_subscreen(nested_child)
                         next_column_bounds = Bounds(
                             x=next_x(widget_factories, self.layout.spacing),
                             w=full_w,
