@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Callable
+from pathlib import Path
 from typing import TypeVar
 
 from pydantic import BaseModel
@@ -99,3 +100,10 @@ def with_title(spacing: int, title_height: int) -> Callable[[Bounds], Bounds]:
     return Bounds(
         x=spacing, y=spacing + title_height, w=2 * spacing, h=2 * spacing + title_height
     ).added_to
+
+
+def split_base_and_ext(path: Path) -> tuple[str, str]:
+    """Split a filename into its base name and full extension chain."""
+    base, sep, ext = path.name.partition(".")
+
+    return base, f"{sep}{ext}" if sep else ""
