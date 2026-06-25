@@ -1,0 +1,685 @@
+# {py:mod}`pvi._convert._asyn_convert`
+
+```{py:module} pvi._convert._asyn_convert
+```
+
+```{autodoc2-docstring} pvi._convert._asyn_convert
+:allowtitles:
+```
+
+## Module Contents
+
+### Classes
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`AsynRecord <pvi._convert._asyn_convert.AsynRecord>`
+  -
+* - {py:obj}`AsynParameter <pvi._convert._asyn_convert.AsynParameter>`
+  - ```{autodoc2-docstring} pvi._convert._asyn_convert.AsynParameter
+    :summary:
+    ```
+* - {py:obj}`AsynBinary <pvi._convert._asyn_convert.AsynBinary>`
+  - ```{autodoc2-docstring} pvi._convert._asyn_convert.AsynBinary
+    :summary:
+    ```
+* - {py:obj}`AsynBusy <pvi._convert._asyn_convert.AsynBusy>`
+  - ```{autodoc2-docstring} pvi._convert._asyn_convert.AsynBusy
+    :summary:
+    ```
+* - {py:obj}`AsynFloat64 <pvi._convert._asyn_convert.AsynFloat64>`
+  - ```{autodoc2-docstring} pvi._convert._asyn_convert.AsynFloat64
+    :summary:
+    ```
+* - {py:obj}`AsynInt32 <pvi._convert._asyn_convert.AsynInt32>`
+  - ```{autodoc2-docstring} pvi._convert._asyn_convert.AsynInt32
+    :summary:
+    ```
+* - {py:obj}`AsynLong <pvi._convert._asyn_convert.AsynLong>`
+  - ```{autodoc2-docstring} pvi._convert._asyn_convert.AsynLong
+    :summary:
+    ```
+* - {py:obj}`AsynMultiBitBinary <pvi._convert._asyn_convert.AsynMultiBitBinary>`
+  - ```{autodoc2-docstring} pvi._convert._asyn_convert.AsynMultiBitBinary
+    :summary:
+    ```
+* - {py:obj}`AsynString <pvi._convert._asyn_convert.AsynString>`
+  - ```{autodoc2-docstring} pvi._convert._asyn_convert.AsynString
+    :summary:
+    ```
+* - {py:obj}`AsynWaveform <pvi._convert._asyn_convert.AsynWaveform>`
+  - ```{autodoc2-docstring} pvi._convert._asyn_convert.AsynWaveform
+    :summary:
+    ```
+* - {py:obj}`AsynInt32Waveform <pvi._convert._asyn_convert.AsynInt32Waveform>`
+  - ```{autodoc2-docstring} pvi._convert._asyn_convert.AsynInt32Waveform
+    :summary:
+    ```
+* - {py:obj}`AsynFloat64Waveform <pvi._convert._asyn_convert.AsynFloat64Waveform>`
+  - ```{autodoc2-docstring} pvi._convert._asyn_convert.AsynFloat64Waveform
+    :summary:
+    ```
+````
+
+### Functions
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`get_waveform_parameter <pvi._convert._asyn_convert.get_waveform_parameter>`
+  - ```{autodoc2-docstring} pvi._convert._asyn_convert.get_waveform_parameter
+    :summary:
+    ```
+````
+
+### Data
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`InRecordTypes <pvi._convert._asyn_convert.InRecordTypes>`
+  - ```{autodoc2-docstring} pvi._convert._asyn_convert.InRecordTypes
+    :summary:
+    ```
+* - {py:obj}`OutRecordTypes <pvi._convert._asyn_convert.OutRecordTypes>`
+  - ```{autodoc2-docstring} pvi._convert._asyn_convert.OutRecordTypes
+    :summary:
+    ```
+* - {py:obj}`WaveformRecordTypes <pvi._convert._asyn_convert.WaveformRecordTypes>`
+  - ```{autodoc2-docstring} pvi._convert._asyn_convert.WaveformRecordTypes
+    :summary:
+    ```
+````
+
+### API
+
+```{py:exception} RecordError()
+:canonical: pvi._convert._asyn_convert.RecordError
+
+Bases: {py:obj}`Exception`
+
+```
+
+`````{py:class} AsynRecord(/, **data: typing.Any)
+:canonical: pvi._convert._asyn_convert.AsynRecord
+
+Bases: {py:obj}`pvi._convert._parameters.Record`
+
+````{py:method} model_post_init(__context: typing.Any)
+:canonical: pvi._convert._asyn_convert.AsynRecord.model_post_init
+
+````
+
+````{py:method} get_parameter_name() -> str | None
+:canonical: pvi._convert._asyn_convert.AsynRecord.get_parameter_name
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynRecord.get_parameter_name
+```
+
+````
+
+````{py:method} asyn_component_type() -> type[pvi._convert._asyn_convert.AsynParameter]
+:canonical: pvi._convert._asyn_convert.AsynRecord.asyn_component_type
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynRecord.asyn_component_type
+```
+
+````
+
+`````
+
+`````{py:class} AsynParameter(/, **data: typing.Any)
+:canonical: pvi._convert._asyn_convert.AsynParameter
+
+Bases: {py:obj}`pvi.device.Named`
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynParameter
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynParameter.__init__
+```
+
+````{py:attribute} type_strings
+:canonical: pvi._convert._asyn_convert.AsynParameter.type_strings
+:type: typing.ClassVar[pvi._convert._parameters.TypeStrings]
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynParameter.type_strings
+```
+
+````
+
+````{py:attribute} read_record
+:canonical: pvi._convert._asyn_convert.AsynParameter.read_record
+:type: typing.Annotated[pvi._convert._asyn_convert.AsynRecord | None, Field(description='A read AsynRecord ($(name)_RBV if not given)')]
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynParameter.read_record
+```
+
+````
+
+````{py:attribute} write_record
+:canonical: pvi._convert._asyn_convert.AsynParameter.write_record
+:type: typing.Annotated[pvi._convert._asyn_convert.AsynRecord | None, Field(description='A write AsynRecord, if not given then use $(name) as write PV')]
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynParameter.write_record
+```
+
+````
+
+````{py:attribute} read_widget
+:canonical: pvi._convert._asyn_convert.AsynParameter.read_widget
+:type: pvi.device.ReadWidgetUnion
+:value: >
+   'TextRead(...)'
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynParameter.read_widget
+```
+
+````
+
+````{py:attribute} write_widget
+:canonical: pvi._convert._asyn_convert.AsynParameter.write_widget
+:type: pvi.device.WriteWidgetUnion
+:value: >
+   'TextWrite(...)'
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynParameter.write_widget
+```
+
+````
+
+````{py:method} get_read_pv() -> str
+:canonical: pvi._convert._asyn_convert.AsynParameter.get_read_pv
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynParameter.get_read_pv
+```
+
+````
+
+````{py:method} get_write_pv() -> str
+:canonical: pvi._convert._asyn_convert.AsynParameter.get_write_pv
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynParameter.get_write_pv
+```
+
+````
+
+`````
+
+`````{py:class} AsynBinary(/, **data: typing.Any)
+:canonical: pvi._convert._asyn_convert.AsynBinary
+
+Bases: {py:obj}`pvi._convert._asyn_convert.AsynParameter`
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynBinary
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynBinary.__init__
+```
+
+````{py:attribute} type_strings
+:canonical: pvi._convert._asyn_convert.AsynBinary.type_strings
+:value: >
+   'TypeStrings(...)'
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynBinary.type_strings
+```
+
+````
+
+````{py:attribute} read_widget
+:canonical: pvi._convert._asyn_convert.AsynBinary.read_widget
+:type: pvi.device.ReadWidgetUnion
+:value: >
+   'LED(...)'
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynBinary.read_widget
+```
+
+````
+
+````{py:attribute} write_widget
+:canonical: pvi._convert._asyn_convert.AsynBinary.write_widget
+:type: pvi.device.WriteWidgetUnion
+:value: >
+   'ToggleButton(...)'
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynBinary.write_widget
+```
+
+````
+
+````{py:method} model_post_init(__context: typing.Any) -> None
+:canonical: pvi._convert._asyn_convert.AsynBinary.model_post_init
+
+````
+
+`````
+
+````{py:class} AsynBusy(/, **data: typing.Any)
+:canonical: pvi._convert._asyn_convert.AsynBusy
+
+Bases: {py:obj}`pvi._convert._asyn_convert.AsynBinary`
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynBusy
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynBusy.__init__
+```
+
+````
+
+`````{py:class} AsynFloat64(/, **data: typing.Any)
+:canonical: pvi._convert._asyn_convert.AsynFloat64
+
+Bases: {py:obj}`pvi._convert._asyn_convert.AsynParameter`
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynFloat64
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynFloat64.__init__
+```
+
+````{py:attribute} type_strings
+:canonical: pvi._convert._asyn_convert.AsynFloat64.type_strings
+:type: typing.ClassVar[pvi._convert._parameters.TypeStrings]
+:value: >
+   'TypeStrings(...)'
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynFloat64.type_strings
+```
+
+````
+
+````{py:attribute} read_widget
+:canonical: pvi._convert._asyn_convert.AsynFloat64.read_widget
+:type: pvi.device.ReadWidgetUnion
+:value: >
+   'TextRead(...)'
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynFloat64.read_widget
+```
+
+````
+
+````{py:attribute} write_widget
+:canonical: pvi._convert._asyn_convert.AsynFloat64.write_widget
+:type: pvi.device.WriteWidgetUnion
+:value: >
+   'TextWrite(...)'
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynFloat64.write_widget
+```
+
+````
+
+`````
+
+`````{py:class} AsynInt32(/, **data: typing.Any)
+:canonical: pvi._convert._asyn_convert.AsynInt32
+
+Bases: {py:obj}`pvi._convert._asyn_convert.AsynParameter`
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynInt32
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynInt32.__init__
+```
+
+````{py:attribute} type_strings
+:canonical: pvi._convert._asyn_convert.AsynInt32.type_strings
+:type: typing.ClassVar[pvi._convert._parameters.TypeStrings]
+:value: >
+   'TypeStrings(...)'
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynInt32.type_strings
+```
+
+````
+
+````{py:attribute} read_widget
+:canonical: pvi._convert._asyn_convert.AsynInt32.read_widget
+:type: pvi.device.ReadWidgetUnion
+:value: >
+   'TextRead(...)'
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynInt32.read_widget
+```
+
+````
+
+````{py:attribute} write_widget
+:canonical: pvi._convert._asyn_convert.AsynInt32.write_widget
+:type: pvi.device.WriteWidgetUnion
+:value: >
+   'TextWrite(...)'
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynInt32.write_widget
+```
+
+````
+
+`````
+
+````{py:class} AsynLong(/, **data: typing.Any)
+:canonical: pvi._convert._asyn_convert.AsynLong
+
+Bases: {py:obj}`pvi._convert._asyn_convert.AsynInt32`
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynLong
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynLong.__init__
+```
+
+````
+
+`````{py:class} AsynMultiBitBinary(/, **data: typing.Any)
+:canonical: pvi._convert._asyn_convert.AsynMultiBitBinary
+
+Bases: {py:obj}`pvi._convert._asyn_convert.AsynParameter`
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynMultiBitBinary
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynMultiBitBinary.__init__
+```
+
+````{py:attribute} type_strings
+:canonical: pvi._convert._asyn_convert.AsynMultiBitBinary.type_strings
+:type: typing.ClassVar[pvi._convert._parameters.TypeStrings]
+:value: >
+   'TypeStrings(...)'
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynMultiBitBinary.type_strings
+```
+
+````
+
+````{py:attribute} read_widget
+:canonical: pvi._convert._asyn_convert.AsynMultiBitBinary.read_widget
+:type: pvi.device.ReadWidgetUnion
+:value: >
+   'TextRead(...)'
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynMultiBitBinary.read_widget
+```
+
+````
+
+````{py:attribute} write_widget
+:canonical: pvi._convert._asyn_convert.AsynMultiBitBinary.write_widget
+:type: pvi.device.WriteWidgetUnion
+:value: >
+   'ComboBox(...)'
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynMultiBitBinary.write_widget
+```
+
+````
+
+`````
+
+`````{py:class} AsynString(/, **data: typing.Any)
+:canonical: pvi._convert._asyn_convert.AsynString
+
+Bases: {py:obj}`pvi._convert._asyn_convert.AsynParameter`
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynString
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynString.__init__
+```
+
+````{py:attribute} type_strings
+:canonical: pvi._convert._asyn_convert.AsynString.type_strings
+:type: typing.ClassVar[pvi._convert._parameters.TypeStrings]
+:value: >
+   'TypeStrings(...)'
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynString.type_strings
+```
+
+````
+
+````{py:attribute} read_widget
+:canonical: pvi._convert._asyn_convert.AsynString.read_widget
+:type: pvi.device.ReadWidgetUnion
+:value: >
+   'TextRead(...)'
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynString.read_widget
+```
+
+````
+
+````{py:attribute} write_widget
+:canonical: pvi._convert._asyn_convert.AsynString.write_widget
+:type: pvi.device.WriteWidgetUnion
+:value: >
+   'TextWrite(...)'
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynString.write_widget
+```
+
+````
+
+`````
+
+````{py:data} InRecordTypes
+:canonical: pvi._convert._asyn_convert.InRecordTypes
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.InRecordTypes
+```
+
+````
+
+````{py:data} OutRecordTypes
+:canonical: pvi._convert._asyn_convert.OutRecordTypes
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.OutRecordTypes
+```
+
+````
+
+`````{py:class} AsynWaveform(/, **data: typing.Any)
+:canonical: pvi._convert._asyn_convert.AsynWaveform
+
+Bases: {py:obj}`pvi._convert._asyn_convert.AsynParameter`
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynWaveform
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynWaveform.__init__
+```
+
+````{py:attribute} type_strings
+:canonical: pvi._convert._asyn_convert.AsynWaveform.type_strings
+:type: typing.ClassVar[pvi._convert._parameters.TypeStrings]
+:value: >
+   'TypeStrings(...)'
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynWaveform.type_strings
+```
+
+````
+
+````{py:attribute} read_widget
+:canonical: pvi._convert._asyn_convert.AsynWaveform.read_widget
+:type: pvi.device.ReadWidgetUnion
+:value: >
+   'TextRead(...)'
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynWaveform.read_widget
+```
+
+````
+
+````{py:attribute} write_widget
+:canonical: pvi._convert._asyn_convert.AsynWaveform.write_widget
+:type: pvi.device.WriteWidgetUnion
+:value: >
+   'TextWrite(...)'
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynWaveform.write_widget
+```
+
+````
+
+`````
+
+`````{py:class} AsynInt32Waveform(/, **data: typing.Any)
+:canonical: pvi._convert._asyn_convert.AsynInt32Waveform
+
+Bases: {py:obj}`pvi._convert._asyn_convert.AsynWaveform`
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynInt32Waveform
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynInt32Waveform.__init__
+```
+
+````{py:attribute} type_strings
+:canonical: pvi._convert._asyn_convert.AsynInt32Waveform.type_strings
+:type: typing.ClassVar[pvi._convert._parameters.TypeStrings]
+:value: >
+   'TypeStrings(...)'
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynInt32Waveform.type_strings
+```
+
+````
+
+````{py:attribute} read_widget
+:canonical: pvi._convert._asyn_convert.AsynInt32Waveform.read_widget
+:type: pvi.device.ReadWidgetUnion
+:value: >
+   'TextRead(...)'
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynInt32Waveform.read_widget
+```
+
+````
+
+````{py:attribute} write_widget
+:canonical: pvi._convert._asyn_convert.AsynInt32Waveform.write_widget
+:type: pvi.device.WriteWidgetUnion
+:value: >
+   'TextWrite(...)'
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynInt32Waveform.write_widget
+```
+
+````
+
+`````
+
+`````{py:class} AsynFloat64Waveform(/, **data: typing.Any)
+:canonical: pvi._convert._asyn_convert.AsynFloat64Waveform
+
+Bases: {py:obj}`pvi._convert._asyn_convert.AsynWaveform`
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynFloat64Waveform
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynFloat64Waveform.__init__
+```
+
+````{py:attribute} type_strings
+:canonical: pvi._convert._asyn_convert.AsynFloat64Waveform.type_strings
+:type: typing.ClassVar[pvi._convert._parameters.TypeStrings]
+:value: >
+   'TypeStrings(...)'
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynFloat64Waveform.type_strings
+```
+
+````
+
+````{py:attribute} read_widget
+:canonical: pvi._convert._asyn_convert.AsynFloat64Waveform.read_widget
+:type: pvi.device.ReadWidgetUnion
+:value: >
+   'TextRead(...)'
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynFloat64Waveform.read_widget
+```
+
+````
+
+````{py:attribute} write_widget
+:canonical: pvi._convert._asyn_convert.AsynFloat64Waveform.write_widget
+:type: pvi.device.WriteWidgetUnion
+:value: >
+   'TextWrite(...)'
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.AsynFloat64Waveform.write_widget
+```
+
+````
+
+`````
+
+````{py:data} WaveformRecordTypes
+:canonical: pvi._convert._asyn_convert.WaveformRecordTypes
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.WaveformRecordTypes
+```
+
+````
+
+````{py:function} get_waveform_parameter(dtyp: str)
+:canonical: pvi._convert._asyn_convert.get_waveform_parameter
+
+```{autodoc2-docstring} pvi._convert._asyn_convert.get_waveform_parameter
+```
+````

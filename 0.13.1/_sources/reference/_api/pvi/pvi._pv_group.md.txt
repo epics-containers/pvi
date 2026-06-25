@@ -1,0 +1,42 @@
+# {py:mod}`pvi._pv_group`
+
+```{py:module} pvi._pv_group
+```
+
+```{autodoc2-docstring} pvi._pv_group
+:allowtitles:
+```
+
+## Module Contents
+
+### Functions
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`find_pvs <pvi._pv_group.find_pvs>`
+  - ```{autodoc2-docstring} pvi._pv_group.find_pvs
+    :summary:
+    ```
+* - {py:obj}`group_by_ui <pvi._pv_group.group_by_ui>`
+  - ```{autodoc2-docstring} pvi._pv_group.group_by_ui
+    :summary:
+    ```
+````
+
+### API
+
+````{py:function} find_pvs(pvs: list[str], file_path: pathlib.Path) -> tuple[list[str], list[str]]
+:canonical: pvi._pv_group.find_pvs
+
+```{autodoc2-docstring} pvi._pv_group.find_pvs
+```
+````
+
+````{py:function} group_by_ui(device: pvi.device.Device, ui_paths: list[pathlib.Path]) -> pvi.device.Tree
+:canonical: pvi._pv_group.group_by_ui
+
+```{autodoc2-docstring} pvi._pv_group.group_by_ui
+```
+````
