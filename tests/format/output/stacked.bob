@@ -4,6 +4,10 @@
   <y use_class="true">0</y>
   <width>290</width>
   <height>136</height>
+  <background_color>
+    <color red="245" green="247" blue="250">
+    </color>
+  </background_color>
   <grid_step_x>4</grid_step_x>
   <grid_step_y>4</grid_step_y>
   <widget type="label" version="2.0.0">
@@ -25,12 +29,20 @@
     <transparent use_class="true">true</transparent>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
-  <widget type="group" version="2.0.0">
+  <widget type="group" version="3.0.0">
     <name>Stacked Group</name>
     <x>4</x>
     <y>30</y>
     <width>282</width>
     <height>102</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="16.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="246" green="247" blue="249">
+      </color>
+    </background_color>
     <transparent>true</transparent>
     <widget type="label" version="2.0.0">
       <name>Label</name>
@@ -39,6 +51,10 @@
       <y>0</y>
       <width>120</width>
       <height>44</height>
+      <font>
+        <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+      </font>
       <tooltip>Stacked Read Write - An RW with a TextRead widget, so it stacks</tooltip>
     </widget>
     <widget type="textentry" version="3.0.0">
@@ -48,6 +64,14 @@
       <y>0</y>
       <width>124</width>
       <height>20</height>
+      <font>
+        <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+      </font>
+      <background_color>
+        <color red="229" green="235" blue="255">
+      </color>
+      </background_color>
       <horizontal_alignment>1</horizontal_alignment>
     </widget>
     <widget type="textupdate" version="2.0.0">
@@ -58,10 +82,22 @@
       <width>124</width>
       <height>20</height>
       <font>
-        <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+        <font family="Cantarell" style="BOLD" size="14.0">
       </font>
       </font>
+      <foreground_color>
+        <color red="15" green="23" blue="42">
+      </color>
+      </foreground_color>
+      <background_color>
+        <color red="245" green="247" blue="250">
+      </color>
+      </background_color>
       <horizontal_alignment>1</horizontal_alignment>
+      <border_color>
+        <color red="203" green="213" blue="225">
+      </color>
+      </border_color>
     </widget>
     <widget type="label" version="2.0.0">
       <name>Label</name>
@@ -70,6 +106,10 @@
       <y>48</y>
       <width>120</width>
       <height>20</height>
+      <font>
+        <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+      </font>
       <tooltip>Unstacked Read Write - An RW with a non-TextRead widget, so it does not stack</tooltip>
     </widget>
     <widget type="textentry" version="3.0.0">
@@ -79,6 +119,14 @@
       <y>48</y>
       <width>60</width>
       <height>20</height>
+      <font>
+        <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+      </font>
+      <background_color>
+        <color red="229" green="235" blue="255">
+      </color>
+      </background_color>
       <horizontal_alignment>1</horizontal_alignment>
     </widget>
     <widget type="led" version="2.0.0">
@@ -88,6 +136,21 @@
       <y>48</y>
       <width>20</width>
       <height>20</height>
+      <off_label>&#9675;</off_label>
+      <off_color>
+        <color red="22" green="163" blue="74">
+      </color>
+      </off_color>
+      <on_label>&#9679;</on_label>
+      <on_color>
+        <color red="167" green="243" blue="208">
+      </color>
+      </on_color>
+      <font>
+        <font family="Cantarell" style="BOLD" size="12.0">
+      </font>
+      </font>
+      <square>true</square>
     </widget>
   </widget>
 </display>
