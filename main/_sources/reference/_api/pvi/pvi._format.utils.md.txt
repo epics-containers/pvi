@@ -37,10 +37,6 @@
   - ```{autodoc2-docstring} pvi._format.utils.with_title
     :summary:
     ```
-* - {py:obj}`split_base_and_ext <pvi._format.utils.split_base_and_ext>`
-  - ```{autodoc2-docstring} pvi._format.utils.split_base_and_ext
-    :summary:
-    ```
 ````
 
 ### Data
@@ -208,12 +204,5 @@ Bases: {py:obj}`pydantic.BaseModel`
 :canonical: pvi._format.utils.with_title
 
 ```{autodoc2-docstring} pvi._format.utils.with_title
-```
-````
-
-````{py:function} split_base_and_ext(path: pathlib.Path) -> tuple[str, str]
-:canonical: pvi._format.utils.split_base_and_ext
-
-```{autodoc2-docstring} pvi._format.utils.split_base_and_ext
 ```
 ````

@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pvi._format.utils &#8212; pvi 0.13.2.dev7+gd018ce49a documentation</title>
+    <title>pvi._format.utils &#8212; pvi 0.13.2.dev4+g57038cc52 documentation</title>
   
   
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=c8c3a621"></script>
+    <script src="../../../_static/documentation_options.js?v=0eeccb8d"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -459,7 +459,6 @@
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TypeVar</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span>
@@ -596,16 +595,6 @@
     <span class="k">return</span> <span class="n">Bounds</span><span class="p">(</span>
         <span class="n">x</span><span class="o">=</span><span class="n">spacing</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">spacing</span> <span class="o">+</span> <span class="n">title_height</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="mi">2</span> <span class="o">*</span> <span class="n">spacing</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mi">2</span> <span class="o">*</span> <span class="n">spacing</span> <span class="o">+</span> <span class="n">title_height</span>
     <span class="p">)</span><span class="o">.</span><span class="n">added_to</span></div>
-
-
-
-<div class="viewcode-block" id="split_base_and_ext">
-<a class="viewcode-back" href="../../../reference/_api/pvi/pvi._format.utils.html#pvi._format.utils.split_base_and_ext">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">split_base_and_ext</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Split a filename into its base name and full extension chain.&quot;&quot;&quot;</span>
-    <span class="n">base</span><span class="p">,</span> <span class="n">sep</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">base</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">sep</span><span class="si">}{</span><span class="n">ext</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">sep</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span></div>
 
 </pre></div>
 
