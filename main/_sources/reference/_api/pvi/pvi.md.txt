@@ -13,8 +13,8 @@
 :titlesonly:
 :maxdepth: 3
 
-pvi._format
 pvi._convert
+pvi._format
 ```
 
 ## Submodules
@@ -23,14 +23,14 @@ pvi._convert
 :titlesonly:
 :maxdepth: 1
 
-pvi.utils
 pvi._pv_group
-pvi._yaml_utils
-pvi.typed_model
-pvi._version
+pvi.utils
 pvi.device
+pvi._version
+pvi.typed_model
 pvi._schema_utils
 pvi.__main__
+pvi._yaml_utils
 ```
 
 ## Package Contents

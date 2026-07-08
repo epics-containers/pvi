@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>How to Write a Site Specific Formatter &#8212; pvi 0.13.1.dev3+g4fd635266 documentation</title>
+    <title>How to Write a Site Specific Formatter &#8212; pvi 0.13.2.dev1+gba2b4bae8 documentation</title>
   
   
   
@@ -41,7 +41,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=fe3c4be8"></script>
+    <script src="../_static/documentation_options.js?v=f68262eb"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -529,15 +529,15 @@ widgets to be written to a UI file.</p>
 <p>To make a screen from this, we need a template UI file. This contains a blank
 representation of each supported widget for each of the supported file formats (bob, edl
 etc…). Below is an example of a <code class="docutils literal notranslate"><span class="pre">textentry</span></code> widget for a .bob file.</p>
-<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="nt">&lt;widget</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;textentry&quot;</span><span class="w"> </span><span class="na">version=</span><span class="s">&quot;3.0.0&quot;</span><span class="nt">&gt;</span>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="nt">&lt;/widget&gt;</span>
+<span class="w">  </span><span class="nt">&lt;widget</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;textentry&quot;</span><span class="w"> </span><span class="na">version=</span><span class="s">&quot;3.0.0&quot;</span><span class="nt">&gt;</span>
 <span class="w">    </span><span class="nt">&lt;name&gt;</span>TextEntry<span class="nt">&lt;/name&gt;</span>
 <span class="w">    </span><span class="nt">&lt;pv_name&gt;</span>TextWrite<span class="nt">&lt;/pv_name&gt;</span>
 <span class="w">    </span><span class="nt">&lt;x&gt;</span>18<span class="nt">&lt;/x&gt;</span>
 <span class="w">    </span><span class="nt">&lt;y&gt;</span>78<span class="nt">&lt;/y&gt;</span>
 <span class="w">    </span><span class="nt">&lt;width&gt;</span>120<span class="nt">&lt;/width&gt;</span>
 <span class="w">    </span><span class="nt">&lt;height&gt;</span>30<span class="nt">&lt;/height&gt;</span>
-<span class="w">    </span><span class="nt">&lt;horizontal_alignment&gt;</span>1<span class="nt">&lt;/horizontal_alignment&gt;</span>
-<span class="w">  </span><span class="nt">&lt;/widget&gt;</span>
+<span class="w">    </span><span class="nt">&lt;font&gt;</span>
 </pre></div>
 </div>
 <p>By extracting and altering the template widgets with the information provided by the
