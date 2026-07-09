@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>How to Write a Site Specific Formatter &#8212; pvi 0.13.2.dev4+g57038cc52 documentation</title>
+    <title>How to Write a Site Specific Formatter &#8212; pvi 0.13.2.dev8+g2817c728f documentation</title>
   
   
   
@@ -41,7 +41,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=0eeccb8d"></script>
+    <script src="../_static/documentation_options.js?v=039b13e0"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -784,6 +784,8 @@ and position, and the <code class="docutils literal notranslate"><span class="pr
                 <span class="p">)</span>
             <span class="p">]</span>
 
+        <span class="n">base_file_name</span><span class="p">,</span> <span class="n">all_suffixes</span> <span class="o">=</span> <span class="n">split_base_and_ext</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
 </pre></div>
 </div>
 </section>
@@ -807,7 +809,7 @@ and position, and the <code class="docutils literal notranslate"><span class="pr
             <span class="p">),</span>
             <span class="n">widget_formatter_factory</span><span class="o">=</span><span class="n">widget_formatter_factory</span><span class="p">,</span>
             <span class="n">layout</span><span class="o">=</span><span class="n">screen_layout</span><span class="p">,</span>
-            <span class="n">base_file_name</span><span class="o">=</span><span class="n">path</span><span class="o">.</span><span class="n">stem</span><span class="p">,</span>
+            <span class="n">base_file_name</span><span class="o">=</span><span class="n">base_file_name</span><span class="p">,</span>
         <span class="p">)</span>
 </pre></div>
 </div>
@@ -822,7 +824,7 @@ specific UI type the factory was parameterised with.</p>
 
         <span class="n">write_bob</span><span class="p">(</span><span class="n">screen_formatter</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">sub_screen_name</span><span class="p">,</span> <span class="n">sub_screen_formatter</span> <span class="ow">in</span> <span class="n">sub_screens</span><span class="p">:</span>
-            <span class="n">sub_screen_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">sub_screen_name</span><span class="si">}{</span><span class="n">path</span><span class="o">.</span><span class="n">suffix</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">sub_screen_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">sub_screen_name</span><span class="si">}{</span><span class="n">all_suffixes</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">write_bob</span><span class="p">(</span><span class="n">sub_screen_formatter</span><span class="p">,</span> <span class="n">sub_screen_path</span><span class="p">)</span>
 
 

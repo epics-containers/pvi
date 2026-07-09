@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pvi._format.utils &#8212; pvi 0.13.2.dev4+g57038cc52 documentation</title>
+    <title>pvi._format.utils &#8212; pvi 0.13.2.dev8+g2817c728f documentation</title>
   
   
   
@@ -41,7 +41,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=0eeccb8d"></script>
+    <script src="../../../_static/documentation_options.js?v=039b13e0"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -532,6 +532,9 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#pvi._format.utils.with_title" title="pvi._format.utils.with_title"><code class="xref py py-obj docutils literal notranslate"><span class="pre">with_title</span></code></a></p></td>
 <td></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi._format.utils.split_base_and_ext" title="pvi._format.utils.split_base_and_ext"><code class="xref py py-obj docutils literal notranslate"><span class="pre">split_base_and_ext</span></code></a></p></td>
+<td><p>Split a filename into its base name and full extension chain.</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -651,6 +654,12 @@
 <span class="sig-prename descclassname"><span class="pre">pvi._format.utils.</span></span><span class="sig-name descname"><span class="pre">with_title</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spacing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">title_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.14)"><span class="pre">collections.abc.Callable</span></a><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pvi._format.utils.Bounds" title="pvi._format.utils.Bounds"><span class="pre">pvi._format.utils.Bounds</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#pvi._format.utils.Bounds" title="pvi._format.utils.Bounds"><span class="pre">pvi._format.utils.Bounds</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/pvi/_format/utils.html#with_title"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._format.utils.with_title" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="pvi._format.utils.split_base_and_ext">
+<span class="sig-prename descclassname"><span class="pre">pvi._format.utils.</span></span><span class="sig-name descname"><span class="pre">split_base_and_ext</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.14)"><span class="pre">pathlib.Path</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/pvi/_format/utils.html#split_base_and_ext"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._format.utils.split_base_and_ext" title="Link to this definition">#</a></dt>
+<dd><p>Split a filename into its base name and full extension chain.</p>
+</dd></dl>
+
 </section>
 </section>
 </section>
@@ -727,6 +736,7 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.utils.concat"><code class="docutils literal notranslate"><span class="pre">concat()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.utils.split_with_sep"><code class="docutils literal notranslate"><span class="pre">split_with_sep()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.utils.with_title"><code class="docutils literal notranslate"><span class="pre">with_title()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.utils.split_base_and_ext"><code class="docutils literal notranslate"><span class="pre">split_base_and_ext()</span></code></a></li>
 </ul>
 </li>
 </ul>
