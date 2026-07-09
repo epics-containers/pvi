@@ -4,6 +4,10 @@
   <y use_class="true">0</y>
   <width>926</width>
   <height>534</height>
+  <background_color>
+    <color red="245" green="247" blue="250">
+    </color>
+  </background_color>
   <grid_step_x>4</grid_step_x>
   <grid_step_y>4</grid_step_y>
   <widget type="label" version="2.0.0">
@@ -32,6 +36,34 @@
     <y>30</y>
     <width>900</width>
     <height>500</height>
+    <x_axis>
+      <visible>true</visible>
+      <title>X</title>
+      <minimum>0.0</minimum>
+      <maximum>100.0</maximum>
+      <title_font>
+        <font family="Cantarell" style="BOLD" size="14.0">
+        </font>
+      </title_font>
+      <scale_font>
+        <font family="Cantarell" style="REGULAR" size="14.0">
+        </font>
+      </scale_font>
+    </x_axis>
+    <y_axis>
+      <visible>true</visible>
+      <title>Y</title>
+      <minimum>0.0</minimum>
+      <maximum>100.0</maximum>
+      <title_font>
+        <font family="Cantarell" style="BOLD" size="14.0">
+        </font>
+      </title_font>
+      <scale_font>
+        <font family="Cantarell" style="REGULAR" size="14.0">
+        </font>
+      </scale_font>
+    </y_axis>
     <color_map>
       <name>GRAY</name>
     </color_map>

@@ -4,6 +4,10 @@
   <y use_class="true">0</y>
   <width>274</width>
   <height>54</height>
+  <background_color>
+    <color red="245" green="247" blue="250">
+    </color>
+  </background_color>
   <grid_step_x>4</grid_step_x>
   <grid_step_y>4</grid_step_y>
   <widget type="label" version="2.0.0">
@@ -32,6 +36,10 @@
     <y>30</y>
     <width>120</width>
     <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
     <tooltip>Enum - No description provided</tooltip>
   </widget>
   <widget type="combo" version="2.0.0">
@@ -41,6 +49,19 @@
     <y>30</y>
     <width>60</width>
     <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="229" green="235" blue="255">
+      </color>
+    </background_color>
+    <items>
+      <item>item 0</item>
+      <item>Item 1</item>
+      <item>Item 2</item>
+    </items>
     <items>
       <item>A</item>
       <item>B</item>
@@ -56,9 +77,21 @@
     <width>60</width>
     <height>20</height>
     <font>
-      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      <font family="Cantarell" style="BOLD" size="14.0">
       </font>
     </font>
+    <foreground_color>
+      <color red="15" green="23" blue="42">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="245" green="247" blue="250">
+      </color>
+    </background_color>
     <horizontal_alignment>1</horizontal_alignment>
+    <border_color>
+      <color red="203" green="213" blue="225">
+      </color>
+    </border_color>
   </widget>
 </display>

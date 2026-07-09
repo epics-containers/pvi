@@ -4,6 +4,10 @@
   <y use_class="true">0</y>
   <width>438</width>
   <height>105</height>
+  <background_color>
+    <color red="245" green="247" blue="250">
+    </color>
+  </background_color>
   <grid_step_x>4</grid_step_x>
   <grid_step_y>4</grid_step_y>
   <widget type="label" version="2.0.0">
@@ -25,13 +29,26 @@
     <transparent use_class="true">true</transparent>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>Button - $(P)</text>
+    <x>23</x>
+    <y>30</y>
+    <width>200</width>
+    <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <tooltip>Button - $(P) - No description provided</tooltip>
+  </widget>
   <widget type="action_button" version="3.0.0">
     <name>OpenDisplay</name>
     <actions>
       <action type="open_display">
+        <description>Open Display</description>
         <file>button.bob</file>
         <target>tab</target>
-        <description>Open Display</description>
         <macros>
           <P>TEST:</P>
         </macros>
@@ -42,15 +59,40 @@
     <y>30</y>
     <width>410</width>
     <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="37" green="99" blue="235">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="241" green="245" blue="249">
+      </color>
+    </background_color>
     <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>ComboBox</text>
+    <x>23</x>
+    <y>55</y>
+    <width>200</width>
+    <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <tooltip>ComboBox - No description provided</tooltip>
   </widget>
   <widget type="action_button" version="3.0.0">
     <name>OpenDisplay</name>
     <actions>
       <action type="open_display">
+        <description>Open Display</description>
         <file>combo_box.bob</file>
         <target>tab</target>
-        <description>Open Display</description>
         <macros>
           <P>TEST:</P>
         </macros>
@@ -61,15 +103,40 @@
     <y>55</y>
     <width>410</width>
     <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="37" green="99" blue="235">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="241" green="245" blue="249">
+      </color>
+    </background_color>
     <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>table</text>
+    <x>23</x>
+    <y>80</y>
+    <width>200</width>
+    <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <tooltip>table - No description provided</tooltip>
   </widget>
   <widget type="action_button" version="3.0.0">
     <name>OpenDisplay</name>
     <actions>
       <action type="open_display">
+        <description>Open Display</description>
         <file>pva_table.bob</file>
         <target>tab</target>
-        <description>Open Display</description>
         <macros>
           <P>TEST:</P>
         </macros>
@@ -80,6 +147,18 @@
     <y>80</y>
     <width>410</width>
     <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="37" green="99" blue="235">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="241" green="245" blue="249">
+      </color>
+    </background_color>
     <tooltip>$(actions)</tooltip>
   </widget>
 </display>

@@ -4,6 +4,10 @@
   <y use_class="true">0</y>
   <width>628</width>
   <height>732</height>
+  <background_color>
+    <color red="245" green="247" blue="250">
+    </color>
+  </background_color>
   <grid_step_x>4</grid_step_x>
   <grid_step_y>4</grid_step_y>
   <widget type="label" version="2.0.0">
@@ -25,20 +29,28 @@
     <transparent use_class="true">true</transparent>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
-  <widget type="group" version="2.0.0">
+  <widget type="group" version="3.0.0">
     <name>ArrayTrace</name>
     <x>4</x>
     <y>30</y>
     <width>282</width>
     <height>54</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="16.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="246" green="247" blue="249">
+      </color>
+    </background_color>
     <transparent>true</transparent>
     <widget type="action_button" version="3.0.0">
       <name>OpenDisplay</name>
       <actions>
         <action type="open_display">
+          <description>Open Display</description>
           <file>all_widgets_ArrayTrace.bob</file>
           <target>tab</target>
-          <description>Open Display</description>
         </action>
       </actions>
       <text>Array Trace &#10697;</text>
@@ -46,15 +58,35 @@
       <y>0</y>
       <width>248</width>
       <height>20</height>
+      <font>
+        <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+      </font>
+      <foreground_color>
+        <color red="37" green="99" blue="235">
+      </color>
+      </foreground_color>
+      <background_color>
+        <color red="241" green="245" blue="249">
+      </color>
+      </background_color>
       <tooltip>$(actions)</tooltip>
     </widget>
   </widget>
-  <widget type="group" version="2.0.0">
+  <widget type="group" version="3.0.0">
     <name>BitField</name>
     <x>4</x>
     <y>88</y>
     <width>282</width>
     <height>54</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="16.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="246" green="247" blue="249">
+      </color>
+    </background_color>
     <transparent>true</transparent>
     <widget type="label" version="2.0.0">
       <name>Label</name>
@@ -63,6 +95,10 @@
       <y>0</y>
       <width>120</width>
       <height>20</height>
+      <font>
+        <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+      </font>
       <tooltip>Bit Field - No description provided</tooltip>
     </widget>
     <widget type="byte_monitor" version="2.0.0">
@@ -71,15 +107,31 @@
       <x>124</x>
       <y>0</y>
       <width>160</width>
+      <off_color>
+        <color red="167" green="243" blue="208">
+      </color>
+      </off_color>
+      <on_color>
+        <color red="22" green="163" blue="74">
+      </color>
+      </on_color>
       <numBits>8</numBits>
     </widget>
   </widget>
-  <widget type="group" version="2.0.0">
+  <widget type="group" version="3.0.0">
     <name>ButtonPanel</name>
     <x>4</x>
     <y>146</y>
     <width>282</width>
     <height>54</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="16.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="246" green="247" blue="249">
+      </color>
+    </background_color>
     <transparent>true</transparent>
     <widget type="label" version="2.0.0">
       <name>Label</name>
@@ -88,51 +140,87 @@
       <y>0</y>
       <width>120</width>
       <height>20</height>
+      <font>
+        <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+      </font>
       <tooltip>Button Panel - One-or-more buttons that poke a PV with a value</tooltip>
     </widget>
     <widget type="action_button" version="3.0.0">
       <name>WritePV</name>
-      <pv_name>$(P)$(R)ButtonPanel</pv_name>
       <actions>
         <action type="write_pv">
-          <pv_name>$(pv_name)</pv_name>
-          <value>0</value>
           <description>$(name)</description>
+          <pv_name>$(P)$(R)ButtonPanel</pv_name>
+          <value>0</value>
         </action>
       </actions>
+      <pv_name>SignalX</pv_name>
       <text>Stop</text>
       <x>124</x>
       <y>0</y>
       <width>60</width>
       <height>20</height>
+      <font>
+        <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+      </font>
+      <foreground_color>
+        <color red="255" green="255" blue="255">
+      </color>
+      </foreground_color>
+      <background_color>
+        <color red="37" green="99" blue="235">
+      </color>
+      </background_color>
       <tooltip>$(P)$(R)ButtonPanel = 0
 $(pv_value)</tooltip>
     </widget>
     <widget type="action_button" version="3.0.0">
       <name>WritePV</name>
-      <pv_name>$(P)$(R)ButtonPanel</pv_name>
       <actions>
         <action type="write_pv">
-          <pv_name>$(pv_name)</pv_name>
-          <value>1</value>
           <description>$(name)</description>
+          <pv_name>$(P)$(R)ButtonPanel</pv_name>
+          <value>1</value>
         </action>
       </actions>
+      <pv_name>SignalX</pv_name>
       <text>Start</text>
       <x>188</x>
       <y>0</y>
       <width>60</width>
       <height>20</height>
+      <font>
+        <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+      </font>
+      <foreground_color>
+        <color red="255" green="255" blue="255">
+      </color>
+      </foreground_color>
+      <background_color>
+        <color red="37" green="99" blue="235">
+      </color>
+      </background_color>
       <tooltip>$(P)$(R)ButtonPanel = 1
 $(pv_value)</tooltip>
     </widget>
   </widget>
-  <widget type="group" version="2.0.0">
+  <widget type="group" version="3.0.0">
     <name>CheckBox</name>
     <x>4</x>
     <y>204</y>
     <width>282</width>
     <height>54</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="16.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="246" green="247" blue="249">
+      </color>
+    </background_color>
     <transparent>true</transparent>
     <widget type="label" version="2.0.0">
       <name>Label</name>
@@ -141,6 +229,10 @@ $(pv_value)</tooltip>
       <y>0</y>
       <width>120</width>
       <height>20</height>
+      <font>
+        <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+      </font>
       <tooltip>Check Box - No description provided</tooltip>
     </widget>
     <widget type="checkbox" version="2.0.0">
@@ -151,15 +243,27 @@ $(pv_value)</tooltip>
       <y>0</y>
       <width>124</width>
       <height>20</height>
+      <font>
+        <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+      </font>
       <auto_size>true</auto_size>
     </widget>
   </widget>
-  <widget type="group" version="2.0.0">
+  <widget type="group" version="3.0.0">
     <name>ComboBox</name>
     <x>4</x>
     <y>262</y>
     <width>282</width>
     <height>54</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="16.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="246" green="247" blue="249">
+      </color>
+    </background_color>
     <transparent>true</transparent>
     <widget type="label" version="2.0.0">
       <name>Label</name>
@@ -168,6 +272,10 @@ $(pv_value)</tooltip>
       <y>0</y>
       <width>120</width>
       <height>20</height>
+      <font>
+        <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+      </font>
       <tooltip>Combo Box - No description provided</tooltip>
     </widget>
     <widget type="combo" version="2.0.0">
@@ -177,6 +285,19 @@ $(pv_value)</tooltip>
       <y>0</y>
       <width>124</width>
       <height>20</height>
+      <font>
+        <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+      </font>
+      <background_color>
+        <color red="229" green="235" blue="255">
+      </color>
+      </background_color>
+      <items>
+        <item>item 0</item>
+        <item>Item 1</item>
+        <item>Item 2</item>
+      </items>
       <items>
         <item>One</item>
         <item>Two</item>
@@ -184,20 +305,28 @@ $(pv_value)</tooltip>
       <items_from_pv>false</items_from_pv>
     </widget>
   </widget>
-  <widget type="group" version="2.0.0">
+  <widget type="group" version="3.0.0">
     <name>ImageRead</name>
     <x>4</x>
     <y>320</y>
     <width>282</width>
     <height>54</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="16.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="246" green="247" blue="249">
+      </color>
+    </background_color>
     <transparent>true</transparent>
     <widget type="action_button" version="3.0.0">
       <name>OpenDisplay</name>
       <actions>
         <action type="open_display">
+          <description>Open Display</description>
           <file>all_widgets_ImageRead.bob</file>
           <target>tab</target>
-          <description>Open Display</description>
         </action>
       </actions>
       <text>Image Read &#10697;</text>
@@ -205,15 +334,35 @@ $(pv_value)</tooltip>
       <y>0</y>
       <width>248</width>
       <height>20</height>
+      <font>
+        <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+      </font>
+      <foreground_color>
+        <color red="37" green="99" blue="235">
+      </color>
+      </foreground_color>
+      <background_color>
+        <color red="241" green="245" blue="249">
+      </color>
+      </background_color>
       <tooltip>$(actions)</tooltip>
     </widget>
   </widget>
-  <widget type="group" version="2.0.0">
+  <widget type="group" version="3.0.0">
     <name>LED</name>
     <x>4</x>
     <y>378</y>
     <width>282</width>
     <height>54</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="16.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="246" green="247" blue="249">
+      </color>
+    </background_color>
     <transparent>true</transparent>
     <widget type="label" version="2.0.0">
       <name>Label</name>
@@ -222,6 +371,10 @@ $(pv_value)</tooltip>
       <y>0</y>
       <width>120</width>
       <height>20</height>
+      <font>
+        <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+      </font>
       <tooltip>LED - No description provided</tooltip>
     </widget>
     <widget type="led" version="2.0.0">
@@ -231,14 +384,37 @@ $(pv_value)</tooltip>
       <y>0</y>
       <width>20</width>
       <height>20</height>
+      <off_label>&#9675;</off_label>
+      <off_color>
+        <color red="22" green="163" blue="74">
+      </color>
+      </off_color>
+      <on_label>&#9679;</on_label>
+      <on_color>
+        <color red="167" green="243" blue="208">
+      </color>
+      </on_color>
+      <font>
+        <font family="Cantarell" style="BOLD" size="12.0">
+      </font>
+      </font>
+      <square>true</square>
     </widget>
   </widget>
-  <widget type="group" version="2.0.0">
+  <widget type="group" version="3.0.0">
     <name>ProgressBar</name>
     <x>4</x>
     <y>436</y>
     <width>282</width>
     <height>54</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="16.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="246" green="247" blue="249">
+      </color>
+    </background_color>
     <transparent>true</transparent>
     <widget type="label" version="2.0.0">
       <name>Label</name>
@@ -247,6 +423,10 @@ $(pv_value)</tooltip>
       <y>0</y>
       <width>120</width>
       <height>20</height>
+      <font>
+        <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+      </font>
       <tooltip>Progress Bar - No description provided</tooltip>
     </widget>
     <widget type="progressbar" version="2.0.0">
@@ -256,14 +436,30 @@ $(pv_value)</tooltip>
       <y>0</y>
       <width>124</width>
       <height>20</height>
+      <fill_color>
+        <color red="37" green="99" blue="235">
+      </color>
+      </fill_color>
+      <background_color>
+        <color red="226" green="232" blue="240">
+      </color>
+      </background_color>
     </widget>
   </widget>
-  <widget type="group" version="2.0.0">
+  <widget type="group" version="3.0.0">
     <name>TableRead</name>
     <x>4</x>
     <y>494</y>
     <width>234</width>
     <height>234</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="16.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="246" green="247" blue="249">
+      </color>
+    </background_color>
     <transparent>true</transparent>
     <widget type="table" version="2.0.0">
       <name>Table</name>
@@ -296,12 +492,20 @@ $(pv_value)</tooltip>
       <editable>false</editable>
     </widget>
   </widget>
-  <widget type="group" version="2.0.0">
+  <widget type="group" version="3.0.0">
     <name>TableWrite</name>
     <x>290</x>
     <y>30</y>
     <width>334</width>
     <height>234</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="16.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="246" green="247" blue="249">
+      </color>
+    </background_color>
     <transparent>true</transparent>
     <widget type="table" version="2.0.0">
       <name>Table</name>
@@ -342,12 +546,20 @@ $(pv_value)</tooltip>
       <editable>true</editable>
     </widget>
   </widget>
-  <widget type="group" version="2.0.0">
+  <widget type="group" version="3.0.0">
     <name>TextRead</name>
     <x>290</x>
     <y>268</y>
     <width>282</width>
     <height>102</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="16.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="246" green="247" blue="249">
+      </color>
+    </background_color>
     <transparent>true</transparent>
     <widget type="label" version="2.0.0">
       <name>Label</name>
@@ -356,6 +568,10 @@ $(pv_value)</tooltip>
       <y>0</y>
       <width>120</width>
       <height>20</height>
+      <font>
+        <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+      </font>
       <tooltip>Text Read - No description provided</tooltip>
     </widget>
     <widget type="textupdate" version="2.0.0">
@@ -366,10 +582,22 @@ $(pv_value)</tooltip>
       <width>124</width>
       <height>20</height>
       <font>
-        <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+        <font family="Cantarell" style="BOLD" size="14.0">
       </font>
       </font>
+      <foreground_color>
+        <color red="15" green="23" blue="42">
+      </color>
+      </foreground_color>
+      <background_color>
+        <color red="245" green="247" blue="250">
+      </color>
+      </background_color>
       <horizontal_alignment>1</horizontal_alignment>
+      <border_color>
+        <color red="203" green="213" blue="225">
+      </color>
+      </border_color>
     </widget>
     <widget type="label" version="2.0.0">
       <name>Label</name>
@@ -378,6 +606,10 @@ $(pv_value)</tooltip>
       <y>24</y>
       <width>120</width>
       <height>20</height>
+      <font>
+        <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+      </font>
       <tooltip>Text Read Float - No description provided</tooltip>
     </widget>
     <widget type="textupdate" version="2.0.0">
@@ -388,10 +620,22 @@ $(pv_value)</tooltip>
       <width>124</width>
       <height>20</height>
       <font>
-        <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+        <font family="Cantarell" style="BOLD" size="14.0">
       </font>
       </font>
+      <foreground_color>
+        <color red="15" green="23" blue="42">
+      </color>
+      </foreground_color>
+      <background_color>
+        <color red="245" green="247" blue="250">
+      </color>
+      </background_color>
       <horizontal_alignment>1</horizontal_alignment>
+      <border_color>
+        <color red="203" green="213" blue="225">
+      </color>
+      </border_color>
       <precision>3</precision>
     </widget>
     <widget type="label" version="2.0.0">
@@ -401,6 +645,10 @@ $(pv_value)</tooltip>
       <y>48</y>
       <width>120</width>
       <height>20</height>
+      <font>
+        <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+      </font>
       <tooltip>Text Read Int - No description provided</tooltip>
     </widget>
     <widget type="textupdate" version="2.0.0">
@@ -411,19 +659,39 @@ $(pv_value)</tooltip>
       <width>124</width>
       <height>20</height>
       <font>
-        <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+        <font family="Cantarell" style="BOLD" size="14.0">
       </font>
       </font>
+      <foreground_color>
+        <color red="15" green="23" blue="42">
+      </color>
+      </foreground_color>
+      <background_color>
+        <color red="245" green="247" blue="250">
+      </color>
+      </background_color>
       <horizontal_alignment>1</horizontal_alignment>
+      <border_color>
+        <color red="203" green="213" blue="225">
+      </color>
+      </border_color>
       <precision>0</precision>
     </widget>
   </widget>
-  <widget type="group" version="2.0.0">
+  <widget type="group" version="3.0.0">
     <name>TextWrite</name>
     <x>290</x>
     <y>374</y>
     <width>282</width>
     <height>102</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="16.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="246" green="247" blue="249">
+      </color>
+    </background_color>
     <transparent>true</transparent>
     <widget type="label" version="2.0.0">
       <name>Label</name>
@@ -432,6 +700,10 @@ $(pv_value)</tooltip>
       <y>0</y>
       <width>120</width>
       <height>20</height>
+      <font>
+        <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+      </font>
       <tooltip>Text Write - No description provided</tooltip>
     </widget>
     <widget type="textentry" version="3.0.0">
@@ -441,6 +713,14 @@ $(pv_value)</tooltip>
       <y>0</y>
       <width>124</width>
       <height>20</height>
+      <font>
+        <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+      </font>
+      <background_color>
+        <color red="229" green="235" blue="255">
+      </color>
+      </background_color>
       <horizontal_alignment>1</horizontal_alignment>
     </widget>
     <widget type="label" version="2.0.0">
@@ -450,6 +730,10 @@ $(pv_value)</tooltip>
       <y>24</y>
       <width>120</width>
       <height>20</height>
+      <font>
+        <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+      </font>
       <tooltip>Text Write Float - No description provided</tooltip>
     </widget>
     <widget type="textentry" version="3.0.0">
@@ -459,6 +743,14 @@ $(pv_value)</tooltip>
       <y>24</y>
       <width>124</width>
       <height>20</height>
+      <font>
+        <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+      </font>
+      <background_color>
+        <color red="229" green="235" blue="255">
+      </color>
+      </background_color>
       <horizontal_alignment>1</horizontal_alignment>
       <precision>3</precision>
     </widget>
@@ -469,6 +761,10 @@ $(pv_value)</tooltip>
       <y>48</y>
       <width>120</width>
       <height>20</height>
+      <font>
+        <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+      </font>
       <tooltip>Text Write Int - No description provided</tooltip>
     </widget>
     <widget type="textentry" version="3.0.0">
@@ -478,16 +774,32 @@ $(pv_value)</tooltip>
       <y>48</y>
       <width>124</width>
       <height>20</height>
+      <font>
+        <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+      </font>
+      <background_color>
+        <color red="229" green="235" blue="255">
+      </color>
+      </background_color>
       <horizontal_alignment>1</horizontal_alignment>
       <precision>0</precision>
     </widget>
   </widget>
-  <widget type="group" version="2.0.0">
+  <widget type="group" version="3.0.0">
     <name>ToggleButton</name>
     <x>290</x>
     <y>480</y>
     <width>282</width>
     <height>78</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="16.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="246" green="247" blue="249">
+      </color>
+    </background_color>
     <transparent>true</transparent>
     <widget type="label" version="2.0.0">
       <name>Label</name>
@@ -496,6 +808,10 @@ $(pv_value)</tooltip>
       <y>0</y>
       <width>120</width>
       <height>20</height>
+      <font>
+        <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+      </font>
       <tooltip>Toggle Button - No description provided</tooltip>
     </widget>
     <widget type="slide_button" version="2.0.0">
@@ -506,6 +822,18 @@ $(pv_value)</tooltip>
       <y>0</y>
       <width>20</width>
       <height>20</height>
+      <off_color>
+        <color red="229" green="235" blue="255">
+      </color>
+      </off_color>
+      <on_color>
+        <color red="37" green="99" blue="235">
+      </color>
+      </on_color>
+      <font>
+        <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+      </font>
     </widget>
     <widget type="label" version="2.0.0">
       <name>Label</name>
@@ -514,6 +842,10 @@ $(pv_value)</tooltip>
       <y>24</y>
       <width>120</width>
       <height>20</height>
+      <font>
+        <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+      </font>
       <tooltip>Toggle Button RBV - No description provided</tooltip>
     </widget>
     <widget type="slide_button" version="2.0.0">
@@ -524,6 +856,18 @@ $(pv_value)</tooltip>
       <y>24</y>
       <width>20</width>
       <height>20</height>
+      <off_color>
+        <color red="229" green="235" blue="255">
+      </color>
+      </off_color>
+      <on_color>
+        <color red="37" green="99" blue="235">
+      </color>
+      </on_color>
+      <font>
+        <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+      </font>
     </widget>
     <widget type="led" version="2.0.0">
       <name>LED</name>
@@ -532,6 +876,21 @@ $(pv_value)</tooltip>
       <y>24</y>
       <width>20</width>
       <height>20</height>
+      <off_label>&#9675;</off_label>
+      <off_color>
+        <color red="22" green="163" blue="74">
+      </color>
+      </off_color>
+      <on_label>&#9679;</on_label>
+      <on_color>
+        <color red="167" green="243" blue="208">
+      </color>
+      </on_color>
+      <font>
+        <font family="Cantarell" style="BOLD" size="12.0">
+      </font>
+      </font>
+      <square>true</square>
     </widget>
   </widget>
 </display>

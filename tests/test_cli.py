@@ -203,6 +203,21 @@ def test_static_table(tmp_path, helper, input_yaml, formatter, output):
         )
 
 
+def test_stacked(tmp_path, helper):
+    expected_path = HERE / "format" / "output" / "stacked.bob"
+    input_path = HERE / "format" / "input"
+    formatter_path = input_path / "dls.bob.pvi.formatter.yaml"
+    with pytest.deprecated_call():
+        helper.assert_cli_output_matches(
+            app,
+            expected_path,
+            "format --yaml-path " + str(input_path),
+            tmp_path / "stacked.bob",
+            HERE / "format" / "input" / "stacked.pvi.device.yaml",
+            formatter_path,
+        )
+
+
 @pytest.mark.parametrize(
     "formatter,format,skip",
     [
