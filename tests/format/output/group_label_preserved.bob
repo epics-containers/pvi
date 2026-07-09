@@ -4,6 +4,10 @@
   <y use_class="true">0</y>
   <width>274</width>
   <height>78</height>
+  <background_color>
+    <color red="245" green="247" blue="250">
+    </color>
+  </background_color>
   <grid_step_x>4</grid_step_x>
   <grid_step_y>4</grid_step_y>
   <widget type="label" version="2.0.0">
@@ -32,6 +36,10 @@
     <y>30</y>
     <width>120</width>
     <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
     <tooltip>Other Sig - No description provided</tooltip>
   </widget>
   <widget type="textupdate" version="2.0.0">
@@ -42,10 +50,22 @@
     <width>124</width>
     <height>20</height>
     <font>
-      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      <font family="Cantarell" style="BOLD" size="14.0">
       </font>
     </font>
+    <foreground_color>
+      <color red="15" green="23" blue="42">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="245" green="247" blue="250">
+      </color>
+    </background_color>
     <horizontal_alignment>1</horizontal_alignment>
+    <border_color>
+      <color red="203" green="213" blue="225">
+      </color>
+    </border_color>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label</name>
@@ -54,15 +74,19 @@
     <y>54</y>
     <width>120</width>
     <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
     <tooltip>BL04I-EA-E1RIO-01 - No description provided</tooltip>
   </widget>
   <widget type="action_button" version="3.0.0">
     <name>OpenDisplay</name>
     <actions>
       <action type="open_display">
+        <description>Open Display</description>
         <file>group_label_preserved_Bl04iEaErio01.bob</file>
         <target>tab</target>
-        <description>Open Display</description>
       </action>
     </actions>
     <text>BL04I-EA-E1RIO-01 &#10697;</text>
@@ -70,6 +94,18 @@
     <y>54</y>
     <width>124</width>
     <height>20</height>
+    <font>
+      <font family="Cantarell" style="REGULAR" size="14.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="37" green="99" blue="235">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="241" green="245" blue="249">
+      </color>
+    </background_color>
     <tooltip>$(actions)</tooltip>
   </widget>
 </display>
