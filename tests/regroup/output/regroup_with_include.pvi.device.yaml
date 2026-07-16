@@ -1,0 +1,31 @@
+label: detector
+children:
+  - type: Group
+    name: Detector
+    label: detector
+    layout:
+      type: Grid
+      labelled: true
+      stacked: false
+    children:
+      - type: SignalRW
+        name: Gain
+        write_pv: $(P)$(R)Gain
+        write_widget:
+          type: TextWrite
+        read_pv: $(P)$(R)Gain_RBV
+        read_widget:
+          type: TextRead
+
+      - type: SignalRW
+        name: Offset
+        write_pv: $(P)$(R)Offset
+        write_widget:
+          type: TextWrite
+        read_pv: $(P)$(R)Offset_RBV
+        read_widget:
+          type: TextRead
+
+  - type: Include
+    file_name: ADBase
+    in_subscreen: false
