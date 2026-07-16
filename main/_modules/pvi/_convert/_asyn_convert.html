@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pvi._convert._asyn_convert &#8212; pvi 0.13.2.dev8+g2817c728f documentation</title>
+    <title>pvi._convert._asyn_convert &#8212; pvi 0.13.2.dev9+g62c851f35 documentation</title>
   
   
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=039b13e0"></script>
+    <script src="../../../_static/documentation_options.js?v=68442209"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -729,6 +729,36 @@
         <span class="n">asyn_read</span><span class="o">=</span><span class="s2">&quot;asynInt32ArrayIn&quot;</span><span class="p">,</span>
         <span class="n">asyn_write</span><span class="o">=</span><span class="s2">&quot;asynInt32ArrayOut&quot;</span><span class="p">,</span>
         <span class="n">asyn_param</span><span class="o">=</span><span class="s2">&quot;asynParamInt32&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">read_widget</span><span class="p">:</span> <span class="n">ReadWidgetUnion</span> <span class="o">=</span> <span class="n">TextRead</span><span class="p">()</span>
+    <span class="n">write_widget</span><span class="p">:</span> <span class="n">WriteWidgetUnion</span> <span class="o">=</span> <span class="n">TextWrite</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="AsynInt64Waveform">
+<a class="viewcode-back" href="../../../reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynInt64Waveform">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AsynInt64Waveform</span><span class="p">(</span><span class="n">AsynWaveform</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Asyn Waveform Parameter and records with int64 array elements&quot;&quot;&quot;</span>
+
+    <span class="n">type_strings</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="n">TypeStrings</span><span class="p">]</span> <span class="o">=</span> <span class="n">TypeStrings</span><span class="p">(</span>
+        <span class="n">asyn_read</span><span class="o">=</span><span class="s2">&quot;asynInt64ArrayIn&quot;</span><span class="p">,</span>
+        <span class="n">asyn_write</span><span class="o">=</span><span class="s2">&quot;asynInt64ArrayOut&quot;</span><span class="p">,</span>
+        <span class="n">asyn_param</span><span class="o">=</span><span class="s2">&quot;asynParamInt64&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">read_widget</span><span class="p">:</span> <span class="n">ReadWidgetUnion</span> <span class="o">=</span> <span class="n">TextRead</span><span class="p">()</span>
+    <span class="n">write_widget</span><span class="p">:</span> <span class="n">WriteWidgetUnion</span> <span class="o">=</span> <span class="n">TextWrite</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="AsynFloat32Waveform">
+<a class="viewcode-back" href="../../../reference/_api/pvi/pvi._convert._asyn_convert.html#pvi._convert._asyn_convert.AsynFloat32Waveform">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AsynFloat32Waveform</span><span class="p">(</span><span class="n">AsynWaveform</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Asyn Waveform Parameter and records with float32 array elements&quot;&quot;&quot;</span>
+
+    <span class="n">type_strings</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="n">TypeStrings</span><span class="p">]</span> <span class="o">=</span> <span class="n">TypeStrings</span><span class="p">(</span>
+        <span class="n">asyn_read</span><span class="o">=</span><span class="s2">&quot;asynFloat32ArrayIn&quot;</span><span class="p">,</span>
+        <span class="n">asyn_write</span><span class="o">=</span><span class="s2">&quot;asynFloat32ArrayOut&quot;</span><span class="p">,</span>
+        <span class="n">asyn_param</span><span class="o">=</span><span class="s2">&quot;asynParamFloat32&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">read_widget</span><span class="p">:</span> <span class="n">ReadWidgetUnion</span> <span class="o">=</span> <span class="n">TextRead</span><span class="p">()</span>
     <span class="n">write_widget</span><span class="p">:</span> <span class="n">WriteWidgetUnion</span> <span class="o">=</span> <span class="n">TextWrite</span><span class="p">()</span></div>

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pvi._convert._asyn_convert &#8212; pvi 0.13.2.dev8+g2817c728f documentation</title>
+    <title>pvi._convert._asyn_convert &#8212; pvi 0.13.2.dev9+g62c851f35 documentation</title>
   
   
   
@@ -41,7 +41,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=039b13e0"></script>
+    <script src="../../../_static/documentation_options.js?v=68442209"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -545,6 +545,12 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#pvi._convert._asyn_convert.AsynInt32Waveform" title="pvi._convert._asyn_convert.AsynInt32Waveform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AsynInt32Waveform</span></code></a></p></td>
 <td><p>Asyn Waveform Parameter and records with int32 array elements</p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi._convert._asyn_convert.AsynInt64Waveform" title="pvi._convert._asyn_convert.AsynInt64Waveform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AsynInt64Waveform</span></code></a></p></td>
+<td><p>Asyn Waveform Parameter and records with int64 array elements</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi._convert._asyn_convert.AsynFloat32Waveform" title="pvi._convert._asyn_convert.AsynFloat32Waveform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AsynFloat32Waveform</span></code></a></p></td>
+<td><p>Asyn Waveform Parameter and records with float32 array elements</p></td>
+</tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#pvi._convert._asyn_convert.AsynFloat64Waveform" title="pvi._convert._asyn_convert.AsynFloat64Waveform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AsynFloat64Waveform</span></code></a></p></td>
 <td><p>Asyn Waveform Parameter and records with float64 array elements</p></td>
 </tr>
@@ -913,6 +919,66 @@ validated to form a valid model.</p>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="pvi._convert._asyn_convert.AsynInt64Waveform">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pvi._convert._asyn_convert.</span></span><span class="sig-name descname"><span class="pre">AsynInt64Waveform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**data:</span> <span class="pre">typing.Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pvi/_convert/_asyn_convert.html#AsynInt64Waveform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._convert._asyn_convert.AsynInt64Waveform" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pvi._convert._asyn_convert.AsynWaveform" title="pvi._convert._asyn_convert.AsynWaveform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pvi._convert._asyn_convert.AsynWaveform</span></code></a></p>
+<p>Asyn Waveform Parameter and records with int64 array elements</p>
+<p class="rubric">Initialization</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code class="docutils literal notranslate"><span class="pre">ValidationError</span></code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code class="docutils literal notranslate"><span class="pre">self</span></code> is explicitly positional-only to allow <code class="docutils literal notranslate"><span class="pre">self</span></code> as a field name.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._convert._asyn_convert.AsynInt64Waveform.type_strings">
+<span class="sig-name descname"><span class="pre">type_strings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.ClassVar" title="(in Python v3.14)"><span class="pre">ClassVar</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pvi._convert._parameters.html#pvi._convert._parameters.TypeStrings" title="pvi._convert._parameters.TypeStrings"><span class="pre">pvi._convert._parameters.TypeStrings</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi._convert._asyn_convert.AsynInt64Waveform.type_strings" title="Link to this definition">#</a></dt>
+<dd><p>‘TypeStrings(…)’</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._convert._asyn_convert.AsynInt64Waveform.read_widget">
+<span class="sig-name descname"><span class="pre">read_widget</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">pvi.device.ReadWidgetUnion</span></em><a class="headerlink" href="#pvi._convert._asyn_convert.AsynInt64Waveform.read_widget" title="Link to this definition">#</a></dt>
+<dd><p>‘TextRead(…)’</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._convert._asyn_convert.AsynInt64Waveform.write_widget">
+<span class="sig-name descname"><span class="pre">write_widget</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">pvi.device.WriteWidgetUnion</span></em><a class="headerlink" href="#pvi._convert._asyn_convert.AsynInt64Waveform.write_widget" title="Link to this definition">#</a></dt>
+<dd><p>‘TextWrite(…)’</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pvi._convert._asyn_convert.AsynFloat32Waveform">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pvi._convert._asyn_convert.</span></span><span class="sig-name descname"><span class="pre">AsynFloat32Waveform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**data:</span> <span class="pre">typing.Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pvi/_convert/_asyn_convert.html#AsynFloat32Waveform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._convert._asyn_convert.AsynFloat32Waveform" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pvi._convert._asyn_convert.AsynWaveform" title="pvi._convert._asyn_convert.AsynWaveform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pvi._convert._asyn_convert.AsynWaveform</span></code></a></p>
+<p>Asyn Waveform Parameter and records with float32 array elements</p>
+<p class="rubric">Initialization</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code class="docutils literal notranslate"><span class="pre">ValidationError</span></code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code class="docutils literal notranslate"><span class="pre">self</span></code> is explicitly positional-only to allow <code class="docutils literal notranslate"><span class="pre">self</span></code> as a field name.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._convert._asyn_convert.AsynFloat32Waveform.type_strings">
+<span class="sig-name descname"><span class="pre">type_strings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.ClassVar" title="(in Python v3.14)"><span class="pre">ClassVar</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pvi._convert._parameters.html#pvi._convert._parameters.TypeStrings" title="pvi._convert._parameters.TypeStrings"><span class="pre">pvi._convert._parameters.TypeStrings</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi._convert._asyn_convert.AsynFloat32Waveform.type_strings" title="Link to this definition">#</a></dt>
+<dd><p>‘TypeStrings(…)’</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._convert._asyn_convert.AsynFloat32Waveform.read_widget">
+<span class="sig-name descname"><span class="pre">read_widget</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">pvi.device.ReadWidgetUnion</span></em><a class="headerlink" href="#pvi._convert._asyn_convert.AsynFloat32Waveform.read_widget" title="Link to this definition">#</a></dt>
+<dd><p>‘TextRead(…)’</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi._convert._asyn_convert.AsynFloat32Waveform.write_widget">
+<span class="sig-name descname"><span class="pre">write_widget</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">pvi.device.WriteWidgetUnion</span></em><a class="headerlink" href="#pvi._convert._asyn_convert.AsynFloat32Waveform.write_widget" title="Link to this definition">#</a></dt>
+<dd><p>‘TextWrite(…)’</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="pvi._convert._asyn_convert.AsynFloat64Waveform">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pvi._convert._asyn_convert.</span></span><span class="sig-name descname"><span class="pre">AsynFloat64Waveform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**data:</span> <span class="pre">typing.Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pvi/_convert/_asyn_convert.html#AsynFloat64Waveform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._convert._asyn_convert.AsynFloat64Waveform" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pvi._convert._asyn_convert.AsynWaveform" title="pvi._convert._asyn_convert.AsynWaveform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pvi._convert._asyn_convert.AsynWaveform</span></code></a></p>
@@ -1071,6 +1137,18 @@ validated to form a valid model.</p>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._asyn_convert.AsynInt32Waveform.type_strings"><code class="docutils literal notranslate"><span class="pre">AsynInt32Waveform.type_strings</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._asyn_convert.AsynInt32Waveform.read_widget"><code class="docutils literal notranslate"><span class="pre">AsynInt32Waveform.read_widget</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._asyn_convert.AsynInt32Waveform.write_widget"><code class="docutils literal notranslate"><span class="pre">AsynInt32Waveform.write_widget</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._asyn_convert.AsynInt64Waveform"><code class="docutils literal notranslate"><span class="pre">AsynInt64Waveform</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._asyn_convert.AsynInt64Waveform.type_strings"><code class="docutils literal notranslate"><span class="pre">AsynInt64Waveform.type_strings</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._asyn_convert.AsynInt64Waveform.read_widget"><code class="docutils literal notranslate"><span class="pre">AsynInt64Waveform.read_widget</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._asyn_convert.AsynInt64Waveform.write_widget"><code class="docutils literal notranslate"><span class="pre">AsynInt64Waveform.write_widget</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._asyn_convert.AsynFloat32Waveform"><code class="docutils literal notranslate"><span class="pre">AsynFloat32Waveform</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._asyn_convert.AsynFloat32Waveform.type_strings"><code class="docutils literal notranslate"><span class="pre">AsynFloat32Waveform.type_strings</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._asyn_convert.AsynFloat32Waveform.read_widget"><code class="docutils literal notranslate"><span class="pre">AsynFloat32Waveform.read_widget</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._asyn_convert.AsynFloat32Waveform.write_widget"><code class="docutils literal notranslate"><span class="pre">AsynFloat32Waveform.write_widget</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._convert._asyn_convert.AsynFloat64Waveform"><code class="docutils literal notranslate"><span class="pre">AsynFloat64Waveform</span></code></a><ul class="nav section-nav flex-column">
