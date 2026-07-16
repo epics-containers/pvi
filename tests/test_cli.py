@@ -168,6 +168,22 @@ def test_reconvert(tmp_path, helper):
     )
 
 
+def test_regroup_preserves_includes(tmp_path, helper):
+    """Regroup should skip Include nodes and pass them through unchanged."""
+    expected_path = HERE / "regroup" / "output"
+    input_path = HERE / "regroup" / "input"
+    filename = "regroup_with_include.pvi.device.yaml"
+    # Make a copy because regroup modifies the file in place
+    shutil.copy(input_path / filename, tmp_path / filename)
+    helper.assert_cli_output_matches(
+        app,
+        expected_path / filename,
+        "regroup",
+        tmp_path / filename,
+        input_path / "detector.adl",
+    )
+
+
 @pytest.mark.parametrize(
     "input_yaml,formatter,output",
     [
