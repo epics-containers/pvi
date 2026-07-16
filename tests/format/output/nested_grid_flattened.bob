@@ -82,25 +82,12 @@
       </color>
       </border_color>
     </widget>
-    <widget type="label" version="2.0.0">
-      <name>Label</name>
-      <text>Nested A</text>
-      <x>0</x>
-      <y>24</y>
-      <width>120</width>
-      <height>20</height>
-      <font>
-        <font family="Cantarell" style="REGULAR" size="14.0">
-      </font>
-      </font>
-      <tooltip>Nested A - No description provided</tooltip>
-    </widget>
     <widget type="textupdate" version="2.0.0">
       <name>TextUpdate</name>
       <pv_name>$(P)Nested:A</pv_name>
-      <x>124</x>
+      <x>0</x>
       <y>24</y>
-      <width>124</width>
+      <width>248</width>
       <height>20</height>
       <font>
         <font family="Cantarell" style="BOLD" size="14.0">
@@ -120,25 +107,12 @@
       </color>
       </border_color>
     </widget>
-    <widget type="label" version="2.0.0">
-      <name>Label</name>
-      <text>Nested B</text>
-      <x>0</x>
-      <y>48</y>
-      <width>120</width>
-      <height>20</height>
-      <font>
-        <font family="Cantarell" style="REGULAR" size="14.0">
-      </font>
-      </font>
-      <tooltip>Nested B - No description provided</tooltip>
-    </widget>
     <widget type="textupdate" version="2.0.0">
       <name>TextUpdate</name>
       <pv_name>$(P)Nested:B</pv_name>
-      <x>124</x>
+      <x>0</x>
       <y>48</y>
-      <width>124</width>
+      <width>248</width>
       <height>20</height>
       <font>
         <font family="Cantarell" style="BOLD" size="14.0">
