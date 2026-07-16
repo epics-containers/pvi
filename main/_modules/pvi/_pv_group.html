@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pvi._pv_group &#8212; pvi 0.13.2.dev9+g62c851f35 documentation</title>
+    <title>pvi._pv_group &#8212; pvi 0.13.2.dev10+g8e6f256f4 documentation</title>
   
   
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=68442209"></script>
+    <script src="../../_static/documentation_options.js?v=42ccdb55"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -464,6 +464,7 @@
     <span class="n">Device</span><span class="p">,</span>
     <span class="n">Grid</span><span class="p">,</span>
     <span class="n">Group</span><span class="p">,</span>
+    <span class="n">Include</span><span class="p">,</span>
     <span class="n">Tree</span><span class="p">,</span>
     <span class="n">enforce_pascal_case</span><span class="p">,</span>
     <span class="n">walk</span><span class="p">,</span>
@@ -522,7 +523,21 @@
 <div class="viewcode-block" id="group_by_ui">
 <a class="viewcode-back" href="../../reference/_api/pvi/pvi._pv_group.html#pvi._pv_group.group_by_ui">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">group_by_ui</span><span class="p">(</span><span class="n">device</span><span class="p">:</span> <span class="n">Device</span><span class="p">,</span> <span class="n">ui_paths</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tree</span><span class="p">:</span>
-    <span class="n">signals</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ComponentUnion</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">walk</span><span class="p">(</span><span class="n">device</span><span class="o">.</span><span class="n">children</span><span class="p">))</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Group the device parameters by the UI files they are found in</span>
+<span class="sd">    Args:</span>
+<span class="sd">        device: The device containing the parameters to group.</span>
+<span class="sd">        ui_paths: A list of paths to the UI files to search for PVs.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A tree structure with parameters grouped by the UI files they are found in.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Separate the Include nodes from the rest of the device children</span>
+    <span class="c1"># so that they can be passed through to the UI tree without modification</span>
+    <span class="n">includes</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">device</span><span class="o">.</span><span class="n">children</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">Include</span><span class="p">)]</span>
+    <span class="n">signals</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ComponentUnion</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+        <span class="n">walk</span><span class="p">([</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">device</span><span class="o">.</span><span class="n">children</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">Include</span><span class="p">)])</span>
+    <span class="p">)</span>
 
     <span class="c1"># PVs without macros to search for in UI</span>
     <span class="n">pv_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">signals</span><span class="p">]</span>
@@ -567,7 +582,7 @@
             <span class="p">)</span>
         <span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">ui_groups</span></div>
+    <span class="k">return</span> <span class="n">ui_groups</span> <span class="o">+</span> <span class="n">includes</span>  <span class="c1"># preserve Include nodes at end</span></div>
 
 </pre></div>
 
