@@ -314,7 +314,7 @@ def test_nested_grid_groups_flattened(tmp_path, helper):
             Group(
                 name="InnerGroup",
                 label="Inner Group",
-                layout=Grid(),
+                layout=Grid(labelled=False, stacked=True),
                 children=[
                     SignalR(
                         name="NestedA", read_pv="$(P)Nested:A", read_widget=TextRead()

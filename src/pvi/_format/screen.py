@@ -332,7 +332,7 @@ class ScreenFormatterFactory(Generic[T]):
                 case Group(layout=SubScreen(labelled=labelled)):
                     add_label = labelled
                     component = c
-                case Group(layout=Grid(labelled=labelled)):
+                case Group(layout=Grid(labelled=labelled, stacked=inner_stacked)):
                     # PVI cannot render a Grid inside another Grid as a nested group.
                     # Flatten the inner Grid's children directly into the parent, which
                     # is equivalent to merging the two Grid sections on the same screen.
@@ -354,9 +354,8 @@ class ScreenFormatterFactory(Generic[T]):
                                 parent_bounds=bounds,
                                 column_bounds=column_bounds,
                                 next_column_bounds=next_column_bounds,
-                                add_label=True,
-                                stacked=isinstance(group.layout, Grid)
-                                and group.layout.stacked,
+                                add_label=labelled,
+                                stacked=inner_stacked,
                                 squeeze=squeeze,
                             )
                         )
