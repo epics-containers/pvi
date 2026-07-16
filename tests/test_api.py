@@ -291,3 +291,45 @@ def test_pvi_template(tmp_path, helper):
     format_template(device, "$(P)", output_template)
 
     helper.assert_output_matches(expected_bob, output_template)
+
+
+def test_nested_grid_groups_flattened(tmp_path, helper):
+    """A Grid group nested inside another Grid group must be flattened, not raise.
+
+    fastcs emits attribute sub-groups as Group(Grid()).  When a controller with
+    INLINE (Grid) group_layout also has such attribute groups, PVI would
+    previously raise NotImplementedError.  The fix flattens the inner Grid's
+    children directly into the parent Group as individual rows.
+    """
+    formatter_yaml = HERE / "format" / "input" / "dls.bob.pvi.formatter.yaml"
+    formatter = Formatter.deserialize(formatter_yaml)
+
+    # Outer Grid group containing an inner Grid group — the formerly forbidden nesting.
+    outer = Group(
+        name="OuterGroup",
+        label="Outer Group",
+        layout=Grid(),
+        children=[
+            SignalR(name="DirectSignal", read_pv="$(P)Direct", read_widget=TextRead()),
+            Group(
+                name="InnerGroup",
+                label="Inner Group",
+                layout=Grid(labelled=False, stacked=True),
+                children=[
+                    SignalR(
+                        name="NestedA", read_pv="$(P)Nested:A", read_widget=TextRead()
+                    ),
+                    SignalR(
+                        name="NestedB", read_pv="$(P)Nested:B", read_widget=TextRead()
+                    ),
+                ],
+            ),
+        ],
+    )
+    device = Device(label="Grid Flatten Test - $(P)", children=[outer])
+
+    expected_bob = HERE / "format" / "output" / "nested_grid_flattened.bob"
+    output_bob = tmp_path / "nested_grid_flattened.bob"
+    formatter.format(device, output_bob)
+
+    helper.assert_output_matches(expected_bob, output_bob)

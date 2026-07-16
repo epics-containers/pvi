@@ -332,11 +332,36 @@ class ScreenFormatterFactory(Generic[T]):
                 case Group(layout=SubScreen(labelled=labelled)):
                     add_label = labelled
                     component = c
-                case Group(layout=Grid(labelled=labelled)):
-                    add_label = labelled
-                    raise NotImplementedError(
-                        "Cannot nest a Group(Grid()) in another Group on one screen"
-                    )
+                case Group(layout=Grid(labelled=labelled, stacked=inner_stacked)):
+                    # PVI cannot render a Grid inside another Grid as a nested group.
+                    # Flatten the inner Grid's children directly into the parent, which
+                    # is equivalent to merging the two Grid sections on the same screen.
+                    for nested_child in c.children:
+                        if isinstance(nested_child, IgnoredComponent):
+                            continue
+                        if _has_plot_widget(nested_child):
+                            # Promote waveform/image signals to SubScreen buttons,
+                            # matching split_out_plots behaviour at the top level.
+                            nested_child = move_to_subscreen(nested_child)
+                        next_column_bounds = Bounds(
+                            x=next_x(widget_factories, self.layout.spacing),
+                            w=full_w,
+                            h=self.layout.widget_height,
+                        )
+                        widget_factories.extend(
+                            self.create_component_widget_formatters(
+                                nested_child,
+                                parent_bounds=bounds,
+                                column_bounds=column_bounds,
+                                next_column_bounds=next_column_bounds,
+                                add_label=labelled,
+                                stacked=inner_stacked,
+                                squeeze=squeeze,
+                            )
+                        )
+                        if next_column_bounds.y != 0:
+                            column_bounds = next_column_bounds
+                    continue
                 case _:
                     # Make single line with a component or Row of components
                     component = c
