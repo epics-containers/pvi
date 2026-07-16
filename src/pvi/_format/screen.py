@@ -38,6 +38,7 @@ from pvi.device import (
     SubScreen,
     TableRead,
     TableWrite,
+    TextRead,
     Tree,
 )
 
@@ -435,7 +436,9 @@ class ScreenFormatterFactory(Generic[T]):
         if isinstance(c, SignalR) and isinstance(c.read_widget, ImageRead | ArrayTrace):
             tmp_column_bounds.w = c.read_widget.width
             tmp_column_bounds.h = c.read_widget.height
-        elif stacked and isinstance(c, SignalRW) and c.read_widget is not None:
+        elif (
+            stacked and isinstance(c, SignalRW) and isinstance(c.read_widget, TextRead)
+        ):
             tmp_column_bounds.h = 2 * self.layout.widget_height + self.layout.spacing
             tmp_next_column_bounds.h = tmp_column_bounds.h
 
@@ -528,7 +531,7 @@ class ScreenFormatterFactory(Generic[T]):
 
             row_components = c.children  # Create a widget for each row of Group
             if stacked and any(
-                isinstance(child, SignalRW) and child.read_widget is not None
+                isinstance(child, SignalRW) and isinstance(child.read_widget, TextRead)
                 for child in c.children
             ):
                 component_bounds.h = 2 * self.layout.widget_height + self.layout.spacing
@@ -605,7 +608,7 @@ class ScreenFormatterFactory(Generic[T]):
                     value=rc.value,
                 )
             elif isinstance(rc, SignalRW):
-                if stacked and rc.read_widget:
+                if stacked and isinstance(rc.read_widget, TextRead):
                     top, bottom = rc_bounds.split_into_rows(2, self.layout.spacing)
                     yield from self.generate_write_widget(rc, top)
                     yield from self.generate_read_widget(rc, bottom)

@@ -168,6 +168,22 @@ def test_reconvert(tmp_path, helper):
     )
 
 
+def test_regroup_preserves_includes(tmp_path, helper):
+    """Regroup should skip Include nodes and pass them through unchanged."""
+    expected_path = HERE / "regroup" / "output"
+    input_path = HERE / "regroup" / "input"
+    filename = "regroup_with_include.pvi.device.yaml"
+    # Make a copy because regroup modifies the file in place
+    shutil.copy(input_path / filename, tmp_path / filename)
+    helper.assert_cli_output_matches(
+        app,
+        expected_path / filename,
+        "regroup",
+        tmp_path / filename,
+        input_path / "detector.adl",
+    )
+
+
 @pytest.mark.parametrize(
     "input_yaml,formatter,output",
     [
@@ -199,6 +215,21 @@ def test_static_table(tmp_path, helper, input_yaml, formatter, output):
             "format --yaml-path " + str(input_path),
             tmp_path / output,
             input_path / input_yaml,
+            formatter_path,
+        )
+
+
+def test_stacked(tmp_path, helper):
+    expected_path = HERE / "format" / "output" / "stacked.bob"
+    input_path = HERE / "format" / "input"
+    formatter_path = input_path / "dls.bob.pvi.formatter.yaml"
+    with pytest.deprecated_call():
+        helper.assert_cli_output_matches(
+            app,
+            expected_path,
+            "format --yaml-path " + str(input_path),
+            tmp_path / "stacked.bob",
+            HERE / "format" / "input" / "stacked.pvi.device.yaml",
             formatter_path,
         )
 
