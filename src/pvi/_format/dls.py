@@ -27,7 +27,7 @@ from pvi._format.widget import (
 from pvi.device import Device
 
 from .base import Formatter
-from .utils import Bounds, split_base_and_ext, with_title
+from .utils import Bounds, split_base_and_ext, with_title, without_title
 
 
 class DLSFormatter(Formatter):
@@ -357,12 +357,21 @@ class DLSFormatter(Formatter):
         base_file_name, all_suffixes = split_base_and_ext(path)
 
         # SCREEN_INI DOCS REF: Construct a screen object
+        title = f"{device.label}"
+        has_title = bool(title)
+
         formatter_factory: ScreenFormatterFactory[_Element] = ScreenFormatterFactory(
             screen_formatter_cls=GroupFormatter[_Element].from_template(
                 template,
                 search=GroupType.SCREEN,
-                sized=with_title(screen_layout.spacing, screen_layout.title_height),
-                widget_formatter_hook=create_screen_title_formatter,
+                sized=(
+                    with_title(screen_layout.spacing, screen_layout.title_height)
+                    if has_title
+                    else without_title(screen_layout.spacing)
+                ),
+                widget_formatter_hook=(
+                    create_screen_title_formatter if has_title else None
+                ),
             ),
             group_formatter_cls=GroupFormatter[_Element].from_template(
                 template,
@@ -377,8 +386,6 @@ class DLSFormatter(Formatter):
             base_file_name=base_file_name,
         )
         # SCREEN_FORMAT DOCS REF: Format the screen
-        title = f"{device.label}"
-
         screen_formatter, sub_screens = formatter_factory.create_screen_formatter(
             device.children, title
         )

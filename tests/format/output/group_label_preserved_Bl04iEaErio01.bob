@@ -1,5 +1,5 @@
 <display version="2.0.0">
-  <name>Device - $(P)</name>
+  <name>Bl04iEaErio01</name>
   <x>0</x>
   <y use_class="true">0</y>
   <width>274</width>
@@ -13,7 +13,7 @@
   <widget type="label" version="2.0.0">
     <name>Title</name>
     <class>TITLE</class>
-    <text>Device - $(P)</text>
+    <text>Bl04iEaErio01</text>
     <x use_class="true">0</x>
     <y use_class="true">0</y>
     <width>274</width>
@@ -29,35 +29,42 @@
     <transparent use_class="true">true</transparent>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
-  <widget type="action_button" version="3.0.0">
-    <name>OpenDisplay</name>
-    <actions>
-      <action type="open_display">
-        <description>Open Display</description>
-        <file>combo_box.bob</file>
-        <target>tab</target>
-        <macros>
-          <P>TEST:</P>
-        </macros>
-      </action>
-    </actions>
-    <text>Combo Box</text>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>Status</text>
     <x>22</x>
     <y>30</y>
-    <width>248</width>
+    <width>120</width>
     <height>20</height>
     <font>
       <font family="Cantarell" style="REGULAR" size="14.0">
       </font>
     </font>
+    <tooltip>Status - No description provided</tooltip>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>TextUpdate</name>
+    <pv_name>$(P)BL04I:EA:E1RIO01:Status</pv_name>
+    <x>146</x>
+    <y>30</y>
+    <width>124</width>
+    <height>20</height>
+    <font>
+      <font family="Cantarell" style="BOLD" size="14.0">
+      </font>
+    </font>
     <foreground_color>
-      <color red="37" green="99" blue="235">
+      <color red="15" green="23" blue="42">
       </color>
     </foreground_color>
     <background_color>
-      <color red="241" green="245" blue="249">
+      <color red="245" green="247" blue="250">
       </color>
     </background_color>
-    <tooltip>$(actions)</tooltip>
+    <horizontal_alignment>1</horizontal_alignment>
+    <border_color>
+      <color red="203" green="213" blue="225">
+      </color>
+    </border_color>
   </widget>
 </display>
