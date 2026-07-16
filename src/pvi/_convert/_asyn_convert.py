@@ -223,6 +223,30 @@ class AsynInt32Waveform(AsynWaveform):
     write_widget: WriteWidgetUnion = TextWrite()
 
 
+class AsynInt64Waveform(AsynWaveform):
+    """Asyn Waveform Parameter and records with int64 array elements"""
+
+    type_strings: ClassVar[TypeStrings] = TypeStrings(
+        asyn_read="asynInt64ArrayIn",
+        asyn_write="asynInt64ArrayOut",
+        asyn_param="asynParamInt64",
+    )
+    read_widget: ReadWidgetUnion = TextRead()
+    write_widget: WriteWidgetUnion = TextWrite()
+
+
+class AsynFloat32Waveform(AsynWaveform):
+    """Asyn Waveform Parameter and records with float32 array elements"""
+
+    type_strings: ClassVar[TypeStrings] = TypeStrings(
+        asyn_read="asynFloat32ArrayIn",
+        asyn_write="asynFloat32ArrayOut",
+        asyn_param="asynParamFloat32",
+    )
+    read_widget: ReadWidgetUnion = TextRead()
+    write_widget: WriteWidgetUnion = TextWrite()
+
+
 class AsynFloat64Waveform(AsynWaveform):
     """Asyn Waveform Parameter and records with float64 array elements"""
 
