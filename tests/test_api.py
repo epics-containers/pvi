@@ -294,14 +294,13 @@ def test_pvi_template(tmp_path, helper):
 
 
 def test_group_label_preserved_through_subscreen(tmp_path, helper):
-    """Group.label must survive SubScreen reconstruction.
+    """Group.label must survive SubScreen reconstruction in create_group_formatters.
 
-    When create_group_formatters reconstructs a Group for SubScreen layout, and
-    when move_to_subscreen wraps a Group in a SubScreen, both must forward the
-    original label rather than letting it default to None.  Without the fix,
-    get_label() falls back to to_title_case(name) and a name like
-    "Bl04iEaErio01" would produce "Bl 04i Ea Erio 01" instead of the intended
-    "BL04I-EA-E1RIO-01".
+    When create_group_formatters reconstructs a Group for SubScreen layout it
+    must forward the original label rather than letting it default to None.
+    Without the fix, get_label() falls back to to_title_case(name) and a name
+    like "Bl04iEaErio01" would produce "Bl 04i Ea Erio 01" instead of the
+    intended "BL04I-EA-E1RIO-01".
     """
     formatter_yaml = HERE / "format" / "input" / "dls.bob.pvi.formatter.yaml"
     formatter = Formatter.deserialize(formatter_yaml)
