@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pvi._format.utils &#8212; pvi 0.13.2.dev10+g8e6f256f4 documentation</title>
+    <title>pvi._format.utils &#8212; pvi 0.13.2.dev11+g01d6b6b2c documentation</title>
   
   
   
@@ -41,7 +41,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=42ccdb55"></script>
+    <script src="../../../_static/documentation_options.js?v=5fc5c4d4"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -58,8 +58,8 @@
     <link rel="icon" href="../../../_static/pvi-favicon.ico"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="pvi._format.widget" href="pvi._format.widget.html" />
-    <link rel="prev" title="pvi._format.edl" href="pvi._format.edl.html" />
+    <link rel="next" title="pvi.device" href="pvi.device.html" />
+    <link rel="prev" title="pvi._format.base" href="pvi._format.base.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="main" />
@@ -418,12 +418,12 @@
 <li class="toctree-l4 current active"><a class="reference internal" href="pvi._format.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._format</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pvi.device.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.device</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pvi._version.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._version</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pvi.typed_model.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.typed_model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi._schema_utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._schema_utils</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pvi._pv_group.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._pv_group</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi.__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.__main__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pvi.typed_model.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.typed_model</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pvi._yaml_utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._yaml_utils</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pvi.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.utils</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pvi._schema_utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._schema_utils</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pvi.__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.__main__</span></code></a></li>
 </ul>
 </details></li>
 </ul>
@@ -532,7 +532,10 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#pvi._format.utils.with_title" title="pvi._format.utils.with_title"><code class="xref py py-obj docutils literal notranslate"><span class="pre">with_title</span></code></a></p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pvi._format.utils.split_base_and_ext" title="pvi._format.utils.split_base_and_ext"><code class="xref py py-obj docutils literal notranslate"><span class="pre">split_base_and_ext</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi._format.utils.without_title" title="pvi._format.utils.without_title"><code class="xref py py-obj docutils literal notranslate"><span class="pre">without_title</span></code></a></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi._format.utils.split_base_and_ext" title="pvi._format.utils.split_base_and_ext"><code class="xref py py-obj docutils literal notranslate"><span class="pre">split_base_and_ext</span></code></a></p></td>
 <td><p>Split a filename into its base name and full extension chain.</p></td>
 </tr>
 </tbody>
@@ -655,6 +658,11 @@
 <dd></dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="pvi._format.utils.without_title">
+<span class="sig-prename descclassname"><span class="pre">pvi._format.utils.</span></span><span class="sig-name descname"><span class="pre">without_title</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spacing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.14)"><span class="pre">collections.abc.Callable</span></a><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pvi._format.utils.Bounds" title="pvi._format.utils.Bounds"><span class="pre">pvi._format.utils.Bounds</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#pvi._format.utils.Bounds" title="pvi._format.utils.Bounds"><span class="pre">pvi._format.utils.Bounds</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/pvi/_format/utils.html#without_title"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._format.utils.without_title" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="pvi._format.utils.split_base_and_ext">
 <span class="sig-prename descclassname"><span class="pre">pvi._format.utils.</span></span><span class="sig-name descname"><span class="pre">split_base_and_ext</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.14)"><span class="pre">pathlib.Path</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/pvi/_format/utils.html#split_base_and_ext"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pvi._format.utils.split_base_and_ext" title="Link to this definition">#</a></dt>
 <dd><p>Split a filename into its base name and full extension chain.</p>
@@ -675,20 +683,20 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="pvi._format.edl.html"
+       href="pvi._format.base.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._format.edl</span></code></p>
+        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._format.base</span></code></p>
       </div>
     </a>
     <a class="right-next"
-       href="pvi._format.widget.html"
+       href="pvi.device.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi._format.widget</span></code></p>
+        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pvi.device</span></code></p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -736,6 +744,7 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.utils.concat"><code class="docutils literal notranslate"><span class="pre">concat()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.utils.split_with_sep"><code class="docutils literal notranslate"><span class="pre">split_with_sep()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.utils.with_title"><code class="docutils literal notranslate"><span class="pre">with_title()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.utils.without_title"><code class="docutils literal notranslate"><span class="pre">without_title()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi._format.utils.split_base_and_ext"><code class="docutils literal notranslate"><span class="pre">split_base_and_ext()</span></code></a></li>
 </ul>
 </li>

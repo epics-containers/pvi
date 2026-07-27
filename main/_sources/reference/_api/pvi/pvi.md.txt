@@ -25,12 +25,12 @@ pvi._format
 
 pvi.device
 pvi._version
-pvi.typed_model
+pvi._schema_utils
 pvi._pv_group
+pvi.__main__
+pvi.typed_model
 pvi._yaml_utils
 pvi.utils
-pvi._schema_utils
-pvi.__main__
 ```
 
 ## Package Contents

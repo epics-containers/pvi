@@ -37,6 +37,10 @@
   - ```{autodoc2-docstring} pvi._format.utils.with_title
     :summary:
     ```
+* - {py:obj}`without_title <pvi._format.utils.without_title>`
+  - ```{autodoc2-docstring} pvi._format.utils.without_title
+    :summary:
+    ```
 * - {py:obj}`split_base_and_ext <pvi._format.utils.split_base_and_ext>`
   - ```{autodoc2-docstring} pvi._format.utils.split_base_and_ext
     :summary:
@@ -208,6 +212,13 @@ Bases: {py:obj}`pydantic.BaseModel`
 :canonical: pvi._format.utils.with_title
 
 ```{autodoc2-docstring} pvi._format.utils.with_title
+```
+````
+
+````{py:function} without_title(spacing: int) -> collections.abc.Callable[[pvi._format.utils.Bounds], pvi._format.utils.Bounds]
+:canonical: pvi._format.utils.without_title
+
+```{autodoc2-docstring} pvi._format.utils.without_title
 ```
 ````
 

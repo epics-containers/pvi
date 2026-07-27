@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pvi._format.screen &#8212; pvi 0.13.2.dev10+g8e6f256f4 documentation</title>
+    <title>pvi._format.screen &#8212; pvi 0.13.2.dev11+g01d6b6b2c documentation</title>
   
   
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=42ccdb55"></script>
+    <script src="../../../_static/documentation_options.js?v=5fc5c4d4"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -724,7 +724,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">layout</span><span class="p">,</span> <span class="n">SubScreen</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_component_widget_formatters</span><span class="p">(</span>
-                <span class="n">Group</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">layout</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">children</span><span class="p">),</span>
+                <span class="n">Group</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">label</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">layout</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">children</span><span class="p">),</span>
                 <span class="n">parent_bounds</span><span class="o">=</span><span class="n">screen_bounds</span><span class="p">,</span>
                 <span class="n">column_bounds</span><span class="o">=</span><span class="n">column_bounds</span><span class="p">,</span>
                 <span class="n">next_column_bounds</span><span class="o">=</span><span class="n">next_column_bounds</span><span class="p">,</span>
@@ -1013,6 +1013,10 @@
                     <span class="n">component_bounds</span><span class="o">.</span><span class="n">h</span> <span class="o">*=</span> <span class="mi">10</span>  <span class="c1"># TODO: How do we know the number of rows?</span>
                 <span class="k">case</span> <span class="n">SignalR</span><span class="p">(</span><span class="n">read_widget</span><span class="o">=</span><span class="n">ImageRead</span><span class="p">()</span> <span class="o">|</span> <span class="n">ArrayTrace</span><span class="p">()):</span>
                     <span class="n">add_label</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">case</span> <span class="n">DeviceRef</span><span class="p">():</span>
+                    <span class="c1"># DeviceRef buttons are self-identifying; the label is</span>
+                    <span class="c1"># shown as the button text so no separate label is needed.</span>
+                    <span class="n">add_label</span> <span class="o">=</span> <span class="kc">False</span>
                 <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
                     <span class="k">pass</span>
 
@@ -1089,7 +1093,7 @@
             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="n">DeviceRef</span><span class="p">):</span>
                 <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget_formatter_factory</span><span class="o">.</span><span class="n">sub_screen_formatter_cls</span><span class="p">(</span>
                     <span class="n">bounds</span><span class="o">=</span><span class="n">rc_bounds</span><span class="p">,</span>
-                    <span class="n">label</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">rc</span><span class="o">.</span><span class="n">macros</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span>
+                    <span class="n">label</span><span class="o">=</span><span class="n">rc</span><span class="o">.</span><span class="n">get_label</span><span class="p">(),</span>
                     <span class="n">file_name</span><span class="o">=</span><span class="n">rc</span><span class="o">.</span><span class="n">ui</span><span class="p">,</span>
                     <span class="n">macros</span><span class="o">=</span><span class="n">rc</span><span class="o">.</span><span class="n">macros</span><span class="p">,</span>
                 <span class="p">)</span>
@@ -1130,7 +1134,10 @@
 <a class="viewcode-back" href="../../../reference/_api/pvi/pvi._format.screen.html#pvi._format.screen.move_to_subscreen">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">move_to_subscreen</span><span class="p">(</span><span class="n">component</span><span class="p">:</span> <span class="n">ComponentUnion</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Group</span><span class="p">:</span>
     <span class="k">return</span> <span class="n">Group</span><span class="p">(</span>
-        <span class="n">name</span><span class="o">=</span><span class="n">component</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">SubScreen</span><span class="p">(</span><span class="n">labelled</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> <span class="n">children</span><span class="o">=</span><span class="p">[</span><span class="n">component</span><span class="p">]</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">component</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="n">component</span><span class="o">.</span><span class="n">label</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">Group</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">layout</span><span class="o">=</span><span class="n">SubScreen</span><span class="p">(</span><span class="n">labelled</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+        <span class="n">children</span><span class="o">=</span><span class="p">[</span><span class="n">component</span><span class="p">],</span>
     <span class="p">)</span></div>
 
 
