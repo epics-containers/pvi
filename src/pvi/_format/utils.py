@@ -102,6 +102,10 @@ def with_title(spacing: int, title_height: int) -> Callable[[Bounds], Bounds]:
     ).added_to
 
 
+def without_title(spacing: int) -> Callable[[Bounds], Bounds]:
+    return Bounds(x=spacing, y=spacing, w=2 * spacing, h=2 * spacing).added_to
+
+
 def split_base_and_ext(path: Path) -> tuple[str, str]:
     """Split a filename into its base name and full extension chain."""
     base, sep, ext = path.name.partition(".")
