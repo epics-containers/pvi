@@ -490,6 +490,9 @@ class Include(TypedModel):
     This is resolved into the components of the referenced device,
     by the device with the `Include` statement, in the location that
     it is included.
+
+    Macros may be overridden to re-scope the included Device's PVs, for
+    the case where it is a distinct sub-device rather than a base class.
     """
 
     file_name: Annotated[
@@ -500,6 +503,18 @@ class Include(TypedModel):
         bool,
         Field(description="Include components in a SubScreen, or flatten."),
     ] = False
+    macros: Annotated[
+        dict[str, str],
+        Field(
+            description=(
+                "Macro-value pairs to substitute into the PVs of the included "
+                "Device, e.g. {R: $(R)TS:} to include a sub-device whose records "
+                "are loaded at a nested prefix. Values may reference the "
+                "including Device's macros. Default is no substitution, i.e. the "
+                "included Device shares the including Device's macro scope."
+            )
+        ),
+    ] = {}
 
 
 Tree = Sequence[ComponentUnion | Include]
