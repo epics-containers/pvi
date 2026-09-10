@@ -491,13 +491,20 @@
           "type": "boolean"
         },
         "macros": {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "default": {},
-          "description": "Macro-value pairs to substitute into the PVs of the included Device, e.g. {R: $(R)TS:} to include a sub-device whose records are loaded at a nested prefix. Values may reference the including Device's macros. Default is no substitution, i.e. the included Device shares the including Device's macro scope.",
-          "title": "Macros",
-          "type": "object"
+          "anyOf": [
+            {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Macro values to substitute into the PVs of the included Device, e.g. {R: $(R)TS:} for a sub-device at a nested prefix.",
+          "title": "Macros"
         },
         "type": {
           "const": "Include",
