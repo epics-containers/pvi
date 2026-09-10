@@ -21,6 +21,7 @@ from pvi.utils import find_pvi_yaml
 
 PASCAL_CASE_REGEX = re.compile(r"(?<![A-Z])[A-Z]|[A-Z][a-z/d]|(?<=[a-z])\d")
 NON_PASCAL_CHARS_RE = re.compile(r"[^A-Za-z0-9]")
+MACRO_RE = re.compile(r"\$\((\w+)\)")
 
 
 class ImageColorMap(IntEnum):
@@ -504,17 +505,12 @@ class Include(TypedModel):
         Field(description="Include components in a SubScreen, or flatten."),
     ] = False
     macros: Annotated[
-        dict[str, str],
+        dict[str, str] | None,
         Field(
-            description=(
-                "Macro-value pairs to substitute into the PVs of the included "
-                "Device, e.g. {R: $(R)TS:} to include a sub-device whose records "
-                "are loaded at a nested prefix. Values may reference the "
-                "including Device's macros. Default is no substitution, i.e. the "
-                "included Device shares the including Device's macro scope."
-            )
+            description="Macro values to substitute into the PVs of the included "
+            "Device, e.g. {R: $(R)TS:} for a sub-device at a nested prefix."
         ),
-    ] = {}
+    ] = None
 
 
 Tree = Sequence[ComponentUnion | Include]
@@ -623,6 +619,19 @@ class Device(TypedModel, YamlValidatorMixin):
                 resolved.extend(self.expand_includes(new_component, yaml_paths))
             else:
                 resolved.append(new_component)
+
+        if component.macros:
+            macros = component.macros
+            for signal in walk(resolved):
+                for field in ("read_pv", "write_pv", "pv"):
+                    if (pv := getattr(signal, field, None)) is not None:
+                        setattr(
+                            signal,
+                            field,
+                            MACRO_RE.sub(
+                                lambda m: macros.get(m.group(1), m.group(0)), pv
+                            ),
+                        )
 
         if component.in_subscreen:
             resolved = [
