@@ -20,6 +20,10 @@
     "url": "https://epics-containers.github.io/pvi/0.14.0b1/"
   },
   {
+    "version": "0.14.0",
+    "url": "https://epics-containers.github.io/pvi/0.14.0/"
+  },
+  {
     "version": "0.13.1",
     "url": "https://epics-containers.github.io/pvi/0.13.1/"
   },
