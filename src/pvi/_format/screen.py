@@ -2,12 +2,13 @@ from __future__ import annotations
 
 from collections.abc import Iterator, Sequence
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import (
     Generic,
     TypeVar,
 )
 
-from pvi._format.utils import Bounds
+from pvi._format.utils import Bounds, split_base_and_ext
 from pvi._format.widget import (
     GroupFormatter,
     SubScreenWidgetFormatter,
@@ -601,10 +602,11 @@ class ScreenFormatterFactory(Generic[T]):
             elif isinstance(rc, SignalR):
                 yield from self.generate_read_widget(rc, rc_bounds)
             elif isinstance(rc, Group) and isinstance(rc.layout, SubScreen):
+                base, suffixes = split_base_and_ext(Path(self.base_file_name))
                 yield self.widget_formatter_factory.sub_screen_formatter_cls(
                     bounds=rc_bounds,
                     label=rc.get_label() + " ⧉",
-                    file_name=f"{self.base_file_name}_{rc.name.replace(' ', '_')}",
+                    file_name=f"{base}_{rc.name.replace(' ', '_')}{suffixes}",
                     components=rc,
                 )
             elif isinstance(rc, DeviceRef):
