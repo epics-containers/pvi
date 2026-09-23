@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pvi._format.screen &#8212; pvi 0.13.2.dev11+g01d6b6b2c documentation</title>
+    <title>pvi._format.screen &#8212; pvi 0.14.1.dev2+g893e947ba documentation</title>
   
   
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=5fc5c4d4"></script>
+    <script src="../../../_static/documentation_options.js?v=06df35a5"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -460,12 +460,13 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Sequence</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">Generic</span><span class="p">,</span>
     <span class="n">TypeVar</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">pvi._format.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">Bounds</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pvi._format.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">Bounds</span><span class="p">,</span> <span class="n">split_base_and_ext</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pvi._format.widget</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">GroupFormatter</span><span class="p">,</span>
     <span class="n">SubScreenWidgetFormatter</span><span class="p">,</span>
@@ -1084,10 +1085,11 @@
             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="n">SignalR</span><span class="p">):</span>
                 <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_read_widget</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="n">rc_bounds</span><span class="p">)</span>
             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="n">Group</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rc</span><span class="o">.</span><span class="n">layout</span><span class="p">,</span> <span class="n">SubScreen</span><span class="p">):</span>
+                <span class="n">base</span><span class="p">,</span> <span class="n">suffixes</span> <span class="o">=</span> <span class="n">split_base_and_ext</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_file_name</span><span class="p">))</span>
                 <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget_formatter_factory</span><span class="o">.</span><span class="n">sub_screen_formatter_cls</span><span class="p">(</span>
                     <span class="n">bounds</span><span class="o">=</span><span class="n">rc_bounds</span><span class="p">,</span>
                     <span class="n">label</span><span class="o">=</span><span class="n">rc</span><span class="o">.</span><span class="n">get_label</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot; ⧉&quot;</span><span class="p">,</span>
-                    <span class="n">file_name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">base_file_name</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">rc</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                    <span class="n">file_name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">rc</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="si">}{</span><span class="n">suffixes</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
                     <span class="n">components</span><span class="o">=</span><span class="n">rc</span><span class="p">,</span>
                 <span class="p">)</span>
             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="n">DeviceRef</span><span class="p">):</span>
