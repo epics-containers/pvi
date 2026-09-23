@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import pytest
+from lxml import etree
 from pydantic import ValidationError
 
 from pvi._format.base import Formatter, IndexEntry
@@ -328,3 +329,27 @@ def test_group_label_preserved_through_subscreen(tmp_path, helper):
     formatter.format(device, output_bob)
 
     helper.assert_output_matches(expected_bob, output_bob)
+
+
+@pytest.mark.parametrize("file_name", ["device.bob", "device.pvi.bob"])
+def test_sub_screen_buttons_link_to_written_files(tmp_path, file_name):
+    formatter_yaml = HERE / "format" / "input" / "dls.bob.pvi.formatter.yaml"
+    formatter = Formatter.deserialize(formatter_yaml)
+
+    signal = SignalR(name="Status", read_pv="$(P)Status", read_widget=TextRead())
+    stats = Group(name="Stats", layout=SubScreen(), children=[signal])
+    advanced = Group(name="Advanced", layout=SubScreen(), children=[signal, stats])
+    device = Device(label="Sub Screens", children=[signal, advanced])
+    formatter.format(device, tmp_path / file_name)
+
+    written_files = sorted(path.name for path in tmp_path.iterdir())
+    linked_files = sorted(
+        str(file.text)
+        for path in tmp_path.iterdir()
+        for file in etree.parse(path).iter("file")
+    )
+    sub_screen_files = [name for name in written_files if name != file_name]
+
+    # One sub screen for Advanced and one for Stats inside it
+    assert len(sub_screen_files) == 2
+    assert linked_files == sub_screen_files

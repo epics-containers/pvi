@@ -27,7 +27,7 @@ from pvi._format.widget import (
 from pvi.device import Device
 
 from .base import Formatter
-from .utils import Bounds, split_base_and_ext, with_title, without_title
+from .utils import Bounds, with_title, without_title
 
 
 class DLSFormatter(Formatter):
@@ -177,8 +177,6 @@ class DLSFormatter(Formatter):
                 )
             ]
 
-        base_file_name, all_suffixes = split_base_and_ext(path)
-
         formatter_factory: ScreenFormatterFactory[str] = ScreenFormatterFactory(
             screen_formatter_cls=GroupFormatter[str].from_template(
                 template,
@@ -197,7 +195,7 @@ class DLSFormatter(Formatter):
             ),
             widget_formatter_factory=widget_formatter_factory,
             layout=screen_layout,
-            base_file_name=base_file_name,
+            base_file_name=path.stem,
         )
         title = f"{device.label}"
 
@@ -207,7 +205,7 @@ class DLSFormatter(Formatter):
 
         path.write_text("".join(screen_formatter.format()))
         for sub_screen_name, sub_screen_formatter in sub_screens:
-            sub_screen_path = Path(path.parent / f"{sub_screen_name}{all_suffixes}")
+            sub_screen_path = Path(path.parent / f"{sub_screen_name}{path.suffix}")
             sub_screen_path.write_text("".join(sub_screen_formatter.format()))
 
     def format_bob(self, device: Device, path: Path):
@@ -354,8 +352,6 @@ class DLSFormatter(Formatter):
                 )
             ]
 
-        base_file_name, all_suffixes = split_base_and_ext(path)
-
         # SCREEN_INI DOCS REF: Construct a screen object
         title = f"{device.label}"
         has_title = bool(title)
@@ -383,7 +379,7 @@ class DLSFormatter(Formatter):
             ),
             widget_formatter_factory=widget_formatter_factory,
             layout=screen_layout,
-            base_file_name=base_file_name,
+            base_file_name=path.stem,
         )
         # SCREEN_FORMAT DOCS REF: Format the screen
         screen_formatter, sub_screens = formatter_factory.create_screen_formatter(
@@ -392,7 +388,7 @@ class DLSFormatter(Formatter):
 
         write_bob(screen_formatter, path)
         for sub_screen_name, sub_screen_formatter in sub_screens:
-            sub_screen_path = Path(path.parent / f"{sub_screen_name}{all_suffixes}")
+            sub_screen_path = Path(path.parent / f"{sub_screen_name}{path.suffix}")
             write_bob(sub_screen_formatter, sub_screen_path)
 
 
