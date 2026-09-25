@@ -616,6 +616,10 @@ class Device(TypedModel, YamlValidatorMixin):
         include_components = find_components(component.file_name, yaml_paths)
         for new_component in include_components:
             if isinstance(new_component, Include):
+                if component.macros:
+                    # A re-scoped sub-device brings only its own components; its
+                    # parent classes belong to the including device already
+                    continue
                 resolved.extend(self.expand_includes(new_component, yaml_paths))
             else:
                 resolved.append(new_component)
@@ -623,6 +627,11 @@ class Device(TypedModel, YamlValidatorMixin):
         if component.macros:
             macros = component.macros
             for signal in walk(resolved):
+                if isinstance(signal, DeviceRef):
+                    signal.macros = {
+                        k: MACRO_RE.sub(lambda m: macros.get(m.group(1), m.group(0)), v)
+                        for k, v in signal.macros.items()
+                    } | {k: v for k, v in macros.items() if k not in signal.macros}
                 for field in ("read_pv", "write_pv", "pv"):
                     if (pv := getattr(signal, field, None)) is not None:
                         setattr(
@@ -683,6 +692,13 @@ class Device(TypedModel, YamlValidatorMixin):
                     duplicate = new_children.pop(existing_children.name, None)
 
                     if duplicate:
+                        for f in ("read_pv", "write_pv", "pv"):
+                            a, b = getattr(existing_children, f, None), getattr(duplicate, f, None)
+                            if a is not None and b is not None and a != b:
+                                raise ValueError(
+                                    f"{component.name}.{duplicate.name}: {f} {b!r} "
+                                    f"collides with {a!r}"
+                                )
                         # Use duplicate, as type may be new
                         merged_children.append(duplicate)
                     else:
