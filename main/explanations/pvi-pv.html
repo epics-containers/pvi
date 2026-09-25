@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>PVI IOC Introspection &#8212; pvi 0.14.1.dev2+g893e947ba documentation</title>
+    <title>PVI IOC Introspection &#8212; pvi 0.14.2 documentation</title>
   
   
   
@@ -41,7 +41,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=06df35a5"></script>
+    <script src="../_static/documentation_options.js?v=0dc20415"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -51,7 +51,7 @@
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://epics-containers.github.io/pvi/switcher.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'main';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.14.2';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             false;
         </script>
@@ -62,7 +62,7 @@
     <link rel="prev" title="Explanations" href="../explanations.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="main" />
+  <meta name="docsearch:version" content="0.14.2" />
   </head>
   
   
@@ -496,6 +496,7 @@ actual PVs, as defined in the <code class="docutils literal notranslate"><span c
             <span class="s2">&quot;pvi.Gain.w&quot;</span><span class="p">:</span> <span class="p">{</span>
                 <span class="s2">&quot;+channel&quot;</span><span class="p">:</span> <span class="s2">&quot;NAME&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;+type&quot;</span><span class="p">:</span> <span class="s2">&quot;plain&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;+trigger&quot;</span><span class="p">:</span> <span class="s2">&quot;pvi.Gain.w&quot;</span><span class="p">,</span>
             <span class="p">}</span>
         <span class="p">}</span>
     <span class="p">})</span>
@@ -507,6 +508,7 @@ actual PVs, as defined in the <code class="docutils literal notranslate"><span c
             <span class="s2">&quot;pvi.Gain.r&quot;</span><span class="p">:</span> <span class="p">{</span>
                 <span class="s2">&quot;+channel&quot;</span><span class="p">:</span> <span class="s2">&quot;NAME&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;+type&quot;</span><span class="p">:</span> <span class="s2">&quot;plain&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;+trigger&quot;</span><span class="p">:</span> <span class="s2">&quot;pvi.Gain.r&quot;</span><span class="p">,</span>
             <span class="p">}</span>
         <span class="p">}</span>
     <span class="p">})</span>
@@ -518,6 +520,7 @@ actual PVs, as defined in the <code class="docutils literal notranslate"><span c
             <span class="s2">&quot;pvi.UniqueId.r&quot;</span><span class="p">:</span> <span class="p">{</span>
                 <span class="s2">&quot;+channel&quot;</span><span class="p">:</span> <span class="s2">&quot;NAME&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;+type&quot;</span><span class="p">:</span> <span class="s2">&quot;plain&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;+trigger&quot;</span><span class="p">:</span> <span class="s2">&quot;pvi.UniqueId.r&quot;</span><span class="p">,</span>
             <span class="p">}</span>
         <span class="p">}</span>
     <span class="p">})</span>
@@ -529,6 +532,7 @@ actual PVs, as defined in the <code class="docutils literal notranslate"><span c
             <span class="s2">&quot;pvi.WaitForPlugins.w&quot;</span><span class="p">:</span> <span class="p">{</span>
                 <span class="s2">&quot;+channel&quot;</span><span class="p">:</span> <span class="s2">&quot;NAME&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;+type&quot;</span><span class="p">:</span> <span class="s2">&quot;plain&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;+trigger&quot;</span><span class="p">:</span> <span class="s2">&quot;pvi.WaitForPlugins.w&quot;</span><span class="p">,</span>
             <span class="p">}</span>
         <span class="p">}</span>
     <span class="p">})</span>
@@ -539,6 +543,9 @@ actual PVs, as defined in the <code class="docutils literal notranslate"><span c
 entry into the V4 PV <code class="docutils literal notranslate"><span class="pre">$(P)$(R)PVI</span></code> with the name <code class="docutils literal notranslate"><span class="pre">pvi.GainX.w</span></code> where <code class="docutils literal notranslate"><span class="pre">w</span></code> is the access
 mode (<code class="docutils literal notranslate"><span class="pre">r</span></code>, <code class="docutils literal notranslate"><span class="pre">w</span></code>, <code class="docutils literal notranslate"><span class="pre">rw</span></code>, <code class="docutils literal notranslate"><span class="pre">x</span></code>). Each <code class="docutils literal notranslate"><span class="pre">Device</span></code> in the IOC will produce its own PVI PV,
 differentiated by the <code class="docutils literal notranslate"><span class="pre">R</span></code> macro in this case.</p>
+<p>Each entry sets <code class="docutils literal notranslate"><span class="pre">+trigger</span></code> to its own field name, so a change to one record posts a
+monitor update of that field alone. Without any <code class="docutils literal notranslate"><span class="pre">+trigger</span></code> in a group QSRV falls back
+to exactly this behaviour, but logs a warning for the group at IOC start.</p>
 <p>For more information on the syntax of the info tags, see the <a class="reference external" href="https://epics-base.github.io/pva2pva/qsrv_page.html">QSRV documentation</a>.</p>
 </section>
 <section id="pvi-nttable">
@@ -621,7 +628,7 @@ SIM:DET:PVI<span class="w"> </span>structure
 
   
   <div class="tocsection editthispage">
-    <a href="https://github.com/epics-containers/pvi/edit/main/docs/explanations/pvi-pv.md">
+    <a href="https://github.com/epics-containers/pvi/edit/0.14.2/docs/explanations/pvi-pv.md">
       <i class="fa-solid fa-pencil"></i>
       
       
