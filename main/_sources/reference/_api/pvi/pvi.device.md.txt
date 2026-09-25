@@ -199,6 +199,10 @@
   - ```{autodoc2-docstring} pvi.device.NON_PASCAL_CHARS_RE
     :summary:
     ```
+* - {py:obj}`MACRO_RE <pvi.device.MACRO_RE>`
+  - ```{autodoc2-docstring} pvi.device.MACRO_RE
+    :summary:
+    ```
 * - {py:obj}`PascalStr <pvi.device.PascalStr>`
   - ```{autodoc2-docstring} pvi.device.PascalStr
     :summary:
@@ -259,6 +263,16 @@
    'compile(...)'
 
 ```{autodoc2-docstring} pvi.device.NON_PASCAL_CHARS_RE
+```
+
+````
+
+````{py:data} MACRO_RE
+:canonical: pvi.device.MACRO_RE
+:value: >
+   'compile(...)'
+
+```{autodoc2-docstring} pvi.device.MACRO_RE
 ```
 
 ````
@@ -1604,6 +1618,17 @@ Bases: {py:obj}`pvi.typed_model.TypedModel`
    False
 
 ```{autodoc2-docstring} pvi.device.Include.in_subscreen
+```
+
+````
+
+````{py:attribute} macros
+:canonical: pvi.device.Include.macros
+:type: typing.Annotated[dict[str, str] | None, Field(description='Macro values to substitute into the PVs of the included Device, e.g. {R: $(R)TS:} for a sub-device at a nested prefix.')]
+:value: >
+   None
+
+```{autodoc2-docstring} pvi.device.Include.macros
 ```
 
 ````

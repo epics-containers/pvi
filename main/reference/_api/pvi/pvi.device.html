@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pvi.device &#8212; pvi 0.14.2 documentation</title>
+    <title>pvi.device &#8212; pvi 0.14.3.dev6+gacbc996c6 documentation</title>
   
   
   
@@ -41,7 +41,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=0dc20415"></script>
+    <script src="../../../_static/documentation_options.js?v=0e0c10a4"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -51,7 +51,7 @@
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://epics-containers.github.io/pvi/switcher.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.14.2';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'main';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             false;
         </script>
@@ -62,7 +62,7 @@
     <link rel="prev" title="pvi.__main__" href="pvi.__main__.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.14.2" />
+  <meta name="docsearch:version" content="main" />
   </head>
   
   
@@ -661,34 +661,37 @@ snake_case converted name. E.g. pascal_case_field_name</p></td>
 <tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.NON_PASCAL_CHARS_RE" title="pvi.device.NON_PASCAL_CHARS_RE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NON_PASCAL_CHARS_RE</span></code></a></p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.PascalStr" title="pvi.device.PascalStr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PascalStr</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.MACRO_RE" title="pvi.device.MACRO_RE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MACRO_RE</span></code></a></p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device._RowWriteUnion" title="pvi.device._RowWriteUnion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_RowWriteUnion</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.PascalStr" title="pvi.device.PascalStr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PascalStr</span></code></a></p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device._RowReadUnion" title="pvi.device._RowReadUnion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_RowReadUnion</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device._RowWriteUnion" title="pvi.device._RowWriteUnion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_RowWriteUnion</span></code></a></p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.LayoutUnion" title="pvi.device.LayoutUnion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LayoutUnion</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device._RowReadUnion" title="pvi.device._RowReadUnion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_RowReadUnion</span></code></a></p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.ReadWidgetUnion" title="pvi.device.ReadWidgetUnion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ReadWidgetUnion</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.LayoutUnion" title="pvi.device.LayoutUnion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LayoutUnion</span></code></a></p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.WriteWidgetUnion" title="pvi.device.WriteWidgetUnion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WriteWidgetUnion</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.ReadWidgetUnion" title="pvi.device.ReadWidgetUnion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ReadWidgetUnion</span></code></a></p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.WidgetUnion" title="pvi.device.WidgetUnion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WidgetUnion</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.WriteWidgetUnion" title="pvi.device.WriteWidgetUnion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WriteWidgetUnion</span></code></a></p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.ComponentUnion" title="pvi.device.ComponentUnion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ComponentUnion</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.WidgetUnion" title="pvi.device.WidgetUnion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WidgetUnion</span></code></a></p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.Tree" title="pvi.device.Tree"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Tree</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.ComponentUnion" title="pvi.device.ComponentUnion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ComponentUnion</span></code></a></p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.ResolvedTree" title="pvi.device.ResolvedTree"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResolvedTree</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pvi.device.Tree" title="pvi.device.Tree"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Tree</span></code></a></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pvi.device.ResolvedTree" title="pvi.device.ResolvedTree"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResolvedTree</span></code></a></p></td>
 <td></td>
 </tr>
 </tbody>
@@ -706,6 +709,12 @@ snake_case converted name. E.g. pascal_case_field_name</p></td>
 <dl class="py data">
 <dt class="sig sig-object py" id="pvi.device.NON_PASCAL_CHARS_RE">
 <span class="sig-prename descclassname"><span class="pre">pvi.device.</span></span><span class="sig-name descname"><span class="pre">NON_PASCAL_CHARS_RE</span></span><a class="headerlink" href="#pvi.device.NON_PASCAL_CHARS_RE" title="Link to this definition">#</a></dt>
+<dd><p>‘compile(…)’</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="pvi.device.MACRO_RE">
+<span class="sig-prename descclassname"><span class="pre">pvi.device.</span></span><span class="sig-name descname"><span class="pre">MACRO_RE</span></span><a class="headerlink" href="#pvi.device.MACRO_RE" title="Link to this definition">#</a></dt>
 <dd><p>‘compile(…)’</p>
 </dd></dl>
 
@@ -1585,6 +1594,8 @@ validated to form a valid model.</p>
 <p>This is resolved into the components of the referenced device,
 by the device with the <code class="docutils literal notranslate"><span class="pre">Include</span></code> statement, in the location that
 it is included.</p>
+<p>Macros may be overridden to re-scope the included Device’s PVs, for
+the case where it is a distinct sub-device rather than a base class.</p>
 <p class="rubric">Initialization</p>
 <p>Create a new model by parsing and validating input data from keyword arguments.</p>
 <p>Raises [<code class="docutils literal notranslate"><span class="pre">ValidationError</span></code>][pydantic_core.ValidationError] if the input data cannot be
@@ -1600,6 +1611,12 @@ validated to form a valid model.</p>
 <dt class="sig sig-object py" id="pvi.device.Include.in_subscreen">
 <span class="sig-name descname"><span class="pre">in_subscreen</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Annotated" title="(in Python v3.14)"><span class="pre">Annotated</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Field</span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="s"><span class="pre">'Include</span> <span class="pre">components</span> <span class="pre">in</span> <span class="pre">a</span> <span class="pre">SubScreen,</span> <span class="pre">or</span> <span class="pre">flatten.'</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi.device.Include.in_subscreen" title="Link to this definition">#</a></dt>
 <dd><p>False</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pvi.device.Include.macros">
+<span class="sig-name descname"><span class="pre">macros</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Annotated" title="(in Python v3.14)"><span class="pre">Annotated</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Field</span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="s"><span class="pre">'Macro</span> <span class="pre">values</span> <span class="pre">to</span> <span class="pre">substitute</span> <span class="pre">into</span> <span class="pre">the</span> <span class="pre">PVs</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">included</span> <span class="pre">Device,</span> <span class="pre">e.g.</span> <span class="pre">{R:</span> <span class="pre">$(R)TS:}</span> <span class="pre">for</span> <span class="pre">a</span> <span class="pre">sub-device</span> <span class="pre">at</span> <span class="pre">a</span> <span class="pre">nested</span> <span class="pre">prefix.'</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pvi.device.Include.macros" title="Link to this definition">#</a></dt>
+<dd><p>None</p>
 </dd></dl>
 
 </dd></dl>
@@ -1765,6 +1782,7 @@ yaml_paths: Paths of parent class Device YAMLs</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#api">API</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.PASCAL_CASE_REGEX"><code class="docutils literal notranslate"><span class="pre">PASCAL_CASE_REGEX</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.NON_PASCAL_CHARS_RE"><code class="docutils literal notranslate"><span class="pre">NON_PASCAL_CHARS_RE</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.MACRO_RE"><code class="docutils literal notranslate"><span class="pre">MACRO_RE</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.ImageColorMap"><code class="docutils literal notranslate"><span class="pre">ImageColorMap</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.ImageColorMap.GRAY"><code class="docutils literal notranslate"><span class="pre">ImageColorMap.GRAY</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.ImageColorMap.COLOR"><code class="docutils literal notranslate"><span class="pre">ImageColorMap.COLOR</span></code></a></li>
@@ -1932,6 +1950,7 @@ yaml_paths: Paths of parent class Device YAMLs</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.Include"><code class="docutils literal notranslate"><span class="pre">Include</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.Include.file_name"><code class="docutils literal notranslate"><span class="pre">Include.file_name</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.Include.in_subscreen"><code class="docutils literal notranslate"><span class="pre">Include.in_subscreen</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.Include.macros"><code class="docutils literal notranslate"><span class="pre">Include.macros</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pvi.device.Tree"><code class="docutils literal notranslate"><span class="pre">Tree</span></code></a></li>
@@ -1962,7 +1981,7 @@ yaml_paths: Paths of parent class Device YAMLs</p>
 
   
   <div class="tocsection editthispage">
-    <a href="https://github.com/epics-containers/pvi/edit/0.14.2/docs/reference/_api/pvi/pvi.device.md">
+    <a href="https://github.com/epics-containers/pvi/edit/main/docs/reference/_api/pvi/pvi.device.md">
       <i class="fa-solid fa-pencil"></i>
       
       
