@@ -693,7 +693,10 @@ class Device(TypedModel, YamlValidatorMixin):
 
                     if duplicate:
                         for f in ("read_pv", "write_pv", "pv"):
-                            a, b = getattr(existing_children, f, None), getattr(duplicate, f, None)
+                            a, b = (
+                                getattr(existing_children, f, None),
+                                getattr(duplicate, f, None),
+                            )
                             if a is not None and b is not None and a != b:
                                 raise ValueError(
                                     f"{component.name}.{duplicate.name}: {f} {b!r} "
