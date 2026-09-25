@@ -500,6 +500,9 @@ class Include(TypedModel):
         bool,
         Field(description="Include components in a SubScreen, or flatten."),
     ] = False
+    dynamic: Annotated[
+        bool, Field(description="Defines if device will be dynamically generated")
+    ] = False
 
 
 Tree = Sequence[ComponentUnion | Include]
@@ -532,6 +535,7 @@ class Device(TypedModel, YamlValidatorMixin):
         ),
     ] = None
     children: Annotated[Tree, Field(description="Child Components")] = []
+    _dynamic_children: dict[int, str] = {}
 
     def _to_dict(self) -> dict[str, Any]:
         """Serialize a `Device` instance to a `dict`.
@@ -590,7 +594,9 @@ class Device(TypedModel, YamlValidatorMixin):
         components: Tree = []
         for component in self.children:
             if isinstance(component, Include):
-                expanded_components = self.expand_includes(component, yaml_paths)
+                expanded_components = self.expand_includes(
+                    component, yaml_paths, len(components)
+                )
                 components.extend(expanded_components)
             else:
                 components.append(component)
@@ -599,15 +605,28 @@ class Device(TypedModel, YamlValidatorMixin):
         pass
 
     def expand_includes(
-        self, component: Include, yaml_paths: list[Path]
+        self, component: Include, yaml_paths: list[Path], base_index: int = 0
     ) -> list[ComponentUnion]:
         resolved: list[ComponentUnion] = []
-        include_components = find_components(component.file_name, yaml_paths)
+        if component.dynamic:
+            # Track this dynamic include at its position in final components list
+            self._dynamic_children[base_index] = component.file_name
+            # Temporarily ignore the dynamic include
+            include_components = [IgnoredComponent(name=component.file_name)]
+        else:
+            include_components = find_components(component.file_name, yaml_paths)
+
+        current_index = base_index
         for new_component in include_components:
             if isinstance(new_component, Include):
-                resolved.extend(self.expand_includes(new_component, yaml_paths))
+                expanded = self.expand_includes(
+                    new_component, yaml_paths, current_index
+                )
+                resolved.extend(expanded)
+                current_index += len(expanded)
             else:
                 resolved.append(new_component)
+                current_index += 1
 
         if component.in_subscreen:
             resolved = [
@@ -668,6 +687,19 @@ class Device(TypedModel, YamlValidatorMixin):
                 group.children = merged_children + list(new_children.values())
 
         self.children = merged
+
+    def resolve_dynamic_children(self, yaml_paths: list[Path]):
+        resolved: Tree = []
+        for index, child in enumerate(self.children):
+            if name := self._dynamic_children.get(index):
+                if find_pvi_yaml(f"{name}.pvi.device.yaml", yaml_paths):
+                    resolved.extend(
+                        self.expand_includes(Include(file_name=name), yaml_paths)
+                    )
+                    continue  # Skip dynamic include, leaving it as an IgnoredComponent
+            resolved.append(child)
+
+        self.children = resolved
 
     def generate_param_tree(self) -> str:
         param_tree = ", ".join(
