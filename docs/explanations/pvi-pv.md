@@ -19,6 +19,7 @@ record("*", "$(P)$(R)Gain") {
             "pvi.Gain.w": {
                 "+channel": "NAME",
                 "+type": "plain",
+                "+trigger": "pvi.Gain.w",
             }
         }
     })
@@ -30,6 +31,7 @@ record("*", "$(P)$(R)Gain_RBV") {
             "pvi.Gain.r": {
                 "+channel": "NAME",
                 "+type": "plain",
+                "+trigger": "pvi.Gain.r",
             }
         }
     })
@@ -41,6 +43,7 @@ record("*", "$(P)$(R)UniqueId_RBV") {
             "pvi.UniqueId.r": {
                 "+channel": "NAME",
                 "+type": "plain",
+                "+trigger": "pvi.UniqueId.r",
             }
         }
     })
@@ -52,6 +55,7 @@ record("*", "$(P)$(R)WaitForPlugins") {
             "pvi.WaitForPlugins.w": {
                 "+channel": "NAME",
                 "+type": "plain",
+                "+trigger": "pvi.WaitForPlugins.w",
             }
         }
     })
@@ -62,6 +66,10 @@ These info tags are then collected and served as a V4 PV by QSRV. This info tag 
 entry into the V4 PV `$(P)$(R)PVI` with the name `pvi.GainX.w` where `w` is the access
 mode (`r`, `w`, `rw`, `x`). Each `Device` in the IOC will produce its own PVI PV,
 differentiated by the `R` macro in this case.
+
+Each entry sets `+trigger` to its own field name, so a change to one record posts a
+monitor update of that field alone. Without any `+trigger` in a group QSRV falls back
+to exactly this behaviour, but logs a warning for the group at IOC start.
 
 For more information on the syntax of the info tags, see the [QSRV documentation][QSRV].
 
