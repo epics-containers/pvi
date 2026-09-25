@@ -7,6 +7,7 @@ record("*", "$(P)Read") {
             "pvi.Read.r": {
                 "+channel": "NAME",
                 "+type": "plain",
+                "+trigger": "pvi.Read.r",
             }
         }
     })
@@ -18,6 +19,7 @@ record("*", "$(P)Write") {
             "pvi.Write.w": {
                 "+channel": "NAME",
                 "+type": "plain",
+                "+trigger": "pvi.Write.w",
             }
         }
     })
@@ -29,6 +31,7 @@ record("*", "$(P)ReadWrite") {
             "pvi.ReadWrite.w": {
                 "+channel": "NAME",
                 "+type": "plain",
+                "+trigger": "pvi.ReadWrite.w",
             }
         }
     })
@@ -40,6 +43,7 @@ record("*", "$(P)ReadWrite_RBV") {
             "pvi.ReadWrite.r": {
                 "+channel": "NAME",
                 "+type": "plain",
+                "+trigger": "pvi.ReadWrite.r",
             }
         }
     })
@@ -51,6 +55,7 @@ record("*", "$(P)ReadWriteSingle") {
             "pvi.ReadWriteSingle.rw": {
                 "+channel": "NAME",
                 "+type": "plain",
+                "+trigger": "pvi.ReadWriteSingle.rw",
             }
         }
     })
@@ -62,6 +67,7 @@ record("*", "$(P)Execute") {
             "pvi.Execute.x": {
                 "+channel": "NAME",
                 "+type": "plain",
+                "+trigger": "pvi.Execute.x",
             }
         }
     })
