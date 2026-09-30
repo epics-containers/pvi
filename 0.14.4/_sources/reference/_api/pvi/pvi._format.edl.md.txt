@@ -1,0 +1,96 @@
+# {py:mod}`pvi._format.edl`
+
+```{py:module} pvi._format.edl
+```
+
+```{autodoc2-docstring} pvi._format.edl
+:allowtitles:
+```
+
+## Module Contents
+
+### Classes
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`EdlTemplate <pvi._format.edl.EdlTemplate>`
+  -
+````
+
+### Functions
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`is_text_widget <pvi._format.edl.is_text_widget>`
+  - ```{autodoc2-docstring} pvi._format.edl.is_text_widget
+    :summary:
+    ```
+* - {py:obj}`add_property <pvi._format.edl.add_property>`
+  - ```{autodoc2-docstring} pvi._format.edl.add_property
+    :summary:
+    ```
+````
+
+### Data
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`EDL_TEXT_FORMATS <pvi._format.edl.EDL_TEXT_FORMATS>`
+  - ```{autodoc2-docstring} pvi._format.edl.EDL_TEXT_FORMATS
+    :summary:
+    ```
+````
+
+### API
+
+````{py:data} EDL_TEXT_FORMATS
+:canonical: pvi._format.edl.EDL_TEXT_FORMATS
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.edl.EDL_TEXT_FORMATS
+```
+
+````
+
+`````{py:class} EdlTemplate(text: str)
+:canonical: pvi._format.edl.EdlTemplate
+
+Bases: {py:obj}`pvi._format.widget.UITemplate`\[{py:obj}`str`\]
+
+````{py:method} set(template: str, bounds: pvi._format.utils.Bounds | None = None, widget: pvi.device.WidgetUnion | None = None, properties: dict[str, typing.Any] | None = None) -> str
+:canonical: pvi._format.edl.EdlTemplate.set
+
+````
+
+````{py:method} search(search: str) -> str
+:canonical: pvi._format.edl.EdlTemplate.search
+
+````
+
+````{py:method} create_group(group_object: list[str], children: list[pvi._format.widget.WidgetFormatter[str]], padding: pvi._format.utils.Bounds | None = None) -> list[str]
+:canonical: pvi._format.edl.EdlTemplate.create_group
+
+````
+
+`````
+
+````{py:function} is_text_widget(text: str)
+:canonical: pvi._format.edl.is_text_widget
+
+```{autodoc2-docstring} pvi._format.edl.is_text_widget
+```
+````
+
+````{py:function} add_property(text: str, property: str, value: str) -> str
+:canonical: pvi._format.edl.add_property
+
+```{autodoc2-docstring} pvi._format.edl.add_property
+```
+````

@@ -1,0 +1,106 @@
+# {py:mod}`pvi._format.template`
+
+```{py:module} pvi._format.template
+```
+
+```{autodoc2-docstring} pvi._format.template
+:allowtitles:
+```
+
+## Module Contents
+
+### Classes
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`PviRecord <pvi._format.template.PviRecord>`
+  - ```{autodoc2-docstring} pvi._format.template.PviRecord
+    :summary:
+    ```
+````
+
+### Functions
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`format_template <pvi._format.template.format_template>`
+  - ```{autodoc2-docstring} pvi._format.template.format_template
+    :summary:
+    ```
+````
+
+### Data
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`PVI_TEMPLATE <pvi._format.template.PVI_TEMPLATE>`
+  - ```{autodoc2-docstring} pvi._format.template.PVI_TEMPLATE
+    :summary:
+    ```
+````
+
+### API
+
+````{py:data} PVI_TEMPLATE
+:canonical: pvi._format.template.PVI_TEMPLATE
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.template.PVI_TEMPLATE
+```
+
+````
+
+`````{py:class} PviRecord
+:canonical: pvi._format.template.PviRecord
+
+```{autodoc2-docstring} pvi._format.template.PviRecord
+```
+
+````{py:attribute} name
+:canonical: pvi._format.template.PviRecord.name
+:type: str
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.template.PviRecord.name
+```
+
+````
+
+````{py:attribute} pv
+:canonical: pvi._format.template.PviRecord.pv
+:type: str
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.template.PviRecord.pv
+```
+
+````
+
+````{py:attribute} access
+:canonical: pvi._format.template.PviRecord.access
+:type: str
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._format.template.PviRecord.access
+```
+
+````
+
+`````
+
+````{py:function} format_template(device: pvi.device.Device, pv_prefix: str, output: pathlib.Path)
+:canonical: pvi._format.template.format_template
+
+```{autodoc2-docstring} pvi._format.template.format_template
+```
+````

@@ -1,0 +1,143 @@
+# {py:mod}`pvi.typed_model`
+
+```{py:module} pvi.typed_model
+```
+
+```{autodoc2-docstring} pvi.typed_model
+:allowtitles:
+```
+
+## Module Contents
+
+### Classes
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`TypedModel <pvi.typed_model.TypedModel>`
+  - ```{autodoc2-docstring} pvi.typed_model.TypedModel
+    :summary:
+    ```
+````
+
+### Functions
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`as_tagged_union <pvi.typed_model.as_tagged_union>`
+  - ```{autodoc2-docstring} pvi.typed_model.as_tagged_union
+    :summary:
+    ```
+````
+
+### API
+
+`````{py:class} TypedModel(/, **data: typing.Any)
+:canonical: pvi.typed_model.TypedModel
+
+Bases: {py:obj}`pydantic.BaseModel`
+
+```{autodoc2-docstring} pvi.typed_model.TypedModel
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi.typed_model.TypedModel.__init__
+```
+
+````{py:attribute} model_config
+:canonical: pvi.typed_model.TypedModel.model_config
+:value: >
+   'ConfigDict(...)'
+
+```{autodoc2-docstring} pvi.typed_model.TypedModel.model_config
+```
+
+````
+
+````{py:attribute} models_typed
+:canonical: pvi.typed_model.TypedModel.models_typed
+:type: typing.ClassVar[bool]
+:value: >
+   False
+
+```{autodoc2-docstring} pvi.typed_model.TypedModel.models_typed
+```
+
+````
+
+````{py:property} type
+:canonical: pvi.typed_model.TypedModel.type
+:type: str
+
+```{autodoc2-docstring} pvi.typed_model.TypedModel.type
+```
+
+````
+
+````{py:method} __pydantic_init_subclass__(**kwargs: typing.Any) -> None
+:canonical: pvi.typed_model.TypedModel.__pydantic_init_subclass__
+:classmethod:
+
+```{autodoc2-docstring} pvi.typed_model.TypedModel.__pydantic_init_subclass__
+```
+
+````
+
+````{py:method} model_json_schema(by_alias: bool = True, ref_template: str = DEFAULT_REF_TEMPLATE, schema_generator: type[pydantic.json_schema.GenerateJsonSchema] = GenerateJsonSchema, mode: pydantic.json_schema.JsonSchemaMode = 'validation', *, union_format: typing.Literal[any_of, primitive_type_array] = 'any_of')
+:canonical: pvi.typed_model.TypedModel.model_json_schema
+:classmethod:
+
+```{autodoc2-docstring} pvi.typed_model.TypedModel.model_json_schema
+```
+
+````
+
+````{py:method} rebuild_child_models()
+:canonical: pvi.typed_model.TypedModel.rebuild_child_models
+:classmethod:
+
+```{autodoc2-docstring} pvi.typed_model.TypedModel.rebuild_child_models
+```
+
+````
+
+````{py:method} _tag()
+:canonical: pvi.typed_model.TypedModel._tag
+:classmethod:
+
+```{autodoc2-docstring} pvi.typed_model.TypedModel._tag
+```
+
+````
+
+````{py:method} discriminator()
+:canonical: pvi.typed_model.TypedModel.discriminator
+:staticmethod:
+
+```{autodoc2-docstring} pvi.typed_model.TypedModel.discriminator
+```
+
+````
+
+````{py:method} _get_type_name(x: pvi.typed_model.TypedModel | dict[str, typing.Any]) -> str | None
+:canonical: pvi.typed_model.TypedModel._get_type_name
+:staticmethod:
+
+```{autodoc2-docstring} pvi.typed_model.TypedModel._get_type_name
+```
+
+````
+
+`````
+
+````{py:function} as_tagged_union(union: type[pvi.typed_model.TypedModel])
+:canonical: pvi.typed_model.as_tagged_union
+
+```{autodoc2-docstring} pvi.typed_model.as_tagged_union
+```
+````
