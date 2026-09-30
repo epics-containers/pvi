@@ -95,7 +95,7 @@
     <width>124</width>
     <height>20</height>
     <font>
-      <font family="Cantarell" style="REGULAR" size="14.0">
+      <font family="Cantarell" style="BOLD" size="14.0">
       </font>
     </font>
     <foreground_color>
@@ -189,7 +189,7 @@
       <width>124</width>
       <height>20</height>
       <font>
-        <font family="Cantarell" style="REGULAR" size="14.0">
+        <font family="Cantarell" style="BOLD" size="14.0">
       </font>
       </font>
       <foreground_color>
