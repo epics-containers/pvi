@@ -14,6 +14,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
 ]
 description = "EPICS PV Interface described in YAML"
 dependencies = [
@@ -31,7 +32,6 @@ requires-python = ">=3.11"
 
 [dependency-groups]
 dev = [
-    "copier",
     "myst-parser",
     "pre-commit",
     "pydata-sphinx-theme>=0.12",
@@ -62,6 +62,17 @@ pvi = "pvi.__main__:app"
 [project.urls]
 GitHub = "https://github.com/epics-containers/pvi"
 
+<<<<<<< before updating
+=======
+[[project.authors]] # Further authors may be added by duplicating this section
+email = "gary.yendell@diamond.ac.uk"
+name = "Gary Yendell"
+
+[tool.uv]
+# Minimum uv to fix eMudhra CA cert incident (see discuss.python.org/t/109576)
+required-version = ">=0.13.5"
+
+>>>>>>> after updating
 [tool.setuptools_scm]
 version_file = "src/pvi/_version.py"
 
