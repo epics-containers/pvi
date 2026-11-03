@@ -104,20 +104,17 @@
     <y>54</y>
     <width>20</width>
     <height>20</height>
-    <off_label>&#9675;</off_label>
     <off_color>
-      <color red="22" green="163" blue="74">
+      <color name="Transparent" red="255" green="255" blue="255" alpha="0">
       </color>
     </off_color>
-    <on_label>&#9679;</on_label>
     <on_color>
-      <color red="167" green="243" blue="208">
+      <color name="Write_Background" red="128" green="255" blue="255">
       </color>
     </on_color>
     <font>
       <font family="Cantarell" style="BOLD" size="12.0">
       </font>
     </font>
-    <square>true</square>
   </widget>
 </display>

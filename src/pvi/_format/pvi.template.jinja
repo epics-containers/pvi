@@ -7,6 +7,7 @@ record("*", "{{ record.pv }}") {
             "pvi.{{ record.name }}.{{ record.access }}": {
                 "+channel": "NAME",
                 "+type": "plain",
+                "+trigger": "pvi.{{ record.name }}.{{ record.access }}",
             }
         }
     })

@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import pytest
+from lxml import etree
 from pydantic import ValidationError
 
 from pvi._format.base import Formatter, IndexEntry
@@ -293,6 +294,44 @@ def test_pvi_template(tmp_path, helper):
     helper.assert_output_matches(expected_bob, output_template)
 
 
+def test_group_label_preserved_through_subscreen(tmp_path, helper):
+    """Group.label must survive SubScreen reconstruction.
+
+    When create_group_formatters reconstructs a Group for SubScreen layout, and
+    when move_to_subscreen wraps a Group in a SubScreen, both must forward the
+    original label rather than letting it default to None.  Without the fix,
+    get_label() falls back to to_title_case(name) and a name like
+    "Bl04iEaErio01" would produce "Bl 04i Ea Erio 01" instead of the intended
+    "BL04I-EA-E1RIO-01".
+    """
+    formatter_yaml = HERE / "format" / "input" / "dls.bob.pvi.formatter.yaml"
+    formatter = Formatter.deserialize(formatter_yaml)
+
+    # A sibling signal forces the SubScreen group through create_group_formatters
+    # rather than the single-group special-case expansion of create_screen_formatter,
+    # so the SubScreen button is rendered and its label can be verified.
+    labeled_sub = Group(
+        name="Bl04iEaErio01",
+        label="BL04I-EA-E1RIO-01",
+        layout=SubScreen(),
+        children=[
+            SignalR(
+                name="Status",
+                read_pv="$(P)BL04I:EA:E1RIO01:Status",
+                read_widget=TextRead(),
+            ),
+        ],
+    )
+    sibling = SignalR(name="OtherSig", read_pv="$(P)Other", read_widget=TextRead())
+    device = Device(label="Label Test - $(P)", children=[sibling, labeled_sub])
+
+    expected_bob = HERE / "format" / "output" / "group_label_preserved.bob"
+    output_bob = tmp_path / "group_label_preserved.bob"
+    formatter.format(device, output_bob)
+
+    helper.assert_output_matches(expected_bob, output_bob)
+
+
 def test_nested_grid_groups_flattened(tmp_path, helper):
     """A Grid group nested inside another Grid group must be flattened, not raise.
 
@@ -333,3 +372,27 @@ def test_nested_grid_groups_flattened(tmp_path, helper):
     formatter.format(device, output_bob)
 
     helper.assert_output_matches(expected_bob, output_bob)
+
+
+@pytest.mark.parametrize("file_name", ["device.bob", "device.pvi.bob"])
+def test_sub_screen_buttons_link_to_written_files(tmp_path, file_name):
+    formatter_yaml = HERE / "format" / "input" / "dls.bob.pvi.formatter.yaml"
+    formatter = Formatter.deserialize(formatter_yaml)
+
+    signal = SignalR(name="Status", read_pv="$(P)Status", read_widget=TextRead())
+    stats = Group(name="Stats", layout=SubScreen(), children=[signal])
+    advanced = Group(name="Advanced", layout=SubScreen(), children=[signal, stats])
+    device = Device(label="Sub Screens", children=[signal, advanced])
+    formatter.format(device, tmp_path / file_name)
+
+    written_files = sorted(path.name for path in tmp_path.iterdir())
+    linked_files = sorted(
+        str(file.text)
+        for path in tmp_path.iterdir()
+        for file in etree.parse(path).iter("file")
+    )
+    sub_screen_files = [name for name in written_files if name != file_name]
+
+    # One sub screen for Advanced and one for Stats inside it
+    assert len(sub_screen_files) == 2
+    assert linked_files == sub_screen_files

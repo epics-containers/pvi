@@ -29,19 +29,6 @@
     <transparent use_class="true">true</transparent>
     <horizontal_alignment>1</horizontal_alignment>
   </widget>
-  <widget type="label" version="2.0.0">
-    <name>Label</name>
-    <text>Button - $(P)</text>
-    <x>23</x>
-    <y>30</y>
-    <width>200</width>
-    <height>20</height>
-    <font>
-      <font family="Cantarell" style="REGULAR" size="14.0">
-      </font>
-    </font>
-    <tooltip>Button - $(P) - No description provided</tooltip>
-  </widget>
   <widget type="action_button" version="3.0.0">
     <name>OpenDisplay</name>
     <actions>
@@ -54,13 +41,13 @@
         </macros>
       </action>
     </actions>
-    <text>TEST:</text>
-    <x>228</x>
+    <text>Button - $(P)</text>
+    <x>23</x>
     <y>30</y>
-    <width>205</width>
+    <width>410</width>
     <height>20</height>
     <font>
-      <font family="Cantarell" style="REGULAR" size="14.0">
+      <font family="Cantarell" style="BOLD" size="14.0">
       </font>
     </font>
     <foreground_color>
@@ -72,19 +59,6 @@
       </color>
     </background_color>
     <tooltip>$(actions)</tooltip>
-  </widget>
-  <widget type="label" version="2.0.0">
-    <name>Label</name>
-    <text>ComboBox</text>
-    <x>23</x>
-    <y>55</y>
-    <width>200</width>
-    <height>20</height>
-    <font>
-      <font family="Cantarell" style="REGULAR" size="14.0">
-      </font>
-    </font>
-    <tooltip>ComboBox - No description provided</tooltip>
   </widget>
   <widget type="action_button" version="3.0.0">
     <name>OpenDisplay</name>
@@ -98,13 +72,13 @@
         </macros>
       </action>
     </actions>
-    <text>TEST:</text>
-    <x>228</x>
+    <text>ComboBox</text>
+    <x>23</x>
     <y>55</y>
-    <width>205</width>
+    <width>410</width>
     <height>20</height>
     <font>
-      <font family="Cantarell" style="REGULAR" size="14.0">
+      <font family="Cantarell" style="BOLD" size="14.0">
       </font>
     </font>
     <foreground_color>
@@ -116,19 +90,6 @@
       </color>
     </background_color>
     <tooltip>$(actions)</tooltip>
-  </widget>
-  <widget type="label" version="2.0.0">
-    <name>Label</name>
-    <text>table</text>
-    <x>23</x>
-    <y>80</y>
-    <width>200</width>
-    <height>20</height>
-    <font>
-      <font family="Cantarell" style="REGULAR" size="14.0">
-      </font>
-    </font>
-    <tooltip>table - No description provided</tooltip>
   </widget>
   <widget type="action_button" version="3.0.0">
     <name>OpenDisplay</name>
@@ -142,13 +103,13 @@
         </macros>
       </action>
     </actions>
-    <text>TEST:</text>
-    <x>228</x>
+    <text>table</text>
+    <x>23</x>
     <y>80</y>
-    <width>205</width>
+    <width>410</width>
     <height>20</height>
     <font>
-      <font family="Cantarell" style="REGULAR" size="14.0">
+      <font family="Cantarell" style="BOLD" size="14.0">
       </font>
     </font>
     <foreground_color>
