@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../../schemas/pvi.device.schema.json
+
+label: Stacked
+children:
+  - type: Group
+    name: StackedGroup
+    layout:
+      type: Grid
+      stacked: true
+    children:
+      - type: SignalRW
+        name: StackedReadWrite
+        description: An RW with a TextRead widget, so it stacks
+        write_pv: StackedReadWrite
+        read_pv: StackedReadWrite_RBV
+
+      - type: SignalRW
+        name: UnstackedReadWrite
+        description: An RW with a non-TextRead widget, so it does not stack
+        write_pv: UnstackedReadWrite
+        read_pv: UnstackedReadWrite_RBV
+        read_widget:
+          type: LED

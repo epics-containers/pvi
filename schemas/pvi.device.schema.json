@@ -477,7 +477,7 @@
     },
     "Include": {
       "additionalProperties": false,
-      "description": "Reference to another PVI Device.\n\nThis is resolved into the components of the referenced device,\nby the device with the `Include` statement, in the location that\nit is included.",
+      "description": "Reference to another PVI Device.\n\nThis is resolved into the components of the referenced device,\nby the device with the `Include` statement, in the location that\nit is included.\n\nMacros may be overridden to re-scope the included Device's PVs, for\nthe case where it is a distinct sub-device rather than a base class.",
       "properties": {
         "file_name": {
           "description": "Name of PVI Device to include (basename of yaml file).",
@@ -489,6 +489,22 @@
           "description": "Include components in a SubScreen, or flatten.",
           "title": "In Subscreen",
           "type": "boolean"
+        },
+        "macros": {
+          "anyOf": [
+            {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Macro values to substitute into the PVs of the included Device, e.g. {R: $(R)TS:} for a sub-device at a nested prefix.",
+          "title": "Macros"
         },
         "type": {
           "const": "Include",

@@ -6,6 +6,7 @@ from pvi.device import (
     Device,
     Grid,
     Group,
+    Include,
     Tree,
     enforce_pascal_case,
     walk,
@@ -59,7 +60,21 @@ def find_pvs(pvs: list[str], file_path: Path) -> tuple[list[str], list[str]]:
 
 
 def group_by_ui(device: Device, ui_paths: list[Path]) -> Tree:
-    signals: list[ComponentUnion] = list(walk(device.children))
+    """Group the device parameters by the UI files they are found in
+    Args:
+        device: The device containing the parameters to group.
+        ui_paths: A list of paths to the UI files to search for PVs.
+
+    Returns:
+        A tree structure with parameters grouped by the UI files they are found in.
+    """
+
+    # Separate the Include nodes from the rest of the device children
+    # so that they can be passed through to the UI tree without modification
+    includes = [c for c in device.children if isinstance(c, Include)]
+    signals: list[ComponentUnion] = list(
+        walk([c for c in device.children if not isinstance(c, Include)])
+    )
 
     # PVs without macros to search for in UI
     pv_names = [s.name for s in signals]
@@ -104,4 +119,4 @@ def group_by_ui(device: Device, ui_paths: list[Path]) -> Tree:
             )
         )
 
-    return ui_groups
+    return ui_groups + includes  # preserve Include nodes at end

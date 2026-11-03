@@ -7,6 +7,7 @@ record("*", "Status_RBV") {
             "pvi.Status.r": {
                 "+channel": "NAME",
                 "+type": "plain",
+                "+trigger": "pvi.Status.r",
             }
         }
     })
@@ -18,6 +19,7 @@ record("*", "Config") {
             "pvi.Config.w": {
                 "+channel": "NAME",
                 "+type": "plain",
+                "+trigger": "pvi.Config.w",
             }
         }
     })
@@ -29,6 +31,7 @@ record("*", "Config_RBV") {
             "pvi.Config.r": {
                 "+channel": "NAME",
                 "+type": "plain",
+                "+trigger": "pvi.Config.r",
             }
         }
     })
@@ -40,6 +43,7 @@ record("*", "Go") {
             "pvi.Command.x": {
                 "+channel": "NAME",
                 "+type": "plain",
+                "+trigger": "pvi.Command.x",
             }
         }
     })

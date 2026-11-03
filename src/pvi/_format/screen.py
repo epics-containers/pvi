@@ -2,12 +2,13 @@ from __future__ import annotations
 
 from collections.abc import Iterator, Sequence
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import (
     Generic,
     TypeVar,
 )
 
-from pvi._format.utils import Bounds
+from pvi._format.utils import Bounds, split_base_and_ext
 from pvi._format.widget import (
     GroupFormatter,
     SubScreenWidgetFormatter,
@@ -38,6 +39,7 @@ from pvi.device import (
     SubScreen,
     TableRead,
     TableWrite,
+    TextRead,
     Tree,
 )
 
@@ -435,7 +437,9 @@ class ScreenFormatterFactory(Generic[T]):
         if isinstance(c, SignalR) and isinstance(c.read_widget, ImageRead | ArrayTrace):
             tmp_column_bounds.w = c.read_widget.width
             tmp_column_bounds.h = c.read_widget.height
-        elif stacked and isinstance(c, SignalRW) and c.read_widget is not None:
+        elif (
+            stacked and isinstance(c, SignalRW) and isinstance(c.read_widget, TextRead)
+        ):
             tmp_column_bounds.h = 2 * self.layout.widget_height + self.layout.spacing
             tmp_next_column_bounds.h = tmp_column_bounds.h
 
@@ -528,7 +532,7 @@ class ScreenFormatterFactory(Generic[T]):
 
             row_components = c.children  # Create a widget for each row of Group
             if stacked and any(
-                isinstance(child, SignalRW) and child.read_widget is not None
+                isinstance(child, SignalRW) and isinstance(child.read_widget, TextRead)
                 for child in c.children
             ):
                 component_bounds.h = 2 * self.layout.widget_height + self.layout.spacing
@@ -609,7 +613,7 @@ class ScreenFormatterFactory(Generic[T]):
                     value=rc.value,
                 )
             elif isinstance(rc, SignalRW):
-                if stacked and rc.read_widget:
+                if stacked and isinstance(rc.read_widget, TextRead):
                     top, bottom = rc_bounds.split_into_rows(2, self.layout.spacing)
                     yield from self.generate_write_widget(rc, top)
                     yield from self.generate_read_widget(rc, bottom)
@@ -624,10 +628,11 @@ class ScreenFormatterFactory(Generic[T]):
             elif isinstance(rc, SignalR):
                 yield from self.generate_read_widget(rc, rc_bounds)
             elif isinstance(rc, Group) and isinstance(rc.layout, SubScreen):
+                base, suffixes = split_base_and_ext(Path(self.base_file_name))
                 yield self.widget_formatter_factory.sub_screen_formatter_cls(
                     bounds=rc_bounds,
                     label=rc.get_label() + " ⧉",
-                    file_name=f"{self.base_file_name}_{rc.name.replace(' ', '_')}",
+                    file_name=f"{base}_{rc.name.replace(' ', '_')}{suffixes}",
                     components=rc,
                 )
             elif isinstance(rc, DeviceRef):
