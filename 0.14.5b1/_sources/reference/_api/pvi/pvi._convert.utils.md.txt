@@ -1,0 +1,119 @@
+# {py:mod}`pvi._convert.utils`
+
+```{py:module} pvi._convert.utils
+```
+
+```{autodoc2-docstring} pvi._convert.utils
+:allowtitles:
+```
+
+## Module Contents
+
+### Functions
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`extract_device_and_parent_class <pvi._convert.utils.extract_device_and_parent_class>`
+  - ```{autodoc2-docstring} pvi._convert.utils.extract_device_and_parent_class
+    :summary:
+    ```
+* - {py:obj}`extract_define_strs <pvi._convert.utils.extract_define_strs>`
+  - ```{autodoc2-docstring} pvi._convert.utils.extract_define_strs
+    :summary:
+    ```
+* - {py:obj}`extract_create_param_strs <pvi._convert.utils.extract_create_param_strs>`
+  - ```{autodoc2-docstring} pvi._convert.utils.extract_create_param_strs
+    :summary:
+    ```
+* - {py:obj}`extract_index_declarations <pvi._convert.utils.extract_index_declarations>`
+  - ```{autodoc2-docstring} pvi._convert.utils.extract_index_declarations
+    :summary:
+    ```
+* - {py:obj}`parse_definition_str <pvi._convert.utils.parse_definition_str>`
+  - ```{autodoc2-docstring} pvi._convert.utils.parse_definition_str
+    :summary:
+    ```
+* - {py:obj}`parse_create_param_str <pvi._convert.utils.parse_create_param_str>`
+  - ```{autodoc2-docstring} pvi._convert.utils.parse_create_param_str
+    :summary:
+    ```
+* - {py:obj}`insert_param_set_accessors <pvi._convert.utils.insert_param_set_accessors>`
+  - ```{autodoc2-docstring} pvi._convert.utils.insert_param_set_accessors
+    :summary:
+    ```
+* - {py:obj}`filter_strings <pvi._convert.utils.filter_strings>`
+  - ```{autodoc2-docstring} pvi._convert.utils.filter_strings
+    :summary:
+    ```
+* - {py:obj}`get_param_set <pvi._convert.utils.get_param_set>`
+  - ```{autodoc2-docstring} pvi._convert.utils.get_param_set
+    :summary:
+    ```
+````
+
+### API
+
+````{py:function} extract_device_and_parent_class(header_text: str) -> tuple[str, str]
+:canonical: pvi._convert.utils.extract_device_and_parent_class
+
+```{autodoc2-docstring} pvi._convert.utils.extract_device_and_parent_class
+```
+````
+
+````{py:function} extract_define_strs(header_text: str, info_strings: list[str]) -> list[str]
+:canonical: pvi._convert.utils.extract_define_strs
+
+```{autodoc2-docstring} pvi._convert.utils.extract_define_strs
+```
+````
+
+````{py:function} extract_create_param_strs(source_text: str, param_strings: list[str]) -> list[str]
+:canonical: pvi._convert.utils.extract_create_param_strs
+
+```{autodoc2-docstring} pvi._convert.utils.extract_create_param_strs
+```
+````
+
+````{py:function} extract_index_declarations(header_text: str, index_names: list[str]) -> list[str]
+:canonical: pvi._convert.utils.extract_index_declarations
+
+```{autodoc2-docstring} pvi._convert.utils.extract_index_declarations
+```
+````
+
+````{py:function} parse_definition_str(definition_str: str) -> tuple[str, str]
+:canonical: pvi._convert.utils.parse_definition_str
+
+```{autodoc2-docstring} pvi._convert.utils.parse_definition_str
+```
+````
+
+````{py:function} parse_create_param_str(create_param_str: str) -> tuple[str, str]
+:canonical: pvi._convert.utils.parse_create_param_str
+
+```{autodoc2-docstring} pvi._convert.utils.parse_create_param_str
+```
+````
+
+````{py:function} insert_param_set_accessors(source_text: str, parameters: list[str]) -> str
+:canonical: pvi._convert.utils.insert_param_set_accessors
+
+```{autodoc2-docstring} pvi._convert.utils.insert_param_set_accessors
+```
+````
+
+````{py:function} filter_strings(strings: list[str], filters: list[str]) -> list[str]
+:canonical: pvi._convert.utils.filter_strings
+
+```{autodoc2-docstring} pvi._convert.utils.filter_strings
+```
+````
+
+````{py:function} get_param_set(driver: str)
+:canonical: pvi._convert.utils.get_param_set
+
+```{autodoc2-docstring} pvi._convert.utils.get_param_set
+```
+````

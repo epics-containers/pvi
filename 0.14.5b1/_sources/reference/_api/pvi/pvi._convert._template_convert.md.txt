@@ -1,0 +1,297 @@
+# {py:mod}`pvi._convert._template_convert`
+
+```{py:module} pvi._convert._template_convert
+```
+
+```{autodoc2-docstring} pvi._convert._template_convert
+:allowtitles:
+```
+
+## Module Contents
+
+### Classes
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`TemplateConverter <pvi._convert._template_convert.TemplateConverter>`
+  - ```{autodoc2-docstring} pvi._convert._template_convert.TemplateConverter
+    :summary:
+    ```
+* - {py:obj}`RecordExtractor <pvi._convert._template_convert.RecordExtractor>`
+  - ```{autodoc2-docstring} pvi._convert._template_convert.RecordExtractor
+    :summary:
+    ```
+* - {py:obj}`RecordRoleSorter <pvi._convert._template_convert.RecordRoleSorter>`
+  - ```{autodoc2-docstring} pvi._convert._template_convert.RecordRoleSorter
+    :summary:
+    ```
+* - {py:obj}`SettingPair <pvi._convert._template_convert.SettingPair>`
+  -
+* - {py:obj}`Readback <pvi._convert._template_convert.Readback>`
+  -
+* - {py:obj}`Action <pvi._convert._template_convert.Action>`
+  -
+* - {py:obj}`ParameterRoleMatcher <pvi._convert._template_convert.ParameterRoleMatcher>`
+  - ```{autodoc2-docstring} pvi._convert._template_convert.ParameterRoleMatcher
+    :summary:
+    ```
+````
+
+### Data
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`OVERRIDE_DESC <pvi._convert._template_convert.OVERRIDE_DESC>`
+  - ```{autodoc2-docstring} pvi._convert._template_convert.OVERRIDE_DESC
+    :summary:
+    ```
+````
+
+### API
+
+````{py:data} OVERRIDE_DESC
+:canonical: pvi._convert._template_convert.OVERRIDE_DESC
+:value: >
+   '# Overriding value in auto-generated template'
+
+```{autodoc2-docstring} pvi._convert._template_convert.OVERRIDE_DESC
+```
+
+````
+
+`````{py:class} TemplateConverter(templates: list[pathlib.Path])
+:canonical: pvi._convert._template_convert.TemplateConverter
+
+```{autodoc2-docstring} pvi._convert._template_convert.TemplateConverter
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi._convert._template_convert.TemplateConverter.__init__
+```
+
+````{py:method} convert() -> pvi.device.Tree
+:canonical: pvi._convert._template_convert.TemplateConverter.convert
+
+```{autodoc2-docstring} pvi._convert._template_convert.TemplateConverter.convert
+```
+
+````
+
+````{py:method} _extract_components() -> list[list[pvi.device.ComponentUnion]]
+:canonical: pvi._convert._template_convert.TemplateConverter._extract_components
+
+```{autodoc2-docstring} pvi._convert._template_convert.TemplateConverter._extract_components
+```
+
+````
+
+`````
+
+`````{py:class} RecordExtractor(text: str)
+:canonical: pvi._convert._template_convert.RecordExtractor
+
+```{autodoc2-docstring} pvi._convert._template_convert.RecordExtractor
+```
+
+```{rubric} Initialization
+```
+
+```{autodoc2-docstring} pvi._convert._template_convert.RecordExtractor.__init__
+```
+
+````{py:method} _extract_record_strs()
+:canonical: pvi._convert._template_convert.RecordExtractor._extract_record_strs
+
+```{autodoc2-docstring} pvi._convert._template_convert.RecordExtractor._extract_record_strs
+```
+
+````
+
+````{py:method} _parse_record(record_str: str) -> tuple[str, str, str]
+:canonical: pvi._convert._template_convert.RecordExtractor._parse_record
+
+```{autodoc2-docstring} pvi._convert._template_convert.RecordExtractor._parse_record
+```
+
+````
+
+````{py:method} _extract_fields(fields_str: str) -> list[tuple[str, str]]
+:canonical: pvi._convert._template_convert.RecordExtractor._extract_fields
+
+```{autodoc2-docstring} pvi._convert._template_convert.RecordExtractor._extract_fields
+```
+
+````
+
+````{py:method} _extract_infos(fields_str: str) -> list[tuple[str, str]]
+:canonical: pvi._convert._template_convert.RecordExtractor._extract_infos
+
+```{autodoc2-docstring} pvi._convert._template_convert.RecordExtractor._extract_infos
+```
+
+````
+
+````{py:method} _create_asyn_record(record_str: str) -> pvi._convert._asyn_convert.AsynRecord
+:canonical: pvi._convert._template_convert.RecordExtractor._create_asyn_record
+
+```{autodoc2-docstring} pvi._convert._template_convert.RecordExtractor._create_asyn_record
+```
+
+````
+
+````{py:method} get_asyn_records() -> list[pvi._convert._asyn_convert.AsynRecord]
+:canonical: pvi._convert._template_convert.RecordExtractor.get_asyn_records
+
+```{autodoc2-docstring} pvi._convert._template_convert.RecordExtractor.get_asyn_records
+```
+
+````
+
+`````
+
+`````{py:class} RecordRoleSorter
+:canonical: pvi._convert._template_convert.RecordRoleSorter
+
+```{autodoc2-docstring} pvi._convert._template_convert.RecordRoleSorter
+```
+
+````{py:method} sort_records(records: list[pvi._convert._asyn_convert.AsynRecord]) -> list[pvi._convert._parameters.Parameter]
+:canonical: pvi._convert._template_convert.RecordRoleSorter.sort_records
+:staticmethod:
+
+```{autodoc2-docstring} pvi._convert._template_convert.RecordRoleSorter.sort_records
+```
+
+````
+
+`````
+
+`````{py:class} SettingPair(/, **data: typing.Any)
+:canonical: pvi._convert._template_convert.SettingPair
+
+Bases: {py:obj}`pvi._convert._parameters.Parameter`
+
+````{py:attribute} read_record
+:canonical: pvi._convert._template_convert.SettingPair.read_record
+:type: pvi._convert._asyn_convert.AsynRecord
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._convert._template_convert.SettingPair.read_record
+```
+
+````
+
+````{py:attribute} write_record
+:canonical: pvi._convert._template_convert.SettingPair.write_record
+:type: pvi._convert._asyn_convert.AsynRecord
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._convert._template_convert.SettingPair.write_record
+```
+
+````
+
+````{py:method} generate_component() -> pvi.device.SignalRW
+:canonical: pvi._convert._template_convert.SettingPair.generate_component
+
+```{autodoc2-docstring} pvi._convert._template_convert.SettingPair.generate_component
+```
+
+````
+
+`````
+
+`````{py:class} Readback(/, **data: typing.Any)
+:canonical: pvi._convert._template_convert.Readback
+
+Bases: {py:obj}`pvi._convert._parameters.Parameter`
+
+````{py:attribute} read_record
+:canonical: pvi._convert._template_convert.Readback.read_record
+:type: pvi._convert._asyn_convert.AsynRecord
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._convert._template_convert.Readback.read_record
+```
+
+````
+
+````{py:method} generate_component() -> pvi.device.SignalR
+:canonical: pvi._convert._template_convert.Readback.generate_component
+
+```{autodoc2-docstring} pvi._convert._template_convert.Readback.generate_component
+```
+
+````
+
+`````
+
+`````{py:class} Action(/, **data: typing.Any)
+:canonical: pvi._convert._template_convert.Action
+
+Bases: {py:obj}`pvi._convert._parameters.Parameter`
+
+````{py:attribute} write_record
+:canonical: pvi._convert._template_convert.Action.write_record
+:type: pvi._convert._asyn_convert.AsynRecord
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._convert._template_convert.Action.write_record
+```
+
+````
+
+````{py:method} generate_component() -> pvi.device.SignalW
+:canonical: pvi._convert._template_convert.Action.generate_component
+
+```{autodoc2-docstring} pvi._convert._template_convert.Action.generate_component
+```
+
+````
+
+`````
+
+`````{py:class} ParameterRoleMatcher
+:canonical: pvi._convert._template_convert.ParameterRoleMatcher
+
+```{autodoc2-docstring} pvi._convert._template_convert.ParameterRoleMatcher
+```
+
+````{py:method} get_actions(read_records: list[pvi._convert._asyn_convert.AsynRecord], write_records: list[pvi._convert._asyn_convert.AsynRecord]) -> list[pvi._convert._template_convert.Action]
+:canonical: pvi._convert._template_convert.ParameterRoleMatcher.get_actions
+:staticmethod:
+
+```{autodoc2-docstring} pvi._convert._template_convert.ParameterRoleMatcher.get_actions
+```
+
+````
+
+````{py:method} get_readbacks(read_records: list[pvi._convert._asyn_convert.AsynRecord], write_records: list[pvi._convert._asyn_convert.AsynRecord]) -> list[pvi._convert._template_convert.Readback]
+:canonical: pvi._convert._template_convert.ParameterRoleMatcher.get_readbacks
+:staticmethod:
+
+```{autodoc2-docstring} pvi._convert._template_convert.ParameterRoleMatcher.get_readbacks
+```
+
+````
+
+````{py:method} get_setting_pairs(read_records: list[pvi._convert._asyn_convert.AsynRecord], write_records: list[pvi._convert._asyn_convert.AsynRecord]) -> list[pvi._convert._template_convert.SettingPair]
+:canonical: pvi._convert._template_convert.ParameterRoleMatcher.get_setting_pairs
+:staticmethod:
+
+```{autodoc2-docstring} pvi._convert._template_convert.ParameterRoleMatcher.get_setting_pairs
+```
+
+````
+
+`````

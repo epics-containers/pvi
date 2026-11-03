@@ -1,0 +1,157 @@
+# {py:mod}`pvi._yaml_utils`
+
+```{py:module} pvi._yaml_utils
+```
+
+```{autodoc2-docstring} pvi._yaml_utils
+:allowtitles:
+```
+
+## Module Contents
+
+### Classes
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`YamlValidatorMixin <pvi._yaml_utils.YamlValidatorMixin>`
+  - ```{autodoc2-docstring} pvi._yaml_utils.YamlValidatorMixin
+    :summary:
+    ```
+````
+
+### Functions
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`type_first <pvi._yaml_utils.type_first>`
+  - ```{autodoc2-docstring} pvi._yaml_utils.type_first
+    :summary:
+    ```
+* - {py:obj}`add_line_before_type <pvi._yaml_utils.add_line_before_type>`
+  - ```{autodoc2-docstring} pvi._yaml_utils.add_line_before_type
+    :summary:
+    ```
+* - {py:obj}`dump_yaml <pvi._yaml_utils.dump_yaml>`
+  - ```{autodoc2-docstring} pvi._yaml_utils.dump_yaml
+    :summary:
+    ```
+* - {py:obj}`load_yaml <pvi._yaml_utils.load_yaml>`
+  - ```{autodoc2-docstring} pvi._yaml_utils.load_yaml
+    :summary:
+    ```
+````
+
+### Data
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`T <pvi._yaml_utils.T>`
+  - ```{autodoc2-docstring} pvi._yaml_utils.T
+    :summary:
+    ```
+* - {py:obj}`Leaf <pvi._yaml_utils.Leaf>`
+  - ```{autodoc2-docstring} pvi._yaml_utils.Leaf
+    :summary:
+    ```
+* - {py:obj}`Branch <pvi._yaml_utils.Branch>`
+  - ```{autodoc2-docstring} pvi._yaml_utils.Branch
+    :summary:
+    ```
+* - {py:obj}`Tree <pvi._yaml_utils.Tree>`
+  - ```{autodoc2-docstring} pvi._yaml_utils.Tree
+    :summary:
+    ```
+````
+
+### API
+
+````{py:data} T
+:canonical: pvi._yaml_utils.T
+:value: >
+   'TypeVar(...)'
+
+```{autodoc2-docstring} pvi._yaml_utils.T
+```
+
+````
+
+````{py:data} Leaf
+:canonical: pvi._yaml_utils.Leaf
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._yaml_utils.Leaf
+```
+
+````
+
+````{py:data} Branch
+:canonical: pvi._yaml_utils.Branch
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._yaml_utils.Branch
+```
+
+````
+
+````{py:data} Tree
+:canonical: pvi._yaml_utils.Tree
+:value: >
+   None
+
+```{autodoc2-docstring} pvi._yaml_utils.Tree
+```
+
+````
+
+````{py:function} type_first(tree: pvi._yaml_utils.Tree) -> pvi._yaml_utils.Tree
+:canonical: pvi._yaml_utils.type_first
+
+```{autodoc2-docstring} pvi._yaml_utils.type_first
+```
+````
+
+````{py:function} add_line_before_type(s: str) -> str
+:canonical: pvi._yaml_utils.add_line_before_type
+
+```{autodoc2-docstring} pvi._yaml_utils.add_line_before_type
+```
+````
+
+````{py:function} dump_yaml(serialized: dict[str, typing.Any], path: pathlib.Path) -> None
+:canonical: pvi._yaml_utils.dump_yaml
+
+```{autodoc2-docstring} pvi._yaml_utils.dump_yaml
+```
+````
+
+````{py:function} load_yaml(path: pathlib.Path) -> dict[str, typing.Any]
+:canonical: pvi._yaml_utils.load_yaml
+
+```{autodoc2-docstring} pvi._yaml_utils.load_yaml
+```
+````
+
+`````{py:class} YamlValidatorMixin
+:canonical: pvi._yaml_utils.YamlValidatorMixin
+
+```{autodoc2-docstring} pvi._yaml_utils.YamlValidatorMixin
+```
+
+````{py:method} validate_yaml(yaml: pathlib.Path) -> dict[str, typing.Any]
+:canonical: pvi._yaml_utils.YamlValidatorMixin.validate_yaml
+:classmethod:
+
+```{autodoc2-docstring} pvi._yaml_utils.YamlValidatorMixin.validate_yaml
+```
+
+````
+
+`````
