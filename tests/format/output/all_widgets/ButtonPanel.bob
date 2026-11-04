@@ -51,7 +51,7 @@
         <value>0</value>
       </action>
     </actions>
-    <pv_name>SignalX</pv_name>
+    <pv_name>$(P)$(R)ButtonPanel</pv_name>
     <text>Stop</text>
     <x>146</x>
     <y>30</y>
@@ -81,7 +81,7 @@ $(pv_value)</tooltip>
         <value>1</value>
       </action>
     </actions>
-    <pv_name>SignalX</pv_name>
+    <pv_name>$(P)$(R)ButtonPanel</pv_name>
     <text>Start</text>
     <x>210</x>
     <y>30</y>

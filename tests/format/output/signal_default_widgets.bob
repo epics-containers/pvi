@@ -204,7 +204,7 @@
         <value>1</value>
       </action>
     </actions>
-    <pv_name>SignalX</pv_name>
+    <pv_name>Execute</pv_name>
     <text>Go</text>
     <x>146</x>
     <y>126</y>
