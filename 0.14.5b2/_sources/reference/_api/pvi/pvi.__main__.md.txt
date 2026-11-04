@@ -1,0 +1,144 @@
+# {py:mod}`pvi.__main__`
+
+```{py:module} pvi.__main__
+```
+
+```{autodoc2-docstring} pvi.__main__
+:allowtitles:
+```
+
+## Module Contents
+
+### Functions
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`version_callback <pvi.__main__.version_callback>`
+  - ```{autodoc2-docstring} pvi.__main__.version_callback
+    :summary:
+    ```
+* - {py:obj}`main <pvi.__main__.main>`
+  - ```{autodoc2-docstring} pvi.__main__.main
+    :summary:
+    ```
+* - {py:obj}`schema <pvi.__main__.schema>`
+  - ```{autodoc2-docstring} pvi.__main__.schema
+    :summary:
+    ```
+* - {py:obj}`format <pvi.__main__.format>`
+  - ```{autodoc2-docstring} pvi.__main__.format
+    :summary:
+    ```
+* - {py:obj}`generate_template <pvi.__main__.generate_template>`
+  - ```{autodoc2-docstring} pvi.__main__.generate_template
+    :summary:
+    ```
+* - {py:obj}`device <pvi.__main__.device>`
+  - ```{autodoc2-docstring} pvi.__main__.device
+    :summary:
+    ```
+* - {py:obj}`regroup <pvi.__main__.regroup>`
+  - ```{autodoc2-docstring} pvi.__main__.regroup
+    :summary:
+    ```
+* - {py:obj}`reconvert <pvi.__main__.reconvert>`
+  - ```{autodoc2-docstring} pvi.__main__.reconvert
+    :summary:
+    ```
+````
+
+### Data
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`app <pvi.__main__.app>`
+  - ```{autodoc2-docstring} pvi.__main__.app
+    :summary:
+    ```
+* - {py:obj}`convert_app <pvi.__main__.convert_app>`
+  - ```{autodoc2-docstring} pvi.__main__.convert_app
+    :summary:
+    ```
+````
+
+### API
+
+````{py:data} app
+:canonical: pvi.__main__.app
+:value: >
+   'Typer(...)'
+
+```{autodoc2-docstring} pvi.__main__.app
+```
+
+````
+
+````{py:data} convert_app
+:canonical: pvi.__main__.convert_app
+:value: >
+   'Typer(...)'
+
+```{autodoc2-docstring} pvi.__main__.convert_app
+```
+
+````
+
+````{py:function} version_callback(value: bool)
+:canonical: pvi.__main__.version_callback
+
+```{autodoc2-docstring} pvi.__main__.version_callback
+```
+````
+
+````{py:function} main(version: typing.Optional[bool] = typer.Option(None, '--version', callback=version_callback, is_eager=True, help='Print the version and exit'))
+:canonical: pvi.__main__.main
+
+```{autodoc2-docstring} pvi.__main__.main
+```
+````
+
+````{py:function} schema(output: typing.Annotated[pathlib.Path, typer.Argument(..., help='filename to write the schema to')])
+:canonical: pvi.__main__.schema
+
+```{autodoc2-docstring} pvi.__main__.schema
+```
+````
+
+````{py:function} format(output_path: typing.Annotated[pathlib.Path, typer.Argument(..., help='Directory to write output file(s) to')], device_path: typing.Annotated[pathlib.Path, typer.Argument(..., help='Path to the .pvi.device.yaml file')], formatter_path: typing.Annotated[pathlib.Path, typer.Argument(..., help='Path to the .pvi.formatter.yaml file')], yaml_paths: typing.Annotated[typing.Optional[list[pathlib.Path]], typer.Option(..., '--yaml-path', help='Paths to directories with .pvi.device.yaml files')] = None)
+:canonical: pvi.__main__.format
+
+```{autodoc2-docstring} pvi.__main__.format
+```
+````
+
+````{py:function} generate_template(device_path: typing.Annotated[pathlib.Path, typer.Argument(..., help='Path to the .pvi.device.yaml file')], pv_prefix: typing.Annotated[str, typer.Argument(..., help='Prefix of PVI PV')], output_path: typing.Annotated[pathlib.Path, typer.Argument(..., help='Output file to generate')])
+:canonical: pvi.__main__.generate_template
+
+```{autodoc2-docstring} pvi.__main__.generate_template
+```
+````
+
+````{py:function} device(output: typing.Annotated[pathlib.Path, typer.Argument(..., help='Directory to write output file to')], header: typing.Annotated[typing.Optional[pathlib.Path], typer.Option(..., '--header', help='Path to the .h file to convert')] = None, templates: typing.Annotated[typing.Optional[list[pathlib.Path]], typer.Option(..., '--template', help='Paths to .template files to convert')] = None, name: typing.Annotated[typing.Optional[str], typer.Option(..., help='Name to use for Device. This is usually the same as the EPICS driver class.')] = None, label: typing.Annotated[typing.Optional[str], typer.Option(..., help='Label for Device UI. Defaults to Device name.')] = None, parent: typing.Annotated[typing.Optional[str], typer.Option(..., help='Parent Device name.')] = None)
+:canonical: pvi.__main__.device
+
+```{autodoc2-docstring} pvi.__main__.device
+```
+````
+
+````{py:function} regroup(device_path: typing.Annotated[pathlib.Path, typer.Argument(..., help='Path to the device.yaml file to regroup')], ui_paths: typing.Annotated[list[pathlib.Path], typer.Argument(..., help='Paths to the ui files to regroup the PVs by')])
+:canonical: pvi.__main__.regroup
+
+```{autodoc2-docstring} pvi.__main__.regroup
+```
+````
+
+````{py:function} reconvert(device_path: typing.Annotated[pathlib.Path, typer.Argument(..., help='Path to the device.yaml file to add to')], templates: typing.Annotated[list[pathlib.Path], typer.Option(..., '--template', help='Paths of templates to add PVs from')])
+:canonical: pvi.__main__.reconvert
+
+```{autodoc2-docstring} pvi.__main__.reconvert
+```
+````

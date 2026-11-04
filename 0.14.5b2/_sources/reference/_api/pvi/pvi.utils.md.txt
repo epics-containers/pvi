@@ -1,0 +1,31 @@
+# {py:mod}`pvi.utils`
+
+```{py:module} pvi.utils
+```
+
+```{autodoc2-docstring} pvi.utils
+:allowtitles:
+```
+
+## Module Contents
+
+### Functions
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`find_pvi_yaml <pvi.utils.find_pvi_yaml>`
+  - ```{autodoc2-docstring} pvi.utils.find_pvi_yaml
+    :summary:
+    ```
+````
+
+### API
+
+````{py:function} find_pvi_yaml(yaml_name: str, yaml_paths: list[pathlib.Path]) -> pathlib.Path | None
+:canonical: pvi.utils.find_pvi_yaml
+
+```{autodoc2-docstring} pvi.utils.find_pvi_yaml
+```
+````
