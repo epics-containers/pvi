@@ -1,0 +1,53 @@
+# {py:mod}`pvi._schema_utils`
+
+```{py:module} pvi._schema_utils
+```
+
+```{autodoc2-docstring} pvi._schema_utils
+:allowtitles:
+```
+
+## Module Contents
+
+### Functions
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`rec_subclasses <pvi._schema_utils.rec_subclasses>`
+  - ```{autodoc2-docstring} pvi._schema_utils.rec_subclasses
+    :summary:
+    ```
+````
+
+### Data
+
+````{list-table}
+:class: autosummary longtable
+:align: left
+
+* - {py:obj}`Cls <pvi._schema_utils.Cls>`
+  - ```{autodoc2-docstring} pvi._schema_utils.Cls
+    :summary:
+    ```
+````
+
+### API
+
+````{py:data} Cls
+:canonical: pvi._schema_utils.Cls
+:value: >
+   'TypeVar(...)'
+
+```{autodoc2-docstring} pvi._schema_utils.Cls
+```
+
+````
+
+````{py:function} rec_subclasses(cls: pvi._schema_utils.Cls) -> list[pvi._schema_utils.Cls]
+:canonical: pvi._schema_utils.rec_subclasses
+
+```{autodoc2-docstring} pvi._schema_utils.rec_subclasses
+```
+````
