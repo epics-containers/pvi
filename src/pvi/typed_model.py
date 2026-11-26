@@ -3,19 +3,23 @@ from __future__ import annotations
 from typing import (
     Annotated,
     Any,
-    ClassVar,
-    Literal,
     Union,
+    cast,
     get_args,
 )
 
-from pydantic import BaseModel, ConfigDict, Discriminator, Field, Tag, computed_field
-from pydantic.fields import FieldInfo
-from pydantic.json_schema import (
-    DEFAULT_REF_TEMPLATE,
-    GenerateJsonSchema,
-    JsonSchemaMode,
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Discriminator,
+    Field,
+    GetJsonSchemaHandler,
+    Tag,
+    computed_field,
+    model_validator,
 )
+from pydantic.json_schema import JsonSchemaValue
+from pydantic_core import CoreSchema
 
 
 class TypedModel(BaseModel):
@@ -33,56 +37,53 @@ class TypedModel(BaseModel):
     # Do not allow extra fields during validation
     model_config = ConfigDict(extra="forbid")
 
-    # Whether child models have been rebuilt with type field inserted
-    models_typed: ClassVar[bool] = False
-
     @computed_field  # type: ignore
     @property
     def type(self) -> str:
         """Property to create type field from class name when serializing."""
         return self.__class__.__name__
 
+    @model_validator(mode="before")
     @classmethod
-    def __pydantic_init_subclass__(cls, **kwargs: Any) -> None:
-        """Add computed type field to model_fields to include it in the schema.
+    def _strip_own_type(cls, data: Any) -> Any:
+        """Accept a serialized `type` field naming this class when validating.
 
-        The `model_rebuild` method must be called to propagate this to the core schema
-        of the models, once all `TypedModel` child classes have been defined. The
-        `model_json_schema` method is overridden in this class to make sure this is
-        applied automatically before generating schema.
+        Inside tagged unions the discriminator removes `type`, but when a model is
+        validated directly (e.g. `Device.model_validate_json(device.model_dump_json())`)
+        it would otherwise be rejected as an extra field. A `type` naming a different
+        class is left in place so validation still fails.
 
         """
-        super().__pydantic_init_subclass__(**kwargs)
-
-        cls.model_fields["type"] = FieldInfo(
-            annotation=Literal[cls.__name__],  # type: ignore
-            default=cls.__name__,
-        )
-
-    @classmethod
-    def model_json_schema(
-        cls,
-        by_alias: bool = True,
-        ref_template: str = DEFAULT_REF_TEMPLATE,
-        schema_generator: type[GenerateJsonSchema] = GenerateJsonSchema,
-        mode: JsonSchemaMode = "validation",
-        *,
-        union_format: Literal["any_of", "primitive_type_array"] = "any_of",
-    ):
-        """Ensure all child models have type field added before generating schema."""
-        if not cls.models_typed:
-            TypedModel.rebuild_child_models()
-
-        return super().model_json_schema(
-            by_alias, ref_template, schema_generator, mode, union_format=union_format
-        )
+        # Before-validators see raw input; pass non-dicts on for pydantic to reject
+        if not isinstance(data, dict):
+            return data
+        fields = cast(dict[str, Any], data)
+        if fields.get("type") == cls.__name__:
+            return {k: v for k, v in fields.items() if k != "type"}
+        return fields
 
     @classmethod
-    def rebuild_child_models(cls):
-        """Recursively rebuild all subclass models to add type into core schema."""
-        for subclass in cls.__subclasses__():
-            subclass.model_rebuild(force=True)
-            subclass.rebuild_child_models()
+    def __get_pydantic_json_schema__(
+        cls, core_schema: CoreSchema, handler: GetJsonSchemaHandler
+    ) -> JsonSchemaValue:
+        """Add the type discriminator to the JSON schema of every child class.
+
+        `type` is serialized by the computed field above and consumed by the
+        discriminator during validation, so it only needs adding to the schema. Doing
+        it here, rather than inserting it into `model_fields` and rebuilding models,
+        means instances created before schema generation (such as default widgets)
+        always match their model's serializer.
+
+        """
+        json_schema = handler(core_schema)
+        target = handler.resolve_ref_schema(json_schema)
+        target.setdefault("properties", {})["type"] = {
+            "const": cls.__name__,
+            "default": cls.__name__,
+            "title": "Type",
+            "type": "string",
+        }
+        return json_schema
 
     @classmethod
     def _tag(cls):

@@ -7,6 +7,7 @@ from unittest.mock import patch
 import pytest
 from pydantic import BaseModel, Discriminator, Field, Tag, ValidationError
 
+from pvi._format import Formatter
 from pvi.device import (
     LED,
     CheckBox,
@@ -111,3 +112,51 @@ def test_validate_fails():
 
     with pytest.raises(ValidationError):
         Container(m=NotTypedModel()).model_dump_json()
+
+
+def _reject_duplicate_keys(pairs: list[tuple[str, object]]) -> dict[str, object]:
+    keys = [k for k, _ in pairs]
+    assert len(keys) == len(set(keys)), f"Duplicate keys in JSON object: {keys}"
+    return dict(pairs)
+
+
+def test_serialize_default_widgets_after_schema_generation():
+    """Default widget instances must serialize cleanly after schemas are generated.
+
+    Widgets such as the default `TextWrite()` of `SignalRW` are instantiated when
+    their class is defined. Schema generation must not change the models in a way
+    that makes those pre-existing instances mismatch their serializer
+    """
+    Device.model_json_schema()
+    Formatter.create_schema()
+
+    device = Device(
+        label="label",
+        children=[
+            SignalRW(name="Width", write_pv="WIDTH", read_pv="WIDTH_RBV"),
+            SignalW(name="Height", write_pv="HEIGHT"),
+            SignalR(name="Out", read_pv="OUT"),
+        ],
+    )
+
+    device_json = device.model_dump_json()
+
+    serialized = json.loads(device_json, object_pairs_hook=_reject_duplicate_keys)
+    assert serialized["type"] == "Device"
+    assert serialized["children"][0]["write_widget"]["type"] == "TextWrite"
+    assert Device.model_validate_json(device_json) == device
+
+
+def test_type_in_schema_of_subclass_defined_later():
+    class LateWidget(TextRead):
+        pass
+
+    schema = LateWidget.model_json_schema()
+    assert schema["properties"]["type"]["const"] == "LateWidget"
+    assert LateWidget().model_dump()["type"] == "LateWidget"
+
+
+def test_validate_rejects_mismatched_type():
+    with pytest.raises(ValidationError):
+        TextWrite.model_validate({"type": "TextRead"})
+    assert TextWrite.model_validate({"type": "TextWrite"}) == TextWrite()
