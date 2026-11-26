@@ -70,7 +70,7 @@
         <value>value</value>
       </action>
     </actions>
-    <pv_name>SignalX</pv_name>
+    <pv_name>$(pv_name)</pv_name>
     <text>SignalX</text>
     <x>18</x>
     <y>118</y>

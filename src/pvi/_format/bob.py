@@ -79,6 +79,10 @@ class BobTemplate(UITemplate[_Element]):
                         new_text = f"{pva_prefix}{pv}"  # Must include pva prefix
                     else:
                         new_text = str(pv)
+                case "action_button", "pv_name", pv:
+                    # The widget's own PV and its write action's PV are separate tags
+                    for element in t_copy.iter(tag="pv_name"):
+                        element.text = str(pv)
                 case "action_button", "file", file_name:
                     new_text = file_name
                     if not new_text.endswith(".bob"):
