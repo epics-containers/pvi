@@ -323,25 +323,7 @@ class ScreenFormatterFactory(Generic[T]):
             "Can only do Grid and SubScreen at the moment"
         )
 
-        for c in group.children:
-            if isinstance(c, IgnoredComponent):
-                # Skip over ignored components
-                continue
-            component: Group | Component
-            add_label: bool = True
-            match c:
-                case Group(layout=SubScreen(labelled=labelled)):
-                    add_label = labelled
-                    component = c
-                case Group(layout=Grid(labelled=labelled)):
-                    add_label = labelled
-                    raise NotImplementedError(
-                        "Cannot nest a Group(Grid()) in another Group on one screen"
-                    )
-                case _:
-                    # Make single line with a component or Row of components
-                    component = c
-
+        for component, add_label, stacked in self._grid_rows(group):
             next_column_bounds = Bounds(
                 x=next_x(widget_factories, self.layout.spacing),
                 w=full_w,
@@ -354,7 +336,7 @@ class ScreenFormatterFactory(Generic[T]):
                     column_bounds=column_bounds,
                     next_column_bounds=next_column_bounds,
                     add_label=add_label,
-                    stacked=isinstance(group.layout, Grid) and group.layout.stacked,
+                    stacked=stacked,
                     squeeze=squeeze,
                 )
             )
@@ -368,9 +350,31 @@ class ScreenFormatterFactory(Generic[T]):
             bounds=bounds, title=group.get_label(), children=widget_factories
         )
 
+    def _grid_rows(
+        self, group: Group, add_label: bool = True
+    ) -> Iterator[tuple[ComponentUnion | _Heading, bool, bool]]:
+        """Yield each row of a group as (component, add_label, stacked).
+
+        A Grid cannot be drawn inside another Grid on one screen, so nested Grid
+        groups (at any depth) are flattened into the parent under a heading.
+        """
+        stacked = isinstance(group.layout, Grid) and group.layout.stacked
+        for c in group.children:
+            match c:
+                case IgnoredComponent():
+                    continue
+                case Group(layout=SubScreen(labelled=labelled)):
+                    yield c, labelled, stacked
+                case Group(layout=Grid(labelled=labelled)):
+                    split_out_plots(c)
+                    yield _Heading(c.get_label()), False, False
+                    yield from self._grid_rows(c, labelled)
+                case _:
+                    yield c, add_label, stacked
+
     def create_component_widget_formatters(
         self,
-        c: ComponentUnion,
+        c: ComponentUnion | _Heading,
         parent_bounds: Bounds,
         column_bounds: Bounds,
         next_column_bounds: Bounds,
@@ -438,7 +442,7 @@ class ScreenFormatterFactory(Generic[T]):
 
     def generate_component_formatters(
         self,
-        c: ComponentUnion,
+        c: ComponentUnion | _Heading,
         bounds: Bounds,
         add_label: bool = True,
         stacked: bool = False,
@@ -454,6 +458,12 @@ class ScreenFormatterFactory(Generic[T]):
         Yields:
             A collection of widgets representing the component
         """
+
+        if isinstance(c, _Heading):
+            yield self.widget_formatter_factory.header_formatter_cls(
+                bounds=bounds.clone(), text=c.text
+            )
+            return
 
         # Widgets are allowed to expand bounds
         if not isinstance(c, SignalRef | Group):
@@ -636,6 +646,13 @@ def is_table(component: Group) -> bool:
         isinstance(sub_component, Group) and isinstance(sub_component.layout, Row)
         for sub_component in component.children
     )
+
+
+@dataclass
+class _Heading:
+    """Label of a nested Grid group that was flattened into its parent"""
+
+    text: str
 
 
 def move_to_subscreen(component: ComponentUnion) -> Group:
