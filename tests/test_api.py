@@ -338,7 +338,7 @@ def test_nested_grid_groups_flattened(tmp_path, helper):
     fastcs emits attribute sub-groups as Group(Grid()).  When a controller with
     INLINE (Grid) group_layout also has such attribute groups, PVI would
     previously raise NotImplementedError.  The fix flattens the inner Grid's
-    children directly into the parent Group as individual rows.
+    children, at any depth, into the parent Group under a heading of its label.
     """
     formatter_yaml = HERE / "format" / "input" / "dls.bob.pvi.formatter.yaml"
     formatter = Formatter.deserialize(formatter_yaml)
@@ -360,6 +360,16 @@ def test_nested_grid_groups_flattened(tmp_path, helper):
                     ),
                     SignalR(
                         name="NestedB", read_pv="$(P)Nested:B", read_widget=TextRead()
+                    ),
+                    Group(
+                        name="DeepGroup",
+                        label="Deep Group",
+                        layout=Grid(),
+                        children=[
+                            SignalR(
+                                name="Deep", read_pv="$(P)Deep", read_widget=TextRead()
+                            )
+                        ],
                     ),
                 ],
             ),
